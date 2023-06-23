@@ -1,0 +1,6 @@
+/Veesy.Domain/obj/*
+/Veesy.Domain/bin/*
+/.idea/*
+/Veesy.WebApp/bin/*
+/Veesy.WebApp/obj/*
+/.vs/*
