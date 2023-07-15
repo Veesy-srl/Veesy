@@ -12,15 +12,15 @@ using Veesy.Domain.Data;
 namespace Veesy.Domain.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230623142759_InitDatabase")]
-    partial class InitDatabase
+    [Migration("20230714143015_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.8")
+                .HasAnnotation("ProductVersion", "7.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -306,6 +306,10 @@ namespace Veesy.Domain.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("MyUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Path")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -327,6 +331,8 @@ namespace Veesy.Domain.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("MyUserId");
+
                     b.ToTable("Medias");
                 });
 
@@ -347,13 +353,14 @@ namespace Veesy.Domain.Migrations
 
             modelBuilder.Entity("Veesy.Domain.Models.MediaFormat", b =>
                 {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("FormatId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("MediaId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Path")
@@ -364,7 +371,9 @@ namespace Veesy.Domain.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("FormatId", "MediaId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("FormatId");
 
                     b.HasIndex("MediaId");
 
@@ -435,40 +444,7 @@ namespace Veesy.Domain.Migrations
                     b.ToTable("MyUserUsedSoftwares");
                 });
 
-            modelBuilder.Entity("Veesy.Domain.Models.PortfolioMedia", b =>
-                {
-                    b.Property<Guid>("PortfolioId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("MediaFormatId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("MediaFormatFormatId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("MediaFormatMediaId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("PortofolioId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("PortfolioId", "MediaFormatId");
-
-                    b.HasIndex("PortofolioId");
-
-                    b.HasIndex("MediaFormatFormatId", "MediaFormatMediaId");
-
-                    b.ToTable("PortfolioMedias");
-                });
-
-            modelBuilder.Entity("Veesy.Domain.Models.Portofolio", b =>
+            modelBuilder.Entity("Veesy.Domain.Models.Portfolio", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -503,6 +479,10 @@ namespace Veesy.Domain.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("MyUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -520,7 +500,58 @@ namespace Veesy.Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Portofolios");
+                    b.HasIndex("MyUserId");
+
+                    b.ToTable("Portfolios");
+                });
+
+            modelBuilder.Entity("Veesy.Domain.Models.PortfolioMedia", b =>
+                {
+                    b.Property<Guid>("PortfolioId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("MediaFormatId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.HasKey("PortfolioId", "MediaFormatId");
+
+                    b.HasIndex("MediaFormatId");
+
+                    b.ToTable("PortfolioMedias");
+                });
+
+            modelBuilder.Entity("Veesy.Domain.Models.PortfolioSector", b =>
+                {
+                    b.Property<Guid>("PorfolioId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SectorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsPrincipal")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Note")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("PortfolioId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("PorfolioId", "SectorId");
+
+                    b.HasIndex("PortfolioId");
+
+                    b.HasIndex("SectorId");
+
+                    b.ToTable("PortfolioSectors");
                 });
 
             modelBuilder.Entity("Veesy.Domain.Models.Sector", b =>
@@ -542,6 +573,37 @@ namespace Veesy.Domain.Migrations
                     b.ToTable("Sectors");
                 });
 
+            modelBuilder.Entity("Veesy.Domain.Models.SubscriptionPlan", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("AllowedMediaNumber")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AllowedMegaByte")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsMediaFormatsInclude")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SubscriptionPlans");
+                });
+
             modelBuilder.Entity("Veesy.Domain.Models.UsedSoftware", b =>
                 {
                     b.Property<Guid>("Id")
@@ -556,12 +618,7 @@ namespace Veesy.Domain.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("UsedSoftwareId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UsedSoftwareId");
 
                     b.ToTable("UsedSoftwares");
                 });
@@ -579,8 +636,13 @@ namespace Veesy.Domain.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("SubscriptionPlanId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<bool>("VeesyPage")
                         .HasColumnType("bit");
+
+                    b.HasIndex("SubscriptionPlanId");
 
                     b.HasDiscriminator().HasValue("MyUser");
                 });
@@ -634,6 +696,17 @@ namespace Veesy.Domain.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Veesy.Domain.Models.Media", b =>
+                {
+                    b.HasOne("Veesy.Domain.Models.MyUser", "MyUser")
+                        .WithMany("Medias")
+                        .HasForeignKey("MyUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("MyUser");
                 });
 
             modelBuilder.Entity("Veesy.Domain.Models.MediaCategory", b =>
@@ -713,7 +786,7 @@ namespace Veesy.Domain.Migrations
                         .IsRequired();
 
                     b.HasOne("Veesy.Domain.Models.UsedSoftware", "UsedSoftware")
-                        .WithMany()
+                        .WithMany("MyUserUsedSoftwares")
                         .HasForeignKey("UsedSoftwareId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -723,24 +796,64 @@ namespace Veesy.Domain.Migrations
                     b.Navigation("UsedSoftware");
                 });
 
-            modelBuilder.Entity("Veesy.Domain.Models.PortfolioMedia", b =>
+            modelBuilder.Entity("Veesy.Domain.Models.Portfolio", b =>
                 {
-                    b.HasOne("Veesy.Domain.Models.Portofolio", null)
-                        .WithMany("PortfolioMedias")
-                        .HasForeignKey("PortofolioId");
-
-                    b.HasOne("Veesy.Domain.Models.MediaFormat", null)
-                        .WithMany("PortfolioMedias")
-                        .HasForeignKey("MediaFormatFormatId", "MediaFormatMediaId")
+                    b.HasOne("Veesy.Domain.Models.MyUser", "MyUser")
+                        .WithMany("Portfolios")
+                        .HasForeignKey("MyUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("MyUser");
                 });
 
-            modelBuilder.Entity("Veesy.Domain.Models.UsedSoftware", b =>
+            modelBuilder.Entity("Veesy.Domain.Models.PortfolioMedia", b =>
                 {
-                    b.HasOne("Veesy.Domain.Models.UsedSoftware", null)
-                        .WithMany("UsedSoftwares")
-                        .HasForeignKey("UsedSoftwareId");
+                    b.HasOne("Veesy.Domain.Models.MediaFormat", "MediaFormat")
+                        .WithMany("PortfolioMedias")
+                        .HasForeignKey("MediaFormatId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Veesy.Domain.Models.Portfolio", "Portfolio")
+                        .WithMany("PortfolioMedias")
+                        .HasForeignKey("PortfolioId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("MediaFormat");
+
+                    b.Navigation("Portfolio");
+                });
+
+            modelBuilder.Entity("Veesy.Domain.Models.PortfolioSector", b =>
+                {
+                    b.HasOne("Veesy.Domain.Models.Portfolio", "Portfolio")
+                        .WithMany("PortfolioSectors")
+                        .HasForeignKey("PortfolioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Veesy.Domain.Models.Sector", "Sector")
+                        .WithMany("PortfolioSectors")
+                        .HasForeignKey("SectorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Portfolio");
+
+                    b.Navigation("Sector");
+                });
+
+            modelBuilder.Entity("Veesy.Domain.Models.MyUser", b =>
+                {
+                    b.HasOne("Veesy.Domain.Models.SubscriptionPlan", "SubscriptionPlan")
+                        .WithMany("MyUsers")
+                        .HasForeignKey("SubscriptionPlanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SubscriptionPlan");
                 });
 
             modelBuilder.Entity("Veesy.Domain.Models.Category", b =>
@@ -767,26 +880,39 @@ namespace Veesy.Domain.Migrations
                     b.Navigation("PortfolioMedias");
                 });
 
-            modelBuilder.Entity("Veesy.Domain.Models.Portofolio", b =>
+            modelBuilder.Entity("Veesy.Domain.Models.Portfolio", b =>
                 {
                     b.Navigation("PortfolioMedias");
+
+                    b.Navigation("PortfolioSectors");
                 });
 
             modelBuilder.Entity("Veesy.Domain.Models.Sector", b =>
                 {
                     b.Navigation("MyUserSectors");
+
+                    b.Navigation("PortfolioSectors");
+                });
+
+            modelBuilder.Entity("Veesy.Domain.Models.SubscriptionPlan", b =>
+                {
+                    b.Navigation("MyUsers");
                 });
 
             modelBuilder.Entity("Veesy.Domain.Models.UsedSoftware", b =>
                 {
-                    b.Navigation("UsedSoftwares");
+                    b.Navigation("MyUserUsedSoftwares");
                 });
 
             modelBuilder.Entity("Veesy.Domain.Models.MyUser", b =>
                 {
+                    b.Navigation("Medias");
+
                     b.Navigation("MyUserSectors");
 
                     b.Navigation("MyUserUsedSoftwares");
+
+                    b.Navigation("Portfolios");
                 });
 #pragma warning restore 612, 618
         }

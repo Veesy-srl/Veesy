@@ -8,6 +8,7 @@ public class ApplicationDbContext : IdentityDbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
+
     public DbSet<MyUser> MyUsers { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Format> Formats { get; set; }
@@ -18,18 +19,22 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<MyUserSector> MyUserSectors { get; set; }
     public DbSet<MyUserUsedSoftware> MyUserUsedSoftwares { get; set; }
     public DbSet<PortfolioMedia> PortfolioMedias { get; set; }
-    public DbSet<Portofolio> Portofolios { get; set; }
+    public DbSet<Portfolio> Portfolios { get; set; }
     public DbSet<Sector> Sectors { get; set; }
     public DbSet<UsedSoftware> UsedSoftwares { get; set; }
+    public DbSet<PortfolioSector> PortfolioSectors { get; set; }
+    public DbSet<SubscriptionPlan> SubscriptionPlans { get; set; }
     
     #region Required
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<PortfolioMedia>().HasKey(a => new { a.PortfolioId, a.MediaFormatId });
+        modelBuilder.Entity<PortfolioMedia>().HasOne(a => a.Portfolio).WithMany(a => a.PortfolioMedias).OnDelete(DeleteBehavior.NoAction);
+        modelBuilder.Entity<PortfolioMedia>().HasOne(a => a.MediaFormat).WithMany(a => a.PortfolioMedias);
         modelBuilder.Entity<MyUserUsedSoftware>().HasKey(a => new { a.MyUserId, a.UsedSoftwareId });
         modelBuilder.Entity<MyUserSector>().HasKey(a => new { a.MyUserId, a.SectorId });
         modelBuilder.Entity<MediaCategory>().HasKey(a => new { a.CategoryId, a.MediaId });
-        modelBuilder.Entity<MediaFormat>().HasKey(a => new { a.FormatId, a.MediaId });
+        modelBuilder.Entity<PortfolioSector>().HasKey(a => new { a.PorfolioId, a.SectorId });
         base.OnModelCreating(modelBuilder);
     }
     #endregion

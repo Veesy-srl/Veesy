@@ -1,6 +1,17 @@
 /Veesy.Domain/obj/*
 /Veesy.Domain/bin/*
 /.idea/*
+/Veesy.WebApp/FilesUploaded/*
 /Veesy.WebApp/bin/*
 /Veesy.WebApp/obj/*
+/Veesy.Service/bin/*
+/Veesy.Service/obj/*
+/Veesy.Presentation/bin/*
+/Veesy.Presentation/obj/*
+/Veesy.Email/bin/*
+/Veesy.Email/obj/*
+/Veesy.Media/bin/*
+/Veesy.Media/obj/*
+/Veesy.Utilities/bin/*
+/Veesy.Utilities/obj/*
 /.vs/*

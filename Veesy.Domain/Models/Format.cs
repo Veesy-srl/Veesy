@@ -8,6 +8,6 @@ public class Format
     public int Width { get; set; }
     public int Height { get; set; }
     public int Status { get; set; }
-    public List<MediaFormat> MediaFormats { get; set; }
+    public virtual List<MediaFormat> MediaFormats { get; set; }
     
 }

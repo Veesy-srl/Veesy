@@ -9,5 +9,5 @@ public class MediaFormat
     public Format Format { get; set; }
     public string ProcessedFileName { get; set; }
     public string Path { get; set; }
-    public List<PortfolioMedia> PortfolioMedias { get; set; }
+    public virtual List<PortfolioMedia> PortfolioMedias { get; set; }
 }

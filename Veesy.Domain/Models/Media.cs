@@ -20,13 +20,15 @@
 public class Media : CommonInfo
 {
     public Guid Id { get; set; }
+    public string MyUserId { get; set; }
+    public MyUser MyUser { get; set; }
     public string FileName { get; set; }
     public string ProcessedName { get; set; }
     public string Type { get; set; }
     public DateTime UploadDate { get; set; }
     public string Path { get; set; }
     public string Quality { get; set; }
-    public List<MediaCategory> MediaCategories { get; set; }
-    public List<MediaTag> MediaTags { get; set; }
-    public List<MediaFormat> MediaFormats { get; set; }
+    public virtual List<MediaCategory> MediaCategories { get; set; }
+    public virtual List<MediaTag> MediaTags { get; set; }
+    public virtual List<MediaFormat> MediaFormats { get; set; }
 }

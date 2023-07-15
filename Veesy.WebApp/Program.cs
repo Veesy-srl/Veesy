@@ -4,6 +4,9 @@ using NLog;
 using NLog.Web;
 using Veesy.Domain.Data;
 using Veesy.Domain.Models;
+using Veesy.Email;
+using Veesy.Media.Utils;
+using Veesy.Presentation.Helper;
 
 var logger = LogManager.Setup()
     .LoadConfigurationFromFile("NLog.config")
@@ -12,6 +15,18 @@ try
 {
     logger.Info("Init main");
     var builder = WebApplication.CreateBuilder(args);
+    
+    builder.WebHost.ConfigureKestrel(serverOptions =>
+    {
+        serverOptions.Limits.MaxRequestBodySize = long.MaxValue; //We are allowing the uploading of files of any size.
+        serverOptions.AllowSynchronousIO = true; //To understand better
+    });
+    
+    builder.Configuration
+        .SetBasePath(builder.Environment.ContentRootPath)
+        .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", true)
+        .AddEnvironmentVariables();
+    
     builder.Logging.ClearProviders();
     builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Debug);
     builder.Host.UseNLog();
@@ -20,6 +35,11 @@ try
     // Add services to the container.
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
         options.UseSqlServer(Configuration.GetConnectionString("VeesyConnection"))); // per entity framework
+    
+    var emailConfig = Configuration
+        .GetSection("EmailConfiguration")
+        .Get<EmailConfiguration>();
+    builder.Services.AddSingleton(emailConfig);
     
     builder.Services.AddIdentity<MyUser, IdentityRole>(opts =>
         {
@@ -34,12 +54,22 @@ try
         .AddEntityFrameworkStores<ApplicationDbContext>()
         .AddDefaultTokenProviders();
     
-// Add services to the container.
+    // Add services to the container.
     builder.Services.AddControllersWithViews();
 
+    /*Utils Dependency Injection*/
+    builder.Services.AddScoped<IEmailSender, EmailSender>();
+    
+    /*Helper Dependency Injection*/
+    builder.Services.AddTransient<AuthHelper>();
+    builder.Services.AddTransient<MediaHelper>();
+
+    /*Media Utils Dependency Injection*/
+    builder.Services.AddTransient<MediaHandler>();
+    
     var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+    // Configure the HTTP request pipeline.
     if (!app.Environment.IsDevelopment())
     {
         app.UseExceptionHandler("/Home/Error");
@@ -56,7 +86,7 @@ try
     
     app.MapControllerRoute(
         name: "default",
-        pattern: "{areas=Portfolio}/{controller=Home}/{action=Index}");
+        pattern: "{controller=Home}/{action=Index}");
 
     using (var scope = app.Services.CreateScope())
     {

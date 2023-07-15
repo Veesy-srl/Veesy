@@ -1,8 +1,10 @@
 ﻿namespace Veesy.Domain.Models;
 
-public class Portofolio : CommonInfo
+public class Portfolio : CommonInfo
 {
     public Guid Id { get; set; }
+    public string MyUserId { get; set; } 
+    public MyUser MyUser { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
     public string Note { get; set; }
@@ -10,5 +12,6 @@ public class Portofolio : CommonInfo
     public string Password { get; set; }
     public string Link { get; set; }
     public int Status { get; set; }
-    public List<PortfolioMedia> PortfolioMedias { get; set; }
+    public virtual List<PortfolioMedia> PortfolioMedias { get; set; }
+    public virtual List<PortfolioSector> PortfolioSectors { get; set; }
 }

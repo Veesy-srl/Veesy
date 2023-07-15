@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Veesy.Domain.Migrations
 {
     /// <inheritdoc />
-    public partial class InitDatabase : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -23,36 +23,6 @@ namespace Veesy.Domain.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetUsers",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    VeesyPage = table.Column<bool>(type: "bit", nullable: true),
-                    Status = table.Column<int>(type: "int", nullable: true),
-                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    SignVeesyContract = table.Column<bool>(type: "bit", nullable: true),
-                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -85,51 +55,6 @@ namespace Veesy.Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Medias",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProcessedName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UploadDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Path = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Quality = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreateRecordDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LastEditRecordDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IpAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreateUserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastEditUserId = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Medias", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Portofolios",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Note = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsPublic = table.Column<bool>(type: "bit", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Link = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    CreateRecordDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LastEditRecordDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IpAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreateUserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastEditUserId = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Portofolios", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Sectors",
                 columns: table => new
                 {
@@ -143,22 +68,33 @@ namespace Veesy.Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UsedSoftwares",
+                name: "SubscriptionPlans",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UsedSoftwareId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    AllowedMegaByte = table.Column<int>(type: "int", nullable: false),
+                    IsMediaFormatsInclude = table.Column<bool>(type: "bit", nullable: false),
+                    AllowedMediaNumber = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubscriptionPlans", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UsedSoftwares",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UsedSoftwares", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UsedSoftwares_UsedSoftwares_UsedSoftwareId",
-                        column: x => x.UsedSoftwareId,
-                        principalTable: "UsedSoftwares",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -178,6 +114,43 @@ namespace Veesy.Domain.Migrations
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SubscriptionPlanId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    VeesyPage = table.Column<bool>(type: "bit", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: true),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    SignVeesyContract = table.Column<bool>(type: "bit", nullable: true),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_SubscriptionPlans_SubscriptionPlanId",
+                        column: x => x.SubscriptionPlanId,
+                        principalTable: "SubscriptionPlans",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -268,72 +241,30 @@ namespace Veesy.Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MediaCategories",
-                columns: table => new
-                {
-                    MediaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MediaCategories", x => new { x.CategoryId, x.MediaId });
-                    table.ForeignKey(
-                        name: "FK_MediaCategories_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_MediaCategories_Medias_MediaId",
-                        column: x => x.MediaId,
-                        principalTable: "Medias",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MediaFormats",
-                columns: table => new
-                {
-                    MediaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FormatId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ProcessedFileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Path = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MediaFormats", x => new { x.FormatId, x.MediaId });
-                    table.ForeignKey(
-                        name: "FK_MediaFormats_Formats_FormatId",
-                        column: x => x.FormatId,
-                        principalTable: "Formats",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_MediaFormats_Medias_MediaId",
-                        column: x => x.MediaId,
-                        principalTable: "Medias",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MediaTags",
+                name: "Medias",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    MediaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    MyUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProcessedName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UploadDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Path = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Quality = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreateRecordDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastEditRecordDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IpAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreateUserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastEditUserId = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MediaTags", x => x.Id);
+                    table.PrimaryKey("PK_Medias", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MediaTags_Medias_MediaId",
-                        column: x => x.MediaId,
-                        principalTable: "Medias",
+                        name: "FK_Medias_AspNetUsers_MyUserId",
+                        column: x => x.MyUserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -390,30 +321,155 @@ namespace Veesy.Domain.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Portfolios",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    MyUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Note = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsPublic = table.Column<bool>(type: "bit", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Link = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    CreateRecordDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastEditRecordDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IpAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreateUserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastEditUserId = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Portfolios", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Portfolios_AspNetUsers_MyUserId",
+                        column: x => x.MyUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MediaCategories",
+                columns: table => new
+                {
+                    MediaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MediaCategories", x => new { x.CategoryId, x.MediaId });
+                    table.ForeignKey(
+                        name: "FK_MediaCategories_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MediaCategories_Medias_MediaId",
+                        column: x => x.MediaId,
+                        principalTable: "Medias",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MediaFormats",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    MediaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FormatId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProcessedFileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Path = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MediaFormats", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MediaFormats_Formats_FormatId",
+                        column: x => x.FormatId,
+                        principalTable: "Formats",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_MediaFormats_Medias_MediaId",
+                        column: x => x.MediaId,
+                        principalTable: "Medias",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MediaTags",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    MediaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MediaTags", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MediaTags_Medias_MediaId",
+                        column: x => x.MediaId,
+                        principalTable: "Medias",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PortfolioSectors",
+                columns: table => new
+                {
+                    SectorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PorfolioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PortfolioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Note = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsPrincipal = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PortfolioSectors", x => new { x.PorfolioId, x.SectorId });
+                    table.ForeignKey(
+                        name: "FK_PortfolioSectors_Portfolios_PortfolioId",
+                        column: x => x.PortfolioId,
+                        principalTable: "Portfolios",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PortfolioSectors_Sectors_SectorId",
+                        column: x => x.SectorId,
+                        principalTable: "Sectors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PortfolioMedias",
                 columns: table => new
                 {
                     MediaFormatId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PortfolioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    MediaFormatFormatId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    MediaFormatMediaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PortofolioId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PortfolioMedias", x => new { x.PortfolioId, x.MediaFormatId });
                     table.ForeignKey(
-                        name: "FK_PortfolioMedias_MediaFormats_MediaFormatFormatId_MediaFormatMediaId",
-                        columns: x => new { x.MediaFormatFormatId, x.MediaFormatMediaId },
+                        name: "FK_PortfolioMedias_MediaFormats_MediaFormatId",
+                        column: x => x.MediaFormatId,
                         principalTable: "MediaFormats",
-                        principalColumns: new[] { "FormatId", "MediaId" },
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PortfolioMedias_Portofolios_PortofolioId",
-                        column: x => x.PortofolioId,
-                        principalTable: "Portofolios",
+                        name: "FK_PortfolioMedias_Portfolios_PortfolioId",
+                        column: x => x.PortfolioId,
+                        principalTable: "Portfolios",
                         principalColumn: "Id");
                 });
 
@@ -450,6 +506,11 @@ namespace Veesy.Domain.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_SubscriptionPlanId",
+                table: "AspNetUsers",
+                column: "SubscriptionPlanId");
+
+            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
@@ -462,9 +523,19 @@ namespace Veesy.Domain.Migrations
                 column: "MediaId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_MediaFormats_FormatId",
+                table: "MediaFormats",
+                column: "FormatId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MediaFormats_MediaId",
                 table: "MediaFormats",
                 column: "MediaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Medias_MyUserId",
+                table: "Medias",
+                column: "MyUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MediaTags_MediaId",
@@ -482,19 +553,24 @@ namespace Veesy.Domain.Migrations
                 column: "UsedSoftwareId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PortfolioMedias_MediaFormatFormatId_MediaFormatMediaId",
+                name: "IX_PortfolioMedias_MediaFormatId",
                 table: "PortfolioMedias",
-                columns: new[] { "MediaFormatFormatId", "MediaFormatMediaId" });
+                column: "MediaFormatId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PortfolioMedias_PortofolioId",
-                table: "PortfolioMedias",
-                column: "PortofolioId");
+                name: "IX_Portfolios_MyUserId",
+                table: "Portfolios",
+                column: "MyUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UsedSoftwares_UsedSoftwareId",
-                table: "UsedSoftwares",
-                column: "UsedSoftwareId");
+                name: "IX_PortfolioSectors_PortfolioId",
+                table: "PortfolioSectors",
+                column: "PortfolioId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PortfolioSectors_SectorId",
+                table: "PortfolioSectors",
+                column: "SectorId");
         }
 
         /// <inheritdoc />
@@ -531,16 +607,13 @@ namespace Veesy.Domain.Migrations
                 name: "PortfolioMedias");
 
             migrationBuilder.DropTable(
+                name: "PortfolioSectors");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Categories");
-
-            migrationBuilder.DropTable(
-                name: "Sectors");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "UsedSoftwares");
@@ -549,13 +622,22 @@ namespace Veesy.Domain.Migrations
                 name: "MediaFormats");
 
             migrationBuilder.DropTable(
-                name: "Portofolios");
+                name: "Portfolios");
+
+            migrationBuilder.DropTable(
+                name: "Sectors");
 
             migrationBuilder.DropTable(
                 name: "Formats");
 
             migrationBuilder.DropTable(
                 name: "Medias");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "SubscriptionPlans");
         }
     }
 }
