@@ -1,3 +1,4 @@
+using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NLog;
@@ -7,6 +8,7 @@ using Veesy.Domain.Models;
 using Veesy.Email;
 using Veesy.Media.Utils;
 using Veesy.Presentation.Helper;
+using Veesy.Service.Implementation;
 
 var logger = LogManager.Setup()
     .LoadConfigurationFromFile("NLog.config")
@@ -56,7 +58,17 @@ try
     
     // Add services to the container.
     builder.Services.AddControllersWithViews();
+    
+    //Register azure blob storage
+    var azureBlobCs = Configuration.GetValue<string>("AzureBlobStorage:ConnectionString");
 
+    builder.Services.AddSingleton(x => new BlobServiceClient(azureBlobCs));
+    builder.Services.AddSingleton(x=> 
+        new VeesyBlobService(new BlobServiceClient(azureBlobCs), 
+            Configuration.GetValue<string>("AzureBlobStorage:VeesyContainerName")));
+    
+    /*Service dependency Injection*/
+    
     /*Utils Dependency Injection*/
     builder.Services.AddScoped<IEmailSender, EmailSender>();
     
@@ -86,7 +98,7 @@ try
     
     app.MapControllerRoute(
         name: "default",
-        pattern: "{controller=Home}/{action=Index}");
+        pattern: "{area=Portfolio}/{controller=Media}/{action=UploadMedia}");
 
     using (var scope = app.Services.CreateScope())
     {

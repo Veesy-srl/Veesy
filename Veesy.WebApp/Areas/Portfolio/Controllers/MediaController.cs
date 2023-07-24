@@ -7,16 +7,19 @@ using Veesy.WebApp.CustomDataAttribute;
 
 namespace Veesy.WebApp.Areas.Portfolio.Controllers;
 
+[Area("Portfolio")]
 public class MediaController : Controller
 {
 
     private readonly MediaHelper _mediaHelper;
+    private readonly IWebHostEnvironment _environment;
     
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     
-    public MediaController(MediaHelper mediaHelper)
+    public MediaController(MediaHelper mediaHelper, IWebHostEnvironment environment)
     {
         _mediaHelper = mediaHelper;
+        _environment = environment;
     }
 
     [HttpGet]
@@ -42,6 +45,21 @@ public class MediaController : Controller
         {
             Logger.Error(ex, ex.Message);
             return View();
+        }
+    }
+    
+    [HttpGet("media/{section}/{fileName}")]
+    public async Task<FileResult> Get(string section, string fileName)
+    {
+        try
+        {
+            var image = await _mediaHelper.GetMediaFromBlob(section, fileName);
+            return File(image.BlobContent, image.BlobContentType);
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            return File(await System.IO.File.ReadAllBytesAsync($"{_environment.WebRootPath}\\imgs\\notfound.jpg"), "image/jpeg");
         }
     }
 }

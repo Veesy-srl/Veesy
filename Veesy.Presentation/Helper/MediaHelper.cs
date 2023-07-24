@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Veesy.Presentation.Model.Media;
 using Microsoft.Net.Http.Headers;
 using Veesy.Media.Utils;
+using Veesy.Service.Implementation;
 
 namespace Veesy.Presentation.Helper;
 
@@ -33,11 +34,12 @@ public class MediaHelper
             if (fileSection != null)
             {
                 totalSizeInBytes += await _mediaHandler.SaveFileAsync(fileSection, filePaths, notUploadedFiles);
+                //await Task.Run(() => _mediaHandler.SaveFileInBackground(fileSection, notUploadedFiles));
                 fileCount++;
                 //Try to compress image. This method will be called at runtime by a function to compress image.
-                MediaCompressor.CompressImage(
+                /*MediaCompressor.CompressImage(
                     $"C:\\Users\\lore9\\Desktop\\ENIGMA\\SourceCode\\Veesy\\Veesy.WebApp\\FilesUploaded\\Compressed\\{fileSection.FileName}",
-                    $"C:\\Users\\lore9\\Desktop\\ENIGMA\\SourceCode\\Veesy\\Veesy.WebApp\\FilesUploaded\\{fileSection.FileName}");
+                    $"C:\\Users\\lore9\\Desktop\\ENIGMA\\SourceCode\\Veesy\\Veesy.WebApp\\FilesUploaded\\{fileSection.FileName}");*/
             }
             section = await multipartReader.ReadNextSectionAsync();
         }
@@ -50,5 +52,8 @@ public class MediaHelper
         };
     }
 
-    
+    public async Task<BlobElement> GetMediaFromBlob(string section, string fileName)
+    {
+        return await _mediaHandler.GetMediaFromBlob(section, fileName);
+    }
 }

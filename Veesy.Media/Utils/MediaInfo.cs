@@ -1,12 +1,14 @@
 using System.Drawing.Imaging;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Net.Http.Headers;
+using Microsoft.AspNetCore.StaticFiles;
 
 namespace Veesy.Media.Utils;
 
 public static class MediaInfo
 {
     private const string UploadsSubDirectory = "FilesUploaded";
+    private static readonly FileExtensionContentTypeProvider Provider = new FileExtensionContentTypeProvider();
 
     public static ImageCodecInfo GetEncoder(ImageFormat format)
     {
@@ -59,5 +61,15 @@ public static class MediaInfo
                 $"{Math.Round(fileSize / gigabyte, fileSize < 10 * gigabyte ? 2 : 1, MidpointRounding.AwayFromZero):##,###.##}GB",
             _ => "n/a"
         };
+    }
+    
+    public static string GetContentType(this string fileName)
+    {
+        if (!Provider.TryGetContentType(fileName, out var contentType))
+        {
+            contentType = "application/octet-stream";
+        }
+
+        return contentType;
     }
 }

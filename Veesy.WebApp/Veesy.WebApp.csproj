@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.17.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.9" />
@@ -29,6 +30,7 @@
     <ProjectReference Include="..\Veesy.Domain\Veesy.Domain.csproj" />
     <ProjectReference Include="..\Veesy.Email\Veesy.Email.csproj" />
     <ProjectReference Include="..\Veesy.Presentation\Veesy.Presentation.csproj" />
+    <ProjectReference Include="..\Veesy.Service\Veesy.Service.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,6 +47,19 @@
 
   <ItemGroup>
     <None Remove="FilesUploaded\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Areas\Portfolio\Shared\Error.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Portfolio\Shared\_Layout.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Portfolio\Shared\_ValidationScriptsPartial.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Home\Index.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Home\Privacy.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Shared\Error.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Shared\_Layout.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Shared\_ValidationScriptsPartial.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\_ViewImports.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\_ViewStart.cshtml" />
   </ItemGroup>
 
 </Project>
