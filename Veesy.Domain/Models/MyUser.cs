@@ -4,7 +4,7 @@ namespace Veesy.Domain.Models;
 
 public class MyUser : IdentityUser
 {
-    public Guid SubscriptionPlanId { get; set; }
+    public Guid? SubscriptionPlanId { get; set; }
     public SubscriptionPlan SubscriptionPlan { get; set; }
     public bool VeesyPage { get; set; }
     public int Status { get; set; }
