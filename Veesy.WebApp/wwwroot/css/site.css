@@ -118,3 +118,134 @@ a:hover{
 .input--style-1:-ms-input-placeholder {
   color: #555
 }
+
+.navbar{
+  background-color: #E2E5E7;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.custom-btn {
+  display: inline-flex;
+  align-items: center;
+  border: none;
+  background-color: white;
+  color: black;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  height: 50px;
+  padding: 0px 10px;
+  position: relative;
+  padding-left: 30px; /* Aggiunto per dare spazio all'icona */
+}
+
+.user-btn {
+  display: inline-flex;
+  align-items: center;
+  border: none;
+  background-color: white;
+  color: black;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  height: 50px;
+  padding-right: 10px;
+  position: relative;
+  padding-left: 40px;
+  margin-right: 5px;/* Aggiunto per dare spazio all'icona */
+}
+
+.icon-user {
+  width: 22px;
+  position: absolute;
+  height: 22px;
+  left: 10px;
+  top: 50%;
+  margin-top: 1px;
+  background-color: #75CCDD;
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
+
+.icon {
+  width: 12px;
+  position: absolute;
+  height: 12px;
+  left: 10px;
+  top: 50%;
+  margin-top: 1px;
+  background-color: #75CCDD;
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
+
+.menu-popup {
+  position: fixed;
+  top: 0;
+  right: -50%;
+  width: 50%;
+  height: 100%;
+  background-color: #e2e5e7;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 30px 0px 0px 30px;
+  transition: right 0.3s ease;
+}
+
+.menu-popup.active {
+  right: 0;
+}
+
+.menu-content {
+  display: flex;
+}
+
+.menu-description {
+  flex: 1;
+  padding-right: 10px;
+}
+
+.menu-list {
+  flex: 2;
+  padding-left: 10px;
+}
+
+.menu-footer {
+  position: absolute;
+  bottom: 0;
+  padding: 10px 20px;
+}
+
+.menu-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.cookie{
+  left: 10%;
+  position: relative;
+}
+
+.menu-list ul li {
+  margin-bottom: 10px;
+}
+
+a{
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a:hover{
+  color: black;
+}
+
+.copyright{
+  font-size: 10px;
+  margin-top: 20px;
+}
