@@ -104,10 +104,10 @@ try
     {
         var services = scope.ServiceProvider;
         var context = services.GetRequiredService<ApplicationDbContext>();
-        services.GetRequiredService<UserManager<MyUser>>();
-        services.GetRequiredService<RoleManager<IdentityRole>>();
+        var userManager = services.GetRequiredService<UserManager<MyUser>>();
+        var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
         context.Database.Migrate();
-        //DbInitializer.SeedUsersAndRoles(userManager, roleManager, context, Configuration);
+        DbInitializer.SeedUsersAndRoles(userManager, roleManager, context, Configuration);
     }
     logger.Debug("Program Initialized, Running App...");
     app.Run();
