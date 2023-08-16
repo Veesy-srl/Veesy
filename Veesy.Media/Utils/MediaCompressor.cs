@@ -6,15 +6,15 @@ namespace Veesy.Media.Utils;
 
 public static class MediaCompressor
 {
-    public static void CompressImage(string output, string targetPath)
+    public static Stream CompressImage(Stream stream)
     {
       try
       {
             // Convert stream to image
-            using var image = Image.FromFile(targetPath);
+            using var image = Image.FromStream(stream);
             
-            float maxHeight = 900.0f;
-            float maxWidth = 900.0f;
+            float maxHeight = 720.0f;
+            float maxWidth = 1280.0f;
             int newWidth;
             int newHeight;
 
@@ -34,23 +34,25 @@ public static class MediaCompressor
 
             else
             {
-                newWidth = (int)originalWidth;
-                newHeight = (int)originalHeight;
+                //TODO: Bisogna comunicare al chiamante che la risoluzione dell'immagine è già inferiore ala risoluzione di compressione
+                return null;
             }
 
             var bitmap = new Bitmap(originalBMP, newWidth, newHeight);
-            var imgGraph = Graphics.FromImage(bitmap);
+            return ToMemoryStream(bitmap);
+            /*var imgGraph = Graphics.FromImage(bitmap);
 
             imgGraph.SmoothingMode = SmoothingMode.Default;
             imgGraph.InterpolationMode = InterpolationMode.HighQualityBicubic;
             imgGraph.DrawImage(originalBMP, 0, 0, newWidth, newHeight);
+
             
             var extension = Path.GetExtension(targetPath).ToLower();
             // for file extension having png and gif
             if (extension == ".png" || extension == ".gif")
             {
                 // Save image to targetPath
-                bitmap.Save(output, image.RawFormat);
+                bitmap.Save(output, image.);
             }
 
             // for file extension having .jpg or .jpeg
@@ -67,7 +69,7 @@ public static class MediaCompressor
             }
             bitmap.Dispose();
             imgGraph.Dispose();
-            originalBMP.Dispose();
+            originalBMP.Dispose();*/
         }
         catch (Exception ex)
         {
@@ -75,73 +77,11 @@ public static class MediaCompressor
         }
     }
     
-    public static void TestCompressImage(Stream srcImgStream, string targetPath)
+    public static MemoryStream ToMemoryStream(this Bitmap b)
     {
-      try
-      {
-            // Convert stream to image
-            using var image = Image.FromStream((Stream)srcImgStream, true, false);
-            
-            float maxHeight = 900.0f;
-            float maxWidth = 900.0f;
-            int newWidth;
-            int newHeight;
-
-            var originalBMP = new Bitmap(srcImgStream);
-            int originalWidth = originalBMP.Width;
-            int originalHeight = originalBMP.Height;
-            
-            if (originalWidth > maxWidth || originalHeight > maxHeight)
-            {
-                // To preserve the aspect ratio  
-                float ratioX = (float)maxWidth / (float)originalWidth;
-                float ratioY = (float)maxHeight / (float)originalHeight;
-                float ratio = Math.Min(ratioX, ratioY);
-                newWidth = (int)(originalWidth * ratio);
-                newHeight = (int)(originalHeight * ratio);
-            }
-
-            else
-            {
-                newWidth = (int)originalWidth;
-                newHeight = (int)originalHeight;
-            }
-
-            var bitmap = new Bitmap(originalBMP, newWidth, newHeight);
-            var imgGraph = Graphics.FromImage(bitmap);
-
-            imgGraph.SmoothingMode = SmoothingMode.Default;
-            imgGraph.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            imgGraph.DrawImage(originalBMP, 0, 0, newWidth, newHeight);
-            
-            var extension = Path.GetExtension(targetPath).ToLower();
-            // for file extension having png and gif
-            if (extension == ".png" || extension == ".gif")
-            {
-                // Save image to targetPath
-                bitmap.Save(targetPath, image.RawFormat);
-            }
-
-            // for file extension having .jpg or .jpeg
-            else if (extension == ".jpg" || extension == ".jpeg")
-            {
-                ImageCodecInfo jpgEncoder = MediaInfo.GetEncoder(ImageFormat.Jpeg);
-                Encoder myEncoder = Encoder.Quality;
-                var encoderParameters = new EncoderParameters(1);
-                var parameter = new EncoderParameter(myEncoder, 50L);
-                encoderParameters.Param[0] = parameter;
-
-                // Save image to targetPath
-                bitmap.Save(targetPath, jpgEncoder, encoderParameters);
-            }
-            bitmap.Dispose();
-            imgGraph.Dispose();
-            originalBMP.Dispose();
-        }
-        catch (Exception ex)
-        {
-            throw ex;
-        }
+        MemoryStream ms = new MemoryStream();
+        b.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+        return ms;
     }
     
 }

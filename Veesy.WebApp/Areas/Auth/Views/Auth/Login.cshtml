@@ -1,0 +1,42 @@
+@model Veesy.Presentation.Model.Auth.LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="mt-60-minus login-container">
+    <div class="logo-container vertical-center">
+        <img class="w-100" src="./imgs/Auth/login-bg.png" alt="">
+    </div>
+    <div class="vertical-center text-center bg-grey-veesy" style="border-bottom-left-radius: 10px; border-top-left-radius: 10px; margin-left: -10px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <form method="post">
+                        <h1 class="h3 mb-3 fw-normal">Are you ready for <br/>New adventures?<br/>Oh Yes!</h1>
+                        <div style="height: 50px;"></div>
+                        <div class="input-group">
+                            <input asp-for="Email" class="input--style-1" type="text"placeholder="Username or E-mail" asp->
+                        </div>
+                        <div class="input-group">
+                            <input asp-for="Password" class="input--style-1" type="text" placeholder="Password">
+                        </div>
+
+                        <div class="form-check text-start">
+                            <input asp-for="RememberMe" type="checkbox" class="form-check-input mt-check-input" id="rememberme">
+                            <label style="cursor: pointer" class="form-check-label" for="rememberme">Remember me</label>
+                        </div>
+                        
+                        <p class="mt-3 text-muted">
+                            <a href="#">Forgot password?</a>
+                        </p>
+                        
+                        <button class="w-50 rounded-pill btn btn-lg btn-primary mt-4" type="button">Log in</button>
+                        <p class="mt-5 mb-3 text-muted">Don't have an account?
+                            <a href="#">Sign up</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

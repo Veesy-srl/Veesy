@@ -2,7 +2,7 @@
   "profiles": {
     "Veesy.Functions": {
       "commandName": "Project",
-      "commandLineArgs": "--port 7139",
+      "commandLineArgs": "--port 7278",
       "launchBrowser": false
     }
   }

@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.WebUtilities;
 using Veesy.Domain.Constants;
+using Veesy.Domain.Data;
+using Veesy.Domain.Models;
 using Veesy.Service.Implementation;
+using System.Linq;
 
 namespace Veesy.Media.Utils;
 
@@ -9,10 +12,12 @@ public class MediaHandler
     private const string UploadsSubDirectory = "FilesUploaded";
     private readonly IEnumerable<string> allowedExtensions = new List<string> { ".zip", ".bin", ".png", ".mp4", ".jpg", ".jpeg" };
     private readonly VeesyBlobService _veesyBlobService;
+    private readonly ApplicationDbContext _dbContext;
 
-    public MediaHandler(VeesyBlobService veesyBlobService)
+    public MediaHandler(VeesyBlobService veesyBlobService, ApplicationDbContext dbContext)
     {
         _veesyBlobService = veesyBlobService;
+        _dbContext = dbContext;
     }
 
     public async Task<long> SaveFileAsync(FileMultipartSection fileSection, IList<string> filePaths, IList<string> notUploadedFiles)
@@ -41,33 +46,39 @@ public class MediaHandler
 
         return fileSection.FileStream.Length;
     }
-    
-    
-    public async void SaveFileInBackground(FileMultipartSection fileSection, IList<string> notUploadedFiles)
-    {
-        try
-        {
-            var files = fileSection;
-            var extension = Path.GetExtension(fileSection.FileName);
-            if (!allowedExtensions.Contains(extension))
-            {
-                notUploadedFiles.Add(fileSection.FileName);
-                return;
-            }
-            var newFileName = $"{Guid.NewGuid().ToString().Replace("-", String.Empty)}{extension}";
-            await _veesyBlobService.UploadFromStreamBlobAsync(files.FileStream,
-                $"{VeesyConstants.BlobMediaSections.OriginalMedia}/{newFileName}", newFileName.GetContentType());
-            return;
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
-    }
 
     public async Task<BlobElement> GetMediaFromBlob(string section, string fileName)
     {
         return await _veesyBlobService.GetBlobAsync($"{section}/{fileName}");
+    }
+
+    public async Task SaveFileAsByteArrayRecordAsync(FileMultipartSection fileSection)
+    {
+        byte[] bytes;
+        using (var memoryStream = new MemoryStream())
+        {
+            await fileSection.FileStream.CopyToAsync(memoryStream);
+            bytes = memoryStream.ToArray();
+        }
+        var extension = Path.GetExtension(fileSection.FileName);
+        var newFileName = $"{Guid.NewGuid().ToString().Replace("-", String.Empty)}{extension}";
+        _dbContext.TmpMedias.Add(new TmpMedia()
+        {
+            FileName = newFileName,
+            MediaBase64 = bytes,
+            Status = 0,
+            Type = extension
+        });
+        await _dbContext.SaveChangesAsync();
+
+        _dbContext.TmpMedias.Where(s => s.Status == 0).ToList();
+    }
+
+    public async Task<bool> SaveFileOnAzureFromByteArray(TmpMedia mediaToUpload)
+    {
+        MemoryStream stream = new MemoryStream(mediaToUpload.MediaBase64);
+        await _veesyBlobService.UploadFromStreamBlobAsync(stream,
+            $"{VeesyConstants.BlobMediaSections.OriginalMedia}/{mediaToUpload.FileName}", mediaToUpload.FileName.GetContentType());
+        return true;
     }
 }

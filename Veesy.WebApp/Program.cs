@@ -57,7 +57,7 @@ try
         .AddDefaultTokenProviders();
     
     // Add services to the container.
-    builder.Services.AddControllersWithViews();
+    builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
     
     //Register azure blob storage
     var azureBlobCs = Configuration.GetValue<string>("AzureBlobStorage:ConnectionString");
@@ -98,7 +98,7 @@ try
     
     app.MapControllerRoute(
         name: "default",
-        pattern: "{area=Portfolio}/{controller=Media}/{action=UploadMedia}");
+        pattern: "{area=Auth}/{controller=Auth}/{action=Login}");
 
     using (var scope = app.Services.CreateScope())
     {

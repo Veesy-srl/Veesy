@@ -9,6 +9,7 @@ using Veesy.Presentation.Model.Auth;
 
 namespace Veesy.WebApp.Areas.Auth.Controllers;
 
+[Area("Auth")]
 public class AuthController : Controller
 {
     private readonly AuthHelper _authHelper;
@@ -40,17 +41,21 @@ public class AuthController : Controller
     {
         try
         {
-            MyUser user = await _userManager.FindByEmailAsync(model.Email);
+            var user = await _userManager.FindByEmailAsync(model.Email);
 
             if (user == null)
-                return View(model);
-            if (!_userManager.IsEmailConfirmedAsync(user).Result)
-                return RedirectToAction("VerifyEmail", "Auth", new {Email = model.Email});
+            {
+                user = await _userManager.FindByNameAsync(model.Email);
+                if (user == null)
+                {
+                    return View(model);
+                }
+            }
         
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
             if (result.Succeeded)
             {
-               return RedirectToAction("Index", "Home");
+               return RedirectToAction("Index", "Home", new { area = "Portfolio" });
             }
 
             return View(model);

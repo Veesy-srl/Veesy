@@ -24,7 +24,8 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<UsedSoftware> UsedSoftwares { get; set; }
     public DbSet<PortfolioSector> PortfolioSectors { get; set; }
     public DbSet<SubscriptionPlan> SubscriptionPlans { get; set; }
-    
+    public DbSet<TmpMedia> TmpMedias { get; set; }
+
     #region Required
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

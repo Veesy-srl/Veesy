@@ -33,7 +33,8 @@ public class MediaHelper
             var fileSection = section.AsFileSection();
             if (fileSection != null)
             {
-                totalSizeInBytes += await _mediaHandler.SaveFileAsync(fileSection, filePaths, notUploadedFiles);
+                await _mediaHandler.SaveFileAsByteArrayRecordAsync(fileSection);
+                //totalSizeInBytes += await _mediaHandler.SaveFileAsync(fileSection, filePaths, notUploadedFiles);
                 //await Task.Run(() => _mediaHandler.SaveFileInBackground(fileSection, notUploadedFiles));
                 fileCount++;
                 //Try to compress image. This method will be called at runtime by a function to compress image.

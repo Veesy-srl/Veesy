@@ -8,6 +8,21 @@ html {
   }
 }
 
+.bg-transparent {
+  background-color: transparent !important;
+}
+
+.header-veesy{
+  background-color: transparent !important;
+  height: 60px;
+  z-index: 10;
+  position: relative;
+}
+
+.mt-60-minus{
+  margin-top: -60px;
+}
+
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
@@ -17,6 +32,89 @@ html {
   min-height: 100%;
 }
 
-body {
-  margin-bottom: 60px;
+.bg-grey-veesy{
+  background: #E2E5E7;
+}
+
+/*AUTH AREA*/
+.login-container {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  height: 100vh;
+  width: 100vw;
+}
+
+.mt-check-input{
+  margin-top: 6px;
+}
+
+.vertical-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+input {
+  outline: none;
+  margin: 0;
+  border: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  width: 100%;
+  font-size: 14px;
+  font-family: inherit
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #ccc;
+}
+
+.btn-primary {
+  background-color: #202F4D;
+  border: #202F4D;
+}
+a {
+  color: #85D0DE;
+}
+
+a:hover{
+  color: #85D0DE;
+}
+@media (max-width: 575.98px) {
+  .login-container {
+    grid-template-columns: 100%;
+  }
+  .logo-container {
+    display: none;
+  }
+}
+
+.input--style-1 {
+  padding: 4px 0;
+  background: #E2E5E7;
+}
+
+.input--style-1::-webkit-input-placeholder {
+  color: #555
+}
+
+.input--style-1:-moz-placeholder {
+  color: #555;
+  opacity: 1
+}
+
+.input--style-1::-moz-placeholder {
+  color: #555;
+  opacity: 1
+}
+
+.input--style-1:-ms-input-placeholder {
+  color: #555
+}
+
+.input--style-1:-ms-input-placeholder {
+  color: #555
 }
