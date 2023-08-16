@@ -10,23 +10,48 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3 fixed-top">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Veesy.WebApp</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
+                
+                <h1 class="h3 mb-2 fw-normal">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><b>veesy</b> dashboard</a></h1>
+                   <div>
+                     <button class="user-btn">
+                       <div class="icon-user"></div>
+                       <b>Hi new user!</b>
+                     </button>
+                     <button class="custom-btn" id="menuButton">
+                       <div class="icon"></div>
+                       <b>menu</b>
+                     </button>
+                   </div>
+                        <div class="menu-popup" id="menuPopup">
+                            <button type="button" id="closeButton" class="btn btn-light"  title="Close">
+                                <span class="text-primary h4 mr-2">&times;</span>
+                                Close
+                              </button>
+                            <div class="menu-content">
+                                <div class="menu-list">
+                                    <ul>
+                                        <li><a href="#">Elemento 1</a></li>
+                                        <li><a href="#">Elemento 2</a></li>
+                                        <li><a href="#">Elemento 3</a></li>
+                                    </ul>
+                                </div>
+                                <div class="d-flex" style="height: 200px;">
+                                  <div class="vr"></div>
+                                </div>
+                                <div class="menu-description">
+                                    <p>Benvenuto nel nostro menu pop-up. Scegli tra le opzioni qui sotto:</p>
+                                  </div>
+                            </div>
+                            <div class="menu-footer">
+                                <a href="#">privacy policy</a>
+                                <a href="#" class="cookie">cookie policy</a><br/>
+                                <p href="#" class="copyright">Veesy © 2023 all rights rederved - website by derein & enigma - VAT nr. 4840572639</p>
+                            </div>
+                          </div>
+                
             </div>
         </nav>
     </header>
@@ -47,3 +72,24 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+<script>
+    const menuButton = document.getElementById('menuButton');
+    const menuPopup = document.getElementById('menuPopup');
+    const closeButton = document.getElementById('closeButton');
+
+    menuButton.addEventListener('click', () => {
+      menuPopup.classList.toggle('active');
+    });
+
+    closeButton.addEventListener('click', () => {
+      menuPopup.classList.remove('active');
+    });
+    
+      // Chiudi il popup quando si clicca fuori da esso
+      $(document).on('click', (e) => {
+        if (!menuPopup.contains(e.target) && !menuButton.contains(e.target)) {
+          menuPopup.classList.remove('active');
+        }
+      });
+  </script>
