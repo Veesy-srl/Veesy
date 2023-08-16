@@ -15,10 +15,10 @@
                         <h1 class="h3 mb-3 fw-normal">Are you ready for <br/>New adventures?<br/>Oh Yes!</h1>
                         <div style="height: 50px;"></div>
                         <div class="input-group">
-                            <input asp-for="Email" class="input--style-1" type="text"placeholder="Username or E-mail" asp->
+                            <input asp-for="Email" class="input--style-1" type="text"placeholder="Username or E-mail">
                         </div>
                         <div class="input-group">
-                            <input asp-for="Password" class="input--style-1" type="text" placeholder="Password">
+                            <input asp-for="Password" class="input--style-1" type="password" placeholder="Password">
                         </div>
 
                         <div class="form-check text-start">
@@ -30,9 +30,9 @@
                             <a href="#">Forgot password?</a>
                         </p>
                         
-                        <button class="w-50 rounded-pill btn btn-lg btn-primary mt-4" type="button">Log in</button>
+                        <button class="w-50 rounded-pill btn btn-lg btn-primary mt-4" type="submit">Log in</button>
                         <p class="mt-5 mb-3 text-muted">Don't have an account?
-                            <a href="#">Sign up</a>
+                            <a asp-action="SignUp" asp-area="Auth" asp-controller="Auth">Sign up</a>
                         </p>
                     </form>
                 </div>

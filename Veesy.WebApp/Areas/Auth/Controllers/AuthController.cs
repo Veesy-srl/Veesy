@@ -75,6 +75,30 @@ public class AuthController : Controller
         return View();
     }
     
+    [HttpPost]
+    public async Task<IActionResult> SignUp(SignUpViewModel model)
+    {
+        try
+        {
+            var result = await _authHelper.RegisterNewMember(model);
+            if (result.Success)
+            {
+                var signin = await _signInManager.PasswordSignInAsync(model.Username, model.Password, false, false);
+                if(signin.Succeeded)
+                    return RedirectToAction("Index", "Home", new { area = "Portfolio" });
+                return RedirectToAction("Login");
+            }
+
+            //TODO: Notify
+            return View(model);
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            return View(model);
+        }
+    }
+    
     [HttpGet]
     public IActionResult ForgotPassword()
     {

@@ -10,6 +10,7 @@
       <ProjectReference Include="..\Veesy.Domain\Veesy.Domain.csproj" />
       <ProjectReference Include="..\Veesy.Email\Veesy.Email.csproj" />
       <ProjectReference Include="..\Veesy.Media\Veesy.Media.csproj" />
+      <ProjectReference Include="..\Veesy.Validators\Veesy.Validators.csproj" />
     </ItemGroup>
 
     <ItemGroup>

@@ -61,7 +61,6 @@ input {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
-  width: 100%;
   font-size: 14px;
   font-family: inherit
 }
@@ -93,6 +92,7 @@ a:hover{
 }
 
 .input--style-1 {
+  width: 100%;
   padding: 4px 0;
   background: #E2E5E7;
 }

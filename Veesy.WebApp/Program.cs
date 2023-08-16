@@ -9,6 +9,7 @@ using Veesy.Email;
 using Veesy.Media.Utils;
 using Veesy.Presentation.Helper;
 using Veesy.Service.Implementation;
+using Veesy.Validators;
 
 var logger = LogManager.Setup()
     .LoadConfigurationFromFile("NLog.config")
@@ -71,6 +72,10 @@ try
     
     /*Utils Dependency Injection*/
     builder.Services.AddScoped<IEmailSender, EmailSender>();
+    
+    
+    /*Validator Dependency Injection*/
+    builder.Services.AddTransient<MyUserValidator>();
     
     /*Helper Dependency Injection*/
     builder.Services.AddTransient<AuthHelper>();

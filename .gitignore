@@ -16,3 +16,5 @@
 /Veesy.Utilities/obj/*
 /.vs/*
 /Veesy.sln.DotSettings.user
+/Veesy.Validators/obj/*
+/Veesy.Validators/bin/*

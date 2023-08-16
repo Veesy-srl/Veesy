@@ -6,6 +6,8 @@ public class MyUser : IdentityUser
 {
     public Guid? SubscriptionPlanId { get; set; }
     public SubscriptionPlan SubscriptionPlan { get; set; }
+    public string Name { get; set; }
+    public string Surname { get; set; }
     public bool VeesyPage { get; set; }
     public int Status { get; set; }
     public DateTime CreateDate { get; set; }
