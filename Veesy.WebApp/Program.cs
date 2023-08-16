@@ -1,3 +1,5 @@
+using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification.Extensions;
 using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -60,6 +62,14 @@ try
     // Add services to the container.
     builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
     
+    builder.Services.AddNotyf(config =>
+    {
+        config.DurationInSeconds = 10; 
+        config.IsDismissable = true;
+        config.Position = NotyfPosition.TopCenter;
+    });
+
+    
     //Register azure blob storage
     var azureBlobCs = Configuration.GetValue<string>("AzureBlobStorage:ConnectionString");
 
@@ -100,6 +110,7 @@ try
     app.UseAuthorization();
     app.UseRouting();
     app.UseAuthorization();
+    app.UseNotyf();
     
     app.MapControllerRoute(
         name: "default",
