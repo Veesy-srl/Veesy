@@ -1,4 +1,5 @@
 using System.Web;
+using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
@@ -13,6 +14,7 @@ namespace Veesy.WebApp.Areas.Auth.Controllers;
 public class AuthController : Controller
 {
     private readonly AuthHelper _authHelper;
+    private readonly INotyfService _notyfService;
     private readonly SignInManager<MyUser> _signInManager;
     private readonly UserManager<MyUser> _userManager;
     private readonly IConfiguration _config;
@@ -21,13 +23,14 @@ public class AuthController : Controller
     
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     
-    public AuthController(AuthHelper authHelper, SignInManager<MyUser> signInManager, UserManager<MyUser> userManager, IConfiguration config, IEmailSender emailSender)
+    public AuthController(AuthHelper authHelper, SignInManager<MyUser> signInManager, UserManager<MyUser> userManager, IConfiguration config, IEmailSender emailSender, INotyfService notyfService)
     {
         _authHelper = authHelper;
         _signInManager = signInManager;
         _userManager = userManager;
         _config = config;
         _emailSender = emailSender;
+        _notyfService = notyfService;
     }
 
     [HttpGet]
@@ -89,7 +92,7 @@ public class AuthController : Controller
                 return RedirectToAction("Login");
             }
 
-            //TODO: Notify
+            _notyfService.Custom("errore", 10, "#ca0a0a96");
             return View(model);
         }
         catch (Exception ex)

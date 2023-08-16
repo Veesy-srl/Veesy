@@ -41,14 +41,6 @@ public class AuthHelper
 
     public async Task<ResultDto> RegisterNewMember(SignUpViewModel model)
     {
-        var adm = await _userManager.FindByEmailAsync(model.Email);
-        if (adm != null) 
-            return new ResultDto(false, "The e-mail entered has already been used.");
-        
-        adm = await _userManager.FindByNameAsync(model.Username);
-        if (adm != null) 
-            return new ResultDto(false, "The username entered has already been used.");
-        
         var newUser = new MyUser()
         {
             Email = model.Email,
@@ -59,6 +51,14 @@ public class AuthHelper
         var validate = await _myUserValidator.UserValidator(newUser);
         if (!validate.Success) 
             return validate;
+        
+        var adm = await _userManager.FindByEmailAsync(model.Email);
+        if (adm != null) 
+            return new ResultDto(false, "The e-mail entered has already been used.");
+        
+        adm = await _userManager.FindByNameAsync(model.Username);
+        if (adm != null) 
+            return new ResultDto(false, "The username entered has already been used.");
         
         IdentityResult result = await _userManager.CreateAsync(newUser, model.Password);
         if (!result.Succeeded) 
