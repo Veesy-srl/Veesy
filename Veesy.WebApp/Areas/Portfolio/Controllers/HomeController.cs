@@ -5,6 +5,7 @@ namespace Veesy.WebApp.Areas.Portfolio.Controllers
     [Area("Portfolio")]
     public class HomeController : Controller
     {
+        [HttpGet("dashboard")]
         public IActionResult Index()
         {
             return View();

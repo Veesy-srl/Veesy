@@ -2,7 +2,133 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row pt-7rem ps-5 pe-5">
+    <div class="col-sm-12 col-md-4">
+        <h3>Hello Daria,<br/>welcome to your dashboard...</h3>
+        <div class="empty-veesy"></div>
+        <div class="empty-veesy"></div>
+        <p class="mb-0">Do you need some help?</p>
+        <a class="grey-link">Contact us</a>
+    </div>
+    <div class="col-sm-12 col-md-8">
+        <div class="row">
+            <div style="border:0 !important; border-radius: 10px 0 0 10px !important;" class="card col-md-3 col-sm-12 p-0">
+                <div class="bg-white card-header" style="border-radius: 10px 0 0 0 !important">
+                    <p class="mb-0">
+                        <strong>OVERVIEW</strong>
+                    </p>
+                </div>
+                <div class="card-body">
+                    <p>Your profile is <strong>85%</strong> complete.</p>
+                    <div style="left: 0;" id="chart">
+                    </div>
+                    <a class="pos-bottom grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit profile</strong></a>
+                </div>
+            </div>
+            <div style="border:0 !important; border-radius: 0 0 0 0 !important;" class="card col-md-3 col-sm-12 p-0">
+                <div class="bg-white card-header">
+                    <h5 class="text-white mb-0">
+                        _
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Files uploaded</strong> on your cloud:</p>
+                    <h1>26/100</h1>
+                    <a class="pos-bottom grey-link"><strong>your cloud <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a>  
+                </div>
+            </div>
+            <div style="border:0 !important; border-radius: 0 0 0 0 !important;" class="card col-md-3 col-sm-12 p-0">
+                <div class="bg-white card-header">
+                    <h5 class="text-white mb-0">
+                        _
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Portfolios</strong> created from your media:</p>
+                    <h1>02</h1>
+                    <a class="pos-bottom grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit portfolios</strong></a>
+                </div>
+            </div>
+            <div style="border:0 !important; border-radius: 0 10px 10px 0 !important" class="card col-md-3 col-sm-12 p-0">
+                <div class="bg-ciano-veesy card-header text-end" style="border-radius: 0 10px 0 0 !important">
+                    <i class="fa-solid fa-circle fa-2xs" style="color: #202F4D;"></i>
+                </div>
+                <div class="card-body bg-ciano-veesy" style="border-radius: 0 0 10px 0 !important">
+                    <p>Your plan</p>
+                    <h2 class="text-white">Basic</h2>
+                    <p class="mb-0 mt-4 text-white"><strong>0€ /month</strong></p>
+                    <p class="text-white">max. 10 media</p>
+                    <div class="text-center">
+                        <button class="rounded-pill btn btn-primary" type="submit">view plans & upgrade</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<div class="row p-5">
+    <div style="height: 400px; background-color: black" class="col-sm-12 col-md-4"></div>
+    <div style="height: 400px; background-color: green" class="col-sm-12 col-md-4"></div>
+    <div style="height: 400px; background-color: white" class="col-sm-12 col-md-4"></div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script>
+    
+        var options = {        
+          chart: {
+            height: 200,
+            type: "radialBar",
+          },
+          series: [67],
+          colors: ["#27415E"],
+          plotOptions: {
+            radialBar: {
+              dataLabels: {
+                total: {
+                  show: false,
+                },
+                value:{
+                  show: false
+                }
+              },
+              startAngle: -180,
+              endAngle: 180,
+              hollow: {
+                margin: 0,
+                size: "40%",
+                background: "#ffffff"
+              },
+              track: {
+                dropShadow: {
+                  enabled: true,
+                  top: 2,
+                  left: 0,
+                  blur: 4,
+                  opacity: 0.15
+                }
+              }
+            }
+          },
+          fill: {
+            type: "gradient",
+            gradient: {
+              shade: "dark",
+              type: "vertical",
+              gradientToColors: ["#75CCDD"],
+              stops: [0, 100]
+            }
+          },
+          stroke: {
+            lineCap: "round"
+          },
+          labels: [""]
+        };
+        
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        
+        chart.render();
+
+    </script>
+}

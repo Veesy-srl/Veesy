@@ -84,6 +84,16 @@ input {
   color: #85D0DE;
   text-decoration: none;
 }
+
+.pos-bottom{
+  position: absolute;
+  bottom: 10px;
+}
+
+.bg-ciano-veesy{
+  background: #75CCDD;
+}
+
 @media (max-width: 575.98px) {
   .login-container {
     grid-template-columns: 100%;
