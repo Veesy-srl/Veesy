@@ -148,6 +148,22 @@ input {
   cursor: pointer;
 }
 
+.color-red{
+  color: #E45B5A;
+}
+
+.red-link{
+  color: #E45B5A;
+  text-decoration: none !important;
+  cursor: pointer;
+}
+
+.red-link:hover{
+  color: #832c2b;
+  text-decoration: none !important;
+  cursor: pointer;
+}
+
 .box {
   position: relative;
   width: 80%;
@@ -194,9 +210,35 @@ input {
   margin-bottom: 1rem;
 }
 
+.empty-veesy{
+  height: 30px;
+}
+
 .card-blue-veesy{
   background-color: #202F4D;
   border-radius: 10px;
+}
+
+.card-white-veesy{
+  background-color: #F0F2F3;
+  border-radius: 10px;
+  -moz-box-shadow: 0 0 5px #333333;
+  -webkit-box-shadow:0 0 5px #333333;
+  box-shadow: 0 0 5px #333333;
+}
+
+.card-white-dashed-veesy{
+  background-color: #F0F2F3;
+  border-radius: 10px;
+  border: 2px dashed #AAB0BB;
+}
+
+.button-white-dashed-veesy{
+  margin: 5px;
+  width: 50px;
+  background-color: #F0F2F3;
+  border-radius: 25px;
+  border: 2px dashed #AAB0BB;
 }
 
 .navbar{
@@ -336,4 +378,8 @@ a:hover{
 
 .w-125{
   width: 125% !important;
+}
+
+.img-thumbnail{
+  padding: 0 !important;
 }
