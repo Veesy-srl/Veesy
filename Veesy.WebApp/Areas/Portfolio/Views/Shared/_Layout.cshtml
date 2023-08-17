@@ -15,42 +15,58 @@
                 
                 <h1 class="h3 mb-2 fw-normal">
                     <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><b>veesy</b> dashboard</a></h1>
-                   <div>
-                     <button class="user-btn">
-                       <div class="icon-user"></div>
-                       <b>Hi new user!</b>
-                     </button>
-                     <button class="custom-btn" id="menuButton">
-                       <div class="icon"></div>
-                       <b>menu</b>
-                     </button>
-                   </div>
-                        <div class="menu-popup" id="menuPopup">
-                            <button type="button" id="closeButton" class="btn btn-light float-end"  title="Close">
-                                <span class="text-primary h4 mr-2">&times;</span>
-                                close
-                              </button>
-                            <div class="menu-content">
-                                <div class="menu-list">
-                                    <ul>
-                                        <li><a href="#">Elemento 1</a></li>
-                                        <li><a href="#">Elemento 2</a></li>
-                                        <li><a href="#">Elemento 3</a></li>
-                                    </ul>
-                                </div>
-                                <div class="d-flex" style="height: 200px;">
-                                  <div class="vr"></div>
-                                </div>
-                                <div class="menu-description">
-                                    <p>Benvenuto nel nostro menu pop-up. Scegli tra le opzioni qui sotto:</p>
-                                  </div>
-                            </div>
-                            <div class="menu-footer">
-                                <a href="#">privacy policy</a>
-                                <a href="#" class="cookie">cookie policy</a><br/>
-                                <p href="#" class="copyright">Veesy © 2023 all rights rederved - website by <a href="https://www.derein.net/">derein</a> & <a href="https://www.enigma-tech.it/">enigma</a> - VAT nr. 4840572639</p>
-                            </div>
-                          </div>
+                <div class="float-end">
+                        <button class="btn btn-light border fw-bolder shadow-none">
+                        <i class="fas fa-circle fa-lg text-primary mr-2" id="icon-color"></i>
+                        <span id="color-text">Hi new user!</span>
+                        </button>
+                        <button class="btn btn-light border fw-bolder shadow-none" id="menuButton">
+                            <i class="fas fa-circle fa-2xs text-primary mr-2" id="icon-color"></i>
+                            <span id="color-text">menu</span>
+                        </button>
+                    </div>
+                <div class="menu-popup" id="menuPopup">
+                    <div class="float-end">
+                        <button class="btn btn-light border fw-bolder shadow-none">
+                            <i class="fas fa-user fa-xs text-primary mr-2" id="icon-color"></i>
+                            <span id="color-text">account</span>
+                        </button>
+                        <button class="btn btn-light border fw-bolder shadow-none" id="closeButton">
+                            <i class="fas fa-times-circle fa-xs text-primary mr-2 " id="icon-color"></i>
+                            <span id="color-text">close</span>
+                        </button>
+                    </div>
+                    <div class="container center-content">
+                        <div class="menu-list">
+                            <ul class="list-unstyled">
+                                <li><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description1">Gallery</a></li>
+                                <li><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description2">Creators</a></li>
+                                <li><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description3">About</a></li>
+                                <li><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description4">Companies</a></li>
+                                <li><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description5">Account</a></li>
+                                <li><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description6">Contact</a></li>
+                            </ul>
+                        </div>
+                        <div class="d-flex" style="height: 250px;">
+                            <div class="vr custom-vr"></div>
+                        </div>
+                        <div class="description-container">
+                            <div id="description1" class="description-content" >Lorem Ipsum is simply dummy text of the printing and typesetting industry.</div>
+                            <div id="description2" class="description-content" >unknown printer took a galley of type and scrambled it to make a type speci</div>
+                            <div id="description3" class="description-content" >essentially unchanged. It was popularised in the 1960s with the release of Letraset shee</div>
+                            <div id="description4" class="description-content" >Neque porro quisquam est qui dolorem ipsum quia dolor sit amet,</div>
+                            <div id="description5" class="description-content" >unknown printer took a galley of type and scrambled</div>
+                            <div id="description6" class="description-content" >Lorem Ipsum is simply dummy text of the printing</div>
+                        </div>
+                    </div>
+
+
+                    <div class="menu-footer">
+                        <a href="#" id="color-text">privacy policy</a>
+                        <a href="#" class="cookie" id="color-text">cookie policy</a><br/>
+                        <p href="#" class="copyright" id="color-text">Veesy © 2023 all rights rederved - website by <a href="https://www.derein.net/">derein</a> & <a href="https://www.enigma-tech.it/">enigma</a> - VAT nr. 4840572639</p>
+                    </div>
+                </div>
                 
             </div>
         </nav>
@@ -91,4 +107,12 @@
           menuPopup.classList.remove('active');
         }
       });
+      
+        $(document).ready(function() {
+               $(".menu-list a").mouseenter(function() {
+                   var target = $(this).data('target');
+                   $(".description-content").hide();
+                   $(target).show();
+               });
+           });
   </script>

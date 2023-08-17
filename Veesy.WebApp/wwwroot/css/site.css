@@ -250,59 +250,8 @@ input {
   font-weight: bold;
 }
 
-.custom-btn {
-  display: inline-flex;
-  align-items: center;
-  border: none;
-  background-color: white;
-  color: black;
-  font-size: 16px;
-  border-radius: 5px;
-  cursor: pointer;
-  height: 50px;
-  padding: 0px 10px;
-  position: relative;
-  padding-left: 30px; /* Aggiunto per dare spazio all'icona */
-}
-
-.user-btn {
-  display: inline-flex;
-  align-items: center;
-  border: none;
-  background-color: white;
-  color: black;
-  font-size: 16px;
-  border-radius: 5px;
-  cursor: pointer;
-  height: 50px;
-  padding-right: 10px;
-  position: relative;
-  padding-left: 40px;
-  margin-right: 5px;/* Aggiunto per dare spazio all'icona */
-}
-
-.icon-user {
-  width: 22px;
-  position: absolute;
-  height: 22px;
-  left: 10px;
-  top: 50%;
-  margin-top: 1px;
-  background-color: #75CCDD;
-  border-radius: 50%;
-  transform: translateY(-50%);
-}
-
-.icon {
-  width: 12px;
-  position: absolute;
-  height: 12px;
-  left: 10px;
-  top: 50%;
-  margin-top: 1px;
-  background-color: #75CCDD;
-  border-radius: 50%;
-  transform: translateY(-50%);
+.custom-vr{
+  width: 2.5px;
 }
 
 .menu-popup {
@@ -314,7 +263,7 @@ input {
   background-color: #e2e5e7;
   border: 1px solid #ccc;
   padding: 10px;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.7);
   border-radius: 30px 0px 0px 30px;
   transition: right 0.3s ease;
 }
@@ -327,34 +276,15 @@ input {
   display: flex;
 }
 
-.menu-description {
-  flex: 1;
-  padding-right: 10px;
-}
-
-.menu-list {
-  flex: 2;
-  padding-left: 10px;
-}
-
 .menu-footer {
   position: absolute;
   bottom: 0;
   padding: 10px 20px;
 }
 
-.menu-list ul {
-  list-style: none;
-  padding: 0;
-}
-
 .cookie{
   left: 10%;
   position: relative;
-}
-
-.menu-list ul li {
-  margin-bottom: 10px;
 }
 
 a{
@@ -382,4 +312,48 @@ a:hover{
 
 .img-thumbnail{
   padding: 0 !important;
+}
+
+#icon-color{
+  color: #75CCDD !important;
+}
+
+.center-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+.menu-list {
+  margin-right: 20px;
+}
+.description-container {
+  width: 30%;
+  height: 43%;
+  padding: 10px;
+  font-size: 12px;
+}
+.description-content {
+  display: none;
+  color: #0D2045;
+}
+
+@media only screen and (max-width: 600px) {
+  .menu-popup{
+    right: -90% !important;
+    width: 90% !important;
+  }
+}
+
+.menu-element:hover {
+  background-color: white !important;
+  border-radius: 5px;
+}
+
+.menu-element{
+  font-size: 18px;
+}
+
+#color-text{
+  color: #0D2045;
 }
