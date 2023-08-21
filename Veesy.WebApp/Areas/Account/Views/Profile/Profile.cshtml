@@ -136,12 +136,26 @@
         <div>
             <h4>Softwares</h4>
             <p>Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,</p>
-            <div class="d-flex">
-                <button class="button-white-dashed-veesy">+</button>
-                <button class="button-white-dashed-veesy">+</button>
-                <button class="button-white-dashed-veesy">+</button>
-            </div>
-            <div class="mt-2"><a class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add softwares</strong></a></div>
+            @if (Model.UsedSoftwares.Count(s => s.Selected) > 0)
+            {
+                <div class="d-flex mb-4">
+                @foreach (var item in Model.UsedSoftwares.Where(s => s.Selected))
+                {
+                        <div class="pe-3 ps-3 div-white-rounded-veesy">@item.Name</div>
+                }
+                </div>
+                <a onclick="openModal('#modalSoftware')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
+
+            }
+            else
+            {
+                <div class="d-flex">
+                    <button class="button-white-dashed-veesy">+</button>
+                    <button class="button-white-dashed-veesy">+</button>
+                    <button class="button-white-dashed-veesy">+</button>
+                </div>
+                <div class="mt-2"><a onclick="openModal('#modalSoftware')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add softwares</strong></a></div>
+            }
         </div>
         <div class="empty-veesy"></div>
         <div>
@@ -203,6 +217,39 @@
     </div>
 </div>
 
+<div class="modal fade" id="modalSoftware" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Softwares</h5>
+                <a onclick="closeModal('#modalSoftware')"><i class="fa-solid fa-circle-xmark"></i></a>
+            </div>
+            <div class="modal-body">
+                <p>select a maximum of 10 software that you can check</p>
+                <div class="overflow-auto p-3 border-div-grey" style="background-color: white !important; max-height: 400px;">
+                    @foreach (var item in Model.UsedSoftwares)
+                    {
+                        <div class="form-check">
+                            <label class="form-check-label" style="cursor: pointer;" for="flexCheckDefault-@item.Code">
+                                <strong>@item.Name</strong>
+                            </label>
+                            @{ var check = @item.Selected ? "checked" : ""; }
+                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="flexCheckDefault-@item.Code" style="float: right !important;">
+                        </div>
+                        <hr class="hr"/>
+                    }
+                </div>
+                <p class="mt-4"><strong>Didn't find it?</strong> <a class="a-ciano">Contact us</a></p>
+                <p class="mb-0"><strong>0 / 10 selected</strong></p>
+            </div>
+            <div class="modal-footer">                
+                <a onclick="UpdateUsedSoftware()" class="rounded-pill btn btn-primary" type="submit">save</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script>
 
 //ADD EDIT BIOGRAPHY
@@ -226,7 +273,34 @@ function UpdateBiography(){
             $('#load-spinner').css("display", "none");
         }
     })
-    $('#load-spinner').css("display", "none");
+}
+
+function UpdateUsedSoftware(){
+    $('#load-spinner').css("display", "block");
+    var codes = JSON.parse('@Html.Raw(Json.Serialize(Model.UsedSoftwares.Select(s => s.Code.ToString()).ToList()))');
+    
+    var data = [];
+    
+    for (const code in codes) {
+        if(document.getElementById("flexCheckDefault-"+codes[code]).checked)
+            data.push(codes[code])
+    }
+    $.ajax({
+        type: 'POST',
+        url: '/Account/Profile/UpdateUsedSoftware',
+        data: JSON.stringify(data),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function (response) {
+            if(response.result){
+                location.reload()
+            }
+            $('#load-spinner').css("display", "none");
+        },
+        error: function (response) {
+            $('#load-spinner').css("display", "none");
+        }
+    })
 }
 
 function UpdatePortfolioIntro(){
@@ -249,6 +323,5 @@ function UpdatePortfolioIntro(){
             $('#load-spinner').css("display", "none");
         }
     })
-    $('#load-spinner').css("display", "none");
 }
 </script>

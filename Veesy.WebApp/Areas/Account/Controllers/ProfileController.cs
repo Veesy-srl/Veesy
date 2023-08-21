@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using NLog;
 using Veesy.Domain.Models;
 using Veesy.Presentation.Helper;
+using Veesy.Service.Dtos;
 using Veesy.WebApp.Areas.Auth.Controllers;
 
 namespace Veesy.WebApp.Areas.Account.Controllers;
@@ -38,6 +39,8 @@ public class ProfileController : VeesyController
     {
         return View();
     }
+
+    #region API
     
     [HttpPost]
     public async Task<JsonResult> UpdateBiography([FromBody] string biography)
@@ -68,4 +71,21 @@ public class ProfileController : VeesyController
             return Json(new { Result = false, Message = "Error saving portfolio intro. Please retry." });
         }
     }
+    
+    [HttpPost]
+    public async Task<JsonResult> UpdateUsedSoftware([FromBody] List<Guid> usedSoftwareCodes)
+    {
+        try
+        {
+            var result = await _profileHelper.UpdateUsedSoftware(usedSoftwareCodes, UserInfo);
+            return Json(new { Result = result.Success, Message = result.Message});
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            return Json(new { Result = false, Message = "Error updating softwares. Please retry." });
+        }
+    }
+    
+    #endregion
 }

@@ -9,4 +9,5 @@ public interface IRepositoryBase<T>
     Task<T> Create(T entity);
     T Update(T entity);
     T Delete(T entity);
+    void DeleteRange(List<T> entities);
 }

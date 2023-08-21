@@ -35,4 +35,9 @@ public class RepositoryBase<T> : IRepositoryBase<T> where T : class
         this._applicationDbContext.Set<T>().Remove(entity);
         return entity;
     }
+
+    public void DeleteRange(List<T> entities)
+    {
+        this._applicationDbContext.Set<T>().RemoveRange(entities);
+    }
 }

@@ -15,6 +15,7 @@ public static class RegisterDependencyInjection
     {
         /*Rpository Dependency Injection*/
         serviceCollection.AddScoped<IMyUserRepository, MyUserRepository>();
+        serviceCollection.AddScoped<IUsedSoftwareRepository, UsedSoftwareRepository>();
         serviceCollection.AddScoped<IVeesyUoW, VeesyUoW>();
         
         /*Service dependency Injection*/

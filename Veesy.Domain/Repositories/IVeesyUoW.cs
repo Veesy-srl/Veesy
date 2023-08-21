@@ -11,4 +11,5 @@ public interface IVeesyUoW
     Task RollbackAsync();
     public ApplicationDbContext DbContext { get; }
     IMyUserRepository MyUserRepository { get; }
+    IUsedSoftwareRepository UsedSoftwareRepository { get; }
 }

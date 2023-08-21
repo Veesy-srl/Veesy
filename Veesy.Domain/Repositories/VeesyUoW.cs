@@ -23,6 +23,10 @@ public class VeesyUoW : IVeesyUoW
     private IMyUserRepository _myUserRepository;
     public IMyUserRepository MyUserRepository => _myUserRepository ??= new MyUserRepository(_dbContext);
     
+    private IUsedSoftwareRepository _usedSoftwareRepository;
+    
+    public IUsedSoftwareRepository UsedSoftwareRepository => _usedSoftwareRepository ??= new UsedSoftwareRepository(_dbContext);
+    
     
     public void Dispose()
     {
