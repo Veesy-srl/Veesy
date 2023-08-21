@@ -12,6 +12,7 @@ using Veesy.Media.Utils;
 using Veesy.Presentation.Helper;
 using Veesy.Service.Implementation;
 using Veesy.Validators;
+using Veesy.WebApp;
 
 var logger = LogManager.Setup()
     .LoadConfigurationFromFile("NLog.config")
@@ -78,21 +79,7 @@ try
         new VeesyBlobService(new BlobServiceClient(azureBlobCs), 
             Configuration.GetValue<string>("AzureBlobStorage:VeesyContainerName")));
     
-    /*Service dependency Injection*/
-    
-    /*Utils Dependency Injection*/
-    builder.Services.AddScoped<IEmailSender, EmailSender>();
-    
-    
-    /*Validator Dependency Injection*/
-    builder.Services.AddTransient<MyUserValidator>();
-    
-    /*Helper Dependency Injection*/
-    builder.Services.AddTransient<AuthHelper>();
-    builder.Services.AddTransient<MediaHelper>();
-
-    /*Media Utils Dependency Injection*/
-    builder.Services.AddTransient<MediaHandler>();
+    builder.Services.RegisterVeesyServices();
     
     var app = builder.Build();
 

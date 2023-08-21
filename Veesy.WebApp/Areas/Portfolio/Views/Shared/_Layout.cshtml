@@ -117,4 +117,15 @@
                    $(target).show();
                });
            });
+        
+        function openModal(id){
+            $(id).modal('show');
+        }
+        function closeModal(id){
+            $(id).modal('hide');
+        }
+        
+        function setTextAreaValue(textAreaId, valueToSet){
+            document.getElementById(textAreaId).value = valueToSet; 
+        }
   </script>

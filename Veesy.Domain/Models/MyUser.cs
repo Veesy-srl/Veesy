@@ -12,8 +12,13 @@ public class MyUser : IdentityUser
     public int Status { get; set; }
     public DateTime CreateDate { get; set; }
     public bool SignVeesyContract { get; set; }
+    public string LanguageSpoken { get; set; }
+    public string ExternalLink { get; set; }
+    public string PortfolioIntro { get; set; }
+    public string Biografy { get; set; }
     public virtual List<MyUserSector> MyUserSectors { get; set; }
     public virtual List<MyUserUsedSoftware> MyUserUsedSoftwares { get; set; }
+    public virtual List<MyUserSkill> MyUserSkills { get; set; }
     public virtual List<Media> Medias { get; set; }
     public virtual List<Portfolio> Portfolios { get; set; }
 }
