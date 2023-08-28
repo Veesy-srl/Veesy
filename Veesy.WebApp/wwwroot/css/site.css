@@ -339,10 +339,10 @@ a:hover{
 }
 
 @media only screen and (max-width: 600px) {
-  .menu-popup{
-    right: -90% !important;
-    width: 90% !important;
+  .menu-popup.active{
+    width: 95% !important;
   }
+
 }
 
 .menu-element:hover {

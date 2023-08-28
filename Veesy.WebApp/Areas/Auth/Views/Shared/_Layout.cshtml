@@ -4,29 +4,133 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Veesy.WebApp</title>
+    
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Veesy.WebApp.styles.css" asp-append-version="true" />
 </head>
 <body>
    <header>
-        <div class="pt-3 header-veesy container-fluid p-2">
-            <img class="h-100" src="~/imgs/Logo-Veesy-Bianco.png"/>
-        </div>
-    </header>
+           <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-transparent box-shadow mb-3 fixed-top">
+               <div class="container-fluid">
+                   
+                   <h1 class="h3 mb-2 fw-normal">
+                       <div class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><b class="text-white">veesy</b>
+                           <h5 id="loginLink">Login</h5>
+                           <h5 id="signupLink">Signup</h5>
+                           </div> 
+                   </h1>
+                   <div class="float-end">
+                           <button class="btn btn-light border fw-bolder shadow-none">
+                           <i class="fas fa-circle fa-lg text-primary mr-2" id="icon-color"></i>
+                           <span id="color-text">account</span>
+                           </button>
+                           <button class="btn btn-light border fw-bolder shadow-none" id="menuButton">
+                               <i class="fas fa-circle fa-2xs text-primary mr-2" id="icon-color"></i>
+                               <span id="color-text">menu</span>
+                           </button>
+                       </div>
+                   <div class="menu-popup" id="menuPopup">
+                       <div class="float-end">
+                           <button class="btn btn-light border fw-bolder shadow-none">
+                               <i class="fas fa-user fa-xs text-primary mr-2" id="icon-color"></i>
+                               <span id="color-text">account</span>
+                           </button>
+                           <button class="btn btn-light border fw-bolder shadow-none" id="closeButton">
+                               <i class="fas fa-times-circle fa-xs text-primary mr-2 " id="icon-color"></i>
+                               <span id="color-text">close</span>
+                           </button>
+                       </div>
+                       <div class="container center-content">
+                           <div class="menu-list">
+                               <ul class="list-unstyled">
+                                   <li><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description1">Gallery</a></li>
+                                   <li><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description2">Creators</a></li>
+                                   <li><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description3">About</a></li>
+                                   <li><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description4">Companies</a></li>
+                                   <li><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description5">Account</a></li>
+                                   <li><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description6">Contact</a></li>
+                               </ul>
+                           </div>
+                           <div class="d-flex" style="height: 250px;">
+                               <div class="vr custom-vr"></div>
+                           </div>
+                           <div class="description-container">
+                               <div id="description1" class="description-content" >Lorem Ipsum is simply dummy text of the printing and typesetting industry.</div>
+                               <div id="description2" class="description-content" >unknown printer took a galley of type and scrambled it to make a type speci</div>
+                               <div id="description3" class="description-content" >essentially unchanged. It was popularised in the 1960s with the release of Letraset shee</div>
+                               <div id="description4" class="description-content" >Neque porro quisquam est qui dolorem ipsum quia dolor sit amet,</div>
+                               <div id="description5" class="description-content" >unknown printer took a galley of type and scrambled</div>
+                               <div id="description6" class="description-content" >Lorem Ipsum is simply dummy text of the printing</div>
+                           </div>
+                       </div>
+   
+   
+                       <div class="menu-footer">
+                           <a href="#" id="color-text">privacy policy</a>
+                           <a href="#" class="cookie" id="color-text">cookie policy</a><br/>
+                           <p href="#" class="copyright" id="color-text">Veesy © 2023 all rights rederved - website by <a href="https://www.derein.net/">derein</a> & <a href="https://www.enigma-tech.it/">enigma</a> - VAT nr. 4840572639</p>
+                       </div>
+                   </div>
+                   
+               </div>
+           </nav>
+       </header>
     <div>
         @RenderBody()
     </div>
-
-    @*<footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - Veesy.WebApp - <a>Privacy</a>
-        </div>
-    </footer>*@
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await Component.InvokeAsync("Notyf")
-    @await RenderSectionAsync("Scripts", required: false)
+<footer class="border-top footer text-muted">
+    <div class="container-fluid">
+        <h6>darial0v3</h6>
+    </div>
+</footer>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/e08a602379.js" crossorigin="anonymous"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+<script>
+    const menuButton = document.getElementById('menuButton');
+    const menuPopup = document.getElementById('menuPopup');
+    const closeButton = document.getElementById('closeButton');
+
+    menuButton.addEventListener('click', () => {
+      menuPopup.classList.toggle('active');
+    });
+
+    closeButton.addEventListener('click', () => {
+      menuPopup.classList.remove('active');
+    });
+    
+      // Chiudi il popup quando si clicca fuori da esso
+      $(document).on('click', (e) => {
+        if (!menuPopup.contains(e.target) && !menuButton.contains(e.target)) {
+          menuPopup.classList.remove('active');
+        }
+      });
+      
+        $(document).ready(function() {
+               $(".menu-list a").mouseenter(function() {
+                   var target = $(this).data('target');
+                   $(".description-content").hide();
+                   $(target).show();
+               });
+           });
+        
+        document.addEventListener("DOMContentLoaded", function() {
+            var url = window.location.href;
+            var signupLink = document.getElementById("signupLink");
+            var loginLink = document.getElementById("loginLink");
+        
+            if (url.includes("SignUp")) {
+                signupLink.style.display = "block";
+                loginLink.style.display = "none";
+            } else {
+                signupLink.style.display = "none";
+                loginLink.style.display = "block";
+            }
+        });
+  </script>
