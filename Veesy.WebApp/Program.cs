@@ -3,6 +3,7 @@ using AspNetCoreHero.ToastNotification.Extensions;
 using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using NLog;
 using NLog.Web;
 using Veesy.Domain.Data;
@@ -79,9 +80,20 @@ try
         new VeesyBlobService(new BlobServiceClient(azureBlobCs), 
             Configuration.GetValue<string>("AzureBlobStorage:VeesyContainerName")));
     
+    builder.Services.AddSwaggerGen(c =>
+    {
+        c.SwaggerDoc("v2", new OpenApiInfo { Title = "Veesy Web API", Version = "v1.0.0" });
+    });
+    
     builder.Services.RegisterVeesyServices();
     
     var app = builder.Build();
+    
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v2/swagger.json", "Veesy Web API");
+    });
 
     // Configure the HTTP request pipeline.
     if (!app.Environment.IsDevelopment())

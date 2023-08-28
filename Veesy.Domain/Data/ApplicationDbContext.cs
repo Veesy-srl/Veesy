@@ -18,6 +18,8 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<MediaTag> MediaTags { get; set; }
     public DbSet<MyUserSector> MyUserSectors { get; set; }
     public DbSet<MyUserUsedSoftware> MyUserUsedSoftwares { get; set; }
+    public DbSet<MyUserSkill> MyUserSkills { get; set; }
+    public DbSet<Skill> Skills { get; set; }
     public DbSet<PortfolioMedia> PortfolioMedias { get; set; }
     public DbSet<Portfolio> Portfolios { get; set; }
     public DbSet<Sector> Sectors { get; set; }
@@ -33,6 +35,7 @@ public class ApplicationDbContext : IdentityDbContext
         modelBuilder.Entity<PortfolioMedia>().HasOne(a => a.Portfolio).WithMany(a => a.PortfolioMedias).OnDelete(DeleteBehavior.NoAction);
         modelBuilder.Entity<PortfolioMedia>().HasOne(a => a.MediaFormat).WithMany(a => a.PortfolioMedias);
         modelBuilder.Entity<MyUserUsedSoftware>().HasKey(a => new { a.MyUserId, a.UsedSoftwareId });
+        modelBuilder.Entity<MyUserSkill>().HasKey(a => new {a.Id, a.MyUserId, a.SkillId });
         modelBuilder.Entity<MyUserSector>().HasKey(a => new { a.MyUserId, a.SectorId });
         modelBuilder.Entity<MediaCategory>().HasKey(a => new { a.CategoryId, a.MediaId });
         modelBuilder.Entity<PortfolioSector>().HasKey(a => new { a.PorfolioId, a.SectorId });

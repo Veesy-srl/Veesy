@@ -114,23 +114,51 @@
         <div>
             <h4>Hard Skills</h4>
             <p>Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,</p>
-            <div class="d-flex">
-                <button class="button-white-dashed-veesy">+</button>
-                <button class="button-white-dashed-veesy">+</button>
-                <button class="button-white-dashed-veesy">+</button>
-            </div>
-            <div class="mt-2"><a class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add soft skill</strong></a></div>
+            @if (Model.HardSkills.Count(s => s.Selected) > 0)
+            {
+                <div class="d-flex mb-4">
+                @foreach (var item in Model.HardSkills.Where(s => s.Selected))
+                {
+                        <div class="pe-3 ps-3 div-white-rounded-blue-veesy d-flex"><a onclick="openModal('#modalHardSkill')"><i class="fa-solid fa-circle pe-2" style="color: #75CCDD"></i>@item.Name</a></div>
+                }
+                </div>
+                <a onclick="openModal('#modalHardSkill')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
+
+            }
+            else
+            {
+                <div class="d-flex">
+                    <a onclick="openModal('#modalHardSkill')" class="button-white-dashed-veesy">+</a>
+                    <a onclick="openModal('#modalHardSkill')" class="button-white-dashed-veesy">+</a>
+                    <a onclick="openModal('#modalHardSkill')" class="button-white-dashed-veesy">+</a>
+                </div>
+                <div class="mt-2"><a onclick="openModal('#modalHardSkill')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add hard skills</strong></a></div>
+            }
         </div>
         <div class="empty-veesy"></div>
         <div>
             <h4>Soft Skills</h4>
             <p>Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,</p>
-            <div class="d-flex">
-                <button class="button-white-dashed-veesy">+</button>
-                <button class="button-white-dashed-veesy">+</button>
-                <button class="button-white-dashed-veesy">+</button>
-            </div>
-            <div class="mt-2"><a class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add hard skill</strong></a></div>
+            @if (Model.SoftSkills.Count(s => s.Selected) > 0)
+            {
+                <div class="d-flex mb-4">
+                @foreach (var item in Model.SoftSkills.Where(s => s.Selected))
+                {
+                        <div class="pe-3 ps-3 div-white-rounded-blue-veesy d-flex"><a onclick="openModal('#modalSoftSkill')" ><i class="fa-solid fa-circle pe-2" style="color: #75CCDD"></i>@item.Name</a></div>
+                }
+                </div>
+                <a onclick="openModal('#modalSoftSkill')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
+
+            }
+            else
+            {
+                <div class="d-flex">
+                    <a onclick="openModal('#modalSoftSkill')" class="button-white-dashed-veesy">+</a>
+                    <a onclick="openModal('#modalSoftSkill')" class="button-white-dashed-veesy">+</a>
+                    <a onclick="openModal('#modalSoftSkill')" class="button-white-dashed-veesy">+</a>
+                </div>
+                <div class="mt-2"><a onclick="openModal('#modalSoftSkill')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add soft skills</strong></a></div>
+            }
         </div>
         <div class="empty-veesy"></div>
         <div>
@@ -249,8 +277,129 @@
     </div>
 </div>
 
+<div class="modal fade" id="modalHardSkill" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Hard Skills</h5>
+                <a onclick="closeModal('#modalHardSkill')"><i class="fa-solid fa-circle-xmark"></i></a>
+            </div>
+            <div class="modal-body">
+                <p>Select a maximum of 5 skills which your strongest superpower.</p>
+                <div class="overflow-auto p-3 border-div-grey" style="background-color: white !important; max-height: 400px;">
+                    @foreach (var item in Model.HardSkills)
+                    {
+                        <div class="form-check">
+                            <label class="form-check-label" style="cursor: pointer;" for="hardSkill-@item.Code">
+                                <strong>@item.Name</strong>
+                            </label>
+                            @{ var check = @item.Selected ? "checked" : ""; }
+                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="hardSkill-@item.Code" style="float: right !important;">
+                        </div>
+                        <hr class="hr"/>
+                    }
+                </div>
+                <p class="mt-4"><strong>Didn't find it?</strong> <a class="a-ciano">Contact us</a></p>
+                <p class="mb-0"><strong>0 / 5 selected</strong></p>
+            </div>
+            <div class="modal-footer">                
+                <a onclick="UpdateHardSkills()" class="rounded-pill btn btn-primary" type="submit">save</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalSoftSkill" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Soft Skills</h5>
+                <a onclick="closeModal('#modalSoftSkill')"><i class="fa-solid fa-circle-xmark"></i></a>
+            </div>
+            <div class="modal-body">
+                <p>Select a maximum of 10 skills which you are developing.</p>
+                <div class="overflow-auto p-3 border-div-grey" style="background-color: white !important; max-height: 400px;">
+                    @foreach (var item in Model.SoftSkills)
+                    {
+                        <div class="form-check">
+                            <label class="form-check-label" style="cursor: pointer;" for="softSkill-@item.Code">
+                                <strong>@item.Name</strong>
+                            </label>
+                            @{ var check = @item.Selected ? "checked" : ""; }
+                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="softSkill-@item.Code" style="float: right !important;">
+                        </div>
+                        <hr class="hr"/>
+                    }
+                </div>
+                <p class="mt-4"><strong>Didn't find it?</strong> <a class="a-ciano">Contact us</a></p>
+                <p class="mb-0"><strong>0 / 5 selected</strong></p>
+            </div>
+            <div class="modal-footer">                
+                <a onclick="UpdateSoftSkills()" class="rounded-pill btn btn-primary" type="submit">save</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script>
+
+function UpdateHardSkills() {
+    $('#load-spinner').css("display", "block");
+    var codes = JSON.parse('@Html.Raw(Json.Serialize(Model.HardSkills.Select(s => s.Code.ToString()).ToList()))');
+    
+    var data = [];
+    
+    for (const code in codes) {
+        if(document.getElementById("hardSkill-"+codes[code]).checked)
+            data.push(codes[code])
+    }
+    $.ajax({
+        type: 'POST',
+        url: '/Account/Profile/UpdateHardSkills',
+        data: JSON.stringify(data),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function (response) {
+            if(response.result){
+                location.reload()
+            }
+            $('#load-spinner').css("display", "none");
+        },
+        error: function (response) {
+            $('#load-spinner').css("display", "none");
+        }
+    })
+}
+
+function UpdateSoftSkills() {
+    $('#load-spinner').css("display", "block");
+    var codes = JSON.parse('@Html.Raw(Json.Serialize(Model.SoftSkills.Select(s => s.Code.ToString()).ToList()))');
+    
+    var data = [];
+    
+    for (const code in codes) {
+        if(document.getElementById("softSkill-"+codes[code]).checked)
+            data.push(codes[code])
+    }
+    $.ajax({
+        type: 'POST',
+        url: '/Account/Profile/UpdateSoftSkills',
+        data: JSON.stringify(data),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function (response) {
+            if(response.result){
+                location.reload()
+            }
+            $('#load-spinner').css("display", "none");
+        },
+        error: function (response) {
+            $('#load-spinner').css("display", "none");
+        }
+    })
+}
+
 
 //ADD EDIT BIOGRAPHY
 function UpdateBiography(){

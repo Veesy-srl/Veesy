@@ -27,6 +27,10 @@ public class VeesyUoW : IVeesyUoW
     
     public IUsedSoftwareRepository UsedSoftwareRepository => _usedSoftwareRepository ??= new UsedSoftwareRepository(_dbContext);
     
+    private ISkillRepository _skillRepository;
+    
+    public ISkillRepository SkillRepository => _skillRepository ??= new SkillRepository(_dbContext);
+    
     
     public void Dispose()
     {

@@ -9,4 +9,6 @@ public class ProfileViewModel
     public string PortfolioIntro { get; set; }
     public List<UsedSoftwareDto> UsedSoftwares { get; set; }
     public List<Guid> SelectedUsedSoftwares { get; set; }
+    public List<SkillDto> HardSkills { get; set; }
+    public List<SkillDto> SoftSkills { get; set; }
 }
