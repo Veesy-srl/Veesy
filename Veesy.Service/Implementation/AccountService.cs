@@ -56,4 +56,34 @@ public class AccountService : IAccountService
             }
         }
     }
+
+    public IEnumerable<Skill> GetSkillsWithUserByType(MyUser userInfo, char type)
+    {
+        return _uoW.SkillRepository.FindAll().Include(s => s.MyUserSkills.Where(s => s.MyUserId == userInfo.Id && s.Type == type));
+    }
+
+    public IEnumerable<MyUserSkill> GetSkillsByUserAndType(MyUser user, char type)
+    {
+        return _uoW.SkillRepository.GetSkillsByUserAndType(user, type);
+    }
+
+    public async Task<ResultDto> UpdateMyUserSkills(List<MyUserSkill> skillToDelete, List<MyUserSkill> skillToAdd)
+    {
+        using (var transaction = _uoW.DbContext.Database.BeginTransaction())
+        {
+            try
+            {
+                _uoW.SkillRepository.DeleteMyUserSkills(skillToDelete);
+                await _uoW.SkillRepository.AddMyUserSkills(skillToAdd);
+                await _uoW.CommitAsync();
+                await transaction.CommitAsync();
+                return new ResultDto(true, "");
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                throw ex;
+            }
+        }
+    }
 }

@@ -12,4 +12,5 @@ public interface IVeesyUoW
     public ApplicationDbContext DbContext { get; }
     IMyUserRepository MyUserRepository { get; }
     IUsedSoftwareRepository UsedSoftwareRepository { get; }
+    ISkillRepository SkillRepository { get; }
 }

@@ -114,14 +114,20 @@ public class AuthController : Controller
         try
         {
             var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                user = await _userManager.FindByNameAsync(email);
+                if (user == null)
+                    return RedirectToAction("ForgotPasswordComplete", "Auth");
+            }
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
             token = HttpUtility.UrlEncode(token);
-            var resetLink = $"{_config["ApplicationUrl"]}/Auth/ResetPassword?token={token}&email={email}";
-            var message = new Message(new (string, string)[] { ("Noreply | Veesy", email) }, "Resetta la tua password", resetLink);
+            var resetLink = $"{_config["ApplicationUrl"]}/Auth/Auth/ResetPassword?token={token}&email={email}";
+            var message = new Message(new (string, string)[] { ("Noreply | Veesy", email) }, "Reset your password", resetLink);
             List<(string, string)> replacer = new List<(string, string)> { ("[LinkResetPassword]", resetLink) };
             var currentPath = Directory.GetCurrentDirectory();
             await _emailSender.SendEmailAsync(message, currentPath + "/wwwroot/MailTemplate/mail-reset-password.html", replacer);
-            return RedirectToAction("Login", "Auth");
+            return RedirectToAction("ForgotPasswordComplete", "Auth");
         }
         catch (Exception e)
         {
@@ -208,4 +214,9 @@ public class AuthController : Controller
         return RedirectToAction("Login", "Auth");
     }
 
+    [HttpGet]
+    public IActionResult ForgotPasswordComplete()
+    {
+        return View();
+    }
 }

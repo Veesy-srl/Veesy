@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Veesy.Domain.Data;
 
@@ -11,9 +12,11 @@ using Veesy.Domain.Data;
 namespace Veesy.Domain.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230828115958_MyUserSkills")]
+    partial class MyUserSkills
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -425,9 +428,6 @@ namespace Veesy.Domain.Migrations
 
             modelBuilder.Entity("Veesy.Domain.Models.MyUserSkill", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("MyUserId")
                         .HasColumnType("nvarchar(450)");
 
@@ -441,9 +441,7 @@ namespace Veesy.Domain.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(1)");
 
-                    b.HasKey("Id", "MyUserId", "SkillId");
-
-                    b.HasIndex("MyUserId");
+                    b.HasKey("MyUserId", "SkillId");
 
                     b.HasIndex("SkillId");
 

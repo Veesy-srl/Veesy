@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
+using Veesy.Domain.Constants;
 using Veesy.Domain.Models;
 using Veesy.Presentation.Helper;
 using Veesy.Service.Dtos;
@@ -78,6 +79,36 @@ public class ProfileController : VeesyController
         try
         {
             var result = await _profileHelper.UpdateUsedSoftware(usedSoftwareCodes, UserInfo);
+            return Json(new { Result = result.Success, Message = result.Message});
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            return Json(new { Result = false, Message = "Error updating softwares. Please retry." });
+        }
+    }
+    
+    [HttpPost]
+    public async Task<JsonResult> UpdateHardSkills([FromBody] List<Guid> hardSkillsCodes)
+    {
+        try
+        {
+            var result = await _profileHelper.UpdateSkill(hardSkillsCodes, UserInfo, SkillConstants.HardSkill);
+            return Json(new { Result = result.Success, Message = result.Message});
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            return Json(new { Result = false, Message = "Error updating softwares. Please retry." });
+        }
+    }
+    
+    [HttpPost]
+    public async Task<JsonResult> UpdateSoftSkills([FromBody] List<Guid> hardSkillsCodes)
+    {
+        try
+        {
+            var result = await _profileHelper.UpdateSkill(hardSkillsCodes, UserInfo, SkillConstants.SoftSkill);
             return Json(new { Result = result.Success, Message = result.Message});
         }
         catch (Exception ex)

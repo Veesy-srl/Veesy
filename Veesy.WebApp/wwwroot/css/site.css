@@ -16,6 +16,14 @@ html {
   border: 0;
 }
 
+.div-white-rounded-blue-veesy{
+  padding: 5px;
+  margin: 5px;
+  background-color: #F0F2F3;
+  border-radius: 25px;
+  border: 1px solid #202F4D !important;
+}
+
 .bg-grey{
   background-color: #536B7E;
 }
@@ -305,6 +313,7 @@ input {
   background-color: #F0F2F3;
   border-radius: 25px;
   border: 2px dashed #AAB0BB;
+  text-align: center;
 }
 
 .navbar{

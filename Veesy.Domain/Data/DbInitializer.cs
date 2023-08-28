@@ -105,6 +105,29 @@ public class DbInitializer
                 dbContext.Add(item);
         }
         dbContext.SaveChanges();
+        
+        var skills = new List<Skill>()
+        {
+            new (){Name = "Skill A"},
+            new (){Name = "Skill B"},
+            new (){Name = "Skill C"},
+            new (){Name = "Skill D"},
+            new (){Name = "Skill E"},
+            new (){Name = "Skill F"},
+            new (){Name = "Skill G"},
+            new (){Name = "Skill H"},
+            new (){Name = "Skill I"},
+            new (){Name = "Skill J"},
+            new (){Name = "Skill K"},
+            new (){Name = "Skill L"},
+        };
+        var dbSkills = dbContext.Skills.ToList();
+        foreach (var item in skills)
+        {
+            if (!dbSkills.Any(x => x.Name == item.Name))
+                dbContext.Add(item);
+        }
+        dbContext.SaveChanges();
 
 
     }

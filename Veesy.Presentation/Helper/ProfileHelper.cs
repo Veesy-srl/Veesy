@@ -1,3 +1,4 @@
+using Veesy.Domain.Constants;
 using Veesy.Domain.Exception;
 using Veesy.Domain.Models;
 using Veesy.Presentation.Model.Account;
@@ -29,12 +30,15 @@ public class ProfileHelper
 
     public ProfileViewModel GetProfileViewModel(MyUser userInfo)
     {
-        
+        var hardskills = _accountService.GetSkillsWithUserByType(userInfo, SkillConstants.HardSkill);
+        var softskills = _accountService.GetSkillsWithUserByType(userInfo, SkillConstants.SoftSkill);
         return new ProfileViewModel()
         {
             Biography = userInfo.Biografy,
             PortfolioIntro = userInfo.PortfolioIntro,
-            UsedSoftwares = MapProfileDtos.MapUsedSoftwareList(_accountService.GetUsedSoftwareWithUser(userInfo))
+            UsedSoftwares = MapProfileDtos.MapUsedSoftwareList(_accountService.GetUsedSoftwareWithUser(userInfo)),
+            HardSkills = MapProfileDtos.MapSkillsList(hardskills.ToList()),
+            SoftSkills = MapProfileDtos.MapSkillsList(softskills.ToList())
         };
     }
 
@@ -63,5 +67,35 @@ public class ProfileHelper
         }
 
         return await _accountService.UpdateMyUserUsedSoftware(usedSoftwareToDelete, usedSoftwareToAdd);
+    }
+
+    public async Task<ResultDto> UpdateSkill(List<Guid> skillsCodes, MyUser userInfo, char skillType)
+    {
+        var oldSkills = _accountService.GetSkillsByUserAndType(userInfo, skillType).ToList();
+        var skillToDelete = new List<MyUserSkill>();
+        var skillToAdd = new List<MyUserSkill>();
+        
+        //Comparison of previous UsedSoftware with those currently selected to delete them
+        foreach (var item in oldSkills)
+        {
+            if(!skillsCodes.Contains(item.SkillId))
+                skillToDelete.Add(item);
+        }
+
+        foreach (var item in skillsCodes)
+        {
+            if(!oldSkills.Any(s => s.SkillId == item))
+                skillToAdd.Add(new MyUserSkill()
+                {
+                    Id = Guid.NewGuid(),
+                    MyUserId = userInfo.Id,
+                    SkillId = item,
+                    Type = skillType,
+                    IsPrincipal = false
+                });
+        }
+        
+        return await _accountService.UpdateMyUserSkills(skillToDelete, skillToAdd);
+
     }
 }
