@@ -86,4 +86,9 @@ public class AccountService : IAccountService
             }
         }
     }
+
+    public List<CategoryWork> GetCategoriesWork()
+    {
+        return _uoW.MyUserRepository.GetCategoriesWork();
+    }
 }

@@ -5,5 +5,5 @@ namespace Veesy.Domain.Repositories;
 
 public interface IMyUserRepository : IRepositoryBase<MyUser>
 {
-    
+    List<CategoryWork> GetCategoriesWork();
 }

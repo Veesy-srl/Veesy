@@ -75,7 +75,7 @@ public class AuthController : Controller
     [HttpGet]
     public IActionResult SignUp()
     {
-        return View();
+        return View(_authHelper.GetSignUpViewModel());
     }
     
     [HttpPost]
@@ -93,12 +93,12 @@ public class AuthController : Controller
             }
 
             _notyfService.Custom("errore", 10, "#ca0a0a96");
-            return View(model);
+            return View(_authHelper.GetSignUpViewModelException(model));
         }
         catch (Exception ex)
         {
             Logger.Error(ex, ex.Message);
-            return View(model);
+            return View(_authHelper.GetSignUpViewModelException(model));
         }
     }
     

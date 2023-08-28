@@ -27,6 +27,8 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<PortfolioSector> PortfolioSectors { get; set; }
     public DbSet<SubscriptionPlan> SubscriptionPlans { get; set; }
     public DbSet<TmpMedia> TmpMedias { get; set; }
+    public DbSet<CategoryWork> CategoriesWork { get; set; }
+    public DbSet<MyUserCategoryWork> MyUserCategoriesWork { get; set; }
 
     #region Required
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -36,6 +38,7 @@ public class ApplicationDbContext : IdentityDbContext
         modelBuilder.Entity<PortfolioMedia>().HasOne(a => a.MediaFormat).WithMany(a => a.PortfolioMedias);
         modelBuilder.Entity<MyUserUsedSoftware>().HasKey(a => new { a.MyUserId, a.UsedSoftwareId });
         modelBuilder.Entity<MyUserSkill>().HasKey(a => new {a.Id, a.MyUserId, a.SkillId });
+        modelBuilder.Entity<MyUserCategoryWork>().HasKey(a => new {a.MyUserId, a.CategoryWorkId });
         modelBuilder.Entity<MyUserSector>().HasKey(a => new { a.MyUserId, a.SectorId });
         modelBuilder.Entity<MediaCategory>().HasKey(a => new { a.CategoryId, a.MediaId });
         modelBuilder.Entity<PortfolioSector>().HasKey(a => new { a.PorfolioId, a.SectorId });

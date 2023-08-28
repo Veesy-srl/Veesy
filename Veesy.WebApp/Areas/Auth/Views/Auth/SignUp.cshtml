@@ -2,6 +2,9 @@
 @{
     ViewData["Title"] = "Sign Up";
 }
+<style>
+    
+</style>
 
     <div class="vertical-center text-center bg-grey-veesy" style="border-bottom-left-radius: 45px; border-top-left-radius: 45px; margin-left: -25px; margin-top: -1.5vh;">
         <div class="container">
@@ -25,6 +28,10 @@
                             </div>
                         </div>
                         <div class="input-group size-custom">
+                            <label class="fw-border">Username*</label>
+                            <input asp-for="Username" class="input--style-1" type="text">
+                        </div>
+                        <div class="input-group size-custom">
                             <label class="fw-border">Email*</label>
                             <input asp-for="Email" class="input--style-1" type="email">
                         </div>
@@ -38,13 +45,18 @@
                             <div class="col-6 ps-2">
                                 <div class="input-group">
                                     <label class="fw-border">Repeat Password*</label>
-                                    <input asp-for="Password" class="input--style-1 " type="password">
+                                    <input asp-for="ConfirmPassword" class="input--style-1 " type="password">
                                 </div>
                             </div>
                         </div>
                         <div class="input-group">
                             <label class="fw-normal mb-1 size-custom">Category*</label>
-                            <input asp-for="Email" class="input--style-1" type="email">
+                            <select asp-for="SelectedCategoriesWork" multiple class="w-100 selectpicker">
+                                @foreach (var item in Model.CategoriesWork)
+                                {
+                                    <option value="@item.Id">@item.Name</option>
+                                }
+                            </select>
                         </div>
                         <p class="mt-3 text-muted" style="font-size: 13px;">By signing up you accept our 
                             <a class="text-muted text-decoration-underline" href="#">Site Policy</a>

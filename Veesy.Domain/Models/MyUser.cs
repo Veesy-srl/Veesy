@@ -21,5 +21,6 @@ public class MyUser : IdentityUser
     public virtual List<MyUserSkill> MyUserSkills { get; set; }
     public virtual List<Media> Medias { get; set; }
     public virtual List<Portfolio> Portfolios { get; set; }
-    
+    public virtual List<MyUserCategoryWork> MyUserCategoriesWork { get; set; }
+
 }

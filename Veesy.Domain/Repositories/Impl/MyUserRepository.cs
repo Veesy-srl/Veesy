@@ -9,4 +9,9 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
     public MyUserRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
     {
     }
+
+    public List<CategoryWork> GetCategoriesWork()
+    {
+        return _applicationDbContext.CategoriesWork.ToList();
+    }
 }
