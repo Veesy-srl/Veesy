@@ -68,7 +68,7 @@ html {
 .login-container {
   display: grid;
   grid-template-columns: 50% 50%;
-  height: 100vh;
+  height: 103vh;
   width: 100vw;
 }
 
@@ -143,7 +143,7 @@ input {
   background-image: url('../imgs/Auth/login-bg.png');
   background-size: cover;
   background-position: center;
-  height: 100vh; 
+  height: 103vh;
 }
 
 .input--style-1 {
@@ -379,13 +379,13 @@ input {
 }
 
 a{
-  color: black;
+  color: #202F4D;
   text-decoration: none;
   cursor: pointer;
 }
 
 a:hover{
-  color: black;
+  color: #202F4D;
 }
 
 .copyright{
@@ -511,18 +511,18 @@ textarea{
 
 .veesy-text-color{
   color: #202F4D;
+  font-size: 16px !important;
+  font-weight: 500;
 }
 
 .social-icons-row {
-  background-color: #202f4d;
   padding: 20px 0;
-  text-align: center;
 }
 
 .social-icons-row .social-icon {
-  font-size: 30px;
+  font-size: 22px;
   color: white;
-  margin: 0 15px;
+  margin: 0 5px;
 }
 
 /*CUSTOM MODAL*/
@@ -547,6 +547,22 @@ textarea{
   }
 }
 
+.contact-veesy{
+  width: 60%;
+}
+
+.contact-veesy:hover{
+  background-color:#75CCDD;
+}
+
 .footer {
   background-color: #f0f2f3;
+  position: relative;
+  top: 3vh;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.icon-color-veesy{
+  color: #202f4d;
 }
