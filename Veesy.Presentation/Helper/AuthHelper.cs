@@ -1,12 +1,14 @@
 using System.Web;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Identity.Client;
 using Veesy.Domain.Constants;
 using Veesy.Domain.Exception;
 using Veesy.Email;
 using Veesy.Domain.Models;
 using Veesy.Domain.Exception;
 using Veesy.Presentation.Model.Auth;
+using Veesy.Service.Interfaces;
 using Veesy.Validators;
 
 namespace Veesy.Presentation.Helper;
@@ -17,13 +19,15 @@ public class AuthHelper
     private readonly IConfiguration _config;
     private readonly IEmailSender _emailSender;
     private readonly MyUserValidator _myUserValidator;
+    private readonly IAccountService _accountService;
 
-    public AuthHelper(UserManager<MyUser> userManager, IConfiguration config, IEmailSender emailSender, MyUserValidator myUserValidator)
+    public AuthHelper(UserManager<MyUser> userManager, IConfiguration config, IEmailSender emailSender, MyUserValidator myUserValidator, IAccountService accountService)
     {
         _userManager = userManager;
         _config = config;
         _emailSender = emailSender;
         _myUserValidator = myUserValidator;
+        _accountService = accountService;
     }
 
     public async Task<string> SendEmailConfirmation(string email)
@@ -41,12 +45,28 @@ public class AuthHelper
 
     public async Task<ResultDto> RegisterNewMember(SignUpViewModel model)
     {
+        
+        if (model.Password != model.ConfirmPassword) 
+            return new ResultDto(false, "Entered passwords do not match.");
+        if(model.SelectedCategoriesWork.Count < 1 || model.SelectedCategoriesWork.Count > 3)
+            return new ResultDto(false, "Select at least one category and not more than three.");
+
+        var categoriesWork = new List<MyUserCategoryWork>();
+        foreach (var item in model.SelectedCategoriesWork)
+        {
+            categoriesWork.Add(new MyUserCategoryWork()
+            {
+                CategoryWorkId = item
+            });
+        }
+        
         var newUser = new MyUser()
         {
             Email = model.Email,
             UserName = model.Username,
             Name = model.Name,
-            Surname = model.Surname
+            Surname = model.Surname,
+            MyUserCategoriesWork = categoriesWork
         };
         var validate = await _myUserValidator.UserValidator(newUser);
         if (!validate.Success) 
@@ -67,5 +87,19 @@ public class AuthHelper
         await _userManager.AddToRolesAsync(newUser, new[] { Roles.User });
         
         return new ResultDto(true, "User create correctly.");
+    }
+
+    public SignUpViewModel GetSignUpViewModel()
+    {
+        return new SignUpViewModel()
+        {
+            CategoriesWork = _accountService.GetCategoriesWork()
+        };
+    }
+
+    public SignUpViewModel GetSignUpViewModelException(SignUpViewModel model)
+    {
+        model.CategoriesWork = _accountService.GetCategoriesWork();
+        return model;
     }
 }

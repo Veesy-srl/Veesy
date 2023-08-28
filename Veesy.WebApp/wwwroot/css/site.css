@@ -1,5 +1,19 @@
+.bd-example{
+  padding: 1.5rem;
+  margin-right: 0;
+  margin-left: 0;
+  border-width: 1px;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+}
+
 html {
   font-size: 14px;
+}
+
+.btn-light, btn-light:hover, btn-light::selection {
+  background-color: white !important;
+  border-color: white !important;
 }
 
 body{

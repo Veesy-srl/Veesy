@@ -128,6 +128,29 @@ public class DbInitializer
                 dbContext.Add(item);
         }
         dbContext.SaveChanges();
+        
+        var categoriesWork = new List<CategoryWork>()
+        {
+            new (){Name = "Work Category A", Description = "Category Work"},
+            new (){Name = "Work Category B", Description = "Category Work"},
+            new (){Name = "Work Category C", Description = "Category Work"},
+            new (){Name = "Work Category D", Description = "Category Work"},
+            new (){Name = "Work Category E", Description = "Category Work"},
+            new (){Name = "Work Category F", Description = "Category Work"},
+            new (){Name = "Work Category G", Description = "Category Work"},
+            new (){Name = "Work Category H", Description = "Category Work"},
+            new (){Name = "Work Category I", Description = "Category Work"},
+            new (){Name = "Work Category J", Description = "Category Work"},
+            new (){Name = "Work Category K", Description = "Category Work"},
+            new (){Name = "Work Category L", Description = "Category Work"},
+        };
+        var dbCategoyWork = dbContext.CategoriesWork.ToList();
+        foreach (var item in categoriesWork)
+        {
+            if (!dbCategoyWork.Any(x => x.Name == item.Name))
+                dbContext.Add(item);
+        }
+        dbContext.SaveChanges();
 
 
     }

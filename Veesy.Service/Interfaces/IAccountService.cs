@@ -13,4 +13,5 @@ public interface IAccountService
     IEnumerable<Skill> GetSkillsWithUserByType(MyUser userInfo, char type);
     IEnumerable<MyUserSkill> GetSkillsByUserAndType(MyUser user, char type);
     Task<ResultDto> UpdateMyUserSkills(List<MyUserSkill> skillToDelete, List<MyUserSkill> skillToAdd);
+    List<CategoryWork> GetCategoriesWork();
 }
