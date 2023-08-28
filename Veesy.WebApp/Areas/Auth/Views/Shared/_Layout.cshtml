@@ -15,29 +15,29 @@
                <div class="container-fluid">
                    
                    <h1 class="h3 mb-2 fw-normal">
-                       <div class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><b class="text-white">veesy</b>
-                           <h5 id="loginLink">Login</h5>
-                           <h5 id="signupLink">Signup</h5>
-                           </div> 
+                       <div class="navbar-brand d-inline-flex" asp-area="" asp-controller="Home" asp-action="Index"><b class="text-white">veesy</b>
+                           <h5 id="loginLink" class="text-white fw-normal">&nbsplogin</h5>
+                           <h5 id="signupLink" class="text-white fw-normal">&nbspsign up</h5>
+                        </div> 
                    </h1>
                    <div class="float-end">
                            <button class="btn btn-light border fw-bolder shadow-none">
-                           <i class="fas fa-circle fa-lg text-primary mr-2" id="icon-color"></i>
+                           <i class="fas fa-user text-primary mr-2" id="icon-color"></i>
                            <span id="color-text">account</span>
                            </button>
                            <button class="btn btn-light border fw-bolder shadow-none" id="menuButton">
-                               <i class="fas fa-circle fa-2xs text-primary mr-2" id="icon-color"></i>
+                               <i class="fas fa-circle text-primary mr-2" id="icon-color"></i>
                                <span id="color-text">menu</span>
                            </button>
                        </div>
                    <div class="menu-popup" id="menuPopup">
                        <div class="float-end">
                            <button class="btn btn-light border fw-bolder shadow-none">
-                               <i class="fas fa-user fa-xs text-primary mr-2" id="icon-color"></i>
+                               <i class="fas fa-user text-primary mr-2" id="icon-color"></i>
                                <span id="color-text">account</span>
                            </button>
                            <button class="btn btn-light border fw-bolder shadow-none" id="closeButton">
-                               <i class="fas fa-times-circle fa-xs text-primary mr-2 " id="icon-color"></i>
+                               <i class="fas fa-times-circle text-primary mr-2 " id="icon-color"></i>
                                <span id="color-text">close</span>
                            </button>
                        </div>
@@ -69,19 +69,24 @@
                        <div class="menu-footer">
                            <a href="#" id="color-text">privacy policy</a>
                            <a href="#" class="cookie" id="color-text">cookie policy</a><br/>
-                           <p href="#" class="copyright" id="color-text">Veesy © 2023 all rights rederved - website by <a href="https://www.derein.net/">derein</a> & <a href="https://www.enigma-tech.it/">enigma</a> - VAT nr. 4840572639</p>
+                           <p href="#" class="copyright" id="color-text-footer">Veesy © 2023 all rights rederved - website by <a href="https://www.derein.net/" style="color: #202F4D">derein</a> & <a href="https://www.enigma-tech.it/" style="color: #202F4D">enigma</a> - VAT nr. 4840572639</p>
                        </div>
                    </div>
                    
                </div>
            </nav>
        </header>
-    <div>
-        @RenderBody()
+<div>
+    <div class="login-container">
+        <div class="logo-container vertical-center">
+            
+        </div>
+    @RenderBody()
     </div>
-<footer class="border-top footer text-muted">
+</div>
+<footer style="margin-top: -40px;">
     <div class="container-fluid">
-        <h6>darial0v3</h6>
+        <h6 style="color: white;">darial0v3</h6>
     </div>
 </footer>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -98,17 +103,20 @@
     const closeButton = document.getElementById('closeButton');
 
     menuButton.addEventListener('click', () => {
-      menuPopup.classList.toggle('active');
+        menuPopup.classList.toggle('active');
+        document.body.classList.toggle('no-scroll'); 
     });
 
     closeButton.addEventListener('click', () => {
       menuPopup.classList.remove('active');
+      document.body.classList.remove('no-scroll'); 
     });
     
       // Chiudi il popup quando si clicca fuori da esso
       $(document).on('click', (e) => {
         if (!menuPopup.contains(e.target) && !menuButton.contains(e.target)) {
           menuPopup.classList.remove('active');
+          document.body.classList.remove('no-scroll'); 
         }
       });
       

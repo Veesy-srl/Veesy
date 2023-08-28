@@ -2,6 +2,10 @@ html {
   font-size: 14px;
 }
 
+body{
+  overflow-x: hidden; 
+}
+
 @media (min-width: 768px) {
   html {
     font-size: 16px;
@@ -62,6 +66,11 @@ html {
 
 .mt-check-input{
   margin-top: 6px;
+  cursor: pointer;
+}
+
+.form-check-input:checked {
+  background-color: #202F4D;
 }
 
 .vertical-center {
@@ -83,8 +92,8 @@ input {
 
 .input-group {
   position: relative;
-  margin-bottom: 30px;
-  border-bottom: 2px solid #ccc;
+  margin-bottom: 20px;
+  border-bottom: 0px solid #ccc;
 }
 
 .btn-primary {
@@ -98,19 +107,15 @@ input {
   color: #202F4D;
 }
 
-.a-ciano {
-  color: #85D0DE;
-  text-decoration: underline;
-}
-
-.a-ciano:hover{
-  color: #85D0DE;
-  text-decoration: none;
-}
-
 .pos-bottom{
   position: absolute;
   bottom: 10px;
+}
+
+.size-custom{
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: #202f4d;
 }
 
 .bg-ciano-veesy{
@@ -126,16 +131,27 @@ input {
   }
 }
 
+.logo-container{
+  background-image: url('../imgs/Auth/login-bg.png');
+  background-size: cover;
+  background-position: center;
+  height: 100vh; 
+}
+
 .input--style-1 {
   width: 100%;
-  padding: 4px 0;
-  background: #E2E5E7 !important;
+  padding: 2px 4px;
+  background: white !important;
+  border-radius: 5px !important;
+  border: 0 !important;
 }
 
 .input--style-1:after {
   width: 100%;
-  padding: 4px 0;
-  background: #E2E5E7 !important;
+  padding: 2px 4px;
+  background: white !important;
+  border-radius: 5px !important;
+  border: 0 !important;
 }
 
 .input--style-1::-webkit-input-placeholder {
@@ -323,8 +339,8 @@ input {
 .menu-popup {
   position: fixed;
   top: 0;
-  right: -50%;
-  width: 50%;
+  right: -53%;
+  width: 53%;
   height: 100%;
   background-color: #e2e5e7;
   border: 1px solid #ccc;
@@ -382,6 +398,11 @@ a:hover{
 
 #icon-color{
   color: #75CCDD !important;
+  font-size: 12px;
+}
+
+.no-scroll {
+  overflow: hidden;
 }
 
 .center-content {
@@ -393,6 +414,11 @@ a:hover{
 .menu-list {
   margin-right: 20px;
 }
+
+.signup:hover{
+  background-color:#75CCDD;
+}
+
 .description-container {
   width: 30%;
   height: 43%;
@@ -421,7 +447,15 @@ a:hover{
 }
 
 #color-text{
-  color: #0D2045;
+  color: #202F4D;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+#color-text-footer{
+  color: #202F4D;
+  font-size: 12px !important;
+  font-weight: 500;
 }
 
 /*DROPZONE CSS*/
