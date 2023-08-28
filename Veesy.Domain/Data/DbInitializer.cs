@@ -48,5 +48,64 @@ public class DbInitializer
 
         }
         
+        var subscriptionPlans = new List<SubscriptionPlan>()
+        {
+            new (){Name = "Free", Description = "Free", Price = 0.0m, AllowedMediaNumber = 10, AllowedMegaByte = 100, IsMediaFormatsInclude = false},
+            new (){Name = "Pro", Description = "Pro", Price = 1.0m, AllowedMediaNumber = 5, AllowedMegaByte = 5000, IsMediaFormatsInclude = false},
+            new (){Name = "Plus", Description = "Plus", Price = 2.0m, AllowedMediaNumber = -1, AllowedMegaByte = 10000, IsMediaFormatsInclude = false},
+        };
+        var dbSubscriptions = dbContext.SubscriptionPlans.ToList();
+        foreach (var item in subscriptionPlans)
+        {
+            if (!dbSubscriptions.Any(x => x.Name == item.Name))
+                dbContext.Add(item);
+        }
+        dbContext.SaveChanges();
+        
+        var usedSoftwares = new List<UsedSoftware>()
+        {
+            new (){Name = "Software A", Description = "Software A"},
+            new (){Name = "Software B", Description = "Software B"},
+            new (){Name = "Software C", Description = "Software C"},
+            new (){Name = "Software D", Description = "Software D"},
+            new (){Name = "Software E", Description = "Software E"},
+            new (){Name = "Software F", Description = "Software F"},
+            new (){Name = "Software G", Description = "Software G"},
+            new (){Name = "Software H", Description = "Software H"},
+            new (){Name = "Software I", Description = "Software I"},
+            new (){Name = "Software J", Description = "Software J"},
+            new (){Name = "Software K", Description = "Software K"},
+            new (){Name = "Software L", Description = "Software L"},
+            new (){Name = "Software M", Description = "Software M"},
+            new (){Name = "Software N", Description = "Software N"},
+            new (){Name = "Software O", Description = "Software O"},
+        }; 
+        
+        var dbSoftwares = dbContext.UsedSoftwares.ToList();
+        foreach (var item in usedSoftwares)
+        {
+            if (!dbSoftwares.Any(x => x.Name == item.Name))
+                dbContext.Add(item);
+        }
+        dbContext.SaveChanges();
+        
+        var sectors = new List<Sector>()
+        {
+            new (){Name = "Settore A", Description = "Settore A"},
+            new (){Name = "Settore B", Description = "Settore B"},
+            new (){Name = "Settore C", Description = "Settore C"},
+            new (){Name = "Settore D", Description = "Settore D"},
+            new (){Name = "Settore E", Description = "Settore E"},
+            new (){Name = "Settore F", Description = "Settore F"},
+        };
+        var dbSectors = dbContext.Sectors.ToList();
+        foreach (var item in sectors)
+        {
+            if (!dbSectors.Any(x => x.Name == item.Name))
+                dbContext.Add(item);
+        }
+        dbContext.SaveChanges();
+
+
     }
 }
