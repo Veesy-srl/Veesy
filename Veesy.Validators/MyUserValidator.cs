@@ -28,7 +28,7 @@ public class MyUserValidator : AbstractValidator<MyUser>
         {
             var userValidation = await ValidateAsync(user);
             if(!userValidation.IsValid)
-                return new ResultDto(false, string.Join("\r\n", userValidation.Errors.Select(s => $" - {s.ErrorMessage}")));
+                return new ResultDto(false, userValidation.Errors.FirstOrDefault().ErrorMessage.Replace("'", "&#39;"));
             return new ResultDto(true, string.Empty);
         }
         catch (Exception e)

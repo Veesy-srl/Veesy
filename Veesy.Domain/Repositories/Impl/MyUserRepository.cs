@@ -14,4 +14,9 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
     {
         return _applicationDbContext.CategoriesWork.ToList();
     }
+
+    public SubscriptionPlan GetSubscriptionPlanByName(string name)
+    {
+        return _applicationDbContext.SubscriptionPlans.SingleOrDefault(s => s.Name == name);
+    }
 }

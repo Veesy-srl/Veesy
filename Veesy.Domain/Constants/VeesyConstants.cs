@@ -6,4 +6,11 @@ public class VeesyConstants
     {
         public const string OriginalMedia = "OriginalMedia";
     }
+    
+    public static class SubscriptionPlan
+    {
+        public const string Free = "Free";
+        public const string Pro = "Pro";
+        public const string Plus = "Plus";
+    }
 }

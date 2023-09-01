@@ -35,8 +35,8 @@ public class AuthHelper
         var user = _userManager.FindByEmailAsync(email).Result;
         var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
         token = HttpUtility.UrlEncode(token);
-        var confirmationLink = $"{_config["ApplicationUrl"]}/Auth/ConfirmEmailVerification?token={token}&email={email}";
-        var message = new Message(new (string, string)[] { ("Noreply | Swirkey", email) }, "Conferma la tua Email", confirmationLink);
+        var confirmationLink = $"{_config["ApplicationUrl"]}/Auth/Auth/ConfirmEmailVerification?token={token}&email={email}";
+        var message = new Message(new (string, string)[] { ("Noreply | Veesy", email) }, "Confirm your account", confirmationLink);
         List<(string, string)> replacer = new List<(string, string)> { ("[LinkVerifyMail]", message.Content) };
         var currentPath = Directory.GetCurrentDirectory();
         await _emailSender.SendEmailAsync(message, currentPath + "/wwwroot/MailTemplate/mail-verify-email.html", replacer);
@@ -45,10 +45,11 @@ public class AuthHelper
 
     public async Task<ResultDto> RegisterNewMember(SignUpViewModel model)
     {
-        
+        if(model.Password == null || model.ConfirmPassword == null)
+            return new ResultDto(false, "Please insert password.");
         if (model.Password != model.ConfirmPassword) 
             return new ResultDto(false, "Entered passwords do not match.");
-        if(model.SelectedCategoriesWork.Count < 1 || model.SelectedCategoriesWork.Count > 3)
+        if(model.SelectedCategoriesWork == null || model.SelectedCategoriesWork.Count < 1 || model.SelectedCategoriesWork.Count > 3)
             return new ResultDto(false, "Select at least one category and not more than three.");
 
         var categoriesWork = new List<MyUserCategoryWork>();
@@ -66,7 +67,8 @@ public class AuthHelper
             UserName = model.Username,
             Name = model.Name,
             Surname = model.Surname,
-            MyUserCategoriesWork = categoriesWork
+            MyUserCategoriesWork = categoriesWork,
+            SubscriptionPlanId = _accountService.GetSubscriptionPlanByName(VeesyConstants.SubscriptionPlan.Free).Id
         };
         var validate = await _myUserValidator.UserValidator(newUser);
         if (!validate.Success) 

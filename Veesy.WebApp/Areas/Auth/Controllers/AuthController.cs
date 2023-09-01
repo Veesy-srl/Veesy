@@ -2,6 +2,7 @@ using System.Web;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using NLog;
 using Veesy.Domain.Models;
 using Veesy.Email;
@@ -57,9 +58,7 @@ public class AuthController : Controller
         
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
             if (result.Succeeded)
-            {
                return RedirectToAction("Index", "Home", new { area = "Portfolio" });
-            }
 
             return View(model);
         }
@@ -86,13 +85,10 @@ public class AuthController : Controller
             var result = await _authHelper.RegisterNewMember(model);
             if (result.Success)
             {
-                var signin = await _signInManager.PasswordSignInAsync(model.Username, model.Password, false, false);
-                if(signin.Succeeded)
-                    return RedirectToAction("VerifyEmail", "Auth");
-                return RedirectToAction("Login");
+                return RedirectToAction("SendEmailVerification", new {email = model.Email});
             }
 
-            _notyfService.Custom("errore", 10, "#ca0a0a96");
+            _notyfService.Custom(result.Message, 10, "#ca0a0a96");
             return View(_authHelper.GetSignUpViewModelException(model));
         }
         catch (Exception ex)
@@ -109,21 +105,21 @@ public class AuthController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> ForgotPassword(string email)
+    public async Task<IActionResult> ForgotPassword(LoginViewModel model)
     {
         try
         {
-            var user = await _userManager.FindByEmailAsync(email);
+            var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
-                user = await _userManager.FindByNameAsync(email);
+                user = await _userManager.FindByNameAsync(model.Email);
                 if (user == null)
                     return RedirectToAction("ForgotPasswordComplete", "Auth");
             }
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
             token = HttpUtility.UrlEncode(token);
-            var resetLink = $"{_config["ApplicationUrl"]}/Auth/Auth/ResetPassword?token={token}&email={email}";
-            var message = new Message(new (string, string)[] { ("Noreply | Veesy", email) }, "Reset your password", resetLink);
+            var resetLink = $"{_config["ApplicationUrl"]}/Auth/Auth/ResetPassword?token={token}&email={model.Email}";
+            var message = new Message(new (string, string)[] { ("Noreply | Veesy", user.Email) }, "Reset your password", resetLink);
             List<(string, string)> replacer = new List<(string, string)> { ("[LinkResetPassword]", resetLink) };
             var currentPath = Directory.GetCurrentDirectory();
             await _emailSender.SendEmailAsync(message, currentPath + "/wwwroot/MailTemplate/mail-reset-password.html", replacer);
@@ -131,6 +127,7 @@ public class AuthController : Controller
         }
         catch (Exception e)
         {
+            _notyfService.Error("Error during send reset password link. Please retry.");
             Logger.Error(e, e.Message);
             return View();
         }
@@ -153,12 +150,32 @@ public class AuthController : Controller
         {
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
+            {
+                user = await _userManager.FindByNameAsync(model.Email);
+                if(user == null)
+                    return RedirectToAction("Login", "Auth");
+            }
+
+            if(model.Password != model.PasswordConfirm)
+            {
+                _notyfService.Error("Passwords don't match");
+                return View(model);
+            }
+            var result = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
+            if (result.Succeeded)
+            {
+                _notyfService.Success("Password update correctly.");
                 return RedirectToAction("Login", "Auth");
-            await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
-            return RedirectToAction("Login", "Auth");
+            }
+            else
+            {
+                _notyfService.Error(result.Errors.FirstOrDefault().Description);
+                return View(model);
+            }
         }
         catch (Exception ex)
         {
+            _notyfService.Error("Error during updating password. Please retry.");
             Logger.Error(ex, ex.Message);
             return View(model);
         }
@@ -171,9 +188,18 @@ public class AuthController : Controller
         {
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
-                return RedirectToAction("SignUp", "Auth");
-            if((await _userManager.ConfirmEmailAsync(user, token)).Succeeded)
-                return RedirectToAction("Login", "Auth");
+            {
+                user = await _userManager.FindByNameAsync(email);
+                if(user == null)
+                    return RedirectToAction("SignUp", "Auth");
+            }
+
+            if ((await _userManager.ConfirmEmailAsync(user, token)).Succeeded)
+            {
+                await _signInManager.SignInAsync(user, false);
+                return RedirectToAction("Index", "Home", new {area = "Portfolio"});
+            }
+
             return RedirectToAction("VerifyEmail", "Auth", new { Email = email });
         }
         catch (Exception e)

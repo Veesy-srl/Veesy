@@ -50,7 +50,7 @@ try
     
     builder.Services.AddIdentity<MyUser, IdentityRole>(opts =>
         {
-            opts.SignIn.RequireConfirmedEmail = false;
+            opts.SignIn.RequireConfirmedEmail = true;
             opts.SignIn.RequireConfirmedAccount = false;
             opts.Password.RequireDigit = true;
             opts.Password.RequireLowercase = true;

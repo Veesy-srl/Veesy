@@ -91,4 +91,9 @@ public class AccountService : IAccountService
     {
         return _uoW.MyUserRepository.GetCategoriesWork();
     }
+
+    public SubscriptionPlan GetSubscriptionPlanByName(string name)
+    {
+        return _uoW.MyUserRepository.GetSubscriptionPlanByName(name);
+    }
 }
