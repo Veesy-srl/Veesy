@@ -69,4 +69,5 @@
     <_ContentIncludedByDefault Remove="Areas\Auth\Shared\_ValidationScriptsPartial.cshtml" />
   </ItemGroup>
 
+
 </Project>

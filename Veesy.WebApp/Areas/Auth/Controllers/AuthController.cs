@@ -88,7 +88,7 @@ public class AuthController : Controller
             {
                 var signin = await _signInManager.PasswordSignInAsync(model.Username, model.Password, false, false);
                 if(signin.Succeeded)
-                    return RedirectToAction("Index", "Home", new { area = "Portfolio" });
+                    return RedirectToAction("VerifyEmail", "Auth");
                 return RedirectToAction("Login");
             }
 
@@ -186,7 +186,7 @@ public class AuthController : Controller
     [HttpGet]
     public IActionResult VerifyEmail(string email)
     {
-        return View(new VerifyEmail()
+        return View(new VerifyEmailViewModel()
         {
             Email = email
         });

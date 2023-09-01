@@ -1,6 +1,6 @@
 namespace Veesy.Presentation.Model.Auth;
 
-public class VerifyEmail
+public class VerifyEmailViewModel
 {
     public string Email { get; set; }
 }
