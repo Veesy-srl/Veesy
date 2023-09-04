@@ -20,6 +20,12 @@ public class MediaHandler
         _dbContext = dbContext;
     }
 
+    public async Task SaveFileAsStreamAsync(Stream stream, string fileName, string contentType)
+    {
+        await _veesyBlobService.UploadFromStreamBlobAsync(stream, fileName, contentType);
+    }
+
+
     public async Task<long> SaveFileAsync(FileMultipartSection fileSection, IList<string> filePaths, IList<string> notUploadedFiles)
     {
         var extension = Path.GetExtension(fileSection.FileName);

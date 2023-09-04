@@ -8,8 +8,8 @@
         <div class="ps-3">
             <nav class="breadcrumb-container" aria-label="Percorso di navigazione">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><i class="fa-solid fa-house me-2"></i><a class="breadcrumb-a me-2" href="#">dashboard</a><i class="fa-solid fa-chevron-right"></i></li>
-                    <li class="breadcrumb-item"><a class="breadcrumb-a me-2" href="#">portfolio</a><i class="fa-solid fa-chevron-right"></i></li>
+                    <li class="breadcrumb-item"><i class="fa-solid fa-house me-2"></i><a class="breadcrumb-a me-2" asp-area="Portfolio" asp-controller="Home" asp-action="Index">dashboard</a><i class="fa-solid fa-chevron-right"></i></li>
+                    <li class="breadcrumb-item"><a class="breadcrumb-a me-2" asp-action="Profile">portfolio</a><i class="fa-solid fa-chevron-right"></i></li>
                     <li class="breadcrumb-item"><a class="breadcrumb-a" href="#"><strong>basic info</strong></a></li>
                 </ol>
             </nav>
@@ -19,14 +19,17 @@
         <h3>Basic Info</h3>
         <div class="empty-veesy"></div>
         <div class="d-flex">
-            <div class="col-sm-3 col-md-3">
-                <div class="text-center">
-                    <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80" class="img-thumbnail rounded-circle" alt="user-image">
-                </div>
+            <div class="text-left me-3">
+                @if (string.IsNullOrEmpty(Model.FileName))
+                {
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" class="img-thumbnail-custom" alt="user-image">
+                }
+                else
+                {
+                    <img src="@Model.BasePathImages@Model.FileName" class="img-thumbnail-custom" alt="user-image">
+                }
             </div>
-            <div class="col-sm-9 col-md-9">
-                <a class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
-            </div>
+            <a onclick="openModal('#modalImage')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
         </div>
         <div class="empty-veesy"></div>
         <div class="d-flex">
@@ -36,7 +39,7 @@
                         <p class="mb-0"><strong>Name and Surname*</strong></p>
                         <p class="mb-0">@Model.Name @Model.Surname</p>
                     </div>
-                    <div class="col-3 text-end"><a class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
+                    <div class="col-3 text-end"><a onclick="setTextAreaValue('name-edit', '@Model.Name'), setTextAreaValue('surname-edit', '@Model.Surname'), openModal('#modalFullname')"  class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
                 </div>
                 <hr class="hr"/>
                 <div class="d-flex">
@@ -44,17 +47,63 @@
                         <p class="mb-0"><strong>Email*</strong></p>
                         <p class="mb-0">@Model.Email</p>
                     </div>
-                    <div class="col-3 text-end"><a class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
+                    <div class="col-3 text-end"><a onclick="setTextAreaValue('email-edit', '@Model.Email'), openModal('#modalEmail')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
                 </div>
                 <hr class="hr"/>
+                <div class="d-flex">
+                     @if (string.IsNullOrEmpty(@Model.Category))
+                        {
+                            <div class="col-9">
+                                <p class="mb-0"><strong>Category</strong></p>
+                                <p class="mb-0 color-red">information missing</p>
+                            </div>
+                            <div class="col-3 text-end">
+                                <a onclick="openModal('#modalCategory')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-9">
+                                <p class="mb-0"><strong>Category</strong></p>
+                                <p class="mb-0">@Model.Category</p>
+                            </div>
+                            <div class="col-3 text-end">
+                                <a onclick="setTextAreaValue('category-edit', '@Model.Category'), openModal('#modalCategory')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
+                            </div>
+                        }
+                </div>
+                <hr class="hr"/>
+                <div class="d-flex">
+                @if (string.IsNullOrEmpty(@Model.VatNumber))
+                {
+                    <div class="col-9">
+                        <p class="mb-0"><strong>VAT Number</strong></p>
+                        <p class="mb-0 color-red">information missing</p>
+                    </div>
+                    <div class="col-3 text-end">
+                        <a onclick="openModal('#modalVAT')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-9">
+                        <p class="mb-0"><strong>VAT Number</strong></p>
+                        <p class="mb-0">@Model.VatNumber</p>
+                    </div>
+                    <div class="col-3 text-end">
+                        <a onclick="setTextAreaValue('vat-number-edit', '@Model.VatNumber'), openModal('#modalVAT')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
+                    </div>
+                }
+            </div>
+            <hr class="hr"/>
             </div>
             <div class="col-sm-12 col-md-6 ms-2">
                 <div class="d-flex">
                     <div class="col-9">
                         <p class="mb-0"><strong>Username*</strong></p>
-                        <p class="mb-0 color-red">@Model.Username</p>
+                        <p class="mb-0">@Model.Username</p>
                     </div>
-                    <div class="col-3 text-end"><a class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
+                    <div class="col-3 text-end"><a onclick="setTextAreaValue('username-edit', '@Model.Username'), openModal('#modalUsername')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
                 </div>
                 <hr class="hr"/>
                 <div class="d-flex">
@@ -62,17 +111,7 @@
                         <p class="mb-0"><strong>Password*</strong></p>
                         <p class="mb-0">***********</p>
                     </div>
-                    <div class="col-3 text-end"><a class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
-                </div>
-                <hr class="hr"/>
-            </div>
-            <div class="col-sm-12 col-md-6 ms-2">
-                <div class="d-flex">
-                    <div class="col-9">
-                        <p class="mb-0"><strong>Category*</strong></p>
-                        <p class="mb-0 color-red">@Model.Category</p>
-                    </div>
-                    <div class="col-3 text-end"><a class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
+                    <div class="col-3 text-end"><a onclick="openModal('#modalPassword')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
                 </div>
                 <hr class="hr"/>
                 <div class="d-flex">
@@ -82,52 +121,27 @@
                     </div>
                 </div>
                 <hr class="hr"/>
-            </div>
-            <div class="col-sm-12 col-md-6 ms-2">
                 <div class="d-flex">
-                    @if (string.IsNullOrEmpty(@Model.VatNumber))
-                    {
-                        <div class="col-9">
-                            <p class="mb-0"><strong>VAT Number</strong></p>
-                            <p class="mb-0 color-red">information missing</p>
-                        </div>
-                        <div class="col-3 text-end">
-                            <a class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="col-9">
-                            <p class="mb-0"><strong>VAT Number</strong></p>
-                            <p class="mb-0 color-red">@Model.VatNumber</p>
-                        </div>
-                        <div class="col-3 text-end">
-                            <a class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
-                        </div>
-                    }
-                </div>
-                <hr class="hr"/>
-                <div class="d-flex">
-                    @if (string.IsNullOrEmpty(@Model.VatNumber))
-                    {
-                        <div class="col-9">
-                            <p class="mb-0"><strong>Phone Number</strong></p>
-                            <p class="mb-0 color-red">information missing</p>
-                        </div>
-                        <div class="col-3 text-end">
-                            <a class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="col-9">
-                            <p class="mb-0"><strong>Phone Number</strong></p>
-                            <p class="mb-0 color-red">@Model.PhoneNumber</p>
-                        </div>
-                        <div class="col-3 text-end">
-                            <a class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
-                        </div>
-                    }
+                @if (string.IsNullOrEmpty(@Model.PhoneNumber))
+                {
+                    <div class="col-9">
+                        <p class="mb-0"><strong>Phone Number</strong></p>
+                        <p class="mb-0 color-red">information missing</p>
+                    </div>
+                    <div class="col-3 text-end">
+                        <a onclick="openModal('#modalPhoneNumber')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-9">
+                        <p class="mb-0"><strong>Phone Number</strong></p>
+                        <p class="mb-0">@Model.PhoneNumber</p>
+                    </div>
+                    <div class="col-3 text-end">
+                        <a onclick="setTextAreaValue('phone-number-edit', '@Model.PhoneNumber'), openModal('#modalPhoneNumber')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
+                    </div>
+                }
                 </div>
                 <hr class="hr"/>
             </div>
@@ -146,3 +160,365 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="modalFullname" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">External Link</h5>
+                <a onclick="closeModal('#modalFullname')"><i class="fa-solid fa-circle-xmark"></i></a>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <p class="mb-0"><strong>Name*</strong></p>
+                        <input type="text" id="name-edit" rows="4" class="w-100 input-modal"/>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <p class="mb-0"><strong>Surname*</strong></p>
+                        <input type="text" id="surname-edit" rows="4" class="w-100 input-modal"/>
+                    </div>
+                </div>
+                <p class="mt-2"><strong>*compulsory field</strong></p>  
+            </div>
+            <div class="modal-footer">                
+                <a onclick="UpdateFullname()" class="rounded-pill btn btn-primary" type="submit">save</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalPassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Password</h5>
+                <a onclick="closeModal('#modalPassword')"><i class="fa-solid fa-circle-xmark"></i></a>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <p class="mb-0"><strong>Old Password*</strong></p>
+                        <input type="password" id="old-password-edit" rows="4" class="w-100 input-modal"/>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <p class="mb-0"><strong>New Password*</strong></p>
+                        <input type="password" id="new-password-edit" rows="4" class="w-100 input-modal"/>
+                    </div>
+                </div>
+                <p class="mt-2"><strong>*compulsory field</strong></p>  
+            </div>
+            <div class="modal-footer">                
+                <a onclick="UpdatePassword()" class="rounded-pill btn btn-primary" type="submit">save</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Email</h5>
+                <a onclick="closeModal('#modalEmail')"><i class="fa-solid fa-circle-xmark"></i></a>
+            </div>
+            <div class="modal-body">
+                <p>Email*</p>
+                <input type="email" id="email-edit" rows="4" class="w-100 input-modal"/>
+            </div>
+            <div class="modal-footer">                
+                <a onclick="UpdateEmail()" class="rounded-pill btn btn-primary" type="submit">save</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modalUsername" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Username</h5>
+                <a onclick="closeModal('#modalUsername')"><i class="fa-solid fa-circle-xmark"></i></a>
+            </div>
+            <div class="modal-body">
+                <p>Email*</p>
+                <input type="text" id="username-edit" rows="4" class="w-100 input-modal"/>
+            </div>
+            <div class="modal-footer">                
+                <a onclick="UpdateUsername()" class="rounded-pill btn btn-primary" type="submit">save</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalVAT" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">VAT Number</h5>
+                <a onclick="closeModal('#modalVAT')"><i class="fa-solid fa-circle-xmark"></i></a>
+            </div>
+            <div class="modal-body">
+                <p>VAT Number*</p>
+                <input type="text" id="vat-number-edit" rows="4" class="w-100 input-modal"/>
+            </div>
+            <div class="modal-footer">                
+                <a onclick="UpdateVATNumber()" class="rounded-pill btn btn-primary" type="submit">save</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalPhoneNumber" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Phone Number</h5>
+                <a onclick="closeModal('#modalPhoneNumber')"><i class="fa-solid fa-circle-xmark"></i></a>
+            </div>
+            <div class="modal-body">
+                <p>Phone Number*</p>
+                <input type="number" min="1" id="phone-number-edit" rows="4" class="w-100 input-modal"/>
+            </div>
+            <div class="modal-footer">                
+                <a onclick="UpdatePhoneNumber()" class="rounded-pill btn btn-primary" type="submit">save</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modalCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Category</h5>
+                <a onclick="closeModal('#modalCategory')"><i class="fa-solid fa-circle-xmark"></i></a>
+            </div>
+            <div class="modal-body">
+                <p>Category*</p>
+                <input type="text" id="category-edit" rows="4" class="w-100 input-modal"/>
+            </div>
+            <div class="modal-footer">                
+                <a onclick="UpdateCategory()" class="rounded-pill btn btn-primary" type="submit">save</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalImage" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Profile Image</h5>
+                <a onclick="closeModal('#modalImage')"><i class="fa-solid fa-circle-xmark"></i></a>
+            </div>
+            <div class="modal-body">
+                <form enctype="multipart/form-data" asp-action="UpdateProfileImage" asp-area="Portfolio" asp-controller="Media" class="dropzone card-grey-dashed-veesy" id="uploader">
+                    <div class="dz-message needsclick" id="message-uploader">
+                        <div id="div-uploader-icon" class="w-100 mb-1">
+                            <i id="uploader-icon" class="fa-solid fa-circle-plus fa-xl" style="color: #0D2045"></i>
+                        </div>
+                        <span id="uploader-text" class="text">
+                            Upload or drop files here.
+                        </span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">                
+                <a onclick="submitForm()" class="rounded-pill btn btn-primary" type="submit">save</a>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script>
+    function submitForm() {
+       document.getElementById("uploader").submit();
+    }
+    
+
+function UpdateFullname() {
+    $('#load-spinner').css("display", "block");
+    var Name = document.getElementById("name-edit").value
+    var Surname = document.getElementById("surname-edit").value
+    var FullNameDto = {Name,  Surname};
+    $.ajax({
+        type: 'POST',
+        url: '/Account/Profile/UpdateNameAndSurname',
+        data: JSON.stringify(FullNameDto),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function (response) {
+            if(response.result){
+                location.reload()
+            }
+            $('#load-spinner').css("display", "none");
+        },
+        error: function (response) {
+            $('#load-spinner').css("display", "none");
+        }
+    })
+}
+
+function UpdatePassword() {
+    $('#load-spinner').css("display", "block");
+    var OldPassword = document.getElementById("old-password-edit").value
+    var NewPassword = document.getElementById("new-password-edit").value
+    var ResetPasswordDto = {OldPassword,  NewPassword};
+    $.ajax({
+        type: 'POST',
+        url: '/Account/Profile/UpdatePassword',
+        data: JSON.stringify(ResetPasswordDto),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function (response) {
+            if(response.result){
+                location.reload()
+            }
+            $('#load-spinner').css("display", "none");
+        },
+        error: function (response) {
+            $('#load-spinner').css("display", "none");
+        }
+    })
+}
+
+function UpdateEmail() {
+    $('#load-spinner').css("display", "block");
+    var email = document.getElementById("email-edit").value
+    $.ajax({
+        type: 'POST',
+        url: '/Account/Profile/UpdateEmail',
+        data: JSON.stringify(email),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function (response) {
+            if(response.result){
+                location.reload()
+            }
+            $('#load-spinner').css("display", "none");
+        },
+        error: function (response) {
+            $('#load-spinner').css("display", "none");
+        }
+    })
+}
+
+function UpdateUsername() {
+    $('#load-spinner').css("display", "block");
+    var username = document.getElementById("username-edit").value
+    $.ajax({
+        type: 'POST',
+        url: '/Account/Profile/UpdateUsername',
+        data: JSON.stringify(username),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function (response) {
+            if(response.result){
+                location.reload()
+            }
+            $('#load-spinner').css("display", "none");
+        },
+        error: function (response) {
+            $('#load-spinner').css("display", "none");
+        }
+    })
+}
+
+function UpdateVATNumber() {
+    $('#load-spinner').css("display", "block");
+    var vatNumber = document.getElementById("vat-number-edit").value
+    $.ajax({
+        type: 'POST',
+        url: '/Account/Profile/UpdateVATNumber',
+        data: JSON.stringify(vatNumber),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function (response) {
+            if(response.result){
+                location.reload()
+            }
+            $('#load-spinner').css("display", "none");
+        },
+        error: function (response) {
+            $('#load-spinner').css("display", "none");
+        }
+    })
+}
+
+function UpdateCategory() {
+    $('#load-spinner').css("display", "block");
+    var category = document.getElementById("category-edit").value
+    $.ajax({
+        type: 'POST',
+        url: '/Account/Profile/UpdateCategory',
+        data: JSON.stringify(category),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function (response) {
+            if(response.result){
+                location.reload()
+            }
+            $('#load-spinner').css("display", "none");
+        },
+        error: function (response) {
+            $('#load-spinner').css("display", "none");
+        }
+    })
+}
+
+function UpdatePhoneNumber() {
+    $('#load-spinner').css("display", "block");
+    var phoneNumber = document.getElementById("phone-number-edit").value
+    $.ajax({
+        type: 'POST',
+        url: '/Account/Profile/UpdatePhoneNumber',
+        data: JSON.stringify(phoneNumber),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function (response) {
+            if(response.result){
+                location.reload()
+            }
+            $('#load-spinner').css("display", "none");
+        },
+        error: function (response) {
+            $('#load-spinner').css("display", "none");
+        }
+    })
+}
+
+    
+</script>
+
+    <script>
+/*Dropzone configuration*/
+    var uploader = null;
+    var msgUploader = document.getElementById("message-uploader");
+    var divUploader = document.getElementById("div-uploader-icon");
+    var iconUploader = document.getElementById("uploader-icon");
+    var txtUploader = document.getElementById("uploader-text");
+    
+    Dropzone.options.uploader = {
+        dictDefaultMessage: 'Upload or drop files here',
+        acceptedFiles: "image/*",
+        paramName: "file",
+        maxFilesize: 5, // MB
+        maxFiles: 1,
+        autoProcessQueue: true,
+        init: function () {
+            this.hiddenFileInput.removeAttribute('multiple');
+            this.on("success", function (file) {
+                location.reload()
+            });
+            this.on("maxfilesexceeded", function (file) {         
+                this.removeAllFiles();         
+                this.addFile(file);     
+            });
+        }
+    };
+</script>
+}

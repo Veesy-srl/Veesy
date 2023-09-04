@@ -1,3 +1,4 @@
+using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ using Veesy.Domain.Models;
 using Veesy.Presentation.Helper;
 using Veesy.Service.Dtos;
 using Veesy.WebApp.Areas.Auth.Controllers;
+using Veesy.WebApp.CustomDataAttribute;
 
 namespace Veesy.WebApp.Areas.Account.Controllers;
 
@@ -17,10 +19,12 @@ public class ProfileController : VeesyController
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     
     private readonly ProfileHelper _profileHelper;
+    private readonly INotyfService _notyfService;
 
-    public ProfileController(ProfileHelper profileHelper, UserManager<MyUser> userManager) : base(userManager)
+    public ProfileController(ProfileHelper profileHelper, UserManager<MyUser> userManager, INotyfService notyfService) : base(userManager)
     {
         _profileHelper = profileHelper;
+        _notyfService = notyfService;
     }
 
     [HttpGet("profile")]
@@ -174,17 +178,107 @@ public class ProfileController : VeesyController
     }
     
     [HttpPost]
-    public async Task<JsonResult> UpdateNameAndSurname([FromBody] string name, string surname)
+    public async Task<JsonResult> UpdateNameAndSurname([FromBody] FullNameDto fullName)
     {
         try
         {
-            var result = await _profileHelper.UpdateFullName(name, surname, UserInfo);
+            var result = await _profileHelper.UpdateFullName(fullName.Name, fullName.Surname, UserInfo);
             return Json(new { Result = result.Success, Message = result.Message});
         }
         catch (Exception ex)
         {
             Logger.Error(ex, ex.Message);
-            return Json(new { Result = false, Message = "Error updating languages. Please retry." });
+            return Json(new { Result = false, Message = "Error updating fullname. Please retry." });
+        }
+    }
+    
+    [HttpPost]
+    public async Task<JsonResult> UpdateEmail([FromBody] string email)
+    {
+        try
+        {
+            var result = await _profileHelper.UpdateEmail(email, UserInfo);
+            return Json(new { Result = result.Success, Message = result.Message});
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            return Json(new { Result = false, Message = "Error updating email. Please retry." });
+        }
+    }
+    
+    [HttpPost]
+    public async Task<JsonResult> UpdateUsername([FromBody] string username)
+    {
+        try
+        {
+            var result = await _profileHelper.UpdateUsername(username, UserInfo);
+            return Json(new { Result = result.Success, Message = result.Message});
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            return Json(new { Result = false, Message = "Error updating username. Please retry." });
+        }
+    }
+    
+    [HttpPost]
+    public async Task<JsonResult> UpdatePassword([FromBody] ResetPasswordDto resetPasswordDto)
+    {
+        try
+        {
+            var result = await _profileHelper.UpdatePassword(resetPasswordDto.OldPassword, resetPasswordDto.NewPassword, UserInfo);
+            return Json(new { Result = result.Success, Message = result.Message});
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            return Json(new { Result = false, Message = "Error updating password. Please retry." });
+        }
+    }
+    
+    [HttpPost]
+    public async Task<JsonResult> UpdatePhoneNumber([FromBody] string phoneNumber)
+    {
+        try
+        {
+            var result = await _profileHelper.UpdatePhoneNumber(phoneNumber, UserInfo);
+            return Json(new { Result = result.Success, Message = result.Message});
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            return Json(new { Result = false, Message = "Error updating phone number. Please retry." });
+        }
+    }
+    
+    [HttpPost]
+    public async Task<JsonResult> UpdateVATNumber([FromBody] string vatNumber)
+    {
+        try
+        {
+            var result = await _profileHelper.UpdateVATNumber(vatNumber, UserInfo);
+            return Json(new { Result = result.Success, Message = result.Message});
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            return Json(new { Result = false, Message = "Error updating VAT number. Please retry." });
+        }
+    }
+    
+    [HttpPost]
+    public async Task<JsonResult> UpdateCategory([FromBody] string category)
+    {
+        try
+        {
+            var result = await _profileHelper.UpdateCategory(category, UserInfo);
+            return Json(new { Result = result.Success, Message = result.Message});
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            return Json(new { Result = false, Message = "Error updating category. Please retry." });
         }
     }
     

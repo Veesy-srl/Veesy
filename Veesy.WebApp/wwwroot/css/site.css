@@ -427,8 +427,16 @@ a:hover{
   width: 125% !important;
 }
 
-.img-thumbnail{
+.img-thumbnail-custom{
   padding: 0 !important;
+  padding: 0.25rem;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  width: 90px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50px !important;
 }
 
 #icon-color{

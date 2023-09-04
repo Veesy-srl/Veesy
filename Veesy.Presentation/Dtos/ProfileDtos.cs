@@ -2,6 +2,18 @@ using Veesy.Domain.Models;
 
 namespace Veesy.Service.Dtos;
 
+public class FullNameDto
+{
+    public string Name { get; set; }
+    public string Surname { get; set; }
+}
+
+public class ResetPasswordDto
+{
+    public string OldPassword { get; set; }
+    public string NewPassword { get; set; }
+}
+
 public class UsedSoftwareDto
 {
     public Guid Code { get; set; }

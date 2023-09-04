@@ -19,4 +19,6 @@ public class ProfileViewModel
     public List<CategoriesWorkDto> CategoriesWork { get; set; }
     public List<LanguageSpokenDto> LanguagesSpoken { get; set; }
     public List<InfoToShowDto> InfoToShow { get; set; }
+    public string FileName { get; set; }
+    public string BasePathImages { get; set; }
 }

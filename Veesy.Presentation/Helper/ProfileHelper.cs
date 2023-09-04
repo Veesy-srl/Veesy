@@ -1,19 +1,31 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Veesy.Domain.Constants;
 using Veesy.Domain.Exception;
 using Veesy.Domain.Models;
+using Veesy.Media.Constants;
 using Veesy.Presentation.Model.Account;
 using Veesy.Service.Dtos;
 using Veesy.Service.Interfaces;
+using Veesy.Validators;
 
 namespace Veesy.Presentation.Helper;
 
 public class ProfileHelper
 {
     private readonly IAccountService _accountService;
+    private readonly MyUserValidator _myUserValidator;
+    private readonly UserManager<MyUser> _userManager;
+    private readonly MediaHelper _mediaHelper;
+    private readonly IConfiguration _config;
 
-    public ProfileHelper(IAccountService accountService)
+    public ProfileHelper(IAccountService accountService, MyUserValidator myUserValidator, UserManager<MyUser> userManager, MediaHelper mediaHelper, IConfiguration config)
     {
         _accountService = accountService;
+        _myUserValidator = myUserValidator;
+        _userManager = userManager;
+        _mediaHelper = mediaHelper;
+        _config = config;
     }
 
     public async Task<ResultDto> UpdateMyUserBio(string biography, MyUser user)
@@ -34,6 +46,8 @@ public class ProfileHelper
         var softskills = _accountService.GetSkillsWithUserByType(userInfo, SkillConstants.SoftSkill);
         return new ProfileViewModel()
         {
+            FileName = userInfo.ProfileImageFileName,
+            BasePathImages = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobProfileImageDirectory}/",
             ExternalLink = userInfo.ExternalLink,
             PhoneNumber = userInfo.PhoneNumber,
             Username = userInfo.UserName,
@@ -193,7 +207,29 @@ public class ProfileHelper
 
     public async Task<ResultDto> UpdateFullName(string name, string surname, MyUser userInfo)
     {
-        throw new NotImplementedException();
+        userInfo.Name = name;
+        userInfo.Surname = surname;
+        var result = await _myUserValidator.UserValidator(userInfo);
+        if (!result.Success)
+            return result;
+        return await _accountService.UpdateUserProfile(userInfo);
+    }
+    public async Task<ResultDto> UpdateCategory(string category, MyUser userInfo)
+    {
+        userInfo.Category = category;
+        return await _accountService.UpdateUserProfile(userInfo);
+    }
+    
+    public async Task<ResultDto> UpdateVATNumber(string vatNumber, MyUser userInfo)
+    {
+        userInfo.VATNumber = vatNumber;
+        return await _accountService.UpdateUserProfile(userInfo);
+    }
+    
+    public async Task<ResultDto> UpdatePhoneNumber(string phoneNumber, MyUser userInfo)
+    {
+        userInfo.PhoneNumber = phoneNumber;
+        return await _accountService.UpdateUserProfile(userInfo);
     }
 
     public BasicInfoViewModel GetBasicInfoViewModel(MyUser userInfo)
@@ -206,7 +242,53 @@ public class ProfileHelper
             Username = userInfo.UserName,
             Category = userInfo.Category,
             VatNumber = userInfo.VATNumber,
-            PhoneNumber = userInfo.PhoneNumber
+            PhoneNumber = userInfo.PhoneNumber,
+            FileName = userInfo.ProfileImageFileName,
+            BasePathImages = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobProfileImageDirectory}/",
         };
+    }
+
+    public async Task<ResultDto> UpdateEmail(string email, MyUser userInfo)
+    {
+        userInfo.Email = email;
+        //TODO: Validate mail
+        var result = await _userManager.UpdateAsync(userInfo);
+        if (result.Succeeded)
+            return new ResultDto(true, "");
+        return new ResultDto(false, result.Errors.FirstOrDefault().Description);
+    }
+    
+    public async Task<ResultDto> UpdateUsername(string username, MyUser userInfo)
+    {
+        userInfo.UserName = username;
+        var result = await _userManager.UpdateAsync(userInfo);
+        if (result.Succeeded)
+            return new ResultDto(true, "");
+        return new ResultDto(false, result.Errors.FirstOrDefault().Description);
+    }
+    
+    public async Task<ResultDto> UpdatePassword(string oldPassword, string newPassword, MyUser userInfo)
+    {
+        var validCredentials = await _userManager.CheckPasswordAsync(userInfo, oldPassword);
+        if (!validCredentials)
+            return new ResultDto(false, "Old password is incorrect. Please retry");
+        var token = await _userManager.GeneratePasswordResetTokenAsync(userInfo);
+        var result = await _userManager.ResetPasswordAsync(userInfo, token, newPassword);
+        if (result.Succeeded)
+            return new ResultDto(true, "");
+        return new ResultDto(false, result.Errors.FirstOrDefault().Description);
+    }
+
+    public async Task<ResultDto> UpdateProfileImage(Stream requestBody, string? requestContentType, MyUser userInfo)
+    {
+        var result = await _mediaHelper.UploadProfileImageOnAzure(requestBody, requestContentType);
+        if (result.resultDto.Success)
+        {
+            userInfo.OrginalProfileImageName = result.originalFilename;
+            userInfo.ProfileImageFileName = result.newFileName;
+            return await _accountService.UpdateUserProfile(userInfo);
+        }
+
+        return result.resultDto;
     }
 }

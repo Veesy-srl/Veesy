@@ -18,6 +18,8 @@ public class MyUser : IdentityUser
     public string Biografy { get; set; }
     public string Category { get; set; }
     public string VATNumber { get; set; }
+    public string OrginalProfileImageName { get; set; }
+    public string ProfileImageFileName { get; set; }
 
     public virtual List<MyUserSector> MyUserSectors { get; set; }
     public virtual List<MyUserUsedSoftware> MyUserUsedSoftwares { get; set; }

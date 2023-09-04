@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 using Veesy.Presentation.Model.Media;
 using Microsoft.Net.Http.Headers;
+using Veesy.Domain.Exception;
+using Veesy.Media.Constants;
 using Veesy.Media.Utils;
 using Veesy.Service.Implementation;
 
@@ -18,9 +20,32 @@ public class MediaHelper
         _mediaHandler = mediaHandler;
     }
 
+    public async Task<(ResultDto resultDto, string originalFilename, string newFileName)> UploadProfileImageOnAzure(Stream fileStream, string contentType)
+    {
+        var boundary = MediaInfo.GetBoundary(MediaTypeHeaderValue.Parse(contentType));
+        var multipartReader = new MultipartReader(boundary, fileStream);
+        var section = await multipartReader.ReadNextSectionAsync();
+        var fileName = Guid.NewGuid().ToString();
+
+        while (section != null)
+        {
+            var fileSection = section.AsFileSection();
+            if (fileSection != null)
+            {
+                var extension = Path.GetExtension(fileSection.FileName);
+                fileName += extension;
+                await _mediaHandler.SaveFileAsStreamAsync(fileSection.FileStream, $"{MediaCostants.BlobProfileImageDirectory}/{fileName}", contentType);
+                return (new ResultDto(true, ""), fileSection.FileName, fileName);
+            }
+            section = await multipartReader.ReadNextSectionAsync();
+        }
+        return (new ResultDto(false, "Error during upload image. Please retry."), "", "");
+    }
+
+
     public async Task<FileUploadSummary> UploadFileAsync(Stream fileStream, string contentType)
     {
-        var fileCount = 0;
+        var fileCount = 0; 
         long totalSizeInBytes = 0;
         var boundary = MediaInfo.GetBoundary(MediaTypeHeaderValue.Parse(contentType));
         var multipartReader = new MultipartReader(boundary, fileStream);

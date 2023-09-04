@@ -17,7 +17,14 @@
                 <div class="d-flex">
                     <div class="col-3">
                         <div class="text-center">
-                            <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80" class="img-thumbnail rounded-circle" alt="user-image">
+                            @if (string.IsNullOrEmpty(@Model.FileName))
+                            {
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" class="img-thumbnail rounded-circle" alt="user-image">
+                            }
+                            else
+                            {
+                                <img src="@Model.BasePathImages@Model.FileName" class="img-thumbnail rounded-circle" alt="user-image">
+                            }
                         </div>
                     </div>
                     <div class="col-8"><p class="ms-2"><strong>@Model.Username</strong></p></div>
@@ -545,8 +552,9 @@
     </div>
 </div>
 
-
-<script>
+@section Scripts
+{
+    <script>
 
 function UpdateInfoToShow() {
     $('#load-spinner').css("display", "block");
@@ -787,3 +795,4 @@ function UpdatePortfolioIntro(){
     })
 }
 </script>
+}

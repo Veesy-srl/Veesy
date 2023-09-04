@@ -10,4 +10,6 @@ public class BasicInfoViewModel
     public string Category { get; set; }
     public string VatNumber { get; set; }
     public string PhoneNumber { get; set; }
+    public string BasePathImages { get; set; }
+    public string FileName { get; set; }
 }
