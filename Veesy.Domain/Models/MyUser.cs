@@ -16,11 +16,15 @@ public class MyUser : IdentityUser
     public string ExternalLink { get; set; }
     public string PortfolioIntro { get; set; }
     public string Biografy { get; set; }
+    public string Category { get; set; }
+    public string VATNumber { get; set; }
+
     public virtual List<MyUserSector> MyUserSectors { get; set; }
     public virtual List<MyUserUsedSoftware> MyUserUsedSoftwares { get; set; }
     public virtual List<MyUserSkill> MyUserSkills { get; set; }
     public virtual List<Media> Medias { get; set; }
     public virtual List<Portfolio> Portfolios { get; set; }
     public virtual List<MyUserCategoryWork> MyUserCategoriesWork { get; set; }
-
+    public virtual List<MyUserLanguageSpoken> MyUserLanguagesSpoken { get; set; }
+    public virtual List<MyUserInfoToShow> MyUserInfosToShow { get; set; }
 }

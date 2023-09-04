@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Veesy.Domain.Data;
 
@@ -11,9 +12,11 @@ using Veesy.Domain.Data;
 namespace Veesy.Domain.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230901162334_AddLanguagesAndInfoToShow")]
+    partial class AddLanguagesAndInfoToShow
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -793,10 +796,6 @@ namespace Veesy.Domain.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
@@ -826,10 +825,6 @@ namespace Veesy.Domain.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VATNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

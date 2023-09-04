@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
@@ -9,6 +10,7 @@ using Veesy.WebApp.Areas.Auth.Controllers;
 
 namespace Veesy.WebApp.Areas.Account.Controllers;
 
+[Authorize]
 [Area("Account")]
 public class ProfileController : VeesyController
 {
@@ -38,7 +40,15 @@ public class ProfileController : VeesyController
     [HttpGet("profile/basic-info")]
     public IActionResult BasicInfo()
     {
-        return View();
+        try
+        {
+            return View(_profileHelper.GetBasicInfoViewModel(UserInfo));
+        }
+        catch (Exception e)
+        {
+            Logger.Error(e, e.Message);
+            return RedirectToAction("Profile");
+        }
     }
 
     #region API
@@ -64,6 +74,21 @@ public class ProfileController : VeesyController
         try
         {
             var result = await _profileHelper.UpdateMyUserPortfolioIntro(introPortfolio, UserInfo);
+            return Json(new { Result = result.Success, Message = result.Message});
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            return Json(new { Result = false, Message = "Error saving portfolio intro. Please retry." });
+        }
+    }
+    
+    [HttpPost]
+    public async Task<JsonResult> UpdateExternalLink([FromBody] string externalLink)
+    {
+        try
+        {
+            var result = await _profileHelper.UpdateMyUserExternalLink(externalLink, UserInfo);
             return Json(new { Result = result.Success, Message = result.Message});
         }
         catch (Exception ex)
@@ -104,17 +129,62 @@ public class ProfileController : VeesyController
     }
     
     [HttpPost]
-    public async Task<JsonResult> UpdateSoftSkills([FromBody] List<Guid> hardSkillsCodes)
+    public async Task<JsonResult> UpdateCategoriesWork([FromBody] List<Guid> categoriesWorkCodes)
     {
         try
         {
-            var result = await _profileHelper.UpdateSkill(hardSkillsCodes, UserInfo, SkillConstants.SoftSkill);
+            var result = await _profileHelper.UpdateCategoriesWork(categoriesWorkCodes, UserInfo);
             return Json(new { Result = result.Success, Message = result.Message});
         }
         catch (Exception ex)
         {
             Logger.Error(ex, ex.Message);
-            return Json(new { Result = false, Message = "Error updating softwares. Please retry." });
+            return Json(new { Result = false, Message = "Error updating roles. Please retry." });
+        }
+    }
+    
+    [HttpPost]
+    public async Task<JsonResult> UpdateLanguageSpoken([FromBody] List<Guid> languagesSpokenCodes)
+    {
+        try
+        {
+            var result = await _profileHelper.UpdateLanguageSpoken(languagesSpokenCodes, UserInfo);
+            return Json(new { Result = result.Success, Message = result.Message});
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            return Json(new { Result = false, Message = "Error updating languages. Please retry." });
+        }
+    }
+    
+    [HttpPost]
+    public async Task<JsonResult> UpdateInfoToShow([FromBody] List<Guid> infoToShowCodes)
+    {
+        try
+        {
+            var result = await _profileHelper.UpdateInfoToShow(infoToShowCodes, UserInfo);
+            return Json(new { Result = result.Success, Message = result.Message});
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            return Json(new { Result = false, Message = "Error updating languages. Please retry." });
+        }
+    }
+    
+    [HttpPost]
+    public async Task<JsonResult> UpdateNameAndSurname([FromBody] string name, string surname)
+    {
+        try
+        {
+            var result = await _profileHelper.UpdateFullName(name, surname, UserInfo);
+            return Json(new { Result = result.Success, Message = result.Message});
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            return Json(new { Result = false, Message = "Error updating languages. Please retry." });
         }
     }
     

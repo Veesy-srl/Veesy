@@ -15,4 +15,14 @@ public interface IAccountService
     Task<ResultDto> UpdateMyUserSkills(List<MyUserSkill> skillToDelete, List<MyUserSkill> skillToAdd);
     List<CategoryWork> GetCategoriesWork();
     SubscriptionPlan GetSubscriptionPlanByName(string name);
+    List<InfoToShow> GetInfosToShow();
+    List<CategoryWork> GetCategoriesWorkWithUser(string userId);
+    List<MyUserCategoryWork> GetCategoriesWorkByUser(MyUser userInfo);
+    Task<ResultDto> UpdateMyUserCategoriesWork(List<MyUserCategoryWork> categoryWorksToDelete, List<MyUserCategoryWork> categoryWorksToAdd);
+    List<MyUserInfoToShow> GetInfosToShowByUser(MyUser userInfo);
+    Task<ResultDto> UpdateMyUserInfoToShow(List<MyUserInfoToShow> infoToShowToDelete, List<MyUserInfoToShow> infoToShowToAdd);
+    List<MyUserLanguageSpoken> GetLanguageSpokenByUser(MyUser userInfo);
+    Task<ResultDto> UpdateMyUserLanguageSpoken(List<MyUserLanguageSpoken> languageSpokenToDelete, List<MyUserLanguageSpoken> languageSpokenToAdd);
+    List<InfoToShow> GetLanguagesSpokenWithUser(MyUser userInfo);
+    List<LanguageSpoken> GetInfosToShowWithUser(MyUser userInfo);
 }

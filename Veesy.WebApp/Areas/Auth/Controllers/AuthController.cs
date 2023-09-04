@@ -55,7 +55,9 @@ public class AuthController : Controller
                     return View(model);
                 }
             }
-        
+
+            if (!await _userManager.IsEmailConfirmedAsync(user))
+                return RedirectToAction("SendEmailVerification", new { email = user.Email });
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
             if (result.Succeeded)
                return RedirectToAction("Index", "Home", new { area = "Portfolio" });

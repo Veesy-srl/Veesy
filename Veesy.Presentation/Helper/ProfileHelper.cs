@@ -34,9 +34,17 @@ public class ProfileHelper
         var softskills = _accountService.GetSkillsWithUserByType(userInfo, SkillConstants.SoftSkill);
         return new ProfileViewModel()
         {
+            ExternalLink = userInfo.ExternalLink,
+            PhoneNumber = userInfo.PhoneNumber,
+            Username = userInfo.UserName,
+            Email = userInfo.Email,
+            FullName = userInfo.Name + " " + userInfo.Surname,
             Biography = userInfo.Biografy,
             PortfolioIntro = userInfo.PortfolioIntro,
+            CategoriesWork = MapProfileDtos.MapCategoriesWorkList(_accountService.GetCategoriesWorkWithUser(userInfo.Id)),
             UsedSoftwares = MapProfileDtos.MapUsedSoftwareList(_accountService.GetUsedSoftwareWithUser(userInfo)),
+            LanguagesSpoken = MapProfileDtos.MapLanguagesSpokenList(_accountService.GetInfosToShowWithUser(userInfo)),
+            InfoToShow = MapProfileDtos.MapInfoToShowList(_accountService.GetLanguagesSpokenWithUser(userInfo)),
             HardSkills = MapProfileDtos.MapSkillsList(hardskills.ToList()),
             SoftSkills = MapProfileDtos.MapSkillsList(softskills.ToList())
         };
@@ -97,5 +105,108 @@ public class ProfileHelper
         
         return await _accountService.UpdateMyUserSkills(skillToDelete, skillToAdd);
 
+    }
+
+    public async Task<ResultDto> UpdateMyUserExternalLink(string externalLink, MyUser userInfo)
+    {
+        userInfo.ExternalLink = string.IsNullOrEmpty(externalLink) ? null : externalLink;
+        return await _accountService.UpdateUserProfile(userInfo);
+    }
+
+    public async Task<ResultDto> UpdateCategoriesWork(List<Guid> categoriesWorkCodes, MyUser userInfo)
+    {
+        var oldCategoriesWork = _accountService.GetCategoriesWorkByUser(userInfo).ToList();
+        var categoryWorksToDelete = new List<MyUserCategoryWork>();
+        var categoryWorksToAdd = new List<MyUserCategoryWork>();
+        
+        //Comparison of previous CategoriesWork with those currently selected to delete them
+        foreach (var item in oldCategoriesWork)
+        {
+            if(!categoriesWorkCodes.Contains(item.CategoryWorkId))
+                categoryWorksToDelete.Add(item);
+        }
+
+        foreach (var item in categoriesWorkCodes)
+        {
+            if(!oldCategoriesWork.Any(s => s.CategoryWorkId == item))
+                categoryWorksToAdd.Add(new MyUserCategoryWork()
+                {
+                    MyUserId = userInfo.Id,
+                    CategoryWorkId = item
+                });
+        }
+        
+        return await _accountService.UpdateMyUserCategoriesWork(categoryWorksToDelete, categoryWorksToAdd);
+    }
+
+    public async Task<ResultDto> UpdateInfoToShow(List<Guid> infoToShowCodes, MyUser userInfo)
+    {
+        var oldInfoToShow = _accountService.GetInfosToShowByUser(userInfo).ToList();
+        var infoToShowToDelete = new List<MyUserInfoToShow>();
+        var infoToShowToAdd = new List<MyUserInfoToShow>();
+        
+        //Comparison of previous CategoriesWork with those currently selected to delete them
+        foreach (var item in oldInfoToShow)
+        {
+            if(!infoToShowCodes.Contains(item.InfoToShowId))
+                infoToShowToDelete.Add(item);
+        }
+
+        foreach (var item in infoToShowCodes)
+        {
+            if(!oldInfoToShow.Any(s => s.InfoToShowId == item))
+                infoToShowToAdd.Add(new MyUserInfoToShow()
+                {
+                    MyUserId = userInfo.Id,
+                    InfoToShowId = item
+                });
+        }
+        
+        return await _accountService.UpdateMyUserInfoToShow(infoToShowToDelete, infoToShowToAdd);
+    }
+
+    public async Task<ResultDto> UpdateLanguageSpoken(List<Guid> languagesSpokenCodes, MyUser userInfo)
+    {
+        var oldLanguageSpoken = _accountService.GetLanguageSpokenByUser(userInfo).ToList();
+        var languagesToDelete = new List<MyUserLanguageSpoken>();
+        var languagesToAdd = new List<MyUserLanguageSpoken>();
+        
+        //Comparison of previous CategoriesWork with those currently selected to delete them
+        foreach (var item in oldLanguageSpoken)
+        {
+            if(!languagesSpokenCodes.Contains(item.LanguageSpokenId))
+                languagesToDelete.Add(item);
+        }
+
+        foreach (var item in languagesSpokenCodes)
+        {
+            if(!oldLanguageSpoken.Any(s => s.LanguageSpokenId == item))
+                languagesToAdd.Add(new MyUserLanguageSpoken()
+                {
+                    MyUserId = userInfo.Id,
+                    LanguageSpokenId = item
+                });
+        }
+        
+        return await _accountService.UpdateMyUserLanguageSpoken(languagesToDelete, languagesToAdd);
+    }
+
+    public async Task<ResultDto> UpdateFullName(string name, string surname, MyUser userInfo)
+    {
+        throw new NotImplementedException();
+    }
+
+    public BasicInfoViewModel GetBasicInfoViewModel(MyUser userInfo)
+    {
+        return new BasicInfoViewModel()
+        {
+            Email = userInfo.Email,
+            Name = userInfo.Name,
+            Surname = userInfo.Surname,
+            Username = userInfo.UserName,
+            Category = userInfo.Category,
+            VatNumber = userInfo.VATNumber,
+            PhoneNumber = userInfo.PhoneNumber
+        };
     }
 }

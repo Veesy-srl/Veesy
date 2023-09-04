@@ -9,7 +9,7 @@
         <div class="ps-3">
             <nav class="breadcrumb-container" aria-label="Percorso di navigazione">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><i class="fa-solid fa-house me-2"></i><a class="breadcrumb-a me-2" href="#">dashboard</a><i class="fa-solid fa-chevron-right"></i></li>
+                    <li class="breadcrumb-item"><i class="fa-solid fa-house me-2"></i><a class="breadcrumb-a me-2" asp-action="Index" asp-area="Portfolio" asp-controller="Home">dashboard</a><i class="fa-solid fa-chevron-right"></i></li>
                     <li class="breadcrumb-item"><a class="breadcrumb-a" href="#"><strong>portfolio</strong></a></li>
                 </ol>
             </nav>
@@ -20,14 +20,32 @@
                             <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80" class="img-thumbnail rounded-circle" alt="user-image">
                         </div>
                     </div>
-                    <div class="col-8"><p class="ms-2"><strong>darial0ve!</strong></p></div>
+                    <div class="col-8"><p class="ms-2"><strong>@Model.Username</strong></p></div>
                     <div class="col-1"><div class="text-end"><i class="fa-solid fa-circle fa-2xs" style="color: #202F4D;"></i></div></div>
                 </div>
-                <h5 class="mt-4 mb-4">Daria Bianchi</h5>
-                <div class="d-flex"><p class="mb-0"><strong>Role:&nbsp;</strong></p><p class="mb-0">art director</p></div>
-                <div class="d-flex"><p class="mb-0"><strong>Email:&nbsp;</strong></p><p class="mb-0">dariabianchi@gmail.com</p></div>
-                <div class="d-flex"><p class="mb-0"><strong>Phone:&nbsp;</strong></p><p class="text-danger mb-0">information missing</p></div>
-                <div class="mt-4"><a class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit basic info</strong></a></div>
+                <h5 class="mt-4 mb-4">@Model.FullName</h5>
+                @{
+                    var workrole = "information missing";
+                    var role_css = "text-danger";
+                    if (Model.CategoriesWork.Count(s => s.Selected) > 0)
+                    {
+                        role_css = "";
+                        workrole = Model.CategoriesWork.FirstOrDefault(s => s.Selected).Name;
+                    }
+                }
+                <div class="d-flex"><p class="mb-0"><strong>Role:&nbsp;</strong></p><p class="@role_css mb-0">@workrole</p></div>
+                <div class="d-flex"><p class="mb-0"><strong>Email:&nbsp;</strong></p><p class="mb-0">@Model.Email</p></div>
+                @{
+                    var phone = "information missing";
+                    var css = "text-danger";
+                    if (!string.IsNullOrEmpty(Model.PhoneNumber))
+                    {
+                        css = "";
+                        phone = Model.PhoneNumber;
+                    }
+                }
+                <div class="d-flex"><p class="mb-0"><strong>Phone:&nbsp;</strong></p><p class="@css mb-0">@phone</p></div>
+                <div class="mt-4"><a asp-controller="Profile" asp-area="Account" asp-action="BasicInfo" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit basic info</strong></a></div>
             </div>
         </div>
     </div>
@@ -40,38 +58,109 @@
             <div class="col-sm-12 col-md-6 col-lg-6 me-2">
                 <hr class="hr"/>
                 <div class="d-flex">
-                    <div class="col-9">
-                        <p class="mb-0"><strong>Role:</strong></p>
-                        <p class="mb-0">Graphic Designer, Illustrator</p>
-                    </div>
-                    <div class="col-3 text-end"><a class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
+                    @if (Model.CategoriesWork.Count(s => s.Selected) == 0)
+                    {
+                        <div class="col-9">
+                            <p class="mb-0"><strong>Role:</strong></p>
+                            <p class="mb-0 color-red">Information missing</p>
+                        </div>
+                        <div class="col-3 text-end"><a onclick="openModal('#modalWorkRole')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div>
+                    }
+                    else
+                    {
+                        <div class="col-9">
+                            <p class="mb-0"><strong>Role:</strong></p>
+                            <p class="mb-0">
+                                @{
+                                    var roles = "";
+                                    foreach (var role in Model.CategoriesWork.Where(s => s.Selected))
+                                    {
+                                        roles += $"{@role.Name}, ";
+                                    }
+                                }
+                                @roles
+                            </p>
+                        </div>
+                        <div class="col-3 text-end"><a onclick="openModal('#modalWorkRole')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
+                    }
                 </div>
                 <hr class="hr"/>
                 <div class="d-flex">
-                    <div class="col-9">
-                        <p class="mb-0"><strong>External link:</strong></p>
-                        <p class="mb-0 color-red">Information missing</p>
-                    </div>
-                    <div class="col-3 text-end"><a class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div>
+                    @if (string.IsNullOrEmpty(Model.ExternalLink))
+                    {
+                        <div class="col-9">
+                            <p class="mb-0"><strong>External link:</strong></p>
+                            <p class="mb-0 color-red">Information missing</p>
+                        </div>
+                        <div class="col-3 text-end"><a onclick="openModal('#modalExternalLink')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div>
+                    }
+                    else
+                    {
+                        <div class="col-9">
+                            <p class="mb-0"><strong>External link:</strong></p>
+                            <a href="https://@Model.ExternalLink" target="_blank" class="mb-0">@Model.ExternalLink</a>
+                        </div>
+                        <div class="col-3 text-end"><a onclick="openModal('#modalExternalLink'), setTextAreaValue('external-link-edit', '@Model.ExternalLink')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
+                    }
                 </div>
                 <hr class="hr"/>
             </div>
             <div class="col-sm-12 col-md-6 ms-2">
                 <hr class="hr"/>
                 <div class="d-flex">
-                    <div class="col-9">
-                        <p class="mb-0"><strong>Language spoken:</strong></p>
-                        <p class="mb-0 color-red">Information missing</p>
-                    </div>
-                    <div class="col-3 text-end"><a class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div>
+                        @if (Model.LanguagesSpoken.Count(s => s.Selected) == 0)
+                        {
+                            <div class="col-9">
+                                <p class="mb-0"><strong>Language Spoken:</strong></p>
+                                <p class="mb-0 color-red">Information missing</p>
+                            </div>
+                            <div class="col-3 text-end"><a onclick="openModal('#modalLanguageSpoken')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div>
+                        }
+                        else
+                        {
+                            <div class="col-9">
+                                <p class="mb-0"><strong>Language Spoken:</strong></p>
+                                <p class="mb-0">
+                                    @{
+                                        var languages = "";
+                                        foreach (var language in Model.LanguagesSpoken.Where(s => s.Selected))
+                                        {
+                                            languages += $"{language.Language}, ";
+                                        }
+                                    }
+                                    @languages
+                                </p>
+                            </div>
+                            <div class="col-3 text-end"><a onclick="openModal('#modalLanguageSpoken')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
+                        }
                 </div>
                 <hr class="hr"/>
                 <div class="d-flex">
-                    <div class="col-9">
-                        <p class="mb-0"><strong>Show Profile info:</strong></p>
-                        <p class="mb-0">lorem ipsum, lorem ipsum</p>
-                    </div>
-                    <div class="col-3 text-end"><a class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
+                        @if (Model.InfoToShow.Count(s => s.Selected) == 0)
+                        {
+                            <div class="col-9">
+                                <p class="mb-0"><strong>Show Profile info:</strong></p>
+                                <p class="mb-0 color-red">Information missing</p>
+                            </div>
+                            <div class="col-3 text-end"><a onclick="openModal('#modalInfoToShow')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div>
+                        }
+                        else
+                        {
+                            <div class="col-9">
+                                <p class="mb-0"><strong>Show Profile info:</strong></p>
+                                <p class="mb-0">
+                                    @{
+                                        var infos = "";
+                                        foreach (var info in Model.InfoToShow.Where(s => s.Selected))
+                                        {
+                                            infos += $"{info.Name}, ";
+                                        }
+                                    }
+                                    @infos
+                                </p>
+                            </div>
+                            <div class="col-3 text-end"><a onclick="openModal('#modalInfoToShow')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
+                        }
                 </div>
                 <hr class="hr"/>
             </div>
@@ -226,6 +315,25 @@
     </div>
 </div>
 
+<div class="modal fade" id="modalExternalLink" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">External Link</h5>
+                <a onclick="closeModal('#modalExternalLink')"><i class="fa-solid fa-circle-xmark"></i></a>
+            </div>
+            <div class="modal-body">
+                <p>Insert an external link</p>
+                <input type="text" id="external-link-edit" rows="4" class="w-100 input-modal"/>
+                <p class="mt-2"><strong>*compulsory field</strong></p>  
+            </div>
+            <div class="modal-footer">                
+                <a onclick="UpdateExternalLink()" class="rounded-pill btn btn-primary" type="submit">save</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="modalPortfolioIntro" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -341,8 +449,213 @@
     </div>
 </div>
 
+<div class="modal fade" id="modalWorkRole" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Role</h5>
+                <a onclick="closeModal('#modalWorkRole')"><i class="fa-solid fa-circle-xmark"></i></a>
+            </div>
+            <div class="modal-body">
+                <p>Select a maximum of 10 skills which you are developing.</p>
+                <div class="overflow-auto p-3 border-div-grey" style="background-color: white !important; max-height: 400px;">
+                    @foreach (var item in Model.CategoriesWork)
+                    {
+                        <div class="form-check">
+                            <label class="form-check-label" style="cursor: pointer;" for="categoryWork-@item.Code">
+                                <strong>@item.Name</strong>
+                            </label>
+                            @{ var check = @item.Selected ? "checked" : ""; }
+                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="categoryWork-@item.Code" style="float: right !important;">
+                        </div>
+                        <hr class="hr"/>
+                    }
+                </div>
+                <p class="mt-4"><strong>Didn't find it?</strong> <a class="a-ciano">Contact us</a></p>
+                <p class="mb-0"><strong>0 / 5 selected</strong></p>
+            </div>
+            <div class="modal-footer">                
+                <a onclick="UpdateCategoriesWork()" class="rounded-pill btn btn-primary" type="submit">save</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalLanguageSpoken" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Role</h5>
+                <a onclick="closeModal('#modalLanguageSpoken')"><i class="fa-solid fa-circle-xmark"></i></a>
+            </div>
+            <div class="modal-body">
+                <p>Select a maximum of 10 skills which you are developing.</p>
+                <div class="overflow-auto p-3 border-div-grey" style="background-color: white !important; max-height: 400px;">
+                    @foreach (var item in Model.LanguagesSpoken)
+                    {
+                        <div class="form-check">
+                            <label class="form-check-label" style="cursor: pointer;" for="languageSpoken-@item.Code">
+                                <strong>@item.Language</strong>
+                            </label>
+                            @{ var check = @item.Selected ? "checked" : ""; }
+                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="languageSpoken-@item.Code" style="float: right !important;">
+                        </div>
+                        <hr class="hr"/>
+                    }
+                </div>
+                <p class="mt-4"><strong>Didn't find it?</strong> <a class="a-ciano">Contact us</a></p>
+                <p class="mb-0"><strong>0 / 5 selected</strong></p>
+            </div>
+            <div class="modal-footer">                
+                <a onclick="UpdateLanguagesSpoken()" class="rounded-pill btn btn-primary" type="submit">save</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalInfoToShow" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Role</h5>
+                <a onclick="closeModal('#modalInfoToShow')"><i class="fa-solid fa-circle-xmark"></i></a>
+            </div>
+            <div class="modal-body">
+                <p>Select a maximum of 10 skills which you are developing.</p>
+                <div class="overflow-auto p-3 border-div-grey" style="background-color: white !important; max-height: 400px;">
+                    @foreach (var item in Model.InfoToShow)
+                    {
+                        <div class="form-check">
+                            <label class="form-check-label" style="cursor: pointer;" for="infoToShow-@item.Code">
+                                <strong>@item.Name</strong>
+                            </label>
+                            @{ var check = @item.Selected ? "checked" : ""; }
+                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="infoToShow-@item.Code" style="float: right !important;">
+                        </div>
+                        <hr class="hr"/>
+                    }
+                </div>
+                <p class="mt-4"><strong>Didn't find it?</strong> <a class="a-ciano">Contact us</a></p>
+                <p class="mb-0"><strong>0 / 5 selected</strong></p>
+            </div>
+            <div class="modal-footer">                
+                <a onclick="UpdateInfoToShow()" class="rounded-pill btn btn-primary" type="submit">save</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script>
+
+function UpdateInfoToShow() {
+    $('#load-spinner').css("display", "block");
+    var codes = JSON.parse('@Html.Raw(Json.Serialize(Model.InfoToShow.Select(s => s.Code.ToString()).ToList()))');
+    
+    var data = [];
+    
+    for (const code in codes) {
+        if(document.getElementById("infoToShow-"+codes[code]).checked)
+            data.push(codes[code])
+    }
+    $.ajax({
+        type: 'POST',
+        url: '/Account/Profile/UpdateInfoToShow',
+        data: JSON.stringify(data),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function (response) {
+            if(response.result){
+                location.reload()
+            }
+            $('#load-spinner').css("display", "none");
+        },
+        error: function (response) {
+            $('#load-spinner').css("display", "none");
+        }
+    })
+}
+
+function UpdateLanguagesSpoken() {
+    $('#load-spinner').css("display", "block");
+    var codes = JSON.parse('@Html.Raw(Json.Serialize(Model.LanguagesSpoken.Select(s => s.Code.ToString()).ToList()))');
+    
+    var data = [];
+    
+    for (const code in codes) {
+        if(document.getElementById("languageSpoken-"+codes[code]).checked)
+            data.push(codes[code])
+    }
+    $.ajax({
+        type: 'POST',
+        url: '/Account/Profile/UpdateLanguageSpoken',
+        data: JSON.stringify(data),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function (response) {
+            if(response.result){
+                location.reload()
+            }
+            $('#load-spinner').css("display", "none");
+        },
+        error: function (response) {
+            $('#load-spinner').css("display", "none");
+        }
+    })
+}
+
+
+function UpdateCategoriesWork() {
+    $('#load-spinner').css("display", "block");
+    var codes = JSON.parse('@Html.Raw(Json.Serialize(Model.CategoriesWork.Select(s => s.Code.ToString()).ToList()))');
+    
+    var data = [];
+    
+    for (const code in codes) {
+        if(document.getElementById("categoryWork-"+codes[code]).checked)
+            data.push(codes[code])
+    }
+    $.ajax({
+        type: 'POST',
+        url: '/Account/Profile/UpdateCategoriesWork',
+        data: JSON.stringify(data),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function (response) {
+            if(response.result){
+                location.reload()
+            }
+            $('#load-spinner').css("display", "none");
+        },
+        error: function (response) {
+            $('#load-spinner').css("display", "none");
+        }
+    })
+}
+
+
+function UpdateExternalLink() {
+    $('#load-spinner').css("display", "block");
+    var externalLink = document.getElementById("external-link-edit").value
+
+    $.ajax({
+        type: 'POST',
+        url: '/Account/Profile/UpdateExternalLink',
+        data: JSON.stringify(externalLink),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function (response) {
+            if(response.result){
+                location.reload()
+            }
+            $('#load-spinner').css("display", "none");
+        },
+        error: function (response) {
+            $('#load-spinner').css("display", "none");
+        }
+    })
+}
+
 
 function UpdateHardSkills() {
     $('#load-spinner').css("display", "block");

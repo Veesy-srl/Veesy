@@ -60,7 +60,17 @@ public class AuthHelper
                 CategoryWorkId = item
             });
         }
-        
+
+        var myUserInfosToShow = new List<MyUserInfoToShow>();
+        var infoToShow = _accountService.GetInfosToShow();
+        foreach (var info in infoToShow)
+        {
+            myUserInfosToShow.Add(new MyUserInfoToShow()
+            {
+                Show = true,
+                InfoToShowId = info.Id
+            });
+        }
         var newUser = new MyUser()
         {
             Email = model.Email,
@@ -68,7 +78,8 @@ public class AuthHelper
             Name = model.Name,
             Surname = model.Surname,
             MyUserCategoriesWork = categoriesWork,
-            SubscriptionPlanId = _accountService.GetSubscriptionPlanByName(VeesyConstants.SubscriptionPlan.Free).Id
+            SubscriptionPlanId = _accountService.GetSubscriptionPlanByName(VeesyConstants.SubscriptionPlan.Free).Id,
+            MyUserInfosToShow = myUserInfosToShow
         };
         var validate = await _myUserValidator.UserValidator(newUser);
         if (!validate.Success) 

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Veesy.Domain.Constants;
 using Veesy.Domain.Models;
@@ -151,7 +152,83 @@ public class DbInitializer
                 dbContext.Add(item);
         }
         dbContext.SaveChanges();
+        
+        var languages = new List<LanguageSpoken>()
+        {
+            new (){Language = "Language A"},
+            new (){Language = "Language B"},
+            new (){Language = "Language C"},
+            new (){Language = "Language D"},
+            new (){Language = "Language E"},
+            new (){Language = "Language F"},
+            new (){Language = "Language G"},
+            new (){Language = "Language H"},
+            new (){Language = "Language I"},
+            new (){Language = "Language J"},
+            new (){Language = "Language K"},
+            new (){Language = "Language L"},
+        };
+        var dbLanguage = dbContext.LanguagesSpoken.ToList();
+        foreach (var item in languages)
+        {
+            if (!dbLanguage.Any(x => x.Language == item.Language))
+                dbContext.Add(item);
+        }
+        dbContext.SaveChanges();
 
+        var infosToShow = new List<InfoToShow>()
+        {
+            new (){Info = "Software"},
+            new (){Info = "Soft Skills"},
+            new (){Info = "Hard Skill"},
+            new (){Info = "Downloadable CV"},
+            
+        };
+        var dbInfoToShow = dbContext.InfosToShow.ToList();
+        foreach (var item in infosToShow)
+        {
+            if (!dbInfoToShow.Any(x => x.Info == item.Info))
+                dbContext.Add(item);
+        }
+        dbContext.SaveChanges();
+            
+#if DEBUG
+        var users = dbContext.MyUsers
+            .Include(s => s.MyUserInfosToShow)
+            .ThenInclude(s => s.InfoToShow)
+            .ToList();
+        infosToShow = dbContext.InfosToShow.ToList();
+        foreach (var user in users)
+        {
+            if (user.MyUserInfosToShow.Count == 0)
+            {
+                user.MyUserInfosToShow = new List<MyUserInfoToShow>();
+                foreach (var info in infosToShow)
+                {
+                    user.MyUserInfosToShow.Add(new MyUserInfoToShow()
+                    {
+                        InfoToShowId = info.Id,
+                        Show = true
+                    });
+                }
+            }
+            else
+            {
+                foreach (var info in infosToShow)
+                {
+                    if(!user.MyUserInfosToShow.Any(s => s.InfoToShowId == info.Id)){
+                        user.MyUserInfosToShow.Add(new MyUserInfoToShow()
+                        {
+                            InfoToShowId = info.Id,
+                            Show = true
+                        });
+                    }
+                }
+            }
+        }
+        dbContext.MyUsers.UpdateRange(users);
+        dbContext.SaveChanges();
+#endif
 
     }
 }

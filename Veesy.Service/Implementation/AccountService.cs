@@ -96,4 +96,99 @@ public class AccountService : IAccountService
     {
         return _uoW.MyUserRepository.GetSubscriptionPlanByName(name);
     }
+
+    public List<InfoToShow> GetInfosToShow()
+    {
+        return _uoW.MyUserRepository.GetInfosToShow();
+    }
+
+    public List<CategoryWork> GetCategoriesWorkWithUser(string userId)
+    {
+        return _uoW.MyUserRepository.GetCategoriesWorkByUserId(userId);
+    }
+
+    public List<MyUserCategoryWork> GetCategoriesWorkByUser(MyUser userInfo)
+    {
+        return _uoW.MyUserRepository.GetCategoriesWorkByUser(userInfo);
+    }
+
+    public async Task<ResultDto> UpdateMyUserCategoriesWork(List<MyUserCategoryWork> categoryWorksToDelete, List<MyUserCategoryWork> categoryWorksToAdd)
+    {
+        using (var transaction = _uoW.DbContext.Database.BeginTransaction())
+        {
+            try
+            {
+                _uoW.MyUserRepository.DeleteMyUserCategoriesWork(categoryWorksToDelete);
+                await _uoW.MyUserRepository.AddMyUserCategoriesWork(categoryWorksToAdd);
+                await _uoW.CommitAsync();
+                await transaction.CommitAsync();
+                return new ResultDto(true, "");
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                throw ex;
+            }
+        }
+    }
+
+    public List<MyUserInfoToShow> GetInfosToShowByUser(MyUser userInfo)
+    {
+        return _uoW.MyUserRepository.GetInfosToShowByUser(userInfo);
+    }
+
+    public async Task<ResultDto> UpdateMyUserInfoToShow(List<MyUserInfoToShow> infoToShowToDelete, List<MyUserInfoToShow> infoToShowToAdd)
+    {
+        using (var transaction = _uoW.DbContext.Database.BeginTransaction())
+        {
+            try
+            {
+                _uoW.MyUserRepository.DeleteMyUserInfoToShow(infoToShowToDelete);
+                await _uoW.MyUserRepository.AddMyUserInfoToShow(infoToShowToAdd);
+                await _uoW.CommitAsync();
+                await transaction.CommitAsync();
+                return new ResultDto(true, "");
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                throw ex;
+            }
+        }
+    }
+
+    public List<MyUserLanguageSpoken> GetLanguageSpokenByUser(MyUser userInfo)
+    {
+        return _uoW.MyUserRepository.GetLanguageSpokenByUser(userInfo);
+    }
+
+    public async Task<ResultDto> UpdateMyUserLanguageSpoken(List<MyUserLanguageSpoken> languageSpokenToDelete, List<MyUserLanguageSpoken> languageSpokenToAdd)
+    {
+        using (var transaction = _uoW.DbContext.Database.BeginTransaction())
+        {
+            try
+            {
+                _uoW.MyUserRepository.DeleteMyUserLanguageSpoken(languageSpokenToDelete);
+                await _uoW.MyUserRepository.AddMyUserLanguageSpoken(languageSpokenToAdd);
+                await _uoW.CommitAsync();
+                await transaction.CommitAsync();
+                return new ResultDto(true, "");
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                throw ex;
+            }
+        }
+    }
+
+    public List<InfoToShow> GetLanguagesSpokenWithUser(MyUser userInfo)
+    {
+        return _uoW.MyUserRepository.GetLanguagesSpokenByUserId(userInfo.Id);
+    }
+
+    public List<LanguageSpoken> GetInfosToShowWithUser(MyUser userInfo)
+    {
+        return _uoW.MyUserRepository.GetInfoToShowByUserId(userInfo.Id);
+    }
 }

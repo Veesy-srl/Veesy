@@ -18,6 +18,29 @@ public class SkillDto
 
 }
 
+public class CategoriesWorkDto
+{
+    public Guid Code { get; set; }
+    public string Name { get; set; }
+    public bool Selected { get; set; }
+
+}
+
+public class LanguageSpokenDto
+{
+    public Guid Code { get; set; }
+    public bool Selected { get; set; }
+    public string Language { get; set; }
+}
+
+public class InfoToShowDto
+{
+    public Guid Code { get; set; }
+    public string Name { get; set; }
+    public bool Selected { get; set; }
+
+}
+
 public static class MapProfileDtos
 {    
     
@@ -56,6 +79,63 @@ public static class MapProfileDtos
         {
             Code = skill.Id,
             Name = skill.Name
+        };
+    }
+    
+    public static List<CategoriesWorkDto> MapCategoriesWorkList(List<CategoryWork> categoriesWorks)
+    {
+        return categoriesWorks.Select(x => new CategoriesWorkDto()
+        {
+            Code = x.Id,
+            Name = x.Name,
+            Selected = x.MyUserCategoriesWork.Count > 0 
+        }).ToList();
+    }
+    
+    public static CategoriesWorkDto MapCategoriesWork(CategoryWork categoryWork)
+    {
+        return new CategoriesWorkDto()
+        {
+            Code = categoryWork.Id,
+            Name = categoryWork.Name
+        };
+    }
+    
+    public static List<InfoToShowDto> MapInfoToShowList(List<InfoToShow> infoToShows)
+    {
+        return infoToShows.Select(x => new InfoToShowDto()
+        {
+            Code = x.Id,
+            Name = x.Info,
+            Selected = x.MyUserInfoToShows.Count > 0 
+        }).ToList();
+    }
+    
+    public static InfoToShowDto MapInfoToShow(InfoToShow categoryWork)
+    {
+        return new InfoToShowDto()
+        {
+            Code = categoryWork.Id,
+            Name = categoryWork.Info
+        };
+    }
+    
+    public static List<LanguageSpokenDto> MapLanguagesSpokenList(List<LanguageSpoken> languagesSpoken)
+    {
+        return languagesSpoken.Select(x => new LanguageSpokenDto()
+        {
+            Code = x.Id,
+            Language = x.Language,
+            Selected = x.MyUserLanguagesSpoken.Count > 0 
+        }).ToList();
+    }
+    
+    public static LanguageSpokenDto MapLanguagesSpoken(LanguageSpoken languageSpoken)
+    {
+        return new LanguageSpokenDto()
+        {
+            Code = languageSpoken.Id,
+            Language = languageSpoken.Language
         };
     }
     

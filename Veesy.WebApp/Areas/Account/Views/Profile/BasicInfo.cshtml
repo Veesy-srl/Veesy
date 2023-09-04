@@ -1,3 +1,4 @@
+@model Veesy.Presentation.Model.Account.BasicInfoViewModel
 @{
     ViewData["Title"] = "Basic Info";
 }
@@ -33,7 +34,7 @@
                 <div class="d-flex">
                     <div class="col-9">
                         <p class="mb-0"><strong>Name and Surname*</strong></p>
-                        <p class="mb-0">Graphic Designer, Illustrator</p>
+                        <p class="mb-0">@Model.Name @Model.Surname</p>
                     </div>
                     <div class="col-3 text-end"><a class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
                 </div>
@@ -41,9 +42,9 @@
                 <div class="d-flex">
                     <div class="col-9">
                         <p class="mb-0"><strong>Email*</strong></p>
-                        <p class="mb-0 color-red">Information missing</p>
+                        <p class="mb-0">@Model.Email</p>
                     </div>
-                    <div class="col-3 text-end"><a class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div>
+                    <div class="col-3 text-end"><a class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
                 </div>
                 <hr class="hr"/>
             </div>
@@ -51,9 +52,9 @@
                 <div class="d-flex">
                     <div class="col-9">
                         <p class="mb-0"><strong>Username*</strong></p>
-                        <p class="mb-0 color-red">Information missing</p>
+                        <p class="mb-0 color-red">@Model.Username</p>
                     </div>
-                    <div class="col-3 text-end"><a class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div>
+                    <div class="col-3 text-end"><a class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
                 </div>
                 <hr class="hr"/>
                 <div class="d-flex">
@@ -65,9 +66,72 @@
                 </div>
                 <hr class="hr"/>
             </div>
+            <div class="col-sm-12 col-md-6 ms-2">
+                <div class="d-flex">
+                    <div class="col-9">
+                        <p class="mb-0"><strong>Category*</strong></p>
+                        <p class="mb-0 color-red">@Model.Category</p>
+                    </div>
+                    <div class="col-3 text-end"><a class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
+                </div>
+                <hr class="hr"/>
+                <div class="d-flex">
+                    <div class="col-9">
+                        <p class="mb-0"><strong>Dashboard Language</strong></p>
+                        <p class="mb-0">English (default)</p>
+                    </div>
+                </div>
+                <hr class="hr"/>
+            </div>
+            <div class="col-sm-12 col-md-6 ms-2">
+                <div class="d-flex">
+                    @if (string.IsNullOrEmpty(@Model.VatNumber))
+                    {
+                        <div class="col-9">
+                            <p class="mb-0"><strong>VAT Number</strong></p>
+                            <p class="mb-0 color-red">information missing</p>
+                        </div>
+                        <div class="col-3 text-end">
+                            <a class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-9">
+                            <p class="mb-0"><strong>VAT Number</strong></p>
+                            <p class="mb-0 color-red">@Model.VatNumber</p>
+                        </div>
+                        <div class="col-3 text-end">
+                            <a class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
+                        </div>
+                    }
+                </div>
+                <hr class="hr"/>
+                <div class="d-flex">
+                    @if (string.IsNullOrEmpty(@Model.VatNumber))
+                    {
+                        <div class="col-9">
+                            <p class="mb-0"><strong>Phone Number</strong></p>
+                            <p class="mb-0 color-red">information missing</p>
+                        </div>
+                        <div class="col-3 text-end">
+                            <a class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-9">
+                            <p class="mb-0"><strong>Phone Number</strong></p>
+                            <p class="mb-0 color-red">@Model.PhoneNumber</p>
+                        </div>
+                        <div class="col-3 text-end">
+                            <a class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
+                        </div>
+                    }
+                </div>
+                <hr class="hr"/>
+            </div>
         </div>
-        <div class="empty-veesy"></div>
-        <button class="rounded-pill btn btn-primary">update info</button>
         <div class="empty-veesy"></div>
     </div>
     <div class="col-2 col-md-3">

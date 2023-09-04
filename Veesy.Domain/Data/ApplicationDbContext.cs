@@ -29,6 +29,10 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<TmpMedia> TmpMedias { get; set; }
     public DbSet<CategoryWork> CategoriesWork { get; set; }
     public DbSet<MyUserCategoryWork> MyUserCategoriesWork { get; set; }
+    public DbSet<MyUserInfoToShow> MyUserInfosToShow { get; set; }
+    public DbSet<MyUserLanguageSpoken> MyUserLanguagesSpoken { get; set; }
+    public DbSet<LanguageSpoken> LanguagesSpoken { get; set; }
+    public DbSet<InfoToShow> InfosToShow { get; set; }
 
     #region Required
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -39,6 +43,8 @@ public class ApplicationDbContext : IdentityDbContext
         modelBuilder.Entity<MyUserUsedSoftware>().HasKey(a => new { a.MyUserId, a.UsedSoftwareId });
         modelBuilder.Entity<MyUserSkill>().HasKey(a => new {a.Id, a.MyUserId, a.SkillId });
         modelBuilder.Entity<MyUserCategoryWork>().HasKey(a => new {a.MyUserId, a.CategoryWorkId });
+        modelBuilder.Entity<MyUserInfoToShow>().HasKey(a => new {a.MyUserId, a.InfoToShowId });
+        modelBuilder.Entity<MyUserLanguageSpoken>().HasKey(a => new {a.MyUserId, a.LanguageSpokenId });
         modelBuilder.Entity<MyUserSector>().HasKey(a => new { a.MyUserId, a.SectorId });
         modelBuilder.Entity<MediaCategory>().HasKey(a => new { a.CategoryId, a.MediaId });
         modelBuilder.Entity<PortfolioSector>().HasKey(a => new { a.PorfolioId, a.SectorId });
