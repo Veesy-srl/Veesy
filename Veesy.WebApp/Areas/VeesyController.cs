@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Veesy.Domain.Models;
 
-namespace Veesy.WebApp.Areas.Auth.Controllers;
+namespace Veesy.WebApp.Areas;
 
 public class VeesyController : Controller
 {
