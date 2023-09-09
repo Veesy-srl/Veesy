@@ -120,11 +120,10 @@ try
 
     app.UseHttpsRedirection();
     app.UseStaticFiles();
+    app.UseNotyf();
+    
     app.UseAuthentication();
     app.UseAuthorization();
-    app.UseRouting();
-    app.UseAuthorization();
-    app.UseNotyf();
     
     app.MapControllerRoute(
         name: "default",

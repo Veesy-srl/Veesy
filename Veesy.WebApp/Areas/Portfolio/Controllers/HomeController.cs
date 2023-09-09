@@ -1,16 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Veesy.WebApp.Areas.Portfolio.Controllers
+namespace Veesy.WebApp.Areas.Portfolio.Controllers;
+
+[Area("Portfolio")]
+[Authorize]
+public class HomeController : Controller
 {
-    [Area("Portfolio")]
-    [Authorize]
-    public class HomeController : Controller
+    [HttpGet]
+    public IActionResult Index()
     {
-        [HttpGet]
-        public IActionResult Index()
-        {
-            return View();
-        }
+        return View();
     }
 }
