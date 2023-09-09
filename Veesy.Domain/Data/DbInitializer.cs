@@ -28,7 +28,8 @@ public class DbInitializer
             adm1 = new MyUser
             {
                 UserName = "lore_vetto11",
-                Email = "lorenzo.vettori11@gmail.com"
+                Email = "lorenzo.vettori11@gmail.com",
+                EmailConfirmed = true
             };
 
             IdentityResult result = userManager.CreateAsync(adm1, "Antani123!").Result;
@@ -41,7 +42,8 @@ public class DbInitializer
             adm2 = new MyUser
             {
                 UserName = "lv_enigma",
-                Email = "lorenzo.vettori@enigma-tech.it"
+                Email = "lorenzo.vettori@enigma-tech.it",
+                EmailConfirmed = true
             };
 
             IdentityResult result = userManager.CreateAsync(adm2, "Antani123!").Result;
