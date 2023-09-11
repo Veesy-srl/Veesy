@@ -46,6 +46,7 @@ public class MediaHelper
 
     public async Task<FileUploadSummary> UploadFileAsync(Stream fileStream, string contentType, MyUser user)
     {
+        // TODO: fare uplad diretto su Azure senza passare dal db
         var fileCount = 0; 
         long totalSizeInBytes = 0;
         var boundary = MediaInfo.GetBoundary(MediaTypeHeaderValue.Parse(contentType));
