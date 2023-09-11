@@ -98,10 +98,11 @@ public class AuthController : Controller
         }
         catch (Exception ex)
         {
-            Logger.Error(ex, model.ToString());
             Logger.Error(ex, ex.Message);
+            Logger.Error($"Signup model: {model.ToJson()}");
             _notyfService.Custom("Error during register new member. Please retry.", 10, "#ca0a0a96");
-            return View(_authHelper.GetSignUpViewModelException(model));
+            var vm = _authHelper.GetSignUpViewModelException(model);
+            return View();
         }
     }
     
@@ -136,6 +137,7 @@ public class AuthController : Controller
         {
             _notyfService.Custom("Error during send reset password link. Please retry.", 10, "#ca0a0a96");
             Logger.Error(e, e.Message);
+            Logger.Error($"Forgot password: {model.ToJson()}");
             return View();
         }
     }
@@ -185,6 +187,7 @@ public class AuthController : Controller
         {
             _notyfService.Custom("Error during updating password. Please retry.", 10, "#ca0a0a96");
             Logger.Error(ex, ex.Message);
+            Logger.Error($"Reset password: {model.ToJson()}");
             return View(model);
         }
     }
