@@ -23,12 +23,15 @@ public class Media : CommonInfo
     public string MyUserId { get; set; }
     public MyUser MyUser { get; set; }
     public string FileName { get; set; }
-    public string ProcessedName { get; set; }
+    public string OriginalFileName { get; set; }
     public string Type { get; set; }
     public DateTime UploadDate { get; set; }
-    public string Path { get; set; }
-    public string Quality { get; set; }
+    public int Status { get; set; }
+    public long Size { get; set; }
+    public int Width { get; set; }
+    public int Height { get; set; }
     public virtual List<MediaCategory> MediaCategories { get; set; }
     public virtual List<MediaTag> MediaTags { get; set; }
     public virtual List<MediaFormat> MediaFormats { get; set; }
+    public virtual TmpMedia TmpMedia { get; set; }
 }

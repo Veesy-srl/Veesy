@@ -46,7 +46,7 @@ public class MediaController : VeesyController
     {
         try
         {
-            await _mediaHelper.UploadFileAsync(HttpContext.Request.Body, Request.ContentType);
+            await _mediaHelper.UploadFileAsync(HttpContext.Request.Body, Request.ContentType, UserInfo);
             return Ok();
         }
         catch (Exception ex)

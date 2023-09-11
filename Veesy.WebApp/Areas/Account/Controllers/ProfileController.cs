@@ -63,6 +63,8 @@ public class ProfileController : VeesyController
         try
         {
             var result = await _profileHelper.UpdateMyUserBio(biography, UserInfo);
+            if(!result.Success)
+                _notyfService.Custom(result.Message, 10, "#ca0a0a96");
             return Json(new { Result = result.Success, Message = result.Message});
         }
         catch (Exception ex)
@@ -78,6 +80,8 @@ public class ProfileController : VeesyController
         try
         {
             var result = await _profileHelper.UpdateMyUserPortfolioIntro(introPortfolio, UserInfo);
+            if(!result.Success)
+                _notyfService.Custom(result.Message, 10, "#ca0a0a96");
             return Json(new { Result = result.Success, Message = result.Message});
         }
         catch (Exception ex)
@@ -108,6 +112,8 @@ public class ProfileController : VeesyController
         try
         {
             var result = await _profileHelper.UpdateUsedSoftware(usedSoftwareCodes, UserInfo);
+            if(!result.Success)
+                _notyfService.Custom(result.Message, 10, "#ca0a0a96");
             return Json(new { Result = result.Success, Message = result.Message});
         }
         catch (Exception ex)
@@ -123,6 +129,21 @@ public class ProfileController : VeesyController
         try
         {
             var result = await _profileHelper.UpdateSkill(hardSkillsCodes, UserInfo, SkillConstants.HardSkill);
+            return Json(new { Result = result.Success, Message = result.Message});
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            return Json(new { Result = false, Message = "Error updating softwares. Please retry." });
+        }
+    }
+    
+    [HttpPost]
+    public async Task<JsonResult> UpdateSoftSkills([FromBody] List<Guid> softSkillsCodes)
+    {
+        try
+        {
+            var result = await _profileHelper.UpdateSkill(softSkillsCodes, UserInfo, SkillConstants.SoftSkill);
             return Json(new { Result = result.Success, Message = result.Message});
         }
         catch (Exception ex)

@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Veesy.Presentation.Model.Media;
 using Microsoft.Net.Http.Headers;
 using Veesy.Domain.Exception;
+using Veesy.Domain.Models;
 using Veesy.Media.Constants;
 using Veesy.Media.Utils;
 using Veesy.Service.Implementation;
@@ -43,7 +44,7 @@ public class MediaHelper
     }
 
 
-    public async Task<FileUploadSummary> UploadFileAsync(Stream fileStream, string contentType)
+    public async Task<FileUploadSummary> UploadFileAsync(Stream fileStream, string contentType, MyUser user)
     {
         var fileCount = 0; 
         long totalSizeInBytes = 0;
@@ -58,14 +59,8 @@ public class MediaHelper
             var fileSection = section.AsFileSection();
             if (fileSection != null)
             {
-                await _mediaHandler.SaveFileAsByteArrayRecordAsync(fileSection);
-                //totalSizeInBytes += await _mediaHandler.SaveFileAsync(fileSection, filePaths, notUploadedFiles);
-                //await Task.Run(() => _mediaHandler.SaveFileInBackground(fileSection, notUploadedFiles));
+                await _mediaHandler.SaveFileAsByteArrayRecordAsync(fileSection, user);
                 fileCount++;
-                //Try to compress image. This method will be called at runtime by a function to compress image.
-                /*MediaCompressor.CompressImage(
-                    $"C:\\Users\\lore9\\Desktop\\ENIGMA\\SourceCode\\Veesy\\Veesy.WebApp\\FilesUploaded\\Compressed\\{fileSection.FileName}",
-                    $"C:\\Users\\lore9\\Desktop\\ENIGMA\\SourceCode\\Veesy\\Veesy.WebApp\\FilesUploaded\\{fileSection.FileName}");*/
             }
             section = await multipartReader.ReadNextSectionAsync();
         }

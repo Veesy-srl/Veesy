@@ -19,11 +19,11 @@
                         <div class="text-center">
                             @if (string.IsNullOrEmpty(@Model.FileName))
                             {
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" class="img-thumbnail rounded-circle" alt="user-image">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" class="img-thumbnail rounded-circle" alt="user-image" style="max-width: none!important; width: 60px !important; height: 60px !important;">
                             }
                             else
                             {
-                                <img src="@Model.BasePathImages@Model.FileName" class="img-thumbnail rounded-circle" alt="user-image">
+                                <img src="@Model.BasePathImages@Model.FileName" style="width: 60px !important; height: 60px !important; max-width: none!important; " class="img-thumbnail rounded-circle" alt="user-image">
                             }
                         </div>
                     </div>
@@ -554,6 +554,7 @@
 
 @section Scripts
 {
+
     <script>
 
 function UpdateInfoToShow() {

@@ -62,6 +62,19 @@ public static class MediaInfo
             _ => "n/a"
         };
     }
+
+    public static (int Width, int Height) GetImageSizeFromStream(Stream stream)
+    {
+        System.Drawing.Image image = System.Drawing.Image.FromStream (stream);
+        if (image != null)
+            return (image.Width, image.Height);
+        return (0, 0);
+    }
+
+    public static (int Width, int Height) GetVideoSizeFromStream(Stream stream)
+    {
+        return (2160, 2700);
+    }
     
     public static string GetContentType(this string fileName)
     {

@@ -45,13 +45,16 @@ public class AuthController : Controller
     {
         try
         {
-            var user = await _userManager.FindByEmailAsync(model.Email);
+            if(string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.Password))
+                _notyfService.Custom("Email or password are invalid", 10, "#ca0a0a96");
 
+            var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
                 user = await _userManager.FindByNameAsync(model.Email);
                 if (user == null)
                 {
+                    _notyfService.Custom("Email or password are invalid", 10, "#ca0a0a96");
                     return View(model);
                 }
             }
@@ -61,7 +64,7 @@ public class AuthController : Controller
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
             if (result.Succeeded)
                return RedirectToAction("Index", "Home", new { area = "Portfolio" });
-
+            _notyfService.Custom("Email or password are invalid", 10, "#ca0a0a96");
             return View(model);
         }
         catch (Exception ex)

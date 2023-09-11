@@ -242,7 +242,7 @@
                 <a onclick="closeModal('#modalUsername')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
-                <p>Email*</p>
+                <p>Username*</p>
                 <input type="text" id="username-edit" rows="4" class="w-100 input-modal"/>
             </div>
             <div class="modal-footer">                
@@ -347,7 +347,7 @@ function UpdateFullname() {
     var FullNameDto = {Name,  Surname};
     $.ajax({
         type: 'POST',
-        url: '/Account/Profile/UpdateNameAndSurname',
+        url: '@Url.Action("UpdateNameAndSurname", "Profile", new {area = "Account"})',
         data: JSON.stringify(FullNameDto),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
@@ -370,7 +370,7 @@ function UpdatePassword() {
     var ResetPasswordDto = {OldPassword,  NewPassword};
     $.ajax({
         type: 'POST',
-        url: '/Account/Profile/UpdatePassword',
+        url: '@Url.Action("UpdatePassword", "Profile", new {area = "Account"})',
         data: JSON.stringify(ResetPasswordDto),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
@@ -391,7 +391,7 @@ function UpdateEmail() {
     var email = document.getElementById("email-edit").value
     $.ajax({
         type: 'POST',
-        url: '/Account/Profile/UpdateEmail',
+        url: '@Url.Action("UpdateEmail", "Profile", new {area = "Account"})',
         data: JSON.stringify(email),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
@@ -412,7 +412,7 @@ function UpdateUsername() {
     var username = document.getElementById("username-edit").value
     $.ajax({
         type: 'POST',
-        url: '/Account/Profile/UpdateUsername',
+        url: '@Url.Action("UpdateUsername", "Profile", new {area = "Account"})',
         data: JSON.stringify(username),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
@@ -433,7 +433,7 @@ function UpdateVATNumber() {
     var vatNumber = document.getElementById("vat-number-edit").value
     $.ajax({
         type: 'POST',
-        url: '/Account/Profile/UpdateVATNumber',
+        url: '@Url.Action("UpdateVATNumber", "Profile", new {area = "Account"})',
         data: JSON.stringify(vatNumber),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
@@ -454,7 +454,7 @@ function UpdateCategory() {
     var category = document.getElementById("category-edit").value
     $.ajax({
         type: 'POST',
-        url: '/Account/Profile/UpdateCategory',
+        url: '@Url.Action("UpdateCategory", "Profile", new {area = "Account"})',
         data: JSON.stringify(category),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
@@ -475,7 +475,7 @@ function UpdatePhoneNumber() {
     var phoneNumber = document.getElementById("phone-number-edit").value
     $.ajax({
         type: 'POST',
-        url: '/Account/Profile/UpdatePhoneNumber',
+        url: '@Url.Action("UpdatePhoneNumber", "Profile", new {area = "Account"})',
         data: JSON.stringify(phoneNumber),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',

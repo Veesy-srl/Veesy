@@ -28,7 +28,8 @@ public class DbInitializer
             adm1 = new MyUser
             {
                 UserName = "lore_vetto11",
-                Email = "lorenzo.vettori11@gmail.com"
+                Email = "lorenzo.vettori11@gmail.com",
+                EmailConfirmed = true
             };
 
             IdentityResult result = userManager.CreateAsync(adm1, "Antani123!").Result;
@@ -41,7 +42,8 @@ public class DbInitializer
             adm2 = new MyUser
             {
                 UserName = "lv_enigma",
-                Email = "lorenzo.vettori@enigma-tech.it"
+                Email = "lorenzo.vettori@enigma-tech.it",
+                EmailConfirmed = true
             };
 
             IdentityResult result = userManager.CreateAsync(adm2, "Antani123!").Result;
@@ -189,6 +191,22 @@ public class DbInitializer
         {
             if (!dbInfoToShow.Any(x => x.Info == item.Info))
                 dbContext.Add(item);
+        }
+        dbContext.SaveChanges();
+        
+        var mediaFormats = new List<Format>()
+        {
+            new (){Description = "2000", Type = "Image", Width = 2000, Name = "Full HD"},
+            new (){Description = "1280", Type = "Image", Width = 1280, Name = "HD"},
+            new (){Description = "1920", Type = "Video", Width = 1920, Name = "Full HD"},
+            new (){Description = "1280", Type = "Video", Width = 1280, Name = "HD"},
+            
+        };
+        var dbFormats = dbContext.Formats.ToList();
+        foreach (var item in mediaFormats)
+        {
+            if (!dbFormats.Any(x => x.Name == item.Name && x.Type == item.Type))
+                dbContext.Formats.Add(item);
         }
         dbContext.SaveChanges();
             

@@ -1,35 +1,32 @@
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
+using Format = Veesy.Domain.Models.Format;
 
 namespace Veesy.Media.Utils;
 
 public static class MediaCompressor
 {
-    public static Stream CompressImage(Stream stream)
+    public static Stream CompressImage(Stream stream, Format format, Domain.Models.Media OriginalMedia)
     {
       try
       {
             // Convert stream to image
             using var image = Image.FromStream(stream);
             
-            float maxHeight = 720.0f;
-            float maxWidth = 1280.0f;
+            //float maxHeight = 720.0f;
+            float maxWidth = format.Width;
             int newWidth;
             int newHeight;
 
             var originalBMP = new Bitmap(image);
-            int originalWidth = originalBMP.Width;
-            int originalHeight = originalBMP.Height;
             
-            if (originalWidth > maxWidth || originalHeight > maxHeight)
+            if (OriginalMedia.Width > maxWidth)
             {
                 // To preserve the aspect ratio  
-                float ratioX = (float)maxWidth / (float)originalWidth;
-                float ratioY = (float)maxHeight / (float)originalHeight;
-                float ratio = Math.Min(ratioX, ratioY);
-                newWidth = (int)(originalWidth * ratio);
-                newHeight = (int)(originalHeight * ratio);
+                float ratioX = (float)format.Width / (float)OriginalMedia.Width;
+                //float ratioY = (float)maxHeight / (float)originalHeight;
+                //float ratio = Math.Min(ratioX, ratioY);
+                newWidth = (int)(OriginalMedia.Width * ratioX);
+                newHeight = (int)(OriginalMedia.Height * ratioX);
             }
 
             else
@@ -40,36 +37,6 @@ public static class MediaCompressor
 
             var bitmap = new Bitmap(originalBMP, newWidth, newHeight);
             return ToMemoryStream(bitmap);
-            /*var imgGraph = Graphics.FromImage(bitmap);
-
-            imgGraph.SmoothingMode = SmoothingMode.Default;
-            imgGraph.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            imgGraph.DrawImage(originalBMP, 0, 0, newWidth, newHeight);
-
-            
-            var extension = Path.GetExtension(targetPath).ToLower();
-            // for file extension having png and gif
-            if (extension == ".png" || extension == ".gif")
-            {
-                // Save image to targetPath
-                bitmap.Save(output, image.);
-            }
-
-            // for file extension having .jpg or .jpeg
-            else if (extension == ".jpg" || extension == ".jpeg")
-            {
-                ImageCodecInfo jpgEncoder = MediaInfo.GetEncoder(ImageFormat.Jpeg);
-                Encoder myEncoder = Encoder.Quality;
-                var encoderParameters = new EncoderParameters(1);
-                var parameter = new EncoderParameter(myEncoder, 50L);
-                encoderParameters.Param[0] = parameter;
-
-                // Save image to targetPath
-                bitmap.Save(output, jpgEncoder, encoderParameters);
-            }
-            bitmap.Dispose();
-            imgGraph.Dispose();
-            originalBMP.Dispose();*/
         }
         catch (Exception ex)
         {
@@ -83,5 +50,28 @@ public static class MediaCompressor
         b.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
         return ms;
     }
-    
+
+    public static Stream CompressVideo(Stream mediaBlobContent, Format format, Domain.Models.Media media)
+    {
+        var setting = new NReco.VideoConverter.ConvertSettings();
+        float maxWidth = format.Width;
+        int newWidth = media.Width;
+        int newHeight = media.Height;
+
+        if (media.Width > maxWidth)
+        {
+            // To preserve the aspect ratio  
+            float ratioX = (float)format.Width / (float)media.Width;
+            //float ratioY = (float)maxHeight / (float)originalHeight;
+            //float ratio = Math.Min(ratioX, ratioY);
+            newWidth = (int)(media.Width * ratioX);
+            newHeight = (int)(media.Height * ratioX);
+        }
+        setting.SetVideoFrameSize(newWidth, newHeight);
+        setting.VideoCodec = "h264";
+        var converter = new NReco.VideoConverter.FFMpegConverter();
+        Stream processedVideo = new System.IO.MemoryStream();
+        converter.ConvertLiveMedia(mediaBlobContent, media.Type, processedVideo, "mp4", setting);
+        return processedVideo;
+    }
 }

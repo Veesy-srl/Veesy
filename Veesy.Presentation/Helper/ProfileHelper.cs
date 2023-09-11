@@ -30,12 +30,16 @@ public class ProfileHelper
 
     public async Task<ResultDto> UpdateMyUserBio(string biography, MyUser user)
     {
+        if (biography.Length > 400)
+            return new ResultDto(false, "Max characters is 400.");
         user.Biografy = string.IsNullOrEmpty(biography) ? null : biography;
         return await _accountService.UpdateUserProfile(user);
     }
     
     public async Task<ResultDto> UpdateMyUserPortfolioIntro(string introPortfolio, MyUser user)
     {
+        if (introPortfolio.Length > 400)
+            return new ResultDto(false, "Max characters is 400.");
         user.PortfolioIntro = string.IsNullOrEmpty(introPortfolio) ? null : introPortfolio;
         return await _accountService.UpdateUserProfile(user);
     }
@@ -66,6 +70,8 @@ public class ProfileHelper
 
     public async Task<ResultDto> UpdateUsedSoftware(List<Guid> usedSoftwareCodes, MyUser userInfo)
     {
+        if (usedSoftwareCodes != null && usedSoftwareCodes.Count > 10)
+            return new ResultDto(false, "Select max 10 softwares.");
         var oldUsedSoftware = _accountService.GetUsedSoftwaresByUser(userInfo);
         var usedSoftwareToDelete = new List<MyUserUsedSoftware>();
         var usedSoftwareToAdd = new List<MyUserUsedSoftware>();
