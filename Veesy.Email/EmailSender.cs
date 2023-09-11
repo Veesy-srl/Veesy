@@ -53,6 +53,10 @@ public class EmailSender : IEmailSender
                 await client.AuthenticateAsync(_emailConfig.UserName, _emailConfig.Password);
                 await client.SendAsync(mailMessage);
             }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
             finally
             {
                 await client.DisconnectAsync(true);

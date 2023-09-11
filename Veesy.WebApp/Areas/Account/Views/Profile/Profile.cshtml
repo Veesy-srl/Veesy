@@ -447,7 +447,7 @@
                     }
                 </div>
                 <p class="mt-4"><strong>Didn't find it?</strong> <a class="a-ciano">Contact us</a></p>
-                <p class="mb-0"><strong>0 / 5 selected</strong></p>
+                <p class="mb-0"><strong>0 / 10 selected</strong></p>
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdateSoftSkills()" class="rounded-pill btn btn-primary" type="submit">save</a>
@@ -464,7 +464,7 @@
                 <a onclick="closeModal('#modalWorkRole')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
-                <p>Select a maximum of 10 skills which you are developing.</p>
+                <p>Select a maximum of 5 work categories.</p>
                 <div class="overflow-auto p-3 border-div-grey" style="background-color: white !important; max-height: 400px;">
                     @foreach (var item in Model.CategoriesWork)
                     {
@@ -492,11 +492,11 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Role</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Languages Spoken</h5>
                 <a onclick="closeModal('#modalLanguageSpoken')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
-                <p>Select a maximum of 10 skills which you are developing.</p>
+                <p>Select a maximum of 5 languages sppken.</p>
                 <div class="overflow-auto p-3 border-div-grey" style="background-color: white !important; max-height: 400px;">
                     @foreach (var item in Model.LanguagesSpoken)
                     {
@@ -524,11 +524,11 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Role</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Info to show</h5>
                 <a onclick="closeModal('#modalInfoToShow')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
-                <p>Select a maximum of 10 skills which you are developing.</p>
+                <p>Select info to show in portfolio.</p>
                 <div class="overflow-auto p-3 border-div-grey" style="background-color: white !important; max-height: 400px;">
                     @foreach (var item in Model.InfoToShow)
                     {

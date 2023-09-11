@@ -97,6 +97,8 @@ public class ProfileController : VeesyController
         try
         {
             var result = await _profileHelper.UpdateMyUserExternalLink(externalLink, UserInfo);
+            if(!result.Success)
+                _notyfService.Custom(result.Message, 10, "#ca0a0a96");
             return Json(new { Result = result.Success, Message = result.Message});
         }
         catch (Exception ex)
@@ -129,6 +131,8 @@ public class ProfileController : VeesyController
         try
         {
             var result = await _profileHelper.UpdateSkill(hardSkillsCodes, UserInfo, SkillConstants.HardSkill);
+            if(!result.Success)
+                _notyfService.Custom(result.Message, 10, "#ca0a0a96");
             return Json(new { Result = result.Success, Message = result.Message});
         }
         catch (Exception ex)
@@ -144,6 +148,8 @@ public class ProfileController : VeesyController
         try
         {
             var result = await _profileHelper.UpdateSkill(softSkillsCodes, UserInfo, SkillConstants.SoftSkill);
+            if(!result.Success)
+                _notyfService.Custom(result.Message, 10, "#ca0a0a96");
             return Json(new { Result = result.Success, Message = result.Message});
         }
         catch (Exception ex)
@@ -159,6 +165,8 @@ public class ProfileController : VeesyController
         try
         {
             var result = await _profileHelper.UpdateCategoriesWork(categoriesWorkCodes, UserInfo);
+            if(!result.Success)
+                _notyfService.Custom(result.Message, 10, "#ca0a0a96");
             return Json(new { Result = result.Success, Message = result.Message});
         }
         catch (Exception ex)
@@ -174,6 +182,8 @@ public class ProfileController : VeesyController
         try
         {
             var result = await _profileHelper.UpdateLanguageSpoken(languagesSpokenCodes, UserInfo);
+            if(!result.Success)
+                _notyfService.Custom(result.Message, 10, "#ca0a0a96");
             return Json(new { Result = result.Success, Message = result.Message});
         }
         catch (Exception ex)
@@ -189,6 +199,8 @@ public class ProfileController : VeesyController
         try
         {
             var result = await _profileHelper.UpdateInfoToShow(infoToShowCodes, UserInfo);
+            if(!result.Success)
+                _notyfService.Custom(result.Message, 10, "#ca0a0a96");
             return Json(new { Result = result.Success, Message = result.Message});
         }
         catch (Exception ex)
@@ -204,6 +216,8 @@ public class ProfileController : VeesyController
         try
         {
             var result = await _profileHelper.UpdateFullName(fullName.Name, fullName.Surname, UserInfo);
+            if(!result.Success)
+                _notyfService.Custom(result.Message, 10, "#ca0a0a96");
             return Json(new { Result = result.Success, Message = result.Message});
         }
         catch (Exception ex)
@@ -219,6 +233,8 @@ public class ProfileController : VeesyController
         try
         {
             var result = await _profileHelper.UpdateEmail(email, UserInfo);
+            if(!result.Success)
+                _notyfService.Custom(result.Message, 10, "#ca0a0a96");
             return Json(new { Result = result.Success, Message = result.Message});
         }
         catch (Exception ex)
@@ -234,6 +250,8 @@ public class ProfileController : VeesyController
         try
         {
             var result = await _profileHelper.UpdateUsername(username, UserInfo);
+            if(!result.Success)
+                _notyfService.Custom(result.Message, 10, "#ca0a0a96");
             return Json(new { Result = result.Success, Message = result.Message});
         }
         catch (Exception ex)
@@ -249,6 +267,8 @@ public class ProfileController : VeesyController
         try
         {
             var result = await _profileHelper.UpdatePassword(resetPasswordDto.OldPassword, resetPasswordDto.NewPassword, UserInfo);
+            if(!result.Success)
+                _notyfService.Custom(result.Message, 10, "#ca0a0a96");
             return Json(new { Result = result.Success, Message = result.Message});
         }
         catch (Exception ex)
@@ -264,6 +284,8 @@ public class ProfileController : VeesyController
         try
         {
             var result = await _profileHelper.UpdatePhoneNumber(phoneNumber, UserInfo);
+            if(!result.Success)
+                _notyfService.Custom(result.Message, 10, "#ca0a0a96");
             return Json(new { Result = result.Success, Message = result.Message});
         }
         catch (Exception ex)
@@ -279,6 +301,8 @@ public class ProfileController : VeesyController
         try
         {
             var result = await _profileHelper.UpdateVATNumber(vatNumber, UserInfo);
+            if(!result.Success)
+                _notyfService.Custom(result.Message, 10, "#ca0a0a96");
             return Json(new { Result = result.Success, Message = result.Message});
         }
         catch (Exception ex)
@@ -294,6 +318,8 @@ public class ProfileController : VeesyController
         try
         {
             var result = await _profileHelper.UpdateCategory(category, UserInfo);
+            if(!result.Success)
+                _notyfService.Custom(result.Message, 10, "#ca0a0a96");
             return Json(new { Result = result.Success, Message = result.Message});
         }
         catch (Exception ex)

@@ -99,6 +99,13 @@ public class ProfileHelper
 
     public async Task<ResultDto> UpdateSkill(List<Guid> skillsCodes, MyUser userInfo, char skillType)
     {
+        if (skillsCodes != null)
+        {
+            if(skillType == SkillConstants.SoftSkill && skillsCodes.Count > 10)
+                return new ResultDto(false, "Select max 10 soft skills.");
+            if(skillType == SkillConstants.HardSkill && skillsCodes.Count > 5)
+                return new ResultDto(false, "Select max 10 hard skills.");
+        }
         var oldSkills = _accountService.GetSkillsByUserAndType(userInfo, skillType).ToList();
         var skillToDelete = new List<MyUserSkill>();
         var skillToAdd = new List<MyUserSkill>();
@@ -135,6 +142,8 @@ public class ProfileHelper
 
     public async Task<ResultDto> UpdateCategoriesWork(List<Guid> categoriesWorkCodes, MyUser userInfo)
     {
+        if (categoriesWorkCodes != null && categoriesWorkCodes.Count > 5)
+            return new ResultDto(false, "Select max 5 roles.");
         var oldCategoriesWork = _accountService.GetCategoriesWorkByUser(userInfo).ToList();
         var categoryWorksToDelete = new List<MyUserCategoryWork>();
         var categoryWorksToAdd = new List<MyUserCategoryWork>();
@@ -165,7 +174,6 @@ public class ProfileHelper
         var infoToShowToDelete = new List<MyUserInfoToShow>();
         var infoToShowToAdd = new List<MyUserInfoToShow>();
         
-        //Comparison of previous CategoriesWork with those currently selected to delete them
         foreach (var item in oldInfoToShow)
         {
             if(!infoToShowCodes.Contains(item.InfoToShowId))
@@ -187,6 +195,8 @@ public class ProfileHelper
 
     public async Task<ResultDto> UpdateLanguageSpoken(List<Guid> languagesSpokenCodes, MyUser userInfo)
     {
+        if (languagesSpokenCodes != null && languagesSpokenCodes.Count > 5)
+            return new ResultDto(false, "Select max 5 languages.");
         var oldLanguageSpoken = _accountService.GetLanguageSpokenByUser(userInfo).ToList();
         var languagesToDelete = new List<MyUserLanguageSpoken>();
         var languagesToAdd = new List<MyUserLanguageSpoken>();
@@ -222,18 +232,24 @@ public class ProfileHelper
     }
     public async Task<ResultDto> UpdateCategory(string category, MyUser userInfo)
     {
+        if(category.Length > 100)
+            return new ResultDto(false, "Max characters are 100.");
         userInfo.Category = category;
         return await _accountService.UpdateUserProfile(userInfo);
     }
     
     public async Task<ResultDto> UpdateVATNumber(string vatNumber, MyUser userInfo)
     {
+        if(vatNumber.Length > 20)
+            return new ResultDto(false, "Max characters are 20.");
         userInfo.VATNumber = vatNumber;
         return await _accountService.UpdateUserProfile(userInfo);
     }
     
     public async Task<ResultDto> UpdatePhoneNumber(string phoneNumber, MyUser userInfo)
     {
+        if(phoneNumber.Length > 13)
+            return new ResultDto(false, "Max characters are 13.");
         userInfo.PhoneNumber = phoneNumber;
         return await _accountService.UpdateUserProfile(userInfo);
     }
