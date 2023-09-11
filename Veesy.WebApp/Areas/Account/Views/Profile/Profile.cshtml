@@ -4,65 +4,63 @@
     ViewData["Title"] = "Profile";
 }
 
-<div class="d-flex pt-7rem">
-    <div class="col-2 col-sm-12 col-md-3">
-        <div class="ps-3">
-            <nav class="breadcrumb-container" aria-label="Percorso di navigazione">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><i class="fa-solid fa-house me-2"></i><a class="breadcrumb-a me-2" asp-action="Index" asp-area="Portfolio" asp-controller="Home">dashboard</a><i class="fa-solid fa-chevron-right"></i></li>
-                    <li class="breadcrumb-item"><a class="breadcrumb-a" href="#"><strong>portfolio</strong></a></li>
-                </ol>
-            </nav>
-            <div class="w-75 card-white-veesy p-3">
-                <div class="d-flex">
-                    <div class="col-3">
-                        <div class="text-center">
-                            @if (string.IsNullOrEmpty(@Model.FileName))
-                            {
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" class="img-thumbnail rounded-circle" alt="user-image" style="max-width: none!important; width: 60px !important; height: 60px !important;">
-                            }
-                            else
-                            {
-                                <img src="@Model.BasePathImages@Model.FileName" style="width: 60px !important; height: 60px !important; max-width: none!important; " class="img-thumbnail rounded-circle" alt="user-image">
-                            }
-                        </div>
+<div class="row pt-7rem">
+    <div class="col-sm-12 col-md-3 mb-3">
+        <nav class="breadcrumb-container" aria-label="Percorso di navigazione">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><i class="fa-solid fa-house me-2"></i><a class="breadcrumb-a me-2" asp-action="Index" asp-area="Portfolio" asp-controller="Home">dashboard</a><i class="fa-solid fa-chevron-right"></i></li>
+                <li class="breadcrumb-item"><a class="breadcrumb-a" href="#"><strong>portfolio</strong></a></li>
+            </ol>
+        </nav>
+        <div class="w-75-veesy card-white-veesy p-3">
+            <div class="d-flex">
+                <div class="col-3">
+                    <div class="text-center">
+                        @if (string.IsNullOrEmpty(@Model.FileName))
+                        {
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" class="img-thumbnail rounded-circle" alt="user-image" style="max-width: none!important; width: 60px !important; height: 60px !important;">
+                        }
+                        else
+                        {
+                            <img src="@Model.BasePathImages@Model.FileName" style="width: 60px !important; height: 60px !important; max-width: none!important; " class="img-thumbnail rounded-circle" alt="user-image">
+                        }
                     </div>
-                    <div class="col-8"><p class="ms-2"><strong>@Model.Username</strong></p></div>
-                    <div class="col-1"><div class="text-end"><i class="fa-solid fa-circle fa-2xs" style="color: #202F4D;"></i></div></div>
                 </div>
-                <h5 class="mt-4 mb-4">@Model.FullName</h5>
-                @{
-                    var workrole = "information missing";
-                    var role_css = "text-danger";
-                    if (Model.CategoriesWork.Count(s => s.Selected) > 0)
-                    {
-                        role_css = "";
-                        workrole = Model.CategoriesWork.FirstOrDefault(s => s.Selected).Name;
-                    }
-                }
-                <div class="d-flex"><p class="mb-0"><strong>Role:&nbsp;</strong></p><p class="@role_css mb-0">@workrole</p></div>
-                <div class="d-flex"><p class="mb-0"><strong>Email:&nbsp;</strong></p><p class="mb-0">@Model.Email</p></div>
-                @{
-                    var phone = "information missing";
-                    var css = "text-danger";
-                    if (!string.IsNullOrEmpty(Model.PhoneNumber))
-                    {
-                        css = "";
-                        phone = Model.PhoneNumber;
-                    }
-                }
-                <div class="d-flex"><p class="mb-0"><strong>Phone:&nbsp;</strong></p><p class="@css mb-0">@phone</p></div>
-                <div class="mt-4"><a asp-controller="Profile" asp-area="Account" asp-action="BasicInfo" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit basic info</strong></a></div>
+                <div class="col-8"><p class="ms-2"><strong>@Model.Username</strong></p></div>
+                <div class="col-1"><div class="text-end"><i class="fa-solid fa-circle fa-2xs" style="color: #202F4D;"></i></div></div>
             </div>
+            <h3 class="mt-4 mb-4">@Model.FullName</h3>
+            @{
+                var workrole = "information missing";
+                var role_css = "text-danger";
+                if (Model.CategoriesWork.Count(s => s.Selected) > 0)
+                {
+                    role_css = "";
+                    workrole = Model.CategoriesWork.FirstOrDefault(s => s.Selected).Name;
+                }
+            }
+            <div class="d-flex"><p class="mb-0"><strong>Role:&nbsp;</strong></p><p class="@role_css mb-0">@workrole</p></div>
+            <div class="d-flex"><p class="mb-0"><strong>Email:&nbsp;</strong></p><p class="mb-0">@Model.Email</p></div>
+            @{
+                var phone = "information missing";
+                var css = "text-danger";
+                if (!string.IsNullOrEmpty(Model.PhoneNumber))
+                {
+                    css = "";
+                    phone = Model.PhoneNumber;
+                }
+            }
+            <div class="d-flex"><p class="mb-0"><strong>Phone:&nbsp;</strong></p><p class="@css mb-0">@phone</p></div>
+            <div class="mt-4"><a asp-controller="Profile" asp-area="Account" asp-action="BasicInfo" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit basic info</strong></a></div>
         </div>
     </div>
-    <div class="col-8 col-md-6">
-        <h3>Your Profile</h3>
+    <div class="col-sm-12 col-md-6">
+        <h1><strong>Your Profile</strong></h1>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <a class="grey-link ms-2"><strong>learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a></p>
         <div class="empty-veesy"></div>
-        <h4>General</h4>
-        <div class="d-flex">
-            <div class="col-sm-12 col-md-6 col-lg-6 me-2">
+        <h3><strong>General</strong></h3>
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-6 ps-2 pe-2">
                 <hr class="hr"/>
                 <div class="d-flex">
                     @if (Model.CategoriesWork.Count(s => s.Selected) == 0)
@@ -112,8 +110,8 @@
                 </div>
                 <hr class="hr"/>
             </div>
-            <div class="col-sm-12 col-md-6 ms-2">
-                <hr class="hr"/>
+            <div class="col-sm-12 col-md-6 pe-2 ps-2">
+                <hr class="hr nodisplay-sm"/>
                 <div class="d-flex">
                         @if (Model.LanguagesSpoken.Count(s => s.Selected) == 0)
                         {
@@ -174,7 +172,7 @@
         </div>
         <div class="empty-veesy"></div>
         <div>
-            <h4>Portfolio intro</h4>
+            <h3><strong>Portfolio intro</strong></h3>
             @if (string.IsNullOrEmpty(Model.PortfolioIntro))
             {
                 <div class="card-white-dashed-veesy p-3">
@@ -191,7 +189,7 @@
         </div>
         <div class="empty-veesy"></div>
         <div>
-            <h4>Biografy</h4>
+            <h3><strong>Biography</strong></h3>
             @if (string.IsNullOrEmpty(Model.Biography))
             {
                 <div class="card-white-dashed-veesy p-3">
@@ -208,7 +206,7 @@
         </div>
         <div class="empty-veesy"></div>
         <div>
-            <h4>Hard Skills</h4>
+            <h3><strong>Hard skills</strong></h3>
             <p>Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,</p>
             @if (Model.HardSkills.Count(s => s.Selected) > 0)
             {
@@ -233,7 +231,7 @@
         </div>
         <div class="empty-veesy"></div>
         <div>
-            <h4>Soft Skills</h4>
+            <h3><strong>Soft skill</strong></h3>
             <p>Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,</p>
             @if (Model.SoftSkills.Count(s => s.Selected) > 0)
             {
@@ -258,7 +256,7 @@
         </div>
         <div class="empty-veesy"></div>
         <div>
-            <h4>Softwares</h4>
+            <h3><strong>Softwares</strong></h3>
             <p>Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,</p>
             @if (Model.UsedSoftwares.Count(s => s.Selected) > 0)
             {
@@ -283,21 +281,20 @@
         </div>
         <div class="empty-veesy"></div>
         <div>
-            <h4>Portfolios</h4>
+            <h3><strong>Portfolios</strong></h3>
             <p>You don't have any portfolio yet.</p>
             <button class="rounded-pill btn btn-primary">create your first portfolio</button>
         </div>
         <div class="empty-veesy"></div>
     </div>
-    <div class="col-2 col-md-3">
+    <div class="col-sm-12 col-md-3">
         <div class="d-flex justify-content-center">
-            <div style="position: fixed">
-                <div class="w-125 card-blue-veesy p-3">
-                    <div class="text-end"><i class="fa-solid fa-circle fa-2xs" style="color: #ffffff;"></i></div>
-                    <p class="mb-0" style="color: white"><strong>Do you need some help?</strong></p>
-                    <a class="a-ciano" href="#">Contact us</a>
-                </div>
+            <div class="w-75-veesy card-blue-veesy p-3">
+                <div class="text-end"><i class="fa-solid fa-circle fa-2xs" style="color: #ffffff;"></i></div>
+                <p class="mb-0" style="color: white"><strong>Do you need some help?</strong></p>
+                <a class="a-ciano" href="#">Contact us</a>
             </div>
+            <div class="empty-veesy"></div>
         </div>
     </div>
 </div>
@@ -307,7 +304,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Biography</h5>
+                <h3 class="modal-title" id="exampleModalLongTitle"><strong>Biography</strong></h3>
                 <a onclick="closeModal('#modalBiography')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
@@ -326,7 +323,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">External Link</h5>
+                <h3 class="modal-title" id="exampleModalLongTitle"><strong>External Link</strong></h3>
                 <a onclick="closeModal('#modalExternalLink')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
@@ -345,7 +342,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Portfolio Intro</h5>
+                <h3 class="modal-title" id="exampleModalLongTitle"><strong>Portfolio Intro</strong></h3>
                 <a onclick="closeModal('#modalPortfolioIntro')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
@@ -364,7 +361,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Softwares</h5>
+                <h3 class="modal-title" id="exampleModalLongTitle"><strong>Softwares</strong></h3>
                 <a onclick="closeModal('#modalSoftware')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
@@ -396,7 +393,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Hard Skills</h5>
+                <h3 class="modal-title" id="exampleModalLongTitle"><strong>Hard Skills</strong></h3>
                 <a onclick="closeModal('#modalHardSkill')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
@@ -428,7 +425,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Soft Skills</h5>
+                <h3 class="modal-title" id="exampleModalLongTitle"><strong>Soft Skills</strong></h3>
                 <a onclick="closeModal('#modalSoftSkill')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
@@ -460,7 +457,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Role</h5>
+                <h3 class="modal-title" id="exampleModalLongTitle"><strong>Role</strong></h3>
                 <a onclick="closeModal('#modalWorkRole')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
@@ -492,11 +489,11 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Languages Spoken</h5>
+                <h3 class="modal-title" id="exampleModalLongTitle"><strong>Languages Spoken</strong></h3>
                 <a onclick="closeModal('#modalLanguageSpoken')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
-                <p>Select a maximum of 5 languages sppken.</p>
+                <p>Select a maximum of 5 languages spoken.</p>
                 <div class="overflow-auto p-3 border-div-grey" style="background-color: white !important; max-height: 400px;">
                     @foreach (var item in Model.LanguagesSpoken)
                     {
@@ -524,7 +521,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Info to show</h5>
+                <h3 class="modal-title" id="exampleModalLongTitle"><strong>Info to show</strong></h3>
                 <a onclick="closeModal('#modalInfoToShow')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
