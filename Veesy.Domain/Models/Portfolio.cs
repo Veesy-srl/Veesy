@@ -1,6 +1,6 @@
 ﻿namespace Veesy.Domain.Models;
 
-public class Portfolio : CommonInfo
+public class Portfolio : TrackableEntity
 {
     public Guid Id { get; set; }
     public string MyUserId { get; set; } 

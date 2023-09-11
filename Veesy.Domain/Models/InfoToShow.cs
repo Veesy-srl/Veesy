@@ -1,6 +1,6 @@
 namespace Veesy.Domain.Models;
 
-public class InfoToShow
+public class InfoToShow : TrackableEntity
 {
     public Guid Id { get; set; }
     public string Info { get; set; }

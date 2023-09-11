@@ -1,6 +1,6 @@
 namespace Veesy.Domain.Models;
 
-public class Format
+public class Format: TrackableEntity
 {
     public Guid Id { get; set; }
     public string Name { get; set; }

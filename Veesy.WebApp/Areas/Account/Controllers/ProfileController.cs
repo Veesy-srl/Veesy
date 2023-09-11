@@ -32,7 +32,8 @@ public class ProfileController : VeesyController
     {
         try
         {
-            return View(_profileHelper.GetProfileViewModel(UserInfo));
+            var vm = _profileHelper.GetProfileViewModel(UserInfo);
+            return View(vm);
         }
         catch (Exception e)
         {
@@ -46,7 +47,8 @@ public class ProfileController : VeesyController
     {
         try
         {
-            return View(_profileHelper.GetBasicInfoViewModel(UserInfo));
+            var vm = _profileHelper.GetBasicInfoViewModel(UserInfo);
+            return View(vm);
         }
         catch (Exception e)
         {

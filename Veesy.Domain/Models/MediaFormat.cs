@@ -1,6 +1,6 @@
 namespace Veesy.Domain.Models;
 
-public class MediaFormat
+public class MediaFormat : TrackableEntity
 {
     public Guid Id { get; set; }
     public Guid MediaId { get; set; }

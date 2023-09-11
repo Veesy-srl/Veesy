@@ -1,6 +1,6 @@
 namespace Veesy.Domain.Models;
 
-public class TmpMedia
+public class TmpMedia : TrackableEntity
 {
     public Guid Id { get; set; }
     public Guid MediaId { get; set; }

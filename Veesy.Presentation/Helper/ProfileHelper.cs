@@ -94,7 +94,7 @@ public class ProfileHelper
                 });
         }
 
-        return await _accountService.UpdateMyUserUsedSoftware(usedSoftwareToDelete, usedSoftwareToAdd);
+        return await _accountService.UpdateMyUserUsedSoftware(usedSoftwareToDelete, usedSoftwareToAdd, userInfo);
     }
 
     public async Task<ResultDto> UpdateSkill(List<Guid> skillsCodes, MyUser userInfo, char skillType)
@@ -130,7 +130,7 @@ public class ProfileHelper
                 });
         }
         
-        return await _accountService.UpdateMyUserSkills(skillToDelete, skillToAdd);
+        return await _accountService.UpdateMyUserSkills(skillToDelete, skillToAdd, userInfo);
 
     }
 
@@ -165,7 +165,7 @@ public class ProfileHelper
                 });
         }
         
-        return await _accountService.UpdateMyUserCategoriesWork(categoryWorksToDelete, categoryWorksToAdd);
+        return await _accountService.UpdateMyUserCategoriesWork(categoryWorksToDelete, categoryWorksToAdd, userInfo);
     }
 
     public async Task<ResultDto> UpdateInfoToShow(List<Guid> infoToShowCodes, MyUser userInfo)
@@ -190,7 +190,7 @@ public class ProfileHelper
                 });
         }
         
-        return await _accountService.UpdateMyUserInfoToShow(infoToShowToDelete, infoToShowToAdd);
+        return await _accountService.UpdateMyUserInfoToShow(infoToShowToDelete, infoToShowToAdd, userInfo);
     }
 
     public async Task<ResultDto> UpdateLanguageSpoken(List<Guid> languagesSpokenCodes, MyUser userInfo)
@@ -218,7 +218,7 @@ public class ProfileHelper
                 });
         }
         
-        return await _accountService.UpdateMyUserLanguageSpoken(languagesToDelete, languagesToAdd);
+        return await _accountService.UpdateMyUserLanguageSpoken(languagesToDelete, languagesToAdd, userInfo);
     }
 
     public async Task<ResultDto> UpdateFullName(string name, string surname, MyUser userInfo)

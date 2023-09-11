@@ -1,6 +1,6 @@
 namespace Veesy.Domain.Models;
 
-public class CategoryWork
+public class CategoryWork : TrackableEntity
 {
     public Guid Id { get; set; }
     public string Name { get; set; }

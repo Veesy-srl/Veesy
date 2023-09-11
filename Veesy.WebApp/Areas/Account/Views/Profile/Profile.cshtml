@@ -706,7 +706,7 @@ function UpdateSoftSkills() {
     }
     $.ajax({
         type: 'POST',
-        url: '@Url.Action("UpdateUsedSoftware", "Profile")',
+        url: '@Url.Action("UpdateSoftSkills", "Profile")',
         data: JSON.stringify(data),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',

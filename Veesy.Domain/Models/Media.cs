@@ -17,7 +17,7 @@
 /// <param name="Quality">Qualità dell'immagine originale.</param>
 /// <typeparam name="Quality">string</typeparam>
 /// </summary>
-public class Media : CommonInfo
+public class Media : TrackableEntity
 {
     public Guid Id { get; set; }
     public string MyUserId { get; set; }

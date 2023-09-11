@@ -92,7 +92,6 @@ public class MediaHandler
                     Type = extension,
                     OriginalFileName = fileSection.FileName,
                     FileName = newFileName,
-                    IpAddress = "",
                     Width = size.Item1,
                     Height = size.Item2,
                     Size = bytes.Length,

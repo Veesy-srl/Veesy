@@ -10,15 +10,16 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 offset-md-3">
-                <form method="post">
-                    <h1 class="h3 mb-3 mt-2 fw-normal">Welcome to <b>Veesy</b><br/> Community!</h1>
-                    <div style="height: 20px;"></div>
-                    <div class="text-center rounded size-custom" style="background-color: #B7DBE3; font-weight:  500;">
-                        well done,<br/>check your email and confirm your account!
-                    </div>
+                <h1 class="h3 mb-3 mt-2 fw-normal">Welcome to <b>Veesy</b><br/> Community!</h1>
+                <div style="height: 20px;"></div>
+                <div class="text-center rounded size-custom" style="background-color: #B7DBE3; font-weight:  500;">
+                    well done,<br/>check your email and confirm your account!
+                </div>
 
-                    <button class="w-100 mt-4 rounded-pill btn btn-primary signup" type="submit">view dashboard</button>
-                </form>
+                <a asp-area="Portfolio" asp-controller="Home" asp-action="Index" asp-ac class="w-100 mt-4 rounded-pill btn btn-primary signup" type="submit">view dashboard</a>
+                <p class="mt-4 mb-3 fw-border size-custom">Didn't you get the email?
+                    <a style="color:#75CCDD;" asp-action="SendEmailVerification" asp-route-email="@Model.Email" asp-area="Auth" asp-controller="Auth">Send again</a>
+                </p>
             </div>
         </div>
     </div>

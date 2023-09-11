@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Veesy.Domain.Models;
@@ -34,7 +35,7 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<LanguageSpoken> LanguagesSpoken { get; set; }
     public DbSet<InfoToShow> InfosToShow { get; set; }
 
-    #region Required
+    #region OnModelCreating
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<PortfolioMedia>().HasKey(a => new { a.PortfolioId, a.MediaFormatId });
@@ -50,5 +51,45 @@ public class ApplicationDbContext : IdentityDbContext
         modelBuilder.Entity<PortfolioSector>().HasKey(a => new { a.PorfolioId, a.SectorId });
         base.OnModelCreating(modelBuilder);
     }
+    #endregion
+    
+    #region OnSaveChanges
+
+        public async Task<int> SaveChangesAsync(string userId)
+        {
+            this.ChangeTracker.DetectChanges();
+            var added = this.ChangeTracker.Entries()
+                .Where(t => t.State == EntityState.Added)
+                .Select(t => t.Entity)
+                .ToArray();
+            var now = DateTime.Now;
+            foreach (var entity in added)
+            {
+                if (entity is ITrack)
+                {
+                    var track = entity as ITrack;
+                    track.CreateRecordDate = now;
+                    track.LastEditRecordDate = now;
+                    track.CreateUserId = userId;
+                    track.LastEditUserId = userId;
+                }
+            }
+
+            var modified = this.ChangeTracker.Entries()
+                .Where(t => t.State == EntityState.Modified)
+                .Select(t => t.Entity)
+                .ToArray();
+
+            foreach (var entity in modified)
+            {
+                if (entity is ITrack)
+                {
+                    var track = entity as ITrack;
+                    track.LastEditRecordDate = now;
+                    track.LastEditUserId = userId;
+                }
+            }
+            return await base.SaveChangesAsync();
+        }
     #endregion
 }

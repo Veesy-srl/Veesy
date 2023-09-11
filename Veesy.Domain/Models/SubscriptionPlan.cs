@@ -12,7 +12,7 @@ namespace Veesy.Domain.Models;
 /// <param name="MyUsers">Lista virtuale di tutti gli utenti in possesso di quello specifico pacchetto.</param>
 /// </summary>
 
-public class SubscriptionPlan
+public class SubscriptionPlan : TrackableEntity
 {
     public Guid Id { get; set; }
     public string Name { get; set; }

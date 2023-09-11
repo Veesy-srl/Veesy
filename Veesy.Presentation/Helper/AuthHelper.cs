@@ -30,9 +30,15 @@ public class AuthHelper
         _accountService = accountService;
     }
 
-    public async Task<string> SendEmailConfirmation(string email)
+    public async Task<ResultDto> SendEmailConfirmation(string email)
     {
-        var user = _userManager.FindByEmailAsync(email).Result;
+        var user = await _userManager.FindByEmailAsync(email);
+        if (user != null)
+        {
+            user = await _userManager.FindByNameAsync(email);
+            if (user != null)
+                return new ResultDto(false, "User not found");
+        }
         var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
         token = HttpUtility.UrlEncode(token);
         var confirmationLink = $"{_config["ApplicationUrl"]}/Auth/Auth/ConfirmEmailVerification?token={token}&email={email}";
@@ -40,7 +46,7 @@ public class AuthHelper
         List<(string, string)> replacer = new List<(string, string)> { ("[LinkVerifyMail]", message.Content) };
         var currentPath = Directory.GetCurrentDirectory();
         await _emailSender.SendEmailAsync(message, currentPath + "/wwwroot/MailTemplate/mail-verify-email.html", replacer);
-        return "Success";
+        return new ResultDto(true, "");
     }
 
     public async Task<ResultDto> RegisterNewMember(SignUpViewModel model)
@@ -52,12 +58,18 @@ public class AuthHelper
         if(model.SelectedCategoriesWork == null || model.SelectedCategoriesWork.Count < 1 || model.SelectedCategoriesWork.Count > 3)
             return new ResultDto(false, "Select at least one category and not more than three.");
 
+        var now = DateTime.Now;
         var categoriesWork = new List<MyUserCategoryWork>();
+        var userID = Guid.NewGuid().ToString();
         foreach (var item in model.SelectedCategoriesWork)
         {
             categoriesWork.Add(new MyUserCategoryWork()
             {
-                CategoryWorkId = item
+                CategoryWorkId = item,
+                CreateRecordDate = now,
+                LastEditRecordDate = now,
+                LastEditUserId = userID,
+                CreateUserId = userID
             });
         }
 
@@ -68,11 +80,17 @@ public class AuthHelper
             myUserInfosToShow.Add(new MyUserInfoToShow()
             {
                 Show = true,
-                InfoToShowId = info.Id
+                InfoToShowId = info.Id,
+                CreateRecordDate = now,
+                LastEditRecordDate = now,
+                CreateUserId = userID,
+                LastEditUserId = userID
             });
         }
+
         var newUser = new MyUser()
         {
+            Id = userID,
             Email = model.Email,
             UserName = model.Username,
             Name = model.Name,
@@ -81,6 +99,7 @@ public class AuthHelper
             SubscriptionPlanId = _accountService.GetSubscriptionPlanByName(VeesyConstants.SubscriptionPlan.Free).Id,
             MyUserInfosToShow = myUserInfosToShow
         };
+        
         var validate = await _myUserValidator.UserValidator(newUser);
         if (!validate.Success) 
             return validate;
