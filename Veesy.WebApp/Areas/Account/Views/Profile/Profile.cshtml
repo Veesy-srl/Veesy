@@ -569,7 +569,7 @@ function UpdateInfoToShow() {
     }
     $.ajax({
         type: 'POST',
-        url: '/Account/Profile/UpdateInfoToShow',
+        url: '@Url.Action("UpdateInfoToShow", "Profile")',
         data: JSON.stringify(data),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
@@ -597,7 +597,7 @@ function UpdateLanguagesSpoken() {
     }
     $.ajax({
         type: 'POST',
-        url: '/Account/Profile/UpdateLanguageSpoken',
+        url: '@Url.Action("UpdateLanguageSpoken", "Profile")',
         data: JSON.stringify(data),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
@@ -626,7 +626,7 @@ function UpdateCategoriesWork() {
     }
     $.ajax({
         type: 'POST',
-        url: '/Account/Profile/UpdateCategoriesWork',
+        url: '@Url.Action("UpdateCategoriesWork", "Profile")',
         data: JSON.stringify(data),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
@@ -649,7 +649,7 @@ function UpdateExternalLink() {
 
     $.ajax({
         type: 'POST',
-        url: '/Account/Profile/UpdateExternalLink',
+        url: '@Url.Action("UpdateExternalLink", "Profile")',
         data: JSON.stringify(externalLink),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
@@ -678,7 +678,7 @@ function UpdateHardSkills() {
     }
     $.ajax({
         type: 'POST',
-        url: '/Account/Profile/UpdateHardSkills',
+        url: '@Url.Action("UpdateHardSkills", "Profile")',
         data: JSON.stringify(data),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
@@ -706,7 +706,7 @@ function UpdateSoftSkills() {
     }
     $.ajax({
         type: 'POST',
-        url: '/Account/Profile/UpdateSoftSkills',
+        url: '@Url.Action("UpdateUsedSoftware", "Profile")',
         data: JSON.stringify(data),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
@@ -730,7 +730,7 @@ function UpdateBiography(){
 
     $.ajax({
         type: 'POST',
-        url: '/Account/Profile/UpdateBiography',
+        url: '@Url.Action("UpdateBiography", "Profile")',
         data: JSON.stringify(biography),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
@@ -758,7 +758,7 @@ function UpdateUsedSoftware(){
     }
     $.ajax({
         type: 'POST',
-        url: '/Account/Profile/UpdateUsedSoftware',
+        url: '@Url.Action("UpdateUsedSoftware", "Profile")',
         data: JSON.stringify(data),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
@@ -780,7 +780,7 @@ function UpdatePortfolioIntro(){
 
     $.ajax({
         type: 'POST',
-        url: '/Account/Profile/UpdatePortfolioIntro',
+        url: '@Url.Action("UpdatePortfolioIntro", "Profile")',
         data: JSON.stringify(introPortfolio),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',

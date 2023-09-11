@@ -34,13 +34,13 @@ public class AuthController : Controller
         _notyfService = notyfService;
     }
 
-    [HttpGet]
+    [HttpGet("auth/login")]
     public IActionResult Login()
     {
         return View();
     }
     
-    [HttpPost]
+    [HttpPost("auth/login")]
     public async Task<IActionResult> Login(LoginViewModel model)
     {
         try
@@ -238,7 +238,7 @@ public class AuthController : Controller
         }
     }
 
-    [HttpGet]
+    [HttpGet("auth/logout")]
     public async Task<IActionResult> Logout()
     {
         await _signInManager.SignOutAsync();
