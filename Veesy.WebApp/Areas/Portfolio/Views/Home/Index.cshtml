@@ -2,168 +2,175 @@
     ViewData["Title"] = "Dashboard";
 }
 
-<div class="row pt-7rem ps-5 pe-5">
-    <div class="col-sm-12 col-md-4">
-        <h3>Hello Daria,<br/>welcome to your dashboard...</h3>
-        <div class="empty-veesy"></div>
-        <div class="empty-veesy"></div>
-        <p class="mb-0">Do you need some help?</p>
-        <a class="grey-link">Contact us</a>
+<h1 class="h3 fw-normal">
+    <div class="navbar-brand d-inline-flex text-black" style="margin-top: 0.7rem!important;" asp-area="" asp-controller="Home" asp-action="Index"><b>veesy</b>&nbspdashboard
     </div>
-    <div class="col-sm-12 col-md-8">
-        <div class="row">
-            <div style="border:0 !important; border-radius: 10px 0 0 10px !important;" class="card col-md-3 col-sm-12 p-0">
-                <div class="bg-white card-header" style="border-radius: 10px 0 0 0 !important">
+</h1>
+
+<div class="container-fluid p-5">
+    <div class="row p-4">
+        <div class="col-sm-12 col-md-4">
+            <h3>Hello Daria,<br/>welcome to your dashboard...</h3>
+            <div class="empty-veesy"></div>
+            <div class="empty-veesy"></div>
+            <p class="mb-0">Do you need some help?</p>
+            <a class="grey-link">Contact us</a>
+        </div>
+        <div class="col-sm-12 col-md-8">
+            <div class="row">
+                <div style="border:0 !important; border-radius: 10px 0 0 10px !important;" class="card col-md-3 col-sm-12 p-0">
+                    <div class="bg-white card-header" style="border-radius: 10px 0 0 0 !important">
+                        <p class="mb-0">
+                            <strong>OVERVIEW</strong>
+                        </p>
+                    </div>
+                    <div class="card-body">
+                        <p>Your profile is <strong>85%</strong> complete.</p>
+                        <div style="left: 0;" id="chart">
+                        </div>
+                        <a class="pos-bottom grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit profile</strong></a>
+                    </div>
+                </div>
+                <div style="border:0 !important; border-radius: 0 0 0 0 !important;" class="card col-md-3 col-sm-12 p-0">
+                    <div class="bg-white card-header">
+                        <h5 class="text-white mb-0">
+                            _
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Files uploaded</strong> on your cloud:</p>
+                        <h1>26/100</h1>
+                        <a class="pos-bottom grey-link"><strong>your cloud <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a>
+                    </div>
+                </div>
+                <div style="border:0 !important; border-radius: 0 0 0 0 !important;" class="card col-md-3 col-sm-12 p-0">
+                    <div class="bg-white card-header">
+                        <h5 class="text-white mb-0">
+                            _
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Portfolios</strong> created from your media:</p>
+                        <h1>02</h1>
+                        <a class="pos-bottom grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit portfolios</strong></a>
+                    </div>
+                </div>
+                <div style="border:0 !important; border-radius: 0 10px 10px 0 !important" class="card col-md-3 col-sm-12 p-0">
+                    <div class="bg-ciano-veesy card-header text-end" style="border-radius: 0 10px 0 0 !important">
+                        <i class="fa-solid fa-circle fa-2xs" style="color: #202F4D;"></i>
+                    </div>
+                    <div class="card-body bg-ciano-veesy" style="border-radius: 0 0 10px 0 !important">
+                        <p>Your plan</p>
+                        <h2 class="text-white">Basic</h2>
+                        <p class="mb-0 mt-4 text-white"><strong>0€ /month</strong></p>
+                        <p class="text-white">max. 10 media</p>
+                        <div class="text-center">
+                            <button class="rounded-pill btn btn-primary" type="submit">view plans & upgrade</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row p-4">
+        <div class="h-100 col-sm-12 col-md-4">
+            <div class="bg-white card-header d-flex">
+                <div class="col-11">
                     <p class="mb-0">
-                        <strong>OVERVIEW</strong>
+                        <strong>PORTFOLIO</strong>
                     </p>
                 </div>
-                <div class="card-body">
-                    <p>Your profile is <strong>85%</strong> complete.</p>
-                    <div style="left: 0;" id="chart">
-                    </div>
-                    <a class="pos-bottom grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit profile</strong></a>
-                </div>
-            </div>
-            <div style="border:0 !important; border-radius: 0 0 0 0 !important;" class="card col-md-3 col-sm-12 p-0">
-                <div class="bg-white card-header">
-                    <h5 class="text-white mb-0">
-                        _
-                    </h5>
-                </div>
-                <div class="card-body">
-                    <p><strong>Files uploaded</strong> on your cloud:</p>
-                    <h1>26/100</h1>
-                    <a class="pos-bottom grey-link"><strong>your cloud <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a>  
-                </div>
-            </div>
-            <div style="border:0 !important; border-radius: 0 0 0 0 !important;" class="card col-md-3 col-sm-12 p-0">
-                <div class="bg-white card-header">
-                    <h5 class="text-white mb-0">
-                        _
-                    </h5>
-                </div>
-                <div class="card-body">
-                    <p><strong>Portfolios</strong> created from your media:</p>
-                    <h1>02</h1>
-                    <a class="pos-bottom grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit portfolios</strong></a>
-                </div>
-            </div>
-            <div style="border:0 !important; border-radius: 0 10px 10px 0 !important" class="card col-md-3 col-sm-12 p-0">
-                <div class="bg-ciano-veesy card-header text-end" style="border-radius: 0 10px 0 0 !important">
+                <div class="col-1 text-end">
                     <i class="fa-solid fa-circle fa-2xs" style="color: #202F4D;"></i>
                 </div>
-                <div class="card-body bg-ciano-veesy" style="border-radius: 0 0 10px 0 !important">
-                    <p>Your plan</p>
-                    <h2 class="text-white">Basic</h2>
-                    <p class="mb-0 mt-4 text-white"><strong>0€ /month</strong></p>
-                    <p class="text-white">max. 10 media</p>
-                    <div class="text-center">
-                        <button class="rounded-pill btn btn-primary" type="submit">view plans & upgrade</button>
-                    </div>
-                </div>
             </div>
-        </div>
-    </div>
-</div>
-<div class="row p-5">
-    <div class="h-100 col-sm-12 col-md-4">
-        <div class="bg-white card-header d-flex">
-            <div class="col-11">
-                <p class="mb-0">
-                    <strong>PORTFOLIO</strong>
-                </p>
-            </div>
-            <div class="col-1 text-end">
-                <i class="fa-solid fa-circle fa-2xs" style="color: #202F4D;"></i>
-            </div>
-        </div>
-        <div class="card-body bg-white rounded-bottom">
-            <h3>Use your media, find work, show your projects to client</h3>
-            <div class="empty-veesy"></div>
-            <div class="row pt-2">
-                <div class="col-4">
-                    <div class='box-100'> 
-                        <div class='content1_1'>
-                            <img class="image-fit-radius" src="https://images.pexels.com/photos/16190930/pexels-photo-16190930/free-photo-of-cibo-piastre-caffe-cucchiaio.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load"/>
-                        </div> 
-                    </div>
-                </div>
-                <div class="col-8">
-                    <h5>Main Portfolio</h5>
-                    <p class="veesy-grey-p mt-3">Updated on 15.06.2023<br/>15 medias uploaded</p>
-                </div>
-            </div>
-            <div class="row pt-2">
-                <div class="col-6"><a class="grey-link ms-2"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit portfolio</strong></a></div>
-                <div class="col-6 text-end"><button class="rounded-pill btn btn-primary" type="submit">preview main portfolio</button></div>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-12 col-md-4">
-        <div class="bg-grey card-header d-flex">
-            <div class="col-11">
-                <p class="text-white mb-0">
-                    <strong>CLOUD</strong>
-                </p>
-            </div>
-            <div class="col-1 text-end">
-                <i class="fa-solid fa-circle fa-2xs" style="color: #ffffff;"></i>
-            </div>
-        </div>
-        <div class="card-body bg-grey rounded-bottom">
-            <p class="text-white mb-0"><strong>Quick Upload: </strong>Upload and order your files to create your portfolios.</p>
-            <p class="text-white">Formats accepted: <strong>jpg, png, mov, mp4.</strong></p>
-            <div class="empty-veesy"></div>
-            <div class="row p-2">
-                <div class="col-12 rounded bg-grey-veesy p-2">
-                    <form enctype="multipart/form-data" asp-action="UploadMedia" asp-controller="Media" asp-area="Portfolio" class="dropzone card-grey-dashed-veesy" id="uploader">
-                        <div class="dz-message needsclick" id="message-uploader">
-                            <div id="div-uploader-icon" class="w-100 mb-1">
-                                <i id="uploader-icon" class="fa-solid fa-circle-plus fa-xl" style="color: #0D2045"></i>
-                            </div>
-                            <span id="uploader-text" class="text">
-                                Upload or drop files here.
-                            </span>
+            <div class="card-body bg-white rounded-bottom">
+                <h3>Use your media, find work, show your projects to client</h3>
+                <div class="empty-veesy"></div>
+                <div class="row pt-2">
+                    <div class="col-4">
+                        <div class='box-100'> 
+                            <div class='content1_1'>
+                                <img class="image-fit-radius" src="https://images.pexels.com/photos/16190930/pexels-photo-16190930/free-photo-of-cibo-piastre-caffe-cucchiaio.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load"/>
+                            </div> 
                         </div>
-                    </form>
-                </div>
-            </div>
-            <div class="empty-veesy"></div>
-            <div class="row pt-2">
-                <div class="col-8"><a class="white-link ms-2"><strong>how it works</strong></a></div>
-                <div class="col-4 text-end"><button class="rounded-pill btn btn-white" type="submit">go to cloud</button></div>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-12 col-md-4">
-        <div class="bg-blue card-header d-flex">
-            <div class="col-11">
-                <p class="text-white mb-0">
-                    <strong>PROFILE</strong>
-                </p>
-            </div>
-            <div class="col-1 text-end">
-                <i class="fa-solid fa-circle fa-2xs" style="color: #ffffff;"></i>
-            </div>
-        </div>
-        <div class="card-body bg-blue rounded-bottom">
-            <div class="row">
-                <div class="col-9">
-                    <h3 class="text-white">Daria Bianchi</h3>
-                    <h5 class="text-white">- Art Director</h5>  
-                    <div class="empty-veesy"></div>
-                    <p class="text-white">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                </div>
-                <div class="col-3">
-                    <div class="text-center">
-                        <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80" class="img-thumbnail rounded-circle" alt="user-image">
+                    </div>
+                    <div class="col-8">
+                        <h5>Main Portfolio</h5>
+                        <p class="veesy-grey-p mt-3">Updated on 15.06.2023<br/>15 medias uploaded</p>
                     </div>
                 </div>
+                <div class="row pt-2">
+                    <div class="col-6"><a class="grey-link ms-2"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit portfolio</strong></a></div>
+                    <div class="col-6 text-end"><button class="rounded-pill btn btn-primary" type="submit">preview main portfolio</button></div>
+                </div>
             </div>
-            <div class="row pt-2">
-                <div class="col-6"><a class="white-link ms-2"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit portfolio</strong></a></div>
-                <div class="col-6 text-end"><button class="rounded-pill btn btn-white" type="submit">preview main portfolio</button></div>
+        </div>
+        <div class="col-sm-12 col-md-4">
+            <div class="bg-grey card-header d-flex">
+                <div class="col-11">
+                    <p class="text-white mb-0">
+                        <strong>CLOUD</strong>
+                    </p>
+                </div>
+                <div class="col-1 text-end">
+                    <i class="fa-solid fa-circle fa-2xs" style="color: #ffffff;"></i>
+                </div>
+            </div>
+            <div class="card-body bg-grey rounded-bottom">
+                <p class="text-white mb-0"><strong>Quick Upload: </strong>Upload and order your files to create your portfolios.</p>
+                <p class="text-white">Formats accepted: <strong>jpg, png, mov, mp4.</strong></p>
+                <div class="empty-veesy"></div>
+                <div class="row p-2">
+                    <div class="col-12 rounded bg-grey-veesy p-2">
+                        <form enctype="multipart/form-data" asp-action="UploadMedia" asp-controller="Media" asp-area="Portfolio" class="dropzone card-grey-dashed-veesy" id="uploader">
+                            <div class="dz-message needsclick" id="message-uploader">
+                                <div id="div-uploader-icon" class="w-100 mb-1">
+                                    <i id="uploader-icon" class="fa-solid fa-circle-plus fa-xl" style="color: #0D2045"></i>
+                                </div>
+                                <span id="uploader-text" class="text">
+                                    Upload or drop files here.
+                                </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="empty-veesy"></div>
+                <div class="row pt-2">
+                    <div class="col-8"><a class="white-link ms-2"><strong>how it works</strong></a></div>
+                    <div class="col-4 text-end"><button class="rounded-pill btn btn-white" type="submit">go to cloud</button></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-4">
+            <div class="bg-blue card-header d-flex">
+                <div class="col-11">
+                    <p class="text-white mb-0">
+                        <strong>PROFILE</strong>
+                    </p>
+                </div>
+                <div class="col-1 text-end">
+                    <i class="fa-solid fa-circle fa-2xs" style="color: #ffffff;"></i>
+                </div>
+            </div>
+            <div class="card-body bg-blue rounded-bottom">
+                <div class="row">
+                    <div class="col-9">
+                        <h3 class="text-white">Daria Bianchi</h3>
+                        <h5 class="text-white">- Art Director</h5>  
+                        <div class="empty-veesy"></div>
+                        <p class="text-white">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                    </div>
+                    <div class="col-3">
+                        <div class="text-center">
+                            <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80" class="img-thumbnail rounded-circle" alt="user-image">
+                        </div>
+                    </div>
+                </div>
+                <div class="row pt-2">
+                    <div class="col-6"><a class="white-link ms-2"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit portfolio</strong></a></div>
+                    <div class="col-6 text-end"><button class="rounded-pill btn btn-white" type="submit">preview main portfolio</button></div>
+                </div>
             </div>
         </div>
     </div>
