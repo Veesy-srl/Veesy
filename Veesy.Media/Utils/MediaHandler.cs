@@ -4,6 +4,7 @@ using Veesy.Domain.Data;
 using Veesy.Domain.Models;
 using Veesy.Service.Implementation;
 using System.Linq;
+using Veesy.Media.Constants;
 
 namespace Veesy.Media.Utils;
 
@@ -58,26 +59,51 @@ public class MediaHandler
         return await _veesyBlobService.GetBlobAsync($"{section}/{fileName}");
     }
 
-    public async Task SaveFileAsByteArrayRecordAsync(FileMultipartSection fileSection)
+    public async Task SaveFileAsByteArrayRecordAsync(FileMultipartSection fileSection, MyUser user)
     {
-        byte[] bytes;
-        using (var memoryStream = new MemoryStream())
+        try
         {
-            await fileSection.FileStream.CopyToAsync(memoryStream);
-            bytes = memoryStream.ToArray();
+            var now = DateTime.Now;
+            byte[] bytes;
+            var size = (0, 0);
+            var extension = Path.GetExtension(fileSection.FileName);
+            using (var memoryStream = new MemoryStream())
+            {
+                await fileSection.FileStream.CopyToAsync(memoryStream);
+                bytes = memoryStream.ToArray();
+                if (MediaCostants.videoExtensions.Contains(extension, StringComparer.OrdinalIgnoreCase))
+                    size = MediaInfo.GetVideoSizeFromStream(memoryStream);
+                else
+                    size = MediaInfo.GetVideoSizeFromStream(memoryStream);
+            }
+            var newFileName = $"{Guid.NewGuid().ToString().Replace("-", String.Empty)}{extension}";
+            _dbContext.TmpMedias.Add(new TmpMedia()
+            {
+                FileName = newFileName,
+                MediaBase64 = bytes,
+                Type = extension,
+                Media = new Domain.Models.Media()
+                {
+                    CreateRecordDate = now,
+                    LastEditUserId = user.Id,
+                    LastEditRecordDate = now,
+                    CreateUserId = user.Id,
+                    MyUserId = user.Id,
+                    Type = extension,
+                    OriginalFileName = fileSection.FileName,
+                    FileName = newFileName,
+                    Width = size.Item1,
+                    Height = size.Item2,
+                    Size = bytes.Length,
+                    Status = 0
+                }
+            });
+            await _dbContext.SaveChangesAsync();
         }
-        var extension = Path.GetExtension(fileSection.FileName);
-        var newFileName = $"{Guid.NewGuid().ToString().Replace("-", String.Empty)}{extension}";
-        _dbContext.TmpMedias.Add(new TmpMedia()
+        catch (Exception e)
         {
-            FileName = newFileName,
-            MediaBase64 = bytes,
-            Status = 0,
-            Type = extension
-        });
-        await _dbContext.SaveChangesAsync();
-
-        _dbContext.TmpMedias.Where(s => s.Status == 0).ToList();
+            throw;
+        }
     }
 
     public async Task<bool> SaveFileOnAzureFromByteArray(TmpMedia mediaToUpload)

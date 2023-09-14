@@ -3,7 +3,7 @@ namespace Veesy.Domain.Models;
 /// <summary>
 /// Settore nella quale lavora l'utente. Ad esempio Metaverso, CGI, Automotive etc.
 /// </summary>
-public class Sector
+public class Sector : TrackableEntity
 {
     public Guid Id { get; set; }
     public string Name { get; set; }

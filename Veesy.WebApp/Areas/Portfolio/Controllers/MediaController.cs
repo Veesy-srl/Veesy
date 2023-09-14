@@ -1,4 +1,5 @@
 using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
@@ -12,6 +13,7 @@ using Veesy.WebApp.CustomDataAttribute;
 namespace Veesy.WebApp.Areas.Portfolio.Controllers;
 
 [Area("Portfolio")]
+[Authorize]
 public class MediaController : VeesyController
 {
 
@@ -46,7 +48,7 @@ public class MediaController : VeesyController
     {
         try
         {
-            await _mediaHelper.UploadFileAsync(HttpContext.Request.Body, Request.ContentType);
+            await _mediaHelper.UploadFileAsync(HttpContext.Request.Body, Request.ContentType, UserInfo);
             return Ok();
         }
         catch (Exception ex)

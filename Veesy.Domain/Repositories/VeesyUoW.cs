@@ -1,4 +1,5 @@
 using Veesy.Domain.Data;
+using Veesy.Domain.Models;
 using Veesy.Domain.Repositories.Impl;
 
 namespace Veesy.Domain.Repositories;
@@ -13,8 +14,11 @@ public class VeesyUoW : IVeesyUoW
         DbContext = dbContext;
     }
     
-    public void Commit() => this._dbContext.SaveChanges();
-    public async Task CommitAsync() => await _dbContext.SaveChangesAsync();
+    public void Commit(MyUser user) => this._dbContext.SaveChanges();
+    public async Task CommitAsync(MyUser user)
+    {
+        await _dbContext.SaveChangesAsync(user.Id);
+    }
     public void Rollback() => _dbContext.Dispose();
     public async Task RollbackAsync() => await _dbContext.DisposeAsync();
     

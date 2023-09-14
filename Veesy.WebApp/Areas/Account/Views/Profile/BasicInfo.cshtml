@@ -3,8 +3,8 @@
     ViewData["Title"] = "Basic Info";
 }
 
-<div class="d-flex pt-7rem">
-    <div class="col-2 col-sm-12 col-md-3">
+<div class="row pt-7rem">
+    <div class="col-sm-12 col-md-3">
         <div class="ps-3">
             <nav class="breadcrumb-container" aria-label="Percorso di navigazione">
                 <ol class="breadcrumb">
@@ -15,8 +15,8 @@
             </nav>
         </div>
     </div>
-    <div class="col-8 col-md-6">
-        <h3>Basic Info</h3>
+    <div class="col-sm-12 col-md-6">
+        <h3><strong>Basic Info</strong></h3>
         <div class="empty-veesy"></div>
         <div class="d-flex">
             <div class="text-left me-3">
@@ -32,14 +32,15 @@
             <a onclick="openModal('#modalImage')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
         </div>
         <div class="empty-veesy"></div>
-        <div class="d-flex">
-            <div class="col-sm-12 col-md-6 col-lg-6 me-2">
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-6 ps-2 pe-2">
+                <hr class="hr"/>
                 <div class="d-flex">
                     <div class="col-9">
                         <p class="mb-0"><strong>Name and Surname*</strong></p>
                         <p class="mb-0">@Model.Name @Model.Surname</p>
                     </div>
-                    <div class="col-3 text-end"><a onclick="setTextAreaValue('name-edit', '@Model.Name'), setTextAreaValue('surname-edit', '@Model.Surname'), openModal('#modalFullname')"  class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
+                    <div class="col-3 text-end"><a onclick="setTextAreaValue('name-edit', '@Model.Name'), setTextAreaValue('surname-edit', '@Model.Surname'), openModal('#modalFullname')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
                 </div>
                 <hr class="hr"/>
                 <div class="d-flex">
@@ -51,53 +52,54 @@
                 </div>
                 <hr class="hr"/>
                 <div class="d-flex">
-                     @if (string.IsNullOrEmpty(@Model.Category))
-                        {
-                            <div class="col-9">
-                                <p class="mb-0"><strong>Category</strong></p>
-                                <p class="mb-0 color-red">information missing</p>
-                            </div>
-                            <div class="col-3 text-end">
-                                <a onclick="openModal('#modalCategory')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="col-9">
-                                <p class="mb-0"><strong>Category</strong></p>
-                                <p class="mb-0">@Model.Category</p>
-                            </div>
-                            <div class="col-3 text-end">
-                                <a onclick="setTextAreaValue('category-edit', '@Model.Category'), openModal('#modalCategory')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
-                            </div>
-                        }
+                    @if (string.IsNullOrEmpty(@Model.Category))
+                    {
+                        <div class="col-9">
+                            <p class="mb-0"><strong>Category</strong></p>
+                            <p class="mb-0 color-red">information missing</p>
+                        </div>
+                        <div class="col-3 text-end">
+                            <a onclick="openModal('#modalCategory')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-9">
+                            <p class="mb-0"><strong>Category</strong></p>
+                            <p class="mb-0">@Model.Category</p>
+                        </div>
+                        <div class="col-3 text-end">
+                            <a onclick="setTextAreaValue('category-edit', '@Model.Category'), openModal('#modalCategory')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
+                        </div>
+                    }
                 </div>
                 <hr class="hr"/>
                 <div class="d-flex">
-                @if (string.IsNullOrEmpty(@Model.VatNumber))
-                {
-                    <div class="col-9">
-                        <p class="mb-0"><strong>VAT Number</strong></p>
-                        <p class="mb-0 color-red">information missing</p>
-                    </div>
-                    <div class="col-3 text-end">
-                        <a onclick="openModal('#modalVAT')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a>
-                    </div>
-                }
-                else
-                {
-                    <div class="col-9">
-                        <p class="mb-0"><strong>VAT Number</strong></p>
-                        <p class="mb-0">@Model.VatNumber</p>
-                    </div>
-                    <div class="col-3 text-end">
-                        <a onclick="setTextAreaValue('vat-number-edit', '@Model.VatNumber'), openModal('#modalVAT')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
-                    </div>
-                }
+                    @if (string.IsNullOrEmpty(@Model.VatNumber))
+                    {
+                        <div class="col-9">
+                            <p class="mb-0"><strong>VAT Number</strong></p>
+                            <p class="mb-0 color-red">information missing</p>
+                        </div>
+                        <div class="col-3 text-end">
+                            <a onclick="openModal('#modalVAT')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-9">
+                            <p class="mb-0"><strong>VAT Number</strong></p>
+                            <p class="mb-0">@Model.VatNumber</p>
+                        </div>
+                        <div class="col-3 text-end">
+                            <a onclick="setTextAreaValue('vat-number-edit', '@Model.VatNumber'), openModal('#modalVAT')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
+                        </div>
+                    }
+                </div>
+                <hr class="hr nodisplay-sm"/>
             </div>
-            <hr class="hr"/>
-            </div>
-            <div class="col-sm-12 col-md-6 ms-2">
+            <div class="col-sm-12 col-md-6 ps-2 pe-2">
+                <hr class="hr"/>
                 <div class="d-flex">
                     <div class="col-9">
                         <p class="mb-0"><strong>Username*</strong></p>
@@ -148,16 +150,15 @@
         </div>
         <div class="empty-veesy"></div>
     </div>
-    <div class="col-2 col-md-3">
+    <div class="col-sm-12 col-md-3">
         <div class="d-flex justify-content-center">
-            <div style="position: fixed">
-                <div class="w-125 card-blue-veesy p-3">
-                    <div class="text-end"><i class="fa-solid fa-circle fa-2xs" style="color: #ffffff;"></i></div>
-                    <p class="mb-0" style="color: white"><strong>Do you need some help?</strong></p>
-                    <a class="a-ciano" href="#">Contact us</a>
-                </div>
+            <div class="w-125 card-blue-veesy p-3">
+                <div class="text-end"><i class="fa-solid fa-circle fa-2xs" style="color: #ffffff;"></i></div>
+                <p class="mb-0" style="color: white"><strong>Do you need some help?</strong></p>
+                <a class="a-ciano" href="#">Contact us</a>
             </div>
         </div>
+        <div class="empty-veesy"></div>
     </div>
 </div>
 
@@ -165,7 +166,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">External Link</h5>
+                <h3 class="modal-title" id="exampleModalLongTitle"><strong>External Link</strong></h3>
                 <a onclick="closeModal('#modalFullname')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
@@ -192,7 +193,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Password</h5>
+                <h3 class="modal-title"><strong>Password</strong></h3>
                 <a onclick="closeModal('#modalPassword')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
@@ -219,7 +220,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Email</h5>
+                <h3 class="modal-title" id="exampleModalLongTitle"><strong>Email</strong></h3>
                 <a onclick="closeModal('#modalEmail')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
@@ -238,11 +239,11 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Username</h5>
+                <h3 class="modal-title" id="exampleModalLongTitle"><strong>Username</strong></h3>
                 <a onclick="closeModal('#modalUsername')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
-                <p>Email*</p>
+                <p>Username*</p>
                 <input type="text" id="username-edit" rows="4" class="w-100 input-modal"/>
             </div>
             <div class="modal-footer">                
@@ -256,7 +257,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">VAT Number</h5>
+                <h3 class="modal-title" id="exampleModalLongTitle"><strong>VAT Number</strong></h3>
                 <a onclick="closeModal('#modalVAT')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
@@ -274,7 +275,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Phone Number</h5>
+                <h3 class="modal-title" id="exampleModalLongTitle"><strong>Phone Number</strong></h3>
                 <a onclick="closeModal('#modalPhoneNumber')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
@@ -293,7 +294,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Category</h5>
+                <h3 class="modal-title" id="exampleModalLongTitle"><strong>Category</strong></h3>
                 <a onclick="closeModal('#modalCategory')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
@@ -311,7 +312,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Profile Image</h5>
+                <h3 class="modal-title" id="exampleModalLongTitle"><strong>Profile Image</strong></h3>
                 <a onclick="closeModal('#modalImage')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
@@ -347,7 +348,7 @@ function UpdateFullname() {
     var FullNameDto = {Name,  Surname};
     $.ajax({
         type: 'POST',
-        url: '/Account/Profile/UpdateNameAndSurname',
+        url: '@Url.Action("UpdateNameAndSurname","Profile")',
         data: JSON.stringify(FullNameDto),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
@@ -370,7 +371,7 @@ function UpdatePassword() {
     var ResetPasswordDto = {OldPassword,  NewPassword};
     $.ajax({
         type: 'POST',
-        url: '/Account/Profile/UpdatePassword',
+        url: '@Url.Action("UpdatePassword", "Profile")',
         data: JSON.stringify(ResetPasswordDto),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
@@ -391,7 +392,7 @@ function UpdateEmail() {
     var email = document.getElementById("email-edit").value
     $.ajax({
         type: 'POST',
-        url: '/Account/Profile/UpdateEmail',
+        url: '@Url.Action("UpdateEmail", "Profile")',
         data: JSON.stringify(email),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
@@ -412,7 +413,7 @@ function UpdateUsername() {
     var username = document.getElementById("username-edit").value
     $.ajax({
         type: 'POST',
-        url: '/Account/Profile/UpdateUsername',
+        url: '@Url.Action("UpdateUsername", "Profile")',
         data: JSON.stringify(username),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
@@ -433,7 +434,7 @@ function UpdateVATNumber() {
     var vatNumber = document.getElementById("vat-number-edit").value
     $.ajax({
         type: 'POST',
-        url: '/Account/Profile/UpdateVATNumber',
+        url: '@Url.Action("UpdateVATNumber", "Profile")',
         data: JSON.stringify(vatNumber),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
@@ -454,7 +455,7 @@ function UpdateCategory() {
     var category = document.getElementById("category-edit").value
     $.ajax({
         type: 'POST',
-        url: '/Account/Profile/UpdateCategory',
+        url: '@Url.Action("UpdateCategory", "Profile")',
         data: JSON.stringify(category),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
@@ -475,7 +476,7 @@ function UpdatePhoneNumber() {
     var phoneNumber = document.getElementById("phone-number-edit").value
     $.ajax({
         type: 'POST',
-        url: '/Account/Profile/UpdatePhoneNumber',
+        url: '@Url.Action("UpdatePhoneNumber", "Profile")',
         data: JSON.stringify(phoneNumber),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',

@@ -1,6 +1,6 @@
 namespace Veesy.Domain.Models;
 
-public class PortfolioSector
+public class PortfolioSector : TrackableEntity
 {
     public Guid SectorId { get; set; }
     public Guid PorfolioId { get; set; }

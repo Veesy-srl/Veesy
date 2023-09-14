@@ -18,7 +18,7 @@ public class AccountService : IAccountService
     public async Task<ResultDto> UpdateUserProfile(MyUser user)
     {
         _uoW.MyUserRepository.Update(user);
-        await _uoW.CommitAsync();
+        await _uoW.CommitAsync(user);
         return new ResultDto(true, "");
     }
 
@@ -37,7 +37,7 @@ public class AccountService : IAccountService
         return _uoW.UsedSoftwareRepository.GetUsedSoftwaresByUser(user);
     }
 
-    public async Task<ResultDto> UpdateMyUserUsedSoftware(List<MyUserUsedSoftware> usedSoftwareToDelete, List<MyUserUsedSoftware> usedSoftwareToAdd)
+    public async Task<ResultDto> UpdateMyUserUsedSoftware(List<MyUserUsedSoftware> usedSoftwareToDelete, List<MyUserUsedSoftware> usedSoftwareToAdd, MyUser user)
     {
         using (var transaction = _uoW.DbContext.Database.BeginTransaction())
         {
@@ -45,7 +45,7 @@ public class AccountService : IAccountService
             {
                 _uoW.UsedSoftwareRepository.DeleteMyUserUsedSoftwares(usedSoftwareToDelete);
                 await _uoW.UsedSoftwareRepository.AddMyUserUsedSoftwares(usedSoftwareToAdd);
-                await _uoW.CommitAsync();
+                await _uoW.CommitAsync(user);
                 await transaction.CommitAsync();
                 return new ResultDto(true, "");
             }
@@ -67,7 +67,7 @@ public class AccountService : IAccountService
         return _uoW.SkillRepository.GetSkillsByUserAndType(user, type);
     }
 
-    public async Task<ResultDto> UpdateMyUserSkills(List<MyUserSkill> skillToDelete, List<MyUserSkill> skillToAdd)
+    public async Task<ResultDto> UpdateMyUserSkills(List<MyUserSkill> skillToDelete, List<MyUserSkill> skillToAdd, MyUser user)
     {
         using (var transaction = _uoW.DbContext.Database.BeginTransaction())
         {
@@ -75,7 +75,7 @@ public class AccountService : IAccountService
             {
                 _uoW.SkillRepository.DeleteMyUserSkills(skillToDelete);
                 await _uoW.SkillRepository.AddMyUserSkills(skillToAdd);
-                await _uoW.CommitAsync();
+                await _uoW.CommitAsync(user);
                 await transaction.CommitAsync();
                 return new ResultDto(true, "");
             }
@@ -112,7 +112,7 @@ public class AccountService : IAccountService
         return _uoW.MyUserRepository.GetCategoriesWorkByUser(userInfo);
     }
 
-    public async Task<ResultDto> UpdateMyUserCategoriesWork(List<MyUserCategoryWork> categoryWorksToDelete, List<MyUserCategoryWork> categoryWorksToAdd)
+    public async Task<ResultDto> UpdateMyUserCategoriesWork(List<MyUserCategoryWork> categoryWorksToDelete, List<MyUserCategoryWork> categoryWorksToAdd, MyUser user)
     {
         using (var transaction = _uoW.DbContext.Database.BeginTransaction())
         {
@@ -120,7 +120,7 @@ public class AccountService : IAccountService
             {
                 _uoW.MyUserRepository.DeleteMyUserCategoriesWork(categoryWorksToDelete);
                 await _uoW.MyUserRepository.AddMyUserCategoriesWork(categoryWorksToAdd);
-                await _uoW.CommitAsync();
+                await _uoW.CommitAsync(user);
                 await transaction.CommitAsync();
                 return new ResultDto(true, "");
             }
@@ -137,7 +137,7 @@ public class AccountService : IAccountService
         return _uoW.MyUserRepository.GetInfosToShowByUser(userInfo);
     }
 
-    public async Task<ResultDto> UpdateMyUserInfoToShow(List<MyUserInfoToShow> infoToShowToDelete, List<MyUserInfoToShow> infoToShowToAdd)
+    public async Task<ResultDto> UpdateMyUserInfoToShow(List<MyUserInfoToShow> infoToShowToDelete, List<MyUserInfoToShow> infoToShowToAdd, MyUser user)
     {
         using (var transaction = _uoW.DbContext.Database.BeginTransaction())
         {
@@ -145,7 +145,7 @@ public class AccountService : IAccountService
             {
                 _uoW.MyUserRepository.DeleteMyUserInfoToShow(infoToShowToDelete);
                 await _uoW.MyUserRepository.AddMyUserInfoToShow(infoToShowToAdd);
-                await _uoW.CommitAsync();
+                await _uoW.CommitAsync(user);
                 await transaction.CommitAsync();
                 return new ResultDto(true, "");
             }
@@ -162,7 +162,7 @@ public class AccountService : IAccountService
         return _uoW.MyUserRepository.GetLanguageSpokenByUser(userInfo);
     }
 
-    public async Task<ResultDto> UpdateMyUserLanguageSpoken(List<MyUserLanguageSpoken> languageSpokenToDelete, List<MyUserLanguageSpoken> languageSpokenToAdd)
+    public async Task<ResultDto> UpdateMyUserLanguageSpoken(List<MyUserLanguageSpoken> languageSpokenToDelete, List<MyUserLanguageSpoken> languageSpokenToAdd, MyUser user)
     {
         using (var transaction = _uoW.DbContext.Database.BeginTransaction())
         {
@@ -170,7 +170,7 @@ public class AccountService : IAccountService
             {
                 _uoW.MyUserRepository.DeleteMyUserLanguageSpoken(languageSpokenToDelete);
                 await _uoW.MyUserRepository.AddMyUserLanguageSpoken(languageSpokenToAdd);
-                await _uoW.CommitAsync();
+                await _uoW.CommitAsync(user);
                 await transaction.CommitAsync();
                 return new ResultDto(true, "");
             }

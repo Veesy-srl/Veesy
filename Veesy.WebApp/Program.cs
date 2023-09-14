@@ -1,6 +1,7 @@
 using AspNetCoreHero.ToastNotification;
 using AspNetCoreHero.ToastNotification.Extensions;
 using Azure.Storage.Blobs;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -85,6 +86,20 @@ try
         c.SwaggerDoc("v2", new OpenApiInfo { Title = "Veesy Web API", Version = "v1.0.0" });
     });
     
+    builder.Services.ConfigureApplicationCookie(options =>
+    {
+        options.LoginPath = "/auth/login";
+        options.LogoutPath = "/auth/logout";
+        options.Events = new CookieAuthenticationEvents
+        {
+            OnRedirectToLogin = ctx =>
+            {
+                ctx.Response.Redirect(options.LoginPath);
+                return Task.FromResult(0);
+            }
+        };
+    });
+    
     builder.Services.RegisterVeesyServices();
     
     var app = builder.Build();
@@ -105,15 +120,14 @@ try
 
     app.UseHttpsRedirection();
     app.UseStaticFiles();
+    app.UseNotyf();
+    
     app.UseAuthentication();
     app.UseAuthorization();
-    app.UseRouting();
-    app.UseAuthorization();
-    app.UseNotyf();
     
     app.MapControllerRoute(
         name: "default",
-        pattern: "{area=Auth}/{controller=Auth}/{action=Login}");
+        pattern: "{area=Portfolio}/{controller=Home}/{action=Index}");
 
     using (var scope = app.Services.CreateScope())
     {

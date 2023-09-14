@@ -1,6 +1,6 @@
 namespace Veesy.Domain.Models;
 
-public class MyUserSkill
+public class MyUserSkill : TrackableEntity
 {
     public Guid Id { get; set; }
     public string MyUserId { get; set; }

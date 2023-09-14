@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using NLog;
+using NuGet.Protocol;
 using Veesy.Domain.Models;
 using Veesy.Email;
 using Veesy.Presentation.Helper;
@@ -34,24 +35,27 @@ public class AuthController : Controller
         _notyfService = notyfService;
     }
 
-    [HttpGet]
+    [HttpGet("auth/login")]
     public IActionResult Login()
     {
         return View();
     }
     
-    [HttpPost]
+    [HttpPost("auth/login")]
     public async Task<IActionResult> Login(LoginViewModel model)
     {
         try
         {
-            var user = await _userManager.FindByEmailAsync(model.Email);
+            if(string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.Password))
+                _notyfService.Custom("Email or password are invalid", 10, "#ca0a0a96");
 
+            var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
                 user = await _userManager.FindByNameAsync(model.Email);
                 if (user == null)
                 {
+                    _notyfService.Custom("Email or password are invalid", 10, "#ca0a0a96");
                     return View(model);
                 }
             }
@@ -61,7 +65,7 @@ public class AuthController : Controller
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
             if (result.Succeeded)
                return RedirectToAction("Index", "Home", new { area = "Portfolio" });
-
+            _notyfService.Custom("Email or password are invalid", 10, "#ca0a0a96");
             return View(model);
         }
         catch (Exception ex)
@@ -76,7 +80,8 @@ public class AuthController : Controller
     [HttpGet]
     public IActionResult SignUp()
     {
-        return View(_authHelper.GetSignUpViewModel());
+        var vm = _authHelper.GetSignUpViewModel();
+        return View(vm);
     }
     
     [HttpPost]
@@ -86,17 +91,18 @@ public class AuthController : Controller
         {
             var result = await _authHelper.RegisterNewMember(model);
             if (result.Success)
-            {
                 return RedirectToAction("SendEmailVerification", new {email = model.Email});
-            }
-
             _notyfService.Custom(result.Message, 10, "#ca0a0a96");
-            return View(_authHelper.GetSignUpViewModelException(model));
+            var vm = _authHelper.GetSignUpViewModelException(model);
+            return View(vm);
         }
         catch (Exception ex)
         {
             Logger.Error(ex, ex.Message);
-            return View(_authHelper.GetSignUpViewModelException(model));
+            Logger.Error($"Signup model: {model.ToJson()}");
+            _notyfService.Custom("Error during register new member. Please retry.", 10, "#ca0a0a96");
+            var vm = _authHelper.GetSignUpViewModelException(model);
+            return View();
         }
     }
     
@@ -129,8 +135,9 @@ public class AuthController : Controller
         }
         catch (Exception e)
         {
-            _notyfService.Error("Error during send reset password link. Please retry.");
+            _notyfService.Custom("Error during send reset password link. Please retry.", 10, "#ca0a0a96");
             Logger.Error(e, e.Message);
+            Logger.Error($"Forgot password: {model.ToJson()}");
             return View();
         }
     }
@@ -138,11 +145,12 @@ public class AuthController : Controller
     [HttpGet]
     public IActionResult ResetPassword(string token, string email)
     {
-        return View(new ResetPasswordViewModel()
+        var vm = new ResetPasswordViewModel()
         {
             Token = token,
             Email = email
-        });
+        };
+        return View(vm);
     }
 
     [HttpPost]
@@ -160,7 +168,7 @@ public class AuthController : Controller
 
             if(model.Password != model.PasswordConfirm)
             {
-                _notyfService.Error("Passwords don't match");
+                _notyfService.Custom("Passwords don't match", 10, "#ca0a0a96");
                 return View(model);
             }
             var result = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
@@ -171,14 +179,15 @@ public class AuthController : Controller
             }
             else
             {
-                _notyfService.Error(result.Errors.FirstOrDefault().Description);
+                _notyfService.Custom(result.Errors.FirstOrDefault().Description, 10, "#ca0a0a96");
                 return View(model);
             }
         }
         catch (Exception ex)
         {
-            _notyfService.Error("Error during updating password. Please retry.");
+            _notyfService.Custom("Error during updating password. Please retry.", 10, "#ca0a0a96");
             Logger.Error(ex, ex.Message);
+            Logger.Error($"Reset password: {model.ToJson()}");
             return View(model);
         }
     }
@@ -207,6 +216,7 @@ public class AuthController : Controller
         catch (Exception e)
         {
             Logger.Error(e, e.Message);
+            _notyfService.Custom("Error send email confirmation. Please retry.", 10, "#ca0a0a96");
             return RedirectToAction("Login", "Auth");
         }
     }
@@ -214,10 +224,11 @@ public class AuthController : Controller
     [HttpGet]
     public IActionResult VerifyEmail(string email)
     {
-        return View(new VerifyEmailViewModel()
+        var vm = new VerifyEmailViewModel()
         {
             Email = email
-        });
+        };
+        return View(vm);
     }
         
     [HttpGet]
@@ -231,11 +242,12 @@ public class AuthController : Controller
         catch (Exception e)
         {
             Logger.Error(e, e.Message);
+            _notyfService.Custom("Error send email verification. Please retry.", 10, "#ca0a0a96");
             return RedirectToAction("VerifyEmail", new { email = email });
         }
     }
 
-    [HttpGet]
+    [HttpGet("auth/logout")]
     public async Task<IActionResult> Logout()
     {
         await _signInManager.SignOutAsync();

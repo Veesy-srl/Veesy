@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Veesy.Domain.Data;
 
@@ -11,9 +12,11 @@ using Veesy.Domain.Data;
 namespace Veesy.Domain.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230908080417_RelationMediaTmpMedia")]
+    partial class RelationMediaTmpMedia
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -234,21 +237,7 @@ namespace Veesy.Domain.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreateRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreateUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LastEditRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastEditUserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -267,21 +256,7 @@ namespace Veesy.Domain.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreateRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreateUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LastEditRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastEditUserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -300,13 +275,6 @@ namespace Veesy.Domain.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreateRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreateUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -314,23 +282,12 @@ namespace Veesy.Domain.Migrations
                     b.Property<int>("Height")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("LastEditRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastEditUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Width")
                         .HasColumnType("int");
@@ -346,21 +303,7 @@ namespace Veesy.Domain.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreateRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreateUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Info")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LastEditRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastEditUserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -375,21 +318,7 @@ namespace Veesy.Domain.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreateRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreateUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Language")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LastEditRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastEditUserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -415,8 +344,9 @@ namespace Veesy.Domain.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Height")
-                        .HasColumnType("int");
+                    b.Property<string>("IpAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("LastEditRecordDate")
                         .HasColumnType("datetime2");
@@ -433,11 +363,13 @@ namespace Veesy.Domain.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("Size")
-                        .HasColumnType("bigint");
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<string>("Quality")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -445,9 +377,6 @@ namespace Veesy.Domain.Migrations
 
                     b.Property<DateTime>("UploadDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("Width")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -464,20 +393,6 @@ namespace Veesy.Domain.Migrations
                     b.Property<Guid>("MediaId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreateRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreateUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LastEditRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastEditUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("CategoryId", "MediaId");
 
                     b.HasIndex("MediaId");
@@ -491,32 +406,19 @@ namespace Veesy.Domain.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreateRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreateUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<Guid>("FormatId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("LastEditRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastEditUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("MediaId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<long>("Size")
-                        .HasColumnType("bigint");
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProcessedFileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -533,21 +435,7 @@ namespace Veesy.Domain.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreateRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreateUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LastEditRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastEditUserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -573,20 +461,6 @@ namespace Veesy.Domain.Migrations
                     b.Property<Guid>("CategoryWorkId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreateRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreateUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LastEditRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastEditUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("MyUserId", "CategoryWorkId");
 
                     b.HasIndex("CategoryWorkId");
@@ -601,20 +475,6 @@ namespace Veesy.Domain.Migrations
 
                     b.Property<Guid>("InfoToShowId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreateRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreateUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LastEditRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastEditUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Show")
                         .HasColumnType("bit");
@@ -634,20 +494,6 @@ namespace Veesy.Domain.Migrations
                     b.Property<Guid>("LanguageSpokenId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreateRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreateUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LastEditRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastEditUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("MyUserId", "LanguageSpokenId");
 
                     b.HasIndex("LanguageSpokenId");
@@ -663,22 +509,8 @@ namespace Veesy.Domain.Migrations
                     b.Property<Guid>("SectorId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreateRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreateUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsPrincipal")
                         .HasColumnType("bit");
-
-                    b.Property<DateTime>("LastEditRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastEditUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Note")
                         .IsRequired()
@@ -702,22 +534,8 @@ namespace Veesy.Domain.Migrations
                     b.Property<Guid>("SkillId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreateRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreateUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsPrincipal")
                         .HasColumnType("bit");
-
-                    b.Property<DateTime>("LastEditRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastEditUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -740,22 +558,8 @@ namespace Veesy.Domain.Migrations
                     b.Property<Guid>("UsedSoftwareId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreateRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreateUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsPrincipal")
                         .HasColumnType("bit");
-
-                    b.Property<DateTime>("LastEditRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastEditUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("MyUserId", "UsedSoftwareId");
 
@@ -778,6 +582,10 @@ namespace Veesy.Domain.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IpAddress")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -829,26 +637,12 @@ namespace Veesy.Domain.Migrations
                     b.Property<Guid>("MediaFormatId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreateRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreateUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
-
-                    b.Property<DateTime>("LastEditRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastEditUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PortfolioId", "MediaFormatId");
 
@@ -865,22 +659,8 @@ namespace Veesy.Domain.Migrations
                     b.Property<Guid>("SectorId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreateRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreateUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsPrincipal")
                         .HasColumnType("bit");
-
-                    b.Property<DateTime>("LastEditRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastEditUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Note")
                         .IsRequired()
@@ -904,21 +684,7 @@ namespace Veesy.Domain.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreateRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreateUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LastEditRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastEditUserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -936,20 +702,6 @@ namespace Veesy.Domain.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreateRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreateUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LastEditRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastEditUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -972,26 +724,12 @@ namespace Veesy.Domain.Migrations
                     b.Property<int>("AllowedMegaByte")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreateRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreateUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsMediaFormatsInclude")
                         .HasColumnType("bit");
-
-                    b.Property<DateTime>("LastEditRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastEditUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -1011,21 +749,7 @@ namespace Veesy.Domain.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreateRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreateUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LastEditRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastEditUserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -1035,6 +759,9 @@ namespace Veesy.Domain.Migrations
 
                     b.Property<Guid>("MediaId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -1054,21 +781,7 @@ namespace Veesy.Domain.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreateRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreateUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LastEditRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastEditUserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

@@ -7,6 +7,45 @@
   border-top-right-radius: 0.25rem;
 }
 
+p{
+  font-size: 16px !important;
+  line-height: 24px !important;
+}
+
+h1{
+  font-size: 36px !important;
+  line-height: 43px !important;
+}
+
+h3{
+  font-size: 20px !important;
+  line-height: 25px !important;
+}
+
+body{
+  font-family: "elza-text",sans-serif;
+}
+
+@font-face {
+  font-family:"elza-text";
+  src:url("https://use.typekit.net/af/9b4894/00000000000000007735f938/30/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff2"),url("https://use.typekit.net/af/9b4894/00000000000000007735f938/30/d?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff"),url("https://use.typekit.net/af/9b4894/00000000000000007735f938/30/a?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("opentype");
+  font-display:auto;font-style:normal;font-weight:400;font-stretch:normal;
+}
+
+.nodisplay-sm{
+  @media only screen and (max-width: 600px) {
+    display: none !important;
+  }
+}
+
+.w-75-veesy{
+  width: 75% !important;
+  @media only screen and (max-width: 600px) {
+    width: 100% !important;
+  }
+
+}
+
 html {
   font-size: 14px;
 }
@@ -408,6 +447,30 @@ a{
   color: #202F4D;
   text-decoration: none;
   cursor: pointer;
+}
+
+.a-ciano{
+  color: #75CCDD;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.bg-auth{
+  border-bottom-left-radius: 45px; 
+  border-top-left-radius: 45px; 
+  margin-left: -25px; 
+  margin-top: -1.5vh;
+  @media only screen and (max-width: 600px) {
+    border-bottom-left-radius: 0 !important;
+    border-top-left-radius: 0 !important;
+    margin-left: 0 !important;
+    margin-top: 0 !important;
+  }
+}
+
+.a-ciano:hover{
+  text-decoration: underline;
+  color: #75CCDD;
 }
 
 a:hover{

@@ -1,6 +1,6 @@
 namespace Veesy.Domain.Models;
 
-public class MyUserLanguageSpoken
+public class MyUserLanguageSpoken : TrackableEntity
 {
     public string MyUserId { get; set; }
     public Guid LanguageSpokenId { get; set; }

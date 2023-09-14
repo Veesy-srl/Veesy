@@ -24,26 +24,15 @@ public static class UploadMediaOnAzure
             var blobServiceClient = new BlobServiceClient("DefaultEndpointsProtocol=https;AccountName=swirkeydevelopas;AccountKey=MD8x0U32UR5Njtdct4ytlRuj5r9+ZAZvnP22w3JPmvpW3hRk2U7/PLyGrdLI7yLzTazcF5G+kK4G+AStbcHLrw==;EndpointSuffix=core.windows.net");
             var veesyBlobService = new VeesyBlobService(blobServiceClient, "blobveesy");
             var mediaHandler = new MediaHandler(veesyBlobService, mainDbContext);
-
-            var tmpMedia = mainDbContext.TmpMedias.Where(s => s.Status == 0).ToList();
-            tmpMedia.ForEach(s => s.Status = 1);
-            mainDbContext.UpdateRange(tmpMedia);
-            mainDbContext.SaveChanges();
+            //TODO: spostare lo status da tmpMedia a Media perchè dovrà esserci una function che pulisce la tabella tmpMedia
+            var tmpMedia = mainDbContext.TmpMedias.Include(m => m.Media).Where(s => s.Media.Status == 0).ToList();
             foreach (var fileToUpload in tmpMedia)
             {
                 if (await mediaHandler.SaveFileOnAzureFromByteArray(fileToUpload))
                 {
-                    mainDbContext.Medias.Add(new Domain.Models.Media()
-                    {
-                        Id = new Guid(),
-                        CreateRecordDate = DateTime.Now,
-                        CreateUserId = "1",
-                        FileName = fileToUpload.FileName,
-                        IpAddress = "10.10.10.10",
-                        LastEditRecordDate = DateTime.Now,
-                        LastEditUserId = "1",
-                    });
-                    mainDbContext.SaveChanges();
+                    fileToUpload.Media.Status = 1;
+                    mainDbContext.Update(fileToUpload);
+                    await mainDbContext.SaveChangesAsync();
                 }
                 
             }
