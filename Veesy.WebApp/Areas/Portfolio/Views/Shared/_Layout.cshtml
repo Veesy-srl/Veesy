@@ -16,17 +16,42 @@
         <div class="container-fluid">
                 
             <h1 class="h3 mb-2 fw-normal">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><b>veesy</b> dashboard</a>
+                <a role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><b>veesy</b> dashboard</a>
             </h1> 
             <div class="float-end">
-                <button class="btn btn-light border fw-bolder shadow-none">
-                    <i class="fas fa-circle fa-lg text-primary mr-2" id="icon-color"></i>
-                    <span id="color-text">Hi new user!</span>
-                </button>
-                <button class="btn btn-light border fw-bolder shadow-none" id="menuButton">
-                    <i class="fas fa-circle fa-2xs text-primary mr-2" id="icon-color"></i>
-                    <span id="color-text">menu</span>
-                </button>
+                <div class="d-flex">
+                    <div class="dropdown show">
+                        @{
+                            var profile_image = ViewBag.ProfileImage;
+                            var basePath = ViewBag.BaseDirectory;
+                            if (string.IsNullOrEmpty(profile_image))
+                            {
+                                <a class="dropdown-toggle btn btn-light border fw-bolder shadow-none">
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" style="margin-top:-5px; width: 20px !important; height: 20px !important; max-width: none!important; " class="img-thumbnail-custom rounded-circle" alt="user-image" style="max-width: none!important; width: 60px !important; height: 60px !important;">
+                                    <span id="color-text">Hi new user!</span>
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="dropdown-toggle btn btn-light border fw-bolder shadow-none">
+                                    <img src="@basePath@profile_image" style="width: 20px !important; height: 20px !important; max-width: none!important; margin-top:-5px;" class="img-thumbnail-custom rounded-circle" alt="user-image">
+                                    <span id="color-text">Hi new user!</span>
+                                </a>
+                            }
+                        }
+                        <div class="dropdown-menu bg-grey-veesy" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Portfolio" ? "a-ciano-header" : "menu-element")" href="#">Portfolio</a>
+                            <a class="dropdown-item menu-element" href="#">Cloud</a>
+                            <a class="dropdown-item menu-element" href="#">Your Plan</a>
+                            <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Profile" ? "a-ciano-header" : "menu-element")" asp-action="Profile" asp-controller="Profile" asp-area="Account">Profile</a>
+                            <a class="dropdown-item menu-element" asp-action="Logout" asp-controller="Auth" asp-area="Auth">Log out</a>
+                        </div>
+                    </div>
+                    <button class="ms-4 btn btn-light border fw-bolder shadow-none" id="menuButton">
+                        <i class="fas fa-circle fa-2xs text-primary mr-2" id="icon-color"></i>
+                        <span id="color-text">menu</span>
+                    </button>
+                </div>
             </div>
             <div class="menu-popup" id="menuPopup">
                 <div class="float-end">
