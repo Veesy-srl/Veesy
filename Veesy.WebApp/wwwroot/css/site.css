@@ -38,6 +38,21 @@ body{
   }
 }
 
+input{
+  height: 30px;
+  font-size: 15px !important;
+  line-height: 20px !important;
+}
+
+.btn-padding{
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.fa-circle-xmark{
+  color: #202F4D66;
+}
+
 .w-75-veesy{
   width: 75% !important;
   @media only screen and (max-width: 600px) {
@@ -66,7 +81,7 @@ body{
 }
 
 .div-white-rounded-veesy{
-  padding: 5px;
+  padding: 5px 5px 1px 5px;
   margin: 5px;
   background-color: #F0F2F3;
   border-radius: 25px;
@@ -74,7 +89,7 @@ body{
 }
 
 .div-white-rounded-blue-veesy{
-  padding: 5px;
+  padding: 5px 5px 1px 5px;
   margin: 5px;
   background-color: #F0F2F3;
   border-radius: 25px;
@@ -151,10 +166,18 @@ input {
   font-family: inherit
 }
 
+.modal-body{
+  padding-bottom: 0px;
+}
+
+.modal-footer{
+  padding-top: 0px;
+}
+
 .input-modal {
   outline: none;
   margin: 0;
-  border: 1px solid #AAB0BB !important;
+  border: 1px solid #202F4D33 !important;
   border-radius: 5px;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
@@ -172,6 +195,26 @@ input {
 .btn-primary {
   background-color: #202F4D;
   border: #202F4D;
+}
+
+.btn-primary:hover {
+  background-color: #75CCDD;
+}
+.btn-primary:focus {
+  background-color: #75CCDD;
+}
+
+input:focus {
+  border: 1px solid #202F4D33 !important;
+  box-shadow: none !important;
+}
+a:focus {
+  border:none !important;
+  box-shadow: none !important;
+}
+button:focus {
+  border:none !important;
+  box-shadow: none !important;
 }
 
 .btn-white {
@@ -216,7 +259,7 @@ input {
   padding: 2px 4px;
   background: white !important;
   border-radius: 5px !important;
-  border: 0 !important;
+  border: 1px solid #202F4D33 !important;
 }
 
 .input--style-1:after {
@@ -224,7 +267,7 @@ input {
   padding: 2px 4px;
   background: white !important;
   border-radius: 5px !important;
-  border: 0 !important;
+  border: 1px solid #202F4D33 !important;
 }
 
 .input--style-1::-webkit-input-placeholder {
@@ -265,7 +308,7 @@ input {
 }
 
 .grey-link:hover{
-  color: #5a5c64;
+  color: #75CCDD;
   text-decoration: none !important;
   cursor: pointer;
 }
@@ -490,12 +533,19 @@ a:hover{
   width: 125% !important;
 }
 
+.veesy-overflow{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.profile-section{
+  height: 48px;
+}
+
 .img-thumbnail-custom{
-  padding: 0 !important;
-  padding: 0.25rem;
   background-color: #fff;
-  border: 1px solid #dee2e6;
-  border-radius: 0.25rem;
+  border: none !important;
   width: 90px;
   height: 120px;
   object-fit: cover;
@@ -554,7 +604,8 @@ a:hover{
 
 #color-text{
   color: #202F4D;
-  font-size: 16px;
+  font-size: 20px !important;
+  line-height: 25px !important;
   font-weight: 500;
 }
 

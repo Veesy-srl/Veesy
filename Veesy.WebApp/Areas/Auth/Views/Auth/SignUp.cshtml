@@ -16,42 +16,43 @@
                         <div class="d-flex size-custom">
                             <div class="col-6 pe-2">
                                 <div class="input-group">
-                                    <label class="fw-border">Name*</label>
+                                    <p class="mb-0 fw-border"><strong>Name*</strong></p>
                                     <input asp-for="Name" class="input--style-1" type="text">
                                 </div>
                             </div>
                             <div class="col-6 ps-2">
                                 <div class="input-group">
-                                    <label class="fw-border">Surname*</label>
+                                    <p class="mb-0 fw-border"><strong>Surname*</strong></p>
                                     <input asp-for="Surname" class="input--style-1" type="text">
                                 </div>
                             </div>
                         </div>
                         <div class="input-group size-custom">
-                            <label class="fw-border">Username*</label>
+                            <p class="mb-0 fw-border"><strong>Username*</strong></p>
                             <input asp-for="Username" class="input--style-1" type="text">
                         </div>
                         <div class="input-group size-custom">
-                            <label class="fw-border">Email*</label>
+                            <p class="mb-0 fw-border"><strong>Email*</strong></p>
                             <input asp-for="Email" class="input--style-1" type="email">
                         </div>
                         <div class="d-flex size-custom">
                             <div class="col-6 pe-2">
                                 <div class="input-group">
-                                    <label class="fw-border">Password*</label>
+                                    <p class="mb-0 fw-border"><strong>Password*</strong></p>
                                     <input asp-for="Password" class="input--style-1" type="password">
                                 </div>
                             </div>
                             <div class="col-6 ps-2">
                                 <div class="input-group">
-                                    <label class="fw-border">Repeat Password*</label>
+                                    <p class="mb-0 fw-border"><strong>Repeat Password*</strong></p>
                                     <input asp-for="ConfirmPassword" class="input--style-1 " type="password">
                                 </div>
                             </div>
                         </div>
                         <div class="input-group">
-                            <label class="fw-normal mb-1 size-custom">Category*</label>
+                            <p class="mb-0 fw-normal mb-1"><strong>Category*</strong></p>
                             <select asp-for="SelectedCategoriesWork" multiple class="w-100 size-custom selectpicker">
+                                <option disabled="">select up to three categories</option>
                                 @foreach (var item in Model.CategoriesWork)
                                 {
                                     <option value="@item.Id">@item.Name</option>
@@ -64,9 +65,9 @@
                             <a class="text-muted text-decoration-underline" href="#">Privacy Policy</a>
                         </p>
                         
-                        <div>
-                            <input type="checkbox" class="form-check-input mt-check-input border-0" id="rememberme" checked>
-                            <label style="cursor: pointer" class="form-check-label size-custom" for="rememberme">Remember me</label>
+                        <div class="d-flex text-center">
+                            <input type="checkbox" class=" me-2 form-check-input mt-check-input border-0" id="rememberme" checked>
+                            <p style="cursor: pointer" class="mt-1 form-check-label size-custom" for="rememberme"><strong>Remember me</strong></p>
                         </div>
 
                         <button class="w-100 mt-2 rounded-pill btn btn-primary signup" type="submit">Join</button>

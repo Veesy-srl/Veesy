@@ -71,7 +71,7 @@ public class MediaController : VeesyController
         {
             var result = await _profileHelper.UpdateProfileImage(HttpContext.Request.Body, Request.ContentType, UserInfo);
             if(result.Success)
-                _notyfService.Success("Image update correctly");
+                _notyfService.Custom("Image update correctly.", 10, "#75CCDD40");
             else
                 _notyfService.Error(result.Message);
             return RedirectToAction("BasicInfo", "Profile", new {area = "Account"});

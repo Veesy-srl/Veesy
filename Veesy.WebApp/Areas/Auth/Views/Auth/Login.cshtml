@@ -11,23 +11,23 @@
                         <h1 class="h3 mt-3 mb-3 fw-normal" style="color: #202f4d;">Are you ready for <br/>new adventures? Oh Yes!</h1>
                         <div style="height: 20px;"></div>
                         <div class="input-group">
-                            <label class="fw-border size-custom">Username or Email</label>
+                            <p class="mb-0 fw-border size-custom"><strong>Username or Email</strong></p>
                             <input asp-for="Email" class="input--style-1" type="text" >
                         </div>
                         <div class="input-group">
-                            <label class="fw-border size-custom">Password</label>
+                            <p class="mb-0 fw-border size-custom"><strong>Password</strong></p>
                             <input asp-for="Password" class="input--style-1" type="password" >
                         </div>
 
                         <div class="form-check text-start">
                             <input asp-for="RememberMe" type="checkbox" class="form-check-input mt-check-input border-0" id="rememberme" checked>
-                            <label style="cursor: pointer" class="form-check-label size-custom" for="rememberme">Remember me</label>
+                            <p style="cursor: pointer" class="pt-1 mb-0 form-check-label size-custom" for="rememberme"><strong>Remember me</strong></p>
                         </div>
                         
                         <button class="w-100 mt-2 rounded-pill btn btn-primary signup" type="submit">Log in</button>
                         
                         <p class="mt-3 text-muted">
-                            <a class="mt-3" asp-action="ForgotPassword" asp-area="Auth" asp-controller="Auth">Forgot your password?</a>
+                            <a style="text-decoration: underline !important;" class="grey-link mt-3" asp-action="ForgotPassword" asp-area="Auth" asp-controller="Auth">Forgot your password?</a>
                         </p>
                         
                         <p class="mt-4 mb-3 fw-border size-custom">Don't have an account?

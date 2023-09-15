@@ -174,7 +174,7 @@ public class AuthController : Controller
             var result = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
             if (result.Succeeded)
             {
-                _notyfService.Success("Password update correctly.");
+                _notyfService.Custom("Password update correctly.", 10, "#75CCDD40");
                 return RedirectToAction("Login", "Auth");
             }
             else
