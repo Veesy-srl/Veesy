@@ -66,8 +66,8 @@ html {
 }
 
 .btn-light, btn-light:hover, btn-light::selection {
-  background-color: white !important;
-  border-color: white !important;
+  background-color: #F0F2F3 !important;
+  border-color: #F0F2F3 !important;
 }
 
 body{
@@ -129,7 +129,7 @@ html {
 }
 
 .bg-grey-veesy{
-  background: #E2E5E7;
+  background: #E2E5E7 !important;
 }
 
 /*AUTH AREA*/
@@ -498,6 +498,19 @@ a{
   cursor: pointer;
 }
 
+.a-ciano-header{
+  color: #75CCDD;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.a-ciano-header:hover{
+  color: #75CCDD;
+  text-decoration: none;
+  cursor: pointer;
+  background-color: #E2E5E7 !important;
+}
+
 .bg-auth{
   border-bottom-left-radius: 45px; 
   border-top-left-radius: 45px; 
@@ -531,6 +544,29 @@ a:hover{
 
 .w-125{
   width: 125% !important;
+}
+
+.dropdown-toggle::after{
+  display: none !important; 
+}
+
+.fa-2xs{
+  vertical-align: 0 !important;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+  margin-top: 0px; /* remove the gap so it doesn't close */
+  width: 100%;
+  border: none !important;
+  box-shadow: 0 0 10px rgba(105, 100, 100, 0.23);
+}
+
+.menu-element:hover{
+  background-color: white;
+  border-radius: 2px;
+  padding-left: 30px;
+  transition-duration: 0.4s;
 }
 
 .veesy-overflow{
@@ -608,6 +644,8 @@ a:hover{
   line-height: 25px !important;
   font-weight: 500;
 }
+
+
 
 #color-text-footer{
   color: #202F4D;

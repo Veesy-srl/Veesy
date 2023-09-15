@@ -21,15 +21,17 @@ public class MediaController : VeesyController
     private readonly IWebHostEnvironment _environment;
     private readonly ProfileHelper _profileHelper;
     private readonly INotyfService _notyfService;
+    private readonly IConfiguration _configuration;
     
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     
-    public MediaController(MediaHelper mediaHelper, UserManager<MyUser> userManager, IWebHostEnvironment environment, ProfileHelper profileHelper, INotyfService notyfService) : base(userManager)
+    public MediaController(MediaHelper mediaHelper, UserManager<MyUser> userManager, IWebHostEnvironment environment, ProfileHelper profileHelper, INotyfService notyfService, IConfiguration configuration) : base(userManager, configuration)
     {
         _mediaHelper = mediaHelper;
         _environment = environment;
         _profileHelper = profileHelper;
         _notyfService = notyfService;
+        _configuration = configuration;
     }
 
     [HttpGet]

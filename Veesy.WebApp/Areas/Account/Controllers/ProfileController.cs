@@ -21,11 +21,13 @@ public class ProfileController : VeesyController
     
     private readonly ProfileHelper _profileHelper;
     private readonly INotyfService _notyfService;
+    private readonly IConfiguration _configuration;
 
-    public ProfileController(ProfileHelper profileHelper, UserManager<MyUser> userManager, INotyfService notyfService) : base(userManager)
+    public ProfileController(ProfileHelper profileHelper, UserManager<MyUser> userManager, INotyfService notyfService, IConfiguration configuration) : base(userManager, configuration)
     {
         _profileHelper = profileHelper;
         _notyfService = notyfService;
+        _configuration = configuration;
     }
 
     [HttpGet("profile")]
