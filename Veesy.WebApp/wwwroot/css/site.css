@@ -692,3 +692,9 @@ canvas {
   border: none;
   outline: none;
 }
+
+#loginLink{
+  position: relative;
+  top: 0.6rem;
+}
+
