@@ -627,6 +627,20 @@ a:hover{
     width: 95% !important;
   }
 
+  #loginLink{
+    position: relative !important;
+    top: 0.8rem !important;
+  }
+
+  #signupLink{
+    position: relative !important;
+    top: 0.8rem !important;
+  }
+
+  footer{
+    margin-top: -15% !important;
+  }
+
 }
 
 .menu-element:hover {
@@ -785,5 +799,10 @@ canvas {
 #loginLink{
   position: relative;
   top: 0.6rem;
+}
+
+#signupLink{
+  position: relative;
+  top: 0.7rem;
 }
 
