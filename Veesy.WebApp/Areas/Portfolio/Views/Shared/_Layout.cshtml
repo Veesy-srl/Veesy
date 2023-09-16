@@ -12,7 +12,7 @@
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom mb-3 fixed-top">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom mb-3 fixed-top">
         <div class="container-fluid">
                 
             <h1 class="h3 mb-2 fw-normal">
@@ -28,14 +28,22 @@
                             {
                                 <a class="dropdown-toggle btn btn-light border fw-bolder shadow-none">
                                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" style="margin-top:-5px; width: 20px !important; height: 20px !important; max-width: none!important; " class="img-thumbnail-custom rounded-circle" alt="user-image" style="max-width: none!important; width: 60px !important; height: 60px !important;">
-                                    <span id="color-text">@User.Identity.Name</span>
+                                    @{
+                                        string username = Model.Username.Contains("@") ? Model.Username.Split('@')[0] : Model.Username;
+                                    }
+                                    <span id="color-text-layout">@username
+                                    </span>
                                 </a>
                             }
                             else
                             {
                                 <a class="nodisplay-sm dropdown-toggle btn btn-light border fw-bolder shadow-none">
                                     <img src="@basePath@profile_image" style="width: 20px !important; height: 20px !important; max-width: none!important; margin-top:-5px;" class="img-thumbnail-custom rounded-circle" alt="user-image">
-                                    <span id="color-text">@User.Identity.Name</span>
+                                    @{
+                                        string username = Model.Username.Contains("@") ? Model.Username.Split('@')[0] : Model.Username;
+                                    }
+                                    <span id="color-text-layout">@username
+                                    </span>
                                 </a>
                             }
                         }
@@ -54,34 +62,40 @@
                 </div>
             </div>
             <div class="menu-popup" id="menuPopup">
-                <div class="float-end">
-                    <div class="dropdown show">
-                        @if (string.IsNullOrEmpty(profile_image))
-                        {
-                            <a class="dropdown-toggle btn btn-light border fw-bolder shadow-none">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" style="margin-top:-5px; width: 20px !important; height: 20px !important; max-width: none!important; " class="img-thumbnail-custom rounded-circle" alt="user-image" style="max-width: none!important; width: 60px !important; height: 60px !important;">
-                                <span id="color-text">@User.Identity.Name</span>
-                            </a>
-                        }
-                        else
-                        {
-                            <a class="dropdown-toggle  btn btn-light border fw-bolder shadow-none">
-                                <img src="@basePath@profile_image" style="width: 20px !important; height: 20px !important; max-width: none!important; margin-top:-5px;" class="img-thumbnail-custom rounded-circle" alt="user-image">
-                                <span id="color-text">@User.Identity.Name</span>
-                            </a>
-                        }
-                        <div class="dropdown-menu bg-grey-veesy" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Portfolio" ? "a-ciano-header" : "menu-element")" href="#">Portfolio</a>
-                            <a class="dropdown-item menu-element" href="#">Cloud</a>
-                            <a class="dropdown-item menu-element" href="#">Your Plan</a>
-                            <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Profile" ? "a-ciano-header" : "menu-element")" asp-action="Profile" asp-controller="Profile" asp-area="Account">Profile</a>
-                            <a class="dropdown-item menu-element" asp-action="Logout" asp-controller="Auth" asp-area="Auth">Log out</a>
+                <div class="float-end d-flex">
+                        <div class="dropdown show" id="none-popup">
+                            @if (string.IsNullOrEmpty(profile_image))
+                            {
+                                <a class="dropdown-toggle btn btn-light border fw-bolder shadow-none">
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" style="margin-top:-5px; width: 20px !important; height: 20px !important; max-width: none!important; " class="img-thumbnail-custom rounded-circle" alt="user-image" style="max-width: none!important; width: 60px !important; height: 60px !important;">
+                                    @{
+                                        string username = Model.Username.Contains("@") ? Model.Username.Split('@')[0] : Model.Username;
+                                    }
+                                    <span id="color-text">@username</span>
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="dropdown-toggle  btn btn-light border fw-bolder shadow-none">
+                                    <img src="@basePath@profile_image" style="width: 20px !important; height: 20px !important; max-width: none!important; margin-top:-5px;" class="img-thumbnail-custom rounded-circle" alt="user-image">
+                                    @{
+                                        string username = Model.Username.Contains("@") ? Model.Username.Split('@')[0] : Model.Username;
+                                    }
+                                    <span id="color-text">@username</span>
+                                </a>
+                            }
+                            <div class="dropdown-menu bg-grey-veesy" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Portfolio" ? "a-ciano-header" : "menu-element")" href="#">Portfolio</a>
+                                <a class="dropdown-item menu-element" href="#">Cloud</a>
+                                <a class="dropdown-item menu-element" href="#">Your Plan</a>
+                                <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Profile" ? "a-ciano-header" : "menu-element")" asp-action="Profile" asp-controller="Profile" asp-area="Account">Profile</a>
+                                <a class="dropdown-item menu-element" asp-action="Logout" asp-controller="Auth" asp-area="Auth">Log out</a>
+                            </div>
                         </div>
-                    </div>
-                    <button class="ms-2 btn btn-light border fw-bolder shadow-none" id="closeButton">
-                        <i class="fas fa-times-circle fa-xs text-primary mr-2 " id="icon-color"></i>
-                        <span id="color-text">close</span>
-                    </button>
+                        <button class="ms-2 btn btn-light border fw-bolder shadow-none" id="closeButton">
+                            <i class="fas fa-times-circle fa-xs text-primary mr-2 " id="icon-color"></i>
+                            <span id="color-text">close</span>
+                        </button>
                 </div>
                 <div class="container center-content">
                     <div class="menu-list">
@@ -129,15 +143,15 @@
 
 <footer class="footer" style="margin-top: -2.5%;">
     <div class="container">
-        <div class="row">
-            <div class="col-md-3 mt-5 mb-4 veesy-text-color" >
+        <div class="row mb-3">
+            <div class="col-md-3 mt-5 veesy-text-color" >
                 <h2 class="h2 mt-3 fw-normal">
                     <div class=" mb-5 d-inline-flex" asp-area="" asp-controller="Home" asp-action="Index"><b>veesy</b></div> 
                 </h2>
                 <p>Veesy S.R.L.<br/>
                     Via Giacomo matteotti 43<br/>
                     20832, Desio (MB)</p>
-                <div class="row mb-3 mt-4 social-icons-row">
+                <div class="row mt-4 social-icons-row">
                     <div class="col">
                         <a href="#" class="social-icon"><i class="fa-brands fa-facebook icon-color-veesy"></i></a>
                         <a href="#" class="social-icon"><i class="fa-brands fa-instagram icon-color-veesy"></i></a>
@@ -202,14 +216,20 @@
     const menuPopup = document.getElementById('menuPopup');
     const closeButton = document.getElementById('closeButton');
 
+    window.onload = (event) => {
+      document.getElementById('none-popup').style.display = "none";
+    };
+    
     menuButton.addEventListener('click', () => {
         menuPopup.classList.toggle('active');
-        document.body.classList.toggle('no-scroll'); 
+        document.body.classList.toggle('no-scroll');
+        document.getElementById('none-popup').style.display = "block";
     });
 
     closeButton.addEventListener('click', () => {
       menuPopup.classList.remove('active');
       document.body.classList.remove('no-scroll'); 
+      document.getElementById('none-popup').style.display = "none";
     });
     
       // Chiudi il popup quando si clicca fuori da esso

@@ -62,6 +62,13 @@ input{
 
 }
 
+.w-80-veesy{
+  width: 80% !important;
+  @media only screen and (max-width: 600px) {
+    width: 100% !important;
+  }
+}
+
 html {
   font-size: 14px;
   position: relative;
@@ -647,6 +654,10 @@ a:hover{
     margin-top: -15% !important;
   }
 
+  #color-text-layout{
+    display: none !important;
+  }
+
 }
 
 .menu-element:hover {
@@ -665,6 +676,13 @@ a:hover{
   font-weight: 500;
 }
 
+
+#color-text-layout{
+  color: #202F4D;
+  font-size: 20px !important;
+  line-height: 25px !important;
+  font-weight: 500;
+}
 
 
 #color-text-footer{
