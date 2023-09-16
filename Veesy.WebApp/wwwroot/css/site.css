@@ -191,7 +191,7 @@ input {
 
 .input-group {
   position: relative;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   border-bottom: 0px solid #ccc;
 }
 
@@ -635,12 +635,12 @@ a:hover{
 
   #loginLink{
     position: relative !important;
-    top: 0.8rem !important;
+    top: 0.7rem !important;
   }
 
   #signupLink{
     position: relative !important;
-    top: 0.8rem !important;
+    top: 0.7rem !important;
   }
 
   footer{
@@ -812,6 +812,6 @@ canvas {
 
 #signupLink{
   position: relative;
-  top: 0.7rem;
+  top: 0.6rem;
 }
 
