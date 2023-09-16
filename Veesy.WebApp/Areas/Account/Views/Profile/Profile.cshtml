@@ -26,7 +26,14 @@
                         }
                     </div>
                 </div>
-                <div class="col-8"><p class="ms-2"><strong>@Model.Username</strong></p></div>
+                @{
+                    // Verifica se la stringa contiene una "@"
+                    string username = Model.Username.Contains("@") ? Model.Username.Split('@')[0] : Model.Username;
+                }
+                
+                <div class="col-8">
+                    <p class="ms-2"><strong>@username</strong></p>
+                </div>
                 <div class="col-1"><div class="text-end"><i class="fa-solid fa-circle fa-2xs" style="color: #202F4D;"></i></div></div>
             </div>
             <h3 class="mt-4 mb-4"><strong>@Model.FullName</strong></h3>
@@ -295,8 +302,10 @@
                 <p class="mb-0" style="color: white"><strong>Do you need some help?</strong></p>
                 <a class="a-ciano" href="#">Contact us</a>
             </div>
-            <div class="empty-veesy"></div>
         </div>
+        <div class="empty-veesy"></div>
+        <div class="empty-veesy"></div>
+        <div class="empty-veesy"></div>
     </div>
 </div>
 
