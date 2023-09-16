@@ -13,7 +13,7 @@
 </head>
 <body>
    <header>
-           <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-transparent box-shadow mb-3 fixed-top">
+           <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-transparent mb-3 fixed-top" style="position: absolute; ">
                <div class="container-fluid">
                    
                    <h1 class="h3 mb-2 fw-normal">
@@ -23,6 +23,13 @@
                        </div>
                    </h1>
                    <div class="float-end">
+                       <!-- 015: On/Off Switch -->
+                           @*<div class="switch-bg" id="switchBg">
+                             <input type="checkbox" id="switchInp" class="d-none">
+                             <label for="switchInp" class="pull-string">
+                               <canvas id="stringCanvas" width="300" height="175" style="position: relative; top: -50px;cursor: pointer;"></canvas>
+                             </label>
+                           </div>*@
                        @*<button class="btn btn-light border fw-bolder shadow-none">
                            <i class="fas fa-user text-primary mr-2" id="icon-color"></i>
                            <span id="color-text">account</span>
@@ -46,24 +53,24 @@
                        <div class="container center-content">
                            <div class="menu-list">
                                <ul class="list-unstyled">
-                                   <li><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description1">Gallery</a></li>
-                                   <li><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description2">Creators</a></li>
-                                   <li><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description3">About</a></li>
-                                   <li><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description4">Companies</a></li>
-                                   <li><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description5">Account</a></li>
-                                   <li><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description6">Contact</a></li>
+                                   <li class="m-4"><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description1">Gallery</a></li>
+                                   <li class="m-4"><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description2">Creators</a></li>
+                                   <li class="m-4"><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description3">About</a></li>
+                                   <li class="m-4"><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description4">Companies</a></li>
+                                   <li class="m-4"><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description5">Account</a></li>
+                                   <li class="m-4"><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description6">Contact</a></li>
                                </ul>
                            </div>
                            <div class="d-flex" style="height: 250px;">
                                <div class="vr custom-vr"></div>
                            </div>
-                           <div class="description-container">
-                               <div id="description1" class="description-content">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</div>
-                               <div id="description2" class="description-content">unknown printer took a galley of type and scrambled it to make a type speci</div>
-                               <div id="description3" class="description-content">essentially unchanged. It was popularised in the 1960s with the release of Letraset shee</div>
-                               <div id="description4" class="description-content">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet,</div>
-                               <div id="description5" class="description-content">unknown printer took a galley of type and scrambled</div>
-                               <div id="description6" class="description-content">Lorem Ipsum is simply dummy text of the printing</div>
+                           <div class="description-container mt-5">
+                               <div id="description1" class="description-content" ><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p></div>
+                               <div id="description2" class="description-content" ><p>unknown printer took a galley of type and scrambled it to make a type speci</p></div>
+                               <div id="description3" class="description-content" ><p>essentially unchanged. It was popularised in the 1960s with the release of Letraset shee</p></div>
+                               <div id="description4" class="description-content" ><p>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet,</p></div>
+                               <div id="description5" class="description-content" ><p>unknown printer took a galley of type and scrambled</p></div>
+                               <div id="description6" class="description-content" ><p>Lorem Ipsum is simply dummy text of the printing</p></div>
                            </div>
                        </div>
 
@@ -87,7 +94,7 @@
     </div>
 </div>
 
-<div style="margin-top: -8vh;">
+<div class="nodisplay-sm" style="margin-top: -8vh;">
     <div class="container-fluid">
         <h6 style="color: white;">darial0v3</h6>
     </div>
@@ -141,10 +148,11 @@
         </div>
         <div class="row">
             <div class="mb-3 veesy-text-color">
-                <p>Veesy S.R.L. © 2023 All rights reserved - Vat.: 13005470961 - annual social capital € xx.xxxx - website by <a href="https://www.derein.net/">derein</a> & <a href="https://www.enigma-tech.it/">enigma</a></p>
+                <p>Veesy S.R.L. © 2023 All rights reserved - Vat.: 13005470961 - annual social capital € xx.xxxx - website by <a href="https://www.derein.net/" class="a-ciano">derein</a> & <a href="https://www.enigma-tech.it/" class="a-ciano">enigma</a></p>
             </div>
         </div>
     </div>
+    
 </footer>
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -202,4 +210,219 @@
                 loginLink.style.display = "block";
             }
         });
+        
+        //On/Off Switch
+        
+        // some settings
+        const BEAD_COUNT = 60;
+        const BEAD_SIZE = 3; // radius for beads
+        const BEAD_DIST = 2; // how far apart beads should be. 400 is canvas size, so we're just dividing it
+        const INITIAL_X_MOMENTUM = -10; // x speed / second of bottom bead when the click happens
+        const GRAVITY = 20; // downward acceleration / second
+        const X_FRICTION = .05; // constant decrease in x acceleration / second
+        
+        // helpers
+        function pythag (x1, y1, x2, y2) {
+          return Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+        }
+        function getAngle (x1, y1, x2, y2) {
+          return Math.atan((y2 - y1) / (x2 - x1));
+        }
+        
+        // setup canvas
+        var canvas = stringCanvas;
+        var ctx = canvas.getContext('2d');
+        var running = true;
+        var lit = switchInp.checked;
+        
+        // beads
+        class Bead {
+          constructor (initialX, initialY) {
+            this.x = initialX;
+            this.y = initialY;
+            this.speedX = 0;
+            this.speedY = 0;
+        
+            this.parent = {
+              x: canvas.width / 2,
+              y: 0
+            }
+          }
+        
+          draw() {
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(this.x, this.y - BEAD_SIZE);
+            ctx.arc(this.x, this.y, BEAD_SIZE, 0, Math.PI * 2, false);
+        
+            var grd;
+            if (lit) {
+              grd = ctx.createRadialGradient(this.x, this.y, BEAD_SIZE, this.x - BEAD_SIZE / 2, this.y - BEAD_SIZE / 4, BEAD_SIZE * .75);
+              grd.addColorStop(1, "black");
+              grd.addColorStop(0, "black");
+              ctx.fillStyle = grd;
+            }
+            else {
+              grd = ctx.createRadialGradient(this.x, this.y, BEAD_SIZE, this.x - BEAD_SIZE / 2, this.y - BEAD_SIZE / 4, BEAD_SIZE * .75);
+              grd.addColorStop(1, "black");
+              grd.addColorStop(0, "black");
+              ctx.fillStyle = grd;
+            }
+            ctx.fillStyle = grd;
+            ctx.fill();
+            var highlight = ctx.createRadialGradient(this.x, this.y, BEAD_SIZE, this.x + BEAD_SIZE / 3, this.y + BEAD_SIZE / 6, BEAD_SIZE);
+            ctx.fillStyle = highlight;
+            ctx.fill();
+            ctx.restore();
+          }
+        
+          drawLine() {
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(this.parent.x, this.parent.y);
+            ctx.lineTo(this.x, this.y);
+            ctx.stroke();
+            ctx.restore();
+          }
+        
+          setParent(parentBead) {
+            this.parent = parentBead;
+          }
+        
+          setSpeed(x,y) {
+            this.speedX = x;
+            this.speedY = y;
+          }
+        
+          addMomentum(x,y) {
+            this.speedX += x;
+            this.speedY += y;
+          }
+        
+          updateMomentum(deltaTime) {
+            // gravity
+            this.speedY += GRAVITY * deltaTime / 1000;
+            if (Math.abs(this.speedX < this.speedX - X_FRICTION * deltaTime / 1000))
+              this.speedX = 0;
+            else
+              this.speedX = this.speedX > 0 ? this.speedX - X_FRICTION * deltaTime / 1000 : this.speedX + X_FRICTION * deltaTime / 1000;
+          }
+        
+          move() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+          }
+        
+          positionBasedOnParent() {
+            // check distance from parent
+            if (this.parent) {
+              let d = pythag(this.x, this.y, this.parent.x, this.parent.y);
+              if (d > BEAD_DIST) {
+                let a = getAngle(this.x, this.y, this.parent.x, this.parent.y);
+                let dx = Math.cos(a) * (d - BEAD_DIST);
+                let dy = Math.sin(a) * (d - BEAD_DIST);
+                if (this.x > this.parent.x) {
+                  dx *= -1;
+                  dy *= -1;
+                }
+                //console.log(d, (a * 180 / Math.PI), dx, dy);
+        
+                if (this.parent instanceof Bead) {
+                  this.x += dx / 2;
+                  this.y += dy / 2;
+                  this.speedX += dx / 2;
+                  this.speedY += dy / 2;
+        
+                  this.parent.x -= dx / 2;
+                  this.parent.y -= dy / 2;
+                  this.parent.speedX -= dx / 2;
+                  this.parent.speedY -= dy / 2;
+                }
+                else {
+                  this.x += dx;
+                  this.y += dy;
+                  this.speedX += dx;
+                  this.speedY += dy;
+                }
+              }
+            }
+          }
+        }
+        var beads = [];
+        for (let i = 0; i < BEAD_COUNT; i++) {
+          beads.push( new Bead(canvas.width / 2, i * BEAD_DIST + (BEAD_SIZE)) );
+          if (i > 0)
+            beads[i].setParent(beads[i - 1]);
+        }
+        
+        // the loop for animation
+        var lastTime = new Date().getTime();
+        (function loop () {
+        
+          let now = new Date().getTime();
+          let deltaTime = now - lastTime;
+          if (running) {
+            console.log('run');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+            if (beads[0].parent.y !== 0) {
+              ctx.strokeStyle = lit ? "#c2cdd1" : "#737777";
+              ctx.beginPath();
+              ctx.moveTo(canvas.width / 2, 0);
+              ctx.lineTo(canvas.width / 2, beads[0].parent.y);
+              ctx.stroke();
+            }
+        
+            ctx.strokeStyle = lit ? "#baaf62" : "#3d392d";
+            ctx.fillStyle = lit ? "#544f3f" : "#2c2a1e";
+            // split into 2 so we can double down on positioning constraints
+            beads.forEach(function (bead) {
+              //console.log(bead);
+              bead.updateMomentum(deltaTime);
+              bead.move();
+              bead.positionBasedOnParent();
+            });
+            for (let i = 0; i < 20; i++) {
+              beads.forEach(function (bead) {
+                bead.positionBasedOnParent();
+              });
+            }
+            beads.forEach(function (bead) {
+              bead.drawLine();
+            });
+            beads.forEach(function (bead) {
+              bead.draw();
+            });
+          }
+        
+          lastTime = now;
+          requestAnimationFrame(loop);
+        })();
+        
+        canvas.addEventListener('mouseup', function () {
+          beads[BEAD_COUNT - 1].addMomentum(INITIAL_X_MOMENTUM, 0);
+          //beads[0].addMomentum(0, GRAVITY * -4);
+          beads[0].parent.y = 0;
+          running = true;
+        });
+        canvas.addEventListener('mousedown', function () {
+          beads[0].parent.y = BEAD_DIST * 2;
+          running = true;
+        });
+        
+        // turn off when document not visible
+        document.addEventListener('visibilitychange', function () {
+          lastTime = new Date().getTime();
+          running = !document.hidden;
+        });
+        
+        // change lit state
+        switchInp.addEventListener('change', function (e) {
+          lit = this.checked;
+          if (lit)
+            switchBg.classList.add('lit');
+          else
+            switchBg.classList.remove('lit');
+        });
+
   </script>

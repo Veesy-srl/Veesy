@@ -10,6 +10,7 @@ public class HomeController : Controller
     [HttpGet]
     public IActionResult Index()
     {
+        return RedirectToAction("Profile", "Profile", new { area = "Account" });
         return View();
     }
 }

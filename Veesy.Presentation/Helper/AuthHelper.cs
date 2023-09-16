@@ -33,10 +33,10 @@ public class AuthHelper
     public async Task<ResultDto> SendEmailConfirmation(string email)
     {
         var user = await _userManager.FindByEmailAsync(email);
-        if (user != null)
+        if (user == null)
         {
             user = await _userManager.FindByNameAsync(email);
-            if (user != null)
+            if (user == null)
                 return new ResultDto(false, "User not found");
         }
         var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);

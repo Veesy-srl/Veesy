@@ -8,31 +8,77 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Veesy.WebApp.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/css/bootstrap-select.min.css" asp-append-version="true" />
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3 fixed-top">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom mb-3 fixed-top">
         <div class="container-fluid">
                 
             <h1 class="h3 mb-2 fw-normal">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><b>veesy</b> dashboard</a></h1>
+                <a role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><b>veesy</b> dashboard</a>
+            </h1> 
             <div class="float-end">
-                <button class="btn btn-light border fw-bolder shadow-none">
-                    <i class="fas fa-circle fa-lg text-primary mr-2" id="icon-color"></i>
-                    <span id="color-text">Hi new user!</span>
-                </button>
-                <button class="btn btn-light border fw-bolder shadow-none" id="menuButton">
-                    <i class="fas fa-circle fa-2xs text-primary mr-2" id="icon-color"></i>
-                    <span id="color-text">menu</span>
-                </button>
+                <div class="d-flex">
+                    <div class="nodisplay-sm dropdown show">
+                        @{
+                            var profile_image = ViewBag.ProfileImage;
+                            var basePath = ViewBag.BaseDirectory;
+                            if (string.IsNullOrEmpty(profile_image))
+                            {
+                                <a class="dropdown-toggle btn btn-light border fw-bolder shadow-none">
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" style="margin-top:-5px; width: 20px !important; height: 20px !important; max-width: none!important; " class="img-thumbnail-custom rounded-circle" alt="user-image" style="max-width: none!important; width: 60px !important; height: 60px !important;">
+                                    <span id="color-text">@User.Identity.Name</span>
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="nodisplay-sm dropdown-toggle btn btn-light border fw-bolder shadow-none">
+                                    <img src="@basePath@profile_image" style="width: 20px !important; height: 20px !important; max-width: none!important; margin-top:-5px;" class="img-thumbnail-custom rounded-circle" alt="user-image">
+                                    <span id="color-text">@User.Identity.Name</span>
+                                </a>
+                            }
+                        }
+                        <div class="dropdown-menu bg-grey-veesy" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Portfolio" ? "a-ciano-header" : "menu-element")" href="#">Portfolio</a>
+                            <a class="dropdown-item menu-element" href="#">Cloud</a>
+                            <a class="dropdown-item menu-element" href="#">Your Plan</a>
+                            <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Profile" ? "a-ciano-header" : "menu-element")" asp-action="Profile" asp-controller="Profile" asp-area="Account">Profile</a>
+                            <a class="dropdown-item menu-element" asp-action="Logout" asp-controller="Auth" asp-area="Auth">Log out</a>
+                        </div>
+                    </div>
+                    <button class="ms-2 btn btn-light border fw-bolder shadow-none" id="menuButton">
+                        <i class="fas fa-circle fa-2xs text-primary mr-2" id="icon-color"></i>
+                        <span id="color-text">menu</span>
+                    </button>
+                </div>
             </div>
             <div class="menu-popup" id="menuPopup">
                 <div class="float-end">
-                    <button class="btn btn-light border fw-bolder shadow-none">
-                        <i class="fas fa-user fa-xs text-primary mr-2" id="icon-color"></i>
-                        <span id="color-text">account</span>
-                    </button>
-                    <button class="btn btn-light border fw-bolder shadow-none" id="closeButton">
+                    <div class="dropdown show">
+                        @if (string.IsNullOrEmpty(profile_image))
+                        {
+                            <a class="dropdown-toggle btn btn-light border fw-bolder shadow-none">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" style="margin-top:-5px; width: 20px !important; height: 20px !important; max-width: none!important; " class="img-thumbnail-custom rounded-circle" alt="user-image" style="max-width: none!important; width: 60px !important; height: 60px !important;">
+                                <span id="color-text">@User.Identity.Name</span>
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="dropdown-toggle  btn btn-light border fw-bolder shadow-none">
+                                <img src="@basePath@profile_image" style="width: 20px !important; height: 20px !important; max-width: none!important; margin-top:-5px;" class="img-thumbnail-custom rounded-circle" alt="user-image">
+                                <span id="color-text">@User.Identity.Name</span>
+                            </a>
+                        }
+                        <div class="dropdown-menu bg-grey-veesy" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Portfolio" ? "a-ciano-header" : "menu-element")" href="#">Portfolio</a>
+                            <a class="dropdown-item menu-element" href="#">Cloud</a>
+                            <a class="dropdown-item menu-element" href="#">Your Plan</a>
+                            <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Profile" ? "a-ciano-header" : "menu-element")" asp-action="Profile" asp-controller="Profile" asp-area="Account">Profile</a>
+                            <a class="dropdown-item menu-element" asp-action="Logout" asp-controller="Auth" asp-area="Auth">Log out</a>
+                        </div>
+                    </div>
+                    <button class="ms-2 btn btn-light border fw-bolder shadow-none" id="closeButton">
                         <i class="fas fa-times-circle fa-xs text-primary mr-2 " id="icon-color"></i>
                         <span id="color-text">close</span>
                     </button>
@@ -40,46 +86,101 @@
                 <div class="container center-content">
                     <div class="menu-list">
                         <ul class="list-unstyled">
-                            <li><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description1">Gallery</a></li>
-                            <li><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description2">Creators</a></li>
-                            <li><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description3">About</a></li>
-                            <li><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description4">Companies</a></li>
-                            <li><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description5">Account</a></li>
-                            <li><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description6">Contact</a></li>
+                            <li class="m-4"><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description1">Gallery</a></li>
+                            <li class="m-4"><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description2">Creators</a></li>
+                            <li class="m-4"><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description3">About</a></li>
+                            <li class="m-4"><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description4">Companies</a></li>
+                            <li class="m-4"><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description5">Account</a></li>
+                            <li class="m-4"><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description6">Contact</a></li>
                         </ul>
                     </div>
                     <div class="d-flex" style="height: 250px;">
                         <div class="vr custom-vr"></div>
                     </div>
-                    <div class="description-container">
-                        <div id="description1" class="description-content" >Lorem Ipsum is simply dummy text of the printing and typesetting industry.</div>
-                        <div id="description2" class="description-content" >unknown printer took a galley of type and scrambled it to make a type speci</div>
-                        <div id="description3" class="description-content" >essentially unchanged. It was popularised in the 1960s with the release of Letraset shee</div>
-                        <div id="description4" class="description-content" >Neque porro quisquam est qui dolorem ipsum quia dolor sit amet,</div>
-                        <div id="description5" class="description-content" >unknown printer took a galley of type and scrambled</div>
-                        <div id="description6" class="description-content" >Lorem Ipsum is simply dummy text of the printing</div>
+                    <div class="description-container mt-5">
+                        <div id="description1" class="description-content" ><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p></div>
+                        <div id="description2" class="description-content" ><p>unknown printer took a galley of type and scrambled it to make a type speci</p></div>
+                        <div id="description3" class="description-content" ><p>essentially unchanged. It was popularised in the 1960s with the release of Letraset shee</p></div>
+                        <div id="description4" class="description-content" ><p>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet,</p></div>
+                        <div id="description5" class="description-content" ><p>unknown printer took a galley of type and scrambled</p></div>
+                        <div id="description6" class="description-content" ><p>Lorem Ipsum is simply dummy text of the printing</p></div>
                     </div>
                 </div>
 
 
-                <div class="menu-footer">
-                    <a href="#" id="color-text">privacy policy</a>
-                    <a href="#" class="cookie" id="color-text">cookie policy</a><br/>
-                    <p href="#" class="copyright" id="color-text">Veesy © 2023 all rights rederved - website by <a href="https://www.derein.net/">derein</a> & <a href="https://www.enigma-tech.it/">enigma</a> - VAT nr. 4840572639</p>
-                </div>
-            </div>
-                
-        </div>
-    </nav>
+                   <div class="menu-footer">
+                       <a href="#" id="color-text">privacy policy</a>
+                       <a href="#" class="cookie" id="color-text">cookie policy</a><br/>
+                       <p href="#" class="copyright" id="color-text-footer">Veesy © 2023 all rights rederved - website by <a href="https://www.derein.net/" style="color: #202F4D">derein</a> & <a href="https://www.enigma-tech.it/" style="color: #202F4D">enigma</a> - VAT nr. 4840572639</p>
+                   </div>
+               </div>
+
+           </div>
+       </nav>
 </header>
-    <div id="load-spinner" style="display: none; position: fixed; z-index: 9999; padding-top: 500px !important; height: 100%; width: 100%; background-color: rgba(0, 0, 0, 0.5);" class="text-center">
+<div id="load-spinner" style="display: none; position: fixed; z-index: 9999; padding-top: 500px !important; height: 100%; width: 100%; background-color: rgba(0, 0, 0, 0.5);" class="text-center">
       <div class="spinner-border" role="status">
         <span class="sr-only">Loading...</span>
       </div>
     </div>
-    <div class="container-fluid bg-grey-veesy">
-            @RenderBody()
+<div class="bg-grey-veesy container-fluid" style="padding-left: 20px; padding-right: 20px;">
+    @RenderBody()
+</div>
+
+<footer class="footer" style="margin-top: -2.5%;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 mt-5 mb-4 veesy-text-color" >
+                <h2 class="h2 mt-3 fw-normal">
+                    <div class=" mb-5 d-inline-flex" asp-area="" asp-controller="Home" asp-action="Index"><b>veesy</b></div> 
+                </h2>
+                <p>Veesy S.R.L.<br/>
+                    Via Giacomo matteotti 43<br/>
+                    20832, Desio (MB)</p>
+                <div class="row mb-3 mt-4 social-icons-row">
+                    <div class="col">
+                        <a href="#" class="social-icon"><i class="fa-brands fa-facebook icon-color-veesy"></i></a>
+                        <a href="#" class="social-icon"><i class="fa-brands fa-instagram icon-color-veesy"></i></a>
+                        <a href="#" class="social-icon"><i class="fa-brands fa-linkedin icon-color-veesy"></i></a>
+                        <a href="#" class="social-icon"><i class="fa-brands fa-twitter icon-color-veesy"></i></a></div>
+                </div>
+            </div>
+            <div class="col-md-3 mt-5 veesy-text-color" >
+                <h4 class="h6 mt-5 fw-normal">
+                    <div class="mb-4 d-inline-flex"><b>INFO</b></div> 
+                </h4>
+                <div class="text-color">
+                    <a href="#">How it works</a><br/>
+                    <a href="#">Plans e Pricing</a><br/>
+                    <a href="#">FAQ</a><br/>
+                    <a href="#">Account</a>
+                </div>
+            </div>
+            <div class="col-md-3 mt-5 veesy-text-color" >
+                <h4 class="h6 mt-5 fw-normal">
+                    <div class=" mb-4 d-inline-flex"><b>LEGAL</b></div> 
+                </h4>
+                <div class="text-color">
+                    <a href="#">Privacy Policy</a><br/>
+                    <a href="#">Cookies Policy</a><br/>
+                    <a href="#">Community Rules</a>
+                </div>
+            </div>
+            <div class="col-md-3 mt-5 mb-4 veesy-text-color" >
+                <h4 class="h5 mt-5 fw-normal">
+                    <div class=" mb-3 d-inline-flex"><b>Do you need some help or want to share some ideas with us?</b></div> 
+                </h4>
+                <button class="contact-veesy rounded-pill btn btn-primary" type="submit">contact veesy</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="mb-3 veesy-text-color">
+                <p>Veesy S.R.L. © 2023 All rights reserved - Vat.: 13005470961 - annual social capital € xx.xxxx - website by <a href="https://www.derein.net/" class="a-ciano">derein</a> & <a class="a-ciano" href="https://www.enigma-tech.it/">enigma</a></p>
+            </div>
+        </div>
     </div>
+    
+</footer>
 
     @* <footer class="border-top footer text-muted"> *@
     @*     <div class="container"> *@
@@ -102,17 +203,20 @@
     const closeButton = document.getElementById('closeButton');
 
     menuButton.addEventListener('click', () => {
-      menuPopup.classList.toggle('active');
+        menuPopup.classList.toggle('active');
+        document.body.classList.toggle('no-scroll'); 
     });
 
     closeButton.addEventListener('click', () => {
       menuPopup.classList.remove('active');
+      document.body.classList.remove('no-scroll'); 
     });
     
       // Chiudi il popup quando si clicca fuori da esso
       $(document).on('click', (e) => {
         if (!menuPopup.contains(e.target) && !menuButton.contains(e.target)) {
           menuPopup.classList.remove('active');
+          document.body.classList.remove('no-scroll'); 
         }
       });
       

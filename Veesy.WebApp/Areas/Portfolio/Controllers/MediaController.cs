@@ -21,15 +21,17 @@ public class MediaController : VeesyController
     private readonly IWebHostEnvironment _environment;
     private readonly ProfileHelper _profileHelper;
     private readonly INotyfService _notyfService;
+    private readonly IConfiguration _configuration;
     
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     
-    public MediaController(MediaHelper mediaHelper, UserManager<MyUser> userManager, IWebHostEnvironment environment, ProfileHelper profileHelper, INotyfService notyfService) : base(userManager)
+    public MediaController(MediaHelper mediaHelper, UserManager<MyUser> userManager, IWebHostEnvironment environment, ProfileHelper profileHelper, INotyfService notyfService, IConfiguration configuration) : base(userManager, configuration)
     {
         _mediaHelper = mediaHelper;
         _environment = environment;
         _profileHelper = profileHelper;
         _notyfService = notyfService;
+        _configuration = configuration;
     }
 
     [HttpGet]
@@ -71,7 +73,7 @@ public class MediaController : VeesyController
         {
             var result = await _profileHelper.UpdateProfileImage(HttpContext.Request.Body, Request.ContentType, UserInfo);
             if(result.Success)
-                _notyfService.Success("Image update correctly");
+                _notyfService.Custom("Image update correctly.", 10, "#75CCDD40");
             else
                 _notyfService.Error(result.Message);
             return RedirectToAction("BasicInfo", "Profile", new {area = "Account"});
