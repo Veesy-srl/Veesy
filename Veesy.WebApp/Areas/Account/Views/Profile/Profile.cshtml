@@ -12,7 +12,7 @@
                 <li class="breadcrumb-item"><a class="breadcrumb-a" href="#"><strong>profile</strong></a></li>
             </ol>
         </nav>
-        <div class="w-75-veesy card-white-veesy p-3">
+        <div class="w-80-veesy card-white-veesy p-3 mb-3">
             <div class="d-flex">
                 <div class="col-3">
                     <div class="text-center">
@@ -242,7 +242,7 @@
             <p>Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,</p>
             @if (Model.SoftSkills.Count(s => s.Selected) > 0)
             {
-                <div class="d-flex mb-4">
+                <div class="d-flex mb-4" style="max-width: 100%; flex-wrap: wrap;">
                 @foreach (var item in Model.SoftSkills.Where(s => s.Selected))
                 {
                         <div class="pe-3 ps-3 div-white-rounded-blue-veesy d-flex"><a onclick="openModal('#modalSoftSkill')" ><i class="fa-solid fa-circle pe-2" style="color: #75CCDD"></i>@item.Name</a></div>
@@ -267,7 +267,7 @@
             <p>Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,</p>
             @if (Model.UsedSoftwares.Count(s => s.Selected) > 0)
             {
-                <div class="d-flex mb-4">
+                <div class="d-flex mb-4" style="max-width: 100%; flex-wrap: wrap;">
                 @foreach (var item in Model.UsedSoftwares.Where(s => s.Selected))
                 {
                         <div class="pe-3 ps-3 div-white-rounded-veesy">@item.Name</div>
@@ -320,7 +320,7 @@
             <div class="modal-body">
                 <p>Write a bio about yourself, try to make it synthetic and professional</p>
                 <textarea id="biography-text-edit" rows="4" class="w-100"></textarea>
-                <p class="mb-0"><strong>0 / 400 characters</strong></p>  
+                <p class="mb-0"><strong>max. 400 characters</strong></p>  
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdateBiography()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -358,7 +358,7 @@
             <div class="modal-body">
                 <p>Write a short info about yourself, try to make it brief and catchy</p>
                 <textarea id="portfolio-intro-text-edit" rows="4" class="w-100"></textarea>
-                <p class="mb-0"><strong>0 / 400 characters</strong></p>  
+                <p class="mb-0"><strong>max. 400 characters</strong></p>  
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdatePortfolioIntro()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -390,7 +390,7 @@
                     }
                 </div>
                 <p class="mt-4"><strong>Didn't find it?</strong> <a class="a-ciano">Contact us</a></p>
-                <p class="mb-0"><strong>0 / 10 selected</strong></p>
+                <p class="mb-0"><strong>max. 10</strong></p>
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdateUsedSoftware()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -422,7 +422,7 @@
                     }
                 </div>
                 <p class="mt-4"><strong>Didn't find it?</strong> <a class="a-ciano">Contact us</a></p>
-                <p class="mb-0"><strong>0 / 5 selected</strong></p>
+                <p class="mb-0"><strong>max. 5</strong></p>
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdateHardSkills()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -454,7 +454,7 @@
                     }
                 </div>
                 <p class="mt-4"><strong>Didn't find it?</strong> <a class="a-ciano">Contact us</a></p>
-                <p class="mb-0"><strong>0 / 10 selected</strong></p>
+                <p class="mb-0"><strong>max. 10</strong></p>
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdateSoftSkills()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -486,7 +486,7 @@
                     }
                 </div>
                 <p class="mt-4"><strong>Didn't find it?</strong> <a class="a-ciano">Contact us</a></p>
-                <p class="mb-0"><strong>0 / 5 selected</strong></p>
+                <p class="mb-0"><strong>max. 5</strong></p>
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdateCategoriesWork()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -518,7 +518,7 @@
                     }
                 </div>
                 <p class="mt-4"><strong>Didn't find it?</strong> <a class="a-ciano">Contact us</a></p>
-                <p class="mb-0"><strong>0 / 5 selected</strong></p>
+                <p class="mb-0"><strong>max. 5</strong></p>
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdateLanguagesSpoken()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -550,7 +550,7 @@
                     }
                 </div>
                 <p class="mt-4"><strong>Didn't find it?</strong> <a class="a-ciano">Contact us</a></p>
-                <p class="mb-0"><strong>0 / 5 selected</strong></p>
+                <p class="mb-0"><strong>max. 5</strong></p>
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdateInfoToShow()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
