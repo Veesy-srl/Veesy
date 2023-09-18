@@ -30,16 +30,16 @@ public class ProfileHelper
 
     public async Task<ResultDto> UpdateMyUserBio(string biography, MyUser user)
     {
-        if (biography.Length > 400)
-            return new ResultDto(false, "Max characters is 400.");
+        if (biography.Length > 500)
+            return new ResultDto(false, "Max characters is 500.");
         user.Biografy = string.IsNullOrEmpty(biography) ? null : biography;
         return await _accountService.UpdateUserProfile(user);
     }
     
     public async Task<ResultDto> UpdateMyUserPortfolioIntro(string introPortfolio, MyUser user)
     {
-        if (introPortfolio.Length > 400)
-            return new ResultDto(false, "Max characters is 400.");
+        if (introPortfolio.Length > 100)
+            return new ResultDto(false, "Max characters is 100.");
         user.PortfolioIntro = string.IsNullOrEmpty(introPortfolio) ? null : introPortfolio;
         return await _accountService.UpdateUserProfile(user);
     }
@@ -51,7 +51,7 @@ public class ProfileHelper
         return new ProfileViewModel()
         {
             FileName = userInfo.ProfileImageFileName,
-            BasePathImages = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobProfileImageDirectory}/",
+            BasePathImages = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/",
             ExternalLink = userInfo.ExternalLink,
             PhoneNumber = userInfo.PhoneNumber,
             Username = userInfo.UserName,
@@ -61,8 +61,8 @@ public class ProfileHelper
             PortfolioIntro = userInfo.PortfolioIntro,
             CategoriesWork = MapProfileDtos.MapCategoriesWorkList(_accountService.GetCategoriesWorkWithUser(userInfo.Id)),
             UsedSoftwares = MapProfileDtos.MapUsedSoftwareList(_accountService.GetUsedSoftwareWithUser(userInfo)),
-            LanguagesSpoken = MapProfileDtos.MapLanguagesSpokenList(_accountService.GetInfosToShowWithUser(userInfo)),
-            InfoToShow = MapProfileDtos.MapInfoToShowList(_accountService.GetLanguagesSpokenWithUser(userInfo)),
+            LanguagesSpoken = MapProfileDtos.MapLanguagesSpokenList(_accountService.GetLanguagesSpokenWithUser(userInfo)),
+            InfoToShow = MapProfileDtos.MapInfoToShowList(_accountService.GetInfosToShowWithUser(userInfo)),
             HardSkills = MapProfileDtos.MapSkillsList(hardskills.ToList()),
             SoftSkills = MapProfileDtos.MapSkillsList(softskills.ToList())
         };
@@ -266,7 +266,7 @@ public class ProfileHelper
             VatNumber = userInfo.VATNumber,
             PhoneNumber = userInfo.PhoneNumber,
             FileName = userInfo.ProfileImageFileName,
-            BasePathImages = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobProfileImageDirectory}/",
+            BasePathImages = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/",
         };
     }
 

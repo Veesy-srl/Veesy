@@ -35,7 +35,7 @@
                 <hr class="hr"/>
                 <div class="d-flex">
                     <div class="col-9">
-                        <p class="mb-0"><strong>Name and Surname*</strong></p>
+                        <p class="mb-0"><strong>First and last name*</strong></p>
                         <p class="mb-0" id="fullname-show">@Model.Name @Model.Surname</p>
                     </div>
                     <div class="col-3 text-end"><a onclick="setTextAreaValue('name-edit', '@Model.Name'), setTextAreaValue('surname-edit', '@Model.Surname'), openModal('#modalFullname')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
@@ -152,8 +152,8 @@
         <div class="d-flex justify-content-center">
             <div class="w-75-veesy card-blue-veesy p-3">
                 <div class="text-end"><i class="fa-solid fa-circle fa-2xs" style="color: #ffffff;"></i></div>
-                <p class="mb-0" style="color: white"><strong>Do you need some help?</strong></p>
-                <a class="a-ciano" href="#">Contact us</a>
+                <p class="mb-0" style="color: white">Do you need some help?</p>
+                <a class="a-ciano-underline" href="mailto:support@veesy.it">Contact us</a>
             </div>
         </div>
         <div class="empty-veesy"></div>
@@ -172,11 +172,11 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
-                        <p class="mb-1"><strong>Name*</strong></p>
+                        <p class="mb-1"><strong>First name*</strong></p>
                         <input type="text" id="name-edit" rows="4" class="w-100 input-modal"/>
                     </div>
                     <div class="col-sm-12 col-md-6">
-                        <p class="mb-1"><strong>Surname*</strong></p>
+                        <p class="mb-1"><strong>Last name*</strong></p>
                         <input type="text" id="surname-edit" rows="4" class="w-100 input-modal"/>
                     </div>
                 </div>
@@ -265,10 +265,9 @@
             <div class="modal-body">
                 <p class="mb-1"><strong>VAT Number*</strong></p>
                 <input type="text" id="vat-number-edit" rows="4" class="w-100 input-modal"/>
-                <p class="mt-2 mb-0">*compulsory field</p>
             </div>
             <div class="modal-footer">                
-                <a onclick="UpdateVATNumber()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
+                <a onclick="UpdateVATNumber()" class="mt-2 rounded-pill btn btn-primary btn-padding" type="submit">save</a>
             </div>
         </div>
     </div>

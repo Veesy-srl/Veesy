@@ -40,7 +40,7 @@ public static class EditMediaResolutionOnAzure
                         var compressedVideo = MediaCompressor.CompressVideo(mediaToCompress.BlobContent, format, media);
                         var newFileName = $"{Guid.NewGuid().ToString().Replace("-", String.Empty)}{media.Type}";
                         await veesyBlobService.UploadFromStreamBlobAsync(compressedVideo,
-                            $"{VeesyConstants.BlobMediaSections.CompressedMedia}/{newFileName}", mediaToCompress.BlobContentType);
+                            $"{MediaCostants.BlobMediaSections.CompressedMedia}/{newFileName}", mediaToCompress.BlobContentType);
                         media.MediaFormats.Add(new MediaFormat()
                         {
                             Format = format,
@@ -64,7 +64,7 @@ public static class EditMediaResolutionOnAzure
                         var compressedImage = MediaCompressor.CompressImage(mediaToCompress.BlobContent, format, media);
                         var newFileName = $"{Guid.NewGuid().ToString().Replace("-", String.Empty)}{media.Type}";
                         await veesyBlobService.UploadFromStreamBlobAsync(compressedImage,
-                            $"{VeesyConstants.BlobMediaSections.CompressedMedia}/{newFileName}", mediaToCompress.BlobContentType);
+                            $"{MediaCostants.BlobMediaSections.CompressedMedia}/{newFileName}", mediaToCompress.BlobContentType);
                         media.MediaFormats.Add(new MediaFormat()
                         {
                             Format = format,

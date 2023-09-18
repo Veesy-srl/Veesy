@@ -7,12 +7,17 @@ public static class MediaCostants
         ".PNG", ".JPG", ".JPEG", ".BMP", ".GIF"
     };
     
+    public static class BlobMediaSections
+    {
+        public const string OriginalMedia = "OriginalMedia";
+        public static string CompressedMedia = "CompressedMedia";
+        public static string ProfileMedia = "ProfileImage";
+    }
+    
     public static string[] videoExtensions =
     {
         ".AVI", ".MP4", ".DIVX", ".WMV"
     };
-
-    public const string BlobProfileImageDirectory = "ProfileImage";
 
     public static string[] mediaExtensions => videoExtensions.Concat(imageExtensions).ToArray();
 }

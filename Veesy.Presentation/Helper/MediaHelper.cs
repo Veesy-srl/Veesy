@@ -35,7 +35,7 @@ public class MediaHelper
             {
                 var extension = Path.GetExtension(fileSection.FileName);
                 fileName += extension;
-                await _mediaHandler.SaveFileAsStreamAsync(fileSection.FileStream, $"{MediaCostants.BlobProfileImageDirectory}/{fileName}", contentType);
+                await _mediaHandler.SaveFileAsStreamAsync(fileSection.FileStream, $"{MediaCostants.BlobMediaSections.ProfileMedia}/{fileName}", contentType);
                 return (new ResultDto(true, ""), fileSection.FileName, fileName);
             }
             section = await multipartReader.ReadNextSectionAsync();

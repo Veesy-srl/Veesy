@@ -1,0 +1,265 @@
+@model Veesy.Presentation.Model.Cloud.CloudViewModel
+@{
+    ViewData["Title"] = "Cloud";
+}
+
+<div class="row pt-7rem">
+    <div class="col-sm-12 col-md-3">
+        <nav class="breadcrumb-container" aria-label="Percorso di navigazione">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><i class="fa-solid fa-house me-2 text-white"></i><a class="breadcrumb-a me-2 text-white" asp-area="Portfolio" asp-controller="Home" asp-action="Index">dashboard</a><i class="fa-solid fa-chevron-right text-white"></i></li>
+                <li class="breadcrumb-item"><a class="breadcrumb-a me-2 text-white" asp-action="List">cloud</a></li>
+            </ol>
+        </nav>
+    </div>
+    <div class="text-white col-sm-12 col-md-6">
+        <h1><strong>Cloud</strong></h1>
+        <div class="empty-veesy"></div>
+        <p>Here you can upload your files. The recommended format is 4:3 horizontal or vertical, format accepted: jpg, png, mov, mp4, Lorem ipsum<a class="grey-link ms-2"><strong>learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a></p>
+    </div>
+    <div class="col-sm-12 col-md-3 nodisplay-sm">
+        <div class="d-flex justify-content-center">
+            <div class="w-75-veesy card-blue-veesy p-3">
+                <div class="text-end"><i class="fa-solid fa-circle fa-2xs" style="color: #ffffff;"></i></div>
+                <p class="mb-0" style="color: white">Do you need some help?</p>
+                <a class="a-ciano-underline" href="mailto:support@veesy.it">Contact us</a>
+            </div>
+        </div>
+        <div class="empty-veesy"></div>
+        <div class="empty-veesy"></div>
+        <div class="empty-veesy"></div>
+    </div>
+</div>
+<div class="empty-veesy"></div>
+<div class="row">
+    <div class="col-sm-2 col-md-1 mb-4 mb-lg-0"></div>
+    <div class="col-sm-2 col-md-1 mb-4 mb-lg-0">
+        @for (int i = 0; i < Model.Medias.Count; i = i+10)
+        {
+            <a onclick="SelectMedia('@Model.Medias[i].Code')">
+                @if (Model.Medias[i].Type == ".mp4")
+                {
+                    <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code"  class="img-rounded-trasparent w-100 shadow-1-strong rounded mb-4" alt="@Model.Medias[i].OriginalFileName">
+                        <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
+                    </video>
+                }
+                else
+                {
+                    <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded mb-4" alt="@Model.Medias[i].OriginalFileName"/>
+                }
+            </a>
+        }
+    </div>
+    <div class="col-sm-2 col-md-1 mb-4 mb-lg-0">
+        @for (int i = 1; i < Model.Medias.Count; i = i+10)
+        {
+            <a onclick="SelectMedia('@Model.Medias[i].Code')">
+                @if (Model.Medias[i].Type == ".mp4")
+                {
+                    <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code"  class="img-rounded-trasparent w-100 shadow-1-strong rounded mb-4" alt="@Model.Medias[i].OriginalFileName">
+                        <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
+                    </video>
+                }
+                else
+                {
+                    <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded mb-4" alt="@Model.Medias[i].OriginalFileName"/>
+                }
+            </a>
+        }
+    </div>
+    <div class="col-sm-2 col-md-1 mb-4 mb-lg-0">
+        @for (int i = 2; i < Model.Medias.Count; i = i+10)
+        {
+            <a onclick="SelectMedia('@Model.Medias[i].Code')">
+                @if (Model.Medias[i].Type == ".mp4")
+                {
+                    <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code"  class="img-rounded-trasparent w-100 shadow-1-strong rounded mb-4" alt="@Model.Medias[i].OriginalFileName">
+                        <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
+                    </video>
+                }
+                else
+                {
+                    <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded mb-4" alt="@Model.Medias[i].OriginalFileName"/>
+                }
+            </a>
+        }
+    </div>
+    <div class="col-sm-2 col-md-1 mb-4 mb-lg-0">
+        @for (int i = 3; i < Model.Medias.Count; i = i+10)
+        {
+            <a onclick="SelectMedia('@Model.Medias[i].Code')">
+                @if (Model.Medias[i].Type == ".mp4")
+                {
+                    <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code"  class="img-rounded-trasparent w-100 shadow-1-strong rounded mb-4" alt="@Model.Medias[i].OriginalFileName">
+                        <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
+                    </video>
+                }
+                else
+                {
+                    <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded mb-4" alt="@Model.Medias[i].OriginalFileName"/>
+                }
+            </a>
+        }
+    </div>
+    <div class="col-sm-2 col-md-1 mb-4 mb-lg-0">
+        @for (int i = 4; i < Model.Medias.Count; i = i+10)
+        {
+            <a onclick="SelectMedia('@Model.Medias[i].Code')">
+                @if (Model.Medias[i].Type == ".mp4")
+                {
+                    <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code"  class="img-rounded-trasparent w-100 shadow-1-strong rounded mb-4" alt="@Model.Medias[i].OriginalFileName">
+                        <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
+                    </video>
+                }
+                else
+                {
+                    <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded mb-4" alt="@Model.Medias[i].OriginalFileName"/>
+                }
+            </a>
+        }
+    </div>
+    <div class="col-sm-2 col-md-1 mb-4 mb-lg-0">
+        @for (int i = 5; i < Model.Medias.Count; i = i+10)
+        {
+            <a onclick="SelectMedia('@Model.Medias[i].Code')">
+                @if (Model.Medias[i].Type == ".mp4")
+                {
+                    <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code"  class="img-rounded-trasparent w-100 shadow-1-strong rounded mb-4" alt="@Model.Medias[i].OriginalFileName">
+                        <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
+                    </video>
+                }
+                else
+                {
+                    <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded mb-4" alt="@Model.Medias[i].OriginalFileName"/>
+                }
+            </a>
+        }
+    </div>
+    <div class="col-sm-2 col-md-1 mb-4 mb-lg-0">
+        @for (int i = 6; i < Model.Medias.Count; i = i+10)
+        {
+            <a onclick="SelectMedia('@Model.Medias[i].Code')">
+                @if (Model.Medias[i].Type == ".mp4")
+                {
+                    <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code"  class="img-rounded-trasparent w-100 shadow-1-strong rounded mb-4" alt="@Model.Medias[i].OriginalFileName">
+                        <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
+                    </video>
+                }
+                else
+                {
+                    <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded mb-4" alt="@Model.Medias[i].OriginalFileName"/>
+                }
+            </a>
+        }
+    </div>
+    <div class="col-sm-2 col-md-1 mb-4 mb-lg-0">
+        @for (int i = 7; i < Model.Medias.Count; i = i+10)
+        {
+            <a onclick="SelectMedia('@Model.Medias[i].Code')">
+                @if (Model.Medias[i].Type == ".mp4")
+                {
+                    <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code"  class="img-rounded-trasparent w-100 shadow-1-strong rounded mb-4" alt="@Model.Medias[i].OriginalFileName">
+                        <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
+                    </video>
+                }
+                else
+                {
+                    <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded mb-4" alt="@Model.Medias[i].OriginalFileName"/>
+                }
+            </a>
+        }
+    </div>
+    <div class="col-sm-2 col-md-1 mb-4 mb-lg-0">
+        @for (int i = 8; i < Model.Medias.Count; i = i+10)
+        {
+            <a onclick="SelectMedia('@Model.Medias[i].Code')">
+                @if (Model.Medias[i].Type == ".mp4")
+                {
+                    <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code"  class="img-rounded-trasparent w-100 shadow-1-strong rounded mb-4" alt="@Model.Medias[i].OriginalFileName">
+                        <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
+                    </video>
+                }
+                else
+                {
+                    <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded mb-4" alt="@Model.Medias[i].OriginalFileName"/>
+                }
+            </a>
+        }
+    </div>
+    <div class="col-sm-2 col-md-1 mb-4 mb-lg-0">
+        @for (int i = 9; i < Model.Medias.Count; i = i+10)
+        {
+            <a onclick="SelectMedia('@Model.Medias[i].Code')">
+                @if (Model.Medias[i].Type == ".mp4")
+                {
+                    <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code"  class="img-rounded-trasparent w-100 shadow-1-strong rounded mb-4" alt="@Model.Medias[i].OriginalFileName">
+                        <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
+                    </video>
+                }
+                else
+                {
+                    <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded mb-4" alt="@Model.Medias[i].OriginalFileName"/>
+                }
+            </a>
+        }
+    </div>
+    <div class="col-sm-2 col-md-1 mb-4 mb-lg-0"></div>
+</div>
+
+<div id="alert-portfolio" class="custom-alert-cloud alert alert-veesy alert-dismissible fade" role="alert">
+    <div class="w-100">
+        <div class="float-start">
+            <div class="d-flex mt-2">
+                <p>1 files selected</p>
+                <a class="red-link-underline ms-3">delete</a>
+            </div>
+        </div>
+        <div class="float-end">
+            <div class="d-flex align-items-center">
+                <a class="blue-link me-2">+ add to portfolio</a>
+                <a class="rounded-pill btn btn-grey btn-padding" type="submit">save</a>
+                <a class="ms-2 me-4 mt-1" type="button" data-bs-dismiss="alert" aria-label="Close"><i class="fa-solid fa-circle-xmark"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+    var img_selected_id = [];
+    const alert_portfolio = document.getElementById("alert-portfolio");
+    function SelectMedia(img_id) {
+        var media = document.getElementById('img-'+img_id); 
+        if(media.classList.contains("img-rounded-ciano")){
+            media.classList.remove("img-rounded-ciano")
+            media.classList.add("img-rounded-trasparent")
+            removeMediaFromList(img_id);
+        }
+        else{
+            media.classList.remove("img-rounded-trasparent")
+            media.classList.add("img-rounded-ciano")
+            img_selected_id.push(img_id);
+        }
+        if (img_selected_id.length > 0){
+            alert_portfolio.classList.add("show");
+        }
+        else{
+            alert_portfolio.classList.remove("show");
+        }
+        
+    }
+    
+    function removeMediaFromList(value){
+        const index = img_selected_id.indexOf(value);
+        if (index > -1) { // only splice array when item is found
+          img_selected_id.splice(index, 1); // 2nd parameter means remove one item only
+        }
+    }
+    
+    function submitForm() {
+       document.getElementById("uploader").submit();
+    }
+    
+    </script>
+}
