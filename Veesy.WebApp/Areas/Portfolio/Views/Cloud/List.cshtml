@@ -151,6 +151,16 @@
                 }
             </a>
         }
+        <form enctype="multipart/form-data" asp-action="UploadMedia" asp-controller="Media" asp-area="Portfolio" class="dropzone card-grey-dashed-veesy" id="uploader">
+            <div class="dz-message needsclick" id="message-uploader">
+                <div id="div-uploader-icon" class="w-100 mb-1">
+                    <i id="uploader-icon" class="fa-solid fa-circle-plus fa-xl" style="color: #0D2045"></i>
+                </div>
+                <span id="uploader-text" class="text">
+                    Upload or drop files here.
+                </span>
+            </div>
+        </form>
     </div>
     <div class="col-sm-2 col-md-1 mb-4 mb-lg-0">
         @for (int i = 7; i < Model.Medias.Count; i = i+10)
@@ -260,6 +270,89 @@
     function submitForm() {
        document.getElementById("uploader").submit();
     }
+    /*Dropzone configuration*/
+        Dropzone.autoDiscover = false;
+        var uploader = null;
+        var msgUploader = document.getElementById("message-uploader");
+        var divUploader = document.getElementById("div-uploader-icon");
+        var iconUploader = document.getElementById("uploader-icon");
+        var txtUploader = document.getElementById("uploader-text");
     
+        var dropzoneOptions = {
+            dictDefaultMessage: 'Upload or drop files here',
+            paramName: "file",
+            maxFilesize: 10000, // MB
+            addRemoveLinks: true,
+            init: function () {
+                this.on("success", function (file) {
+                    console.log("success > " + file.name);
+                });
+            }
+        };
+                
+        uploader = document.querySelector('#uploader');
+        var newDropzone = new Dropzone(uploader, dropzoneOptions);
+        
+        // 1
+        window.addEventListener('dragenter', function(e) {
+            showDropZone();
+        });
+        
+        // 2
+        uploader.addEventListener('dragenter', allowDrag);
+        uploader.addEventListener('dragover', allowDrag);
+        
+        // 3
+        uploader.addEventListener('dragleave', function(e) {
+            console.log('dragleave');
+            hideDropZone();
+        });
+        
+        // 4
+        uploader.addEventListener('drop', handleDrop);
+               
+    
+        function showDropZone() {
+            uploader.classList.remove("card-grey-dashed-veesy");
+            uploader.classList.add("dropzone-full-page");
+            
+            divUploader.classList.remove("mb-1");
+            msgUploader.classList.add("text-center");
+            msgUploader.classList.add("h-100");
+            msgUploader.style.marginTop = "20%";
+            divUploader.classList.add("mb-4");
+            txtUploader.classList.add("text-white");
+            iconUploader.style.color = "#ffffff"
+            
+            document.body.style.overflow = 'hidden';
+        }
+        function hideDropZone() {
+            uploader.classList.remove("dropzone-full-page");
+            uploader.classList.add("card-grey-dashed-veesy");
+            
+            msgUploader.classList.remove("text-center");
+            msgUploader.classList.remove("h-100");
+            msgUploader.style.marginTop = "2em";
+            divUploader.classList.remove("mb-4");
+            txtUploader.classList.remove("text-white");
+            iconUploader.style.color = "#202F4D"
+            divUploader.classList.add("mb-1");
+            
+            document.body.style.overflow = 'visible';
+        }
+        
+        function allowDrag(e) {
+            if (true) {  // Test that the item being dragged is a valid one
+                e.dataTransfer.dropEffect = 'copy';
+                e.preventDefault();
+            }
+        }
+        
+        function handleDrop(e) {
+            e.preventDefault();
+            hideDropZone();
+        
+            alert('Drop!');
+        }
     </script>
 }

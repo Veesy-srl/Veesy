@@ -80,11 +80,12 @@ try
     builder.Services.AddSingleton(x=> 
         new VeesyBlobService(new BlobServiceClient(azureBlobCs), 
             Configuration.GetValue<string>("AzureBlobStorage:VeesyContainerName")));
-    
+#if  DEBUG
     builder.Services.AddSwaggerGen(c =>
     {
         c.SwaggerDoc("v2", new OpenApiInfo { Title = "Veesy Web API", Version = "v1.0.0" });
     });
+#endif
     
     builder.Services.ConfigureApplicationCookie(options =>
     {
@@ -103,12 +104,15 @@ try
     builder.Services.RegisterVeesyServices();
     
     var app = builder.Build();
-    
+
+#if  DEBUG
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v2/swagger.json", "Veesy Web API");
     });
+#endif
+
 
     // Configure the HTTP request pipeline.
     if (!app.Environment.IsDevelopment())

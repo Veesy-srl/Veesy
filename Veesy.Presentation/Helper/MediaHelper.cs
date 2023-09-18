@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 using Veesy.Presentation.Model.Media;
 using Microsoft.Net.Http.Headers;
+using Veesy.Domain.Data;
 using Veesy.Domain.Exception;
 using Veesy.Domain.Models;
 using Veesy.Media.Constants;
@@ -14,11 +15,13 @@ public class MediaHelper
 {
     private readonly IConfiguration _config;
     private readonly MediaHandler _mediaHandler;
+    private readonly ApplicationDbContext _dbContext;
 
-    public MediaHelper(IConfiguration config, MediaHandler mediaHandler)
+    public MediaHelper(IConfiguration config, MediaHandler mediaHandler, ApplicationDbContext dbContext)
     {
         _config = config;
         _mediaHandler = mediaHandler;
+        _dbContext = dbContext;
     }
 
     public async Task<(ResultDto resultDto, string originalFilename, string newFileName)> UploadProfileImageOnAzure(Stream fileStream, string contentType)
@@ -59,7 +62,29 @@ public class MediaHelper
             var fileSection = section.AsFileSection();
             if (fileSection != null)
             {
-                await _mediaHandler.SaveFileAsByteArrayRecordAsync(fileSection, user);
+                await _mediaHandler.SaveFileAsStreamAsync(fileSection.FileStream, "", contentType);
+                try
+                {
+                    var size = (0, 0);
+                    var extension = Path.GetExtension(fileSection.FileName);
+                    var newFileName = $"{Guid.NewGuid().ToString().Replace("-", String.Empty)}{extension}";
+                    _dbContext.Medias.Add(new Domain.Models.Media()
+                    {
+                        FileName = newFileName,
+                        OriginalFileName = fileSection.FileName,
+                        Type = extension,
+                        Width = size.Item1,
+                        Height = size.Item2,
+                        MyUserId = user.Id,
+                        Size = fileStream.Length,
+                        Status = 2
+                    });
+                    await _dbContext.SaveChangesAsync();
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
                 fileCount++;
             }
             section = await multipartReader.ReadNextSectionAsync();
