@@ -10,6 +10,7 @@
         <PackageReference Include="Azure.Storage.Blobs" Version="12.17.0" />
         <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.9" />
         <PackageReference Include="Microsoft.Azure.Functions.Worker" Version="1.8.0" />
+        <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Storage.Blobs" Version="4.0.4" />
         <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Timer" Version="4.0.1" />
         <PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="1.7.0" />
         <PackageReference Include="Microsoft.Azure.WebJobs" Version="3.0.37" />

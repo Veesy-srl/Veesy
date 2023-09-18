@@ -26,6 +26,7 @@ public class SkillRepository : RepositoryBase<Skill>, ISkillRepository
     {
         return _applicationDbContext.MyUserSkills
             .Include(s => s.Skill)
-            .Where(s => s.MyUserId == user.Id && s.Type == type);
+            .Where(s => s.MyUserId == user.Id && s.Type == type)
+            .OrderBy(s => s.Skill);
     }
 }

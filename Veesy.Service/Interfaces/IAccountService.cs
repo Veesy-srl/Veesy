@@ -23,6 +23,6 @@ public interface IAccountService
     Task<ResultDto> UpdateMyUserInfoToShow(List<MyUserInfoToShow> infoToShowToDelete, List<MyUserInfoToShow> infoToShowToAdd, MyUser user);
     List<MyUserLanguageSpoken> GetLanguageSpokenByUser(MyUser userInfo);
     Task<ResultDto> UpdateMyUserLanguageSpoken(List<MyUserLanguageSpoken> languageSpokenToDelete, List<MyUserLanguageSpoken> languageSpokenToAdd, MyUser user);
-    List<InfoToShow> GetLanguagesSpokenWithUser(MyUser userInfo);
-    List<LanguageSpoken> GetInfosToShowWithUser(MyUser userInfo);
+    List<LanguageSpoken> GetLanguagesSpokenWithUser(MyUser userInfo);
+    List<InfoToShow> GetInfosToShowWithUser(MyUser userInfo);
 }

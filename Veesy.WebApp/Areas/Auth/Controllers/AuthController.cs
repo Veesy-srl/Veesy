@@ -92,7 +92,7 @@ public class AuthController : Controller
             var result = await _authHelper.RegisterNewMember(model);
             if (result.Success)
                 return RedirectToAction("SendEmailVerification", new {email = model.Email});
-            _notyfService.Custom(result.Message, 10, "#ca0a0a96");
+            _notyfService.Custom(result.Message.Replace("'", "&#39;"), 10, "#ca0a0a96");
             var vm = _authHelper.GetSignUpViewModelException(model);
             return View(vm);
         }

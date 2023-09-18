@@ -14,4 +14,5 @@ public interface IVeesyUoW
     IMyUserRepository MyUserRepository { get; }
     IUsedSoftwareRepository UsedSoftwareRepository { get; }
     ISkillRepository SkillRepository { get; }
+    IMediaRepository MediaRepository { get; }
 }

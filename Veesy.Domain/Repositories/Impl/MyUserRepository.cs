@@ -28,7 +28,7 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
 
     public List<CategoryWork> GetCategoriesWorkByUserId(string userId)
     {
-        return _applicationDbContext.CategoriesWork.Include(s => s.MyUserCategoriesWork.Where(s => s.MyUserId == userId)).ToList();
+        return _applicationDbContext.CategoriesWork.Include(s => s.MyUserCategoriesWork.Where(s => s.MyUserId == userId)).OrderBy(s => s.Name).ToList();
 
     }
 
@@ -37,6 +37,7 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
         return _applicationDbContext.MyUserCategoriesWork
             .Include(s => s.CategoryWork)
             .Where(s => s.MyUserId == userInfo.Id)
+            .OrderBy(s => s.CategoryWork.Name)
             .ToList();
     }
 
@@ -73,6 +74,7 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
         return _applicationDbContext.MyUserLanguagesSpoken
             .Include(s => s.LanguageSpoken)
             .Where(s => s.MyUserId == userInfo.Id)
+            .OrderBy(s => s.LanguageSpoken.Language)
             .ToList();
     }
 
@@ -86,14 +88,14 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
         await _applicationDbContext.MyUserLanguagesSpoken.AddRangeAsync(languageSpokenToAdd);
     }
 
-    public List<InfoToShow> GetLanguagesSpokenByUserId(string userInfoId)
+    public List<LanguageSpoken> GetLanguagesSpokenByUserId(string userInfoId)
     {
-        return _applicationDbContext.InfosToShow.Include(s => s.MyUserInfoToShows.Where(s => s.MyUserId == userInfoId)).ToList();
+        return _applicationDbContext.LanguagesSpoken.Include(s => s.MyUserLanguagesSpoken.Where(s => s.MyUserId == userInfoId)).OrderBy(s => s.Language).ToList();
     }
 
-    public List<LanguageSpoken> GetInfoToShowByUserId(string userInfoId)
+    public List<InfoToShow> GetInfoToShowByUserId(string userInfoId)
     {
-        return _applicationDbContext.LanguagesSpoken.Include(s => s.MyUserLanguagesSpoken.Where(s => s.MyUserId == userInfoId)).ToList();
+        return _applicationDbContext.InfosToShow.Include(s => s.MyUserInfoToShows.Where(s => s.MyUserId == userInfoId)).OrderBy(s => s.Info).ToList();
 
     }
 }

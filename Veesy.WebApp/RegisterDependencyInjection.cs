@@ -13,13 +13,15 @@ public static class RegisterDependencyInjection
 {
     public static IServiceCollection RegisterVeesyServices(this IServiceCollection serviceCollection)
     {
-        /*Rpository Dependency Injection*/
+        /*Repository Dependency Injection*/
         serviceCollection.AddScoped<IMyUserRepository, MyUserRepository>();
         serviceCollection.AddScoped<IUsedSoftwareRepository, UsedSoftwareRepository>();
+        serviceCollection.AddScoped<IMediaRepository, MediaRepository>();
         serviceCollection.AddScoped<IVeesyUoW, VeesyUoW>();
         
         /*Service dependency Injection*/
         serviceCollection.AddTransient<IAccountService, AccountService>();
+        serviceCollection.AddTransient<IMediaService, MediaService>();
 
         /*Utils Dependency Injection*/
         serviceCollection.AddScoped<IEmailSender, EmailSender>();
@@ -32,6 +34,7 @@ public static class RegisterDependencyInjection
         serviceCollection.AddTransient<AuthHelper>();
         serviceCollection.AddTransient<MediaHelper>();
         serviceCollection.AddTransient<ProfileHelper>();
+        serviceCollection.AddTransient<CloudHelper>();
 
         /*Media Utils Dependency Injection*/
         serviceCollection.AddTransient<MediaHandler>();

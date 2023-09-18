@@ -29,7 +29,7 @@ public class AccountService : IAccountService
 
     public List<UsedSoftware> GetUsedSoftwareWithUser(MyUser user)
     {
-        return _uoW.UsedSoftwareRepository.FindAll().Include(s => s.MyUserUsedSoftwares.Where(s => s.MyUserId == user.Id)).ToList();
+        return _uoW.UsedSoftwareRepository.FindAll().Include(s => s.MyUserUsedSoftwares.Where(s => s.MyUserId == user.Id)).OrderBy(s => s.Name).ToList();
     }
 
     public List<MyUserUsedSoftware> GetUsedSoftwaresByUser(MyUser user)
@@ -59,7 +59,7 @@ public class AccountService : IAccountService
 
     public IEnumerable<Skill> GetSkillsWithUserByType(MyUser userInfo, char type)
     {
-        return _uoW.SkillRepository.FindAll().Include(s => s.MyUserSkills.Where(s => s.MyUserId == userInfo.Id && s.Type == type));
+        return _uoW.SkillRepository.FindAll().Include(s => s.MyUserSkills.Where(s => s.MyUserId == userInfo.Id && s.Type == type)).OrderBy(s => s.Name);
     }
 
     public IEnumerable<MyUserSkill> GetSkillsByUserAndType(MyUser user, char type)
@@ -182,12 +182,12 @@ public class AccountService : IAccountService
         }
     }
 
-    public List<InfoToShow> GetLanguagesSpokenWithUser(MyUser userInfo)
+    public List<LanguageSpoken> GetLanguagesSpokenWithUser(MyUser userInfo)
     {
         return _uoW.MyUserRepository.GetLanguagesSpokenByUserId(userInfo.Id);
     }
 
-    public List<LanguageSpoken> GetInfosToShowWithUser(MyUser userInfo)
+    public List<InfoToShow> GetInfosToShowWithUser(MyUser userInfo)
     {
         return _uoW.MyUserRepository.GetInfoToShowByUserId(userInfo.Id);
     }

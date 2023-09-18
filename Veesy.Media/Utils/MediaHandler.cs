@@ -39,7 +39,7 @@ public class MediaHandler
         
         /*Save File on Azure Blob*/
         await _veesyBlobService.UploadFromStreamBlobAsync(fileSection.FileStream,
-            $"{VeesyConstants.BlobMediaSections.OriginalMedia}/{newFileName}", newFileName.GetContentType());
+            $"{MediaCostants.BlobMediaSections.OriginalMedia}/{newFileName}", newFileName.GetContentType());
         
         /*Save File in Folder*/
         Directory.CreateDirectory(UploadsSubDirectory);
@@ -110,7 +110,7 @@ public class MediaHandler
     {
         MemoryStream stream = new MemoryStream(mediaToUpload.MediaBase64);
         await _veesyBlobService.UploadFromStreamBlobAsync(stream,
-            $"{VeesyConstants.BlobMediaSections.OriginalMedia}/{mediaToUpload.FileName}", mediaToUpload.FileName.GetContentType());
+            $"{MediaCostants.BlobMediaSections.OriginalMedia}/{mediaToUpload.FileName}", mediaToUpload.FileName.GetContentType());
         return true;
     }
 }

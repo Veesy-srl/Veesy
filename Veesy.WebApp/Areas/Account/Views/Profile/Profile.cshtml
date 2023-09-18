@@ -12,7 +12,7 @@
                 <li class="breadcrumb-item"><a class="breadcrumb-a" href="#"><strong>profile</strong></a></li>
             </ol>
         </nav>
-        <div class="w-75-veesy card-white-veesy p-3">
+        <div class="w-80-veesy card-white-veesy p-3 mb-3">
             <div class="d-flex">
                 <div class="col-3">
                     <div class="text-center">
@@ -89,6 +89,7 @@
                                     {
                                         roles += $"{@role.Name}, ";
                                     }
+                                    roles = roles.Substring(0, (roles.Length - 2));
                                 }
                                 @roles
                             </p>
@@ -139,6 +140,7 @@
                                         {
                                             languages += $"{language.Language}, ";
                                         }
+                                        languages = languages.Substring(0, (languages.Length - 2));
                                     }
                                     @languages
                                 </p>
@@ -167,6 +169,7 @@
                                         {
                                             infos += $"{info.Name}, ";
                                         }
+                                        infos = infos.Substring(0, (infos.Length - 2));
                                     }
                                     @infos
                                 </p>
@@ -217,10 +220,10 @@
             <p>Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,</p>
             @if (Model.HardSkills.Count(s => s.Selected) > 0)
             {
-                <div class="d-flex mb-4">
+                <div class="d-flex mb-4" style="max-width: 100%; flex-wrap: wrap;">
                 @foreach (var item in Model.HardSkills.Where(s => s.Selected))
                 {
-                        <div class="pe-3 ps-3 div-white-rounded-blue-veesy d-flex"><a onclick="openModal('#modalHardSkill')"><i class="fa-solid fa-circle pe-2" style="color: #75CCDD"></i>@item.Name</a></div>
+                    <div class="pe-3 ps-3 div-white-rounded-blue-veesy d-flex"><a onclick="openModal('#modalHardSkill')"><i class="fa-solid fa-circle pe-2" style="color: #75CCDD"></i>@item.Name</a></div>
                 }
                 </div>
                 <a onclick="openModal('#modalHardSkill')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
@@ -242,7 +245,7 @@
             <p>Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,</p>
             @if (Model.SoftSkills.Count(s => s.Selected) > 0)
             {
-                <div class="d-flex mb-4">
+                <div class="d-flex mb-4" style="max-width: 100%; flex-wrap: wrap;">
                 @foreach (var item in Model.SoftSkills.Where(s => s.Selected))
                 {
                         <div class="pe-3 ps-3 div-white-rounded-blue-veesy d-flex"><a onclick="openModal('#modalSoftSkill')" ><i class="fa-solid fa-circle pe-2" style="color: #75CCDD"></i>@item.Name</a></div>
@@ -267,7 +270,7 @@
             <p>Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,</p>
             @if (Model.UsedSoftwares.Count(s => s.Selected) > 0)
             {
-                <div class="d-flex mb-4">
+                <div class="d-flex mb-4" style="max-width: 100%; flex-wrap: wrap;">
                 @foreach (var item in Model.UsedSoftwares.Where(s => s.Selected))
                 {
                         <div class="pe-3 ps-3 div-white-rounded-veesy">@item.Name</div>
@@ -299,8 +302,8 @@
         <div class="d-flex justify-content-center">
             <div class="w-75-veesy card-blue-veesy p-3">
                 <div class="text-end"><i class="fa-solid fa-circle fa-2xs" style="color: #ffffff;"></i></div>
-                <p class="mb-0" style="color: white"><strong>Do you need some help?</strong></p>
-                <a class="a-ciano" href="#">Contact us</a>
+                <p class="mb-0" style="color: white">Do you need some help?</p>
+                <a class="a-ciano-underline" href="mailto:support@veesy.it">Contact us</a>
             </div>
         </div>
         <div class="empty-veesy"></div>
@@ -320,7 +323,7 @@
             <div class="modal-body">
                 <p>Write a bio about yourself, try to make it synthetic and professional</p>
                 <textarea id="biography-text-edit" rows="4" class="w-100"></textarea>
-                <p class="mb-0"><strong>0 / 400 characters</strong></p>  
+                <p class="mb-0"><strong>max. 500 characters</strong></p>  
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdateBiography()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -339,10 +342,9 @@
             <div class="modal-body">
                 <p>Insert an external link</p>
                 <input type="text" id="external-link-edit" rows="4" class="w-100 input-modal"/>
-                <p class="mt-2"><strong>*compulsory field</strong></p>  
             </div>
             <div class="modal-footer">                
-                <a onclick="UpdateExternalLink()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
+                <a onclick="UpdateExternalLink()" class="mt-2 rounded-pill btn btn-primary btn-padding" type="submit">save</a>
             </div>
         </div>
     </div>
@@ -358,7 +360,7 @@
             <div class="modal-body">
                 <p>Write a short info about yourself, try to make it brief and catchy</p>
                 <textarea id="portfolio-intro-text-edit" rows="4" class="w-100"></textarea>
-                <p class="mb-0"><strong>0 / 400 characters</strong></p>  
+                <p class="mb-0"><strong>max. 100 characters</strong></p>  
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdatePortfolioIntro()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -389,8 +391,8 @@
                         <hr class="hr"/>
                     }
                 </div>
-                <p class="mt-4"><strong>Didn't find it?</strong> <a class="a-ciano">Contact us</a></p>
-                <p class="mb-0"><strong>0 / 10 selected</strong></p>
+                <p class="mt-4"><strong>Didn't find it?</strong> <a class="a-ciano" href="mailto:support@veesy.it">Contact us</a></p>
+                <p class="mb-0"><strong>max. 10</strong></p>
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdateUsedSoftware()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -421,8 +423,8 @@
                         <hr class="hr"/>
                     }
                 </div>
-                <p class="mt-4"><strong>Didn't find it?</strong> <a class="a-ciano">Contact us</a></p>
-                <p class="mb-0"><strong>0 / 5 selected</strong></p>
+                <p class="mt-4"><strong>Didn't find it?</strong> <a class="a-ciano" href="mailto:support@veesy.it">Contact us</a></p>
+                <p class="mb-0"><strong>max. 5</strong></p>
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdateHardSkills()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -453,8 +455,8 @@
                         <hr class="hr"/>
                     }
                 </div>
-                <p class="mt-4"><strong>Didn't find it?</strong> <a class="a-ciano">Contact us</a></p>
-                <p class="mb-0"><strong>0 / 10 selected</strong></p>
+                <p class="mt-4"><strong>Didn't find it?</strong> <a class="a-ciano" href="mailto:support@veesy.it">Contact us</a></p>
+                <p class="mb-0"><strong>max. 10</strong></p>
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdateSoftSkills()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -485,8 +487,8 @@
                         <hr class="hr"/>
                     }
                 </div>
-                <p class="mt-4"><strong>Didn't find it?</strong> <a class="a-ciano">Contact us</a></p>
-                <p class="mb-0"><strong>0 / 5 selected</strong></p>
+                <p class="mt-4"><strong>Didn't find it?</strong> <a class="a-ciano" href="mailto:support@veesy.it">Contact us</a></p>
+                <p class="mb-0"><strong>max. 5</strong></p>
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdateCategoriesWork()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -517,8 +519,8 @@
                         <hr class="hr"/>
                     }
                 </div>
-                <p class="mt-4"><strong>Didn't find it?</strong> <a class="a-ciano">Contact us</a></p>
-                <p class="mb-0"><strong>0 / 5 selected</strong></p>
+                <p class="mt-4"><strong>Didn't find it?</strong> <a class="a-ciano" href="mailto:support@veesy.it">Contact us</a></p>
+                <p class="mb-0"><strong>max. 5</strong></p>
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdateLanguagesSpoken()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -549,8 +551,8 @@
                         <hr class="hr"/>
                     }
                 </div>
-                <p class="mt-4"><strong>Didn't find it?</strong> <a class="a-ciano">Contact us</a></p>
-                <p class="mb-0"><strong>0 / 5 selected</strong></p>
+                <p class="mt-4"><strong>Didn't find it?</strong> <a class="a-ciano" href="mailto:support@veesy.it">Contact us</a></p>
+                <p class="mb-0"><strong>max. 5</strong></p>
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdateInfoToShow()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>

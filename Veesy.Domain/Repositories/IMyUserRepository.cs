@@ -18,6 +18,6 @@ public interface IMyUserRepository : IRepositoryBase<MyUser>
     List<MyUserLanguageSpoken> GetLanguageSpokenByUser(MyUser userInfo);
     void DeleteMyUserLanguageSpoken(List<MyUserLanguageSpoken> languageSpokenToDelete);
     Task AddMyUserLanguageSpoken(List<MyUserLanguageSpoken> languageSpokenToAdd);
-    List<InfoToShow> GetLanguagesSpokenByUserId(string userInfoId);
-    List<LanguageSpoken> GetInfoToShowByUserId(string userInfoId);
+    List<LanguageSpoken> GetLanguagesSpokenByUserId(string userInfoId);
+    List<InfoToShow> GetInfoToShowByUserId(string userInfoId);
 }
