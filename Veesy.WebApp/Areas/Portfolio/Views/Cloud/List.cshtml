@@ -159,6 +159,9 @@
                 <span id="uploader-text" class="text">
                     Upload or drop files here.
                 </span>
+                <div class="progress-bar progress-bar-primary" role="progressbar" data-dz-uploadprogress>
+                    <span class="progress-text"></span>
+                </div>
             </div>
         </form>
     </div>
@@ -287,6 +290,12 @@
                 this.on("success", function (file) {
                     console.log("success > " + file.name);
                 });
+            },
+            uploadprogress: function(file, progress, bytesSent) {
+                if (file.previewElement) {
+                    var progressElement = file.previewElement.querySelector("[data-dz-uploadprogress]");
+                    progressElement.style.width = progress + "%";
+                }
             }
         };
                 

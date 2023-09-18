@@ -62,12 +62,14 @@ public class MediaHelper
             var fileSection = section.AsFileSection();
             if (fileSection != null)
             {
-                await _mediaHandler.SaveFileAsStreamAsync(fileSection.FileStream, "", contentType);
+                var length = 12354;
+                var extension = Path.GetExtension(fileSection.FileName);
+                var newFileName = $"{Guid.NewGuid().ToString().Replace("-", String.Empty)}{extension}";
+                await _mediaHandler.SaveFileAsStreamAsync(fileSection.FileStream, $"{MediaCostants.BlobMediaSections.OriginalMedia}/{newFileName}", contentType);
                 try
                 {
+                    var now = DateTime.Now;
                     var size = (0, 0);
-                    var extension = Path.GetExtension(fileSection.FileName);
-                    var newFileName = $"{Guid.NewGuid().ToString().Replace("-", String.Empty)}{extension}";
                     _dbContext.Medias.Add(new Domain.Models.Media()
                     {
                         FileName = newFileName,
@@ -76,8 +78,13 @@ public class MediaHelper
                         Width = size.Item1,
                         Height = size.Item2,
                         MyUserId = user.Id,
-                        Size = fileStream.Length,
-                        Status = 2
+                        Size = length,
+                        Status = 2,
+                        CreateUserId = user.Id,
+                        LastEditRecordDate = now,
+                        LastEditUserId = user.Id,
+                        CreateRecordDate = now,
+                        UploadDate = now
                     });
                     await _dbContext.SaveChangesAsync();
                 }

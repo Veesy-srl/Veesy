@@ -52,7 +52,8 @@
                         }
                         <div class="dropdown-menu bg-grey-veesy" aria-labelledby="dropdownMenuLink">
                             <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Portfolio" ? "a-ciano-header" : "menu-element")" href="#">Portfolio</a>
-                            <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Cloud" ? "a-ciano-header" : "menu-element")" asp-action="List" asp-controller="Cloud" asp-area="Portfolio">Cloud</a>
+                        <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Cloud" ? "a-ciano-header" : "menu-element")" @*asp-action="List" asp-controller="Cloud" asp-area="Portfolio"*@>Cloud</a>
+                        
                             <a class="dropdown-item menu-element" href="#">Your Plan</a>
                             <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Profile" ? "a-ciano-header" : "menu-element")" asp-action="Profile" asp-controller="Profile" asp-area="Account">Profile</a>
                             <a class="dropdown-item menu-element" asp-action="Logout" asp-controller="Auth" asp-area="Auth">Log out</a>
