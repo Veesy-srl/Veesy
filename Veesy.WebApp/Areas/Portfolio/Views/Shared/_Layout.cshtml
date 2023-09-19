@@ -30,7 +30,7 @@
                             if (string.IsNullOrEmpty(profile_image))
                             {
                                 <a class="dropdown-toggle btn btn-light border fw-bolder shadow-none">
-                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" style="margin-top:-5px; width: 20px !important; height: 20px !important; max-width: none!important; " class="img-thumbnail-custom rounded-circle" alt="user-image" style="max-width: none!important; width: 60px !important; height: 60px !important;">
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" style=" width: 20px !important; height: 20px !important; max-width: none!important; " class="img-thumbnail-custom rounded-circle" alt="user-image" style="max-width: none!important; width: 60px !important; height: 60px !important;">
                                     @{
                                         string username = Model.Username.Contains("@") ? Model.Username.Split('@')[0] : Model.Username;
                                     }
@@ -41,7 +41,7 @@
                             else
                             {
                                 <a class="nodisplay-sm dropdown-toggle btn btn-light border fw-bolder shadow-none">
-                                    <img src="@basePath@profile_image" style="width: 20px !important; height: 20px !important; max-width: none!important; margin-top:-5px;" class="img-thumbnail-custom rounded-circle" alt="user-image">
+                                    <img src="@basePath@profile_image" style="width: 20px !important; height: 20px !important; max-width: none!important; " class="img-thumbnail-custom rounded-circle" alt="user-image">
                                     @{
                                         string username = Model.Username.Contains("@") ? Model.Username.Split('@')[0] : Model.Username;
                                     }
@@ -60,7 +60,7 @@
                     </div>
                     <button class="ms-2 btn btn-light border fw-bolder shadow-none" id="menuButton">
                         <i class="fas fa-circle fa-2xs text-primary mr-2" id="icon-color"></i>
-                        <span id="color-text">menu</span>
+                        <span id="color-text-variant">menu</span>
                     </button>
                 </div>
             </div>
@@ -70,21 +70,21 @@
                             @if (string.IsNullOrEmpty(profile_image))
                             {
                                 <a class="dropdown-toggle btn btn-light border fw-bolder shadow-none">
-                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" style="margin-top:-5px; width: 20px !important; height: 20px !important; max-width: none!important; " class="img-thumbnail-custom rounded-circle" alt="user-image" style="max-width: none!important; width: 60px !important; height: 60px !important;">
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" style=" width: 20px !important; height: 20px !important; max-width: none!important; " class="img-thumbnail-custom rounded-circle" alt="user-image" style="max-width: none!important; width: 60px !important; height: 60px !important;">
                                     @{
                                         string username = Model.Username.Contains("@") ? Model.Username.Split('@')[0] : Model.Username;
                                     }
-                                    <span id="color-text">@username</span>
+                                    <span id="color-text-variant">@username</span>
                                 </a>
                             }
                             else
                             {
                                 <a class="dropdown-toggle  btn btn-light border fw-bolder shadow-none">
-                                    <img src="@basePath@profile_image" style="width: 20px !important; height: 20px !important; max-width: none!important; margin-top:-5px;" class="img-thumbnail-custom rounded-circle" alt="user-image">
+                                    <img src="@basePath@profile_image" style="width: 20px !important; height: 20px !important; max-width: none!important; " class="img-thumbnail-custom rounded-circle" alt="user-image">
                                     @{
                                         string username = Model.Username.Contains("@") ? Model.Username.Split('@')[0] : Model.Username;
                                     }
-                                    <span id="color-text">@username</span>
+                                    <span id="color-text-variant">@username</span>
                                 </a>
                             }
                             <div class="dropdown-menu bg-grey-veesy" aria-labelledby="dropdownMenuLink">
@@ -96,8 +96,8 @@
                             </div>
                         </div>
                         <button class="ms-2 btn btn-light border fw-bolder shadow-none" id="closeButton">
-                            <i class="fas fa-times-circle fa-xs text-primary mr-2 " id="icon-color"></i>
-                            <span id="color-text">close</span>
+                            <i class="fas fa-times-circle fa-2xs text-primary" id="icon-color"></i>
+                            <span id="color-text-variant">close</span>
                         </button>
                 </div>
                 <div class="container center-content">
@@ -184,10 +184,10 @@
                 </div>
             </div>
             <div class="col-md-3 mt-3 mt-md-5 mb-4 veesy-text-color" >
-                <h4 class="h5 mt-5 fw-normal">
+                <h4 class="h6 mt-5 fw-normal">
                     <div class=" mb-3 d-inline-flex"><b>Do you need some help or want to share some ideas with us?</b></div> 
                 </h4>
-                <a href="mailto:info@veesy.it" class="contact-veesy rounded-pill btn btn-primary" type="submit">get in touch</a>
+                <a href="mailto:info@veesy.it" class="contact-veesy rounded-pill btn btn-primary btn-variant" type="submit">contact veesy</a>
             </div>
         </div>
         <div class="row">

@@ -27,7 +27,7 @@
 
 .alert-veesy{
   background-color: #E2E5E7 !important;
-  border-color: #202F4D4D !important;
+  border-color: #202F4D !important;
 }
 
 .bd-example{
@@ -40,8 +40,9 @@
 }
 
 p{
-  font-size: 16px !important;
+  font-size: 14px !important;
   line-height: 24px !important;
+  color: #202F4D;
 }
 
 h1{
@@ -83,7 +84,7 @@ input{
 }
 
 .fa-circle-xmark{
-  color: #202F4D66;
+  color: #202F4D;
 }
 
 .w-75-veesy{
@@ -124,6 +125,7 @@ html {
   background-color: #F0F2F3;
   border-radius: 25px;
   border: 0;
+  font-size: 15px;
 }
 
 .div-white-rounded-blue-veesy{
@@ -132,6 +134,7 @@ html {
   background-color: #F0F2F3;
   border-radius: 25px;
   border: 1px solid #202F4D !important;
+  font-size: 15px;
 }
 
 .bg-grey{
@@ -232,6 +235,12 @@ input {
   position: relative;
   margin-bottom: 15px;
   border-bottom: 0px solid #ccc;
+}
+
+.btn-variant{
+  font-weight: 500 !important;
+  padding: 0.4rem 1.2rem !important;
+  font-size: 0.8rem !important;
 }
 
 .btn-primary {
@@ -583,6 +592,7 @@ a{
   color: #75CCDD !important;
   text-decoration: underline !important;
   cursor: pointer;
+  font-size: 14px;
 }
 
 .a-ciano-underline:hover{
@@ -595,6 +605,8 @@ a{
   color: #75CCDD !important;
   text-decoration: none;
   cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .a-ciano-header:hover{
@@ -746,7 +758,8 @@ a:hover{
 }
 
 .menu-element{
-  font-size: 18px;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 #color-text{
@@ -759,9 +772,16 @@ a:hover{
 
 #color-text-layout{
   color: #202F4D;
-  font-size: 20px !important;
+  font-size: 14px !important;
   line-height: 25px !important;
-  font-weight: 500;
+  font-weight: 600;
+}
+
+#color-text-variant{
+  color: #202F4D;
+  font-size: 14px !important;
+  line-height: 25px !important;
+  font-weight: 600;
 }
 
 
@@ -815,8 +835,12 @@ textarea{
 
 .veesy-text-color{
   color: #202F4D;
-  font-size: 16px !important;
+  font-size: 14px !important;
   font-weight: 500;
+}
+
+.text-color{
+  color: #202F4D;
 }
 
 .social-icons-row {
@@ -852,7 +876,7 @@ textarea{
 }
 
 .contact-veesy{
-  width: 60%;
+  width: 45%;
 }
 
 .contact-veesy:hover{
