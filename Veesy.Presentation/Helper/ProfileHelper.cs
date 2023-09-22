@@ -167,6 +167,36 @@ public class ProfileHelper
         
         return await _accountService.UpdateMyUserCategoriesWork(categoryWorksToDelete, categoryWorksToAdd, userInfo);
     }
+    
+    
+    public async Task<ResultDto> UpdateSectors(List<Guid> sectorsCodes, MyUser userInfo)
+    {
+        if (sectorsCodes != null && sectorsCodes.Count > 3)
+            return new ResultDto(false, "Select max 3 sectors.");
+        var oldSectors = _accountService.GetSectorsByUser(userInfo).ToList();
+        var sectorsToDelete = new List<MyUserSector>();
+        var sectorsToAdd = new List<MyUserSector>();
+        
+        //Comparison of previous CategoriesWork with those currently selected to delete them
+        foreach (var item in oldSectors)
+        {
+            if(!sectorsCodes.Contains(item.SectorId))
+                sectorsToDelete.Add(item);
+        }
+
+        foreach (var item in sectorsCodes)
+        {
+            if(!oldSectors.Any(s => s.SectorId == item))
+                sectorsToAdd.Add(new MyUserSector()
+                {
+                    MyUserId = userInfo.Id,
+                    SectorId = item,
+                    Note = ""
+                });
+        }
+        
+        return await _accountService.UpdateMyUserSectors(sectorsToDelete, sectorsToAdd, userInfo);
+    }
 
     public async Task<ResultDto> UpdateInfoToShow(List<Guid> infoToShowCodes, MyUser userInfo)
     {
@@ -246,11 +276,15 @@ public class ProfileHelper
         return await _accountService.UpdateUserProfile(userInfo);
     }
     
-    public async Task<ResultDto> UpdatePhoneNumber(string phoneNumber, MyUser userInfo)
+    public async Task<ResultDto> UpdatePhoneNumber(string phoneNumberPrefix, string phoneNumber, MyUser userInfo)
     {
         if(phoneNumber.Length > 13)
-            return new ResultDto(false, "Max characters are 13.");
+            return new ResultDto(false, "Phone number max characters are 13.");
+        if(string.IsNullOrEmpty(phoneNumberPrefix))
+            return new ResultDto(false, "Please insert prefix.");
+
         userInfo.PhoneNumber = phoneNumber;
+        userInfo.PhoneNumberPrefix = phoneNumberPrefix;
         return await _accountService.UpdateUserProfile(userInfo);
     }
 
@@ -258,6 +292,7 @@ public class ProfileHelper
     {
         return new BasicInfoViewModel()
         {
+            Sectors = MapProfileDtos.MapSectorList(_accountService.GetSectorsWithUser(userInfo.Id)),
             Email = userInfo.Email,
             Name = userInfo.Name,
             Surname = userInfo.Surname,
@@ -265,6 +300,7 @@ public class ProfileHelper
             Category = userInfo.Category,
             VatNumber = userInfo.VATNumber,
             PhoneNumber = userInfo.PhoneNumber,
+            PhoneNumberPrefix = userInfo.PhoneNumberPrefix,
             FileName = userInfo.ProfileImageFileName,
             BasePathImages = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/",
         };

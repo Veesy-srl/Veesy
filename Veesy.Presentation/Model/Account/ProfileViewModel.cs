@@ -10,7 +10,6 @@ public class ProfileViewModel
     public string Email { get; set; }
     public string FullName { get; set; }
     public List<UsedSoftwareDto> UsedSoftwares { get; set; }
-    public List<Guid> SelectedUsedSoftwares { get; set; }
     public List<SkillDto> HardSkills { get; set; }
     public List<SkillDto> SoftSkills { get; set; }
     public string Username { get; set; }

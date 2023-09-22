@@ -47,7 +47,7 @@
                 }
             }
             <div class="d-flex"><p class="mb-0"><strong>Role:&nbsp;</strong></p><p class="@role_css mb-0">@workrole</p></div>
-            <div class="d-flex"><p class="mb-0"><strong>Email:&nbsp;</strong></p><p class="mb-0">@Model.Email</p></div>
+            <div class="d-flex"><p class="mb-0"><strong>Email:&nbsp;</strong></p><p class="mb-0 veesy-overflow">@Model.Email</p></div>
             @{
                 var phone = "information missing";
                 var css = "text-danger";
@@ -273,7 +273,7 @@
                 <div class="d-flex mb-4 text-color" style="max-width: 100%; flex-wrap: wrap;">
                 @foreach (var item in Model.UsedSoftwares.Where(s => s.Selected))
                 {
-                        <div class="pe-3 ps-3 div-white-rounded-veesy">@item.Name</div>
+                    <div class="pe-3 ps-3 div-white-rounded-veesy"><a onclick="openModal('#modalSoftware')" >@item.Name</a></div>
                 }
                 </div>
                 <a onclick="openModal('#modalSoftware')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
@@ -282,9 +282,9 @@
             else
             {
                 <div class="d-flex">
-                    <button class="button-white-dashed-veesy">+</button>
-                    <button class="button-white-dashed-veesy">+</button>
-                    <button class="button-white-dashed-veesy">+</button>
+                    <a onclick="openModal('#modalSoftware')" class="button-white-dashed-veesy">+</a>
+                    <a onclick="openModal('#modalSoftware')" class="button-white-dashed-veesy">+</a>
+                    <a onclick="openModal('#modalSoftware')" class="button-white-dashed-veesy">+</a>
                 </div>
                 <div class="mt-2"><a onclick="openModal('#modalSoftware')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add softwares</strong></a></div>
             }

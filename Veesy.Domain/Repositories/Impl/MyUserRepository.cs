@@ -15,6 +15,11 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
     {
         return _applicationDbContext.CategoriesWork.ToList();
     }
+    
+    public List<Sector> GetSectors()
+    {
+        return _applicationDbContext.Sectors.ToList();
+    }
 
     public SubscriptionPlan GetSubscriptionPlanByName(string name)
     {
@@ -31,6 +36,12 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
         return _applicationDbContext.CategoriesWork.Include(s => s.MyUserCategoriesWork.Where(s => s.MyUserId == userId)).OrderBy(s => s.Name).ToList();
 
     }
+    
+    public List<Sector> GetSectorsByUserId(string userId)
+    {
+        return _applicationDbContext.Sectors.Include(s => s.MyUserSectors.Where(s => s.MyUserId == userId)).OrderBy(s => s.Name).ToList();
+
+    }
 
     public List<MyUserCategoryWork> GetCategoriesWorkByUser(MyUser userInfo)
     {
@@ -38,6 +49,15 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
             .Include(s => s.CategoryWork)
             .Where(s => s.MyUserId == userInfo.Id)
             .OrderBy(s => s.CategoryWork.Name)
+            .ToList();
+    }
+    
+    public List<MyUserSector> GetSectorsByUser(MyUser userInfo)
+    {
+        return _applicationDbContext.MyUserSectors
+            .Include(s => s.Sector)
+            .Where(s => s.MyUserId == userInfo.Id)
+            .OrderBy(s => s.Sector.Name)
             .ToList();
     }
 
@@ -49,6 +69,16 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
     public async Task AddMyUserCategoriesWork(List<MyUserCategoryWork> categoryWorksToAdd)
     {
         await _applicationDbContext.MyUserCategoriesWork.AddRangeAsync(categoryWorksToAdd);
+    }
+
+    public void DeleteMyUserSectors(List<MyUserSector> sectorsToDelete)
+    {
+        _applicationDbContext.MyUserSectors.RemoveRange(sectorsToDelete);
+    }
+
+    public async Task AddMyUserSectors(List<MyUserSector> sectorsToAdd)
+    {
+        await _applicationDbContext.MyUserSectors.AddRangeAsync(sectorsToAdd);
     }
 
     public List<MyUserInfoToShow> GetInfosToShowByUser(MyUser userInfo)

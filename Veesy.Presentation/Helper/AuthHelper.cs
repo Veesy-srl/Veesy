@@ -55,17 +55,17 @@ public class AuthHelper
             return new ResultDto(false, "Please insert password.");
         if (model.Password != model.ConfirmPassword) 
             return new ResultDto(false, "Entered passwords do not match.");
-        if(model.SelectedCategoriesWork == null || model.SelectedCategoriesWork.Count < 1 || model.SelectedCategoriesWork.Count > 3)
+        if(model.SelectedSectors == null || model.SelectedSectors.Count < 1 || model.SelectedSectors.Count > 3)
             return new ResultDto(false, "Select at least one category and not more than three.");
 
         var now = DateTime.Now;
-        var categoriesWork = new List<MyUserCategoryWork>();
+        var sectors = new List<MyUserSector>();
         var userID = Guid.NewGuid().ToString();
-        foreach (var item in model.SelectedCategoriesWork)
+        foreach (var item in model.SelectedSectors)
         {
-            categoriesWork.Add(new MyUserCategoryWork()
+            sectors.Add(new MyUserSector()
             {
-                CategoryWorkId = item,
+                SectorId = item,
                 CreateRecordDate = now,
                 LastEditRecordDate = now,
                 LastEditUserId = userID,
@@ -95,7 +95,7 @@ public class AuthHelper
             UserName = model.Username,
             Name = model.Name,
             Surname = model.Surname,
-            MyUserCategoriesWork = categoriesWork,
+            MyUserSectors = sectors,
             SubscriptionPlanId = _accountService.GetSubscriptionPlanByName(VeesyConstants.SubscriptionPlan.Free).Id,
             MyUserInfosToShow = myUserInfosToShow
         };
@@ -125,13 +125,13 @@ public class AuthHelper
     {
         return new SignUpViewModel()
         {
-            CategoriesWork = _accountService.GetCategoriesWork()
+            Sectors = _accountService.GetSectors()
         };
     }
 
     public SignUpViewModel GetSignUpViewModelException(SignUpViewModel model)
     {
-        model.CategoriesWork = _accountService.GetCategoriesWork();
+        model.Sectors = _accountService.GetSectors();
         return model;
     }
 }

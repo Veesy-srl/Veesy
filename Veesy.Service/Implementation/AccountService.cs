@@ -91,6 +91,11 @@ public class AccountService : IAccountService
     {
         return _uoW.MyUserRepository.GetCategoriesWork();
     }
+    
+    public List<Sector> GetSectors()
+    {
+        return _uoW.MyUserRepository.GetSectors();
+    }
 
     public SubscriptionPlan GetSubscriptionPlanByName(string name)
     {
@@ -106,10 +111,20 @@ public class AccountService : IAccountService
     {
         return _uoW.MyUserRepository.GetCategoriesWorkByUserId(userId);
     }
+    
+    public List<Sector> GetSectorsWithUser(string userId)
+    {
+        return _uoW.MyUserRepository.GetSectorsByUserId(userId);
+    }
 
     public List<MyUserCategoryWork> GetCategoriesWorkByUser(MyUser userInfo)
     {
         return _uoW.MyUserRepository.GetCategoriesWorkByUser(userInfo);
+    }
+    
+    public List<MyUserSector> GetSectorsByUser(MyUser userInfo)
+    {
+        return _uoW.MyUserRepository.GetSectorsByUser(userInfo);
     }
 
     public async Task<ResultDto> UpdateMyUserCategoriesWork(List<MyUserCategoryWork> categoryWorksToDelete, List<MyUserCategoryWork> categoryWorksToAdd, MyUser user)
@@ -120,6 +135,26 @@ public class AccountService : IAccountService
             {
                 _uoW.MyUserRepository.DeleteMyUserCategoriesWork(categoryWorksToDelete);
                 await _uoW.MyUserRepository.AddMyUserCategoriesWork(categoryWorksToAdd);
+                await _uoW.CommitAsync(user);
+                await transaction.CommitAsync();
+                return new ResultDto(true, "");
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                throw ex;
+            }
+        }
+    }
+    
+    public async Task<ResultDto> UpdateMyUserSectors(List<MyUserSector> sectorsToDelete, List<MyUserSector> sectorsToAdd, MyUser user)
+    {
+        using (var transaction = _uoW.DbContext.Database.BeginTransaction())
+        {
+            try
+            {
+                _uoW.MyUserRepository.DeleteMyUserSectors(sectorsToDelete);
+                await _uoW.MyUserRepository.AddMyUserSectors(sectorsToAdd);
                 await _uoW.CommitAsync(user);
                 await transaction.CommitAsync();
                 return new ResultDto(true, "");

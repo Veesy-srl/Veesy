@@ -8,6 +8,12 @@ public class FullNameDto
     public string Surname { get; set; }
 }
 
+public class PhoneNumberDto
+{
+    public string Prefix { get; set; }
+    public string PhoneNumber { get; set; }
+}
+
 public class ResetPasswordDto
 {
     public string OldPassword { get; set; }
@@ -31,6 +37,14 @@ public class SkillDto
 }
 
 public class CategoriesWorkDto
+{
+    public Guid Code { get; set; }
+    public string Name { get; set; }
+    public bool Selected { get; set; }
+
+}
+
+public class SectorDto
 {
     public Guid Code { get; set; }
     public string Name { get; set; }
@@ -110,6 +124,25 @@ public static class MapProfileDtos
         {
             Code = categoryWork.Id,
             Name = categoryWork.Name
+        };
+    }
+    
+    public static List<SectorDto> MapSectorList(List<Sector> sectors)
+    {
+        return sectors.Select(x => new SectorDto()
+        {
+            Code = x.Id,
+            Name = x.Name,
+            Selected = x.MyUserSectors.Count > 0 
+        }).ToList();
+    }
+    
+    public static SectorDto MapSector(Sector sector)
+    {
+        return new SectorDto()
+        {
+            Code = sector.Id,
+            Name = sector.Name
         };
     }
     

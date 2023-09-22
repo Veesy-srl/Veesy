@@ -1,3 +1,5 @@
+using Veesy.Service.Dtos;
+
 namespace Veesy.Presentation.Model.Account;
 
 public class BasicInfoViewModel
@@ -12,4 +14,6 @@ public class BasicInfoViewModel
     public string PhoneNumber { get; set; }
     public string BasePathImages { get; set; }
     public string FileName { get; set; }
+    public List<SectorDto> Sectors { get; set; }
+    public string PhoneNumberPrefix { get; set; }
 }

@@ -51,8 +51,8 @@
                         </div>
                         <div class="input-group">
                             <p class="mb-0 fw-normal size-custom"><strong>Category*</strong></p>
-                            <select asp-for="SelectedCategoriesWork" multiple class="w-100 size-custom selectpicker">
-                                @foreach (var item in Model.CategoriesWork)
+                            <select asp-for="SelectedSectors" multiple class="w-100 size-custom selectpicker">
+                                @foreach (var item in Model.Sectors)
                                 {
                                     <option value="@item.Id">@item.Name</option>
                                 }

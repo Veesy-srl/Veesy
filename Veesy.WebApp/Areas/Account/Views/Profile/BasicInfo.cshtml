@@ -50,24 +50,32 @@
                 </div>
                 <hr class="hr"/>
                 <div class="d-flex">
-                    @if (string.IsNullOrEmpty(@Model.Category))
+                    @if (Model.Sectors.Count(s => s.Selected) == 0)
                     {
                         <div class="col-9">
-                            <p class="mb-0"><strong>Category</strong></p>
-                            <p class="mb-0 color-red" id="category-show">information missing</p>
+                            <p class="mb-0"><strong>Settori</strong></p>
+                            <p class="mb-0 color-red">Information missing</p>
                         </div>
-                        <div class="col-3 text-end">
-                            <a id="category-button" onclick="openModal('#modalCategory')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a>
-                        </div>
+                        <div class="col-3 text-end"><a onclick="openModal('#modalSector')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div>
                     }
                     else
                     {
                         <div class="col-9">
-                            <p class="mb-0"><strong>Category</strong></p>
-                            <p class="mb-0" id="category-show">@Model.Category</p>
+                            <p class="mb-0"><strong>Sector</strong></p>
+                            <p class="mb-0 veesy-overflow" id="category-show">
+                                @{
+                                    var sectors = "";
+                                    foreach (var sector in Model.Sectors.Where(s => s.Selected))
+                                    {
+                                        sectors += $"{@sector.Name}, ";
+                                    }
+                                    sectors = sectors.Substring(0, (sectors.Length - 2));
+                                }
+                                @sectors
+                            </p>
                         </div>
                         <div class="col-3 text-end">
-                            <a id="category-button" onclick="setTextAreaValue('category-edit', '@Model.Category'), openModal('#modalCategory')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
+                            <a id="category-button" onclick="openModal('#modalSector')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
                         </div>
                     }
                 </div>
@@ -136,10 +144,10 @@
                 {
                     <div class="col-9">
                         <p class="mb-0"><strong>Phone Number</strong></p>
-                        <p class="mb-0" id="phone-number-show">@Model.PhoneNumber</p>
+                        <p class="mb-0" id="phone-number-show">@Model.PhoneNumberPrefix @Model.PhoneNumber</p>
                     </div>
                     <div class="col-3 text-end">
-                        <a id="phone-number-button" onclick="setTextAreaValue('phone-number-edit', '@Model.PhoneNumber'), openModal('#modalPhoneNumber')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
+                        <a id="phone-number-button" onclick="setTextAreaValue('phone-number-prefix-edit', '@Model.PhoneNumberPrefix'), setTextAreaValue('phone-number-edit', '@Model.PhoneNumber'), openModal('#modalPhoneNumber')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
                     </div>
                 }
                 </div>
@@ -280,9 +288,14 @@
                 <h3 class="modal-title text-color" id="exampleModalLongTitle"></h3>
                 <a onclick="closeModal('#modalPhoneNumber')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
-            <div class="modal-body">
+            <div class="modal-body row">
                 <p class="mb-1"><strong>Phone Number*</strong></p>
-                <input type="number" min="1" id="phone-number-edit" rows="4" class="w-100 input-modal"/>
+                <div class="col-2">
+                    <input type="text" placeholder="+39" min="1" id="phone-number-prefix-edit" rows="4" class="w-100 input-modal"/>    
+                </div>
+                <div class="col-10">
+                    <input type="number" min="1" id="phone-number-edit" rows="4" class="w-100 input-modal"/>    
+                </div>
                 <p class="mt-2 mb-0">*compulsory field</p>
             </div>
             <div class="modal-footer">                
@@ -292,21 +305,33 @@
     </div>
 </div>
 
-
-<div class="modal fade" id="modalCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="modalSector" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title text-color" id="exampleModalLongTitle"></h3>
-                <a onclick="closeModal('#modalCategory')"><i class="fa-solid fa-circle-xmark"></i></a>
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Sector</strong></h3>
+                <a onclick="closeModal('#modalSector')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
-                <p class="mb-1"><strong>Category*</strong></p>
-                <input type="text" id="category-edit" rows="4" class="w-100 input-modal"/>
-                <p class="mt-2 mb-0">*compulsory field</p>
+                <p>Select a maximum of 3 sectors.</p>
+                <div class="overflow-auto p-3 border-div-grey" style="background-color: white !important; max-height: 400px;">
+                    @foreach (var item in Model.Sectors)
+                    {
+                        <div class="form-check">
+                            <label class="form-check-label" style="cursor: pointer;" for="sector-@item.Code">
+                                <strong>@item.Name</strong>
+                            </label>
+                            @{ var check = @item.Selected ? "checked" : ""; }
+                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="sector-@item.Code" style="float: right !important;">
+                        </div>
+                        <hr class="hr"/>
+                    }
+                </div>
+                <p class="mt-4"><strong>Didn't find it?</strong> <a class="a-ciano" href="mailto:support@veesy.it">Contact us</a></p>
+                <p class="mb-0"><strong>max. 5</strong></p>
             </div>
             <div class="modal-footer">                
-                <a onclick="UpdateCategory()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
+                <a onclick="UpdateSectors()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
             </div>
         </div>
     </div>
@@ -340,6 +365,34 @@
 @section Scripts
 {
     <script>
+    function UpdateSectors() {
+        $('#load-spinner').css("display", "block");
+        var codes = JSON.parse('@Html.Raw(Json.Serialize(Model.Sectors.Select(s => s.Code.ToString()).ToList()))');
+        
+        var data = [];
+        
+        for (const code in codes) {
+            if(document.getElementById("sector-"+codes[code]).checked)
+                data.push(codes[code])
+        }
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("UpdateSectors", "Profile")',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (response) {
+                if(response.result){
+                    location.reload()
+                }
+                $('#load-spinner').css("display", "none");
+            },
+            error: function (response) {
+                $('#load-spinner').css("display", "none");
+            }
+        })
+    }
+    
     function submitForm() {
        document.getElementById("uploader").submit();
     }
@@ -492,7 +545,7 @@ function UpdateCategory() {
                     document.getElementById("category-button").classList.remove("grey-link");
                     document.getElementById("category-show").textContent = "Information missing";    
                 }
-                closeModal('#modalCategory');
+                closeModal('#modalSector');
             }
             $('#load-spinner').css("display", "none");
         },
@@ -505,19 +558,21 @@ function UpdateCategory() {
 function UpdatePhoneNumber() {
     $('#load-spinner').css("display", "block");
     var phoneNumber = document.getElementById("phone-number-edit").value
+    var prefix = document.getElementById("phone-number-prefix-edit").value
+    var PhoneNumberDto = {prefix, phoneNumber}; 
     $.ajax({
         type: 'POST',
         url: '@Url.Action("UpdatePhoneNumber", "Profile")',
-        data: JSON.stringify(phoneNumber),
+        data: JSON.stringify(PhoneNumberDto),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: function (response) {
             if(response.result){
-                if (phoneNumber != ""){
+                if (prefix + " " + phoneNumber != ""){
                     document.getElementById("phone-number-show").classList.remove("color-red");
                     document.getElementById("phone-number-button").classList.remove("red-link");
                     document.getElementById("phone-number-button").classList.add("grey-link");
-                    document.getElementById("phone-number-show").textContent = phoneNumber;
+                    document.getElementById("phone-number-show").textContent = prefix + " " + phoneNumber;
                 }                            
                 else{                        
                     document.getElementById("phone-number-show").classList.add("color-red");

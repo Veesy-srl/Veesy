@@ -335,11 +335,11 @@ public class ProfileController : VeesyController
     }
     
     [HttpPost]
-    public async Task<JsonResult> UpdatePhoneNumber([FromBody] string phoneNumber)
+    public async Task<JsonResult> UpdatePhoneNumber([FromBody] PhoneNumberDto phoneNumberDto)
     {
         try
         {
-            var result = await _profileHelper.UpdatePhoneNumber(phoneNumber, UserInfo);
+            var result = await _profileHelper.UpdatePhoneNumber(phoneNumberDto.Prefix, phoneNumberDto.PhoneNumber, UserInfo);
             if(!result.Success)
                 _notyfService.Custom(result.Message, 10, "#ca0a0a96");
             else 
@@ -349,7 +349,7 @@ public class ProfileController : VeesyController
         catch (Exception ex)
         {
             Logger.Error(ex, ex.Message);
-            Logger.Error($"Phone Number: {phoneNumber}");
+            Logger.Error($"Phone Number: {phoneNumberDto.Prefix} {phoneNumberDto.PhoneNumber}");
             _notyfService.Custom("Error updating phone number. Please retry.", 10 , "#ca0a0a96");
             return Json(new { Result = false, Message = "Error updating phone number. Please retry." });
         }
@@ -397,5 +397,28 @@ public class ProfileController : VeesyController
         }
     }
     
+    
+    [HttpPost]
+    public async Task<JsonResult> UpdateSectors([FromBody] List<Guid> sectorCodes)
+    {
+        try
+        {
+            var result = await _profileHelper.UpdateSectors(sectorCodes, UserInfo);
+            if(!result.Success)
+                _notyfService.Custom(result.Message, 10, "#ca0a0a96");
+            else 
+                _notyfService.Custom("Sectors update correctly.", 10, "#75CCDD40");
+            return Json(new { Result = result.Success, Message = result.Message});
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            Logger.Error($"Sectors id: {sectorCodes.ToJson()}");
+            _notyfService.Custom("Error updating sectors. Please retry.", 10 , "#ca0a0a96");
+            return Json(new { Result = false, Message = "Error updating sectors. Please retry." });
+        }
+    }
+    
     #endregion
+
 }
