@@ -8,7 +8,7 @@
     <div class="col-sm-12 col-md-3 mb-3">
         <nav class="breadcrumb-container" aria-label="Percorso di navigazione">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><i class="fa-solid fa-house me-2"></i><a class="breadcrumb-a me-2" asp-action="Index" asp-area="Portfolio" asp-controller="Home">dashboard</a><i class="fa-solid fa-chevron-right"></i></li>
+                <li class="breadcrumb-item"><img src="imgs/dashboard_home_light-mode.png" style="width: 18px; margin-top: -5px;" class="me-2"><a class="breadcrumb-a me-2" asp-action="Index" asp-area="Portfolio" asp-controller="Home">dashboard</a><i class="fa-solid fa-chevron-right"></i></li>
                 <li class="breadcrumb-item"><a class="breadcrumb-a" href="#"><strong>profile</strong></a></li>
             </ol>
         </nav>
@@ -34,7 +34,7 @@
                 <div class="col-8">
                     <p class="ms-2"><strong>@username</strong></p>
                 </div>
-                <div class="col-1"><div class="text-end"><i class="fa-solid fa-circle fa-2xs" style="color: #202F4D;"></i></div></div>
+                <div class="col-1"><div class="text-end"><i class="fa-solid fa-circle fa-xs" style="color: #202F4D;"></i></div></div>
             </div>
             <h3 class="mt-4 mb-4"><strong>@Model.FullName</strong></h3>
             @{
@@ -62,10 +62,10 @@
         </div>
     </div>
     <div class="col-sm-12 col-md-6">
-        <h1><strong>Your Profile</strong></h1>
+        <h2 class="text-color"><strong>Your Profile</strong></h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <a class="grey-link ms-2"><strong>learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a></p>
         <div class="empty-veesy"></div>
-        <h3><strong>General</strong></h3>
+        <h3 class="text-color"><strong>General</strong></h3>
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-6 ps-2 pe-2">
                 <hr class="hr"/>
@@ -182,7 +182,7 @@
         </div>
         <div class="empty-veesy"></div>
         <div>
-            <h3><strong>Portfolio intro</strong></h3>
+            <h3 class="text-color"><strong>Portfolio intro</strong></h3>
             @if (string.IsNullOrEmpty(Model.PortfolioIntro))
             {
                 <div class="card-white-dashed-veesy p-3">
@@ -199,7 +199,7 @@
         </div>
         <div class="empty-veesy"></div>
         <div>
-            <h3><strong>Biography</strong></h3>
+            <h3 class="text-color"><strong>Biography</strong></h3>
             @if (string.IsNullOrEmpty(Model.Biography))
             {
                 <div class="card-white-dashed-veesy p-3">
@@ -216,7 +216,7 @@
         </div>
         <div class="empty-veesy"></div>
         <div>
-            <h3><strong>Hard skills</strong></h3>
+            <h3 class="text-color"><strong>Hard skills</strong></h3>
             <p>Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,</p>
             @if (Model.HardSkills.Count(s => s.Selected) > 0)
             {
@@ -241,7 +241,7 @@
         </div>
         <div class="empty-veesy"></div>
         <div>
-            <h3><strong>Soft skill</strong></h3>
+            <h3 class="text-color"><strong>Soft skill</strong></h3>
             <p>Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,</p>
             @if (Model.SoftSkills.Count(s => s.Selected) > 0)
             {
@@ -266,11 +266,11 @@
         </div>
         <div class="empty-veesy"></div>
         <div>
-            <h3><strong>Softwares</strong></h3>
+            <h3 class="text-color"><strong>Softwares</strong></h3>
             <p>Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,</p>
             @if (Model.UsedSoftwares.Count(s => s.Selected) > 0)
             {
-                <div class="d-flex mb-4" style="max-width: 100%; flex-wrap: wrap;">
+                <div class="d-flex mb-4 text-color" style="max-width: 100%; flex-wrap: wrap;">
                 @foreach (var item in Model.UsedSoftwares.Where(s => s.Selected))
                 {
                         <div class="pe-3 ps-3 div-white-rounded-veesy">@item.Name</div>
@@ -291,9 +291,9 @@
         </div>
         <div class="empty-veesy"></div>
         <div>
-            <h3><strong>Portfolios</strong></h3>
+            <h3 class="text-color"><strong>Portfolios</strong></h3>
             <p>You don't have any portfolio yet.</p>
-            <button class="rounded-pill btn btn-primary">create your first portfolio</button>
+            <button class="rounded-pill btn btn-primary btn-variant">create your first portfolio</button>
         </div>
         <div class="empty-veesy"></div>
         <div class="empty-veesy"></div>
@@ -317,7 +317,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="exampleModalLongTitle"><strong>Biography</strong></h3>
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Biography</strong></h3>
                 <a onclick="closeModal('#modalBiography')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
@@ -336,7 +336,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="exampleModalLongTitle"><strong>External Link</strong></h3>
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>External Link</strong></h3>
                 <a onclick="closeModal('#modalExternalLink')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
@@ -354,7 +354,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="exampleModalLongTitle"><strong>Portfolio Intro</strong></h3>
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Portfolio Intro</strong></h3>
                 <a onclick="closeModal('#modalPortfolioIntro')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
@@ -373,7 +373,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="exampleModalLongTitle"><strong>Softwares</strong></h3>
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Softwares</strong></h3>
                 <a onclick="closeModal('#modalSoftware')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
@@ -405,7 +405,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="exampleModalLongTitle"><strong>Hard Skills</strong></h3>
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Hard Skills</strong></h3>
                 <a onclick="closeModal('#modalHardSkill')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
@@ -437,7 +437,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="exampleModalLongTitle"><strong>Soft Skills</strong></h3>
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Soft Skills</strong></h3>
                 <a onclick="closeModal('#modalSoftSkill')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
@@ -469,7 +469,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="exampleModalLongTitle"><strong>Role</strong></h3>
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Role</strong></h3>
                 <a onclick="closeModal('#modalWorkRole')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
@@ -501,7 +501,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="exampleModalLongTitle"><strong>Languages Spoken</strong></h3>
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Languages Spoken</strong></h3>
                 <a onclick="closeModal('#modalLanguageSpoken')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
@@ -533,7 +533,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="exampleModalLongTitle"><strong>Info to show</strong></h3>
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Info to show</strong></h3>
                 <a onclick="closeModal('#modalInfoToShow')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
