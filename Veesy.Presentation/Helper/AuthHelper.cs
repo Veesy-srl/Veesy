@@ -55,17 +55,17 @@ public class AuthHelper
             return new ResultDto(false, "Please insert password.");
         if (model.Password != model.ConfirmPassword) 
             return new ResultDto(false, "Entered passwords do not match.");
-        if(model.SelectedSectors == null || model.SelectedSectors.Count < 1 || model.SelectedSectors.Count > 3)
+        if(model.SelectedCategoriesWork == null || model.SelectedCategoriesWork.Count < 1 || model.SelectedCategoriesWork.Count > 3)
             return new ResultDto(false, "Select at least one category and not more than three.");
 
         var now = DateTime.Now;
-        var sectors = new List<MyUserSector>();
+        var categories = new List<MyUserCategoryWork>();
         var userID = Guid.NewGuid().ToString();
-        foreach (var item in model.SelectedSectors)
+        foreach (var item in model.SelectedCategoriesWork)
         {
-            sectors.Add(new MyUserSector()
+            categories.Add(new MyUserCategoryWork()
             {
-                SectorId = item,
+                CategoryWorkId = item,
                 CreateRecordDate = now,
                 LastEditRecordDate = now,
                 LastEditUserId = userID,
@@ -95,8 +95,8 @@ public class AuthHelper
             UserName = model.Username,
             Name = model.Name,
             Surname = model.Surname,
-            MyUserSectors = sectors,
-            SubscriptionPlanId = _accountService.GetSubscriptionPlanByName(VeesyConstants.SubscriptionPlan.Free).Id,
+            MyUserCategoriesWork = categories,
+            SubscriptionPlanId = _accountService.GetSubscriptionPlanByName(VeesyConstants.SubscriptionPlan.Beta).Id,
             MyUserInfosToShow = myUserInfosToShow
         };
         
@@ -125,13 +125,13 @@ public class AuthHelper
     {
         return new SignUpViewModel()
         {
-            Sectors = _accountService.GetSectors()
+            CategoriesWork = _accountService.GetCategoriesWork()
         };
     }
 
     public SignUpViewModel GetSignUpViewModelException(SignUpViewModel model)
     {
-        model.Sectors = _accountService.GetSectors();
+        model.CategoriesWork = _accountService.GetCategoriesWork();
         return model;
     }
 }

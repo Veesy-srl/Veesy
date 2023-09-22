@@ -18,10 +18,13 @@ public interface IAccountService
     SubscriptionPlan GetSubscriptionPlanByName(string name);
     List<InfoToShow> GetInfosToShow();
     List<CategoryWork> GetCategoriesWorkWithUser(string userId);
+    List<RoleWork> GetRolesWorkWithUser(string userId);
     List<Sector> GetSectorsWithUser(string userId);
     List<MyUserCategoryWork> GetCategoriesWorkByUser(MyUser userInfo);
+    List<MyUserRoleWork> GetRolesWorkByUser(MyUser userInfo);
     List<MyUserSector> GetSectorsByUser(MyUser userInfo);
     Task<ResultDto> UpdateMyUserCategoriesWork(List<MyUserCategoryWork> categoryWorksToDelete, List<MyUserCategoryWork> categoryWorksToAdd, MyUser user);
+    Task<ResultDto> UpdateMyUserRolesWork(List<MyUserRoleWork> rolesWorksToDelete, List<MyUserRoleWork> rolesWorksToAdd, MyUser user);
     Task<ResultDto> UpdateMyUserSectors(List<MyUserSector> sectorsToDelete, List<MyUserSector> sectorsToAdd, MyUser user);
     List<MyUserInfoToShow> GetInfosToShowByUser(MyUser userInfo);
     Task<ResultDto> UpdateMyUserInfoToShow(List<MyUserInfoToShow> infoToShowToDelete, List<MyUserInfoToShow> infoToShowToAdd, MyUser user);

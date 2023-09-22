@@ -50,32 +50,32 @@
                 </div>
                 <hr class="hr"/>
                 <div class="d-flex">
-                    @if (Model.Sectors.Count(s => s.Selected) == 0)
+                    @if (Model.CategoriesWork.Count(s => s.Selected) == 0)
                     {
                         <div class="col-9">
-                            <p class="mb-0"><strong>Settori</strong></p>
+                            <p class="mb-0"><strong>Category</strong></p>
                             <p class="mb-0 color-red">Information missing</p>
                         </div>
-                        <div class="col-3 text-end"><a onclick="openModal('#modalSector')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div>
+                        <div class="col-3 text-end"><a onclick="openModal('#modalCategory')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div>
                     }
                     else
                     {
                         <div class="col-9">
-                            <p class="mb-0"><strong>Sector</strong></p>
+                            <p class="mb-0"><strong>Category</strong></p>
                             <p class="mb-0 veesy-overflow" id="category-show">
                                 @{
-                                    var sectors = "";
-                                    foreach (var sector in Model.Sectors.Where(s => s.Selected))
+                                    var categories = "";
+                                    foreach (var category in Model.CategoriesWork.Where(s => s.Selected))
                                     {
-                                        sectors += $"{@sector.Name}, ";
+                                        categories += $"{@category.Name}, ";
                                     }
-                                    sectors = sectors.Substring(0, (sectors.Length - 2));
+                                    categories = categories.Substring(0, (categories.Length - 2));
                                 }
-                                @sectors
+                                @categories
                             </p>
                         </div>
                         <div class="col-3 text-end">
-                            <a id="category-button" onclick="openModal('#modalSector')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
+                            <a id="category-button" onclick="openModal('#modalCategory')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
                         </div>
                     }
                 </div>
@@ -305,24 +305,24 @@
     </div>
 </div>
 
-<div class="modal fade" id="modalSector" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="modalCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Sector</strong></h3>
-                <a onclick="closeModal('#modalSector')"><i class="fa-solid fa-circle-xmark"></i></a>
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Categories</strong></h3>
+                <a onclick="closeModal('#modalCategory')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
-                <p>Select a maximum of 3 sectors.</p>
+                <p>Select a maximum of 3 categories.</p>
                 <div class="overflow-auto p-3 border-div-grey" style="background-color: white !important; max-height: 400px;">
-                    @foreach (var item in Model.Sectors)
+                    @foreach (var item in Model.CategoriesWork)
                     {
                         <div class="form-check">
-                            <label class="form-check-label" style="cursor: pointer;" for="sector-@item.Code">
+                            <label class="form-check-label" style="cursor: pointer;" for="category-@item.Code">
                                 <strong>@item.Name</strong>
                             </label>
                             @{ var check = @item.Selected ? "checked" : ""; }
-                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="sector-@item.Code" style="float: right !important;">
+                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="category-@item.Code" style="float: right !important;">
                         </div>
                         <hr class="hr"/>
                     }
@@ -331,7 +331,7 @@
                 <p class="mb-0"><strong>max. 5</strong></p>
             </div>
             <div class="modal-footer">                
-                <a onclick="UpdateSectors()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
+                <a onclick="UpdateCategoriesWork()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
             </div>
         </div>
     </div>
@@ -365,19 +365,19 @@
 @section Scripts
 {
     <script>
-    function UpdateSectors() {
+    function UpdateCategoriesWork() {
         $('#load-spinner').css("display", "block");
-        var codes = JSON.parse('@Html.Raw(Json.Serialize(Model.Sectors.Select(s => s.Code.ToString()).ToList()))');
+        var codes = JSON.parse('@Html.Raw(Json.Serialize(Model.CategoriesWork.Select(s => s.Code.ToString()).ToList()))');
         
         var data = [];
         
         for (const code in codes) {
-            if(document.getElementById("sector-"+codes[code]).checked)
+            if(document.getElementById("category-"+codes[code]).checked)
                 data.push(codes[code])
         }
         $.ajax({
             type: 'POST',
-            url: '@Url.Action("UpdateSectors", "Profile")',
+            url: '@Url.Action("UpdateCategoriesWork", "Profile")',
             data: JSON.stringify(data),
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
@@ -545,7 +545,7 @@ function UpdateCategory() {
                     document.getElementById("category-button").classList.remove("grey-link");
                     document.getElementById("category-show").textContent = "Information missing";    
                 }
-                closeModal('#modalSector');
+                closeModal('#modalCategory');
             }
             $('#load-spinner').css("display", "none");
         },

@@ -8,5 +8,6 @@ public class VeesyConstants
         public const string Free = "Free";
         public const string Pro = "Pro";
         public const string Plus = "Plus";
+        public const string Beta = "Beta";
     }
 }

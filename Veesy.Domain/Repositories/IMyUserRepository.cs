@@ -9,11 +9,15 @@ public interface IMyUserRepository : IRepositoryBase<MyUser>
     SubscriptionPlan GetSubscriptionPlanByName(string name);
     List<InfoToShow> GetInfosToShow();
     List<CategoryWork> GetCategoriesWorkByUserId(string userId);
+    List<RoleWork> GetRolesWorkByUserId(string userId);
     List<Sector> GetSectorsByUserId(string userId);
     List<MyUserCategoryWork> GetCategoriesWorkByUser(MyUser userInfo);
+    List<MyUserRoleWork> GetRolesWorkByUser(MyUser userInfo);
     List<MyUserSector> GetSectorsByUser(MyUser userInfo);
+    void DeleteMyUserRolesWork(List<MyUserRoleWork> roleWorksToDelete);
     void DeleteMyUserCategoriesWork(List<MyUserCategoryWork> categoryWorksToDelete);
     Task AddMyUserCategoriesWork(List<MyUserCategoryWork> categoryWorksToAdd);
+    Task AddMyUserRolesWork(List<MyUserRoleWork> roleWorksToAdd);
     void DeleteMyUserSectors(List<MyUserSector> sectorsToDelete);
     Task AddMyUserSectors(List<MyUserSector> sectorsToAdd);
     List<MyUserInfoToShow> GetInfosToShowByUser(MyUser userInfo);

@@ -53,6 +53,7 @@ public class DbInitializer
         
         var subscriptionPlans = new List<SubscriptionPlan>()
         {
+            new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Beta", Description = "Beta", Price = 0.0m, AllowedMediaNumber = 100, AllowedMegaByte = 250, IsMediaFormatsInclude = false},
             new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Free", Description = "Free", Price = 0.0m, AllowedMediaNumber = 10, AllowedMegaByte = 100, IsMediaFormatsInclude = false},
             new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Pro", Description = "Pro", Price = 1.0m, AllowedMediaNumber = 5, AllowedMegaByte = 5000, IsMediaFormatsInclude = false},
             new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Plus", Description = "Plus", Price = 2.0m, AllowedMediaNumber = -1, AllowedMegaByte = 10000, IsMediaFormatsInclude = false},
@@ -125,7 +126,10 @@ public class DbInitializer
         foreach (var item in usedSoftwares)
         {
             if (!dbSoftwares.Any(x => x.Name == item.Name))
+            {
                 dbContext.Add(item);
+                dbSoftwares.Add(item);
+            }
         }
         dbContext.SaveChanges();
         
@@ -137,7 +141,6 @@ public class DbInitializer
             new (){LastEditUserId = "Init", CreateUserId = "init", Name = "VR / AR / XR", Description = "VR / AR / XR"},
             new (){LastEditUserId = "Init", CreateUserId = "init", Name = "CGI", Description = "CGI"},
             new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Game Art", Description = "Game Art"},
-            new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Game Development", Description = "Game Development"},
             new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Archiviz", Description = "Archiviz"},
             new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Interior Design", Description = "Interior Design"},
             new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Light Design", Description = "Light Design"},
@@ -178,7 +181,10 @@ public class DbInitializer
         foreach (var item in sectors)
         {
             if (!dbSectors.Any(x => x.Name == item.Name))
+            {
                 dbContext.Add(item);
+                dbSectors.Add(item);
+            }
         }
         dbContext.SaveChanges();
         
@@ -214,11 +220,37 @@ public class DbInitializer
         foreach (var item in skills)
         {
             if (!dbSkills.Any(x => x.Name == item.Name))
+            {
                 dbContext.Add(item);
+                dbSkills.Add(item);
+            }
         }
         dbContext.SaveChanges();
         
         var categoriesWork = new List<CategoryWork>()
+        {
+            new (){LastEditUserId = "Init", CreateUserId = "init", Name = "3D", Description = "3D"},
+            new (){LastEditUserId = "Init", CreateUserId = "init", Name = "2D", Description = "2D"},
+            new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Web Design / UX / UI", Description = "Web Design / UX / UI"},
+            new (){LastEditUserId = "Init", CreateUserId = "init", Name = "VR / AR / XR / Metaverse", Description = "VR / AR / XR / Metaverse"},
+            new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Photography", Description = "Photography"},
+            new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Illustration", Description = "Illustration"},
+            new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Motion Design / Graphic", Description = "Motion Design / Graphic"},
+            new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Sound Design", Description = "Sound Design"},
+            new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Video / Film Making", Description = "Video / Film Making"},
+        };
+        var dbCategoyWork = dbContext.CategoriesWork.ToList();
+        foreach (var item in categoriesWork)
+        {
+            if (!dbCategoyWork.Any(x => x.Name == item.Name))
+            {
+                dbContext.Add(item);
+                dbCategoyWork.Add(item);
+            }
+        }
+        dbContext.SaveChanges();
+        
+        var rolesWork = new List<RoleWork>()
         {
             new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Automotive", Description = "Automotive"},
             new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Metaverso", Description = "Metaverso"},
@@ -226,7 +258,6 @@ public class DbInitializer
             new (){LastEditUserId = "Init", CreateUserId = "init", Name = "VR / AR / XR", Description = "VR / AR / XR"},
             new (){LastEditUserId = "Init", CreateUserId = "init", Name = "CGI", Description = "CGI"},
             new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Game Art", Description = "Game Art"},
-            new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Game Development", Description = "Game Development"},
             new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Archiviz", Description = "Archiviz"},
             new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Interior Design", Description = "Interior Design"},
             new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Light Design", Description = "Light Design"},
@@ -263,11 +294,14 @@ public class DbInitializer
             new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Storyboarding", Description = "Storyboarding"},
             new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Game Development", Description = "Game Development"}
         };
-        var dbCategoyWork = dbContext.CategoriesWork.ToList();
-        foreach (var item in categoriesWork)
+        var dbRoleWorks= dbContext.RolesWork.ToList();
+        foreach (var item in rolesWork)
         {
-            if (!dbCategoyWork.Any(x => x.Name == item.Name))
+            if (!dbRoleWorks.Any(x => x.Name == item.Name))
+            {
                 dbContext.Add(item);
+                dbRoleWorks.Add(item);
+            }
         }
         dbContext.SaveChanges();
         
@@ -350,7 +384,10 @@ public class DbInitializer
         foreach (var item in languages)
         {
             if (!dbLanguage.Any(x => x.Language == item.Language))
+            {
                 dbContext.Add(item);
+                dbLanguage.Add(item);
+            }
         }
         dbContext.SaveChanges();
 
@@ -366,7 +403,10 @@ public class DbInitializer
         foreach (var item in infosToShow)
         {
             if (!dbInfoToShow.Any(x => x.Info == item.Info))
+            {
                 dbContext.Add(item);
+                dbInfoToShow.Add(item);
+            }
         }
         dbContext.SaveChanges();
         

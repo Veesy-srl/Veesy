@@ -112,6 +112,11 @@ public class AccountService : IAccountService
         return _uoW.MyUserRepository.GetCategoriesWorkByUserId(userId);
     }
     
+    public List<RoleWork> GetRolesWorkWithUser(string userId)
+    {
+        return _uoW.MyUserRepository.GetRolesWorkByUserId(userId);
+    }
+    
     public List<Sector> GetSectorsWithUser(string userId)
     {
         return _uoW.MyUserRepository.GetSectorsByUserId(userId);
@@ -120,6 +125,11 @@ public class AccountService : IAccountService
     public List<MyUserCategoryWork> GetCategoriesWorkByUser(MyUser userInfo)
     {
         return _uoW.MyUserRepository.GetCategoriesWorkByUser(userInfo);
+    }
+    
+    public List<MyUserRoleWork> GetRolesWorkByUser(MyUser userInfo)
+    {
+        return _uoW.MyUserRepository.GetRolesWorkByUser(userInfo);
     }
     
     public List<MyUserSector> GetSectorsByUser(MyUser userInfo)
@@ -135,6 +145,26 @@ public class AccountService : IAccountService
             {
                 _uoW.MyUserRepository.DeleteMyUserCategoriesWork(categoryWorksToDelete);
                 await _uoW.MyUserRepository.AddMyUserCategoriesWork(categoryWorksToAdd);
+                await _uoW.CommitAsync(user);
+                await transaction.CommitAsync();
+                return new ResultDto(true, "");
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                throw ex;
+            }
+        }
+    }
+
+    public async Task<ResultDto> UpdateMyUserRolesWork(List<MyUserRoleWork> rolesWorksToDelete, List<MyUserRoleWork> rolesWorksToAdd, MyUser user)
+    {
+        using (var transaction = _uoW.DbContext.Database.BeginTransaction())
+        {
+            try
+            {
+                _uoW.MyUserRepository.DeleteMyUserRolesWork(rolesWorksToDelete);
+                await _uoW.MyUserRepository.AddMyUserRolesWork(rolesWorksToAdd);
                 await _uoW.CommitAsync(user);
                 await transaction.CommitAsync();
                 return new ResultDto(true, "");

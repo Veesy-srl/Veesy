@@ -34,7 +34,11 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
     public List<CategoryWork> GetCategoriesWorkByUserId(string userId)
     {
         return _applicationDbContext.CategoriesWork.Include(s => s.MyUserCategoriesWork.Where(s => s.MyUserId == userId)).OrderBy(s => s.Name).ToList();
-
+    }
+    
+    public List<RoleWork> GetRolesWorkByUserId(string userId)
+    {
+        return _applicationDbContext.RolesWork.Include(s => s.MyUserRolesWork.Where(s => s.MyUserId == userId)).OrderBy(s => s.Name).ToList();
     }
     
     public List<Sector> GetSectorsByUserId(string userId)
@@ -49,6 +53,15 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
             .Include(s => s.CategoryWork)
             .Where(s => s.MyUserId == userInfo.Id)
             .OrderBy(s => s.CategoryWork.Name)
+            .ToList();
+    }
+
+    public List<MyUserRoleWork> GetRolesWorkByUser(MyUser userInfo)
+    {
+        return _applicationDbContext.MyUserRolesWork
+            .Include(s => s.RoleWork)
+            .Where(s => s.MyUserId == userInfo.Id)
+            .OrderBy(s => s.RoleWork.Name)
             .ToList();
     }
     
@@ -69,6 +82,16 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
     public async Task AddMyUserCategoriesWork(List<MyUserCategoryWork> categoryWorksToAdd)
     {
         await _applicationDbContext.MyUserCategoriesWork.AddRangeAsync(categoryWorksToAdd);
+    }
+
+    public void DeleteMyUserRolesWork(List<MyUserRoleWork> rolesWorksToDelete)
+    {
+        _applicationDbContext.MyUserRolesWork.RemoveRange(rolesWorksToDelete);
+    }
+
+    public async Task AddMyUserRolesWork(List<MyUserRoleWork> rolesWorksToAdd)
+    {
+        await _applicationDbContext.MyUserRolesWork.AddRangeAsync(rolesWorksToAdd);
     }
 
     public void DeleteMyUserSectors(List<MyUserSector> sectorsToDelete)

@@ -197,14 +197,14 @@ public class ProfileController : VeesyController
             if(!result.Success)
                 _notyfService.Custom(result.Message, 10, "#ca0a0a96");
             else 
-                _notyfService.Custom("Roles update correctly.", 10, "#75CCDD40");
+                _notyfService.Custom("Categories update correctly.", 10, "#75CCDD40");
             return Json(new { Result = result.Success, Message = result.Message});
         }
         catch (Exception ex)
         {
             Logger.Error(ex, ex.Message);
             Logger.Error($"Categories work id: {categoriesWorkCodes.ToJson()}");
-            _notyfService.Custom("Error updating roles. Please retry.", 10 , "#ca0a0a96");
+            _notyfService.Custom("Error updating categories. Please retry.", 10 , "#ca0a0a96");
             return Json(new { Result = false, Message = "Error updating roles. Please retry." });
         }
     }
@@ -416,6 +416,27 @@ public class ProfileController : VeesyController
             Logger.Error($"Sectors id: {sectorCodes.ToJson()}");
             _notyfService.Custom("Error updating sectors. Please retry.", 10 , "#ca0a0a96");
             return Json(new { Result = false, Message = "Error updating sectors. Please retry." });
+        }
+    }
+    
+    [HttpPost]
+    public async Task<JsonResult> UpdateRolesWork([FromBody] List<Guid> roleCodes)
+    {
+        try
+        {
+            var result = await _profileHelper.UpdateRolesWorks(roleCodes, UserInfo);
+            if(!result.Success)
+                _notyfService.Custom(result.Message, 10, "#ca0a0a96");
+            else 
+                _notyfService.Custom("Roles update correctly.", 10, "#75CCDD40");
+            return Json(new { Result = result.Success, Message = result.Message});
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            Logger.Error($"Roles id: {roleCodes.ToJson()}");
+            _notyfService.Custom("Error updating sectors. Please retry.", 10 , "#ca0a0a96");
+            return Json(new { Result = false, Message = "Error updating roles. Please retry." });
         }
     }
     

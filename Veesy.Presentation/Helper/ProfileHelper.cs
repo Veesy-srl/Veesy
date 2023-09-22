@@ -45,7 +45,6 @@ public class ProfileHelper
 
     public ProfileViewModel GetProfileViewModel(MyUser userInfo)
     {
-        var hardskills = _accountService.GetSkillsWithUserByType(userInfo, SkillConstants.HardSkill);
         var softskills = _accountService.GetSkillsWithUserByType(userInfo, SkillConstants.SoftSkill);
         return new ProfileViewModel()
         {
@@ -58,12 +57,12 @@ public class ProfileHelper
             FullName = userInfo.Name + " " + userInfo.Surname,
             Biography = userInfo.Biografy,
             PortfolioIntro = userInfo.PortfolioIntro,
-            CategoriesWork = MapProfileDtos.MapCategoriesWorkList(_accountService.GetCategoriesWorkWithUser(userInfo.Id)),
+            RolesWork = MapProfileDtos.MapRolesWorkList(_accountService.GetRolesWorkWithUser(userInfo.Id)),
             UsedSoftwares = MapProfileDtos.MapUsedSoftwareList(_accountService.GetUsedSoftwareWithUser(userInfo)),
             LanguagesSpoken = MapProfileDtos.MapLanguagesSpokenList(_accountService.GetLanguagesSpokenWithUser(userInfo)),
             InfoToShow = MapProfileDtos.MapInfoToShowList(_accountService.GetInfosToShowWithUser(userInfo)),
-            HardSkills = MapProfileDtos.MapSkillsList(hardskills.ToList()),
-            SoftSkills = MapProfileDtos.MapSkillsList(softskills.ToList())
+            SoftSkills = MapProfileDtos.MapSkillsList(softskills.ToList()),
+            Sectors = MapProfileDtos.MapSectorList(_accountService.GetSectorsWithUser(userInfo.Id))
         };
     }
 
@@ -141,8 +140,8 @@ public class ProfileHelper
 
     public async Task<ResultDto> UpdateCategoriesWork(List<Guid> categoriesWorkCodes, MyUser userInfo)
     {
-        if (categoriesWorkCodes != null && categoriesWorkCodes.Count > 5)
-            return new ResultDto(false, "Select max 5 roles.");
+        if (categoriesWorkCodes != null && categoriesWorkCodes.Count > 3)
+            return new ResultDto(false, "Select max 3 categories.");
         var oldCategoriesWork = _accountService.GetCategoriesWorkByUser(userInfo).ToList();
         var categoryWorksToDelete = new List<MyUserCategoryWork>();
         var categoryWorksToAdd = new List<MyUserCategoryWork>();
@@ -176,7 +175,6 @@ public class ProfileHelper
         var sectorsToDelete = new List<MyUserSector>();
         var sectorsToAdd = new List<MyUserSector>();
         
-        //Comparison of previous CategoriesWork with those currently selected to delete them
         foreach (var item in oldSectors)
         {
             if(!sectorsCodes.Contains(item.SectorId))
@@ -291,7 +289,7 @@ public class ProfileHelper
     {
         return new BasicInfoViewModel()
         {
-            Sectors = MapProfileDtos.MapSectorList(_accountService.GetSectorsWithUser(userInfo.Id)),
+            CategoriesWork = MapProfileDtos.MapCategoriesWorkList(_accountService.GetCategoriesWorkWithUser(userInfo.Id)),
             Email = userInfo.Email,
             Name = userInfo.Name,
             Surname = userInfo.Surname,
@@ -347,5 +345,32 @@ public class ProfileHelper
         }
 
         return result.resultDto;
+    }
+
+    public async Task<ResultDto> UpdateRolesWorks(List<Guid> roleCodes, MyUser userInfo)
+    {
+        if (roleCodes != null && roleCodes.Count > 5)
+            return new ResultDto(false, "Select max 5 roles.");
+        var oldRolesWork = _accountService.GetRolesWorkByUser(userInfo).ToList();
+        var rolesToDelete = new List<MyUserRoleWork>();
+        var rolesToAdd = new List<MyUserRoleWork>();
+        
+        foreach (var item in oldRolesWork)
+        {
+            if(!roleCodes.Contains(item.RoleWorkId))
+                rolesToDelete.Add(item);
+        }
+
+        foreach (var item in roleCodes)
+        {
+            if(!oldRolesWork.Any(s => s.RoleWorkId == item))
+                rolesToAdd.Add(new MyUserRoleWork()
+                {
+                    MyUserId = userInfo.Id,
+                    RoleWorkId = item
+                });
+        }
+        
+        return await _accountService.UpdateMyUserRolesWork(rolesToDelete, rolesToAdd, userInfo);
     }
 }

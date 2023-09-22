@@ -28,6 +28,7 @@ public class MyUser : IdentityUser
     public virtual List<Media> Medias { get; set; }
     public virtual List<Portfolio> Portfolios { get; set; }
     public virtual List<MyUserCategoryWork> MyUserCategoriesWork { get; set; }
+    public virtual List<MyUserRoleWork> MyUserRolesWork { get; set; }
     public virtual List<MyUserLanguageSpoken> MyUserLanguagesSpoken { get; set; }
     public virtual List<MyUserInfoToShow> MyUserInfosToShow { get; set; }
 }

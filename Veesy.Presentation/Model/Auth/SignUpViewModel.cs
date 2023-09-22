@@ -10,6 +10,6 @@ public class SignUpViewModel
     public string Username { get; set; }
     public string Password { get; set; } 
     public string ConfirmPassword { get; set; }
-    public List<Guid> SelectedSectors { get; set; }
-    public List<Sector> Sectors { get; set; }
+    public List<Guid> SelectedCategoriesWork { get; set; }
+    public List<CategoryWork> CategoriesWork { get; set; }
 }

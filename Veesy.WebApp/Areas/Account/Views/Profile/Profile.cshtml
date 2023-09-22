@@ -40,10 +40,10 @@
             @{
                 var workrole = "information missing";
                 var role_css = "text-danger";
-                if (Model.CategoriesWork.Count(s => s.Selected) > 0)
+                if (Model.RolesWork.Count(s => s.Selected) > 0)
                 {
                     role_css = "";
-                    workrole = Model.CategoriesWork.FirstOrDefault(s => s.Selected).Name;
+                    workrole = Model.RolesWork.FirstOrDefault(s => s.Selected).Name;
                 }
             }
             <div class="d-flex"><p class="mb-0"><strong>Role:&nbsp;</strong></p><p class="@role_css mb-0">@workrole</p></div>
@@ -70,7 +70,7 @@
             <div class="col-sm-12 col-md-6 col-lg-6 ps-2 pe-2">
                 <hr class="hr"/>
                 <div class="d-flex">
-                    @if (Model.CategoriesWork.Count(s => s.Selected) == 0)
+                    @if (Model.RolesWork.Count(s => s.Selected) == 0)
                     {
                         <div class="col-9">
                             <p class="mb-0"><strong>Role:</strong></p>
@@ -85,7 +85,7 @@
                             <p class="mb-0 veesy-overflow">
                                 @{
                                     var roles = "";
-                                    foreach (var role in Model.CategoriesWork.Where(s => s.Selected))
+                                    foreach (var role in Model.RolesWork.Where(s => s.Selected))
                                     {
                                         roles += $"{@role.Name}, ";
                                     }
@@ -216,27 +216,27 @@
         </div>
         <div class="empty-veesy"></div>
         <div>
-            <h3 class="text-color"><strong>Hard skills</strong></h3>
+            <h3 class="text-color"><strong>Sectors</strong></h3>
             <p>Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,</p>
-            @if (Model.HardSkills.Count(s => s.Selected) > 0)
+            @if (Model.Sectors.Count(s => s.Selected) > 0)
             {
                 <div class="d-flex mb-4" style="max-width: 100%; flex-wrap: wrap;">
-                @foreach (var item in Model.HardSkills.Where(s => s.Selected))
+                @foreach (var item in Model.Sectors.Where(s => s.Selected))
                 {
-                    <div class="pe-3 ps-3 div-white-rounded-blue-veesy d-flex"><a onclick="openModal('#modalHardSkill')"><i class="fa-solid fa-circle pe-2" style="color: #75CCDD"></i>@item.Name</a></div>
+                    <div class="pe-3 ps-3 div-white-rounded-blue-veesy d-flex"><a onclick="openModal('#modalSectors')"><i class="fa-solid fa-circle pe-2" style="color: #75CCDD"></i>@item.Name</a></div>
                 }
                 </div>
-                <a onclick="openModal('#modalHardSkill')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
+                <a onclick="openModal('#modalSectors')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
 
             }
             else
             {
                 <div class="d-flex">
-                    <a onclick="openModal('#modalHardSkill')" class="button-white-dashed-veesy">+</a>
-                    <a onclick="openModal('#modalHardSkill')" class="button-white-dashed-veesy">+</a>
-                    <a onclick="openModal('#modalHardSkill')" class="button-white-dashed-veesy">+</a>
+                    <a onclick="openModal('#modalSectors')" class="button-white-dashed-veesy">+</a>
+                    <a onclick="openModal('#modalSectors')" class="button-white-dashed-veesy">+</a>
+                    <a onclick="openModal('#modalSectors')" class="button-white-dashed-veesy">+</a>
                 </div>
-                <div class="mt-2"><a onclick="openModal('#modalHardSkill')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add hard skills</strong></a></div>
+                <div class="mt-2"><a onclick="openModal('#modalSectors')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add hard skills</strong></a></div>
             }
         </div>
         <div class="empty-veesy"></div>
@@ -401,24 +401,24 @@
     </div>
 </div>
 
-<div class="modal fade" id="modalHardSkill" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="modalSectors" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Hard Skills</strong></h3>
-                <a onclick="closeModal('#modalHardSkill')"><i class="fa-solid fa-circle-xmark"></i></a>
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Sectors</strong></h3>
+                <a onclick="closeModal('#modalSectors')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
-                <p>Select a maximum of 5 skills which your strongest superpower.</p>
+                <p>Select a maximum of 3 sectors.</p>
                 <div class="overflow-auto p-3 border-div-grey" style="background-color: white !important; max-height: 400px;">
-                    @foreach (var item in Model.HardSkills)
+                    @foreach (var item in Model.Sectors)
                     {
                         <div class="form-check">
-                            <label class="form-check-label" style="cursor: pointer;" for="hardSkill-@item.Code">
+                            <label class="form-check-label" style="cursor: pointer;" for="sector-@item.Code">
                                 <strong>@item.Name</strong>
                             </label>
                             @{ var check = @item.Selected ? "checked" : ""; }
-                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="hardSkill-@item.Code" style="float: right !important;">
+                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="sector-@item.Code" style="float: right !important;">
                         </div>
                         <hr class="hr"/>
                     }
@@ -427,7 +427,7 @@
                 <p class="mb-0"><strong>max. 5</strong></p>
             </div>
             <div class="modal-footer">                
-                <a onclick="UpdateHardSkills()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
+                <a onclick="UpdateSectors()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
             </div>
         </div>
     </div>
@@ -473,16 +473,16 @@
                 <a onclick="closeModal('#modalWorkRole')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
-                <p>Select a maximum of 5 work categories.</p>
+                <p>Select a maximum of 5 roles.</p>
                 <div class="overflow-auto p-3 border-div-grey" style="background-color: white !important; max-height: 400px;">
-                    @foreach (var item in Model.CategoriesWork)
+                    @foreach (var item in Model.RolesWork)
                     {
                         <div class="form-check">
-                            <label class="form-check-label" style="cursor: pointer;" for="categoryWork-@item.Code">
+                            <label class="form-check-label" style="cursor: pointer;" for="roleWork-@item.Code">
                                 <strong>@item.Name</strong>
                             </label>
                             @{ var check = @item.Selected ? "checked" : ""; }
-                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="categoryWork-@item.Code" style="float: right !important;">
+                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="roleWork-@item.Code" style="float: right !important;">
                         </div>
                         <hr class="hr"/>
                     }
@@ -491,7 +491,7 @@
                 <p class="mb-0"><strong>max. 5</strong></p>
             </div>
             <div class="modal-footer">                
-                <a onclick="UpdateCategoriesWork()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
+                <a onclick="UpdateRolesWork()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
             </div>
         </div>
     </div>
@@ -623,19 +623,19 @@ function UpdateLanguagesSpoken() {
 }
 
 
-function UpdateCategoriesWork() {
+function UpdateRolesWork() {
     $('#load-spinner').css("display", "block");
-    var codes = JSON.parse('@Html.Raw(Json.Serialize(Model.CategoriesWork.Select(s => s.Code.ToString()).ToList()))');
+    var codes = JSON.parse('@Html.Raw(Json.Serialize(Model.RolesWork.Select(s => s.Code.ToString()).ToList()))');
     
     var data = [];
     
     for (const code in codes) {
-        if(document.getElementById("categoryWork-"+codes[code]).checked)
+        if(document.getElementById("roleWork-"+codes[code]).checked)
             data.push(codes[code])
     }
     $.ajax({
         type: 'POST',
-        url: '@Url.Action("UpdateCategoriesWork", "Profile")',
+        url: '@Url.Action("UpdateRolesWork", "Profile")',
         data: JSON.stringify(data),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
@@ -675,19 +675,47 @@ function UpdateExternalLink() {
 }
 
 
-function UpdateHardSkills() {
+// function UpdateHardSkills() {
+//     $('#load-spinner').css("display", "block");
+@*    var codes = JSON.parse('@Html.Raw(Json.Serialize(Model.HardSkills.Select(s => s.Code.ToString()).ToList()))');*@
+//    
+//     var data = [];
+//    
+//     for (const code in codes) {
+//         if(document.getElementById("hardSkill-"+codes[code]).checked)
+//             data.push(codes[code])
+//     }
+//     $.ajax({
+//         type: 'POST',
+//         url: '@Url.Action("UpdateHardSkills", "Profile")',
+//         data: JSON.stringify(data),
+//         contentType: 'application/json; charset=utf-8',
+//         dataType: 'json',
+//         success: function (response) {
+//             if(response.result){
+//                 location.reload()
+//             }
+//             $('#load-spinner').css("display", "none");
+//         },
+//         error: function (response) {
+//             $('#load-spinner').css("display", "none");
+//         }
+//     })
+// }
+
+function UpdateSectors() {
     $('#load-spinner').css("display", "block");
-    var codes = JSON.parse('@Html.Raw(Json.Serialize(Model.HardSkills.Select(s => s.Code.ToString()).ToList()))');
+    var codes = JSON.parse('@Html.Raw(Json.Serialize(Model.Sectors.Select(s => s.Code.ToString()).ToList()))');
     
     var data = [];
     
     for (const code in codes) {
-        if(document.getElementById("hardSkill-"+codes[code]).checked)
+        if(document.getElementById("sector-"+codes[code]).checked)
             data.push(codes[code])
     }
     $.ajax({
         type: 'POST',
-        url: '@Url.Action("UpdateHardSkills", "Profile")',
+        url: '@Url.Action("UpdateSectors", "Profile")',
         data: JSON.stringify(data),
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',

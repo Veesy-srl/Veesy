@@ -28,7 +28,9 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<PortfolioSector> PortfolioSectors { get; set; }
     public DbSet<SubscriptionPlan> SubscriptionPlans { get; set; }
     public DbSet<CategoryWork> CategoriesWork { get; set; }
+    public DbSet<RoleWork> RolesWork { get; set; }
     public DbSet<MyUserCategoryWork> MyUserCategoriesWork { get; set; }
+    public DbSet<MyUserRoleWork> MyUserRolesWork { get; set; }
     public DbSet<MyUserInfoToShow> MyUserInfosToShow { get; set; }
     public DbSet<MyUserLanguageSpoken> MyUserLanguagesSpoken { get; set; }
     public DbSet<LanguageSpoken> LanguagesSpoken { get; set; }
@@ -43,6 +45,7 @@ public class ApplicationDbContext : IdentityDbContext
         modelBuilder.Entity<MyUserUsedSoftware>().HasKey(a => new { a.MyUserId, a.UsedSoftwareId });
         modelBuilder.Entity<MyUserSkill>().HasKey(a => new {a.Id, a.MyUserId, a.SkillId });
         modelBuilder.Entity<MyUserCategoryWork>().HasKey(a => new {a.MyUserId, a.CategoryWorkId });
+        modelBuilder.Entity<MyUserRoleWork>().HasKey(a => new {a.MyUserId, a.RoleWorkId });
         modelBuilder.Entity<MyUserInfoToShow>().HasKey(a => new {a.MyUserId, a.InfoToShowId });
         modelBuilder.Entity<MyUserLanguageSpoken>().HasKey(a => new {a.MyUserId, a.LanguageSpokenId });
         modelBuilder.Entity<MyUserSector>().HasKey(a => new { a.MyUserId, a.SectorId });

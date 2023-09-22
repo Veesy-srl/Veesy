@@ -14,6 +14,6 @@ public class BasicInfoViewModel
     public string PhoneNumber { get; set; }
     public string BasePathImages { get; set; }
     public string FileName { get; set; }
-    public List<SectorDto> Sectors { get; set; }
+    public List<CategoriesWorkDto> CategoriesWork { get; set; }
     public string PhoneNumberPrefix { get; set; }
 }

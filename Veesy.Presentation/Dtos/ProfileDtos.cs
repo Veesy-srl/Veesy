@@ -44,6 +44,14 @@ public class CategoriesWorkDto
 
 }
 
+public class RolesWorkDto
+{
+    public Guid Code { get; set; }
+    public string Name { get; set; }
+    public bool Selected { get; set; }
+
+}
+
 public class SectorDto
 {
     public Guid Code { get; set; }
@@ -127,6 +135,25 @@ public static class MapProfileDtos
         };
     }
     
+    public static List<RolesWorkDto> MapRolesWorkList(List<RoleWork> rolesWorks)
+    {
+        return rolesWorks.Select(x => new RolesWorkDto()
+        {
+            Code = x.Id,
+            Name = x.Name,
+            Selected = x.MyUserRolesWork.Count > 0 
+        }).ToList();
+    }
+    
+    public static RolesWorkDto MapRolesWork(RoleWork roleWork)
+    {
+        return new RolesWorkDto()
+        {
+            Code = roleWork.Id,
+            Name = roleWork.Name
+        };
+    }
+    
     public static List<SectorDto> MapSectorList(List<Sector> sectors)
     {
         return sectors.Select(x => new SectorDto()
@@ -185,3 +212,4 @@ public static class MapProfileDtos
     }
     
 }
+
