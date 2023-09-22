@@ -10,7 +10,6 @@ using NLog.Web;
 using Veesy.Domain.Data;
 using Veesy.Domain.Models;
 using Veesy.Email;
-using Veesy.Media.Utils;
 using Veesy.Presentation.Helper;
 using Veesy.Service.Implementation;
 using Veesy.Validators;

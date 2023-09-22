@@ -1,7 +1,6 @@
 using Veesy.Domain.Repositories;
 using Veesy.Domain.Repositories.Impl;
 using Veesy.Email;
-using Veesy.Media.Utils;
 using Veesy.Presentation.Helper;
 using Veesy.Service.Implementation;
 using Veesy.Service.Interfaces;
@@ -35,9 +34,6 @@ public static class RegisterDependencyInjection
         serviceCollection.AddTransient<MediaHelper>();
         serviceCollection.AddTransient<ProfileHelper>();
         serviceCollection.AddTransient<CloudHelper>();
-
-        /*Media Utils Dependency Injection*/
-        serviceCollection.AddTransient<MediaHandler>();
         
         return serviceCollection;
     }

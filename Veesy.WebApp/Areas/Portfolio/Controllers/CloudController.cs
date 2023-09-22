@@ -38,4 +38,24 @@ public class CloudController : VeesyController
             return RedirectToAction("Index", "Home");
         }
     }
+    
+    [HttpGet("cloud/edit/{id}")]
+    public IActionResult Edit(Guid id)
+    {
+        try
+        {
+            var response = _cloudHelper.GetEditViewModel(id, UserInfo);
+            if (!response.resultDto.Success)
+            {
+                _notyfService.Custom(response.resultDto.Message, 10 , "#ca0a0a96");
+                return RedirectToAction("List");    
+            }
+            return View(response.viewModel);
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            return RedirectToAction("List");
+        }
+    }
 }

@@ -1,4 +1,4 @@
-namespace Veesy.Media.Constants;
+namespace Veesy.Domain.Constants;
 
 public static class MediaCostants
 {

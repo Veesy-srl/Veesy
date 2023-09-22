@@ -7,4 +7,5 @@ public class CloudViewModel
     public List<MediaDto> Medias { get; set; }
     public string Username { get; set; }
     public string BasePath { get; set; }
+    public string ApplicationUrl { get; set; }
 }

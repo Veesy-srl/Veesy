@@ -26,12 +26,11 @@ public class Media : TrackableEntity
     public string OriginalFileName { get; set; }
     public string Type { get; set; }
     public DateTime UploadDate { get; set; }
-    public int Status { get; set; }
+    // public int Status { get; set; }
     public long Size { get; set; }
-    public int Width { get; set; }
-    public int Height { get; set; }
+    // public int Width { get; set; }
+    // public int Height { get; set; }
     public virtual List<MediaCategory> MediaCategories { get; set; }
     public virtual List<MediaTag> MediaTags { get; set; }
     public virtual List<MediaFormat> MediaFormats { get; set; }
-    public virtual TmpMedia TmpMedia { get; set; }
 }

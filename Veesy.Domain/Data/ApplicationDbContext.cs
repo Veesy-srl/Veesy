@@ -27,7 +27,6 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<UsedSoftware> UsedSoftwares { get; set; }
     public DbSet<PortfolioSector> PortfolioSectors { get; set; }
     public DbSet<SubscriptionPlan> SubscriptionPlans { get; set; }
-    public DbSet<TmpMedia> TmpMedias { get; set; }
     public DbSet<CategoryWork> CategoriesWork { get; set; }
     public DbSet<MyUserCategoryWork> MyUserCategoriesWork { get; set; }
     public DbSet<MyUserInfoToShow> MyUserInfosToShow { get; set; }

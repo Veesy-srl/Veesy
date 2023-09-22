@@ -3,7 +3,6 @@ using Microsoft.Extensions.Configuration;
 using Veesy.Domain.Constants;
 using Veesy.Domain.Exception;
 using Veesy.Domain.Models;
-using Veesy.Media.Constants;
 using Veesy.Presentation.Model.Account;
 using Veesy.Service.Dtos;
 using Veesy.Service.Interfaces;

@@ -50,13 +50,20 @@ public class MediaController : VeesyController
     {
         try
         {
-            await _mediaHelper.UploadFileAsync(HttpContext.Request.Body, Request.ContentType, UserInfo);
-            return Ok();
+            var resultDto = await _mediaHelper.UploadFileAsync(HttpContext.Request.Body, HttpContext.Request.ContentLength, Request.ContentType, UserInfo);
+            if (resultDto.Success)
+            {
+                _notyfService.Custom(resultDto.Message, 10, "#75CCDD40");
+                return Ok();
+            }
+            _notyfService.Custom(resultDto.Message, 10, "#ca0a0a96");
+            return BadRequest();
         }
         catch (Exception ex)
         {
             Logger.Error(ex, ex.Message);
-            return View();
+            _notyfService.Custom("Error during upload file. Please retry.", 10, "#ca0a0a96");
+            return BadRequest();
         }
     }
     

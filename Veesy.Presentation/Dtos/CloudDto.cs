@@ -28,8 +28,11 @@ public static class MapCloudDtos
         }).ToList();
     }
     
-    public static MediaDto MapMedia(Domain.Models.Media media, string basePath)
+    public static MediaDto MapMedia(Media? media)
     {
+        if (media == null)
+            return null;
+        
         return new MediaDto()
         {
             Code = media.Id,

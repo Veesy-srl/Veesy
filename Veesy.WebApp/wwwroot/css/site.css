@@ -1,3 +1,45 @@
+/*DROPZONE SECTION*/
+.dz-success-mark svg g path{
+  fill: #75CCDD !important;
+}
+
+.dz-error-mark svg g g {
+  fill: #E45B5A;
+}
+
+.dropzone .dz-preview .dz-progress .dz-upload{
+  background: linear-gradient(to right, #75CCDD, #202F4D) !important;
+}
+
+.dropzone .dz-preview .dz-progress{
+  top: 65% !important;
+  margin-top: 0px !important;
+}
+/*END DROPZONE SECTION*/
+
+
+.img-div:hover .middle {
+  opacity: 1;
+}
+
+.middle {
+  transition: .5s ease;
+  opacity: 1;
+  position: relative;
+  text-align: center;
+}
+
+
+.dropzone .dz-preview .dz-details .dz-size span{
+  background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.dropzone .dz-preview .dz-details .dz-filename{
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: normal !important;
+}
+
 .custom-alert-cloud{
   width: 50% !important;
   z-index: 10 !important;

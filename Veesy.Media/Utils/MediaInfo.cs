@@ -65,7 +65,7 @@ public static class MediaInfo
 
     public static (int Width, int Height) GetImageSizeFromStream(Stream stream)
     {
-        System.Drawing.Image image = System.Drawing.Image.FromStream (stream);
+        System.Drawing.Image image = System.Drawing.Image.FromStream(stream);
         if (image != null)
             return (image.Width, image.Height);
         return (0, 0);
