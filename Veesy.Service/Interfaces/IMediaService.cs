@@ -10,4 +10,5 @@ public interface IMediaService
     Media? GetMediaById(Guid id);
     Media? GetPreviousMediaByDate(DateTime mediaSelectedCreateRecordDate, MyUser user);
     Media? GetNextMediaByDate(DateTime mediaSelectedCreateRecordDate, MyUser user);
+    Task<ResultDto> UpdateMedia(Media media, MyUser user);
 }

@@ -44,4 +44,11 @@ public class MediaService : IMediaService
             .OrderBy(s => s.CreateRecordDate)
             .FirstOrDefault();
     }
+
+    public async Task<ResultDto> UpdateMedia(Media media, MyUser user)
+    {
+        _uoW.MediaRepository.Update(media);
+        await _uoW.CommitAsync(user);
+        return new ResultDto(true, "");
+    }
 }
