@@ -183,6 +183,10 @@ html {
   background-color: #536B7E !important;
 }
 
+.text-grey{
+  color: #AAB0BB !important;
+}
+
 .bg-blue{
   background-color: #202F4D !important;
 }
@@ -543,9 +547,21 @@ button:focus {
 }
 
 .card-white-dashed-veesy{
-  background-color: #F0F2F3 !important;
+  background-color: rgba(255, 255, 255, 0) !important;
   border-radius: 10px;
   border: 2px dashed #AAB0BB !important;
+}
+
+.text-area-not-resizable{
+  resize: none;
+}
+
+.text-area-not-resizable:focus-visible{
+  outline: none !important;
+}
+
+.text-area-rounded{
+  border-radius: 10px;
 }
 
 .card-grey-dashed-veesy{

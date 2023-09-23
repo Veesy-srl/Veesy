@@ -50,4 +50,26 @@ public class CloudHelper
         };
         return (new ResultDto(true, ""), vm);
     }
+
+    public async Task<ResultDto> UpdateFileName(MediaDto mediaDto, MyUser userInfo)
+    {
+        var media = _mediaService.GetMediaById(mediaDto.Code);
+        if (media.MyUserId != userInfo.Id)
+            return new ResultDto(false, "Transaction not allowed.");
+        if(string.IsNullOrEmpty(mediaDto.OriginalFileName))
+            return new ResultDto(false, "Please insert filename.");
+        if(mediaDto.OriginalFileName.Contains("/"))
+            return new ResultDto(false, "Characters '/' not allowed.");
+        media.OriginalFileName = mediaDto.OriginalFileName + media.Type;
+        return await _mediaService.UpdateMedia(media, userInfo);
+    }
+
+    public async Task<ResultDto> UpdateFileUpdateCredits(MediaDto mediaDto, MyUser userInfo)
+    {
+        var media = _mediaService.GetMediaById(mediaDto.Code);
+        if (media.MyUserId != userInfo.Id)
+            return new ResultDto(false, "Transaction not allowed.");
+        media.Credits = mediaDto.Credits;
+        return await _mediaService.UpdateMedia(media, userInfo);
+    }
 }

@@ -7,10 +7,10 @@ public class MediaDto
     public Guid Code { get; set; }
     public string OriginalFileName { get; set; }
     public string FileName { get; set; }
-    public string Size { get; set; }
+    public long Size { get; set; }
     public string Type { get; set; }
     public string UploadDate { get; set; }
-    public string Credits { get; set; }
+    public string? Credits { get; set; }
 }
 
 public static class MapCloudDtos
@@ -22,9 +22,10 @@ public static class MapCloudDtos
             Code = x.Id,
             OriginalFileName = x.OriginalFileName,
             FileName = x.FileName,
-            Size = x.Size.ToString(),
+            Size = x.Size,
             Type = x.Type,
-            UploadDate = x.CreateRecordDate.ToString("dd/MM/yyyy h. hh.mm")
+            Credits = x.Credits,
+            UploadDate = x.CreateRecordDate.ToString("dd/MM/yyyy hh.mm")
         }).ToList();
     }
     
@@ -38,9 +39,10 @@ public static class MapCloudDtos
             Code = media.Id,
             OriginalFileName = media.OriginalFileName,
             FileName = media.FileName,
-            Size = media.Size.ToString(),
+            Size = media.Size,
             Type = media.Type,
-            UploadDate = media.CreateRecordDate.ToString("dd/MM/yyyy h. hh.mm")
+            Credits = media.Credits,
+            UploadDate = media.CreateRecordDate.ToString("dd/MM/yyyy hh.mm")
         };
     }
 }

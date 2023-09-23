@@ -26,6 +26,7 @@ public class Media : TrackableEntity
     public string OriginalFileName { get; set; }
     public string Type { get; set; }
     public DateTime UploadDate { get; set; }
+    public string? Credits { get; set; }
     // public int Status { get; set; }
     public long Size { get; set; }
     // public int Width { get; set; }
