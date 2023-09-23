@@ -216,7 +216,7 @@
         </div>
         <div class="empty-veesy"></div>
         <div>
-            <h3 class="text-color"><strong>Sectors</strong></h3>
+            <h3 class="text-color"><strong>Fields</strong></h3>
             <p>Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,</p>
             @if (Model.Sectors.Count(s => s.Selected) > 0)
             {
@@ -236,7 +236,7 @@
                     <a onclick="openModal('#modalSectors')" class="button-white-dashed-veesy">+</a>
                     <a onclick="openModal('#modalSectors')" class="button-white-dashed-veesy">+</a>
                 </div>
-                <div class="mt-2"><a onclick="openModal('#modalSectors')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add hard skills</strong></a></div>
+                <div class="mt-2"><a onclick="openModal('#modalSectors')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add fields</strong></a></div>
             }
         </div>
         <div class="empty-veesy"></div>
@@ -405,11 +405,11 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Sectors</strong></h3>
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Fields</strong></h3>
                 <a onclick="closeModal('#modalSectors')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
-                <p>Select a maximum of 3 sectors.</p>
+                <p>Select a maximum of 3 fields.</p>
                 <div class="overflow-auto p-3 border-div-grey" style="background-color: white !important; max-height: 400px;">
                     @foreach (var item in Model.Sectors)
                     {
@@ -551,8 +551,6 @@
                         <hr class="hr"/>
                     }
                 </div>
-                <p class="mt-4"><strong>Didn't find it?</strong> <a class="a-ciano" href="mailto:support@veesy.it">Contact us</a></p>
-                <p class="mb-0"><strong>max. 5</strong></p>
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdateInfoToShow()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>

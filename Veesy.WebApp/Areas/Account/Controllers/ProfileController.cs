@@ -407,7 +407,7 @@ public class ProfileController : VeesyController
             if(!result.Success)
                 _notyfService.Custom(result.Message, 10, "#ca0a0a96");
             else 
-                _notyfService.Custom("Sectors update correctly.", 10, "#75CCDD40");
+                _notyfService.Custom("Fields update correctly.", 10, "#75CCDD40");
             return Json(new { Result = result.Success, Message = result.Message});
         }
         catch (Exception ex)

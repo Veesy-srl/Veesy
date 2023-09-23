@@ -170,7 +170,7 @@ public class ProfileHelper
     public async Task<ResultDto> UpdateSectors(List<Guid> sectorsCodes, MyUser userInfo)
     {
         if (sectorsCodes != null && sectorsCodes.Count > 3)
-            return new ResultDto(false, "Select max 3 sectors.");
+            return new ResultDto(false, "Select max 3 fields.");
         var oldSectors = _accountService.GetSectorsByUser(userInfo).ToList();
         var sectorsToDelete = new List<MyUserSector>();
         var sectorsToAdd = new List<MyUserSector>();
