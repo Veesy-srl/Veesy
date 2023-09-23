@@ -1,5 +1,12 @@
-using MailKit.Net.Smtp;
 using MimeKit;
+using System.Drawing;
+using System.Net.Mail;
+using System.Net.Mime;
+using MimeKit.Text;
+using MimeKit.Utils;
+using ContentDisposition = MimeKit.ContentDisposition;
+using SmtpClient = MailKit.Net.Smtp.SmtpClient;
+
 
 namespace Veesy.Email;
 
@@ -23,11 +30,29 @@ public class EmailSender : IEmailSender
         emailMessage.From.Add(new MailboxAddress("noreply | Veesy", _emailConfig.From));
         emailMessage.To.AddRange(message.To);
         emailMessage.Subject = message.Subject;
-        if (!string.IsNullOrEmpty(templatePATH))
-            emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)
-                {Text = EmailGetBody(templatePATH, replacer)};
-        else
-            emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html) {Text = message.Content};
+        
+        string templateDirectory = Path.GetDirectoryName(Path.GetDirectoryName(templatePATH)); // Rimuovi le ultime due cartelle
+        string pathImmagine = Path.Combine(templateDirectory, "imgs", "veesy_vettoriale_enigma.png");
+        
+        var imageAttachment = new MimePart("image", "jpeg")
+        {
+            Content = new MimeContent(File.OpenRead(pathImmagine), ContentEncoding.Default),
+            ContentDisposition = new ContentDisposition(ContentDisposition.Inline),
+            ContentTransferEncoding = ContentEncoding.Base64,
+        };
+        
+        imageAttachment.ContentId = "logo";
+        emailMessage.Body = new TextPart(TextFormat.Html)
+        {
+            Text = EmailGetBody(templatePATH, replacer)
+        };
+
+        emailMessage.Body = new Multipart("mixed")
+        {
+            emailMessage.Body,
+            imageAttachment
+        };
+
         return emailMessage;
     }
 
