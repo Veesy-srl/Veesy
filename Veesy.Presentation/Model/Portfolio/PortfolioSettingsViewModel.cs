@@ -5,4 +5,5 @@ namespace Veesy.Presentation.Model.Portfolio;
 public class PortfolioSettingsViewModel
 {
     public PortfolioDto Portfolio { get; set; }
+    public string BasePathImages { get; set; }
 }

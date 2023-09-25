@@ -12,6 +12,10 @@ public class Portfolio : TrackableEntity
     public string Password { get; set; }
     public string Link { get; set; }
     public int Status { get; set; }
+    /// <summary>
+    /// campo che identifica se è il portfolio principale (quello mostrato nei risultati di ricerca)
+    /// </summary>
+    public bool IsMain { get; set; }
     public virtual List<PortfolioMedia> PortfolioMedias { get; set; }
     public virtual List<PortfolioSector> PortfolioSectors { get; set; }
 }

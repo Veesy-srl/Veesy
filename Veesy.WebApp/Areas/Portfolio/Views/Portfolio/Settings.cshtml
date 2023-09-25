@@ -15,6 +15,9 @@
 @*         </nav> *@
 @*         <div class="w-80-veesy card-white-veesy p-3 mb-3"> *@
 @*             <div class="d-flex"> *@
+@*                 <div class="col-8"> *@
+@*                     <p class="ms-2"><strong>@User.Identity.Name's Portfolio</strong></p> *@
+@*                 </div> *@
 @*                 <div class="col-3"> *@
 @*                     <div class="text-center"> *@
 @*                         @if (!Model.Portfolio.PortfolioMedias.Any()) *@
@@ -23,79 +26,42 @@
 @*                         } *@
 @*                         else *@
 @*                         { *@
-@*                             <img src="@Model.Portfolio.PortfolioMedias.First().Media.@Model.FileName" style="width: 60px !important; height: 60px !important; max-width: none!important; " class="img-thumbnail-custom rounded-circle" alt="user-image"> *@
+@*                             <img src="@Model.BasePathImages@Model.Portfolio.PortfolioMedias.First().Media.FileName" style="width: 60px !important; height: 60px !important; max-width: none!important; " class="img-thumbnail-custom rounded-circle" alt="user-image"> *@
 @*                         } *@
 @*                     </div> *@
 @*                 </div> *@
-@*                 @{ *@
-@*                     // Verifica se la stringa contiene una "@" *@
-@*                     string username = Model.Username.Contains("@") ? Model.Username.Split('@')[0] : Model.Username; *@
-@*                 } *@
-@* *@
-@*                 <div class="col-8"> *@
-@*                     <p class="ms-2"><strong>@username</strong></p> *@
-@*                 </div> *@
 @*                 <div class="col-1"><div class="text-end"><i class="fa-solid fa-circle fa-xs" style="color: #202F4D;"></i></div></div> *@
 @*             </div> *@
-@*             <h3 class="mt-4 mb-4"><strong>@Model.FullName</strong></h3> *@
-@*             @{ *@
-@*                 var workrole = "information missing"; *@
-@*                 var role_css = "text-danger"; *@
-@*                 if (Model.RolesWork.Count(s => s.Selected) > 0) *@
-@*                 { *@
-@*                     role_css = ""; *@
-@*                     workrole = Model.RolesWork.FirstOrDefault(s => s.Selected).Name; *@
-@*                 } *@
-@*             } *@
-@*             <div class="d-flex"><p class="mb-0"><strong>Role:&nbsp;</strong></p><p class="@role_css mb-0">@workrole</p></div> *@
-@*             <div class="d-flex"><p class="mb-0"><strong>Email:&nbsp;</strong></p><p class="mb-0 veesy-overflow">@Model.Email</p></div> *@
-@*             @{ *@
-@*                 var phone = "information missing"; *@
-@*                 var css = "text-danger"; *@
-@*                 if (!string.IsNullOrEmpty(Model.PhoneNumber)) *@
-@*                 { *@
-@*                     css = ""; *@
-@*                     phone = Model.PhoneNumber; *@
-@*                 } *@
-@*             } *@
-@*             <div class="d-flex"><p class="mb-0"><strong>Phone:&nbsp;</strong></p><p class="@css mb-0">@phone</p></div> *@
-@*             <div class="mt-4"><a asp-controller="Profile" asp-area="Account" asp-action="BasicInfo" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit basic info</strong></a></div> *@
+@*             <div class="d-flex"><p class="mb-0">Updated on @Model.Portfolio.LastEditRecordDate</p></div> *@
+@*             <div class="d-flex"><p class="mb-0 veesy-overflow">@Model.Portfolio.PortfolioMedias.Count media uploaded</p></div> *@
+@*             <div class="d-flex"><p class="mb-0 veesy-overflow">2 images (TODO)</p></div> *@
+@*             <div class="d-flex"><p class="mb-0 veesy-overflow">8 videos (TODO)</p></div> *@
 @*         </div> *@
 @*     </div> *@
 @*     <div class="col-sm-12 col-md-6"> *@
-@*         <h2 class="text-color"><strong>Your Profile</strong></h2> *@
+@*         <h2 class="text-color"><strong>@User.Identity.Name's Portfolio</strong></h2> *@
 @*         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <a class="grey-link ms-2"><strong>learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a></p> *@
 @*         <div class="empty-veesy"></div> *@
-@*         <h3 class="text-color"><strong>General</strong></h3> *@
+@*         <h3 class="text-color"><strong>Main Settings</strong></h3> *@
 @*         <div class="row"> *@
 @*             <div class="col-sm-12 col-md-6 col-lg-6 ps-2 pe-2"> *@
 @*                 <hr class="hr"/> *@
 @*                 <div class="d-flex"> *@
-@*                     @if (Model.RolesWork.Count(s => s.Selected) == 0) *@
+@*                     @if (string.IsNullOrEmpty(Model.Portfolio.Name)) *@
 @*                     { *@
 @*                         <div class="col-9"> *@
-@*                             <p class="mb-0"><strong>Role:</strong></p> *@
+@*                             <p class="mb-0"><strong>Portfolio Name:</strong></p> *@
 @*                             <p class="mb-0 color-red">Information missing</p> *@
 @*                         </div> *@
-@*                         <div class="col-3 text-end"><a onclick="openModal('#modalWorkRole')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div> *@
+@*                         <div class="col-3 text-end"><a onclick="openModal('#modalPortfolioName')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div> *@
 @*                     } *@
 @*                     else *@
 @*                     { *@
 @*                         <div class="col-9 profile-section"> *@
-@*                             <p class="mb-0"><strong>Role:</strong></p> *@
-@*                             <p class="mb-0 veesy-overflow"> *@
-@*                                 @{ *@
-@*                                     var roles = ""; *@
-@*                                     foreach (var role in Model.RolesWork.Where(s => s.Selected)) *@
-@*                                     { *@
-@*                                         roles += $"{@role.Name}, "; *@
-@*                                     } *@
-@*                                     roles = roles.Substring(0, (roles.Length - 2)); *@
-@*                                 } *@
-@*                                 @roles *@
-@*                             </p> *@
+@*                             <p class="mb-0"><strong>Portfolio Name:</strong></p> *@
+@*                             <p class="mb-0 veesy-overflow">@Model.Portfolio.Name</p> *@
 @*                         </div> *@
-@*                         <div class="col-3 text-end"><a onclick="openModal('#modalWorkRole')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div> *@
+@*                         <div class="col-3 text-end"><a onclick="openModal('#modalPortfolioName')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div> *@
 @*                     } *@
 @*                 </div> *@
 @*                 <hr class="hr"/> *@
