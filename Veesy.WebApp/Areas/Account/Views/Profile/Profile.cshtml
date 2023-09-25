@@ -26,13 +26,9 @@
                         }
                     </div>
                 </div>
-                @{
-                    // Verifica se la stringa contiene una "@"
-                    string username = Model.Username.Contains("@") ? Model.Username.Split('@')[0] : Model.Username;
-                }
                 
                 <div class="col-8">
-                    <p class="ms-2"><strong>@username</strong></p>
+                    <p class="ms-2"><strong>@User.Identity.Name</strong></p>
                 </div>
                 <div class="col-1"><div class="text-end"><i class="fa-solid fa-circle fa-xs" style="color: #202F4D;"></i></div></div>
             </div>

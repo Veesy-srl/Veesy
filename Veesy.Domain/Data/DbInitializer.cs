@@ -409,22 +409,6 @@ public class DbInitializer
             }
         }
         dbContext.SaveChanges();
-        
-        var mediaFormats = new List<Format>()
-        {
-            new (){LastEditUserId = "Init", CreateUserId = "init", Description = "2000", Type = "Image", Width = 2000, Name = "Full HD"},
-            new (){LastEditUserId = "Init", CreateUserId = "init", Description = "1280", Type = "Image", Width = 1280, Name = "HD"},
-            new (){LastEditUserId = "Init", CreateUserId = "init", Description = "1920", Type = "Video", Width = 1920, Name = "Full HD"},
-            new (){LastEditUserId = "Init", CreateUserId = "init", Description = "1280", Type = "Video", Width = 1280, Name = "HD"},
-            
-        };
-        var dbFormats = dbContext.Formats.ToList();
-        foreach (var item in mediaFormats)
-        {
-            if (!dbFormats.Any(x => x.Name == item.Name && x.Type == item.Type))
-                dbContext.Formats.Add(item);
-        }
-        dbContext.SaveChanges();
             
 #if DEBUG
         var users = dbContext.MyUsers
