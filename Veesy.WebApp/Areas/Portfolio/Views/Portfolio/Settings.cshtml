@@ -66,90 +66,18 @@
 @*                 </div> *@
 @*                 <hr class="hr"/> *@
 @*                 <div class="d-flex"> *@
-@*                     @if (string.IsNullOrEmpty(Model.ExternalLink)) *@
-@*                     { *@
-@*                         <div class="col-9"> *@
-@*                             <p class="mb-0"><strong>External link:</strong></p> *@
-@*                             <p class="mb-0 color-red">Information missing</p> *@
-@*                         </div> *@
-@*                         <div class="col-3 text-end"><a onclick="openModal('#modalExternalLink')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div> *@
-@*                     } *@
-@*                     else *@
-@*                     { *@
-@*                         <div class="col-9 profile-section"> *@
-@*                             <p class="mb-0"><strong>External link:</strong></p> *@
-@*                             <a href="https://@Model.ExternalLink" target="_blank" class="mb-0 veesy-overflow">@Model.ExternalLink</a> *@
-@*                         </div> *@
-@*                         <div class="col-3 text-end"><a onclick="openModal('#modalExternalLink'), setTextAreaValue('external-link-edit', '@Model.ExternalLink')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div> *@
-@*                     } *@
-@*                 </div> *@
-@*                 <hr class="hr"/> *@
-@*             </div> *@
-@*             <div class="col-sm-12 col-md-6 pe-2 ps-2"> *@
-@*                 <hr class="hr nodisplay-sm"/> *@
-@*                 <div class="d-flex"> *@
-@*                         @if (Model.LanguagesSpoken.Count(s => s.Selected) == 0) *@
-@*                         { *@
-@*                             <div class="col-9"> *@
-@*                                 <p class="mb-0"><strong>Language Spoken:</strong></p> *@
-@*                                 <p class="mb-0 color-red">Information missing</p> *@
-@*                             </div> *@
-@*                             <div class="col-3 text-end"><a onclick="openModal('#modalLanguageSpoken')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div> *@
-@*                         } *@
-@*                         else *@
-@*                         { *@
-@*                             <div class="col-9 profile-section"> *@
-@*                                 <p class="mb-0"><strong>Language Spoken:</strong></p> *@
-@*                                 <p class="mb-0 veesy-overflow"> *@
-@*                                     @{ *@
-@*                                         var languages = ""; *@
-@*                                         foreach (var language in Model.LanguagesSpoken.Where(s => s.Selected)) *@
-@*                                         { *@
-@*                                             languages += $"{language.Language}, "; *@
-@*                                         } *@
-@*                                         languages = languages.Substring(0, (languages.Length - 2)); *@
-@*                                     } *@
-@*                                     @languages *@
-@*                                 </p> *@
-@*                             </div> *@
-@*                             <div class="col-3 text-end"><a onclick="openModal('#modalLanguageSpoken')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div> *@
-@*                         } *@
-@*                 </div> *@
-@*                 <hr class="hr"/> *@
-@*                 <div class="d-flex"> *@
-@*                         @if (Model.InfoToShow.Count(s => s.Selected) == 0) *@
-@*                         { *@
-@*                             <div class="col-9"> *@
-@*                                 <p class="mb-0"><strong>Show Profile info:</strong></p> *@
-@*                                 <p class="mb-0 color-red">Information missing</p> *@
-@*                             </div> *@
-@*                             <div class="col-3 text-end"><a onclick="openModal('#modalInfoToShow')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div> *@
-@*                         } *@
-@*                         else *@
-@*                         { *@
-@*                             <div class="col-9 profile-section"> *@
-@*                                 <p class="mb-0"><strong>Show Profile info:</strong></p> *@
-@*                                 <p class="mb-0 veesy-overflow"> *@
-@*                                     @{ *@
-@*                                         var infos = ""; *@
-@*                                         foreach (var info in Model.InfoToShow.Where(s => s.Selected)) *@
-@*                                         { *@
-@*                                             infos += $"{info.Name}, "; *@
-@*                                         } *@
-@*                                         infos = infos.Substring(0, (infos.Length - 2)); *@
-@*                                     } *@
-@*                                     @infos *@
-@*                                 </p> *@
-@*                             </div> *@
-@*                             <div class="col-3 text-end"><a onclick="openModal('#modalInfoToShow')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div> *@
-@*                         } *@
+@*                     <div class="col-9"> *@
+@*                         <p class="mb-0"><strong>Main Portfolio:</strong></p> *@
+@*                         <p class="mb-0 color-red">This portfolio is set as your main</p> *@
+@*                     </div> *@
+@*                     $1$ <div class="col-3 text-end"><a onclick="openModal('#modalExternalLink')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div> #1# *@
 @*                 </div> *@
 @*                 <hr class="hr"/> *@
 @*             </div> *@
 @*         </div> *@
 @*         <div class="empty-veesy"></div> *@
 @*         <div> *@
-@*             <h3 class="text-color"><strong>Portfolio intro</strong></h3> *@
+@*             <h3 class="text-color"><strong>Select layout</strong></h3> *@
 @*             @if (string.IsNullOrEmpty(Model.PortfolioIntro)) *@
 @*             { *@
 @*                 <div class="card-white-dashed-veesy p-3"> *@

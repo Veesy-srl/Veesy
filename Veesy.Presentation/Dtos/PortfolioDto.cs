@@ -14,6 +14,7 @@ public class PortfolioDto
     public string Link { get; set; }
     public int Status { get; set; }
     public DateTime LastEditRecordDate { get; set; }
+    public bool IsMain { get; set; }
     public virtual List<PortfolioMediaDto> PortfolioMedias { get; set; }
 }
 
@@ -46,6 +47,7 @@ public static class MapPortfolioDtos
             Link = portfolio.Link,
             Status = portfolio.Status,
             LastEditRecordDate = portfolio.LastEditRecordDate,
+            IsMain = portfolio.IsMain,
             PortfolioMedias = portfolio.PortfolioMedias?.Select(MapPortfolioMedia)?.ToList()
         };
     }

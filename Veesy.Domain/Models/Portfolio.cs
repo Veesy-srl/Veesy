@@ -1,4 +1,6 @@
-﻿namespace Veesy.Domain.Models;
+﻿using Veesy.Domain.Constants;
+
+namespace Veesy.Domain.Models;
 
 public class Portfolio : TrackableEntity
 {
@@ -13,9 +15,13 @@ public class Portfolio : TrackableEntity
     public string Link { get; set; }
     public int Status { get; set; }
     /// <summary>
-    /// campo che identifica se è il portfolio principale (quello mostrato nei risultati di ricerca)
+    /// campo che identica se è il portfolio principale (quello mostrato nei risultati di ricerca)
     /// </summary>
     public bool IsMain { get; set; }
+    /// <summary>
+    /// campo che identica il numero di colonne del portfolio in visualizzazione
+    /// </summary>
+    public VeesyConstants.PortfolioLayout Layout { get; set; }
     public virtual List<PortfolioMedia> PortfolioMedias { get; set; }
     public virtual List<PortfolioSector> PortfolioSectors { get; set; }
 }
