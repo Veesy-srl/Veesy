@@ -1,4 +1,3 @@
-using Veesy.Domain.Models;
 using Veesy.Service.Dtos;
 
 namespace Veesy.Presentation.Model.Account;

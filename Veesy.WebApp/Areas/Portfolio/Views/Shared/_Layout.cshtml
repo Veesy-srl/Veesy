@@ -25,31 +25,19 @@
                 <div class="d-flex">
                     <div class="nodisplay-sm dropdown show">
                         @{
-                            var profile_image = ViewBag.ProfileImage;
-                            var basePath = ViewBag.BaseDirectory;
-                            if (string.IsNullOrEmpty(profile_image))
+                            var imageSrc = ViewBag.BaseDirectory + ViewBag.ProfileImage;
+                            
+                            string username = User.Identity.Name;
+                            if (string.IsNullOrEmpty(ViewBag.ProfileImage))
                             {
-                                <a class="dropdown-toggle btn btn-light border fw-bolder shadow-none">
-                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" style=" width: 20px !important; height: 20px !important; max-width: none!important; " class="img-thumbnail-custom rounded-circle" alt="user-image" style="max-width: none!important; width: 60px !important; height: 60px !important;">
-                                    @{
-                                        string username = Model.Username.Contains("@") ? Model.Username.Split('@')[0] : Model.Username;
-                                    }
-                                    <span id="color-text-layout">@username
-                                    </span>
-                                </a>
-                            }
-                            else
-                            {
-                                <a class="nodisplay-sm dropdown-toggle btn btn-light border fw-bolder shadow-none">
-                                    <img src="@basePath@profile_image" style="width: 20px !important; height: 20px !important; max-width: none!important; " class="img-thumbnail-custom rounded-circle" alt="user-image">
-                                    @{
-                                        string username = Model.Username.Contains("@") ? Model.Username.Split('@')[0] : Model.Username;
-                                    }
-                                    <span id="color-text-layout">@username
-                                    </span>
-                                </a>
+                                imageSrc = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU";
                             }
                         }
+                            <a class="dropdown-toggle btn btn-light border fw-bolder shadow-none">
+                                <img src='@imageSrc' style="width: 20px !important; height: 20px !important; max-width: none!important; " class="img-thumbnail-custom rounded-circle" alt="user-image">
+                                <span id="color-text-layout">@username</span>
+                            </a>
+                        
                         <div class="dropdown-menu bg-grey-veesy" aria-labelledby="dropdownMenuLink">
                             <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Portfolio" ? "a-ciano-header" : "menu-element")" href="#">Portfolio</a>
                         <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Cloud" ? "a-ciano-header" : "menu-element")" @*asp-action="List" asp-controller="Cloud" asp-area="Portfolio"*@>Cloud</a>
@@ -68,26 +56,10 @@
             <div class="menu-popup" id="menuPopup">
                 <div class="float-end d-flex">
                         <div class="dropdown show" id="none-popup">
-                            @if (string.IsNullOrEmpty(profile_image))
-                            {
-                                <a class="dropdown-toggle btn btn-light border fw-bolder shadow-none">
-                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" style=" width: 20px !important; height: 20px !important; max-width: none!important; " class="img-thumbnail-custom rounded-circle" alt="user-image" style="max-width: none!important; width: 60px !important; height: 60px !important;">
-                                    @{
-                                        string username = Model.Username.Contains("@") ? Model.Username.Split('@')[0] : Model.Username;
-                                    }
-                                    <span id="color-text-variant">@username</span>
-                                </a>
-                            }
-                            else
-                            {
-                                <a class="dropdown-toggle  btn btn-light border fw-bolder shadow-none">
-                                    <img src="@basePath@profile_image" style="width: 20px !important; height: 20px !important; max-width: none!important; " class="img-thumbnail-custom rounded-circle" alt="user-image">
-                                    @{
-                                        string username = Model.Username.Contains("@") ? Model.Username.Split('@')[0] : Model.Username;
-                                    }
-                                    <span id="color-text-variant">@username</span>
-                                </a>
-                            }
+                            <a class="dropdown-toggle btn btn-light border fw-bolder shadow-none">
+                                <img src='@imageSrc' style=" width: 20px !important; height: 20px !important; max-width: none!important; " class="img-thumbnail-custom rounded-circle" alt="user-image">
+                                <span id="color-text-variant">@username</span>
+                            </a>
                             <div class="dropdown-menu bg-grey-veesy" aria-labelledby="dropdownMenuLink">
                                 <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Portfolio" ? "a-ciano-header" : "menu-element")" href="#">Portfolio</a>
                                 <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Cloud" ? "a-ciano-header" : "menu-element")" href="#">Cloud</a>

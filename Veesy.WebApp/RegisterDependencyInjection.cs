@@ -18,7 +18,7 @@ public static class RegisterDependencyInjection
         serviceCollection.AddScoped<IMediaRepository, MediaRepository>();
         serviceCollection.AddScoped<IVeesyUoW, VeesyUoW>();
         
-        /*Service dependency Injection*/
+        /*Service Dependency Injection*/
         serviceCollection.AddTransient<IAccountService, AccountService>();
         serviceCollection.AddTransient<IMediaService, MediaService>();
 
@@ -34,6 +34,7 @@ public static class RegisterDependencyInjection
         serviceCollection.AddTransient<MediaHelper>();
         serviceCollection.AddTransient<ProfileHelper>();
         serviceCollection.AddTransient<CloudHelper>();
+        serviceCollection.AddTransient<PortfolioHelper>();
         
         return serviceCollection;
     }
