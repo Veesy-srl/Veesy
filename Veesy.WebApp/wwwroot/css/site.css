@@ -114,6 +114,12 @@ body{
   }
 }
 
+.nodisplay-md{
+  @media only screen and (min-width: 600px) {
+    display: none !important;
+  }
+}
+
 input{
   height: 30px !important;
   font-size: 15px !important;
@@ -218,7 +224,6 @@ html {
 .login-container {
   display: grid;
   grid-template-columns: 50% 50%;
-  height: 103vh;
   width: 100vw;
 }
 
@@ -790,9 +795,10 @@ a:hover{
     width: 95% !important;
   }
 
+  
   #loginLink{
     position: relative !important;
-    top: 0.7rem !important;
+    top: 0.8rem !important;
   }
 
   #signupLink{
@@ -801,13 +807,19 @@ a:hover{
   }
 
   footer{
-    margin-top: -15% !important;
+    margin-top: -30px !important;
   }
 
   #color-text-layout{
     display: none !important;
   }
 
+}
+
+.arrow-edit-media{
+  background-color: #728695 !important;
+  height: 50px !important;
+  width: 50px !important;
 }
 
 .menu-element:hover {
@@ -948,7 +960,7 @@ textarea{
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
   @media (max-width: 576px){
-    top: -1vh;
+    margin-top: -1vh;
   }
 }
 

@@ -6,7 +6,31 @@
 }
 
 <div class="row pt-7rem">
-    <div class="col-sm-12 col-md-2"></div>
+    <div class="col-sm-12 col-md-2 center-content">
+        @if (Model.PreviousMedia != null)
+        {
+            <ul class="list-unstyled">
+                <li class="mb-3">
+                    <div class="arrow-edit-media rounded center-content"><a><i class="text-white fa-solid fa-arrow-left fa-2xl pe-1"></i></a></div>
+                </li>
+                <li class="mt-2">
+                    @if (Model.Media.Type == ".mp4")
+                    {
+                        <video autoplay="autoplay" muted loop class="img-rounded-trasparent w-25 shadow-1-strong rounded" alt="@Model.PreviousMedia.OriginalFileName">
+                            <source src="@Model.BasePath@Model.PreviousMedia.FileName?tr=w-300" type="video/mp4">
+                        </video>
+                    }
+                    else
+                    {
+                        <img asp-append-version="true" src="@Model.BasePath@Model.PreviousMedia.FileName?tr=w-300" class="w-25 shadow-1-strong rounded" alt="@Model.Media.OriginalFileName"/>
+                    }
+                </li>
+                <li class="mt-2">
+                    <p class="text-white veesy-overflow">@Model.PreviousMedia.FileName</p>
+                </li>
+            </ul>
+        }
+    </div>
     <div class="text-white col-sm-12 col-md-8">
         <div class="row">
             <div class="row">
@@ -98,7 +122,31 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-12 col-md-2"></div>
+    <div class="col-sm-12 col-md-2 center-content">
+        @if (Model.NextMedia != null)
+        {
+            <ul class="list-unstyled">
+                <li class="mb-3">
+                    <div class="arrow-edit-media rounded center-content"><a><i class="text-white fa-solid fa-arrow-right fa-2xl pe-1"></i></a></div>
+                </li>
+                <li class="mt-2">
+                    @if (Model.Media.Type == ".mp4")
+                    {
+                        <video autoplay="autoplay" muted loop class="img-rounded-trasparent w-25 shadow-1-strong rounded" alt="@Model.NextMedia.OriginalFileName">
+                            <source src="@Model.BasePath@Model.NextMedia.FileName?tr=w-300" type="video/mp4">
+                        </video>
+                    }
+                    else
+                    {
+                        <img asp-append-version="true" src="@Model.BasePath@Model.NextMedia.FileName?tr=w-300" class="w-25 shadow-1-strong rounded" alt="@Model.Media.OriginalFileName"/>
+                    }
+                </li>
+                <li class="mt-2">
+                    <p class="text-white veesy-overflow">@Model.NextMedia.FileName</p>
+                </li>
+            </ul>
+        }
+    </div>
 </div>
 
 <div class="modal fade" id="modalFileName" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
