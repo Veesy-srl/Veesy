@@ -1315,7 +1315,7 @@ namespace Veesy.Domain.Migrations
 
             modelBuilder.Entity("Veesy.Domain.Models.PortfolioMedia", b =>
                 {
-                    b.HasOne("Veesy.Domain.Models.Media", "Med")
+                    b.HasOne("Veesy.Domain.Models.Media", "Media")
                         .WithMany("PortfolioMedias")
                         .HasForeignKey("MediaId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1327,7 +1327,7 @@ namespace Veesy.Domain.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("Med");
+                    b.Navigation("Media");
 
                     b.Navigation("Portfolio");
                 });

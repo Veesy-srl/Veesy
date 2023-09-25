@@ -13,3 +13,13 @@ public class PortfolioDto
     public int Status { get; set; }
     public virtual List<PortfolioMediaDto> PortfolioMedias { get; set; }
 }
+
+public class PortfolioMediaDto
+{
+    public Guid MediaId { get; set; }
+    public MediaDto Media { get; set; }
+    public Guid PortfolioId { get; set; }
+    public string Description { get; set; }
+    public bool IsActive { get; set; }
+    public int SortOrder { get; set; }
+}

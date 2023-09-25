@@ -1,6 +1,314 @@
-@model Veesy.Presentation.Model.Portfolio.PortfolioSettingsViewModel
-
-@{
-    ViewData["Title"] = "Portfolio Settings";
-}
-
+@* @model Veesy.Presentation.Model.Portfolio.PortfolioSettingsViewModel *@
+@* *@
+@* @{ *@
+@*     ViewData["Title"] = "Portfolio Settings"; *@
+@* } *@
+@* *@
+@* <div class="row pt-7rem"> *@
+@*     <div class="col-sm-12 col-md-3 mb-3"> *@
+@*         <nav class="breadcrumb-container" aria-label="Percorso di navigazione"> *@
+@*             <ol class="breadcrumb"> *@
+@*                 <li class="breadcrumb-item"><img src="imgs/dashboard_home_light-mode.png" style="width: 18px; margin-top: -5px;" class="me-2"><a class="breadcrumb-a me-2" asp-action="Index" asp-area="Portfolio" asp-controller="Home">dashboard</a><i class="fa-solid fa-chevron-right"></i></li> *@
+@*                 <li class="breadcrumb-item"><a class="breadcrumb-a" href="#"><strong>portfolio</strong></a></li> *@
+@*                 <li class="breadcrumb-item"><a class="breadcrumb-a" href="#"><strong>settings</strong></a></li> *@
+@*             </ol> *@
+@*         </nav> *@
+@*         <div class="w-80-veesy card-white-veesy p-3 mb-3"> *@
+@*             <div class="d-flex"> *@
+@*                 <div class="col-3"> *@
+@*                     <div class="text-center"> *@
+@*                         @if (!Model.Portfolio.PortfolioMedias.Any()) *@
+@*                         { *@
+@*                             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" class="img-thumbnail rounded-circle" alt="user-image" style="max-width: none!important; width: 60px !important; height: 60px !important;"> *@
+@*                         } *@
+@*                         else *@
+@*                         { *@
+@*                             <img src="@Model.Portfolio.PortfolioMedias.First().Media.@Model.FileName" style="width: 60px !important; height: 60px !important; max-width: none!important; " class="img-thumbnail-custom rounded-circle" alt="user-image"> *@
+@*                         } *@
+@*                     </div> *@
+@*                 </div> *@
+@*                 @{ *@
+@*                     // Verifica se la stringa contiene una "@" *@
+@*                     string username = Model.Username.Contains("@") ? Model.Username.Split('@')[0] : Model.Username; *@
+@*                 } *@
+@* *@
+@*                 <div class="col-8"> *@
+@*                     <p class="ms-2"><strong>@username</strong></p> *@
+@*                 </div> *@
+@*                 <div class="col-1"><div class="text-end"><i class="fa-solid fa-circle fa-xs" style="color: #202F4D;"></i></div></div> *@
+@*             </div> *@
+@*             <h3 class="mt-4 mb-4"><strong>@Model.FullName</strong></h3> *@
+@*             @{ *@
+@*                 var workrole = "information missing"; *@
+@*                 var role_css = "text-danger"; *@
+@*                 if (Model.RolesWork.Count(s => s.Selected) > 0) *@
+@*                 { *@
+@*                     role_css = ""; *@
+@*                     workrole = Model.RolesWork.FirstOrDefault(s => s.Selected).Name; *@
+@*                 } *@
+@*             } *@
+@*             <div class="d-flex"><p class="mb-0"><strong>Role:&nbsp;</strong></p><p class="@role_css mb-0">@workrole</p></div> *@
+@*             <div class="d-flex"><p class="mb-0"><strong>Email:&nbsp;</strong></p><p class="mb-0 veesy-overflow">@Model.Email</p></div> *@
+@*             @{ *@
+@*                 var phone = "information missing"; *@
+@*                 var css = "text-danger"; *@
+@*                 if (!string.IsNullOrEmpty(Model.PhoneNumber)) *@
+@*                 { *@
+@*                     css = ""; *@
+@*                     phone = Model.PhoneNumber; *@
+@*                 } *@
+@*             } *@
+@*             <div class="d-flex"><p class="mb-0"><strong>Phone:&nbsp;</strong></p><p class="@css mb-0">@phone</p></div> *@
+@*             <div class="mt-4"><a asp-controller="Profile" asp-area="Account" asp-action="BasicInfo" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit basic info</strong></a></div> *@
+@*         </div> *@
+@*     </div> *@
+@*     <div class="col-sm-12 col-md-6"> *@
+@*         <h2 class="text-color"><strong>Your Profile</strong></h2> *@
+@*         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <a class="grey-link ms-2"><strong>learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a></p> *@
+@*         <div class="empty-veesy"></div> *@
+@*         <h3 class="text-color"><strong>General</strong></h3> *@
+@*         <div class="row"> *@
+@*             <div class="col-sm-12 col-md-6 col-lg-6 ps-2 pe-2"> *@
+@*                 <hr class="hr"/> *@
+@*                 <div class="d-flex"> *@
+@*                     @if (Model.RolesWork.Count(s => s.Selected) == 0) *@
+@*                     { *@
+@*                         <div class="col-9"> *@
+@*                             <p class="mb-0"><strong>Role:</strong></p> *@
+@*                             <p class="mb-0 color-red">Information missing</p> *@
+@*                         </div> *@
+@*                         <div class="col-3 text-end"><a onclick="openModal('#modalWorkRole')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div> *@
+@*                     } *@
+@*                     else *@
+@*                     { *@
+@*                         <div class="col-9 profile-section"> *@
+@*                             <p class="mb-0"><strong>Role:</strong></p> *@
+@*                             <p class="mb-0 veesy-overflow"> *@
+@*                                 @{ *@
+@*                                     var roles = ""; *@
+@*                                     foreach (var role in Model.RolesWork.Where(s => s.Selected)) *@
+@*                                     { *@
+@*                                         roles += $"{@role.Name}, "; *@
+@*                                     } *@
+@*                                     roles = roles.Substring(0, (roles.Length - 2)); *@
+@*                                 } *@
+@*                                 @roles *@
+@*                             </p> *@
+@*                         </div> *@
+@*                         <div class="col-3 text-end"><a onclick="openModal('#modalWorkRole')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div> *@
+@*                     } *@
+@*                 </div> *@
+@*                 <hr class="hr"/> *@
+@*                 <div class="d-flex"> *@
+@*                     @if (string.IsNullOrEmpty(Model.ExternalLink)) *@
+@*                     { *@
+@*                         <div class="col-9"> *@
+@*                             <p class="mb-0"><strong>External link:</strong></p> *@
+@*                             <p class="mb-0 color-red">Information missing</p> *@
+@*                         </div> *@
+@*                         <div class="col-3 text-end"><a onclick="openModal('#modalExternalLink')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div> *@
+@*                     } *@
+@*                     else *@
+@*                     { *@
+@*                         <div class="col-9 profile-section"> *@
+@*                             <p class="mb-0"><strong>External link:</strong></p> *@
+@*                             <a href="https://@Model.ExternalLink" target="_blank" class="mb-0 veesy-overflow">@Model.ExternalLink</a> *@
+@*                         </div> *@
+@*                         <div class="col-3 text-end"><a onclick="openModal('#modalExternalLink'), setTextAreaValue('external-link-edit', '@Model.ExternalLink')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div> *@
+@*                     } *@
+@*                 </div> *@
+@*                 <hr class="hr"/> *@
+@*             </div> *@
+@*             <div class="col-sm-12 col-md-6 pe-2 ps-2"> *@
+@*                 <hr class="hr nodisplay-sm"/> *@
+@*                 <div class="d-flex"> *@
+@*                         @if (Model.LanguagesSpoken.Count(s => s.Selected) == 0) *@
+@*                         { *@
+@*                             <div class="col-9"> *@
+@*                                 <p class="mb-0"><strong>Language Spoken:</strong></p> *@
+@*                                 <p class="mb-0 color-red">Information missing</p> *@
+@*                             </div> *@
+@*                             <div class="col-3 text-end"><a onclick="openModal('#modalLanguageSpoken')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div> *@
+@*                         } *@
+@*                         else *@
+@*                         { *@
+@*                             <div class="col-9 profile-section"> *@
+@*                                 <p class="mb-0"><strong>Language Spoken:</strong></p> *@
+@*                                 <p class="mb-0 veesy-overflow"> *@
+@*                                     @{ *@
+@*                                         var languages = ""; *@
+@*                                         foreach (var language in Model.LanguagesSpoken.Where(s => s.Selected)) *@
+@*                                         { *@
+@*                                             languages += $"{language.Language}, "; *@
+@*                                         } *@
+@*                                         languages = languages.Substring(0, (languages.Length - 2)); *@
+@*                                     } *@
+@*                                     @languages *@
+@*                                 </p> *@
+@*                             </div> *@
+@*                             <div class="col-3 text-end"><a onclick="openModal('#modalLanguageSpoken')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div> *@
+@*                         } *@
+@*                 </div> *@
+@*                 <hr class="hr"/> *@
+@*                 <div class="d-flex"> *@
+@*                         @if (Model.InfoToShow.Count(s => s.Selected) == 0) *@
+@*                         { *@
+@*                             <div class="col-9"> *@
+@*                                 <p class="mb-0"><strong>Show Profile info:</strong></p> *@
+@*                                 <p class="mb-0 color-red">Information missing</p> *@
+@*                             </div> *@
+@*                             <div class="col-3 text-end"><a onclick="openModal('#modalInfoToShow')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div> *@
+@*                         } *@
+@*                         else *@
+@*                         { *@
+@*                             <div class="col-9 profile-section"> *@
+@*                                 <p class="mb-0"><strong>Show Profile info:</strong></p> *@
+@*                                 <p class="mb-0 veesy-overflow"> *@
+@*                                     @{ *@
+@*                                         var infos = ""; *@
+@*                                         foreach (var info in Model.InfoToShow.Where(s => s.Selected)) *@
+@*                                         { *@
+@*                                             infos += $"{info.Name}, "; *@
+@*                                         } *@
+@*                                         infos = infos.Substring(0, (infos.Length - 2)); *@
+@*                                     } *@
+@*                                     @infos *@
+@*                                 </p> *@
+@*                             </div> *@
+@*                             <div class="col-3 text-end"><a onclick="openModal('#modalInfoToShow')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div> *@
+@*                         } *@
+@*                 </div> *@
+@*                 <hr class="hr"/> *@
+@*             </div> *@
+@*         </div> *@
+@*         <div class="empty-veesy"></div> *@
+@*         <div> *@
+@*             <h3 class="text-color"><strong>Portfolio intro</strong></h3> *@
+@*             @if (string.IsNullOrEmpty(Model.PortfolioIntro)) *@
+@*             { *@
+@*                 <div class="card-white-dashed-veesy p-3"> *@
+@*                     <p>Write a short info about yourself, try to make it <strong>brief</strong> and <strong>catchy</strong></p> *@
+@*                     <div class="mt-4"><a onclick="openModal('#modalPortfolioIntro')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add portfolio intro</strong></a></div> *@
+@*                 </div> *@
+@*             } *@
+@*             else *@
+@*             { *@
+@*                 <p>@Model.PortfolioIntro</p> *@
+@*                 <a onclick="openModal('#modalPortfolioIntro'), setTextAreaValue('portfolio-intro-text-edit', '@Model.PortfolioIntro')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a> *@
+@* *@
+@*             } *@
+@*         </div> *@
+@*         <div class="empty-veesy"></div> *@
+@*         <div> *@
+@*             <h3 class="text-color"><strong>Biography</strong></h3> *@
+@*             @if (string.IsNullOrEmpty(Model.Biography)) *@
+@*             { *@
+@*                 <div class="card-white-dashed-veesy p-3"> *@
+@*                     <p>Write a bio about yourself, try to make it <strong>synthetic</strong> and <strong>professional</strong></p> *@
+@*                     <div class="mt-4"><a onclick="openModal('#modalBiography')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add bio</strong></a></div> *@
+@*                 </div> *@
+@*             } *@
+@*             else *@
+@*             { *@
+@*                 <p>@Model.Biography</p> *@
+@*                 <a onclick="openModal('#modalBiography'), setTextAreaValue('biography-text-edit', '@Model.Biography')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a> *@
+@* *@
+@*             } *@
+@*         </div> *@
+@*         <div class="empty-veesy"></div> *@
+@*         <div> *@
+@*             <h3 class="text-color"><strong>Fields</strong></h3> *@
+@*             <p>Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,</p> *@
+@*             @if (Model.Sectors.Count(s => s.Selected) > 0) *@
+@*             { *@
+@*                 <div class="d-flex mb-4" style="max-width: 100%; flex-wrap: wrap;"> *@
+@*                 @foreach (var item in Model.Sectors.Where(s => s.Selected)) *@
+@*                 { *@
+@*                     <div class="pe-3 ps-3 div-white-rounded-blue-veesy d-flex"><a onclick="openModal('#modalSectors')"><i class="fa-solid fa-circle pe-2" style="color: #75CCDD"></i>@item.Name</a></div> *@
+@*                 } *@
+@*                 </div> *@
+@*                 <a onclick="openModal('#modalSectors')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a> *@
+@* *@
+@*             } *@
+@*             else *@
+@*             { *@
+@*                 <div class="d-flex"> *@
+@*                     <a onclick="openModal('#modalSectors')" class="button-white-dashed-veesy">+</a> *@
+@*                     <a onclick="openModal('#modalSectors')" class="button-white-dashed-veesy">+</a> *@
+@*                     <a onclick="openModal('#modalSectors')" class="button-white-dashed-veesy">+</a> *@
+@*                 </div> *@
+@*                 <div class="mt-2"><a onclick="openModal('#modalSectors')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add fields</strong></a></div> *@
+@*             } *@
+@*         </div> *@
+@*         <div class="empty-veesy"></div> *@
+@*         <div> *@
+@*             <h3 class="text-color"><strong>Soft skill</strong></h3> *@
+@*             <p>Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,</p> *@
+@*             @if (Model.SoftSkills.Count(s => s.Selected) > 0) *@
+@*             { *@
+@*                 <div class="d-flex mb-4" style="max-width: 100%; flex-wrap: wrap;"> *@
+@*                 @foreach (var item in Model.SoftSkills.Where(s => s.Selected)) *@
+@*                 { *@
+@*                         <div class="pe-3 ps-3 div-white-rounded-blue-veesy d-flex"><a onclick="openModal('#modalSoftSkill')" ><i class="fa-solid fa-circle pe-2" style="color: #75CCDD"></i>@item.Name</a></div> *@
+@*                 } *@
+@*                 </div> *@
+@*                 <a onclick="openModal('#modalSoftSkill')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a> *@
+@* *@
+@*             } *@
+@*             else *@
+@*             { *@
+@*                 <div class="d-flex"> *@
+@*                     <a onclick="openModal('#modalSoftSkill')" class="button-white-dashed-veesy">+</a> *@
+@*                     <a onclick="openModal('#modalSoftSkill')" class="button-white-dashed-veesy">+</a> *@
+@*                     <a onclick="openModal('#modalSoftSkill')" class="button-white-dashed-veesy">+</a> *@
+@*                 </div> *@
+@*                 <div class="mt-2"><a onclick="openModal('#modalSoftSkill')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add soft skills</strong></a></div> *@
+@*             } *@
+@*         </div> *@
+@*         <div class="empty-veesy"></div> *@
+@*         <div> *@
+@*             <h3 class="text-color"><strong>Softwares</strong></h3> *@
+@*             <p>Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,</p> *@
+@*             @if (Model.UsedSoftwares.Count(s => s.Selected) > 0) *@
+@*             { *@
+@*                 <div class="d-flex mb-4 text-color" style="max-width: 100%; flex-wrap: wrap;"> *@
+@*                 @foreach (var item in Model.UsedSoftwares.Where(s => s.Selected)) *@
+@*                 { *@
+@*                     <div class="pe-3 ps-3 div-white-rounded-veesy"><a onclick="openModal('#modalSoftware')" >@item.Name</a></div> *@
+@*                 } *@
+@*                 </div> *@
+@*                 <a onclick="openModal('#modalSoftware')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a> *@
+@* *@
+@*             } *@
+@*             else *@
+@*             { *@
+@*                 <div class="d-flex"> *@
+@*                     <a onclick="openModal('#modalSoftware')" class="button-white-dashed-veesy">+</a> *@
+@*                     <a onclick="openModal('#modalSoftware')" class="button-white-dashed-veesy">+</a> *@
+@*                     <a onclick="openModal('#modalSoftware')" class="button-white-dashed-veesy">+</a> *@
+@*                 </div> *@
+@*                 <div class="mt-2"><a onclick="openModal('#modalSoftware')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add softwares</strong></a></div> *@
+@*             } *@
+@*         </div> *@
+@*         <div class="empty-veesy"></div> *@
+@*         <div> *@
+@*             <h3 class="text-color"><strong>Portfolios</strong></h3> *@
+@*             <p>You don't have any portfolio yet.</p> *@
+@*             <button class="rounded-pill btn btn-primary btn-variant">create your first portfolio</button> *@
+@*         </div> *@
+@*         <div class="empty-veesy"></div> *@
+@*         <div class="empty-veesy"></div> *@
+@*     </div> *@
+@*     <div class="col-sm-12 col-md-3"> *@
+@*         <div class="d-flex justify-content-center"> *@
+@*             <div class="w-75-veesy card-blue-veesy p-3"> *@
+@*                 <div class="text-end"><i class="fa-solid fa-circle fa-2xs" style="color: #ffffff;"></i></div> *@
+@*                 <p class="mb-0" style="color: white">Do you need some help?</p> *@
+@*                 <a class="a-ciano-underline" href="mailto:support@veesy.it">Contact us</a> *@
+@*             </div> *@
+@*         </div> *@
+@*         <div class="empty-veesy"></div> *@
+@*         <div class="empty-veesy"></div> *@
+@*         <div class="empty-veesy"></div> *@
+@*     </div> *@
+@* </div> *@
