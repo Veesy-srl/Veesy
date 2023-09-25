@@ -33,5 +33,5 @@ public class Media : TrackableEntity
     // public int Height { get; set; }
     public virtual List<MediaCategory> MediaCategories { get; set; }
     public virtual List<MediaTag> MediaTags { get; set; }
-    public virtual List<MediaFormat> MediaFormats { get; set; }
+    public virtual List<PortfolioMedia> PortfolioMedias { get; set; }
 }

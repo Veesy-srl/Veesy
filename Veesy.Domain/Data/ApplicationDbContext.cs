@@ -12,10 +12,8 @@ public class ApplicationDbContext : IdentityDbContext
 
     public DbSet<MyUser> MyUsers { get; set; }
     public DbSet<Category> Categories { get; set; }
-    public DbSet<Format> Formats { get; set; }
     public DbSet<Media> Medias { get; set; }
     public DbSet<MediaCategory> MediaCategories { get; set; }
-    public DbSet<MediaFormat> MediaFormats { get; set; }
     public DbSet<MediaTag> MediaTags { get; set; }
     public DbSet<MyUserSector> MyUserSectors { get; set; }
     public DbSet<MyUserUsedSoftware> MyUserUsedSoftwares { get; set; }
@@ -39,9 +37,8 @@ public class ApplicationDbContext : IdentityDbContext
     #region OnModelCreating
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<PortfolioMedia>().HasKey(a => new { a.PortfolioId, a.MediaFormatId });
+        modelBuilder.Entity<PortfolioMedia>().HasKey(a => new { a.PortfolioId, a.MediaId });
         modelBuilder.Entity<PortfolioMedia>().HasOne(a => a.Portfolio).WithMany(a => a.PortfolioMedias).OnDelete(DeleteBehavior.NoAction);
-        modelBuilder.Entity<PortfolioMedia>().HasOne(a => a.MediaFormat).WithMany(a => a.PortfolioMedias);
         modelBuilder.Entity<MyUserUsedSoftware>().HasKey(a => new { a.MyUserId, a.UsedSoftwareId });
         modelBuilder.Entity<MyUserSkill>().HasKey(a => new {a.Id, a.MyUserId, a.SkillId });
         modelBuilder.Entity<MyUserCategoryWork>().HasKey(a => new {a.MyUserId, a.CategoryWorkId });
