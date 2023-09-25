@@ -28,6 +28,6 @@ public class PortfolioController : VeesyController
     public IActionResult Settings()
     {
         var vm = _portfolioHelper.GetPortfolioSettingsViewModel(UserInfo);
-        return View();
+        return View(vm);
     }
 }

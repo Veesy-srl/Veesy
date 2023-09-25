@@ -1,3 +1,4 @@
+using Veesy.Domain.Constants;
 using Veesy.Domain.Models;
 
 namespace Veesy.Service.Dtos;
@@ -15,7 +16,13 @@ public class PortfolioDto
     public int Status { get; set; }
     public DateTime LastEditRecordDate { get; set; }
     public bool IsMain { get; set; }
+    public VeesyConstants.PortfolioLayout Layout { get; set; }
     public virtual List<PortfolioMediaDto> PortfolioMedias { get; set; }
+
+    public PortfolioDto()
+    {
+        PortfolioMedias = new List<PortfolioMediaDto>();
+    }
 }
 
 public class PortfolioMediaDto
@@ -48,6 +55,7 @@ public static class MapPortfolioDtos
             Status = portfolio.Status,
             LastEditRecordDate = portfolio.LastEditRecordDate,
             IsMain = portfolio.IsMain,
+            Layout = portfolio.Layout,
             PortfolioMedias = portfolio.PortfolioMedias?.Select(MapPortfolioMedia)?.ToList()
         };
     }

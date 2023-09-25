@@ -1,6 +1,6 @@
 namespace Veesy.Domain.Constants;
 
-public class VeesyConstants
+public static class VeesyConstants
 {
     public static class SubscriptionPlan
     {
@@ -17,5 +17,10 @@ public class VeesyConstants
         TwoColumns = 2,
         ThreeColumns = 3,
         FourColumns = 4
+    }
+
+    public static List<PortfolioLayout> GetAvailableLayouts()
+    {
+        return Enum.GetValues(typeof(PortfolioLayout)).Cast<PortfolioLayout>().ToList();
     }
 }
