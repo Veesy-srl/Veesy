@@ -412,6 +412,40 @@ button:focus {
   border: 1px solid #202F4D33 !important;
 }
 
+.input--style-password {
+  width: 100%;
+  padding: 2px 4px;
+  background: white !important;
+  border-radius: 5px 0px 0px 5px !important;
+  border-top: 1px solid #202F4D33 !important;
+  border-bottom: 1px solid #202F4D33 !important;
+  border-left: 1px solid #202F4D33 !important;
+  border-right: 0px solid #202F4D33 !important;
+}
+
+.span--style-password {
+  width: 100%;
+  padding: 2px 4px;
+  background: rgb(255, 255, 255) !important;
+  border-radius: 0px 5px 5px 0px !important;
+  border-top: 1px solid #202F4D33 !important;
+  border-bottom: 1px solid #202F4D33 !important;
+  border-right: 1px solid #202F4D33 !important;
+  border-left: 0px solid #202F4D33 !important;
+  height: 100%;
+}
+
+.input--style-password::after {
+  width: 100%;
+  padding: 2px 4px;
+  background: white !important;
+  border-radius: 5px 0px 0px 5px !important;
+  border-top: 1px solid #202F4D33 !important;
+  border-bottom: 1px solid #202F4D33 !important;
+  border-left: 1px solid #202F4D33 !important;
+  border-right: 0px solid #202F4D33 !important;
+}
+
 .input--style-1:after {
   width: 100%;
   padding: 2px 4px;
