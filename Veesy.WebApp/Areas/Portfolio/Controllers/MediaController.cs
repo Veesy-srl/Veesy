@@ -33,41 +33,67 @@ public class MediaController : VeesyController
         _notyfService = notyfService;
         _configuration = configuration;
     }
-
-    [HttpGet]
-    public IActionResult UploadMedia(string a)
-    {
-        return View();
-    }
     
-    // [HttpPost("upload-stream-multipartreader")]
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status415UnsupportedMediaType)]
     [MultipartFormData]
     [DisableFormValueModelBinding]
-    public async Task<IActionResult> UploadMedia(/*UploadMediaViewModel model*/)
+    public async Task<IActionResult> UploadMedia()
     {
         try
         {
-            var resultDto = await _mediaHelper.UploadFileAsync(HttpContext.Request.Body, HttpContext.Request.ContentLength, Request.ContentType, UserInfo);
-            if (resultDto.Success)
+            var result = await _mediaHelper.UploadFileAsync(HttpContext.Request.Body,  Request.ContentType, UserInfo);
+            var successFiles = "Files upload: \n";
+            var errorFiles = "Files not upload: \n";
+            foreach (var res in result)
             {
-                _notyfService.Custom(resultDto.Message, 10, "#75CCDD40");
-                return Ok();
+                if (res.success)
+                    successFiles += res.fileName + "\n";
+                else
+                    errorFiles += res.fileName + " - " + res.message + "\n";
             }
-            _notyfService.Custom(resultDto.Message, 10, "#ca0a0a96");
-            return BadRequest();
+            if (successFiles != "Files delete: \n")
+                _notyfService.Custom(successFiles, 10, "#75CCDD");
+            if (errorFiles != "Files not delete: \n")
+                _notyfService.Custom(errorFiles, 10, "#ca0a0a");
+            return Ok();
         }
         catch (Exception ex)
         {
             Logger.Error(ex, ex.Message);
-            _notyfService.Custom("Error during upload file. Please retry.", 10, "#ca0a0a96");
+            _notyfService.Custom("Error during upload file. Please retry.", 10, "#ca0a0a");
             return BadRequest();
         }
     }
     
-    
+    [HttpPost]
+    public async Task<JsonResult> DeleteMedia([FromBody] List<Guid> imgToDelete)
+    {
+        try
+        {
+            var result = await _mediaHelper.DeleteFiles(imgToDelete, UserInfo);
+            var successFiles = "Files delete: \n";
+            var errorFiles = "Files not delete: \n";
+            var codeToDelete = result.Select(s => s.code);
+            foreach (var res in result)
+            {
+                if (res.success)
+                    successFiles += res.filename + "\n";
+                else
+                    errorFiles += res.filename + " - " + res.message + "\n";
+            }
+            if (successFiles != "Files delete: \n")
+                _notyfService.Custom(successFiles, 10, "#75CCDD");
+            if (errorFiles != "Files not delete: \n")
+                _notyfService.Custom(errorFiles, 10, "#ca0a0a");
+            return Json(new { Result = true, SuccessFiles = successFiles, ErrorFiles = errorFiles, CodeToDelete = codeToDelete });
+        }
+        catch (Exception ex)
+        {
+            return Json(new { Result = false, Message = "Error deleting files. Please retry." });
+        }
+    }
     
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
@@ -80,7 +106,7 @@ public class MediaController : VeesyController
         {
             var result = await _profileHelper.UpdateProfileImage(HttpContext.Request.Body, Request.ContentType, UserInfo);
             if(result.Success)
-                _notyfService.Custom("Image update correctly.", 10, "#75CCDD40");
+                _notyfService.Custom("Image update correctly.", 10, "#75CCDD");
             else
                 _notyfService.Error(result.Message);
             return RedirectToAction("BasicInfo", "Profile", new {area = "Account"});

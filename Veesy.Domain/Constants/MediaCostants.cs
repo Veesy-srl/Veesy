@@ -2,10 +2,17 @@ namespace Veesy.Domain.Constants;
 
 public static class MediaCostants
 {
-    public static string[] imageExtensions =
+    public static string[] ImageExtensions =
     {
-        ".PNG", ".JPG", ".JPEG", ".BMP", ".GIF"
+        ".PNG", ".JPG", ".JPEG", ".GIF"
     };
+    
+    public static string[] VideoExtensions =
+    {
+        ".AVI", ".MP4", ".MOV"
+    };
+    
+    public static string[] MediaExtension => VideoExtensions.Concat(ImageExtensions).ToArray();
     
     public static class BlobMediaSections
     {
@@ -13,11 +20,4 @@ public static class MediaCostants
         public static string CompressedMedia = "CompressedMedia";
         public static string ProfileMedia = "ProfileImage";
     }
-    
-    public static string[] videoExtensions =
-    {
-        ".AVI", ".MP4", ".DIVX", ".WMV"
-    };
-
-    public static string[] mediaExtensions => videoExtensions.Concat(imageExtensions).ToArray();
 }

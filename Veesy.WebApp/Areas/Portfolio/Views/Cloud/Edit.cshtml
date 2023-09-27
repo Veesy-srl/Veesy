@@ -10,23 +10,25 @@
         @if (Model.PreviousMedia != null)
         {
             <ul class="list-unstyled">
-                <li class="mb-3">
-                    <div class="arrow-edit-media rounded center-content"><a><i class="text-white fa-solid fa-arrow-left fa-2xl pe-1"></i></a></div>
+                <li class="mb-3 edit-padding-left">
+                    <div class="arrow-edit-media rounded-05 center-content"><a><img class="w-100" src="~/icon/arrow_left_dark mode.svg"/></a></div>
                 </li>
                 <li class="mt-2">
-                    @if (Model.Media.Type == ".mp4")
-                    {
-                        <video autoplay="autoplay" muted loop class="img-rounded-trasparent w-25 shadow-1-strong rounded" alt="@Model.PreviousMedia.OriginalFileName">
-                            <source src="@Model.BasePath@Model.PreviousMedia.FileName?tr=w-300" type="video/mp4">
-                        </video>
-                    }
-                    else
-                    {
-                        <img asp-append-version="true" src="@Model.BasePath@Model.PreviousMedia.FileName?tr=w-300" class="w-25 shadow-1-strong rounded" alt="@Model.Media.OriginalFileName"/>
-                    }
+                    <a asp-action="Edit" asp-area="Portfolio" asp-controller="Cloud" asp-route-id="@Model.NextMedia.Code">
+                        @if (Model.PreviousMedia.Type == ".mp4")
+                        {
+                            <video autoplay="autoplay" muted loop class="img-rounded-trasparent w-25 shadow-1-strong rounded-05" title="@Model.PreviousMedia.OriginalFileName" alt="@Model.PreviousMedia.OriginalFileName">
+                                <source src="@Model.BasePath@Model.PreviousMedia.FileName?tr=w-300" type="video/mp4">
+                            </video>
+                        }
+                        else
+                        {
+                            <img asp-append-version="true" src="@Model.BasePath@Model.PreviousMedia.FileName?tr=w-300" class="img-rounded-trasparent w-25 shadow-1-strong rounded" title="@Model.PreviousMedia.OriginalFileName" alt="@Model.PreviousMedia.OriginalFileName"/>
+                        }
+                    </a>
                 </li>
-                <li class="mt-2">
-                    <p class="text-white veesy-overflow">@Model.PreviousMedia.FileName</p>
+                <li class="mt-2 w-50  edit-padding-left">
+                    <p class="text-white veesy-overflow">@Model.PreviousMedia.OriginalFileName</p>
                 </li>
             </ul>
         }
@@ -95,9 +97,13 @@
                         <h3 class="mb-0 text-white">Credits</h3>
                         @if (string.IsNullOrEmpty(Model.Media.Credits))
                         {
-                            <div class="card-white-dashed-veesy p-3 mt-2" id="credits-area">
+                            <div class="card-white-dashed-veesy p-3 mt-2" id="credits-area-empty">
                                 <p class="text-white">Add a note or quote collaborators who worked at this output.</p>
                                 <div class="mt-4"><a onclick="ShowTextArea()" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add credits</strong></a></div>
+                            </div>
+                            <div id="credits-area" style="display: none">
+                                <p class="text-white" id="credits-show"></p>
+                                <a onclick="ShowTextArea()" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
                             </div>
                             <div class="text-area-rounded mt-2 text-end" style="display: none" id="credits-area-input">
                                 <textarea id="credits-edit" class="text-area-rounded text-area-not-resizable w-100 p-2" style="height: 131.2px;" placeholder="Write your credits.."></textarea>
@@ -106,6 +112,10 @@
                         }
                         else
                         {
+                            <div class="card-white-dashed-veesy p-3 mt-2" id="credits-area-empty" style="display: none">
+                                <p class="text-white">Add a note or quote collaborators who worked at this output.</p>
+                                <div class="mt-4"><a onclick="ShowTextArea()" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add credits</strong></a></div>
+                            </div>
                             <div id="credits-area">
                                 <p class="text-white" id="credits-show">@Model.Media.Credits</p>
                                 <a onclick="ShowTextArea()" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
@@ -126,23 +136,25 @@
         @if (Model.NextMedia != null)
         {
             <ul class="list-unstyled">
-                <li class="mb-3">
-                    <div class="arrow-edit-media rounded center-content"><a><i class="text-white fa-solid fa-arrow-right fa-2xl pe-1"></i></a></div>
+                <li class="mb-3 edit-padding-right" style="float: right">
+                    <div class="arrow-edit-media rounded-05 center-content"><a asp-action="Edit" asp-area="Portfolio" asp-controller="Cloud" asp-route-id="@Model.NextMedia.Code"><img class="w-100" src="~/icon/arrow_right_dark mode.svg"/></a></div>
                 </li>
-                <li class="mt-2">
-                    @if (Model.Media.Type == ".mp4")
-                    {
-                        <video autoplay="autoplay" muted loop class="img-rounded-trasparent w-25 shadow-1-strong rounded" alt="@Model.NextMedia.OriginalFileName">
-                            <source src="@Model.BasePath@Model.NextMedia.FileName?tr=w-300" type="video/mp4">
-                        </video>
-                    }
-                    else
-                    {
-                        <img asp-append-version="true" src="@Model.BasePath@Model.NextMedia.FileName?tr=w-300" class="w-25 shadow-1-strong rounded" alt="@Model.Media.OriginalFileName"/>
-                    }
+                <li style="float: right" class="mt-2">
+                    <a asp-action="Edit" asp-area="Portfolio" asp-controller="Cloud" asp-route-id="@Model.NextMedia.Code">
+                        @if (Model.NextMedia.Type == ".mp4")
+                        {
+                            <video style="float: right" autoplay="autoplay" muted loop class="img-rounded-trasparent w-25 shadow-1-strong rounded-05" title="@Model.NextMedia.OriginalFileName" alt="@Model.NextMedia.OriginalFileName">
+                                <source src="@Model.BasePath@Model.NextMedia.FileName?tr=w-300" type="video/mp4">
+                            </video>
+                        }
+                        else
+                        {
+                            <img style="float: right" asp-append-version="true" src="@Model.BasePath@Model.NextMedia.FileName?tr=w-300" class="w-25 shadow-1-strong rounded-05 img-rounded-trasparent" title="@Model.NextMedia.OriginalFileName" alt="@Model.NextMedia.OriginalFileName"/>
+                        }
+                    </a>
                 </li>
-                <li class="mt-2">
-                    <p class="text-white veesy-overflow">@Model.NextMedia.FileName</p>
+                <li class="mt-2 w-50 edit-padding-right text-end" style="float: right">
+                    <p class="text-white veesy-overflow">@Model.NextMedia.OriginalFileName</p>
                 </li>
             </ul>
         }
@@ -183,6 +195,20 @@
                 dataType: 'json',
                 success: function (response) {
                     if(response.result){
+                        if (Credits != ""){
+                            document.getElementById("credits-area").style.display = "block";
+                            document.getElementById("credits-area-empty").style.display = "none";
+                            document.getElementById("credits-area-input").style.display = "none";
+                            document.getElementById("credits-show").textContent = Credits;
+                            document.getElementById("credits-edit").value = Credits;
+                        }
+                        else{
+                            document.getElementById("credits-area").style.display = "none";
+                            document.getElementById("credits-area-empty").style.display = "block";
+                            document.getElementById("credits-area-input").style.display = "none";
+                            document.getElementById("credits-show").textContent = "";
+                            document.getElementById("credits-edit").value = "";
+                        }
                     }
                     $('#load-spinner').css("display", "none");
                 },
@@ -193,8 +219,9 @@
         }
     
         function ShowTextArea() {
+            document.getElementById("credits-area-empty").style.display = "none";
             document.getElementById("credits-area").style.display = "none";
-            document.getElementById("credits-area-input").style.display = "block";
+            document.getElementById("credits-area-input").style.display = "";
         }
     
         var Code = '@Model.Media.Code'

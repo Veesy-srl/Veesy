@@ -47,7 +47,7 @@ public class AuthController : Controller
         try
         {
             if(string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.Password))
-                _notyfService.Custom("Email or password are invalid", 10, "#ca0a0a96");
+                _notyfService.Custom("Email or password are invalid", 10, "#ca0a0a");
 
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
@@ -55,7 +55,7 @@ public class AuthController : Controller
                 user = await _userManager.FindByNameAsync(model.Email);
                 if (user == null)
                 {
-                    _notyfService.Custom("Email or password are invalid", 10, "#ca0a0a96");
+                    _notyfService.Custom("Email or password are invalid", 10, "#ca0a0a");
                     return View(model);
                 }
             }
@@ -65,7 +65,7 @@ public class AuthController : Controller
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
             if (result.Succeeded)
                return RedirectToAction("Index", "Home", new { area = "Portfolio" });
-            _notyfService.Custom("Email or password are invalid", 10, "#ca0a0a96");
+            _notyfService.Custom("Email or password are invalid", 10, "#ca0a0a");
             return View(model);
         }
         catch (Exception ex)
@@ -92,7 +92,7 @@ public class AuthController : Controller
             var result = await _authHelper.RegisterNewMember(model);
             if (result.Success)
                 return RedirectToAction("SendEmailVerification", new {email = model.Email});
-            _notyfService.Custom(result.Message.Replace("'", "&#39;"), 10, "#ca0a0a96");
+            _notyfService.Custom(result.Message.Replace("'", "&#39;"), 10, "#ca0a0a");
             var vm = _authHelper.GetSignUpViewModelException(model);
             return View(vm);
         }
@@ -100,7 +100,7 @@ public class AuthController : Controller
         {
             Logger.Error(ex, ex.Message);
             Logger.Error($"Signup model: {model.ToJson()}");
-            _notyfService.Custom("Error during register new member. Please retry.", 10, "#ca0a0a96");
+            _notyfService.Custom("Error during register new member. Please retry.", 10, "#ca0a0a");
             var vm = _authHelper.GetSignUpViewModelException(model);
             return View();
         }
@@ -135,7 +135,7 @@ public class AuthController : Controller
         }
         catch (Exception e)
         {
-            _notyfService.Custom("Error during send reset password link. Please retry.", 10, "#ca0a0a96");
+            _notyfService.Custom("Error during send reset password link. Please retry.", 10, "#ca0a0a");
             Logger.Error(e, e.Message);
             Logger.Error($"Forgot password: {model.ToJson()}");
             return View();
@@ -168,24 +168,24 @@ public class AuthController : Controller
 
             if(model.Password != model.PasswordConfirm)
             {
-                _notyfService.Custom("Passwords don't match", 10, "#ca0a0a96");
+                _notyfService.Custom("Passwords don't match", 10, "#ca0a0a");
                 return View(model);
             }
             var result = await _userManager.ResetPasswordAsync(user, model.Token, model.Password);
             if (result.Succeeded)
             {
-                _notyfService.Custom("Password update correctly.", 10, "#75CCDD40");
+                _notyfService.Custom("Password update correctly.", 10, "#75CCDD");
                 return RedirectToAction("Login", "Auth");
             }
             else
             {
-                _notyfService.Custom(result.Errors.FirstOrDefault().Description, 10, "#ca0a0a96");
+                _notyfService.Custom(result.Errors.FirstOrDefault().Description, 10, "#ca0a0a");
                 return View(model);
             }
         }
         catch (Exception ex)
         {
-            _notyfService.Custom("Error during updating password. Please retry.", 10, "#ca0a0a96");
+            _notyfService.Custom("Error during updating password. Please retry.", 10, "#ca0a0a");
             Logger.Error(ex, ex.Message);
             Logger.Error($"Reset password: {model.ToJson()}");
             return View(model);
@@ -208,7 +208,7 @@ public class AuthController : Controller
             if ((await _userManager.ConfirmEmailAsync(user, token)).Succeeded)
             {
                 await _signInManager.SignInAsync(user, false);
-                return RedirectToAction("Index", "Home", new {area = "Portfolio"});
+                return RedirectToAction("EmailVerified", "Auth", new {area = "Auth"});
             }
 
             return RedirectToAction("VerifyEmail", "Auth", new { Email = email });
@@ -216,7 +216,7 @@ public class AuthController : Controller
         catch (Exception e)
         {
             Logger.Error(e, e.Message);
-            _notyfService.Custom("Error send email confirmation. Please retry.", 10, "#ca0a0a96");
+            _notyfService.Custom("Error send email confirmation. Please retry.", 10, "#ca0a0a");
             return RedirectToAction("Login", "Auth");
         }
     }
@@ -230,6 +230,12 @@ public class AuthController : Controller
         };
         return View(vm);
     }
+    
+    [HttpGet]
+    public IActionResult EmailVerified()
+    {
+        return View();
+    }
         
     [HttpGet]
     public async Task<IActionResult> SendEmailVerification(string email)
@@ -242,7 +248,7 @@ public class AuthController : Controller
         catch (Exception e)
         {
             Logger.Error(e, e.Message);
-            _notyfService.Custom("Error send email verification. Please retry.", 10, "#ca0a0a96");
+            _notyfService.Custom("Error send email verification. Please retry.", 10, "#ca0a0a");
             return RedirectToAction("VerifyEmail", new { email = email });
         }
     }

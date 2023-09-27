@@ -21,6 +21,7 @@ public static class RegisterDependencyInjection
         /*Service Dependency Injection*/
         serviceCollection.AddTransient<IAccountService, AccountService>();
         serviceCollection.AddTransient<IMediaService, MediaService>();
+        serviceCollection.AddTransient<ISubscriptionPlanService, SubscriptionPlanService>();
 
         /*Utils Dependency Injection*/
         serviceCollection.AddScoped<IEmailSender, EmailSender>();
@@ -28,6 +29,7 @@ public static class RegisterDependencyInjection
     
         /*Validator Dependency Injection*/
         serviceCollection.AddTransient<MyUserValidator>();
+        serviceCollection.AddTransient<MediaValidators>();
     
         /*Helper Dependency Injection*/
         serviceCollection.AddTransient<AuthHelper>();
