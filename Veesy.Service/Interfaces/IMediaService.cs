@@ -11,4 +11,6 @@ public interface IMediaService
     Media? GetPreviousMediaByDate(DateTime mediaSelectedCreateRecordDate, MyUser user);
     Media? GetNextMediaByDate(DateTime mediaSelectedCreateRecordDate, MyUser user);
     Task<ResultDto> UpdateMedia(Media media, MyUser user);
+    long GetSizeMediaStorageByUserId(string userId);
+    Task DeleteMedia(Media media, MyUser user);
 }

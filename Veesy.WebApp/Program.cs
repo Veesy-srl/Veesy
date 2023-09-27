@@ -35,7 +35,7 @@ try
         .AddEnvironmentVariables();
     
     builder.Logging.ClearProviders();
-    builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Debug);
+    builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Information);
     builder.Host.UseNLog();
     
     ConfigurationManager Configuration = builder.Configuration;

@@ -9,6 +9,7 @@ using Veesy.Domain.Exception;
 using Veesy.Domain.Models;
 using Veesy.Service.Implementation;
 using Veesy.Service.Interfaces;
+using Veesy.Validators;
 
 namespace Veesy.Presentation.Helper;
 
@@ -18,16 +19,20 @@ public class MediaHelper
     private readonly ApplicationDbContext _dbContext;
     private readonly VeesyBlobService _veesyBlobService;
     private readonly IMediaService _mediaService;
+    private readonly MediaValidators _mediaValidators;
+    private readonly ISubscriptionPlanService _subscriptionPlanService;
     
     private static readonly FileExtensionContentTypeProvider Provider = new FileExtensionContentTypeProvider();
     private readonly IEnumerable<string> allowedExtensions = new List<string> { ".zip", ".bin", ".png", ".mp4", ".jpg", ".jpeg" };
 
-    public MediaHelper(IConfiguration config, ApplicationDbContext dbContext, VeesyBlobService veesyBlobService, IMediaService mediaService)
+    public MediaHelper(IConfiguration config, ApplicationDbContext dbContext, VeesyBlobService veesyBlobService, IMediaService mediaService, MediaValidators mediaValidators, ISubscriptionPlanService subscriptionPlanService)
     {
         _config = config;
         _dbContext = dbContext;
         _veesyBlobService = veesyBlobService;
         _mediaService = mediaService;
+        _mediaValidators = mediaValidators;
+        _subscriptionPlanService = subscriptionPlanService;
     }
 
     public async Task<(ResultDto resultDto, string originalFilename, string newFileName)> UploadProfileImageOnAzure(Stream fileStream, string contentType)
@@ -53,22 +58,43 @@ public class MediaHelper
     }
 
 
-    public async Task<ResultDto> UploadFileAsync(Stream fileStream, long? mediaSize, string contentType, MyUser user)
+    public async Task<List<(bool success, string fileName, string message)>> UploadFileAsync(Stream fileStream, string contentType, MyUser user)
     {
         //Il numero di file che trovo nella section dipende dal limite che imposto a dropzone
-        //TODO: fare validazione
         var boundary = GetBoundary(MediaTypeHeaderValue.Parse(contentType));
         var multipartReader = new MultipartReader(boundary, fileStream);
         var section = await multipartReader.ReadNextSectionAsync();
-        var result = new ResultDto(false, "No files uploaded. Please retry");
+        var filesUploadedStatus = new List<(bool success,string fileName, string message)>();
+        var subscription = _subscriptionPlanService.GetSubscriptionByUserId(user.Id);
         while (section != null)
         {
             var fileSection = section.AsFileSection();
             if (fileSection != null)
             {
+                //File extension validation
                 var extension = Path.GetExtension(fileSection.FileName);
+                var validateExtension = _mediaValidators.ValidateMediaExtension(extension);
+                if (!validateExtension.Success)
+                {
+                    filesUploadedStatus.Add(new (false, fileSection.FileName, validateExtension.Message));
+                    continue;
+                }
+                
+                //File size validation
+                Stream stream = new MemoryStream();
+                await fileSection.FileStream.CopyToAsync(stream);
+                var size = stream.Length;
+                var tmpSize = _mediaService.GetSizeMediaStorageByUserId(user.Id) + size; //Value in byte
+                var validateSize = _mediaValidators.ValidateSizeUpload(tmpSize, subscription.AllowedMegaByte * 1024 * 1024);
+                if (!validateSize.Success)
+                {
+                    filesUploadedStatus.Add(new (false, fileSection.FileName, validateSize.Message));
+                    section = await multipartReader.ReadNextSectionAsync();
+                    continue;
+                }
+                
                 var newFileName = $"{Guid.NewGuid().ToString().Replace("-", String.Empty)}{extension}";
-                await _veesyBlobService.UploadFromStreamBlobAsync(fileSection.FileStream, $"{MediaCostants.BlobMediaSections.OriginalMedia}/{newFileName}", contentType);
+                await _veesyBlobService.UploadFromStreamBlobAsync(stream, $"{MediaCostants.BlobMediaSections.OriginalMedia}/{newFileName}", contentType);
                 try
                 {
                     await _mediaService.AddMedia(new Media()
@@ -77,9 +103,9 @@ public class MediaHelper
                         OriginalFileName = fileSection.FileName,
                         Type = extension,
                         MyUserId = user.Id,
-                        Size = mediaSize.Value,
+                        Size = size,
                     }, user);
-                    result = new ResultDto(true, $"{fileSection.FileName} upload correctly.");
+                    filesUploadedStatus.Add(new (true, fileSection.FileName, $"{fileSection.FileName} upload correctly."));
                 }
                 catch (Exception e)
                 {
@@ -90,18 +116,49 @@ public class MediaHelper
             section = await multipartReader.ReadNextSectionAsync();
         }
 
-        return result;
+        return filesUploadedStatus;
     }
 
     public async Task<BlobElement> GetMediaFromBlob(string section, string fileName)
     {
         return await _veesyBlobService.GetBlobAsync($"{section}/{fileName}");
     }
+    
+    public async Task<List<(bool success, string filename, string message, string? code)>> DeleteFiles(List<Guid> imgToDelete, MyUser userInfo)
+    {
+        var result = new List<(bool, string, string, string?)>();
+        foreach (var imgCode in imgToDelete)
+        {
+            var media = _mediaService.GetMediaById(imgCode);
+            try
+            {
+                if (media == null)
+                {
+                    result.Add(new(false, imgCode.ToString(), "File not found.", null));
+                    continue;
+                }
+
+                if (media.MyUserId != userInfo.Id)
+                {
+                    result.Add(new(false, media.OriginalFileName, "Access not allowed.", null));
+                    continue;
+                }
+
+                await _veesyBlobService.DeleteBlobAsync($"{MediaCostants.BlobMediaSections.OriginalMedia}/{media.FileName}");
+                await _mediaService.DeleteMedia(media, userInfo);
+                result.Add(new (true, media.OriginalFileName, "", imgCode.ToString()));
+            }
+            catch (Exception e)
+            {
+                result.Add(new(false, media.FileName, "Error deleting file. Please retry.", null));
+            }
+        }
+
+        return result;
+    }
 
     #region Media Utils
 
-    
-    
     private static string GetBoundary(MediaTypeHeaderValue contentType)
     {
         var boundary = HeaderUtilities.RemoveQuotes(contentType.Boundary).Value;
@@ -145,6 +202,7 @@ public class MediaHelper
     }
 
     #endregion
+
 }
 
 public static class MediaUtils

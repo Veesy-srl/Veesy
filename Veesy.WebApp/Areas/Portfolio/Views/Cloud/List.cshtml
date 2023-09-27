@@ -7,18 +7,22 @@
     <div class="col-sm-12 col-md-3">
         <nav class="breadcrumb-container" aria-label="Percorso di navigazione">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><img src="imgs/dashboard_home_dark-mode.png" style="width: 18px; margin-top: -5px;" class="me-2"><a class="breadcrumb-a me-2 text-white" asp-area="Portfolio" asp-controller="Home" asp-action="Index">dashboard</a><i class="fa-solid fa-chevron-right text-white"></i></li>
-                <li class="breadcrumb-item"><a class="breadcrumb-a me-2 text-white" asp-action="List">cloud</a></li>
+                <li class="breadcrumb-item"><img src="imgs/dashboard_home_dark-mode.png" style="width: 18px; margin-top: -5px;" class="me-2"><a class="breadcrumb-a-white me-2 text-white" asp-area="Portfolio" asp-controller="Home" asp-action="Index">dashboard</a><i class="fa-solid fa-chevron-right text-white"></i></li>
+                <li class="breadcrumb-item"><a class="breadcrumb-a-white me-2 text-white" asp-action="List">cloud</a></li>
             </ol>
         </nav>
     </div>
     <div class="text-white col-sm-12 col-md-6">
         <h1><strong>Cloud</strong></h1>
         <div class="empty-veesy"></div>
-        <p>Here you can upload your files. The recommended format is 4:3 horizontal or vertical, format accepted: jpg, png, mov, mp4, Lorem ipsum<a class="grey-link ms-2"><strong>learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a></p>
-        <div class="empty-veesy"></div>
-        <div class="row">
-            <form enctype="multipart/form-data" asp-action="UploadMedia" asp-controller="Media" asp-area="Portfolio" class="dropzone card-grey-dashed-veesy" id="uploader">
+        <p class="text-white mb-0">Here you can upload your files. The recommended format is 4:3 horizontal or vertical, format accepted: jpg, png, mov, mp4, Lorem ipsum<a class="grey-link ms-2"><strong>learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a></p>
+        <div class="empty-veesy nodisplay-md"></div>
+        <div class="nodisplay-md" id="div-uploader">
+            <a onclick="hideDropZone()" class="ms-2 btn btn-light border fw-bolder shadow-none close-button-dropzone">
+                <i class="fas fa-times-circle fa-2xs text-primary" id="icon-color" aria-hidden="true"></i>
+                <span id="color-text-variant">close</span>
+            </a>
+            <form enctype="multipart/form-data" asp-action="UploadMedia" asp-controller="Media" asp-area="Portfolio" class="dropzone card-grey-dashed-veesy mb-4" id="uploader">
                 <div class="dz-message needsclick" id="message-uploader">
                     <div id="div-uploader-icon" class="w-100 mb-1">
                         <i id="uploader-icon" class="fa-solid fa-circle-plus fa-xl" style="color: #0D2045"></i>
@@ -46,185 +50,219 @@
         <div class="empty-veesy"></div>
     </div>
 </div>
-<div class="empty-veesy"></div>
 <div class="row">
-    <div class="p-1 col-sm-2 col-md-1 mb-4 mb-lg-0"></div>
-    <div class="p-1 col-sm-2 col-md-1 mb-4 mb-lg-0">
-        @for (int i = 0; i < Model.Medias.Count; i = i+10)
+    <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm"></div>
+    <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm">
+        @for (int i = 0; i < Model.Medias.Count; i = i+8)
         {
-            <a onclick="SelectMedia('@Model.Medias[i].Code')">
-                <div class="img-div" oncontextmenu="EditMedia('@Model.Medias[i].Code'); return false;">
-                    @if (Model.Medias[i].Type == ".mp4")
-                    {
-                        <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded" alt="@Model.Medias[i].OriginalFileName">
-                            <source src="@Model.BasePath@Model.Medias[i].FileName" type="video/mp4">
-                        </video>
-                    }
-                    else
-                    {
-                        <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName" class="img-rounded-trasparent w-100 shadow-1-strong rounded" alt="@Model.Medias[i].OriginalFileName"/>
-                    }
-                </div>
-            </a>
-        }
-        <div class="empty-veesy"></div>
-        <div class="empty-veesy"></div>
-        <div class="empty-veesy"></div>
-    </div>
-    <div class="p-1 col-sm-2 col-md-1 mb-4 mb-lg-0">
-        @for (int i = 1; i < Model.Medias.Count; i = i+10)
-        {
-            <a onclick="SelectMedia('@Model.Medias[i].Code')">
-                @if (Model.Medias[i].Type == ".mp4")
-                {
-                    <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code"  class="img-rounded-trasparent w-100 shadow-1-strong rounded" alt="@Model.Medias[i].OriginalFileName">
-                        <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
-                    </video>
-                }
-                else
-                {
-                    <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded" alt="@Model.Medias[i].OriginalFileName"/>
-                }
-            </a>
+            <div id="div-for-remove-@Model.Medias[i].Code">
+                <a onclick="SelectMedia('@Model.Medias[i].Code')">
+                    <div class="img-div" oncontextmenu="EditMedia('@Model.Medias[i].Code'); return false;">
+                        @if (Model.Medias[i].Type == ".mp4")
+                        {
+                            <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
+                                <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
+                            </video>
+                        }
+                        else
+                        {
+                            <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05 mb-2" alt="@Model.Medias[i].OriginalFileName"/>
+                        }
+                    </div>
+                </a>
+            </div>
         }
     </div>
-    <div class="p-1 col-sm-2 col-md-1 mb-4 mb-lg-0">
-        @for (int i = 2; i < Model.Medias.Count; i = i+10)
+    <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm">
+        @for (int i = 1; i < Model.Medias.Count; i = i+8)
         {
-            <a onclick="SelectMedia('@Model.Medias[i].Code')">
-                @if (Model.Medias[i].Type == ".mp4")
-                {
-                    <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code"  class="img-rounded-trasparent w-100 shadow-1-strong rounded" alt="@Model.Medias[i].OriginalFileName">
-                        <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
-                    </video>
-                }
-                else
-                {
-                    <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded" alt="@Model.Medias[i].OriginalFileName"/>
-                }
-            </a>
+            <div id="div-for-remove-@Model.Medias[i].Code">
+                <a onclick="SelectMedia('@Model.Medias[i].Code')">
+                    <div class="img-div" oncontextmenu="EditMedia('@Model.Medias[i].Code'); return false;">
+                        @if (Model.Medias[i].Type == ".mp4")
+                        {
+                            <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
+                                <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
+                            </video>
+                        }
+                        else
+                        {
+                            <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05 mb-2" alt="@Model.Medias[i].OriginalFileName"/>
+                        }
+                    </div>
+                </a>
+            </div>
         }
     </div>
-    <div class="p-1 col-sm-2 col-md-1 mb-4 mb-lg-0">
-        @for (int i = 3; i < Model.Medias.Count; i = i+10)
+    <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm">
+        @for (int i = 2; i < Model.Medias.Count; i = i+8)
         {
-            <a onclick="SelectMedia('@Model.Medias[i].Code')">
-                @if (Model.Medias[i].Type == ".mp4")
-                {
-                    <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code"  class="img-rounded-trasparent w-100 shadow-1-strong rounded" alt="@Model.Medias[i].OriginalFileName">
-                        <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
-                    </video>
-                }
-                else
-                {
-                    <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded" alt="@Model.Medias[i].OriginalFileName"/>
-                }
-            </a>
+            <div id="div-for-remove-@Model.Medias[i].Code">
+                <a onclick="SelectMedia('@Model.Medias[i].Code')">
+                    <div class="img-div" oncontextmenu="EditMedia('@Model.Medias[i].Code'); return false;">
+                        @if (Model.Medias[i].Type == ".mp4")
+                        {
+                            <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
+                                <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
+                            </video>
+                        }
+                        else
+                        {
+                            <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05 mb-2" alt="@Model.Medias[i].OriginalFileName"/>
+                        }
+                    </div>
+                </a>
+            </div>
         }
     </div>
-    <div class="p-1 col-sm-2 col-md-1 mb-4 mb-lg-0">
-        @for (int i = 4; i < Model.Medias.Count; i = i+10)
+    <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm">
+        @for (int i = 3; i < Model.Medias.Count; i = i+8)
         {
-            <a onclick="SelectMedia('@Model.Medias[i].Code')">
-                @if (Model.Medias[i].Type == ".mp4")
-                {
-                    <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code"  class="img-rounded-trasparent w-100 shadow-1-strong rounded" alt="@Model.Medias[i].OriginalFileName">
-                        <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
-                    </video>
-                }
-                else
-                {
-                    <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded" alt="@Model.Medias[i].OriginalFileName"/>
-                }
-            </a>
+            <div id="div-for-remove-@Model.Medias[i].Code">
+                <a onclick="SelectMedia('@Model.Medias[i].Code')">
+                    <div class="img-div" oncontextmenu="EditMedia('@Model.Medias[i].Code'); return false;">
+                        @if (Model.Medias[i].Type == ".mp4")
+                        {
+                            <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
+                                <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
+                            </video>
+                        }
+                        else
+                        {
+                            <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05 mb-2" alt="@Model.Medias[i].OriginalFileName"/>
+                        }
+                    </div>
+                </a>
+            </div>
         }
     </div>
-    <div class="p-1 col-sm-2 col-md-1 mb-4 mb-lg-0">
-        @for (int i = 5; i < Model.Medias.Count; i = i+10)
+    <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm">
+        @for (int i = 4; i < Model.Medias.Count; i = i+8)
         {
-            <a onclick="SelectMedia('@Model.Medias[i].Code')">
-                @if (Model.Medias[i].Type == ".mp4")
-                {
-                    <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code"  class="img-rounded-trasparent w-100 shadow-1-strong rounded" alt="@Model.Medias[i].OriginalFileName">
-                        <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
-                    </video>
-                }
-                else
-                {
-                    <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded" alt="@Model.Medias[i].OriginalFileName"/>
-                }
-            </a>
+            <div id="div-for-remove-@Model.Medias[i].Code">
+                <a onclick="SelectMedia('@Model.Medias[i].Code')">
+                    <div class="img-div" oncontextmenu="EditMedia('@Model.Medias[i].Code'); return false;">
+                        @if (Model.Medias[i].Type == ".mp4")
+                        {
+                            <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
+                                <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
+                            </video>
+                        }
+                        else
+                        {
+                            <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05 mb-2" alt="@Model.Medias[i].OriginalFileName"/>
+                        }
+                    </div>
+                </a>
+            </div>
         }
     </div>
-    <div class="p-1 col-sm-2 col-md-1 mb-4 mb-lg-0">
-        @for (int i = 6; i < Model.Medias.Count; i = i+10)
+    <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm">
+        @for (int i = 5; i < Model.Medias.Count; i = i+8)
         {
-            <a onclick="SelectMedia('@Model.Medias[i].Code')">
-                @if (Model.Medias[i].Type == ".mp4")
-                {
-                    <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code"  class="img-rounded-trasparent w-100 shadow-1-strong rounded" alt="@Model.Medias[i].OriginalFileName">
-                        <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
-                    </video>
-                }
-                else
-                {
-                    <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded" alt="@Model.Medias[i].OriginalFileName"/>
-                }
-            </a>
+            <div id="div-for-remove-@Model.Medias[i].Code">
+                <a onclick="SelectMedia('@Model.Medias[i].Code')">
+                    <div class="img-div" oncontextmenu="EditMedia('@Model.Medias[i].Code'); return false;">
+                        @if (Model.Medias[i].Type == ".mp4")
+                        {
+                            <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
+                                <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
+                            </video>
+                        }
+                        else
+                        {
+                            <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05 mb-2" alt="@Model.Medias[i].OriginalFileName"/>
+                        }
+                    </div>
+                </a>
+            </div>
         }
     </div>
-    <div class="p-1 col-sm-2 col-md-1 mb-4 mb-lg-0">
-        @for (int i = 7; i < Model.Medias.Count; i = i+10)
+    <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm">
+        @for (int i = 6; i < Model.Medias.Count; i = i+8)
         {
-            <a onclick="SelectMedia('@Model.Medias[i].Code')">
-                @if (Model.Medias[i].Type == ".mp4")
-                {
-                    <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code"  class="img-rounded-trasparent w-100 shadow-1-strong rounded" alt="@Model.Medias[i].OriginalFileName">
-                        <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
-                    </video>
-                }
-                else
-                {
-                    <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded" alt="@Model.Medias[i].OriginalFileName"/>
-                }
-            </a>
+            <div id="div-for-remove-@Model.Medias[i].Code">
+                <a onclick="SelectMedia('@Model.Medias[i].Code')">
+                    <div class="img-div" oncontextmenu="EditMedia('@Model.Medias[i].Code'); return false;">
+                        @if (Model.Medias[i].Type == ".mp4")
+                        {
+                            <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
+                                <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
+                            </video>
+                        }
+                        else
+                        {
+                            <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05 mb-2" alt="@Model.Medias[i].OriginalFileName"/>
+                        }
+                    </div>
+                </a>
+            </div>
         }
     </div>
-    <div class="p-1 col-sm-2 col-md-1 mb-4 mb-lg-0">
-        @for (int i = 8; i < Model.Medias.Count; i = i+10)
+    <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm">
+        @for (int i = 7; i < Model.Medias.Count; i = i+8)
         {
-            <a onclick="SelectMedia('@Model.Medias[i].Code')">
-                @if (Model.Medias[i].Type == ".mp4")
-                {
-                    <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code"  class="img-rounded-trasparent w-100 shadow-1-strong rounded" alt="@Model.Medias[i].OriginalFileName">
-                        <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
-                    </video>
-                }
-                else
-                {
-                    <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded" alt="@Model.Medias[i].OriginalFileName"/>
-                }
-            </a>
+            <div id="div-for-remove-@Model.Medias[i].Code">
+                <a  onclick="SelectMedia('@Model.Medias[i].Code')">
+                    <div class="img-div" oncontextmenu="EditMedia('@Model.Medias[i].Code'); return false;">
+                        @if (Model.Medias[i].Type == ".mp4")
+                        {
+                            <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
+                                <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
+                            </video>
+                        }
+                        else
+                        {
+                            <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05 mb-2" alt="@Model.Medias[i].OriginalFileName"/>
+                        }
+                    </div>
+                </a>
+            </div>
         }
     </div>
-    <div class="p-1 col-sm-2 col-md-1 mb-4 mb-lg-0">
-        @for (int i = 9; i < Model.Medias.Count; i = i+10)
+    <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm"></div>
+    <div class="p-1 col-6 mb-4 mb-lg-0 nodisplay-md">
+        @for (int i = 0; i < Model.Medias.Count; i = i+2)
         {
-            <a onclick="SelectMedia('@Model.Medias[i].Code')">
-                @if (Model.Medias[i].Type == ".mp4")
-                {
-                    <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code"  class="img-rounded-trasparent w-100 shadow-1-strong rounded" alt="@Model.Medias[i].OriginalFileName">
-                        <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
-                    </video>
-                }
-                else
-                {
-                    <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded" alt="@Model.Medias[i].OriginalFileName"/>
-                }
-            </a>
+            <div id="div-for-remove-@Model.Medias[i].Code">
+                <a onclick="SelectMedia('@Model.Medias[i].Code')">
+                    <div class="img-div" oncontextmenu="EditMedia('@Model.Medias[i].Code'); return false;">
+                        @if (Model.Medias[i].Type == ".mp4")
+                        {
+                            <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
+                                <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
+                            </video>
+                        }
+                        else
+                        {
+                            <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05 mb-2" alt="@Model.Medias[i].OriginalFileName"/>
+                        }
+                    </div>
+                </a>
+            </div>
         }
     </div>
-    <div class="p-1 col-sm-2 col-md-1 mb-4 mb-lg-0"></div>
+    <div class="p-1 col-6 mb-4 mb-lg-0 nodisplay-md">
+        @for (int i = 1; i < Model.Medias.Count; i = i+2)
+        {
+            <div id="div-for-remove-@Model.Medias[i].Code">
+                <a onclick="SelectMedia('@Model.Medias[i].Code')">
+                    <div class="img-div" oncontextmenu="EditMedia('@Model.Medias[i].Code'); return false;">
+                        @if (Model.Medias[i].Type == ".mp4")
+                        {
+                            <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
+                                <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
+                            </video>
+                        }
+                        else
+                        {
+                            <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05 mb-2" alt="@Model.Medias[i].OriginalFileName"/>
+                        }
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
 </div>
 
 <div class="empty-veesy"></div>
@@ -235,8 +273,8 @@
     <div class="w-100">
         <div class="float-start">
             <div class="d-flex mt-2">
-                <p>1 files selected</p>
-                <a class="red-link-underline ms-3">delete</a>
+                <p id="number_files">1 files selected</p>
+                <a onclick="deleteMedia()" class="red-link-underline ms-3">delete</a>
             </div>
         </div>
         <div class="float-end">
@@ -253,11 +291,46 @@
 {
     <script>
     
+    var img_selected_id = [];
+    
+    function deleteMedia() {
+        $('#load-spinner').css("display", "block");
+        var data = [];
+        for (const code in img_selected_id) {
+            data.push(img_selected_id[code])
+        }
+        
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("DeleteMedia", "Media")',
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (response) {
+                if(response.result){
+                    for (let i = 0; i<response.codeToDelete.length; i++){
+                        document.getElementById("div-for-remove-" + response.codeToDelete[i]).style.display = "none";
+                        removeMediaFromList(response.codeToDelete[i]);
+                        alert_portfolio.classList.remove("show");
+                    }
+                }
+                else{
+                    toastNotifyCustom(response.message, 100, "#ca0a0a", "")
+                }
+                $('#load-spinner').css("display", "none");
+            },
+            error: function (response) {
+                $('#load-spinner').css("display", "none");
+            }
+        })
+    }
+    
+    
     function EditMedia(s) {
         document.location.href = '@Model.ApplicationUrl' + '/cloud/edit/' + s;
     }
     
-    var img_selected_id = [];
+    
     const alert_portfolio = document.getElementById("alert-portfolio");
     function SelectMedia(img_id) {
         var media = document.getElementById('img-'+img_id); 
@@ -273,6 +346,7 @@
         }
         if (img_selected_id.length > 0){
             alert_portfolio.classList.add("show");
+            document.getElementById("number_files").textContent = img_selected_id.length + " files selected"
         }
         else{
             alert_portfolio.classList.remove("show");
@@ -290,6 +364,7 @@
     function submitForm() {
        document.getElementById("uploader").submit();
     }
+    var div_uploader = document.getElementById("div-uploader");
     /*Dropzone configuration*/
         Dropzone.autoDiscover = false;
         var uploader = null;
@@ -297,6 +372,7 @@
         var divUploader = document.getElementById("div-uploader-icon");
         var iconUploader = document.getElementById("uploader-icon");
         var txtUploader = document.getElementById("uploader-text");
+        let dropzone_processing = false;
     
         var dropzoneOptions = {
             dictDefaultMessage: 'Upload or drop files here',
@@ -305,16 +381,28 @@
             addRemoveLinks: true,
             parallelUploads: 5,
             uploadMultiple: true,
+            acceptedFiles: "image/jpeg,image/png,image/gif,image/jpg,video/mp4,video/mov",
             init: function () {
                 this.on("success", function (file) {
                     console.log("success > " + file.name);
                 });
+            },
+            addedfiles: function (){
+                dropzone_processing = true;
             },
             uploadprogress: function(file, progress, bytesSent) {
                 if (file.previewElement) {
                     var progressElement = file.previewElement.querySelector("[data-dz-uploadprogress]");
                     progressElement.style.width = progress + "%";
                 }
+            },
+            success: function (file, response) {
+               this.removeFile(file);
+            },
+            queuecomplete: function (){
+               hideDropZone()
+               //location.reload() 
+               dropzone_processing = false;
             }
         };
                 
@@ -333,7 +421,7 @@
         // 3
         uploader.addEventListener('dragleave', function(e) {
             console.log('dragleave');
-            hideDropZone();
+            //hideDropZone();
         });
         
         // 4
@@ -341,6 +429,7 @@
                
     
         function showDropZone() {
+            div_uploader.classList.remove("nodisplay-md");
             uploader.classList.remove("card-grey-dashed-veesy");
             uploader.classList.add("dropzone-full-page");
             
@@ -355,6 +444,7 @@
             document.body.style.overflow = 'hidden';
         }
         function hideDropZone() {
+            div_uploader.classList.add("nodisplay-md");
             uploader.classList.remove("dropzone-full-page");
             uploader.classList.add("card-grey-dashed-veesy");
             
@@ -372,15 +462,21 @@
         function allowDrag(e) {
             if (true) {  // Test that the item being dragged is a valid one
                 e.dataTransfer.dropEffect = 'copy';
-                e.preventDefault();
             }
         }
         
         function handleDrop(e) {
-            e.preventDefault();
-            hideDropZone();
-        
-            alert('Drop!');
+            //hideDropZone();
         }
+        
+        // window.addEventListener("beforeunload", function (e) {
+        //     if (!dropzone_processing){
+        //         // Cancel the event
+        //         e.preventDefault(); // If you prevent default behavior in Mozilla Firefox prompt will always be shown
+        //         // Chrome requires returnValue to be set
+        //         e.returnValue = "";
+        //     }
+        //   });
+        
     </script>
 }

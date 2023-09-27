@@ -8,7 +8,7 @@
     <div class="col-sm-12 col-md-3 mb-3">
         <nav class="breadcrumb-container" aria-label="Percorso di navigazione">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><img src="imgs/dashboard_home_light-mode.png" style="width: 18px; margin-top: -5px;" class="me-2"><a class="breadcrumb-a me-2" asp-action="Index" asp-area="Portfolio" asp-controller="Home">dashboard</a><i class="fa-solid fa-chevron-right"></i></li>
+                <li class="breadcrumb-item"><img src="~/imgs/dashboard_home_light-mode.png" style="width: 18px; margin-top: -5px;" class="me-2"><a class="breadcrumb-a me-2" asp-action="Index" asp-area="Portfolio" asp-controller="Home">dashboard</a><i class="fa-solid fa-chevron-right"></i></li>
                 <li class="breadcrumb-item"><a class="breadcrumb-a" href="#"><strong>profile</strong></a></li>
             </ol>
         </nav>
@@ -26,13 +26,9 @@
                         }
                     </div>
                 </div>
-                @{
-                    // Verifica se la stringa contiene una "@"
-                    string username = Model.Username.Contains("@") ? Model.Username.Split('@')[0] : Model.Username;
-                }
                 
                 <div class="col-8">
-                    <p class="ms-2"><strong>@username</strong></p>
+                    <p class="ms-2"><strong>@User.Identity.Name</strong></p>
                 </div>
                 <div class="col-1"><div class="text-end"><i class="fa-solid fa-circle fa-xs" style="color: #202F4D;"></i></div></div>
             </div>
@@ -58,7 +54,14 @@
                 }
             }
             <div class="d-flex"><p class="mb-0"><strong>Phone:&nbsp;</strong></p><p class="@css mb-0">@phone</p></div>
-            <div class="mt-4"><a asp-controller="Profile" asp-area="Account" asp-action="BasicInfo" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit basic info</strong></a></div>
+            @if (string.IsNullOrEmpty(Model.PhoneNumber) || string.IsNullOrEmpty(Model.Email) || Model.RolesWork == null || Model.RolesWork.Count == 0)
+            {
+                <div class="mt-4"><a asp-controller="Profile" asp-area="Account" asp-action="BasicInfo" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit basic info</strong></a></div>
+            }
+            else
+            {
+                <div class="mt-4"><a asp-controller="Profile" asp-area="Account" asp-action="BasicInfo" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit basic info</strong></a></div>
+            }
         </div>
     </div>
     <div class="col-sm-12 col-md-6">
@@ -111,7 +114,7 @@
                     {
                         <div class="col-9 profile-section">
                             <p class="mb-0"><strong>External link:</strong></p>
-                            <a href="https://@Model.ExternalLink" target="_blank" class="mb-0 veesy-overflow">@Model.ExternalLink</a>
+                            <a href="@Model.ExternalLink" target="_blank" class="mb-0 veesy-overflow">@Model.ExternalLink</a>
                         </div>
                         <div class="col-3 text-end"><a onclick="openModal('#modalExternalLink'), setTextAreaValue('external-link-edit', '@Model.ExternalLink')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
                     }
@@ -409,7 +412,7 @@
                 <a onclick="closeModal('#modalSectors')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
-                <p>Select a maximum of 3 fields.</p>
+                <p>Select a maximum of 5 fields.</p>
                 <div class="overflow-auto p-3 border-div-grey" style="background-color: white !important; max-height: 400px;">
                     @foreach (var item in Model.Sectors)
                     {

@@ -294,52 +294,6 @@ namespace Veesy.Domain.Migrations
                     b.ToTable("CategoriesWork");
                 });
 
-            modelBuilder.Entity("Veesy.Domain.Models.Format", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreateRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreateUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Height")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("LastEditRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastEditUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Width")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Formats");
-                });
-
             modelBuilder.Entity("Veesy.Domain.Models.InfoToShow", b =>
                 {
                     b.Property<Guid>("Id")
@@ -477,48 +431,6 @@ namespace Veesy.Domain.Migrations
                     b.HasIndex("MediaId");
 
                     b.ToTable("MediaCategories");
-                });
-
-            modelBuilder.Entity("Veesy.Domain.Models.MediaFormat", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreateRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreateUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FileName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("FormatId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("LastEditRecordDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("LastEditUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("MediaId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<long>("Size")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FormatId");
-
-                    b.HasIndex("MediaId");
-
-                    b.ToTable("MediaFormats");
                 });
 
             modelBuilder.Entity("Veesy.Domain.Models.MediaTag", b =>
@@ -804,6 +716,9 @@ namespace Veesy.Domain.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsMain")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsPublic")
                         .HasColumnType("bit");
 
@@ -813,6 +728,9 @@ namespace Veesy.Domain.Migrations
                     b.Property<string>("LastEditUserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Layout")
+                        .HasColumnType("int");
 
                     b.Property<string>("Link")
                         .IsRequired()
@@ -849,7 +767,7 @@ namespace Veesy.Domain.Migrations
                     b.Property<Guid>("PortfolioId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("MediaFormatId")
+                    b.Property<Guid>("MediaId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreateRecordDate")
@@ -873,9 +791,12 @@ namespace Veesy.Domain.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("PortfolioId", "MediaFormatId");
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("int");
 
-                    b.HasIndex("MediaFormatId");
+                    b.HasKey("PortfolioId", "MediaId");
+
+                    b.HasIndex("MediaId");
 
                     b.ToTable("PortfolioMedias");
                 });
@@ -1243,25 +1164,6 @@ namespace Veesy.Domain.Migrations
                     b.Navigation("Media");
                 });
 
-            modelBuilder.Entity("Veesy.Domain.Models.MediaFormat", b =>
-                {
-                    b.HasOne("Veesy.Domain.Models.Format", "Format")
-                        .WithMany("MediaFormats")
-                        .HasForeignKey("FormatId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Veesy.Domain.Models.Media", "Media")
-                        .WithMany("MediaFormats")
-                        .HasForeignKey("MediaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Format");
-
-                    b.Navigation("Media");
-                });
-
             modelBuilder.Entity("Veesy.Domain.Models.MediaTag", b =>
                 {
                     b.HasOne("Veesy.Domain.Models.Media", "Media")
@@ -1419,9 +1321,9 @@ namespace Veesy.Domain.Migrations
 
             modelBuilder.Entity("Veesy.Domain.Models.PortfolioMedia", b =>
                 {
-                    b.HasOne("Veesy.Domain.Models.MediaFormat", "MediaFormat")
+                    b.HasOne("Veesy.Domain.Models.Media", "Media")
                         .WithMany("PortfolioMedias")
-                        .HasForeignKey("MediaFormatId")
+                        .HasForeignKey("MediaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1431,7 +1333,7 @@ namespace Veesy.Domain.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("MediaFormat");
+                    b.Navigation("Media");
 
                     b.Navigation("Portfolio");
                 });
@@ -1474,11 +1376,6 @@ namespace Veesy.Domain.Migrations
                     b.Navigation("MyUserCategoriesWork");
                 });
 
-            modelBuilder.Entity("Veesy.Domain.Models.Format", b =>
-                {
-                    b.Navigation("MediaFormats");
-                });
-
             modelBuilder.Entity("Veesy.Domain.Models.InfoToShow", b =>
                 {
                     b.Navigation("MyUserInfoToShows");
@@ -1493,13 +1390,8 @@ namespace Veesy.Domain.Migrations
                 {
                     b.Navigation("MediaCategories");
 
-                    b.Navigation("MediaFormats");
-
                     b.Navigation("MediaTags");
-                });
 
-            modelBuilder.Entity("Veesy.Domain.Models.MediaFormat", b =>
-                {
                     b.Navigation("PortfolioMedias");
                 });
 

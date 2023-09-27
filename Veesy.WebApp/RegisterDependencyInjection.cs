@@ -18,9 +18,10 @@ public static class RegisterDependencyInjection
         serviceCollection.AddScoped<IMediaRepository, MediaRepository>();
         serviceCollection.AddScoped<IVeesyUoW, VeesyUoW>();
         
-        /*Service dependency Injection*/
+        /*Service Dependency Injection*/
         serviceCollection.AddTransient<IAccountService, AccountService>();
         serviceCollection.AddTransient<IMediaService, MediaService>();
+        serviceCollection.AddTransient<ISubscriptionPlanService, SubscriptionPlanService>();
 
         /*Utils Dependency Injection*/
         serviceCollection.AddScoped<IEmailSender, EmailSender>();
@@ -28,12 +29,14 @@ public static class RegisterDependencyInjection
     
         /*Validator Dependency Injection*/
         serviceCollection.AddTransient<MyUserValidator>();
+        serviceCollection.AddTransient<MediaValidators>();
     
         /*Helper Dependency Injection*/
         serviceCollection.AddTransient<AuthHelper>();
         serviceCollection.AddTransient<MediaHelper>();
         serviceCollection.AddTransient<ProfileHelper>();
         serviceCollection.AddTransient<CloudHelper>();
+        serviceCollection.AddTransient<PortfolioHelper>();
         
         return serviceCollection;
     }

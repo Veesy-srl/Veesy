@@ -1,4 +1,10 @@
 /*DROPZONE SECTION*/
+.close-button-dropzone{
+  position: absolute !important;
+  top: 20px !important;
+  z-index: 999999 !important;
+  right: 20px !important;
+}
 .dz-success-mark svg g path{
   fill: #75CCDD !important;
 }
@@ -15,8 +21,32 @@
   top: 65% !important;
   margin-top: 0px !important;
 }
+
+.dropzone .dz-preview.dz-image-preview{
+  background: rgba(255, 255, 255, 0);
+}
+.dropzone .dz-preview .dz-remove{
+  color: white !important;
+}
+
 /*END DROPZONE SECTION*/
 
+.rounded-05{
+  border-radius: 0.5rem!important;
+}
+
+.edit-padding-right{
+  padding-right: 3px;
+}
+
+.edit-padding-left{
+  padding-left: 3px;
+}
+
+::placeholder {
+  color: #202F4D33;
+  opacity: 1; /* Firefox */
+}
 
 .img-div:hover .middle {
   opacity: 1;
@@ -110,6 +140,12 @@ body{
 
 .nodisplay-sm{
   @media only screen and (max-width: 600px) {
+    display: none !important;
+  }
+}
+
+.nodisplay-md{
+  @media only screen and (min-width: 600px) {
     display: none !important;
   }
 }
@@ -218,7 +254,6 @@ html {
 .login-container {
   display: grid;
   grid-template-columns: 50% 50%;
-  height: 103vh;
   width: 100vw;
 }
 
@@ -377,6 +412,40 @@ button:focus {
   border: 1px solid #202F4D33 !important;
 }
 
+.input--style-password {
+  width: 100%;
+  padding: 2px 4px;
+  background: white !important;
+  border-radius: 5px 0px 0px 5px !important;
+  border-top: 1px solid #202F4D33 !important;
+  border-bottom: 1px solid #202F4D33 !important;
+  border-left: 1px solid #202F4D33 !important;
+  border-right: 0px solid #202F4D33 !important;
+}
+
+.span--style-password {
+  width: 100%;
+  padding: 2px 4px;
+  background: rgb(255, 255, 255) !important;
+  border-radius: 0px 5px 5px 0px !important;
+  border-top: 1px solid #202F4D33 !important;
+  border-bottom: 1px solid #202F4D33 !important;
+  border-right: 1px solid #202F4D33 !important;
+  border-left: 0px solid #202F4D33 !important;
+  height: 100%;
+}
+
+.input--style-password::after {
+  width: 100%;
+  padding: 2px 4px;
+  background: white !important;
+  border-radius: 5px 0px 0px 5px !important;
+  border-top: 1px solid #202F4D33 !important;
+  border-bottom: 1px solid #202F4D33 !important;
+  border-left: 1px solid #202F4D33 !important;
+  border-right: 0px solid #202F4D33 !important;
+}
+
 .input--style-1:after {
   width: 100%;
   padding: 2px 4px;
@@ -405,6 +474,16 @@ button:focus {
 
 .input--style-1:-ms-input-placeholder {
   color: #E2E5E7 !important;
+}
+
+.breadcrumb-a-white{
+  text-decoration: none !important;
+  color: white !important;
+}
+
+.breadcrumb-a-white:hover{
+  text-decoration: none !important;
+  color: white !important;
 }
 
 .breadcrumb-a{
@@ -790,9 +869,10 @@ a:hover{
     width: 95% !important;
   }
 
+  
   #loginLink{
     position: relative !important;
-    top: 0.7rem !important;
+    top: 0.8rem !important;
   }
 
   #signupLink{
@@ -801,13 +881,19 @@ a:hover{
   }
 
   footer{
-    margin-top: -15% !important;
+    margin-top: -30px !important;
   }
 
   #color-text-layout{
     display: none !important;
   }
 
+}
+
+.arrow-edit-media{
+  background-color: #728695 !important;
+  height: 50px !important;
+  width: 50px !important;
 }
 
 .menu-element:hover {
@@ -948,7 +1034,7 @@ textarea{
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
   @media (max-width: 576px){
-    top: -1vh;
+    margin-top: -1vh;
   }
 }
 
