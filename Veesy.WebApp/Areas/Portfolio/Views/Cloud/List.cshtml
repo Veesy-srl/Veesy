@@ -55,9 +55,13 @@
     <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm">
         @for (int i = 0; i < Model.Medias.Count; i = i+8)
         {
-            <div id="div-for-remove-@Model.Medias[i].Code">
+            <div id="div-for-remove-@Model.Medias[i].Code" class="media-container" onmouseover="showEditButton(this)" onmouseout="hideEditButton(this)">
+                <a class="grey-link edit-button" onclick="EditMedia('@Model.Medias[i].Code'); return false;">
+                    <strong style="margin-right: 5px; font-size: 14px;">edit</strong>
+                    <i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>
+                </a>
                 <a onclick="SelectMedia('@Model.Medias[i].Code')">
-                    <div class="img-div" oncontextmenu="EditMedia('@Model.Medias[i].Code'); return false;">
+                    <div class="img-div">
                         @if (Model.Medias[i].Type == ".mp4")
                         {
                             <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
@@ -76,7 +80,11 @@
     <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm">
         @for (int i = 1; i < Model.Medias.Count; i = i+8)
         {
-            <div id="div-for-remove-@Model.Medias[i].Code">
+            <div id="div-for-remove-@Model.Medias[i].Code" class="media-container" onmouseover="showEditButton(this)" onmouseout="hideEditButton(this)">
+                <a class="grey-link edit-button" onclick="EditMedia('@Model.Medias[i].Code'); return false;">
+                    <strong style="margin-right: 5px; font-size: 14px;">edit</strong>
+                    <i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>
+                </a>
                 <a onclick="SelectMedia('@Model.Medias[i].Code')">
                     <div class="img-div" oncontextmenu="EditMedia('@Model.Medias[i].Code'); return false;">
                         @if (Model.Medias[i].Type == ".mp4")
@@ -97,7 +105,11 @@
     <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm">
         @for (int i = 2; i < Model.Medias.Count; i = i+8)
         {
-            <div id="div-for-remove-@Model.Medias[i].Code">
+            <div id="div-for-remove-@Model.Medias[i].Code" class="media-container" onmouseover="showEditButton(this)" onmouseout="hideEditButton(this)">
+                <a class="grey-link edit-button" onclick="EditMedia('@Model.Medias[i].Code'); return false;">
+                    <strong style="margin-right: 5px; font-size: 14px;">edit</strong>
+                    <i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>
+                </a>
                 <a onclick="SelectMedia('@Model.Medias[i].Code')">
                     <div class="img-div" oncontextmenu="EditMedia('@Model.Medias[i].Code'); return false;">
                         @if (Model.Medias[i].Type == ".mp4")
@@ -118,7 +130,11 @@
     <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm">
         @for (int i = 3; i < Model.Medias.Count; i = i+8)
         {
-            <div id="div-for-remove-@Model.Medias[i].Code">
+            <div id="div-for-remove-@Model.Medias[i].Code" class="media-container" onmouseover="showEditButton(this)" onmouseout="hideEditButton(this)">
+                <a class="grey-link edit-button" onclick="EditMedia('@Model.Medias[i].Code'); return false;">
+                    <strong style="margin-right: 5px; font-size: 14px;">edit</strong>
+                    <i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>
+                </a>
                 <a onclick="SelectMedia('@Model.Medias[i].Code')">
                     <div class="img-div" oncontextmenu="EditMedia('@Model.Medias[i].Code'); return false;">
                         @if (Model.Medias[i].Type == ".mp4")
@@ -139,7 +155,11 @@
     <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm">
         @for (int i = 4; i < Model.Medias.Count; i = i+8)
         {
-            <div id="div-for-remove-@Model.Medias[i].Code">
+            <div id="div-for-remove-@Model.Medias[i].Code" class="media-container" onmouseover="showEditButton(this)" onmouseout="hideEditButton(this)">
+                <a class="grey-link edit-button" onclick="EditMedia('@Model.Medias[i].Code'); return false;">
+                    <strong style="margin-right: 5px; font-size: 14px;">edit</strong>
+                    <i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>
+                </a>
                 <a onclick="SelectMedia('@Model.Medias[i].Code')">
                     <div class="img-div" oncontextmenu="EditMedia('@Model.Medias[i].Code'); return false;">
                         @if (Model.Medias[i].Type == ".mp4")
@@ -160,7 +180,11 @@
     <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm">
         @for (int i = 5; i < Model.Medias.Count; i = i+8)
         {
-            <div id="div-for-remove-@Model.Medias[i].Code">
+            <div id="div-for-remove-@Model.Medias[i].Code" class="media-container" onmouseover="showEditButton(this)" onmouseout="hideEditButton(this)">
+                <a class="grey-link edit-button" onclick="EditMedia('@Model.Medias[i].Code'); return false;">
+                    <strong style="margin-right: 5px; font-size: 14px;">edit</strong>
+                    <i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>
+                </a>
                 <a onclick="SelectMedia('@Model.Medias[i].Code')">
                     <div class="img-div" oncontextmenu="EditMedia('@Model.Medias[i].Code'); return false;">
                         @if (Model.Medias[i].Type == ".mp4")
@@ -181,7 +205,11 @@
     <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm">
         @for (int i = 6; i < Model.Medias.Count; i = i+8)
         {
-            <div id="div-for-remove-@Model.Medias[i].Code">
+            <div id="div-for-remove-@Model.Medias[i].Code" class="media-container" onmouseover="showEditButton(this)" onmouseout="hideEditButton(this)">
+                <a class="grey-link edit-button" onclick="EditMedia('@Model.Medias[i].Code'); return false;">
+                    <strong style="margin-right: 5px; font-size: 14px;">edit</strong>
+                    <i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>
+                </a>
                 <a onclick="SelectMedia('@Model.Medias[i].Code')">
                     <div class="img-div" oncontextmenu="EditMedia('@Model.Medias[i].Code'); return false;">
                         @if (Model.Medias[i].Type == ".mp4")
@@ -202,7 +230,11 @@
     <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm">
         @for (int i = 7; i < Model.Medias.Count; i = i+8)
         {
-            <div id="div-for-remove-@Model.Medias[i].Code">
+            <div id="div-for-remove-@Model.Medias[i].Code" class="media-container" onmouseover="showEditButton(this)" onmouseout="hideEditButton(this)">
+                <a class="grey-link edit-button" onclick="EditMedia('@Model.Medias[i].Code'); return false;">
+                    <strong style="margin-right: 5px; font-size: 14px;">edit</strong>
+                    <i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>
+                </a>
                 <a  onclick="SelectMedia('@Model.Medias[i].Code')">
                     <div class="img-div" oncontextmenu="EditMedia('@Model.Medias[i].Code'); return false;">
                         @if (Model.Medias[i].Type == ".mp4")
@@ -224,7 +256,11 @@
     <div class="p-1 col-6 mb-4 mb-lg-0 nodisplay-md">
         @for (int i = 0; i < Model.Medias.Count; i = i+2)
         {
-            <div id="div-for-remove-@Model.Medias[i].Code">
+            <div id="div-for-remove-@Model.Medias[i].Code" class="media-container" onmouseover="showEditButton(this)" onmouseout="hideEditButton(this)">
+                <a class="grey-link edit-button" onclick="EditMedia('@Model.Medias[i].Code'); return false;">
+                    <strong style="margin-right: 5px; font-size: 14px;">edit</strong>
+                    <i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>
+                </a>
                 <a onclick="SelectMedia('@Model.Medias[i].Code')">
                     <div class="img-div" oncontextmenu="EditMedia('@Model.Medias[i].Code'); return false;">
                         @if (Model.Medias[i].Type == ".mp4")
@@ -245,7 +281,11 @@
     <div class="p-1 col-6 mb-4 mb-lg-0 nodisplay-md">
         @for (int i = 1; i < Model.Medias.Count; i = i+2)
         {
-            <div id="div-for-remove-@Model.Medias[i].Code">
+            <div id="div-for-remove-@Model.Medias[i].Code" class="media-container" onmouseover="showEditButton(this)" onmouseout="hideEditButton(this)">
+                <a class="grey-link edit-button" onclick="EditMedia('@Model.Medias[i].Code'); return false;">
+                    <strong style="margin-right: 5px; font-size: 14px;">edit</strong>
+                    <i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>
+                </a>
                 <a onclick="SelectMedia('@Model.Medias[i].Code')">
                     <div class="img-div" oncontextmenu="EditMedia('@Model.Medias[i].Code'); return false;">
                         @if (Model.Medias[i].Type == ".mp4")
@@ -269,19 +309,19 @@
 <div class="empty-veesy"></div>
 <div class="empty-veesy"></div>
 
-<div id="alert-portfolio" class="custom-alert-cloud alert alert-veesy alert-dismissible fade" role="alert">
+<div id="alert-portfolio" class="custom-alert-cloud shadow alert alert-veesy-cloud alert-dismissible fade mobile-option-cloud" role="alert" >
     <div class="w-100">
         <div class="float-start">
             <div class="d-flex mt-2">
-                <p id="number_files">1 files selected</p>
-                <a onclick="deleteMedia()" class="red-link-underline ms-3">delete</a>
+                <p id="number_files" class="fw-bolder" style="margin-top: -2px;">1 files selected</p>
+                <a onclick="deleteMedia()" class="red-link-underline ms-3" style="font-size: 14px;">delete</a>
             </div>
         </div>
         <div class="float-end">
             <div class="d-flex align-items-center">
-                <a class="blue-link me-2">+ add to portfolio</a>
-                <a class="rounded-pill btn btn-grey btn-padding" type="submit">save</a>
-                <a class="ms-2 me-4 mt-1" type="button" data-bs-dismiss="alert" aria-label="Close"><i class="fa-solid fa-circle-xmark"></i></a>
+                <a class="blue-link me-4 fw-bolder" style="font-size: 14px; margin-top: 2px;">+ add to portfolio</a>
+                <a class="rounded-pill btn btn-grey btn-padding" style="padding-left: 35px !important; padding-right:  35px !important; font-size:  15px;" type="submit">save</a>
+                <a class="ms-4 me-2 mt-1" type="button" data-bs-dismiss="alert" aria-label="Close"><i class="fa-solid fa-grey fa-circle-xmark" style="color: grey;"></i></a>
             </div>
         </div>
     </div>
@@ -477,6 +517,20 @@
         //         e.returnValue = "";
         //     }
         //   });
+        
+        function showEditButton(container) {
+            const editButton = container.querySelector(".edit-button");
+            if (editButton) {
+                editButton.style.display = "inline-block";
+            }
+        }
+    
+        function hideEditButton(container) {
+            const editButton = container.querySelector(".edit-button");
+            if (editButton) {
+                editButton.style.display = "none";
+            }
+        }
         
     </script>
 }

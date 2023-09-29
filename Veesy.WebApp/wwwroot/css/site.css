@@ -102,6 +102,14 @@
   border-color: #202F4D !important;
 }
 
+.alert-veesy-cloud{
+  background-color: #E2E5E7 !important;
+}
+
+.mobile-option-cloud{
+  padding: 1rem 1rem 0.2rem 1rem !important;
+}
+
 .bd-example{
   padding: 1.5rem;
   margin-right: 0;
@@ -869,6 +877,13 @@ a:hover{
     width: 95% !important;
   }
 
+  .edit-button {
+    display: inline-block !important;
+  }
+  
+  .mobile-option-cloud{
+    padding: 1rem !important;
+  }
   
   #loginLink{
     position: relative !important;
@@ -888,6 +903,25 @@ a:hover{
     display: none !important;
   }
 
+}
+
+.edit-button {
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 1px 4px 1px 4px;
+  border-radius: 20px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  display: none;
+  color: white !important;
+}
+
+.edit-button:hover {
+  color: white !important;
+}
+
+.media-container {
+  position: relative;
 }
 
 .arrow-edit-media{
