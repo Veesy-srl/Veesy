@@ -11,10 +11,10 @@
         {
             <ul class="list-unstyled">
                 <li class="mb-3 edit-padding-left">
-                    <div class="arrow-edit-media rounded-05 center-content"><a><img class="w-100" src="~/icon/arrow_left_dark mode.svg"/></a></div>
+                    <div class="arrow-edit-media rounded-05 center-content"><a asp-action="Edit" asp-area="Portfolio" asp-controller="Cloud" asp-route-id="@Model.PreviousMedia.Code"><img class="w-100" src="~/icon/arrow_left_dark mode.svg"/></a></div>
                 </li>
                 <li class="mt-2">
-                    <a asp-action="Edit" asp-area="Portfolio" asp-controller="Cloud" asp-route-id="@Model.NextMedia.Code">
+                    <a asp-action="Edit" asp-area="Portfolio" asp-controller="Cloud" asp-route-id="@Model.PreviousMedia.Code">
                         @if (Model.PreviousMedia.Type == ".mp4")
                         {
                             <video autoplay="autoplay" muted loop class="img-rounded-trasparent w-25 shadow-1-strong rounded-05" title="@Model.PreviousMedia.OriginalFileName" alt="@Model.PreviousMedia.OriginalFileName">
@@ -23,7 +23,7 @@
                         }
                         else
                         {
-                            <img asp-append-version="true" src="@Model.BasePath@Model.PreviousMedia.FileName?tr=w-300" class="img-rounded-trasparent w-25 shadow-1-strong rounded" title="@Model.PreviousMedia.OriginalFileName" alt="@Model.PreviousMedia.OriginalFileName"/>
+                            <img asp-append-version="true" src="@Model.BasePath@Model.PreviousMedia.FileName?tr=w-300" class="img-rounded-trasparent w-25 shadow-1-strong rounded-05" title="@Model.PreviousMedia.OriginalFileName" alt="@Model.PreviousMedia.OriginalFileName"/>
                         }
                     </a>
                 </li>

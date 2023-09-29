@@ -905,6 +905,14 @@ a:hover{
 
 }
 
+.show-edit:hover{
+  .edit-button{
+    display: inline-block;
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
 .edit-button {
   background-color: rgba(0, 0, 0, 0.6);
   padding: 1px 4px 1px 4px;
@@ -913,11 +921,15 @@ a:hover{
   top: 5px;
   right: 5px;
   display: none;
-  color: white !important;
+  opacity: 0;
+  visibility: hidden;
+  color: #AAB0BB !important;
+  -webkit-transition: opacity 600ms, visibility 600ms !important;
+  transition: opacity 600ms, visibility 600ms !important;
 }
 
 .edit-button:hover {
-  color: white !important;
+  color: #75CCDD !important;
 }
 
 .media-container {
