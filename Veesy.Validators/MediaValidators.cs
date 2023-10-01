@@ -1,5 +1,5 @@
 using Veesy.Domain.Constants;
-using Veesy.Domain.Exception;
+using Veesy.Domain.Exceptions;
 
 namespace Veesy.Validators;
 
