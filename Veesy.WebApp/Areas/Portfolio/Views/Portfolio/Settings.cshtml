@@ -10,7 +10,7 @@
         <nav class="breadcrumb-container" aria-label="Percorso di navigazione">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><img src="~/imgs/dashboard_home_light-mode.png" style="width: 18px; margin-top: -5px;" class="me-2"><a class="breadcrumb-a me-2" asp-action="Index" asp-area="Portfolio" asp-controller="Home">dashboard</a><i class="fa-solid fa-chevron-right"></i></li>
-                <li class="breadcrumb-item"><a class="breadcrumb-a" href="#"><strong>portfolio</strong></a></li>
+                <li class="breadcrumb-item"><a class="breadcrumb-a" href="#"><strong>portfolio</strong></a><i class="fa-solid fa-chevron-right"></i></li>
                 <li class="breadcrumb-item"><a class="breadcrumb-a" href="#"><strong>settings</strong></a></li>
             </ol>
         </nav>
@@ -81,32 +81,46 @@
         <div class="empty-veesy"></div>
         <div class="row">
             <h3 class="text-color"><strong>Select layout</strong></h3>
-            <div class="form-check col-3"><input class="form-check-input" type="radio" name="layout" value="column1" id="column1"/><label class="form-check-label" for="column1">1 Column</label></div>
-            <div class="form-check col-3"><input class="form-check-input" type="radio" name="layout" value="column2" id="column2"/><label class="form-check-label" for="column2">2 Columns</label></div>
-            <div class="form-check col-3"><input class="form-check-input" type="radio" name="layout" value="column3" id="column3"/><label class="form-check-label" for="column3">3 Columns</label></div>
-            <div class="form-check col-3"><input class="form-check-input" type="radio" name="layout" value="column4" id="column4"/><label class="form-check-label" for="column4">4 Columns</label></div>
-            @foreach (var layout in VeesyConstants.GetAvailableLayouts())
+            @foreach (var item in VeesyConstants.GetAvailableLayouts())
             {
-                @:TODO: mostrare i Layout
+                <div class="form-check col-3">
+                    <input class="form-check-input" type="radio" name="column-layout" value="@item" id="@item" onchange="switchColumnLayout(@((int)item))"/>
+                    <label class="form-check-label" for="@item">@item.ToString()</label>
+                </div>
             }
         </div>
         <div class="empty-veesy"></div>
         <div class="row">
             <h3 class="text-color"><strong>Your Images</strong></h3>
             TODO mostrare immagini del portfolio
-            <div class="row draggable-zone">
-                <div class="col-3 draggable" sortable>
-                    <img src="https://picsum.photos/300/300"/>
-                </div>
-                <div class="col-3 draggable" sortable>
-                    <img src="https://picsum.photos/200/400"/>
-                </div>
-                <div class="col-3 draggable" sortable>
-                    <img src="https://picsum.photos/100/300"/>
-                </div>
-                <div class="col-3 draggable" sortable>
-                    <img src="https://picsum.photos/400/400"/>
-                </div>
+            <div class="draggable-zone" id="images-container">
+                <span class="draggable mb-1" sortable>
+                    <img src="https://picsum.photos/300/300" class="pb-1"/>
+                </span>
+                <span class="draggable" sortable>
+                    <img src="https://picsum.photos/200/400" class="pb-1"/>
+                </span>
+                <span class="draggable" sortable>
+                    <img src="https://picsum.photos/100/300" class="pb-1"/>
+                </span>
+                <span class="draggable" sortable>
+                    <img src="https://picsum.photos/400/400" class="pb-1"/>
+                </span>
+                <span class="draggable" sortable>
+                    <img src="https://picsum.photos/450/200" class="pb-1"/>
+                </span>
+                <span class="draggable" sortable>
+                    <img src="https://picsum.photos/200/110" class="pb-1"/>
+                </span>
+                <span class="draggable" sortable>
+                    <img src="https://picsum.photos/120/340" class="pb-1"/>
+                </span>
+                <span class="draggable" sortable>
+                    <img src="https://picsum.photos/440/310" class="pb-1"/>
+                </span>
+                <span class="draggable" sortable>
+                    <img src="https://picsum.photos/270/400" class="pb-1"/>
+                </span>
             </div>
         </div>
         <div class="empty-veesy"></div>
@@ -126,19 +140,46 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@@shopify/draggable@1.0.0-beta.11/lib/draggable.bundle.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@@shopify/draggable@1.0.0-beta.11/lib/draggable.bundle.legacy.js"></script>
-<!-- Sortable only -->
 <script src="https://cdn.jsdelivr.net/npm/@@shopify/draggable@1.0.0-beta.11/lib/sortable.js"></script>
 
 <style>
     .draggable {
         cursor: move;
     }
+    
     .draggable-source--is-dragging {
-      visibility: hidden;
+        /* non togliere anche se non ha usi, serve per eliminare un elemento generato dal plugin */ 
+        visibility: hidden;
+    }
+    
+    .draggable-zone {
+        border-style: dashed;
+        border-width: medium;
+        border-color: grey;
+        padding-bottom: 10px;
+        padding-top: 10px;
     }
 </style>
 
 <script>
+    
+    function switchColumnLayout(columnsNumber) {
+        switch (columnsNumber){
+            case 1:
+                document.getElementById("images-container").style.width = "30%"
+                return
+            case 2:
+                document.getElementById("images-container").style.width = "50%"
+                return;
+            case 3:
+                document.getElementById("images-container").style.width = "80%"
+                return;
+            case 4:
+                document.getElementById("images-container").style.width = "100%"
+                return;
+        }
+    }
+    
     const sortable = new Sortable.default(
     	document.querySelectorAll('.draggable-zone'), {
     		draggable: '.draggable',

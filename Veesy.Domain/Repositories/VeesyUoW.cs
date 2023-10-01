@@ -29,8 +29,10 @@ public class VeesyUoW : IVeesyUoW
 
     private IMediaRepository _mediaRepository;
     public IMediaRepository MediaRepository => _mediaRepository ??= new MediaRepository(_dbContext);
-    
     private IUsedSoftwareRepository _usedSoftwareRepository;
+    
+    public IPortfolioRepository PortfolioRepository => _portfolioRepository ??= new PortfolioRepository(_dbContext);
+    private IPortfolioRepository _portfolioRepository;
     
     public IUsedSoftwareRepository UsedSoftwareRepository => _usedSoftwareRepository ??= new UsedSoftwareRepository(_dbContext);
     

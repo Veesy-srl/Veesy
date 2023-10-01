@@ -16,11 +16,13 @@ public static class RegisterDependencyInjection
         serviceCollection.AddScoped<IMyUserRepository, MyUserRepository>();
         serviceCollection.AddScoped<IUsedSoftwareRepository, UsedSoftwareRepository>();
         serviceCollection.AddScoped<IMediaRepository, MediaRepository>();
+        serviceCollection.AddScoped<IPortfolioRepository, PortfolioRepository>();
         serviceCollection.AddScoped<IVeesyUoW, VeesyUoW>();
         
         /*Service Dependency Injection*/
         serviceCollection.AddTransient<IAccountService, AccountService>();
         serviceCollection.AddTransient<IMediaService, MediaService>();
+        serviceCollection.AddTransient<IPortfolioService, PortfolioService>();
 
         /*Utils Dependency Injection*/
         serviceCollection.AddScoped<IEmailSender, EmailSender>();

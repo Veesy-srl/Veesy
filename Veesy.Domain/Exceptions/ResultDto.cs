@@ -1,4 +1,4 @@
-namespace Veesy.Domain.Exception;
+namespace Veesy.Domain.Exceptions;
 
 public class ResultDto
 {
