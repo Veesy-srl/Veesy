@@ -36,7 +36,7 @@ public class CloudController : VeesyController
         catch (Exception ex)
         {
             Logger.Error(ex, ex.Message);
-            _notyfService.Custom("Error retrieve medias. Please retry.", 10 , "#ca0a0a");
+            _notyfService.Custom("Error retrieving medias. Please retry.", 10 , "#ca0a0a");
             return RedirectToAction("Index", "Home");
         }
     }

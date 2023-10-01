@@ -30,10 +30,22 @@ public class PortfolioHelper
             IsPublic = true,
             IsMain = true,
             LastEditRecordDate = DateTime.Now.AddDays(-3),
-            Layout = VeesyConstants.PortfolioLayout.TwoColumns
+            Layout = VeesyConstants.PortfolioLayout.TwoColumns,
+            PortfolioMedias = new List<PortfolioMediaDto>()
+            {
+                new PortfolioMediaDto { Media = new MediaDto(){ } },
+                new PortfolioMediaDto { Media = new MediaDto(){ } },
+                new PortfolioMediaDto { Media = new MediaDto(){ } },
+                new PortfolioMediaDto { Media = new MediaDto(){ } }
+            }
         };
         vm.BasePathImages = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/";
 
         return vm;
+    }
+
+    public void UpdatePortfolioSettings()
+    {
+        
     }
 }

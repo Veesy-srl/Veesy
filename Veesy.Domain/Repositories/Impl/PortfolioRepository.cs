@@ -10,13 +10,4 @@ public class PortfolioRepository : RepositoryBase<Portfolio>, IPortfolioReposito
     public PortfolioRepository(ApplicationDbContext applicationDbContext) : base(applicationDbContext)
     {
     }
-
-
-    public Portfolio GetPortfolioById(Guid portfolioId, string userId)
-    {
-        var portfolio = _applicationDbContext.Portfolios.SingleOrDefault(w => w.MyUserId == userId && w.Id == portfolioId);
-        if (portfolio == null)
-            throw new Exception($"Portfolio not found with id {portfolioId}.");
-        return portfolio;
-    }
 }

@@ -10,7 +10,7 @@
         <nav class="breadcrumb-container" aria-label="Percorso di navigazione">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><img src="~/imgs/dashboard_home_light-mode.png" style="width: 18px; margin-top: -5px;" class="me-2"><a class="breadcrumb-a me-2" asp-action="Index" asp-area="Portfolio" asp-controller="Home">dashboard</a><i class="fa-solid fa-chevron-right"></i></li>
-                <li class="breadcrumb-item"><a class="breadcrumb-a" href="#"><strong>portfolio</strong></a><i class="fa-solid fa-chevron-right"></i></li>
+                <li class="breadcrumb-item"><a class="breadcrumb-a" asp-action="List"><strong>portfolio</strong></a><i class="fa-solid fa-chevron-right"></i></li>
                 <li class="breadcrumb-item"><a class="breadcrumb-a" href="#"><strong>settings</strong></a></li>
             </ol>
         </nav>
@@ -39,14 +39,15 @@
             <div class="d-flex"><p class="mb-0 veesy-overflow">@Model.Portfolio.PortfolioMedias.Count media uploaded</p></div>
             <div class="d-flex"><p class="mb-0 veesy-overflow">2 images (TODO)</p></div>
             <div class="d-flex"><p class="mb-0 veesy-overflow">8 videos (TODO)</p></div>
+            <button class="rounded-pill btn btn-primary btn-variant">Preview portfolio</button>
         </div>
     </div>
     <div class="col-sm-12 col-md-6">
         <h2 class="text-color"><strong>@User.Identity.Name's Portfolio</strong></h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <a class="grey-link ms-2"><strong>learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a></p>
         <div class="empty-veesy"></div>
-        <h3 class="text-color"><strong>Main Settings</strong></h3>
         <div class="row">
+            <h3 class="text-color"><strong>Main Settings</strong></h3>
             <div class="col-sm-12 col-md-6 col-lg-6 ps-2 pe-2">
                 <hr class="hr"/>
                 <div class="d-flex">
@@ -81,10 +82,11 @@
         <div class="empty-veesy"></div>
         <div class="row">
             <h3 class="text-color"><strong>Select layout</strong></h3>
+            <p class="mb-0 veesy-overflow">Remember that for <b>horizontal images</b>, 1 or 2 columns are more suitable choice, for <b>vertical images</b>, it's better to pick 3 or 4 columns.</p>
             @foreach (var item in VeesyConstants.GetAvailableLayouts())
             {
                 <div class="form-check col-3">
-                    <input class="form-check-input" type="radio" name="column-layout" value="@item" id="@item" onchange="switchColumnLayout(@((int)item))"/>
+                    <input class="form-check-input" type="radio" name="column-layout" asp-for="Portfolio.Layout" value="@item" id="@item" onchange="switchColumnLayout(@((int)item))"/>
                     <label class="form-check-label" for="@item">@item.ToString()</label>
                 </div>
             }
@@ -93,35 +95,33 @@
         <div class="row">
             <h3 class="text-color"><strong>Your Images</strong></h3>
             TODO mostrare immagini del portfolio
-            <div class="draggable-zone" id="images-container">
-                <span class="draggable mb-1" sortable>
-                    <img src="https://picsum.photos/300/300" class="pb-1"/>
-                </span>
-                <span class="draggable" sortable>
-                    <img src="https://picsum.photos/200/400" class="pb-1"/>
-                </span>
-                <span class="draggable" sortable>
-                    <img src="https://picsum.photos/100/300" class="pb-1"/>
-                </span>
-                <span class="draggable" sortable>
-                    <img src="https://picsum.photos/400/400" class="pb-1"/>
-                </span>
-                <span class="draggable" sortable>
-                    <img src="https://picsum.photos/450/200" class="pb-1"/>
-                </span>
-                <span class="draggable" sortable>
-                    <img src="https://picsum.photos/200/110" class="pb-1"/>
-                </span>
-                <span class="draggable" sortable>
-                    <img src="https://picsum.photos/120/340" class="pb-1"/>
-                </span>
-                <span class="draggable" sortable>
-                    <img src="https://picsum.photos/440/310" class="pb-1"/>
-                </span>
-                <span class="draggable" sortable>
-                    <img src="https://picsum.photos/270/400" class="pb-1"/>
-                </span>
+            <div class="row draggable-zone" id="images-container">
+                @{
+                    var bsCols = Model.Portfolio.Layout switch
+                    {
+                        VeesyConstants.PortfolioLayout.OneColumn => "col-12",
+                        VeesyConstants.PortfolioLayout.TwoColumns => "col-6",
+                        VeesyConstants.PortfolioLayout.ThreeColumns => "col-4",
+                        VeesyConstants.PortfolioLayout.FourColumns => "col-3",
+                        _ => "col-12"
+                        };
+                }
+                @foreach (var image in Model.Portfolio.PortfolioMedias)
+                {
+                    <div class="@bsCols draggable" name="image-gallery">
+                        <img src="https://picsum.photos/200/400" class="mb-1 rounded-corners"/>                        
+                    </div>
+                }
+                @foreach (var image in Model.Portfolio.PortfolioMedias)
+                {
+                    <div class="@bsCols draggable" name="image-gallery">
+                        <img src="https://picsum.photos/300/200" class="mb-1 rounded-corners"/>                        
+                    </div>
+                }
             </div>
+        </div>
+        <div>
+            <button class="rounded-pill btn btn-primary btn-variant">Publish</button>
         </div>
         <div class="empty-veesy"></div>
     </div>
@@ -152,6 +152,11 @@
         visibility: hidden;
     }
     
+    img.rounded-corners {
+      border-radius: 20px;
+      width: 100%
+    }
+    
     .draggable-zone {
         border-style: dashed;
         border-width: medium;
@@ -164,18 +169,31 @@
 <script>
     
     function switchColumnLayout(columnsNumber) {
+        var images = document.getElementsByName("image-gallery");
         switch (columnsNumber){
             case 1:
-                document.getElementById("images-container").style.width = "30%"
+                images.forEach(fe=>{
+                    fe.className = ''
+                    fe.classList.add("draggable","col-12")
+                })
                 return
             case 2:
-                document.getElementById("images-container").style.width = "50%"
+                images.forEach(fe=>{
+                    fe.className = ''
+                    fe.classList.add("draggable","col-6")
+                })
                 return;
             case 3:
-                document.getElementById("images-container").style.width = "80%"
+                images.forEach(fe=>{
+                    fe.className = ''
+                    fe.classList.add("draggable","col-4")
+                })
                 return;
             case 4:
-                document.getElementById("images-container").style.width = "100%"
+                images.forEach(fe=>{
+                    fe.className = ''
+                    fe.classList.add("draggable","col-3")
+                })
                 return;
         }
     }
@@ -186,15 +204,18 @@
             handle: ".draggable",
             mirror: {
                 appendTo: "body",
-                constrainDimensions: false
+                constrainDimensions: true
             },
             delay: 50
     	}
     )
-    sortable.on('drag:start', () => {
-    	console.log('drag:start')
+    sortable.on('drag:start', (divElem) => {
+        console.log(divElem)
+        var imageElem = divElem.source.children[0]
+        imageElem.style.border = "3px solid #75CCDD"
     })
-    sortable.on('drag:stop', () => {
-    	console.log('drag:stop')
+    sortable.on('drag:stop', (divElem) => {
+    	var imageElem = divElem.source.children[0]
+        imageElem.style.border = ''
     })
 </script>
