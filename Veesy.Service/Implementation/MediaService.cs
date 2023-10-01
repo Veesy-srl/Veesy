@@ -51,4 +51,15 @@ public class MediaService : IMediaService
         await _uoW.CommitAsync(user);
         return new ResultDto(true, "");
     }
+
+    public long GetSizeMediaStorageByUserId(string userId)
+    {
+        return _uoW.MediaRepository.FindByCondition(s => s.MyUserId == userId).Sum(s => s.Size);
+    }
+
+    public async Task DeleteMedia(Media media, MyUser user)
+    {
+        _uoW.MediaRepository.Delete(media);
+        await _uoW.CommitAsync(user);
+    }
 }

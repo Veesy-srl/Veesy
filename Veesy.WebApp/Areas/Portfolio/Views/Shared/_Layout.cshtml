@@ -19,7 +19,17 @@
         <div class="container-fluid">
                 
             <h1 class="h3 mb-2 fw-normal">
-                <a role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><img src="/imgs/veesy_vettoriale_enigma.png" style="width: 75px; height: 25px; margin-top: 5px;"> dashboard</a>
+                @if(ViewContext.RouteData.Values["Controller"].ToString() == "Cloud")
+                {
+                    <a role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="breadcrumb-a-white text-white navbar-brand" asp-area="Portfolio" asp-controller="Cloud" asp-action="List">
+                        <img src="~/imgs/veesy_vettoriale_enigma_white.png" style="width: 75px; height: 25px; margin-top: 5px;">cloud
+                    </a>
+                }
+                else{
+                    <a role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                        <img src="~/imgs/veesy_vettoriale_enigma.png" style="width: 75px; height: 25px; margin-top: 5px;">dashboard
+                    </a>
+                }
             </h1> 
             <div class="float-end mb-2">
                 <div class="d-flex">

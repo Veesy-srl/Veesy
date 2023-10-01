@@ -36,7 +36,7 @@ public class CloudController : VeesyController
         catch (Exception ex)
         {
             Logger.Error(ex, ex.Message);
-            _notyfService.Custom("Error retrieve medias. Please retry.", 10 , "#ca0a0a96");
+            _notyfService.Custom("Error retrieve medias. Please retry.", 10 , "#ca0a0a");
             return RedirectToAction("Index", "Home");
         }
     }
@@ -49,7 +49,7 @@ public class CloudController : VeesyController
             var response = _cloudHelper.GetEditViewModel(id, UserInfo);
             if (!response.resultDto.Success)
             {
-                _notyfService.Custom(response.resultDto.Message, 10 , "#ca0a0a96");
+                _notyfService.Custom(response.resultDto.Message, 10 , "#ca0a0a");
                 return RedirectToAction("List");    
             }
             return View(response.viewModel);
@@ -70,39 +70,40 @@ public class CloudController : VeesyController
         {
             var result = await _cloudHelper.UpdateFileName(media, UserInfo);
             if(!result.Success)
-                _notyfService.Custom(result.Message, 10, "#ca0a0a96");
+                _notyfService.Custom(result.Message, 10, "#ca0a0a");
             else 
-                _notyfService.Custom("Filename update correctly.", 10, "#75CCDD40");
+                _notyfService.Custom("Filename update correctly.", 10, "#75CCDD");
             return Json(new { Result = result.Success, Message = result.Message});
         }
         catch (Exception ex)
         {
             Logger.Error(ex, ex.Message);
             Logger.Error($"MediaDto to update: {media.ToJson()}");
-            _notyfService.Custom("Error updating Filename. Please retry.", 10 , "#ca0a0a96");
+            _notyfService.Custom("Error updating Filename. Please retry.", 10 , "#ca0a0a");
             return Json(new { Result = false, Message = "Error updating Filename. Please retry." });
         }
-    } 
-    
+    }
+
     public async Task<JsonResult> UpdateCredits([FromBody] MediaDto media)
     {
         try
         {
             var result = await _cloudHelper.UpdateFileUpdateCredits(media, UserInfo);
-            if(!result.Success)
-                _notyfService.Custom(result.Message, 10, "#ca0a0a96");
-            else 
-                _notyfService.Custom("Filename update correctly.", 10, "#75CCDD40");
-            return Json(new { Result = result.Success, Message = result.Message});
+            if (!result.Success)
+                _notyfService.Custom(result.Message, 10, "#ca0a0a");
+            else
+                _notyfService.Custom("Credits update correctly.", 10, "#75CCDD");
+            return Json(new { Result = result.Success, Message = result.Message });
         }
         catch (Exception ex)
         {
             Logger.Error(ex, ex.Message);
             Logger.Error($"MediaDto to update: {media.ToJson()}");
-            _notyfService.Custom("Error updating Filename. Please retry.", 10 , "#ca0a0a96");
+            _notyfService.Custom("Error updating Filename. Please retry.", 10, "#ca0a0a");
             return Json(new { Result = false, Message = "Error updating Filename. Please retry." });
         }
     }
 
     #endregion
+
 }
