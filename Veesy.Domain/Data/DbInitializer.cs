@@ -143,7 +143,7 @@ public class DbInitializer
             new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Game Art", Description = "Game Art"},
             new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Archiviz", Description = "Archiviz"},
             new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Interior Design", Description = "Interior Design"},
-            new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Light Design", Description = "Light Design"},
+            new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Lighting Design", Description = "Lighting Design"},
             new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Graphic Design", Description = "Graphic Design"},
             new (){LastEditUserId = "Init", CreateUserId = "init", Name = "UX/UI", Description = "UX/UI"},
             new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Character", Description = "Character"},

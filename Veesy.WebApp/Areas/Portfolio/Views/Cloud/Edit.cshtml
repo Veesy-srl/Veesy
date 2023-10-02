@@ -6,7 +6,7 @@
 }
 
 <div class="row pt-7rem">
-    <div class="col-sm-12 col-md-2 center-content">
+    <div class="col-sm-12 col-md-2 center-content nodisplay-sm">
         @if (Model.PreviousMedia != null)
         {
             <ul class="list-unstyled">
@@ -36,22 +36,22 @@
     <div class="text-white col-sm-12 col-md-8">
         <div class="row">
             <div class="row">
-                <div class="col-6 text-center">
+                <div class="col-md-6 col-sm-12 text-center">
                     <h1><strong>Edit media</strong></h1>
                 </div>
-                <div class="col-6">
+                <div class="col-md-6">
                 </div>
             </div>
             <div class="col-sm-12 col-md-7 text-center pe-3">
                 @if (Model.Media.Type == ".mp4")
                 {
                     <video autoplay="autoplay" muted loop class="img-rounded-trasparent w-100 shadow-1-strong rounded" alt="@Model.Media.OriginalFileName">
-                        <source src="@Model.BasePath@Model.Media.FileName" type="video/mp4">
+                        <source src="@Model.BasePath@Model.Media.FileName?tr=w-1080" type="video/mp4">
                     </video>
                 }
                 else
                 {
-                    <img asp-append-version="true" src="@Model.BasePath@Model.Media.FileName" class="w-100 shadow-1-strong rounded" alt="@Model.Media.OriginalFileName"/>
+                    <img asp-append-version="true" src="@Model.BasePath@Model.Media.FileName?tr=w-1080" class="w-100 shadow-1-strong rounded" alt="@Model.Media.OriginalFileName"/>
                 }
                 <div class="empty-veesy"></div>
                 <div class="empty-veesy"></div>
@@ -70,7 +70,7 @@
                     <div class="empty-veesy"></div>
                     <div class="col-12 ps-0 pe-0">
                         <p class="mb-0 text-white"><strong>Media url</strong></p>
-                        <a href="@Model.BasePath@Model.Media.FileName" _target="blank" class="grey-link veesy-overflow"><i class="fa-solid fa-arrow-up-right-from-square pe-1"></i>https://beta.veesy.it/cloud/@Model.Media.OriginalFileName</a>
+                        <p style="cursor: pointer" onclick="OpenImageNewTab('@Model.BasePathAzure@Model.Media.FileName')" _target="blank" class="grey-link veesy-overflow"><i class="fa-solid fa-arrow-up-right-from-square pe-1"></i>https://beta.veesy.it/cloud/@Model.Media.OriginalFileName</p>
                     </div>
                     
                     <div class="empty-veesy"></div>
@@ -132,7 +132,7 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-12 col-md-2 center-content">
+    <div class="col-sm-12 col-md-2 center-content nodisplay-sm">
         @if (Model.NextMedia != null)
         {
             <ul class="list-unstyled">
@@ -150,6 +150,66 @@
                         else
                         {
                             <img style="float: right" asp-append-version="true" src="@Model.BasePath@Model.NextMedia.FileName?tr=w-300" class="w-25 shadow-1-strong rounded-05 img-rounded-trasparent" title="@Model.NextMedia.OriginalFileName" alt="@Model.NextMedia.OriginalFileName"/>
+                        }
+                    </a>
+                </li>
+                <li class="mt-2 w-50 edit-padding-right text-end" style="float: right">
+                    <p class="text-white veesy-overflow">@Model.NextMedia.OriginalFileName</p>
+                </li>
+            </ul>
+        }
+    </div>
+    
+</div>
+
+<div class="row nodisplay-md">
+    
+    @*PREVIOUS / NEXT MOBILE SECTION*@
+    <div class="col-6 center-content nodisplay-md">
+            @if (Model.PreviousMedia != null)
+            {
+                <ul class="list-unstyled w-100">
+                    <li class="mb-3 edit-padding-left">
+                        <div class="arrow-edit-media rounded-05 center-content"><a asp-action="Edit" asp-area="Portfolio" asp-controller="Cloud" asp-route-id="@Model.PreviousMedia.Code"><img class="w-100" src="~/icon/arrow_left_dark mode.svg"/></a></div>
+                    </li>
+                    <li class="mt-2">
+                        <a asp-action="Edit" asp-area="Portfolio" asp-controller="Cloud" asp-route-id="@Model.PreviousMedia.Code">
+                            @if (Model.PreviousMedia.Type == ".mp4")
+                            {
+                                <video autoplay="autoplay" muted loop class="img-rounded-trasparent w-50 shadow-1-strong rounded-05" title="@Model.PreviousMedia.OriginalFileName" alt="@Model.PreviousMedia.OriginalFileName">
+                                    <source src="@Model.BasePath@Model.PreviousMedia.FileName?tr=w-300" type="video/mp4">
+                                </video>
+                            }
+                            else
+                            {
+                                <img asp-append-version="true" src="@Model.BasePath@Model.PreviousMedia.FileName?tr=w-300" class="img-rounded-trasparent w-50 shadow-1-strong rounded-05" title="@Model.PreviousMedia.OriginalFileName" alt="@Model.PreviousMedia.OriginalFileName"/>
+                            }
+                        </a>
+                    </li>
+                    <li class="mt-2 w-50  edit-padding-left">
+                        <p class="text-white veesy-overflow">@Model.PreviousMedia.OriginalFileName</p>
+                    </li>
+                </ul>
+            }
+        </div>
+    <div class="col-6 center-content nodisplay-md">
+        @if (Model.NextMedia != null)
+        {
+            <ul class="list-unstyled w-100">
+                <li class="mb-3 edit-padding-right" style="float: right">
+                    <div class="arrow-edit-media rounded-05 center-content"><a asp-action="Edit" asp-area="Portfolio" asp-controller="Cloud" asp-route-id="@Model.NextMedia.Code"><img class="w-100" src="~/icon/arrow_right_dark mode.svg"/></a></div>
+                </li>
+                <li style="float: right" class="mt-2">
+                    <a asp-action="Edit" asp-area="Portfolio" asp-controller="Cloud" asp-route-id="@Model.NextMedia.Code">
+                        @if (Model.NextMedia.Type == ".mp4")
+                        {
+                            <video style="float: right" autoplay="autoplay" muted loop class="img-rounded-trasparent w-50 shadow-1-strong rounded-05" title="@Model.NextMedia.OriginalFileName" alt="@Model.NextMedia.OriginalFileName">
+                                <source src="@Model.BasePath@Model.NextMedia.FileName?tr=w-300" type="video/mp4">
+                            </video>
+                        }
+                        else
+                        {
+                            <img style="float: right" asp-append-version="true" src="@Model.BasePath@Model.NextMedia.FileName?tr=w-300" class="w-50 shadow-1-strong rounded-05 img-rounded-trasparent" title="@Model.NextMedia.OriginalFileName" alt="@Model.NextMedia.OriginalFileName"/>
                         }
                     </a>
                 </li>
@@ -183,6 +243,10 @@
 @section Scripts
 {
     <script>
+        function OpenImageNewTab(url) {
+            window.open(url, '_blank');
+        }
+    
         function UpdateCredits() {
             $('#load-spinner').css("display", "block");
             var Credits = document.getElementById("credits-edit").value

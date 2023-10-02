@@ -36,10 +36,10 @@
             @{
                 var workrole = "information missing";
                 var role_css = "text-danger";
-                if (Model.RolesWork.Count(s => s.Selected) > 0)
+                if (!string.IsNullOrEmpty(Model.Role))
                 {
                     role_css = "";
-                    workrole = Model.RolesWork.FirstOrDefault(s => s.Selected).Name;
+                    workrole = Model.Role;
                 }
             }
             <div class="d-flex"><p class="mb-0"><strong>Role:&nbsp;</strong></p><p class="@role_css mb-0">@workrole</p></div>
@@ -73,7 +73,7 @@
             <div class="col-sm-12 col-md-6 col-lg-6 ps-2 pe-2">
                 <hr class="hr"/>
                 <div class="d-flex">
-                    @if (Model.RolesWork.Count(s => s.Selected) == 0)
+                    @if (string.IsNullOrEmpty(Model.Role))
                     {
                         <div class="col-9">
                             <p class="mb-0"><strong>Role:</strong></p>
@@ -85,19 +85,10 @@
                     {
                         <div class="col-9 profile-section">
                             <p class="mb-0"><strong>Role:</strong></p>
-                            <p class="mb-0 veesy-overflow">
-                                @{
-                                    var roles = "";
-                                    foreach (var role in Model.RolesWork.Where(s => s.Selected))
-                                    {
-                                        roles += $"{@role.Name}, ";
-                                    }
-                                    roles = roles.Substring(0, (roles.Length - 2));
-                                }
-                                @roles
+                            <p class="mb-0 veesy-overflow">@Model.Role
                             </p>
                         </div>
-                        <div class="col-3 text-end"><a onclick="openModal('#modalWorkRole')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
+                        <div class="col-3 text-end"><a onclick="openModal('#modalWorkRole'), setTextAreaValue('category-edit', '@Model.Role')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
                     }
                 </div>
                 <hr class="hr"/>
@@ -114,7 +105,7 @@
                     {
                         <div class="col-9 profile-section">
                             <p class="mb-0"><strong>External link:</strong></p>
-                            <a href="@Model.ExternalLink" target="_blank" class="mb-0 veesy-overflow">@Model.ExternalLink</a>
+                            <p style="cursor: pointer" onclick="OpenUrlNewTab('@Model.ExternalLink')" class="mb-0 veesy-overflow">@Model.ExternalLink</p>
                         </div>
                         <div class="col-3 text-end"><a onclick="openModal('#modalExternalLink'), setTextAreaValue('external-link-edit', '@Model.ExternalLink')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
                     }
@@ -124,32 +115,32 @@
             <div class="col-sm-12 col-md-6 pe-2 ps-2">
                 <hr class="hr nodisplay-sm"/>
                 <div class="d-flex">
-                        @if (Model.LanguagesSpoken.Count(s => s.Selected) == 0)
-                        {
-                            <div class="col-9">
-                                <p class="mb-0"><strong>Language Spoken:</strong></p>
-                                <p class="mb-0 color-red">Information missing</p>
-                            </div>
-                            <div class="col-3 text-end"><a onclick="openModal('#modalLanguageSpoken')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div>
-                        }
-                        else
-                        {
-                            <div class="col-9 profile-section">
-                                <p class="mb-0"><strong>Language Spoken:</strong></p>
-                                <p class="mb-0 veesy-overflow">
-                                    @{
-                                        var languages = "";
-                                        foreach (var language in Model.LanguagesSpoken.Where(s => s.Selected))
-                                        {
-                                            languages += $"{language.Language}, ";
-                                        }
-                                        languages = languages.Substring(0, (languages.Length - 2));
+                    @if (Model.LanguagesSpoken.Count(s => s.Selected) == 0)
+                    {
+                        <div class="col-9">
+                            <p class="mb-0"><strong>Language Spoken:</strong></p>
+                            <p class="mb-0 color-red">Information missing</p>
+                        </div>
+                        <div class="col-3 text-end"><a onclick="openModal('#modalLanguageSpoken')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div>
+                    }
+                    else
+                    {
+                        <div class="col-9 profile-section">
+                            <p class="mb-0"><strong>Language Spoken:</strong></p>
+                            <p class="mb-0 veesy-overflow">
+                                @{
+                                    var languages = "";
+                                    foreach (var language in Model.LanguagesSpoken.Where(s => s.Selected))
+                                    {
+                                        languages += $"{language.Language}, ";
                                     }
-                                    @languages
-                                </p>
-                            </div>
-                            <div class="col-3 text-end"><a onclick="openModal('#modalLanguageSpoken')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
-                        }
+                                    languages = languages.Substring(0, (languages.Length - 2));
+                                }
+                                @languages
+                            </p>
+                        </div>
+                        <div class="col-3 text-end"><a onclick="openModal('#modalLanguageSpoken')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
+                    }
                 </div>
                 <hr class="hr"/>
                 <div class="d-flex">
@@ -196,7 +187,7 @@
             else
             {
                 <p>@Model.PortfolioIntro</p>
-                <a onclick="openModal('#modalPortfolioIntro'), setTextAreaValue('portfolio-intro-text-edit', '@Model.PortfolioIntro')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
+                <a onclick="openModal('#modalPortfolioIntro'), setTextAreaValue('portfolio-intro-text-edit', '@Model.PortfolioIntro.Replace("\'", "&#x27;")')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
 
             }
         </div>
@@ -213,7 +204,7 @@
             else
             {
                 <p>@Model.Biography</p>
-                <a onclick="openModal('#modalBiography'), setTextAreaValue('biography-text-edit', '@Model.Biography')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
+                <a onclick="openModal('#modalBiography'), setTextAreaValue('biography-text-edit', '@Model.Biography.Replace("\'", "&#x27;")')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
 
             }
         </div>
@@ -372,6 +363,25 @@
     </div>
 </div>
 
+<div class="modal fade" id="modalWorkRole" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Role</strong></h3>
+                <a onclick="closeModal('#modalWorkRole')"><i class="fa-solid fa-circle-xmark"></i></a>
+            </div>
+            <div class="modal-body">
+                <p>Write about your role.</p>
+                <textarea id="category-edit" rows="4" class="w-100"></textarea>
+                <p class="mb-0"><strong>max. 50 characters</strong></p>  
+            </div>
+            <div class="modal-footer">                
+                <a onclick="UpdateCategory()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="modalSoftware" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -468,7 +478,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="modalWorkRole" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+@*<div class="modal fade" id="modalWorkRole" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -498,7 +508,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 
 <div class="modal fade" id="modalLanguageSpoken" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -566,6 +576,9 @@
 {
 
     <script>
+    function OpenUrlNewTab(url) {
+        window.open(url, '_blank');
+    }
 
 function UpdateInfoToShow() {
     $('#load-spinner').css("display", "block");
@@ -833,6 +846,41 @@ function UpdatePortfolioIntro(){
         }
     })
 }
+
+function UpdateCategory() {
+    $('#load-spinner').css("display", "block");
+    var category = document.getElementById("category-edit").value
+    $.ajax({
+        type: 'POST',
+        url: '@Url.Action("UpdateCategory", "Profile")',
+        data: JSON.stringify(category),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function (response) {
+            if(response.result){
+                location.reload()
+                if (category != ""){
+                    // document.getElementById("category-show").classList.remove("color-red");
+                    // document.getElementById("category-button").classList.remove("red-link");
+                    // document.getElementById("category-button").classList.add("grey-link");
+                    // document.getElementById("category-show").textContent = category;
+                }
+                else{
+                    // document.getElementById("category-show").classList.add("color-red");
+                    // document.getElementById("category-button").classList.add("red-link");
+                    // document.getElementById("category-button").classList.remove("grey-link");
+                    // document.getElementById("category-show").textContent = "Information missing";    
+                }
+                closeModal('#modalWorkRole');
+            }
+            $('#load-spinner').css("display", "none");
+        },
+        error: function (response) {
+            $('#load-spinner').css("display", "none");
+        }
+    })
+}
+
 </script>
 }
 

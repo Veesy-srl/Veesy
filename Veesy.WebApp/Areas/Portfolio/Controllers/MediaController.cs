@@ -53,9 +53,9 @@ public class MediaController : VeesyController
                 else
                     errorFiles += res.fileName + " - " + res.message + "\n";
             }
-            if (successFiles != "Files delete: \n")
+            if (successFiles != "Files upload: \n")
                 _notyfService.Custom(successFiles, 10, "#75CCDD");
-            if (errorFiles != "Files not delete: \n")
+            if (errorFiles != "Files not upload: \n")
                 _notyfService.Custom(errorFiles, 10, "#ca0a0a");
             return Ok();
         }

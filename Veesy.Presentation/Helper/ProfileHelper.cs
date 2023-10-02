@@ -51,6 +51,7 @@ public class ProfileHelper
             FileName = userInfo.ProfileImageFileName,
             BasePathImages = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/",
             ExternalLink = userInfo.ExternalLink,
+            Role = userInfo.Category,
             PhoneNumber = userInfo.PhoneNumber,
             Username = userInfo.UserName,
             Email = userInfo.Email,
@@ -260,7 +261,7 @@ public class ProfileHelper
     public async Task<ResultDto> UpdateCategory(string category, MyUser userInfo)
     {
         if(category.Length > 100)
-            return new ResultDto(false, "Max characters are 100.");
+            return new ResultDto(false, "Max characters are 50.");
         userInfo.Category = category;
         return await _accountService.UpdateUserProfile(userInfo);
     }

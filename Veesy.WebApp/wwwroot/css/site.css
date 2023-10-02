@@ -1,9 +1,9 @@
 /*DROPZONE SECTION*/
 .close-button-dropzone{
-  position: absolute !important;
-  top: 20px !important;
+  position: relative !important;
   z-index: 999999 !important;
   right: 20px !important;
+  float: right !important;
 }
 .dz-success-mark svg g path{
   fill: #75CCDD !important;
@@ -849,9 +849,12 @@ a:hover{
 
 .center-content {
   display: flex;
-  justify-content: center;
   align-items: center;
   height: 80vh;
+  @media only screen and (max-width: 600px) {
+    align-items: normal !important;
+    height: auto !important; 
+  }
 }
 .menu-list {
   margin-right: 20px;
@@ -879,6 +882,8 @@ a:hover{
 
   .edit-button {
     display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
   }
   
   .mobile-option-cloud{
@@ -922,6 +927,7 @@ a:hover{
   right: 5px;
   display: none;
   opacity: 0;
+  z-index: 9;
   visibility: hidden;
   color: #AAB0BB !important;
   -webkit-transition: opacity 600ms, visibility 600ms !important;

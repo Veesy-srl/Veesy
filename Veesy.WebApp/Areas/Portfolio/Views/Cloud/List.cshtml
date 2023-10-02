@@ -8,27 +8,34 @@
         <nav class="breadcrumb-container" aria-label="Percorso di navigazione">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><img src="imgs/dashboard_home_dark-mode.png" style="width: 18px; margin-top: -5px;" class="me-2"><a class="breadcrumb-a-white me-2 text-white" asp-area="Portfolio" asp-controller="Home" asp-action="Index">dashboard</a><i class="fa-solid fa-chevron-right text-white"></i></li>
-                <li class="breadcrumb-item"><a class="breadcrumb-a-white me-2 text-white" asp-action="List">cloud</a></li>
+                <li class="breadcrumb-item"><a class="breadcrumb-a-white me-2 text-white" asp-action="List"><strong>cloud</strong></a></li>
             </ol>
         </nav>
     </div>
     <div class="text-white col-sm-12 col-md-6">
         <h1><strong>Cloud</strong></h1>
         <div class="empty-veesy"></div>
-        <p class="text-white mb-0">Here you can upload your files. The recommended format is 4:3 horizontal or vertical, format accepted: jpg, png, mov, mp4, Lorem ipsum<a class="grey-link ms-2"><strong>learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a></p>
+        <p class="text-white mb-0">Here you can upload your files. Drop files on the screen to upload. The recommended format is 4:3 horizontal or vertical, format accepted: jpg, png, mov, mp4, gif. <a class="grey-link ms-2"><strong>learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a></p>
         <div class="empty-veesy nodisplay-md"></div>
-        <div class="nodisplay-md" id="div-uploader">
-            <a onclick="hideDropZone()" class="ms-2 btn btn-light border fw-bolder shadow-none close-button-dropzone">
-                <i class="fas fa-times-circle fa-2xs text-primary" id="icon-color" aria-hidden="true"></i>
-                <span id="color-text-variant">close</span>
-            </a>
+        @{
+            var nodisplay_md = "mt-4";
+            if (Model.Medias != null && Model.Medias.Count != 0)
+            {
+                nodisplay_md = "nodisplay-md";
+            }
+        }
+        <div class="@nodisplay_md" id="div-uploader">
             <form enctype="multipart/form-data" asp-action="UploadMedia" asp-controller="Media" asp-area="Portfolio" class="dropzone card-grey-dashed-veesy mb-4" id="uploader">
+                <a id="dropzone-close-button" style="display: none;" onclick="hideDropZone()" class="ms-2 btn btn-light border fw-bolder shadow-none close-button-dropzone">
+                    <i class="fas fa-times-circle fa-2xs text-primary" id="icon-color" aria-hidden="true"></i>
+                    <span id="color-text-variant">close</span>
+                </a>
                 <div class="dz-message needsclick" id="message-uploader">
                     <div id="div-uploader-icon" class="w-100 mb-1">
                         <i id="uploader-icon" class="fa-solid fa-circle-plus fa-xl" style="color: #0D2045"></i>
                     </div>
                     <span id="uploader-text" class="text">
-                        Upload or drop files here.
+                        Upload or drop files here. <br/> (Accepted formats: jpg, png, mov, mp4, gif)
                     </span>
                     <div class="progress-bar progress-bar-primary" role="progressbar" data-dz-uploadprogress>
                         <span class="progress-text"></span>
@@ -321,7 +328,7 @@
             <div class="d-flex align-items-center">
                 <a class="blue-link me-4 fw-bolder" style="font-size: 14px; margin-top: 2px;">+ add to portfolio</a>
                 <a class="rounded-pill btn btn-grey btn-padding" style="padding-left: 35px !important; padding-right:  35px !important; font-size:  15px;" type="submit">save</a>
-                <a class="ms-4 me-2 mt-1" type="button" data-bs-dismiss="alert" aria-label="Close"><i class="fa-solid fa-grey fa-circle-xmark" style="color: grey;"></i></a>
+                <a class="ms-4 me-2 mt-1" type="button" onclick="CloseAlert()"><i class="fa-solid fa-grey fa-circle-xmark" style="color: grey;"></i></a>
             </div>
         </div>
     </div>
@@ -330,6 +337,10 @@
 @section Scripts
 {
     <script>
+    function CloseAlert() {
+        alert_portfolio.classList.remove("show");
+    }
+    
     
     var img_selected_id = [];
     
@@ -353,6 +364,7 @@
                         removeMediaFromList(response.codeToDelete[i]);
                         alert_portfolio.classList.remove("show");
                     }
+                    location.reload();
                 }
                 else{
                     toastNotifyCustom(response.message, 100, "#ca0a0a", "")
@@ -441,7 +453,7 @@
             },
             queuecomplete: function (){
                hideDropZone()
-               //location.reload() 
+               location.reload() 
                dropzone_processing = false;
             }
         };
@@ -469,6 +481,7 @@
                
     
         function showDropZone() {
+            document.getElementById("dropzone-close-button").style.display = "block";
             div_uploader.classList.remove("nodisplay-md");
             uploader.classList.remove("card-grey-dashed-veesy");
             uploader.classList.add("dropzone-full-page");
@@ -484,6 +497,7 @@
             document.body.style.overflow = 'hidden';
         }
         function hideDropZone() {
+            document.getElementById("dropzone-close-button").style.display = "none";
             div_uploader.classList.add("nodisplay-md");
             uploader.classList.remove("dropzone-full-page");
             uploader.classList.add("card-grey-dashed-veesy");

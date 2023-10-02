@@ -13,6 +13,7 @@ public class ProfileViewModel
     public string Username { get; set; }
     public string PhoneNumber { get; set; }
     public string ExternalLink { get; set; }
+    public string Role { get; set; }
     public List<RolesWorkDto> RolesWork { get; set; }
     public List<LanguageSpokenDto> LanguagesSpoken { get; set; }
     public List<InfoToShowDto> InfoToShow { get; set; }
