@@ -9,6 +9,7 @@ using Veesy.Domain.Constants;
 using Veesy.Domain.Data;
 using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
+using Veesy.Service.Dtos;
 using Veesy.Service.Implementation;
 using Veesy.Service.Interfaces;
 using Veesy.Validators;
@@ -61,13 +62,13 @@ public class MediaHelper
     }
 
 
-    public async Task<List<(bool success, string fileName, string message)>> UploadFileAsync(Stream fileStream, string contentType, MyUser user)
+    public async Task<List<(bool success, MediaDto? media, string fileName, string message)>> UploadFileAsync(Stream fileStream, string contentType, MyUser user)
     {
         //Il numero di file che trovo nella section dipende dal limite che imposto a dropzone
         var boundary = GetBoundary(MediaTypeHeaderValue.Parse(contentType));
         var multipartReader = new MultipartReader(boundary, fileStream);
         var section = await multipartReader.ReadNextSectionAsync();
-        var filesUploadedStatus = new List<(bool success,string fileName, string message)>();
+        var filesUploadedStatus = new List<(bool success, MediaDto? media, string fileName, string message)>();
         var subscription = _subscriptionPlanService.GetSubscriptionByUserId(user.Id);
         while (section != null)
         {
@@ -79,7 +80,7 @@ public class MediaHelper
                 var validateExtension = _mediaValidators.ValidateMediaExtension(extension);
                 if (!validateExtension.Success)
                 {
-                    filesUploadedStatus.Add(new (false, fileSection.FileName, validateExtension.Message));
+                    filesUploadedStatus.Add(new (false, null, fileSection.FileName, validateExtension.Message));
                     continue;
                 }
                 
@@ -93,7 +94,7 @@ public class MediaHelper
                         _mediaValidators.ValidateSizeUpload(tmpSize, subscription.AllowedMegaByte * 1024 * 1024);
                     if (!validateSize.Success)
                     {
-                        filesUploadedStatus.Add(new(false, fileSection.FileName, validateSize.Message));
+                        filesUploadedStatus.Add(new(false, null, fileSection.FileName, validateSize.Message));
                         section = await multipartReader.ReadNextSectionAsync();
                         continue;
                     }
@@ -103,7 +104,7 @@ public class MediaHelper
                         $"{MediaCostants.BlobMediaSections.OriginalMedia}/{newFileName}", contentType);
                     try
                     {
-                        await _mediaService.AddMedia(new Media()
+                        var result = await _mediaService.AddMedia(new Media()
                         {
                             FileName = newFileName,
                             OriginalFileName = fileSection.FileName,
@@ -111,7 +112,7 @@ public class MediaHelper
                             MyUserId = user.Id,
                             Size = size,
                         }, user);
-                        filesUploadedStatus.Add(new(true, fileSection.FileName,
+                        filesUploadedStatus.Add(new(true, MapCloudDtos.MapMedia(result), fileSection.FileName,
                             $"{fileSection.FileName} upload correctly."));
                     }
                     catch (Exception e)

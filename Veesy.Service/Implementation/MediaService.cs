@@ -19,10 +19,11 @@ public class MediaService : IMediaService
         return _uoW.MediaRepository.FindByCondition(s => s.MyUserId == user.Id).OrderBy(s => s.CreateRecordDate).ToList();
     }
 
-    public async Task AddMedia(Media media, MyUser user)
+    public async Task<Media> AddMedia(Media media, MyUser user)
     {
-        await _uoW.MediaRepository.Create(media);
+        var res = await _uoW.MediaRepository.Create(media);
         await _uoW.CommitAsync(user);
+        return res;
     }
 
     public Media? GetMediaById(Guid id)
