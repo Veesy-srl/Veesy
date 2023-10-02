@@ -81,36 +81,41 @@ public class MediaHelper
                 }
                 
                 //File size validation
-                Stream stream = new MemoryStream();
-                await fileSection.FileStream.CopyToAsync(stream);
-                var size = stream.Length;
-                var tmpSize = _mediaService.GetSizeMediaStorageByUserId(user.Id) + size; //Value in byte
-                var validateSize = _mediaValidators.ValidateSizeUpload(tmpSize, subscription.AllowedMegaByte * 1024 * 1024);
-                if (!validateSize.Success)
+                using (Stream stream = new MemoryStream())
                 {
-                    filesUploadedStatus.Add(new (false, fileSection.FileName, validateSize.Message));
-                    section = await multipartReader.ReadNextSectionAsync();
-                    continue;
-                }
-                
-                var newFileName = $"{Guid.NewGuid().ToString().Replace("-", String.Empty)}{extension}";
-                await _veesyBlobService.UploadFromStreamBlobAsync(stream, $"{MediaCostants.BlobMediaSections.OriginalMedia}/{newFileName}", contentType);
-                try
-                {
-                    await _mediaService.AddMedia(new Media()
+                    await fileSection.FileStream.CopyToAsync(stream);
+                    var size = stream.Length;
+                    var tmpSize = _mediaService.GetSizeMediaStorageByUserId(user.Id) + size; //Value in byte
+                    var validateSize =
+                        _mediaValidators.ValidateSizeUpload(tmpSize, subscription.AllowedMegaByte * 1024 * 1024);
+                    if (!validateSize.Success)
                     {
-                        FileName = newFileName,
-                        OriginalFileName = fileSection.FileName,
-                        Type = extension,
-                        MyUserId = user.Id,
-                        Size = size,
-                    }, user);
-                    filesUploadedStatus.Add(new (true, fileSection.FileName, $"{fileSection.FileName} upload correctly."));
-                }
-                catch (Exception e)
-                {
-                    //TODO: delete file from azure
-                    throw e;
+                        filesUploadedStatus.Add(new(false, fileSection.FileName, validateSize.Message));
+                        section = await multipartReader.ReadNextSectionAsync();
+                        continue;
+                    }
+
+                    var newFileName = $"{Guid.NewGuid().ToString().Replace("-", String.Empty)}{extension}";
+                    await _veesyBlobService.UploadFromStreamBlobAsync(stream,
+                        $"{MediaCostants.BlobMediaSections.OriginalMedia}/{newFileName}", contentType);
+                    try
+                    {
+                        await _mediaService.AddMedia(new Media()
+                        {
+                            FileName = newFileName,
+                            OriginalFileName = fileSection.FileName,
+                            Type = extension,
+                            MyUserId = user.Id,
+                            Size = size,
+                        }, user);
+                        filesUploadedStatus.Add(new(true, fileSection.FileName,
+                            $"{fileSection.FileName} upload correctly."));
+                    }
+                    catch (Exception e)
+                    {
+                        //TODO: delete file from azure
+                        throw e;
+                    }
                 }
             }
             section = await multipartReader.ReadNextSectionAsync();
