@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using NLog;
 using NLog.Fluent;
 using Veesy.Domain.Exceptions;
+using NuGet.Protocol;
+using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
 using Veesy.Presentation.Helper;
 using Veesy.Presentation.Model.Media;
@@ -59,7 +61,7 @@ public class MediaController : VeesyController
             if (errorFiles != "Files not upload: \n")
                 _notyfService.Custom(errorFiles, 10, "#ca0a0a");
             var resultDto = new ResultDto(true, "succes", 1);
-            return Ok(resultDto);
+            return Ok(resultDto.ToJson());
         }
         catch (Exception ex)
         {

@@ -443,12 +443,16 @@
                     progressElement.style.width = progress + "%";
                 }
             },
-            success: function (file, responseText) {
+            success: function (file) {
                this.removeFile(file);
             },
+            successmultiple: function (file, response) {
+                // TODO mostrare popup con success/error
+                console.log(response)
+             },
             queuecomplete: function (){
                hideDropZone()
-               location.reload() 
+               //location.reload() 
                dropzone_processing = false;
             }
         };
