@@ -58,7 +58,7 @@ public class MediaController : VeesyController
                 _notyfService.Custom(successFiles, 10, "#75CCDD");
             if (errorFiles != "Files not upload: \n")
                 _notyfService.Custom(errorFiles, 10, "#ca0a0a");
-            var resultDto = new ResultDto(true, "", 0);
+            var resultDto = new ResultDto(true, "succes", 1);
             return Ok(resultDto);
         }
         catch (Exception ex)

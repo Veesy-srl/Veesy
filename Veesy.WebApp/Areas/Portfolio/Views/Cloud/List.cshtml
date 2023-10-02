@@ -434,11 +434,6 @@
             parallelUploads: 5,
             uploadMultiple: true,
             acceptedFiles: "image/jpeg,image/png,image/gif,image/jpg,video/mp4,video/mov",
-            init: function () {
-                this.on("success", function (file) {
-                    console.log("success > " + file.name);
-                });
-            },
             addedfiles: function (){
                 dropzone_processing = true;
             },
@@ -448,7 +443,7 @@
                     progressElement.style.width = progress + "%";
                 }
             },
-            success: function (file, response) {
+            success: function (file, responseText) {
                this.removeFile(file);
             },
             queuecomplete: function (){
