@@ -1,5 +1,6 @@
 using Veesy.Domain.Models;
-
+using Veesy.Domain.Constants;
+    
 namespace Veesy.Service.Dtos;
 
 public class MediaDto
@@ -11,6 +12,21 @@ public class MediaDto
     public string Type { get; set; }
     public string UploadDate { get; set; }
     public string? Credits { get; set; }
+    public bool IsVideo => MediaCostants.VideoExtensions.Contains(Type.ToUpper());
+}
+
+public class UploadMediaResponseDto
+{
+    public UploadMediaResponseDto()
+    {
+        MediaDtos = new List<MediaDto>();
+    }
+
+    public int NumberSuccessFile { get; set; }
+    public int NumberErrorFile { get; set; }
+    public string SuccessFileMessage { get; set; }
+    public string ErrorFileMessage { get; set; }
+    public List<MediaDto> MediaDtos { get; set; }
 }
 
 public static class MapCloudDtos

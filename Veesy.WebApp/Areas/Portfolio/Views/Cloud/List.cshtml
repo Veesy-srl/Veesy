@@ -1,3 +1,4 @@
+@using Veesy.Domain.Constants
 @model Veesy.Presentation.Model.Cloud.CloudViewModel
 @{
     ViewData["Title"] = "Cloud";
@@ -59,7 +60,7 @@
 </div>
 <div class="row">
     <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm"></div>
-    <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm">
+    <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm" id="column-1">
         @for (int i = 0; i < Model.Medias.Count; i = i+8)
         {
             <div id="div-for-remove-@Model.Medias[i].Code" class="media-container show-edit">
@@ -69,7 +70,7 @@
                 </a>
                 <a onclick="SelectMedia('@Model.Medias[i].Code')">
                     <div class="img-div">
-                        @if (Model.Medias[i].Type == ".mp4")
+                        @if (Model.Medias[i].IsVideo)
                         {
                             <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
                                 <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
@@ -84,7 +85,7 @@
             </div>
         }
     </div>
-    <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm">
+    <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm" id="column-2">
         @for (int i = 1; i < Model.Medias.Count; i = i+8)
         {
             <div id="div-for-remove-@Model.Medias[i].Code" class="media-container show-edit">
@@ -94,7 +95,7 @@
                 </a>
                 <a onclick="SelectMedia('@Model.Medias[i].Code')">
                     <div class="img-div">
-                        @if (Model.Medias[i].Type == ".mp4")
+                        @if (Model.Medias[i].IsVideo)
                         {
                             <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
                                 <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
@@ -109,7 +110,7 @@
             </div>
         }
     </div>
-    <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm">
+    <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm" id="column-3">
         @for (int i = 2; i < Model.Medias.Count; i = i+8)
         {
             <div id="div-for-remove-@Model.Medias[i].Code" class="media-container show-edit">
@@ -119,7 +120,7 @@
                 </a>
                 <a onclick="SelectMedia('@Model.Medias[i].Code')">
                     <div class="img-div">
-                        @if (Model.Medias[i].Type == ".mp4")
+                        @if (Model.Medias[i].IsVideo)
                         {
                             <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
                                 <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
@@ -134,7 +135,7 @@
             </div>
         }
     </div>
-    <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm">
+    <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm" id="column-4">
         @for (int i = 3; i < Model.Medias.Count; i = i+8)
         {
             <div id="div-for-remove-@Model.Medias[i].Code" class="media-container show-edit">
@@ -144,7 +145,7 @@
                 </a>
                 <a onclick="SelectMedia('@Model.Medias[i].Code')">
                     <div class="img-div">
-                        @if (Model.Medias[i].Type == ".mp4")
+                        @if (Model.Medias[i].IsVideo)
                         {
                             <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
                                 <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
@@ -159,7 +160,7 @@
             </div>
         }
     </div>
-    <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm">
+    <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm" id="column-5">
         @for (int i = 4; i < Model.Medias.Count; i = i+8)
         {
             <div id="div-for-remove-@Model.Medias[i].Code" class="media-container show-edit">
@@ -169,7 +170,7 @@
                 </a>
                 <a onclick="SelectMedia('@Model.Medias[i].Code')">
                     <div class="img-div">
-                        @if (Model.Medias[i].Type == ".mp4")
+                        @if (Model.Medias[i].IsVideo)
                         {
                             <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
                                 <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
@@ -184,7 +185,7 @@
             </div>
         }
     </div>
-    <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm">
+    <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm" id="column-6">
         @for (int i = 5; i < Model.Medias.Count; i = i+8)
         {
             <div id="div-for-remove-@Model.Medias[i].Code" class="media-container show-edit">
@@ -194,7 +195,7 @@
                 </a>
                 <a onclick="SelectMedia('@Model.Medias[i].Code')">
                     <div class="img-div">
-                        @if (Model.Medias[i].Type == ".mp4")
+                        @if (Model.Medias[i].IsVideo)
                         {
                             <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
                                 <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
@@ -209,7 +210,7 @@
             </div>
         }
     </div>
-    <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm">
+    <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm" id="column-7">
         @for (int i = 6; i < Model.Medias.Count; i = i+8)
         {
             <div id="div-for-remove-@Model.Medias[i].Code" class="media-container show-edit">
@@ -219,7 +220,7 @@
                 </a>
                 <a onclick="SelectMedia('@Model.Medias[i].Code')">
                     <div class="img-div">
-                        @if (Model.Medias[i].Type == ".mp4")
+                        @if (Model.Medias[i].IsVideo)
                         {
                             <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
                                 <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
@@ -234,7 +235,7 @@
             </div>
         }
     </div>
-    <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm">
+    <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm" id="column-0">
         @for (int i = 7; i < Model.Medias.Count; i = i+8)
         {
             <div id="div-for-remove-@Model.Medias[i].Code" class="media-container show-edit">
@@ -244,7 +245,7 @@
                 </a>
                 <a  onclick="SelectMedia('@Model.Medias[i].Code')">
                     <div class="img-div">
-                        @if (Model.Medias[i].Type == ".mp4")
+                        @if (Model.Medias[i].IsVideo)
                         {
                             <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
                                 <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
@@ -260,7 +261,7 @@
         }
     </div>
     <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm"></div>
-    <div class="p-1 col-6 mb-4 mb-lg-0 nodisplay-md">
+    <div class="p-1 col-6 mb-4 mb-lg-0 nodisplay-md" id="column-1">
         @for (int i = 0; i < Model.Medias.Count; i = i+2)
         {
             <div id="div-for-remove-@Model.Medias[i].Code" class="media-container" onmouseover="showEditButton(this)" onmouseout="hideEditButton(this)">
@@ -270,7 +271,7 @@
                 </a>
                 <a onclick="SelectMedia('@Model.Medias[i].Code')">
                     <div class="img-div">
-                        @if (Model.Medias[i].Type == ".mp4")
+                        @if (Model.Medias[i].IsVideo)
                         {
                             <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
                                 <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
@@ -285,7 +286,7 @@
             </div>
         }
     </div>
-    <div class="p-1 col-6 mb-4 mb-lg-0 nodisplay-md">
+    <div class="p-1 col-6 mb-4 mb-lg-0 nodisplay-md" id="column-0">
         @for (int i = 1; i < Model.Medias.Count; i = i+2)
         {
             <div id="div-for-remove-@Model.Medias[i].Code" class="media-container"> 
@@ -295,7 +296,7 @@
                 </a>
                 <a onclick="SelectMedia('@Model.Medias[i].Code')">
                     <div class="img-div">
-                        @if (Model.Medias[i].Type == ".mp4")
+                        @if (Model.Medias[i].IsVideo)
                         {
                             <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
                                 <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
@@ -337,6 +338,7 @@
 @section Scripts
 {
     <script>
+    let imageNumber = @Model.Medias.Count;
     function CloseAlert() {
         alert_portfolio.classList.remove("show");
     }
@@ -445,10 +447,50 @@
             },
             success: function (file) {
                this.removeFile(file);
+               
             },
             successmultiple: function (file, response) {
+                const res = JSON.parse(response);
                 // TODO mostrare popup con success/error
-                console.log(response)
+                if (res.NumberSuccessFile > 0){
+                    toastNotifyCustom(res.SuccessFileMessage, 10000, "#75ccdd", "")
+                    for (let i = 0; i < res.MediaDtos.length; i++){
+                        var divider = 8
+                        if (screen.width < 600)
+                            divider = 2
+                        imageNumber++;
+                        var index = imageNumber % divider;
+                        if (!res.MediaDtos[i].IsVideo){
+                            document.getElementById("column-" + index).innerHTML +=
+                            '<div id="div-for-remove-' + res.MediaDtos[i].Code + '" class="media-container show-edit">' +
+                             '<a class="edit-button" onclick="EditMedia(\'' + res.MediaDtos[i].Code + '\'); return false;">' +
+                                 '<strong style="margin-right: 5px; font-size: 14px;">edit</strong>' +
+                                 '<i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>' +
+                             '</a><a onclick="SelectMedia(\'' + res.MediaDtos[i].Code + '\')">' +
+                                 '<div class="img-div">' +
+                                         '<img asp-append-version="true" id="img-' + res.MediaDtos[i].Code + '" src="' + '@Model.BasePath' + res.MediaDtos[i].FileName + '?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05 mb-2" alt="'+ res.MediaDtos[i].OriginalFileName +'"/>' +
+                                 '</div></a></div>'
+                         }
+                        else{
+                            document.getElementById("column-" + index).innerHTML +=
+                            '<div id="div-for-remove-' + res.MediaDtos[i].Code + '" class="media-container show-edit">' +
+                             '<a class="edit-button" onclick="EditMedia(\'' + res.MediaDtos[i].Code + '\'); return false;">' +
+                                 '<strong style="margin-right: 5px; font-size: 14px;">edit</strong>' +
+                                 '<i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>' +
+                             '</a><a onclick="SelectMedia(\'' + res.MediaDtos[i].Code + '\')">' +
+                                 '<div class="img-div">' +
+                                         '<video autoplay="autoplay" muted loop id="img-' + res.MediaDtos[i].Code + '" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="'+ res.MediaDtos[i].OriginalFileName +'">' +
+                                              '<source src="' + '@Model.BasePath' + res.MediaDtos[i].FileName + '?tr=w-300" type="video/mp4">' +
+                                    '</video></div></a></div>'
+                                    
+                        }
+                    }
+                }    
+                if (res.NumberErrorFile > 0)
+                    toastNotifyCustom(res.ErrorFileMessage, 10000, "#ca0a0a", "")
+             },
+            errormultiple: function () {
+                toastNotifyCustom("Error during uploading files. Please retry.", 100, "#ca0a0a", "")
              },
             queuecomplete: function (){
                hideDropZone()

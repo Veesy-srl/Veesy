@@ -9,6 +9,7 @@ using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
 using Veesy.Presentation.Helper;
 using Veesy.Presentation.Model.Media;
+using Veesy.Service.Dtos;
 using Veesy.WebApp.Areas.Auth.Controllers;
 using Veesy.WebApp.CustomDataAttribute;
 
@@ -46,21 +47,27 @@ public class MediaController : VeesyController
         try
         {
             var result = await _mediaHelper.UploadFileAsync(HttpContext.Request.Body,  Request.ContentType, UserInfo);
-            var successFiles = "Files upload: \n";
-            var errorFiles = "Files not upload: \n";
+            var successFiles = "Files upload: </br>";
+            var errorFiles = "Files not upload: </br>";
+            var response = new UploadMediaResponseDto();
             foreach (var res in result)
             {
                 if (res.success)
-                    successFiles += res.fileName + "\n";
+                {
+                    successFiles += res.fileName + "</br>";
+                    response.NumberSuccessFile++;
+                    response.MediaDtos.Add(res.media);
+                }
                 else
-                    errorFiles += res.fileName + " - " + res.message + "\n";
+                {
+                    errorFiles += res.fileName + " - " + res.message + "</br>";
+                    response.NumberErrorFile++;
+                }
             }
-            if (successFiles != "Files upload: \n")
-                _notyfService.Custom(successFiles, 10, "#75CCDD");
-            if (errorFiles != "Files not upload: \n")
-                _notyfService.Custom(errorFiles, 10, "#ca0a0a");
-            var resultDto = new ResultDto(true, "succes", 1);
-            return Ok(resultDto.ToJson());
+
+            response.SuccessFileMessage = successFiles;
+            response.ErrorFileMessage = errorFiles;
+            return Ok(response.ToJson());
         }
         catch (Exception ex)
         {
