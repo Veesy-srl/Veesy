@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Veesy.Presentation.Model.Media;
 using Microsoft.Net.Http.Headers;
 using NLog;
+using NuGet.Protocol;
 using Veesy.Domain.Constants;
 using Veesy.Domain.Data;
 using Veesy.Domain.Exceptions;
@@ -85,7 +86,9 @@ public class MediaHelper
                 //File size validation
                 using (Stream stream = new MemoryStream())
                 {
+                    Logger.Info("Stream PRIMA del copy:" + stream?.Length);
                     fileSection.FileStream.CopyTo(stream);
+                    Logger.Info("Stream DOPO il copy:" + stream?.Length);
                     var size = stream.Length;
                     var tmpSize = _mediaService.GetSizeMediaStorageByUserId(user.Id) + size; //Value in byte
                     var validateSize =
