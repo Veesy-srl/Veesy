@@ -85,10 +85,21 @@ public class MediaHelper
                 }
                 
                 //File size validation
-                using (Stream stream = new MemoryStream())
+                using (Stream stream1 = new MemoryStream())
                 {
-                    fileSection.FileStream.CopyTo(stream);
-                    var size = stream.Length;
+                    long size = 5242880;
+                    try
+                    {
+                        fileSection.FileStream.CopyTo(stream1);
+                        Logger.Info("Stream Lenght" + stream1.Length);
+                        if (stream1.Length != 0)
+                            size = stream1.Length;
+
+                    }
+                    catch (Exception)
+                    {
+                        size = 5242880;
+                    }
                     var tmpSize = _mediaService.GetSizeMediaStorageByUserId(user.Id) + size; //Value in byte
                     var validateSize =
                         _mediaValidators.ValidateSizeUpload(tmpSize, subscription.AllowedMegaByte * 1024 * 1024);
@@ -100,7 +111,7 @@ public class MediaHelper
                     }
 
                     var newFileName = $"{Guid.NewGuid().ToString().Replace("-", String.Empty)}{extension}";
-                    await _veesyBlobService.UploadFromStreamBlobAsync(stream,
+                    await _veesyBlobService.UploadFromStreamBlobAsync(stream1,
                         $"{MediaCostants.BlobMediaSections.OriginalMedia}/{newFileName}", contentType);
                     try
                     {

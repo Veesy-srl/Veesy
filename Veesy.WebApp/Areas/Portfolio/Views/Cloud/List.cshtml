@@ -260,7 +260,7 @@
         }
     </div>
     <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm"></div>
-    <div class="p-1 col-6 mb-4 mb-lg-0 nodisplay-md" id="column-1">
+    <div class="p-1 col-6 mb-4 mb-lg-0 nodisplay-md" id="column-mobile-1">
         @for (int i = 0; i < Model.Medias.Count; i = i+2)
         {
             <div id="div-for-remove-@Model.Medias[i].Code" class="media-container" onmouseover="showEditButton(this)" onmouseout="hideEditButton(this)">
@@ -285,7 +285,7 @@
             </div>
         }
     </div>
-    <div class="p-1 col-6 mb-4 mb-lg-0 nodisplay-md" id="column-0">
+    <div class="p-1 col-6 mb-4 mb-lg-0 nodisplay-md" id="column-mobile-0">
         @for (int i = 1; i < Model.Medias.Count; i = i+2)
         {
             <div id="div-for-remove-@Model.Medias[i].Code" class="media-container"> 
@@ -368,7 +368,7 @@
                     location.reload();
                 }
                 else{
-                    toastNotifyCustom(response.message, 100, "#ca0a0a", "")
+                    toastNotifyCustom(response.message, 10000, "#ca0a0a", "")
                 }
                 $('#load-spinner').css("display", "none");
             },
@@ -454,12 +454,14 @@
                     toastNotifyCustom(res.SuccessFileMessage, 10000, "#75ccdd", "")
                     for (let i = 0; i < res.MediaDtos.length; i++){
                         var divider = 8
-                        if (screen.width < 600)
+                        var mobile= "mobile-";
+                        if (screen.width < 600){
                             divider = 2
+                        }
                         imageNumber++;
                         var index = imageNumber % divider;
                         if (!res.MediaDtos[i].IsVideo){
-                            document.getElementById("column-" + index).innerHTML +=
+                            document.getElementById("column-" + mobile +  index).innerHTML +=
                             '<div id="div-for-remove-' + res.MediaDtos[i].Code + '" class="media-container show-edit">' +
                              '<a class="edit-button" onclick="EditMedia(\'' + res.MediaDtos[i].Code + '\'); return false;">' +
                                  '<strong style="margin-right: 5px; font-size: 14px;">edit</strong>' +
@@ -470,7 +472,7 @@
                                  '</div></a></div>'
                          }
                         else{
-                            document.getElementById("column-" + index).innerHTML +=
+                            document.getElementById("column-"+ mobile + index).innerHTML +=
                             '<div id="div-for-remove-' + res.MediaDtos[i].Code + '" class="media-container show-edit">' +
                              '<a class="edit-button" onclick="EditMedia(\'' + res.MediaDtos[i].Code + '\'); return false;">' +
                                  '<strong style="margin-right: 5px; font-size: 14px;">edit</strong>' +
@@ -488,7 +490,7 @@
                     toastNotifyCustom(res.ErrorFileMessage, 10000, "#ca0a0a", "")
              },
             errormultiple: function () {
-                toastNotifyCustom("Error during uploading files. Please retry.", 100, "#ca0a0a", "")
+                toastNotifyCustom("Error during uploading files. Please retry.", 10000, "#ca0a0a", "")
              },
             queuecomplete: function (){
                hideDropZone()
