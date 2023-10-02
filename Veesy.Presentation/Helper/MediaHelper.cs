@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 using Veesy.Presentation.Model.Media;
 using Microsoft.Net.Http.Headers;
+using NLog;
 using Veesy.Domain.Constants;
 using Veesy.Domain.Data;
 using Veesy.Domain.Exceptions;
@@ -22,6 +23,7 @@ public class MediaHelper
     private readonly MediaValidators _mediaValidators;
     private readonly ISubscriptionPlanService _subscriptionPlanService;
     
+    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     private static readonly FileExtensionContentTypeProvider Provider = new FileExtensionContentTypeProvider();
     private readonly IEnumerable<string> allowedExtensions = new List<string> { ".zip", ".bin", ".png", ".mp4", ".jpg", ".jpeg" };
 
@@ -83,7 +85,7 @@ public class MediaHelper
                 //File size validation
                 using (Stream stream = new MemoryStream())
                 {
-                    await fileSection.FileStream.CopyToAsync(stream);
+                    fileSection.FileStream.CopyTo(stream);
                     var size = stream.Length;
                     var tmpSize = _mediaService.GetSizeMediaStorageByUserId(user.Id) + size; //Value in byte
                     var validateSize =
