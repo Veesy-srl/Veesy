@@ -82,12 +82,25 @@ public class MediaHelper
                     filesUploadedStatus.Add(new (false, fileSection.FileName, validateExtension.Message));
                     continue;
                 }
+
+                try
+                {
+                    using (Stream stream1 = new MemoryStream())
+                    {
+                        fileSection.FileStream.CopyTo(stream1);
+                        Logger.Info("Stream Lenght" + stream1.Length);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Logger.Warn(e, e.Message);
+                }
                 
                 //File size validation
-                using (Stream stream = new MemoryStream())
+                await using (Stream stream = new MemoryStream())
                 {
                     Logger.Info("Stream PRIMA del copy:" + stream?.Length);
-                    fileSection.FileStream.CopyTo(stream);
+                    await fileSection.FileStream.CopyToAsync(stream);
                     Logger.Info("Stream DOPO il copy:" + stream?.Length);
                     var size = stream.Length;
                     var tmpSize = _mediaService.GetSizeMediaStorageByUserId(user.Id) + size; //Value in byte

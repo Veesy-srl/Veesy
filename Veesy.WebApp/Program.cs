@@ -29,6 +29,12 @@ try
         serverOptions.AllowSynchronousIO = true; //To understand better
     });
     
+    builder.Services.Configure<IISServerOptions>(options =>
+    {
+        options.MaxRequestBodySize = long.MaxValue;
+        options.AllowSynchronousIO = true;
+    });
+    
     builder.Configuration
         .SetBasePath(builder.Environment.ContentRootPath)
         .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", true)
