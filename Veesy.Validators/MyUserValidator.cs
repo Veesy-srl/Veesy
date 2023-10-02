@@ -2,7 +2,7 @@
 using NLog;
 using NuGet.Protocol;
 using Veesy.Domain.Models;
-using Veesy.Domain.Exception;
+using Veesy.Domain.Exceptions;
 
 namespace Veesy.Validators;
 

@@ -5,7 +5,7 @@ using Veesy.Presentation.Model.Media;
 using Microsoft.Net.Http.Headers;
 using Veesy.Domain.Constants;
 using Veesy.Domain.Data;
-using Veesy.Domain.Exception;
+using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
 using Veesy.Service.Implementation;
 using Veesy.Service.Interfaces;

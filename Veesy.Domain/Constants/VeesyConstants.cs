@@ -19,8 +19,11 @@ public static class VeesyConstants
         FourColumns = 4
     }
 
-    public static List<PortfolioLayout> GetAvailableLayouts()
+    public static List<PortfolioLayout> GetAvailableLayouts(bool excludeDefault = true)
     {
-        return Enum.GetValues(typeof(PortfolioLayout)).Cast<PortfolioLayout>().ToList();
+        var layouts = Enum.GetValues(typeof(PortfolioLayout)).Cast<PortfolioLayout>();
+        if(excludeDefault)
+            return layouts.Where(w=>w!=0).ToList();
+        return layouts.ToList();
     }
 }

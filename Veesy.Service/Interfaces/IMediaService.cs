@@ -1,4 +1,4 @@
-using Veesy.Domain.Exception;
+using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
 
 namespace Veesy.Service.Interfaces;

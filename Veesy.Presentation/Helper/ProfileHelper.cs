@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Veesy.Domain.Constants;
-using Veesy.Domain.Exception;
+using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
 using Veesy.Presentation.Model.Account;
 using Veesy.Service.Dtos;
