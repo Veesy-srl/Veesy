@@ -88,7 +88,6 @@ public class MediaHelper
                 using (Stream stream1 = new MemoryStream())
                 {
                     long size = 5242880;
-                    Logger.Info($"size start{size}");
                     try
                     {
                         fileSection.FileStream.CopyTo(stream1);
@@ -101,28 +100,19 @@ public class MediaHelper
                     {
                         size = 5242880;
                     }
-                    Logger.Info($"Lunghezza {size}");
                     var tmpSize = _mediaService.GetSizeMediaStorageByUserId(user.Id) + size; //Value in byte
-                    Logger.Info("A");
                     var validateSize = _mediaValidators.ValidateSizeUpload(tmpSize, subscription.AllowedMegaByte * 1024 * 1024);
-                    Logger.Info("B");
                     if (!validateSize.Success)
                     {
-                        Logger.Info("C");
                         filesUploadedStatus.Add(new(false, null, fileSection.FileName, validateSize.Message));
-                        Logger.Info("D");
                         section = await multipartReader.ReadNextSectionAsync();
-                        Logger.Info("E");
                         continue;
                     }
 
                     var newFileName = $"{Guid.NewGuid().ToString().Replace("-", String.Empty)}{extension}";
-                    Logger.Info("F");
                     await _veesyBlobService.UploadFromStreamBlobAsync(stream1, $"{MediaCostants.BlobMediaSections.OriginalMedia}/{newFileName}", contentType);
-                    Logger.Info("G");
                     try
                     {
-                        Logger.Info("H");
                         var result = await _mediaService.AddMedia(new Media()
                         {
                             FileName = newFileName,
@@ -131,9 +121,7 @@ public class MediaHelper
                             MyUserId = user.Id,
                             Size = size,
                         }, user);
-                        Logger.Info("I");
                         filesUploadedStatus.Add(new(true, MapCloudDtos.MapMedia(result), fileSection.FileName, $"{fileSection.FileName} upload correctly."));
-                        Logger.Info("J");
                     }
                     catch (Exception e)
                     {
