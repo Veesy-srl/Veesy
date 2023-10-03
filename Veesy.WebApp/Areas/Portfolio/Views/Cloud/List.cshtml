@@ -454,9 +454,10 @@
                     toastNotifyCustom(res.SuccessFileMessage, 10000, "#75ccdd", "")
                     for (let i = 0; i < res.MediaDtos.length; i++){
                         var divider = 8
-                        var mobile= "mobile-";
+                        var mobile= "";
                         if (screen.width < 600){
                             divider = 2
+                            mobile = "mobile-"
                         }
                         imageNumber++;
                         var index = imageNumber % divider;
