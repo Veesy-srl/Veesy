@@ -95,27 +95,17 @@
         <div class="row">
             <h3 class="text-color"><strong>Your Images</strong></h3>
             TODO mostrare immagini del portfolio
-            <div class="row draggable-zone" id="images-container">
-                @{
-                    var bsCols = Model.Portfolio.Layout switch
-                    {
-                        VeesyConstants.PortfolioLayout.OneColumn => "col-12",
-                        VeesyConstants.PortfolioLayout.TwoColumns => "col-6",
-                        VeesyConstants.PortfolioLayout.ThreeColumns => "col-4",
-                        VeesyConstants.PortfolioLayout.FourColumns => "col-3",
-                        _ => "col-12"
-                        };
-                }
+            <div class="card-columns draggable-zone" id="images-container">
                 @foreach (var image in Model.Portfolio.PortfolioMedias)
                 {
-                    <div class="@bsCols draggable" name="image-gallery">
-                        <img src="https://picsum.photos/200/400" class="mb-1 rounded-05 img-rounded-trasparent w-100"/>                        
+                    <div class="draggable m-0" name="image-gallery">
+                        <img src="https://picsum.photos/600/400" class="card-body m-0 p-0 rounded-05 img-rounded-trasparent w-100 p-0"/>                        
                     </div>
                 }
                 @foreach (var image in Model.Portfolio.PortfolioMedias)
                 {
-                    <div class="@bsCols draggable" name="image-gallery">
-                        <img src="https://picsum.photos/300/200" class="mb-1 rounded-05 img-rounded-trasparent w-100"/>                        
+                    <div class="draggable m-0" name="image-gallery">
+                        <img src="https://picsum.photos/300/400" class="card-body m-0 p-0 rounded-05 img-rounded-trasparent w-100"/>                        
                     </div>
                 }
             </div>
@@ -164,38 +154,17 @@
         padding-bottom: 10px;
         padding-top: 10px;
     }
+    .card-columns {
+        column-count: @((int)Model.Portfolio.Layout);
+    }
 </style>
 
 <script>
     
     function switchColumnLayout(columnsNumber) {
-        var images = document.getElementsByName("image-gallery");
-        switch (columnsNumber){
-            case 1:
-                images.forEach(fe=>{
-                    fe.className = ''
-                    fe.classList.add("draggable","col-12")
-                })
-                return
-            case 2:
-                images.forEach(fe=>{
-                    fe.className = ''
-                    fe.classList.add("draggable","col-6")
-                })
-                return;
-            case 3:
-                images.forEach(fe=>{
-                    fe.className = ''
-                    fe.classList.add("draggable","col-4")
-                })
-                return;
-            case 4:
-                images.forEach(fe=>{
-                    fe.className = ''
-                    fe.classList.add("draggable","col-3")
-                })
-                return;
-        }
+        var imagesContainer = document.getElementById("images-container");
+        imagesContainer.classList.remove("card-columns")
+        imagesContainer.style.columnCount = columnsNumber
     }
     
     const sortable = new Sortable.default(
@@ -217,5 +186,6 @@
     sortable.on('drag:stop', (divElem) => {
     	var imageElem = divElem.source.children[0]
         imageElem.style.border = ''
+        //$("body").append($(".draggable-source--is-dragging"))
     })
 </script>
