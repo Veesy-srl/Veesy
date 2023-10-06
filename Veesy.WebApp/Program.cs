@@ -23,11 +23,11 @@ try
     logger.Info("Init main");
     var builder = WebApplication.CreateBuilder(args);
     
-    builder.WebHost.ConfigureKestrel(serverOptions =>
-    {
-        serverOptions.Limits.MaxRequestBodySize = long.MaxValue; //We are allowing the uploading of files of any size.
-        serverOptions.AllowSynchronousIO = true; //To understand better
-    });
+    // builder.WebHost.ConfigureKestrel(serverOptions =>
+    // {
+    //     serverOptions.Limits.MaxRequestBodySize = long.MaxValue; //We are allowing the uploading of files of any size.
+    //     serverOptions.AllowSynchronousIO = true; //To understand better
+    // });
     
     builder.Services.Configure<IISServerOptions>(options =>
     {

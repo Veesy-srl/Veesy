@@ -12,7 +12,7 @@ public class MediaDto
     public string Type { get; set; }
     public string UploadDate { get; set; }
     public string? Credits { get; set; }
-    public bool IsVideo => MediaCostants.VideoExtensions.Contains(Type.ToUpper());
+    public bool? IsVideo => !string.IsNullOrEmpty(Type) ? MediaCostants.VideoExtensions.Contains(Type.ToUpper()) : null;
 }
 
 public class UploadMediaResponseDto

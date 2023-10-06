@@ -1,0 +1,10 @@
+/*DROPZONE SECTION*/
+.notyf__toast{
+    max-width: 450px !important;
+    width: 100% !important;
+}
+
+.notyf__icon{
+    display: none;    
+}
+/*END DROPZONE SECTION*/

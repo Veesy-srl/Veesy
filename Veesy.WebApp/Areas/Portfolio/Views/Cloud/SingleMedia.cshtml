@@ -1,0 +1,26 @@
+@model Veesy.Presentation.Model.Cloud.SingleMediaViewModel
+
+@{
+    ViewData["Title"] = @Model.Media.OriginalFileName;
+    Layout = "";
+}
+<style>
+    body, html {
+      height: 100%;
+      margin: 0;
+    }
+    
+    .bg {
+      /* The image used */
+      background-image: url('@Model.BasePath@Model.Media.FileName');
+    
+      /* Full height */
+      height: 100%; 
+    
+      /* Center and scale the image nicely */
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+</style>
+<img style="display: block;-webkit-user-select: none;margin: auto;background-color: hsl(0, 0%, 90%);transition: background-color 300ms;" src="@Model.BasePath@Model.Media.FileName">

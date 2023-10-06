@@ -60,6 +60,27 @@ public class CloudController : VeesyController
             return RedirectToAction("List");
         }
     }
+    
+    [HttpGet("cloud/{id}")]
+    public IActionResult SingleMedia(Guid id)
+    {
+        try
+        {
+            var response = _cloudHelper.GetSingleMediaViewModel(id, UserInfo);
+            if (!response.resultDto.Success)
+            {
+                _notyfService.Custom(response.resultDto.Message, 10 , "#ca0a0a");
+                return RedirectToAction("Edit", new {id = id});    
+            }
+            return View(response.viewModel);
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            _notyfService.Custom("Error server repsonse. Please retry.", 10 , "#ca0a0a");
+            return RedirectToAction("Edit", new {id = id});
+        }
+    }
 
     #region API
 

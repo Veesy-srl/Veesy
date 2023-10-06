@@ -77,25 +77,53 @@ public class MediaController : VeesyController
         }
     }
     
-    [HttpPost]
-    public async Task<JsonResult> DeleteMedia([FromBody] List<Guid> imgToDelete)
+    [HttpGet]
+    public async Task<IActionResult> DeleteMedia(Guid imgToDelete)
     {
         try
         {
-            var result = await _mediaHelper.DeleteFiles(imgToDelete, UserInfo);
-            var successFiles = "Files delete: \n";
-            var errorFiles = "Files not delete: \n";
+            var result = await _mediaHelper.DeleteFile(imgToDelete, UserInfo);
+            var successFiles = "Files delete: <br/>";
+            var errorFiles = "Files not delete: <br/>";
             var codeToDelete = result.Select(s => s.code);
             foreach (var res in result)
             {
                 if (res.success)
-                    successFiles += res.filename + "\n";
+                    successFiles += res.filename + "<br/>";
                 else
-                    errorFiles += res.filename + " - " + res.message + "\n";
+                    errorFiles += res.filename + " - " + res.message + "<br/>";
             }
-            if (successFiles != "Files delete: \n")
+            if (successFiles != "Files delete: <br/>")
                 _notyfService.Custom(successFiles, 10, "#75CCDD");
-            if (errorFiles != "Files not delete: \n")
+            if (errorFiles != "Files not delete: <br/>")
+                _notyfService.Custom(errorFiles, 10, "#ca0a0a");
+            return RedirectToAction("List", "Cloud", new { area = "Portfolio" });
+        }
+        catch (Exception ex)
+        {
+            return RedirectToAction("List", "Cloud", new { area = "Portfolio" });
+        }
+    }
+    
+    [HttpPost]
+    public async Task<JsonResult> DeleteMediaList([FromBody] List<Guid> imgToDelete)
+    {
+        try
+        {
+            var result = await _mediaHelper.DeleteFiles(imgToDelete, UserInfo);
+            var successFiles = "Files delete: <br/>";
+            var errorFiles = "Files not delete: <br/>";
+            var codeToDelete = result.Select(s => s.code);
+            foreach (var res in result)
+            {
+                if (res.success)
+                    successFiles += res.filename + "<br/>";
+                else
+                    errorFiles += res.filename + " - " + res.message + "<br/>";
+            }
+            if (successFiles != "Files delete: <br/>")
+                _notyfService.Custom(successFiles, 10, "#75CCDD");
+            if (errorFiles != "Files not delete: <br/>")
                 _notyfService.Custom(errorFiles, 10, "#ca0a0a");
             return Json(new { Result = true, SuccessFiles = successFiles, ErrorFiles = errorFiles, CodeToDelete = codeToDelete });
         }

@@ -73,4 +73,17 @@ public class CloudHelper
         media.Credits = mediaDto.Credits;
         return await _mediaService.UpdateMedia(media, userInfo);
     }
+
+    public (ResultDto resultDto, SingleMediaViewModel? viewModel) GetSingleMediaViewModel(Guid id, MyUser userInfo)
+    {
+        var mediaSelected = _mediaService.GetMediaById(id);
+        if (mediaSelected == null)
+            return (new ResultDto(false, "Media selected not found."), null);
+        var vm = new SingleMediaViewModel()
+        {
+            Media = MapCloudDtos.MapMedia(mediaSelected),
+            BasePath = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/"
+        };
+        return (new ResultDto(true, ""), vm);
+    }
 }

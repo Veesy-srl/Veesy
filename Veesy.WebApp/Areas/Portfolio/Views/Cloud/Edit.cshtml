@@ -6,6 +6,18 @@
 }
 
 <div class="row pt-7rem">
+    <div class="col-sm-12 col-md-3">
+        <nav class="breadcrumb-container" aria-label="Percorso di navigazione">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><img src="~/imgs/dashboard_home_dark-mode.png" style="width: 18px; margin-top: -5px;" class="me-2"><a class="breadcrumb-a-white me-2 text-white" asp-area="Portfolio" asp-controller="Home" asp-action="Index">dashboard</a><i class="fa-solid fa-chevron-right text-white"></i></li>
+                <li class="breadcrumb-item"><a class="breadcrumb-a-white me-2 text-white" asp-area="Portfolio" asp-controller="Cloud" asp-action="List">cloud</a><i class="fa-solid fa-chevron-right text-white"></i></li>
+                <li class="breadcrumb-item"><a class="breadcrumb-a-white me-2 text-white" href="#"><strong>edit</strong></a></li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="row">
     <div class="col-sm-12 col-md-2 center-content nodisplay-sm">
         @if (Model.PreviousMedia != null)
         {
@@ -63,7 +75,7 @@
                     <div class="empty-veesy"></div>
                     <div class="col-12 ps-0 pe-0">
                         <p class="mb-0 text-white"><strong>Media url</strong></p>
-                        <p style="cursor: pointer" onclick="OpenImageNewTab('@Model.BasePathAzure@Model.Media.FileName')" _target="blank" class="grey-link veesy-overflow"><i class="fa-solid fa-arrow-up-right-from-square pe-1"></i>https://beta.veesy.it/cloud/@Model.Media.OriginalFileName</p>
+                        <p style="cursor: pointer" onclick="OpenImageNewTab('@Url.Action("SingleMedia", "Cloud", new {id = @Model.Media.Code})')" _target="blank" class="grey-link veesy-overflow"><i class="fa-solid fa-arrow-up-right-from-square pe-1"></i>https://beta.veesy.it/cloud/@Model.Media.OriginalFileName</p>
                     </div>
                     
                     <div class="empty-veesy"></div>
@@ -159,32 +171,32 @@
     
     @*PREVIOUS / NEXT MOBILE SECTION*@
     <div class="col-6 center-content nodisplay-md">
-            @if (Model.PreviousMedia != null)
-            {
-                <ul class="list-unstyled w-100">
-                    <li class="mb-3 edit-padding-left">
-                        <div class="arrow-edit-media rounded-05 center-content"><a asp-action="Edit" asp-area="Portfolio" asp-controller="Cloud" asp-route-id="@Model.PreviousMedia.Code"><img class="w-100" src="~/icon/arrow_left_dark mode.svg"/></a></div>
-                    </li>
-                    <li class="mt-2">
-                        <a asp-action="Edit" asp-area="Portfolio" asp-controller="Cloud" asp-route-id="@Model.PreviousMedia.Code">
-                            @if (Model.PreviousMedia.Type == ".mp4")
-                            {
-                                <video autoplay="autoplay" muted loop class="img-rounded-trasparent w-50 shadow-1-strong rounded-05" title="@Model.PreviousMedia.OriginalFileName" alt="@Model.PreviousMedia.OriginalFileName">
-                                    <source src="@Model.BasePath@Model.PreviousMedia.FileName?tr=w-300" type="video/mp4">
-                                </video>
-                            }
-                            else
-                            {
-                                <img asp-append-version="true" src="@Model.BasePath@Model.PreviousMedia.FileName?tr=w-300" class="img-rounded-trasparent w-50 shadow-1-strong rounded-05" title="@Model.PreviousMedia.OriginalFileName" alt="@Model.PreviousMedia.OriginalFileName"/>
-                            }
-                        </a>
-                    </li>
-                    <li class="mt-2 w-50  edit-padding-left">
-                        <p class="text-white veesy-overflow">@Model.PreviousMedia.OriginalFileName</p>
-                    </li>
-                </ul>
-            }
-        </div>
+        @if (Model.PreviousMedia != null)
+        {
+            <ul class="list-unstyled w-100">
+                <li class="mb-3 edit-padding-left">
+                    <div class="arrow-edit-media rounded-05 center-content"><a asp-action="Edit" asp-area="Portfolio" asp-controller="Cloud" asp-route-id="@Model.PreviousMedia.Code"><img class="w-100" src="~/icon/arrow_left_dark mode.svg"/></a></div>
+                </li>
+                <li class="mt-2">
+                    <a asp-action="Edit" asp-area="Portfolio" asp-controller="Cloud" asp-route-id="@Model.PreviousMedia.Code">
+                        @if (Model.PreviousMedia.Type == ".mp4")
+                        {
+                            <video autoplay="autoplay" muted loop class="img-rounded-trasparent w-50 shadow-1-strong rounded-05" title="@Model.PreviousMedia.OriginalFileName" alt="@Model.PreviousMedia.OriginalFileName">
+                                <source src="@Model.BasePath@Model.PreviousMedia.FileName?tr=w-300" type="video/mp4">
+                            </video>
+                        }
+                        else
+                        {
+                            <img asp-append-version="true" src="@Model.BasePath@Model.PreviousMedia.FileName?tr=w-300" class="img-rounded-trasparent w-50 shadow-1-strong rounded-05" title="@Model.PreviousMedia.OriginalFileName" alt="@Model.PreviousMedia.OriginalFileName"/>
+                        }
+                    </a>
+                </li>
+                <li class="mt-2 w-50  edit-padding-left">
+                    <p class="text-white veesy-overflow">@Model.PreviousMedia.OriginalFileName</p>
+                </li>
+            </ul>
+        }
+    </div>
     <div class="col-6 center-content nodisplay-md">
         @if (Model.NextMedia != null)
         {
@@ -212,6 +224,12 @@
             </ul>
         }
     </div>
+</div>
+
+<div class="row justify-content-center">
+    <a asp-action="DeleteMedia" asp-area="Portfolio" asp-controller="Media" asp-route-imgToDelete="@Model.Media.Code" class="rounded-pill btn btn-delete">delete media</a>
+    <div class="empty-veesy"></div>
+    <div class="empty-veesy"></div>
 </div>
 
 <div class="modal fade" id="modalFileName" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

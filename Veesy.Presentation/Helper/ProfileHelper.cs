@@ -100,8 +100,8 @@ public class ProfileHelper
     {
         if (skillsCodes != null)
         {
-            if(skillType == SkillConstants.SoftSkill && skillsCodes.Count > 10)
-                return new ResultDto(false, "Select max 10 soft skills.");
+            if(skillType == SkillConstants.SoftSkill && skillsCodes.Count > 5)
+                return new ResultDto(false, "Select max 5 soft skills.");
             if(skillType == SkillConstants.HardSkill && skillsCodes.Count > 5)
                 return new ResultDto(false, "Select max 5 hard skills.");
         }
@@ -170,8 +170,8 @@ public class ProfileHelper
     
     public async Task<ResultDto> UpdateSectors(List<Guid> sectorsCodes, MyUser userInfo)
     {
-        if (sectorsCodes != null && sectorsCodes.Count > 5)
-            return new ResultDto(false, "Select max 5 fields.");
+        if (sectorsCodes != null && sectorsCodes.Count > 10)
+            return new ResultDto(false, "Select max 10 fields.");
         var oldSectors = _accountService.GetSectorsByUser(userInfo).ToList();
         var sectorsToDelete = new List<MyUserSector>();
         var sectorsToAdd = new List<MyUserSector>();

@@ -3,6 +3,12 @@
     ViewData["Title"] = "Cloud";
 }
 
+@section Style
+{
+    <link rel="stylesheet" href="~/css/dropzone_cloudpage.css" asp-append-version="true" />
+
+}
+
 <div class="row pt-7rem">
     <div class="col-sm-12 col-md-3">
         <nav class="breadcrumb-container" aria-label="Percorso di navigazione">
@@ -69,7 +75,7 @@
                 </a>
                 <a onclick="SelectMedia('@Model.Medias[i].Code')">
                     <div class="img-div">
-                        @if (Model.Medias[i].IsVideo)
+                        @if (Model.Medias[i].IsVideo.HasValue && Model.Medias[i].IsVideo.Value)
                         {
                             <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
                                 <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
@@ -94,7 +100,7 @@
                 </a>
                 <a onclick="SelectMedia('@Model.Medias[i].Code')">
                     <div class="img-div">
-                        @if (Model.Medias[i].IsVideo)
+                        @if (Model.Medias[i].IsVideo.HasValue && Model.Medias[i].IsVideo.Value)
                         {
                             <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
                                 <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
@@ -119,7 +125,7 @@
                 </a>
                 <a onclick="SelectMedia('@Model.Medias[i].Code')">
                     <div class="img-div">
-                        @if (Model.Medias[i].IsVideo)
+                        @if (Model.Medias[i].IsVideo.HasValue && Model.Medias[i].IsVideo.Value)
                         {
                             <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
                                 <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
@@ -144,7 +150,7 @@
                 </a>
                 <a onclick="SelectMedia('@Model.Medias[i].Code')">
                     <div class="img-div">
-                        @if (Model.Medias[i].IsVideo)
+                        @if (Model.Medias[i].IsVideo.HasValue && Model.Medias[i].IsVideo.Value)
                         {
                             <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
                                 <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
@@ -169,7 +175,7 @@
                 </a>
                 <a onclick="SelectMedia('@Model.Medias[i].Code')">
                     <div class="img-div">
-                        @if (Model.Medias[i].IsVideo)
+                        @if (Model.Medias[i].IsVideo.HasValue && Model.Medias[i].IsVideo.Value)
                         {
                             <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
                                 <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
@@ -194,7 +200,7 @@
                 </a>
                 <a onclick="SelectMedia('@Model.Medias[i].Code')">
                     <div class="img-div">
-                        @if (Model.Medias[i].IsVideo)
+                        @if (Model.Medias[i].IsVideo.HasValue && Model.Medias[i].IsVideo.Value)
                         {
                             <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
                                 <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
@@ -219,7 +225,7 @@
                 </a>
                 <a onclick="SelectMedia('@Model.Medias[i].Code')">
                     <div class="img-div">
-                        @if (Model.Medias[i].IsVideo)
+                        @if (Model.Medias[i].IsVideo.HasValue && Model.Medias[i].IsVideo.Value)
                         {
                             <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
                                 <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
@@ -244,7 +250,7 @@
                 </a>
                 <a  onclick="SelectMedia('@Model.Medias[i].Code')">
                     <div class="img-div">
-                        @if (Model.Medias[i].IsVideo)
+                        @if (Model.Medias[i].IsVideo.HasValue && Model.Medias[i].IsVideo.Value)
                         {
                             <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
                                 <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
@@ -270,7 +276,7 @@
                 </a>
                 <a onclick="SelectMedia('@Model.Medias[i].Code')">
                     <div class="img-div">
-                        @if (Model.Medias[i].IsVideo)
+                        @if (Model.Medias[i].IsVideo.HasValue && Model.Medias[i].IsVideo.Value)
                         {
                             <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
                                 <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
@@ -295,7 +301,7 @@
                 </a>
                 <a onclick="SelectMedia('@Model.Medias[i].Code')">
                     <div class="img-div">
-                        @if (Model.Medias[i].IsVideo)
+                        @if (Model.Medias[i].IsVideo.HasValue && Model.Medias[i].IsVideo.Value)
                         {
                             <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
                                 <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
@@ -321,7 +327,7 @@
         <div class="float-start">
             <div class="d-flex mt-2">
                 <p id="number_files" class="fw-bolder" style="margin-top: -2px;">1 files selected</p>
-                <a onclick="deleteMedia()" class="red-link-underline ms-3" style="font-size: 14px;">delete</a>
+                <a onclick="confirmDelete(), openModal('#modalDeleteMedia')" class="red-link-underline ms-3" style="font-size: 14px;">delete</a>
             </div>
         </div>
         <div class="float-end">
@@ -334,14 +340,50 @@
     </div>
 </div>
 
+<div class="modal fade" id="modalDeleteMedia" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Delete Medias</strong></h3>
+                <a onclick="closeModal('#modalDeleteMedia')"><i class="fa-solid fa-grey fa-circle-xmark" style="color: grey;"></i></a>
+            </div>
+            <div class="empty-veesy"></div>
+            <div class="modal-body text-center">
+                <h5><strong id="confirm-delete-body" style=" white-space: pre">0 Medias will be delete permanently. Are you sure?</strong></h5>
+            </div>
+            <div class="empty-veesy"></div>
+            <div class="row">  
+                <div class="col-4">
+                    <p class="ps-3 text-muted">
+                        <a style="text-decoration: underline !important; position: relative; top: 20px;" class="grey-link mt-3" onclick="closeModal('#modalDeleteMedia')">back to cloud</a>
+                    </p>
+                </div>
+                <div class="col-4 justify-content-center" style="display: flex"><a onclick="deleteMedia()" class="mt-2 rounded-pill btn btn-delete" type="submit">yes, delete</a></div>
+                <div class="col-4"></div>
+            </div>
+            <div class="empty-veesy"></div>
+        </div>
+    </div>
+</div>
+
 @section Scripts
 {
     <script>
     let imageNumber = @Model.Medias.Count;
     function CloseAlert() {
         alert_portfolio.classList.remove("show");
+        var items = document.getElementsByClassName("img-rounded-ciano");
+        while (items.length > 0){
+            items[0].classList.add("img-rounded-trasparent");
+            items[0].classList.remove("img-rounded-ciano");
+        }
+        img_selected_id = []
     }
     
+    function confirmDelete(){
+        var newline = "\r\n";
+        document.getElementById("confirm-delete-body").textContent = img_selected_id.length + " Medias will be delete" + newline + "permanently. Are you sure?"
+    }
     
     var img_selected_id = [];
     
@@ -354,7 +396,7 @@
         
         $.ajax({
             type: 'POST',
-            url: '@Url.Action("DeleteMedia", "Media")',
+            url: '@Url.Action("DeleteMediaList", "Media")',
             data: JSON.stringify(data),
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',

@@ -347,6 +347,22 @@ input {
   color: white !important;
 }
 
+.btn-delete {
+  width: 130px !important;
+  background-color: #E55B5B !important;
+  border: #E55B5B !important;
+  color: white !important;
+}
+
+.btn-delete:hover {
+  background-color: #E55B5B66 !important;
+  color: white !important;
+}
+.btn-delete:focus {
+  background-color: #E55B5B66 !important;
+  color: white !important;
+}
+
 .btn-grey {
   background-color: #383B43 !important;
   border: #383B43 !important;

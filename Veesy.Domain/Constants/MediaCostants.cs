@@ -6,13 +6,32 @@ public static class MediaCostants
     {
         ".PNG", ".JPG", ".JPEG", ".GIF"
     };
-    
+
     public static string[] VideoExtensions =
     {
         ".AVI", ".MP4", ".MOV"
     };
-    
+
+    public static string[] GetType(string extension)
+    {
+        if (ImageExtensions.Contains(extension.ToUpper()))
+        {
+            return ImageExtensions;
+        }
+        else if(VideoExtensions.Contains(extension.ToUpper()))
+        {
+            return VideoExtensions;
+        }
+
+        return null;
+    }
+
     public static string[] MediaExtension => VideoExtensions.Concat(ImageExtensions).ToArray();
+
+    public static Dictionary<string[], long> MaxSizeSingleMedia = new Dictionary<string[], long>
+    {
+        {ImageExtensions,36700160}, {VideoExtensions, 304087040}    
+    };
     
     public static class BlobMediaSections
     {

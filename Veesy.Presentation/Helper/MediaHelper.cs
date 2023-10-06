@@ -1,3 +1,4 @@
+using System.Collections;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
@@ -85,23 +86,12 @@ public class MediaHelper
                 }
                 
                 //File size validation
-                using (Stream stream1 = new MemoryStream())
+                await using (Stream stream = new MemoryStream())
                 {
-                    long size = 5242880;
-                    try
-                    {
-                        fileSection.FileStream.CopyTo(stream1);
-                        Logger.Info("Stream Lenght" + stream1.Length);
-                        if (stream1.Length != 0)
-                            size = stream1.Length;
-                    
-                    }
-                    catch (Exception)
-                    {
-                        size = 5242880;
-                    }
+                    await fileSection.FileStream.CopyToAsync(stream);
+                    var size = stream.Length;
                     var tmpSize = _mediaService.GetSizeMediaStorageByUserId(user.Id) + size; //Value in byte
-                    var validateSize = _mediaValidators.ValidateSizeUpload(tmpSize, subscription.AllowedMegaByte * 1024 * 1024);
+                    var validateSize = _mediaValidators.ValidateSizeUpload(tmpSize, subscription.AllowedMegaByte * 1024 * 1024, extension);
                     if (!validateSize.Success)
                     {
                         filesUploadedStatus.Add(new(false, null, fileSection.FileName, validateSize.Message));
@@ -110,7 +100,7 @@ public class MediaHelper
                     }
 
                     var newFileName = $"{Guid.NewGuid().ToString().Replace("-", String.Empty)}{extension}";
-                    await _veesyBlobService.UploadFromStreamBlobAsync(stream1, $"{MediaCostants.BlobMediaSections.OriginalMedia}/{newFileName}", contentType);
+                    await _veesyBlobService.UploadFromStreamBlobAsync(stream, $"{MediaCostants.BlobMediaSections.OriginalMedia}/{newFileName}", contentType);
                     try
                     {
                         var result = await _mediaService.AddMedia(new Media()
@@ -172,6 +162,14 @@ public class MediaHelper
         }
 
         return result;
+    }
+    
+    public async Task<List<(bool success, string filename, string message, string? code)>> DeleteFile(Guid imgToDelete, MyUser userInfo)
+    {
+        
+        var imgList = new List<Guid>();
+        imgList.Add(imgToDelete);
+        return await DeleteFiles(imgList, userInfo);
     }
 
     #region Media Utils
