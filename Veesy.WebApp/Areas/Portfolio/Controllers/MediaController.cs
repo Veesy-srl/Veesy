@@ -6,7 +6,6 @@ using NLog;
 using NLog.Fluent;
 using NuGet.Protocol;
 using Veesy.Domain.Exceptions;
-using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
 using Veesy.Presentation.Helper;
 using Veesy.Presentation.Model.Media;
