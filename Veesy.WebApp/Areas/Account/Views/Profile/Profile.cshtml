@@ -399,7 +399,7 @@
                                 <strong>@item.Name</strong>
                             </label>
                             @{ var check = @item.Selected ? "checked" : ""; }
-                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="flexCheckDefault-@item.Code" style="float: right !important;">
+                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="flexCheckDefault-@item.Code" style="float: right !important; border: 1px solid rgba(0,0,0,.25) !important;">
                         </div>
                         <hr class="hr"/>
                     }
@@ -431,7 +431,7 @@
                                 <strong>@item.Name</strong>
                             </label>
                             @{ var check = @item.Selected ? "checked" : ""; }
-                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="sector-@item.Code" style="float: right !important;">
+                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="sector-@item.Code" style="float: right !important; border: 1px solid rgba(0,0,0,.25) !important;">
                         </div>
                         <hr class="hr"/>
                     }
@@ -463,7 +463,7 @@
                                 <strong>@item.Name</strong>
                             </label>
                             @{ var check = @item.Selected ? "checked" : ""; }
-                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="softSkill-@item.Code" style="float: right !important;">
+                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="softSkill-@item.Code" style="float: right !important; border: 1px solid rgba(0,0,0,.25) !important;">
                         </div>
                         <hr class="hr"/>
                     }
@@ -518,7 +518,7 @@
                 <a onclick="closeModal('#modalLanguageSpoken')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
-                <p>Select a maximum of 5 languages spoken.</p>
+                <p>Select a maximum of 5 languages spoken. <br/>Don't overdue! Just pick languages you are confident with.</p>
                 <div class="overflow-auto p-3 border-div-grey" style="background-color: white !important; max-height: 400px;">
                     @foreach (var item in Model.LanguagesSpoken)
                     {
@@ -527,7 +527,7 @@
                                 <strong>@item.Language</strong>
                             </label>
                             @{ var check = @item.Selected ? "checked" : ""; }
-                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="languageSpoken-@item.Code" style="float: right !important;">
+                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="languageSpoken-@item.Code" style="float: right !important; border: 1px solid rgba(0,0,0,.25) !important;">
                         </div>
                         <hr class="hr"/>
                     }
@@ -559,7 +559,7 @@
                                 <strong>@item.Name</strong>
                             </label>
                             @{ var check = @item.Selected ? "checked" : ""; }
-                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="infoToShow-@item.Code" style="float: right !important;">
+                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="infoToShow-@item.Code" style="float: right !important; border: 1px solid rgba(0,0,0,.25) !important;">
                         </div>
                         <hr class="hr"/>
                     }
