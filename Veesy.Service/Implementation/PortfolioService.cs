@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Veesy.Domain.Models;
 using Veesy.Domain.Repositories;
 using Veesy.Service.Interfaces;
@@ -35,8 +36,16 @@ public class PortfolioService : IPortfolioService
         return result;
     }
 
-    public IEnumerable<Portfolio> GetPortfoliosByUser()
+    public IEnumerable<Portfolio> GetPortfoliosByUser(MyUser user)
     {
-        return _uoW.PortfolioRepository.FindAll();
+        return _uoW.PortfolioRepository.FindByCondition(s => s.MyUserId == user.Id);
+    }
+
+    public IEnumerable<Portfolio> GetPortfoliosByUserWithMedia(MyUser user)
+    {
+        return _uoW.PortfolioRepository.FindByCondition(s => s.MyUserId == user.Id)
+            .Include(s => s.PortfolioMedias)
+            .ThenInclude(s => s.Media);
+
     }
 }

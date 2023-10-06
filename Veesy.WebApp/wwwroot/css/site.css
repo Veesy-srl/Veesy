@@ -535,6 +535,18 @@ button:focus {
   cursor: pointer;
 }
 
+.grey-danger-link{
+  color: #AAB0BB !important;;
+  text-decoration: none !important;
+  cursor: pointer;
+}
+
+.grey-danger-link:hover{
+  color: #E55B5B !important;;
+  text-decoration: none !important;
+  cursor: pointer;
+}
+
 .white-link{
   color: #ffffff !important;;
   text-decoration: none !important;

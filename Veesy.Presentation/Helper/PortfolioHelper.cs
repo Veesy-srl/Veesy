@@ -57,7 +57,7 @@ public class PortfolioHelper
         if (newPortfolioDto.CodeImagesToAdd == null || newPortfolioDto.CodeImagesToAdd.Count == 0)
             return (new ResultDto(false, "Select at least one image."), Guid.Empty);
         
-        var portfoliosNumber = _portfolioService.GetPortfoliosByUser().Count();
+        var portfoliosNumber = _portfolioService.GetPortfoliosByUser(userInfo).Count();
         var potfoliosMedia = new List<PortfolioMedia>();
         var index = 0;
         newPortfolioDto.CodeImagesToAdd.ForEach(code => potfoliosMedia.Add(new PortfolioMedia()
@@ -84,5 +84,16 @@ public class PortfolioHelper
         };
         var res = await _portfolioService.AddPortfolio(portfolio, userInfo);
         return (new ResultDto(true, ""), res.Id);
+    }
+
+    public PortfolioListViewModel GetListViewModel(MyUser userInfo)
+    {
+        var portfolios = _portfolioService.GetPortfoliosByUserWithMedia(userInfo).ToList();
+        var vm = new PortfolioListViewModel()
+        {
+            PortfolioThumbnailDtos = MapPortfolioDtos.MapListPortfolioThumbnailDto(portfolios),
+            BasePath = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/"
+        };
+        return vm;
     }
 }

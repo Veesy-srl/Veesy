@@ -1,54 +1,67 @@
+@model Veesy.Presentation.Model.Portfolio.PortfolioListViewModel
+
 @{
     ViewData["Title"] = "Portfolios";
 }
-<div class="d-flex pt-7rem">
-    <div class="col-2 col-md-3">
-        <div class="ps-3" style="position:fixed">
-            <nav class="breadcrumb-container" aria-label="Percorso di navigazione">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><i class="fa-solid fa-house me-2"></i><a class="breadcrumb-a me-2" asp-action="Index" asp-area="Portfolio" asp-controller="Home">dashboard</a><i class="fa-solid fa-chevron-right"></i></li>
-                    <li class="breadcrumb-item"><a class="breadcrumb-a" href="#"><strong>portfolios</strong></a></li>
-                </ol>
-            </nav>
-        </div>
+
+<div class="row pt-7rem">
+    <div class="col-sm-12 col-md-3 mb-3">
+        <nav class="breadcrumb-container" aria-label="Percorso di navigazione">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><img src="~/imgs/dashboard_home_light-mode.png" style="width: 18px; margin-top: -5px;" class="me-2"><a class="breadcrumb-a me-2" asp-action="Index" asp-area="Portfolio" asp-controller="Home">dashboard</a><i class="fa-solid fa-chevron-right"></i></li>
+                <li class="breadcrumb-item"><a class="breadcrumb-a" href="#"><strong>portfolios</strong></a></li>
+            </ol>
+        </nav>
     </div>
-    <div class="col-8 col-md-6">
-        <h3>Portfolios</h3>
+    <div class="col-sm-12 col-md-6">
+        <h2><strong>Portfolios</strong></h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <a class="grey-link ms-2"><strong>learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a></p>
         <div class="empty-veesy"></div>
-        @for (int i = 0; i < 20; i++)
+        @foreach (var item in Model.PortfolioThumbnailDtos)
         {
             <hr/>
             <div class="d-flex pt-2">
                 <div class="col-3">
                     <div class='box'> 
                         <div class='content1_1'>
-                            <img class="image-fit-radius" src="https://images.pexels.com/photos/16190930/pexels-photo-16190930/free-photo-of-cibo-piastre-caffe-cucchiaio.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load"/>
+                            <img class="image-fit-radius" title="@item.DefaultImageOriginalName" src="@Model.BasePath@item.DefaultImageName?tr=w-300"/>
                         </div> 
                     </div>
                 </div>
                 <div class="col-3">
-                    <h5>Daria's Portfolio</h5>
-                    <div class="h-50"></div>
-                    <p class="veesy-grey-p">Updated on 15.06.2023<br/>15 media uploaded</p>
+                    <h5><strong>@item.Name</strong></h5>
+                    <p class="veesy-grey-p" style="margin-bottom: 3rem">Updated on @item.LastUpdate<br/>@item.NumberMedia media uploaded</p>
+                    <a class="grey-link"><i class="fa-solid fa-arrow-up-right-from-square"></i>preview</a>
                 </div>
                 <div class="col-6 text-end">
-                    <a class="grey-link ms-2"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit portfolio</strong></a>
-                    <div class="h-50"></div>
-                    <button class="w-50 rounded-pill btn btn-primary mt-2" type="submit">preview portfolio</button>
+                    <a onclick="CopyLink()" class="grey-link ms-2"><i class="fa-regular fa-clone pe-1"></i><strong>copy link</strong></a>
+                    <div style="margin-top: 5.3rem; align-items: flex-end" class="d-flex justify-content-between">
+                        @{
+                            var visibility = @item.IsMain ? "hidden" : "visible";
+                        }
+                        
+                        <a class="grey-danger-link mt-2" style="visibility: @visibility">Delete</a>
+                        <a asp-action="Settings" asp-route-id="@item.Code" class="rounded-pill btn btn-primary mt-2"><i class="fa-regular fa-pen-to-square pe-1"></i>edit portfolio</a>
+                    </div>
                 </div>
             </div>
         }
+        <hr/>
+        <div class="empty-veesy"></div>
+        <a class="rounded-pill btn btn-primary mt-2 btn-padding">create a new portfolio from cloud</a>
+        <div class="empty-veesy"></div>
+        <div class="empty-veesy"></div>
     </div>
-    <div class="col-2 col-md-3">
-        <div class="d-flex justify-content-center">
-            <div style="position: fixed">
-                <div class="w-125 card-blue-veesy p-3">
+    <div class="col-sm-12 col-md-3">
+            <div class="d-flex justify-content-center">
+                <div class="w-75-veesy card-blue-veesy p-3">
                     <div class="text-end"><i class="fa-solid fa-circle fa-2xs" style="color: #ffffff;"></i></div>
-                    <p class="mb-0" style="color: white"><strong>Do you need some help?</strong></p>
-                    <a class="a-ciano" href="#">Contact us</a>
+                    <p class="mb-0" style="color: white">Do you need some help?</p>
+                    <a class="a-ciano-underline" href="mailto:support@veesy.it">Contact us</a>
                 </div>
             </div>
+            <div class="empty-veesy"></div>
+            <div class="empty-veesy"></div>
+            <div class="empty-veesy"></div>
         </div>
-    </div>
 </div>

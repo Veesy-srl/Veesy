@@ -29,7 +29,17 @@ public class PortfolioController : VeesyController
     [HttpGet("portfolios")]
     public IActionResult List()
     {
-        return View();
+        try
+        {
+            var vm = _portfolioHelper.GetListViewModel(UserInfo);
+            return View(vm);
+        }
+        catch (Exception e)
+        {
+            Logger.Error(e, e.Message);
+            _notyfService.Custom("Error retrieving portfolios. Please retry.", 10 , "#ca0a0a");
+            return RedirectToAction("Index", "Home");
+        }
     }
     
     [HttpGet("portfolio/settings/{id}")]

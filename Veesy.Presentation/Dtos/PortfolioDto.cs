@@ -32,6 +32,17 @@ public class NewPortfolioDto
     
 }
 
+public class PortfolioThumbnailDto
+{
+    public Guid Code { get; set; }
+    public string Name { get; set; }
+    public int NumberMedia { get; set; }
+    public string LastUpdate { get; set; }
+    public string DefaultImageName { get; set; }
+    public string DefaultImageOriginalName { get; set; }
+    public bool IsMain { get; set; }
+}
+
 public class PortfolioMediaDto
 {
     public Guid MediaId { get; set; }
@@ -44,6 +55,51 @@ public class PortfolioMediaDto
 
 public static class MapPortfolioDtos
 {
+    public static PortfolioThumbnailDto MapPortfolioThumbnailDto(Portfolio? portfolio)
+    {
+        if (portfolio == null)
+            return null;
+
+        return new PortfolioThumbnailDto()
+        {
+            Code = portfolio.Id,
+            IsMain = portfolio.IsMain,
+            NumberMedia = portfolio.PortfolioMedias.Count,
+            Name = portfolio.Name,
+            DefaultImageName = portfolio.PortfolioMedias.Count == 0
+                ? ""
+                : portfolio.PortfolioMedias.SingleOrDefault(s => s.SortOrder == 0).Media.FileName,
+            DefaultImageOriginalName = portfolio.PortfolioMedias.Count == 0
+                ? ""
+                : portfolio.PortfolioMedias.SingleOrDefault(s => s.SortOrder == 0).Media.OriginalFileName,
+            LastUpdate = portfolio.LastEditRecordDate.ToString("dd.MM.yyyy")
+        };
+    }
+    
+    public static List<PortfolioThumbnailDto> MapListPortfolioThumbnailDto(List<Portfolio>? portfolios)
+    {
+        if (portfolios == null)
+            return null;
+
+        var portfoliosDto = new List<PortfolioThumbnailDto>();
+        
+        portfolios.ForEach(portfolio => portfoliosDto.Add(new PortfolioThumbnailDto()
+        {
+            Code = portfolio.Id,
+            IsMain = portfolio.IsMain,
+            NumberMedia = portfolio.PortfolioMedias.Count,
+            Name = portfolio.Name,
+            DefaultImageName = portfolio.PortfolioMedias.Count == 0
+                ? ""
+                : portfolio.PortfolioMedias.SingleOrDefault(s => s.SortOrder == 0).Media.FileName,
+            DefaultImageOriginalName = portfolio.PortfolioMedias.Count == 0
+                ? ""
+                : portfolio.PortfolioMedias.SingleOrDefault(s => s.SortOrder == 0).Media.OriginalFileName,
+            LastUpdate = portfolio.LastEditRecordDate.ToString("dd.MM.yyyy")
+        }));
+        return portfoliosDto;
+    }
+    
     public static PortfolioDto MapPortfolio(Portfolio? portfolio)
     {
         if (portfolio == null)
