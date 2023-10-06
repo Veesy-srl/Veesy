@@ -188,7 +188,7 @@
                         <input type="text" id="surname-edit" rows="4" class="w-100 input-modal"/>
                     </div>
                 </div>
-                <p class="mt-2 mb-0">*compulsory field</p>  
+                <p class="mt-2 mb-0">*required field</p>  
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdateFullname()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -215,7 +215,7 @@
                         <input type="password" id="new-password-edit" rows="4" class="w-100 input-modal"/>
                     </div>
                 </div>
-                <p class="mt-2 mb-0">*compulsory field</p>  
+                <p class="mt-2 mb-0">*required field</p>  
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdatePassword()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -234,7 +234,7 @@
             <div class="modal-body">
                 <p class="mb-1"><strong>Email*</strong></p>
                 <input type="email" id="email-edit" rows="4" class="w-100 input-modal"/>
-                <p class="mt-2 mb-0">*compulsory field</p>
+                <p class="mt-2 mb-0">*required field</p>
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdateEmail()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -254,7 +254,7 @@
             <div class="modal-body">
                 <p class="mb-1"><strong>Username*</strong></p>
                 <input type="text" id="username-edit" rows="4" class="w-100 input-modal"/>
-                <p class="mt-2 mb-0">*compulsory field</p>
+                <p class="mt-2 mb-0">*required field</p>
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdateUsername()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -296,7 +296,7 @@
                 <div class="col-10">
                     <input type="number" min="1" id="phone-number-edit" rows="4" class="w-100 input-modal"/>    
                 </div>
-                <p class="mt-2 mb-0">*compulsory field</p>
+                <p class="mt-2 mb-0">*required field</p>
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdatePhoneNumber()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -322,7 +322,7 @@
                                 <strong>@item.Name</strong>
                             </label>
                             @{ var check = @item.Selected ? "checked" : ""; }
-                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="category-@item.Code" style="float: right !important;">
+                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="category-@item.Code" style="float: right !important; border: 1px solid rgba(0,0,0,.25) !important;">
                         </div>
                         <hr class="hr"/>
                     }

@@ -886,6 +886,14 @@ a:hover{
   background-color:#75CCDD;
 }
 
+#password-eye{
+  width: 20px;
+}
+
+#passwordconfirm-eye{
+  width: 20px;
+}
+
 .description-container {
   width: 30%;
   height: 43%;

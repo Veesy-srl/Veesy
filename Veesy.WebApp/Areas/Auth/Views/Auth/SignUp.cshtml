@@ -43,7 +43,7 @@
                                     <input id="password" asp-for="Password" class="input--style-password" type="password">
                                     <span class="input-group-append border-left-0">
                                         <a onclick="switchPassword()" class="input-group-text span--style-password bg-transparent">
-                                            <i id="password-eye" class="fa-solid fa-eye"></i>
+                                            <img id="password-eye" src="/imgs/Auth/password-hidden_light-mode.png"/>
                                         </a>
                                     </span>
                                 </div>
@@ -56,13 +56,14 @@
                                     <input id="passwordconfirm" asp-for="ConfirmPassword" class="input--style-password" type="password">
                                     <span class="input-group-append border-left-0">
                                         <a onclick="switchConfirmPassword()" class="input-group-text span--style-password bg-transparent">
-                                            <i id="passwordconfirm-eye" class="fa-solid fa-eye"></i>
+                                            <img id="passwordconfirm-eye" src="/imgs/Auth/password-hidden_light-mode.png"/>
                                         </a>
                                     </span>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="mb-2 text-muted" id="password-message" style="display: none; font-size: 11px; text-align: left;">Password must be at least 6 characters long, and contain at least one uppercase, one lowercase, one number, one special character.</div>
                     <div class="input-group">
                         <p class="mb-0 fw-normal size-custom"><strong>Category*</strong></p>
                         <select asp-for="SelectedCategoriesWork" multiple class="w-100 size-custom selectpicker">
@@ -72,7 +73,7 @@
                             }
                         </select>
                     </div>
-                    <div class="mt-3 mb-2 text-muted" style="font-size: 13px;">By signing up you accept our 
+                    <div class="mt-3 mb-2 text-muted" style="font-size: 12px;">By signing up you accept our 
                         <a class="text-muted text-decoration-underline" href="#">Site Policy</a>
                         and
                         <a class="text-muted text-decoration-underline" href="#">Privacy Policy</a>
@@ -109,14 +110,12 @@
             if (passwordClose){
                 passwordClose = false;
                 document.getElementById("password").type = "text";
-                document.getElementById("password-eye").classList.remove("fa-eye");
-                document.getElementById("password-eye").classList.add("fa-eye-slash");
+                document.getElementById("password-eye").src = "/imgs/Auth/password-shown.png";
             }
             else{
                 passwordClose = true;
                 document.getElementById("password").type = "password";
-                document.getElementById("password-eye").classList.add("fa-eye");
-                document.getElementById("password-eye").classList.remove("fa-eye-slash");
+                document.getElementById("password-eye").src = "/imgs/Auth/password-hidden_light-mode.png";
             }
         }
         
@@ -124,16 +123,30 @@
             if (passworConfirmClose){
                 passworConfirmClose = false;
                 document.getElementById("passwordconfirm").type = "text";
-                document.getElementById("passwordconfirm-eye").classList.remove("fa-eye");
-                document.getElementById("passwordconfirm-eye").classList.add("fa-eye-slash");
+                document.getElementById("passwordconfirm-eye").src = "/imgs/Auth/password-shown.png";
             }
             else{
                 passworConfirmClose = true;
                 document.getElementById("passwordconfirm").type = "password";
-                document.getElementById("passwordconfirm-eye").classList.add("fa-eye");
-                document.getElementById("passwordconfirm-eye").classList.remove("fa-eye-slash");
+                document.getElementById("passwordconfirm-eye").src = "/imgs/Auth/password-hidden_light-mode.png";
             }
         }
+        
+        document.getElementById("passwordconfirm").addEventListener("input", function() {
+            document.getElementById("password-message").style.display = "block";
+        });
+        
+        document.getElementById("passwordconfirm").addEventListener("blur", function() {
+            document.getElementById("password-message").style.display = "none";
+        });
+        
+        document.getElementById("password").addEventListener("input", function() {
+            document.getElementById("password-message").style.display = "block";
+        });
+        
+        document.getElementById("password").addEventListener("blur", function() {
+            document.getElementById("password-message").style.display = "none";
+        });
     </script>
 }
 
