@@ -326,6 +326,10 @@ input {
   border-bottom: 0px solid #ccc;
 }
 
+.fa-grey{
+  color: grey;
+}
+
 .btn-variant{
   font-weight: 500 !important;
   padding: 0.4rem 1.2rem !important;

@@ -25,6 +25,13 @@ public class PortfolioDto
     }
 }
 
+public class NewPortfolioDto
+{
+    public List<Guid> CodeImagesToAdd { get; set; }
+    public string Name { get; set; }
+    
+}
+
 public class PortfolioMediaDto
 {
     public Guid MediaId { get; set; }

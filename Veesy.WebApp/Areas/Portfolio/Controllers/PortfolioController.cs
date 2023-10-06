@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
+using NuGet.Protocol;
 using Veesy.Domain.Models;
 using Veesy.Presentation.Helper;
+using Veesy.Service.Dtos;
 
 namespace Veesy.WebApp.Areas.Portfolio.Controllers;
 
@@ -30,8 +32,8 @@ public class PortfolioController : VeesyController
         return View();
     }
     
-    [HttpGet("portfolio/settings")]
-    public IActionResult Settings()
+    [HttpGet("portfolio/settings/{id}")]
+    public IActionResult Settings(Guid id)
     {
         try
         {
@@ -45,4 +47,28 @@ public class PortfolioController : VeesyController
             return RedirectToAction("Index", "Home");
         }
     }
+
+    #region API
+
+    public async Task<JsonResult> Create([FromBody] NewPortfolioDto newPortfolioDto)
+    {
+        try
+        {
+            var response = await _portfolioHelper.CreateNewPortfolio(newPortfolioDto, UserInfo);
+            if (!response.result.Success)
+                _notyfService.Custom(response.result.Message, 10, "#ca0a0a");
+            else
+                _notyfService.Custom("Portfolio create correctly.", 10, "#75CCDD");
+            return Json(new { Result = response.result.Success, Message = response.result.Message, Code = response.code });
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            Logger.Error($"MediaDto to update: {newPortfolioDto.ToJson()}");
+            _notyfService.Custom("Error creating portfolio. Please retry.", 10, "#ca0a0a");
+            return Json(new { Result = false, Message = "Error creating portfolio. Please retry." });
+        }
+    }    
+
+    #endregion
 }

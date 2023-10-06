@@ -333,8 +333,8 @@
         <div class="float-end">
             <div class="d-flex align-items-center">
                 <a class="blue-link me-4 fw-bolder" style="font-size: 14px; margin-top: 2px;">+ add to portfolio</a>
-                <a class="rounded-pill btn btn-grey btn-padding" style="padding-left: 35px !important; padding-right:  35px !important; font-size:  15px;" type="submit">save</a>
-                <a class="ms-4 me-2 mt-1" type="button" onclick="CloseAlert()"><i class="fa-solid fa-grey fa-circle-xmark" style="color: grey;"></i></a>
+                <a class="rounded-pill btn btn-grey btn-padding" style="padding-left: 35px !important; padding-right:  35px !important; font-size:  15px;" type="submit">create portfolio</a>
+                <a class="ms-4 me-2 mt-1" type="button" onclick="CloseAlert()"><i class="fa-solid fa-grey fa-circle-xmark"></i></a>
             </div>
         </div>
     </div>
@@ -345,7 +345,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Delete Medias</strong></h3>
-                <a onclick="closeModal('#modalDeleteMedia')"><i class="fa-solid fa-grey fa-circle-xmark" style="color: grey;"></i></a>
+                <a onclick="closeModal('#modalDeleteMedia')"><i class="fa-solid fa-grey fa-circle-xmark"></i></a>
             </div>
             <div class="empty-veesy"></div>
             <div class="modal-body text-center">
@@ -366,9 +366,74 @@
     </div>
 </div>
 
+<div class="modal fade" id="modalCreatePortfolio" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Create Portfolio</strong></h3>
+                <a onclick="closeModal('#modalCreatePortfolio')"><i class="fa-solid fa-grey fa-circle-xmark"></i></a>
+            </div>
+            <div id="input-portfolio">
+                <div class="modal-body">
+                    <p class="mb-0">name your Portfolio</p>
+                    <input type="text" id="portfolio-name-edit" rows="4" class="w-100 input-modal"/>
+                    <p class="mb-0"><strong>max. 50 characters</strong></p>
+                </div>
+                <div class="modal-footer">                
+                    <a onclick="CreateNewPortfolio()" class="mt-2 rounded-pill btn btn-primary btn-padding" type="submit">save</a>
+                </div>
+            </div>
+            <div id="success-portfolio" style="display: none">
+                <div class="modal-body justify-content-center d-flex">
+                    <a id="portfolio-setting-link" class="mt-2 rounded-pill btn btn-primary" type="submit">view portfolio</a> 
+                </div>
+                <div class="modal-footer">    
+                    <div class="empty-veesy"></div>
+                    <div class="empty-veesy"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts
 {
     <script>
+    
+    function ResetInput() {
+        document.getElementById("input-portfolio").style.display = "block";
+        document.getElementById("success-portfolio").style.display = "none";
+    }
+    
+    
+    function CreateNewPortfolio() {
+        $('#load-spinner').css("display", "block");
+        var Name = document.getElementById("portfolio-name-edit").value
+        CodeImagesToAdd = []
+        for (const code in img_selected_id) {
+            CodeImagesToAdd.push(img_selected_id[code])
+        }
+        var newPortfolioDto = {CodeImagesToAdd,  Name};
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Create", "Portfolio")',
+            data: JSON.stringify(newPortfolioDto),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (response) {
+                if(response.result){
+                    document.getElementById("input-portfolio").style.display = "none";
+                    document.getElementById("success-portfolio").style.display = "block";
+                    document.getElementById("portfolio-setting-link").setAttribute('href', "/portfolio/settings/" + response.code);  
+                }
+                $('#load-spinner').css("display", "none");
+            },
+            error: function (response) {
+                $('#load-spinner').css("display", "none");
+            }
+        })
+    }
+    
     let imageNumber = @Model.Medias.Count;
     function CloseAlert() {
         alert_portfolio.classList.remove("show");

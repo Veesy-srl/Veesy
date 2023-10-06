@@ -34,4 +34,9 @@ public class PortfolioService : IPortfolioService
         await _uoW.CommitAsync(user);
         return result;
     }
+
+    public IEnumerable<Portfolio> GetPortfoliosByUser()
+    {
+        return _uoW.PortfolioRepository.FindAll();
+    }
 }
