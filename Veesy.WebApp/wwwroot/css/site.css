@@ -856,6 +856,28 @@ a:hover{
     height: auto !important; 
   }
 }
+
+.center-content {
+  display: flex;
+  align-items: center;
+  height: 80vh;
+  @media only screen and (max-width: 600px) {
+    align-items: normal !important;
+    height: auto !important;
+  }
+}
+.center-content-menu {
+  display: flex;
+  align-items: center;
+  height: 80vh;
+  justify-content: center;
+  @media only screen and (max-width: 600px) {
+    align-items: normal !important;
+    height: auto !important;
+    margin-top: 40%;
+    justify-content: left !important;
+  }
+}
 .menu-list {
   margin-right: 20px;
 }

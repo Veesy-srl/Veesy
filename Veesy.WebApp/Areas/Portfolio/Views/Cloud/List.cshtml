@@ -63,7 +63,7 @@
         @for (int i = 0; i < Model.Medias.Count; i = i+8)
         {
             <div id="div-for-remove-@Model.Medias[i].Code" class="media-container show-edit">
-                <a class="edit-button">
+                <a class="edit-button" onclick="EditMedia('@Model.Medias[i].Code'); return false;">
                     <strong style="margin-right: 5px; font-size: 14px;">edit</strong>
                     <i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>
                 </a>
