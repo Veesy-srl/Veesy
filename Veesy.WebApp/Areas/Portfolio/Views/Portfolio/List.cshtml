@@ -20,9 +20,9 @@
         @foreach (var item in Model.PortfolioThumbnailDtos)
         {
             <hr/>
-            <div class="d-flex pt-2">
+            <div class="d-flex">
                 <div class="col-3">
-                    <div class='box'> 
+                    <div class='box m-0'> 
                         <div class='content1_1'>
                             <img class="image-fit-radius" title="@item.DefaultImageOriginalName" src="@Model.BasePath@item.DefaultImageName?tr=w-300"/>
                         </div> 
@@ -31,7 +31,7 @@
                 <div class="col-3">
                     <h5><strong>@item.Name</strong></h5>
                     <p class="veesy-grey-p" style="margin-bottom: 3rem">Updated on @item.LastUpdate<br/>@item.NumberMedia media uploaded</p>
-                    <a class="grey-link"><i class="fa-solid fa-arrow-up-right-from-square"></i>preview</a>
+                    <a class="grey-link">preview<i class="fa-solid fa-arrow-up-right-from-square ms-2"></i></a>
                 </div>
                 <div class="col-6 text-end">
                     <a onclick="CopyLink()" class="grey-link ms-2"><i class="fa-regular fa-clone pe-1"></i><strong>copy link</strong></a>

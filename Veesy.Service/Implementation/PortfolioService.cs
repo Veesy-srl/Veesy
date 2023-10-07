@@ -16,7 +16,10 @@ public class PortfolioService : IPortfolioService
 
     public Portfolio GetPortfolioById(Guid portfolioId, string userId)
     {
-        var portfolio = _uoW.PortfolioRepository.FindByCondition(w => w.MyUserId == userId && w.Id == portfolioId).SingleOrDefault();
+        var portfolio = _uoW.PortfolioRepository.FindByCondition(w => w.MyUserId == userId && w.Id == portfolioId)
+            .Include(s => s.PortfolioMedias)
+            .ThenInclude(s => s.Media)
+            .SingleOrDefault();
         if (portfolio == null)
             throw new Exception($"Portfolio not found with id {portfolioId}.");
         return portfolio;
