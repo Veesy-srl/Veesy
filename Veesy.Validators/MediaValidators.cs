@@ -12,12 +12,12 @@ public class MediaValidators
         return new ResultDto(false, "File extension not supported.");
     }
 
-    public ResultDto ValidateSizeUpload(long size, long maxSizePlan, string extension)
+    public ResultDto ValidateSizeUpload(long size, long sizeTotal, long maxSizePlan, string extension)
     {
         var limit = MediaCostants.MaxSizeSingleMedia[MediaCostants.GetType(extension)];
         if(size > limit)
             return new ResultDto(false, $"Limit size: {(limit / (1024*1024)).ToString("0.")}Mb");
-        if (size > maxSizePlan)
+        if (sizeTotal > maxSizePlan)
             return new ResultDto(false, "Reached maximum subscription size");
         return new ResultDto(true, "");
     }
