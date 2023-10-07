@@ -19,28 +19,12 @@ public class PortfolioHelper
         _portfolioService = portfolioService;
     }
     
-    public PortfolioSettingsViewModel GetPortfolioSettingsViewModel(MyUser userInfo)
+    public PortfolioSettingsViewModel GetPortfolioSettingsViewModel(Guid id, MyUser userInfo)
     {
         var vm = new PortfolioSettingsViewModel();
-        // var portfolio = _portfolioService.GetPortfolioById(new Guid(), userInfo.Id);
-        // vm.Portfolio = MapPortfolioDtos.MapPortfolio(portfolio);
-        vm.Portfolio = new PortfolioDto
-        {
-            Name = "NamePlaceholder",
-            Description = "DescriptionPlaceholder",
-            IsPublic = true,
-            IsMain = true,
-            LastEditRecordDate = DateTime.Now.AddDays(-3),
-            Layout = VeesyConstants.PortfolioLayout.TwoColumns,
-            PortfolioMedias = new List<PortfolioMediaDto>()
-            {
-                new PortfolioMediaDto { Media = new MediaDto(){ } },
-                new PortfolioMediaDto { Media = new MediaDto(){ } },
-                new PortfolioMediaDto { Media = new MediaDto(){ } },
-                new PortfolioMediaDto { Media = new MediaDto(){ } }
-            }
-        };
-        vm.BasePathImages = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/";
+        var portfolio = _portfolioService.GetPortfolioById(id, userInfo.Id);
+        vm.Portfolio = MapPortfolioDtos.MapPortfolio(portfolio);
+        vm.BasePathImages = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/";
 
         return vm;
     }
@@ -52,6 +36,8 @@ public class PortfolioHelper
 
     public async Task<(ResultDto result, Guid code)> CreateNewPortfolio(NewPortfolioDto newPortfolioDto, MyUser userInfo)
     {
+        if(string.IsNullOrEmpty(newPortfolioDto.Name))
+            return (new ResultDto(false, "Please insert portfolio's name."), Guid.Empty);
         if(newPortfolioDto.Name.Length > 50)
             return (new ResultDto(false, "Max name characters are 50."), Guid.Empty);
         if (newPortfolioDto.CodeImagesToAdd == null || newPortfolioDto.CodeImagesToAdd.Count == 0)
@@ -95,5 +81,17 @@ public class PortfolioHelper
             BasePath = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/"
         };
         return vm;
+    }
+
+    public async Task<ResultDto> UpdateNamePortfolio(UpdatePortfolioDto portfolioDto, MyUser userInfo)
+    {
+        if(string.IsNullOrEmpty(portfolioDto.Name))
+            return new ResultDto(false, "Please insert portfolio's name.");
+        if (portfolioDto.Name.Length > 50)
+            return new ResultDto(false, "Max name characters are 50.");
+        var portfolio = _portfolioService.GetPortfolioById(portfolioDto.Id, userInfo.Id);
+        portfolio.Name = portfolioDto.Name;
+        await _portfolioService.UpdatePortfolio(portfolio, userInfo);
+        return new ResultDto(true, "");
     }
 }

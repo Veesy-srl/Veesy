@@ -14,8 +14,12 @@ public class PortfolioDto
     public string Password { get; set; }
     public string Link { get; set; }
     public int Status { get; set; }
-    public DateTime LastEditRecordDate { get; set; }
+    public string LastEditRecordDate { get; set; }
     public bool IsMain { get; set; }
+    public int NumberImage { get; set; }
+    public int NumberVideo { get; set; }
+    public MediaDto DefaultMedia { get; set; }
+    public int NumberMedia => NumberImage + NumberVideo;
     public VeesyConstants.PortfolioLayout Layout { get; set; }
     public virtual List<PortfolioMediaDto> PortfolioMedias { get; set; }
 
@@ -30,6 +34,12 @@ public class NewPortfolioDto
     public List<Guid> CodeImagesToAdd { get; set; }
     public string Name { get; set; }
     
+}
+
+public class UpdatePortfolioDto
+{
+    public Guid Id { get; set; }
+    public string Name { get; set; }
 }
 
 public class PortfolioThumbnailDto
@@ -116,9 +126,20 @@ public static class MapPortfolioDtos
             Password = portfolio.Password,
             Link = portfolio.Link,
             Status = portfolio.Status,
-            LastEditRecordDate = portfolio.LastEditRecordDate,
+            LastEditRecordDate = portfolio.LastEditRecordDate.ToString("dd.MM.yyyy"),
             IsMain = portfolio.IsMain,
             Layout = portfolio.Layout,
+            NumberImage = portfolio.PortfolioMedias.Count == 0
+                ? 0
+                :
+                portfolio.PortfolioMedias.Count(s => MediaCostants.ImageExtensions.Contains(s.Media.Type.ToUpper())),
+            NumberVideo = portfolio.PortfolioMedias.Count == 0
+                ? 0
+                :
+                portfolio.PortfolioMedias.Count(s => MediaCostants.VideoExtensions.Contains(s.Media.Type.ToUpper())),
+            DefaultMedia = portfolio.PortfolioMedias.Count == 0
+                ? null
+                : MapCloudDtos.MapMedia(portfolio.PortfolioMedias.SingleOrDefault(s => s.SortOrder == 0).Media),
             PortfolioMedias = portfolio.PortfolioMedias?.Select(MapPortfolioMedia)?.ToList()
         };
     }
@@ -134,7 +155,8 @@ public static class MapPortfolioDtos
             PortfolioId = portfolioMedia.PortfolioId,
             Description = portfolioMedia.Description,
             IsActive = portfolioMedia.IsActive,
-            SortOrder = portfolioMedia.SortOrder
+            SortOrder = portfolioMedia.SortOrder,
+            Media = MapCloudDtos.MapMedia(portfolioMedia.Media)
         };
     }
 }

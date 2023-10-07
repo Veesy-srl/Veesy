@@ -870,6 +870,14 @@ a:hover{
   border-radius: 50px !important;
 }
 
+.img-thumbnail-custom-portfolio{
+  background-color: #fff;
+  border: none !important;
+  height: auto;
+  object-fit: cover;
+  border-radius: 0.5rem !important;
+}
+
 #icon-color{
   color: #75CCDD !important;
   font-size: 12px !important;
