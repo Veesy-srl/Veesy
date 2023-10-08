@@ -239,6 +239,13 @@
     <_ContentIncludedByDefault Remove="Areas\Auth\Shared\_Layout.cshtml" />
     <_ContentIncludedByDefault Remove="Areas\Auth\Shared\_ValidationScriptsPartial.cshtml" />
     <_ContentIncludedByDefault Remove="Areas\Portfolio\Views\Media\UploadMedia.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Public\Views\Shared\Error.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Public\Views\Shared\_Layout.cshtml" />
+    <_ContentIncludedByDefault Remove="Areas\Public\Views\Shared\_ValidationScriptsPartial.cshtml" />
+
+
+
+
   </ItemGroup>
 
 

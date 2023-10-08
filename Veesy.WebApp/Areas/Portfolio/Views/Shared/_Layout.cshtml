@@ -26,7 +26,13 @@
                         <img src="~/imgs/veesy_vettoriale_enigma_white.png" style="width: 75px; height: 25px; margin-top: 5px;">cloud
                     </a>
                 }
-                else{
+                else if(ViewContext.RouteData.Values["Action"].ToString() == "Contacts"){
+                    <a role="button" href="" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" >
+                        <img src="~/imgs/veesy_vettoriale_enigma.png" style="width: 75px; height: 25px; margin-top: 5px;">contacts
+                    </a>
+                }
+                else
+                {
                     <a role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                         <img src="~/imgs/veesy_vettoriale_enigma.png" style="width: 75px; height: 25px; margin-top: 5px;">dashboard
                     </a>
@@ -44,19 +50,30 @@
                                 imageSrc = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU";
                             }
                         }
+                        @if (username != null)
+                        {
                             <a class="dropdown-toggle btn btn-light border fw-bolder shadow-none">
                                 <img src='@imageSrc' style="width: 20px !important; height: 20px !important; max-width: none!important; " class="img-thumbnail-custom rounded-circle" alt="user-image">
                                 <span id="color-text-layout">@username</span>
                             </a>
+
+                            <div class="dropdown-menu bg-grey-veesy" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Portfolio" ? "a-ciano-header" : "menu-element")" href="#">Portfolio</a>
+                                <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Cloud" ? "a-ciano-header" : "menu-element")" asp-action="List" asp-controller="Cloud" asp-area="Portfolio">Cloud</a>
+
+                                <a class="dropdown-item menu-element" href="#">Your Plan</a>
+                                <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Profile" ? "a-ciano-header" : "menu-element")" asp-action="Profile" asp-controller="Profile" asp-area="Account">Profile</a>
+                                <a class="dropdown-item menu-element" asp-action="Logout" asp-controller="Auth" asp-area="Auth">Log out</a>
+                            </div>
+                        }
+                        else
+                        {
+                            <a asp-action="Login" asp-controller="Auth" asp-area="Auth" class="ms-2 btn btn-light border fw-bolder shadow-none">
+                                <i class="fas fa-user fa-2xs text-primary" id="icon-color"></i>
+                                <span id="color-text-variant">account</span>
+                            </a>
+                        }
                         
-                        <div class="dropdown-menu bg-grey-veesy" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Portfolio" ? "a-ciano-header" : "menu-element")" href="#">Portfolio</a>
-                            <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Cloud" ? "a-ciano-header" : "menu-element")" asp-action="List" asp-controller="Cloud" asp-area="Portfolio">Cloud</a>
-                        
-                            <a class="dropdown-item menu-element" href="#">Your Plan</a>
-                            <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Profile" ? "a-ciano-header" : "menu-element")" asp-action="Profile" asp-controller="Profile" asp-area="Account">Profile</a>
-                            <a class="dropdown-item menu-element" asp-action="Logout" asp-controller="Auth" asp-area="Auth">Log out</a>
-                        </div>
                     </div>
                     <button class="ms-2 btn btn-light border fw-bolder shadow-none" id="menuButton">
                         <i class="fas fa-circle fa-2xs text-primary mr-2" id="icon-color"></i>
@@ -66,6 +83,7 @@
             </div>
             <div class="menu-popup" id="menuPopup">
                 <div class="float-end d-flex">
+                    @if(username != null){
                         <div class="dropdown show" id="none-popup">
                             <a class="dropdown-toggle btn btn-light border fw-bolder shadow-none">
                                 <img src='@imageSrc' style=" width: 20px !important; height: 20px !important; max-width: none!important; " class="img-thumbnail-custom rounded-circle" alt="user-image">
@@ -73,16 +91,17 @@
                             </a>
                             <div class="dropdown-menu bg-grey-veesy" aria-labelledby="dropdownMenuLink">
                                 <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Portfolio" ? "a-ciano-header" : "menu-element")" href="#">Portfolio</a>
-                                <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Cloud" ? "a-ciano-header" : "menu-element")"  asp-area="Portfolio" asp-controller="Cloud" asp-action="List">Cloud</a>
+                                <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Cloud" ? "a-ciano-header" : "menu-element")" asp-area="Portfolio" asp-controller="Cloud" asp-action="List">Cloud</a>
                                 <a class="dropdown-item menu-element" href="#">Your Plan</a>
                                 <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Profile" ? "a-ciano-header" : "menu-element")" asp-action="Profile" asp-controller="Profile" asp-area="Account">Profile</a>
                                 <a class="dropdown-item menu-element" asp-action="Logout" asp-controller="Auth" asp-area="Auth">Log out</a>
                             </div>
                         </div>
-                        <button class="ms-2 btn btn-light border fw-bolder shadow-none" id="closeButton">
-                            <i class="fas fa-times-circle fa-2xs text-primary" id="icon-color"></i>
-                            <span id="color-text-variant">close</span>
-                        </button>
+                    }
+                    <button class="ms-2 btn btn-light border fw-bolder shadow-none" id="closeButton">
+                        <i class="fas fa-times-circle fa-2xs text-primary" id="icon-color"></i>
+                        <span id="color-text-variant">close</span>
+                    </button>
                 </div>
                 <div class="container center-content-menu">
                     <div class="menu-list">
@@ -92,7 +111,7 @@
                             <li class="m-4"><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description3">About</a></li>
                             <li class="m-4"><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description4">Match</a></li>
                             <li class="m-4"><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description5">Profile</a></li>
-                            <li class="m-4"><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description6">Contact</a></li>
+                            <li class="m-4"><a asp-action="Contacts" asp-controller="Public" asp-area="Public" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description6">Contact</a></li>
                         </ul>
                     </div>
                     <div class="d-flex" style="height: 250px;">
