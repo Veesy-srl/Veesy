@@ -150,9 +150,8 @@ public class MediaHelper
                     result.Add(new(false, media.OriginalFileName, "Access not allowed.", null));
                     continue;
                 }
-
-                await _veesyBlobService.DeleteBlobAsync($"{MediaCostants.BlobMediaSections.OriginalMedia}/{media.FileName}");
                 await _mediaService.DeleteMedia(media, userInfo);
+                await _veesyBlobService.DeleteBlobAsync($"{MediaCostants.BlobMediaSections.OriginalMedia}/{media.FileName}");
                 result.Add(new (true, media.OriginalFileName, "", imgCode.ToString()));
             }
             catch (Exception e)
@@ -164,12 +163,25 @@ public class MediaHelper
         return result;
     }
     
-    public async Task<List<(bool success, string filename, string message, string? code)>> DeleteFile(Guid imgToDelete, MyUser userInfo)
+    public async Task<(bool success, string filename, string message, string? code, Media? previousMedia)> DeleteFile(Guid imgToDelete, MyUser userInfo)
     {
+
+        var media = _mediaService.GetMediaById(imgToDelete);
+        if (media == null || media.MyUserId != userInfo.Id)
+        {
+            return new(false, imgToDelete.ToString(), "File not found.", null, null);
+        }
+
+        if (media.MyUserId != userInfo.Id)
+        {
+            return new(false, media.OriginalFileName, "Access not allowed.", null, null);
+        }
+
+        await _mediaService.DeleteMedia(media, userInfo);
+        await _veesyBlobService.DeleteBlobAsync($"{MediaCostants.BlobMediaSections.OriginalMedia}/{media.FileName}");
+        var previousMedia = _mediaService.GetPreviousMediaByDate(media.CreateRecordDate, userInfo);
         
-        var imgList = new List<Guid>();
-        imgList.Add(imgToDelete);
-        return await DeleteFiles(imgList, userInfo);
+        return new (true, media.OriginalFileName, "", imgToDelete.ToString(), previousMedia);
     }
 
     #region Media Utils

@@ -11,7 +11,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><img src="~/imgs/dashboard_home_dark-mode.png" style="width: 18px; margin-top: -5px;" class="me-2"><a class="breadcrumb-a-white me-2 text-white" asp-area="Portfolio" asp-controller="Home" asp-action="Index">dashboard</a><i class="fa-solid fa-chevron-right text-white"></i></li>
                 <li class="breadcrumb-item"><a class="breadcrumb-a-white me-2 text-white" asp-area="Portfolio" asp-controller="Cloud" asp-action="List">cloud</a><i class="fa-solid fa-chevron-right text-white"></i></li>
-                <li class="breadcrumb-item"><a class="breadcrumb-a-white me-2 text-white" href="#"><strong>edit</strong></a></li>
+                <li class="breadcrumb-item"><a class="breadcrumb-a-white me-2 text-white" href="#"><strong>media</strong></a></li>
             </ol>
         </nav>
     </div>
@@ -118,7 +118,7 @@
                         else
                         {
                             <div class="card-white-dashed-veesy p-3 mt-2" id="credits-area-empty" style="display: none">
-                                <p class="text-white">Add a note or quote collaborators who worked at this output.</p>
+                                <p class="text-white">Add a text or mention collaborators who worked at this output.</p>
                                 <div class="mt-4"><a onclick="ShowTextArea()" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add credits</strong></a></div>
                             </div>
                             <div id="credits-area">
@@ -227,7 +227,7 @@
 </div>
 
 <div class="row justify-content-center">
-    <a asp-action="DeleteMedia" asp-area="Portfolio" asp-controller="Media" asp-route-imgToDelete="@Model.Media.Code" class="rounded-pill btn btn-delete">delete media</a>
+    <a onclick="openModal('#modalDeleteMedia')" class="rounded-pill btn btn-delete">delete media</a>
     <div class="empty-veesy"></div>
     <div class="empty-veesy"></div>
 </div>
@@ -251,9 +251,65 @@
     </div>
 </div>
 
+<div class="modal fade" id="modalDeleteMedia" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Delete Medias</strong></h3>
+                <a onclick="closeModal('#modalDeleteMedia')"><i class="fa-solid fa-grey fa-circle-xmark"></i></a>
+            </div>
+            <div class="empty-veesy"></div>
+            <div class="modal-body text-center">
+                <h5><strong id="confirm-delete-body">@Model.Media.OriginalFileName will be delete permanently. Are you sure?</strong></h5>
+            </div>
+            <div class="empty-veesy"></div>
+            <div class="row">  
+                <div class="col-4">
+                    <p class="ps-3 text-muted">
+                        <a style="text-decoration: underline !important; position: relative; top: 20px;" class="grey-link mt-3" onclick="closeModal('#modalDeleteMedia')">back to media</a>
+                    </p>
+                </div>
+                <div class="col-4 justify-content-center" style="display: flex">
+                    <form method="post" asp-controller="Media" asp-action="DeleteMedia">
+                        @Html.HiddenFor(s => s.Media.Code)
+                        <button class="mt-2 rounded-pill btn btn-delete" type="submit">yes, delete</button>
+                    </form>
+                </div>
+                <div class="col-4"></div>
+            </div>
+            <div class="empty-veesy"></div>
+        </div>
+    </div>
+</div>
+
 @section Scripts
 {
     <script>
+        
+        function deleteMedia(code) {
+            $('#load-spinner').css("display", "block");
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("DeleteMedia", "Media")',
+                data: JSON.stringify(code),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (response) {
+                    if(response.result){
+                        //location.reload();
+                        return;
+                    }
+                    else{
+                        toastNotifyCustom(response.message, 10000, "#ca0a0a", "")
+                    }
+                    $('#load-spinner').css("display", "none");
+                },
+                error: function (response) {
+                    $('#load-spinner').css("display", "none");
+                }
+            })
+        }
+    
         function OpenImageNewTab(url) {
             window.open(url, '_blank');
         }
