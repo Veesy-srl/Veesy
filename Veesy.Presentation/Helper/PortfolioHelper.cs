@@ -94,4 +94,61 @@ public class PortfolioHelper
         await _portfolioService.UpdatePortfolio(portfolio, userInfo);
         return new ResultDto(true, "");
     }
+
+    public async Task<ResultDto> AddMediaToPortfolio(EditPortfolioDto editPortfolioDto, MyUser user)
+    {
+        if (editPortfolioDto.Code == Guid.Empty)
+            return new ResultDto(false, "Select one portfolio.");
+        var portfolio = _portfolioService.GetPortfolioById(editPortfolioDto.Code, user.Id);
+        foreach (var item in editPortfolioDto.CodeImagesToAdd)
+        {
+            if(!portfolio.PortfolioMedias.Select(s => s.MediaId).Contains(item))
+                portfolio.PortfolioMedias.Add(new PortfolioMedia()
+                {
+                    MediaId = item,
+                    Description = "",
+                    IsActive = true,
+                    SortOrder = portfolio.PortfolioMedias.Count
+                });
+        }
+
+        await _portfolioService.UpdatePortfolio(portfolio, user);
+        return new ResultDto(true, "");
+    }
+
+    /// <summary>
+    /// Metodo utilizzato per cambiare i portfolio a cui l'immagine è associata. All'interno dell'oggetto portfolioDto vengono
+    /// si trova una lista di Guid che rappresentano gli Id dei portfolios selezionati in pagina a cui collegare l'immagine.
+    /// </summary>
+    /// <param name="portfolioDto"></param>
+    /// <param name="userInfo"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public async Task<ResultDto> UpdateMediaLinkedPortfolio(UpdateMediaPortfolioDto portfolioDto, MyUser userInfo)
+    {
+        var oldPortfolioMediae = _portfolioService.GetPortfliosMediaByMediaId(portfolioDto.MediaCode).ToList();
+        var portfoliosMediaToDelete = new List<PortfolioMedia>();
+        var portfoliosMediaToAdd = new List<PortfolioMedia>();
+        
+        foreach (var item in oldPortfolioMediae)
+        {
+            if(!portfolioDto.PortfolioSelected.Contains(item.PortfolioId))
+                portfoliosMediaToDelete.Add(item);
+        }
+        
+        foreach (var item in portfolioDto.PortfolioSelected)
+        {
+            if(!oldPortfolioMediae.Any(s => s.PortfolioId == item))
+                portfoliosMediaToAdd.Add(new PortfolioMedia()
+                {
+                    PortfolioId = item,
+                    MediaId = portfolioDto.MediaCode,
+                    IsActive = true,
+                    SortOrder = portfoliosMediaToAdd.Count,
+                    Description = ""
+                });
+        }
+
+        return await _portfolioService.UpdatePortfolioMedias(portfoliosMediaToDelete, portfoliosMediaToAdd, userInfo);
+    }
 }

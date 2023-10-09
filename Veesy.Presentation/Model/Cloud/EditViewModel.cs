@@ -10,4 +10,5 @@ public class EditViewModel
     public string BasePath { get; set; }
     public string? Username { get; set; }
     public string BasePathAzure { get; set; }
+    public List<LinkPortfolioDto> LinkedPortfolioDtos { get; set; }
 }

@@ -60,6 +60,7 @@ public class PortfolioController : VeesyController
 
     #region API
 
+    [HttpPost]
     public async Task<JsonResult> Create([FromBody] NewPortfolioDto newPortfolioDto)
     {
         try
@@ -80,12 +81,54 @@ public class PortfolioController : VeesyController
         }
     }    
     
+    [HttpPost]
+    public async Task<JsonResult> AddMedia([FromBody] EditPortfolioDto addPortfolioDto)
+    {
+        try
+        {
+            var response = await _portfolioHelper.AddMediaToPortfolio(addPortfolioDto, UserInfo);
+            if (!response.Success)
+                _notyfService.Custom(response.Message, 10, "#ca0a0a");
+            else
+                _notyfService.Custom("Portfolio update correctly.", 10, "#75CCDD");
+            return Json(new { Result = response.Success, Message = response.Message, Code = addPortfolioDto.Code });
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            Logger.Error($"EditPortfolioDto : {addPortfolioDto.ToJson()}");
+            _notyfService.Custom("Error adding media. Please retry.", 10, "#ca0a0a");
+            return Json(new { Result = false, Message = "Error adding media. Please retry." });
+        }
+    }    
     
+    [HttpPost]
     public async Task<JsonResult> UpdateName([FromBody] UpdatePortfolioDto portfolioDto)
     {
         try
         {
             var response = await _portfolioHelper.UpdateNamePortfolio(portfolioDto, UserInfo);
+            if (!response.Success)
+                _notyfService.Custom(response.Message, 10, "#ca0a0a");
+            else
+                _notyfService.Custom("Portfolio update correctly.", 10, "#75CCDD");
+            return Json(new { Result = response.Success, Message = response.Message });
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            Logger.Error($"PortfolioDto to update: {portfolioDto.ToJson()}");
+            _notyfService.Custom("Error updating portfolio. Please retry.", 10, "#ca0a0a");
+            return Json(new { Result = false, Message = "Error updating portfolio. Please retry." });
+        }
+    }    
+    
+    [HttpPost]
+    public async Task<JsonResult> ChangeMediaPortfolio([FromBody] UpdateMediaPortfolioDto portfolioDto)
+    {
+        try
+        {
+            var response = await _portfolioHelper.UpdateMediaLinkedPortfolio(portfolioDto, UserInfo);
             if (!response.Success)
                 _notyfService.Custom(response.Message, 10, "#ca0a0a");
             else

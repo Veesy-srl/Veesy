@@ -9,4 +9,5 @@ public class CloudViewModel
     public string BasePath { get; set; }
     public string ApplicationUrl { get; set; }
     public string BasePathAzure { get; set; }
+    public List<PortfolioThumbnailDto> Portfolios { get; set; }
 }

@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
 using Veesy.Domain.Repositories;
 using Veesy.Service.Interfaces;
@@ -50,5 +51,30 @@ public class PortfolioService : IPortfolioService
             .Include(s => s.PortfolioMedias)
             .ThenInclude(s => s.Media);
 
+    }
+
+    public IEnumerable<PortfolioMedia> GetPortfliosMediaByMediaId(Guid mediaId)
+    {
+        return _uoW.DbContext.PortfolioMedias.Where(s => s.MediaId == mediaId);
+    }
+
+    public async Task<ResultDto> UpdatePortfolioMedias(List<PortfolioMedia> portfoliosMediaToDelete, List<PortfolioMedia> portfoliosMediaToAdd, MyUser userInfo)
+    {
+        await using (var transaction = _uoW.DbContext.Database.BeginTransaction())
+        {
+            try
+            {
+                _uoW.DbContext.PortfolioMedias.RemoveRange(portfoliosMediaToDelete);
+                _uoW.DbContext.PortfolioMedias.AddRange(portfoliosMediaToAdd);
+                await _uoW.CommitAsync(userInfo);
+                await transaction.CommitAsync();
+                return new ResultDto(true, "");
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                throw ex;
+            }
+        }
     }
 }

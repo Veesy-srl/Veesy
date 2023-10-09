@@ -332,9 +332,65 @@
         </div>
         <div class="float-end">
             <div class="d-flex align-items-center">
-                <a class="blue-link me-4 fw-bolder" style="font-size: 14px; margin-top: 2px;">+ add to portfolio</a>
+                @if (Model.Portfolios != null && Model.Portfolios.Count > 0)
+                {
+                    <a onclick="openModal('#modalAddMediaToPortfolio')" class="blue-link me-4 fw-bolder" style="font-size: 14px; margin-top: 2px;">+ add to portfolio</a>
+                }
                 <a onclick="openModal('#modalCreatePortfolio'), ResetInput()" class="rounded-pill btn btn-grey btn-padding" style="padding-left: 35px !important; padding-right:  35px !important; font-size:  15px;" type="submit">create portfolio</a>
                 <a class="ms-4 me-2 mt-1" type="button" onclick="CloseAlert()"><i class="fa-solid fa-grey fa-circle-xmark"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalAddMediaToPortfolio" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color">Add to Portfolio</h3>
+                <a onclick="closeModal('#modalAddMediaToPortfolio')"><i class="fa-solid fa-circle-xmark"></i></a>
+            </div>
+            <div id="input-portfolio-edit">
+                <div class="modal-body">
+                    <div class="row select-portfolio-modal">
+                        @foreach (var item in @Model.Portfolios)
+                        {
+                            <div class="col-sm-12 col-md-6 mb-4">
+                                <div id="div-select-portfolio-@item.Code" class="d-flex p-2 select-portfolio" onclick="SelectPortfolio('@item.Code')">
+                                    <div class="w-50">
+                                        @if (!item.IsVideo)
+                                        {
+                                            <img src="@Model.BasePath@item.DefaultImageName?tr=w-300" class="img-thumbnail-custom-portfolio w-100" title="@item.DefaultImageOriginalName">
+                                        }
+                                        else
+                                        {
+                                            <video autoplay="autoplay" muted loop class="img-thumbnail-custom-portfolio w-100" title="@item.DefaultImageOriginalName">
+                                                <source src="@Model.BasePath@item.DefaultImageName?tr=w-300" type="video/mp4">
+                                            </video>
+                                        }
+                                    </div>
+                                    <div class="w-50 ps-2">
+                                        <p class="mb-0"><strong>@item.Name</strong></p>
+                                        <p class="mb-0 text-grey">Updated on <br/>@item.LastUpdate</p>
+                                        <p class="mb-0 text-grey">@item.NumberMedia medias</p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>                
+                </div>
+            </div>
+            <div id="success-portfolio-edit" style="display: none">
+                <div class="modal-body justify-content-center d-flex">
+                    <a id="portfolio-setting-link" class="mt-2 rounded-pill btn btn-primary" type="submit">view portfolio</a> 
+                </div>
+                <div class="modal-footer">    
+                    <div class="empty-veesy"></div>
+                    <div class="empty-veesy"></div>
+                </div>
+            </div>
+            <div class="modal-footer">                
+                <a onclick="AddToPortfolio()" class="mt-2 rounded-pill btn btn-primary btn-padding" type="submit">save</a>
             </div>
         </div>
     </div>
@@ -398,7 +454,45 @@
 
 @section Scripts
 {
-    <script>
+    <script>function AddToPortfolio() {
+        $('#load-spinner').css("display", "block");
+        var Code = portfolioCodeSelected;
+        CodeImagesToAdd = []
+        for (const code in img_selected_id) {
+            CodeImagesToAdd.push(img_selected_id[code])
+        }
+        var addPortfolioDto = {CodeImagesToAdd, Code};
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("AddMedia", "Portfolio")',
+            data: JSON.stringify(addPortfolioDto),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (response) {
+                if(response.result){
+                    document.getElementById("input-portfolio-edit").style.display = "none";
+                    document.getElementById("success-portfolio-edit").style.display = "block";
+                    document.getElementById("portfolio-setting-link").setAttribute('href', "/portfolio/settings/" + response.code);  
+                }
+                $('#load-spinner').css("display", "none");
+            },
+            error: function (response) {
+                $('#load-spinner').css("display", "none");
+            }
+        })
+    }
+    
+    let portfolioCodeSelected = "";
+    function SelectPortfolio(portfolioCode) {
+        if (portfolioCodeSelected != ""){
+            document.getElementById("div-select-portfolio-" + portfolioCodeSelected).classList.remove("select-portfolio-selected");
+            document.getElementById("div-select-portfolio-" + portfolioCodeSelected).classList.add("select-portfolio");
+        }
+        portfolioCodeSelected = portfolioCode;
+        document.getElementById("div-select-portfolio-" + portfolioCodeSelected).classList.add("select-portfolio-selected");
+        document.getElementById("div-select-portfolio-" + portfolioCodeSelected).classList.remove("select-portfolio");
+    }
+    
     
     function ResetInput() {
         document.getElementById("input-portfolio").style.display = "block";

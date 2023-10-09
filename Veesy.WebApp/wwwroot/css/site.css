@@ -870,10 +870,32 @@ a:hover{
   border-radius: 50px !important;
 }
 
+.select-portfolio{
+  border-radius: 0.5rem !important;
+  border: 1px solid #AAB0BB !important;
+  cursor: pointer;
+}
+
+.select-portfolio:hover {
+  background: #F0F2F3;
+  border: 1px solid #383B43 !important;
+}
+
+.select-portfolio-selected{
+  background: #F0F2F3;
+  border: 1px solid #383B43 !important;
+  border-radius: 0.5rem !important;
+}
+
+.select-portfolio-modal{
+  height: 260px;
+  overflow: auto;
+}
+
 .img-thumbnail-custom-portfolio{
   background-color: #fff;
   border: none !important;
-  height: auto;
+  height: 100%;
   object-fit: cover;
   border-radius: 0.5rem !important;
 }

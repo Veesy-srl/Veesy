@@ -29,9 +29,28 @@ public class UploadMediaResponseDto
     public List<MediaDto> MediaDtos { get; set; }
 }
 
+public class LinkPortfolioDto{
+    public Guid Code { get; set; }
+    public string Name { get; set; }
+    public bool Selected { get; set; }
+}
+
 public static class MapCloudDtos
 {
-    public static List<MediaDto> MapMediaList(List<Domain.Models.Media> media)
+
+    public static List<LinkPortfolioDto> MapLinkedPortfolioDtos(List<Portfolio> portfolios, Media media)
+    {
+        var portfoliosDto = new List<LinkPortfolioDto>();
+        portfolios.ForEach(portfolio => portfoliosDto.Add(new LinkPortfolioDto()
+        {
+            Code = portfolio.Id,
+            Name = portfolio.Name,
+            Selected = portfolio.PortfolioMedias.Select(s => s.MediaId).Contains(media.Id)
+        }));
+        return portfoliosDto;
+    }
+    
+    public static List<MediaDto> MapMediaList(List<Media> media)
     {
         return media.Select(x => new MediaDto()
         {

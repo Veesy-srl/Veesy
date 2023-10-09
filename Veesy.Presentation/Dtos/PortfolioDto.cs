@@ -36,10 +36,22 @@ public class NewPortfolioDto
     
 }
 
+public class EditPortfolioDto
+{
+    public List<Guid> CodeImagesToAdd { get; set; }
+    public Guid Code { get; set; }
+}
+
 public class UpdatePortfolioDto
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
+}
+
+public class UpdateMediaPortfolioDto
+{
+    public List<Guid> PortfolioSelected { get; set; }
+    public Guid MediaCode { get; set; }
 }
 
 public class PortfolioThumbnailDto
@@ -51,6 +63,7 @@ public class PortfolioThumbnailDto
     public string DefaultImageName { get; set; }
     public string DefaultImageOriginalName { get; set; }
     public bool IsMain { get; set; }
+    public bool IsVideo { get; set; }
 }
 
 public class PortfolioMediaDto
@@ -76,6 +89,7 @@ public static class MapPortfolioDtos
             IsMain = portfolio.IsMain,
             NumberMedia = portfolio.PortfolioMedias.Count,
             Name = portfolio.Name,
+            IsVideo = MediaCostants.VideoExtensions.Contains(portfolio.PortfolioMedias.SingleOrDefault(s => s.SortOrder == 0).Media.Type.ToUpper()),
             DefaultImageName = portfolio.PortfolioMedias.Count == 0
                 ? ""
                 : portfolio.PortfolioMedias.SingleOrDefault(s => s.SortOrder == 0).Media.FileName,
@@ -99,6 +113,7 @@ public static class MapPortfolioDtos
             IsMain = portfolio.IsMain,
             NumberMedia = portfolio.PortfolioMedias.Count,
             Name = portfolio.Name,
+            IsVideo = MediaCostants.VideoExtensions.Contains(portfolio.PortfolioMedias.SingleOrDefault(s => s.SortOrder == 0).Media.Type.ToUpper()),
             DefaultImageName = portfolio.PortfolioMedias.Count == 0
                 ? ""
                 : portfolio.PortfolioMedias.SingleOrDefault(s => s.SortOrder == 0).Media.FileName,
