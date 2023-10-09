@@ -81,6 +81,7 @@ public class MediaController : VeesyController
     [HttpPost]
     public async Task<IActionResult> DeleteMedia(EditViewModel model)
     {
+        //TODO: Se si elimina un'immagine bisogna ricalcorare l'ordine di tutte le immagini nel portfolio.
         try
         {
             var result = await _mediaHelper.DeleteFile(model.Media.Code, UserInfo);

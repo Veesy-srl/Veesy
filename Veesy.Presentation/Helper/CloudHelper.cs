@@ -12,11 +12,13 @@ public class CloudHelper
 {
     private readonly IMediaService _mediaService;
     private readonly IConfiguration _config;
+    private readonly IPortfolioService _portfolioService;
 
-    public CloudHelper(IMediaService mediaService, IConfiguration config)
+    public CloudHelper(IMediaService mediaService, IConfiguration config, IPortfolioService portfolioService)
     {
         _mediaService = mediaService;
         _config = config;
+        _portfolioService = portfolioService;
     }
 
     public CloudViewModel GetCloudViewModel(MyUser user)
@@ -28,6 +30,7 @@ public class CloudHelper
             ApplicationUrl = _config["ApplicationUrl"],
             Medias = mediasDto,
             Username = user.UserName,
+            Portfolios = MapPortfolioDtos.MapListPortfolioThumbnailDto(_portfolioService.GetPortfoliosByUserWithMedia(user).ToList()),
             BasePath = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/"
         };
     }
@@ -40,8 +43,13 @@ public class CloudHelper
 
         var previousMedia = _mediaService.GetPreviousMediaByDate(mediaSelected.CreateRecordDate, userInfo);
         var nextMedia = _mediaService.GetNextMediaByDate(mediaSelected.CreateRecordDate, userInfo);
+
+        var portfolios = _portfolioService.GetPortfoliosByUserWithMedia(userInfo).ToList();
+        var LinkedPortfolioDtos = MapCloudDtos.MapLinkedPortfolioDtos(portfolios, mediaSelected);
+        
         var vm = new EditViewModel()
         {
+            LinkedPortfolioDtos = LinkedPortfolioDtos,
             Media = MapCloudDtos.MapMedia(mediaSelected),
             PreviousMedia =MapCloudDtos.MapMedia(previousMedia),
             NextMedia = MapCloudDtos.MapMedia(nextMedia),
