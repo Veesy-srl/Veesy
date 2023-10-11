@@ -30,4 +30,32 @@ public class PublicController : VeesyController
             return RedirectToAction("Index", "Home");
         }
     }
+    
+    [HttpGet("Splash")]
+    public IActionResult Splash()
+    {
+        try
+        {
+            return View();
+        }
+        catch (Exception e)
+        {
+            Logger.Error(e, e.Message);
+            return RedirectToAction("Index", "Home");
+        }
+    }
+    
+    [HttpGet("About")]
+    public IActionResult About()
+    {
+        try
+        {
+            return View();
+        }
+        catch (Exception e)
+        {
+            Logger.Error(e, e.Message);
+            return RedirectToAction("Index", "Home");
+        }
+    }
 }
