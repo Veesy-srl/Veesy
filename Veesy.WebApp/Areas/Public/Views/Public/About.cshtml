@@ -2,6 +2,10 @@
     ViewData["Title"] = "About";
 }
 
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+
+
 <div style="padding-top: 25px; padding-bottom: 25px;" >
     <div class="container-fluid p-3 mt-5 pb-5 background-image-about">
         <div class="row p-lg-5 mt-5 mt-lg-2">
@@ -119,10 +123,35 @@
         </div>
     </div>
 </div>
-<div class="row pb-5">
+<div class="row pb-4">
     <div class="col-md-6 offset-md-3">
         <div class="text-left mt-4">
             <h3 style="color: #202F4D; font-size: 23px !important; line-height: 25px !important;"><b>Meet our investors or creators</b></h3>
         </div>
     </div>
 </div>
+
+<div class="row pb-5" style="cursor: pointer;">
+    <div class="slider-about">
+        @for (var i = 0; i < 6; i++)
+        {
+            <div><img class="p-3" width="360px" height="260px" style="border-radius: 30px;" src="../imgs/SampleImg/Lelievre-fabric01-gigapixel-standard-width-1500px-1024x576.jpeg"></div>
+        }
+    </div>
+</div>
+
+<!-- Aggiungi il collegamento a jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<!-- Aggiungi il collegamento a slick-carousel JS -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script>
+    // Inizializza il plugin slick-carousel
+    $('.slider-about').slick({
+        slidesToShow: 4, // Numero di immagini visibili contemporaneamente
+        slidesToScroll: 1,
+        focusOnSelect: true,
+        variableWidth: true,
+        infinite: false,
+        centerPadding: 0
+    });
+</script>

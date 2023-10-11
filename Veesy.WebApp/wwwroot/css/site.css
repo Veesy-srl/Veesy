@@ -1217,7 +1217,7 @@ canvas {
 }
 
 .width-about{
-  width: 30%;
+  width: 35%;
   @media only screen and (max-width: 600px) {
     width: 40% !important;
   }
@@ -1238,4 +1238,9 @@ canvas {
 .btn-primary-about:hover {
   background-color: #75CCDD !important;
   color: white !important;
+}
+
+.slider-about {
+  width: 100%;
+  margin: 0 auto;
 }
