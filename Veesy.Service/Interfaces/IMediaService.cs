@@ -13,4 +13,6 @@ public interface IMediaService
     Task<ResultDto> UpdateMedia(Media media, MyUser user);
     long GetSizeMediaStorageByUserId(string userId);
     Task DeleteMedia(Media media, MyUser user);
+    public (Media, string, string) GetRandomMediaWithUsername();
+
 }

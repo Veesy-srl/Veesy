@@ -69,20 +69,27 @@ public class MediaService : IMediaService
         await _uoW.CommitAsync(user);
     }
     
-    public Media GetRandomMediaFromRandomUser()
+    public (Media, string, string) GetRandomMediaWithUsername()
     {
-        var random = new Random();
-        var randomUser = _userManager.Users.OrderBy(x => random.Next()).FirstOrDefault();
+        var Users = _userManager.Users.ToList();
+        Random random = new Random();
 
-        if (randomUser == null)
-            return null;
+        if (Users.Count > 0)
+        {
+            var randomUser = Users[random.Next(0, Users.Count)];
 
-        var randomMedia = _uoW.MediaRepository
-            .FindByCondition(s => s.MyUserId == randomUser.Id)
-            .OrderBy(x => random.Next())
-            .FirstOrDefault();
+            var randomMediaListForUser = _uoW.MediaRepository
+                .FindByCondition(s => s.MyUserId == randomUser.Id)
+                .ToList();
 
-        return randomMedia;
+            if (randomMediaListForUser.Any())
+            {
+                var randomMedia = randomMediaListForUser[random.Next(0, randomMediaListForUser.Count)];
+                return (randomMedia, randomUser.ProfileImageFileName, randomUser.UserName);
+            }
+        }
+
+        return (null,null, null);
     }
 
 }
