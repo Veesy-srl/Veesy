@@ -30,6 +30,13 @@ public class RepositoryBase<T> : IRepositoryBase<T> where T : class
         this._applicationDbContext.Set<T>().Update(entity);
         return entity;
     }
+
+    public List<T> UpdateRange(List<T> entities)
+    {
+        _applicationDbContext.Set<T>().UpdateRange(entities);
+        return entities;
+    }
+
     public T Delete(T entity)
     {
         this._applicationDbContext.Set<T>().Remove(entity);

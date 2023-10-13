@@ -19,29 +19,39 @@
         <div class="empty-veesy"></div>
         @foreach (var item in Model.PortfolioThumbnailDtos)
         {
-            <hr/>
-            <div class="d-flex">
-                <div class="col-3">
-                    <div class='box m-0'> 
-                        <div class='content1_1'>
-                            <img class="image-fit-radius" title="@item.DefaultImageOriginalName" src="@Model.BasePath@item.DefaultImageName?tr=w-300"/>
-                        </div> 
+            <div id="portfolio-div-@item.Code">
+                <hr/>
+                <div class="d-flex">
+                    <div class="col-3">
+                        <div class='box m-0'> 
+                            <div class='content1_1'>
+                                <img class="image-fit-radius" title="@item.DefaultImageOriginalName" src="@Model.BasePath@item.DefaultImageName?tr=w-400"/>
+                            </div> 
+                        </div>
                     </div>
-                </div>
-                <div class="col-3">
-                    <h5><strong>@item.Name</strong></h5>
-                    <p class="veesy-grey-p" style="margin-bottom: 3rem">Updated on @item.LastUpdate<br/>@item.NumberMedia media uploaded</p>
-                    <a class="grey-link">preview<i class="fa-solid fa-arrow-up-right-from-square ms-2"></i></a>
-                </div>
-                <div class="col-6 text-end">
-                    <a onclick="CopyLink()" class="grey-link ms-2"><i class="fa-regular fa-clone pe-1"></i><strong>copy link</strong></a>
-                    <div style="margin-top: 5.3rem; align-items: flex-end" class="d-flex justify-content-between">
+                    <div class="col-5">
                         @{
-                            var visibility = @item.IsMain ? "hidden" : "visible";
+                            var iconBack = "fa-regular";
+
+                            if (item.IsMain)
+                            {
+                                iconBack = "fa-solid";
+                            }
                         }
-                        
-                        <a class="grey-danger-link mt-2" style="visibility: @visibility">Delete</a>
-                        <a asp-action="Settings" asp-route-id="@item.Code" class="rounded-pill btn btn-primary mt-2"><i class="fa-regular fa-pen-to-square pe-1"></i>edit portfolio</a>
+                        <h5><i style="color: #75CCDD" class="@iconBack icon-main-portfolio fa-star me-2"></i><strong>@item.Name</strong></h5>
+                        <p class="veesy-grey-p" style="margin-bottom: 3rem">Updated on @item.LastUpdate<br/>@item.NumberMedia media uploaded</p>
+                        <a class="grey-link">preview<i class="fa-solid fa-arrow-up-right-from-square ms-2"></i></a>
+                    </div>
+                    <div class="col-4 text-end">
+                        <a onclick="CopyLink()" class="grey-link ms-2"><i class="fa-regular fa-clone pe-1"></i><strong>copy link</strong></a>
+                        <div style="margin-top: 5.3rem; align-items: flex-end" class="d-flex justify-content-between">
+                            @{
+                                var visibility = @item.IsMain ? "hidden" : "visible";
+                            }
+                            
+                            <a class="grey-danger-link mt-2" onclick="openModal('#modalDeletePortfolio'), setPortfolioIdAndText('@item.Code', '@item.Name')" style="visibility: @visibility">delete</a>
+                            <a asp-action="Settings" asp-route-id="@item.Code" class="rounded-pill btn btn-primary mt-2"><i class="fa-regular fa-pen-to-square pe-1"></i>edit portfolio</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -53,15 +63,65 @@
         <div class="empty-veesy"></div>
     </div>
     <div class="col-sm-12 col-md-3">
-            <div class="d-flex justify-content-center">
-                <div class="w-75-veesy card-blue-veesy p-3">
-                    <div class="text-end"><i class="fa-solid fa-circle fa-2xs" style="color: #ffffff;"></i></div>
-                    <p class="mb-0" style="color: white">Do you need some help?</p>
-                    <a class="a-ciano-underline" href="mailto:support@veesy.it">Contact us</a>
-                </div>
+        <div class="d-flex justify-content-center">
+            <div class="w-75-veesy card-blue-veesy p-3">
+                <div class="text-end"><i class="fa-solid fa-circle fa-2xs" style="color: #ffffff;"></i></div>
+                <p class="mb-0" style="color: white">Do you need some help?</p>
+                <a class="a-ciano-underline" href="mailto:support@veesy.it">Contact us</a>
+            </div>
+        </div>
+        <div class="empty-veesy"></div>
+        <div class="empty-veesy"></div>
+        <div class="empty-veesy"></div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalDeletePortfolio" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Delete Portfolio</strong></h3>
+                <a onclick="closeModal('#modalDeletePortfolio')"><i class="fa-solid fa-grey fa-circle-xmark"></i></a>
             </div>
             <div class="empty-veesy"></div>
-            <div class="empty-veesy"></div>
+            <div class="modal-body text-center">
+                <h5 id="confirm-delete-body"></h5>
+                <div class="empty-veesy"></div>
+                <a onclick="DeletePortfolio()" class="mt-2 rounded-pill btn btn-delete" type="submit">yes, delete</a>
+            </div>
             <div class="empty-veesy"></div>
         </div>
+    </div>
 </div>
+
+@section Scripts
+{
+    <script>
+        let portfolioId
+        function setPortfolioIdAndText(id, name){
+            portfolioId = id
+            document.getElementById("confirm-delete-body").textContent = "The portfolio " + name + " will be delete permanently. Are you sure?";
+        }
+        
+        function DeletePortfolio() {
+            $('#load-spinner').css("display", "block");
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Delete", "Portfolio")',
+                data: JSON.stringify(portfolioId),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (response) {
+                    if(response.result){
+                        document.getElementById("portfolio-div-" + portfolioId).style.display = "none";
+                        closeModal('#modalDeletePortfolio')
+                    }
+                    $('#load-spinner').css("display", "none");
+                },
+                error: function (response) {
+                    $('#load-spinner').css("display", "none");
+                }
+            })
+        }
+    </script>
+}

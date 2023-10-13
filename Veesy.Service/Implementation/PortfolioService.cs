@@ -49,7 +49,8 @@ public class PortfolioService : IPortfolioService
     {
         return _uoW.PortfolioRepository.FindByCondition(s => s.MyUserId == user.Id)
             .Include(s => s.PortfolioMedias)
-            .ThenInclude(s => s.Media);
+            .ThenInclude(s => s.Media)
+            .OrderByDescending(s => s.IsMain);
 
     }
 
@@ -76,5 +77,68 @@ public class PortfolioService : IPortfolioService
                 throw ex;
             }
         }
+    }
+
+    public Portfolio? GetMainPortfolioByUser(MyUser user)
+    {
+        return _uoW.PortfolioRepository.FindByCondition(s => s.IsMain).SingleOrDefault();
+    }
+
+    public async Task UpdatePortfolios(List<Portfolio> portfoliosToUpdate, MyUser user)
+    {
+        _uoW.PortfolioRepository.UpdateRange(portfoliosToUpdate);
+        await _uoW.CommitAsync(user);
+    }
+
+    public async Task DeletePortfolio(Portfolio portfolio, MyUser userInfo)
+    {
+        await using (var transaction = _uoW.DbContext.Database.BeginTransaction())
+        {
+            try
+            {
+                _uoW.DbContext.PortfolioMedias.RemoveRange(portfolio.PortfolioMedias);
+                _uoW.PortfolioRepository.Delete(portfolio);
+                await _uoW.CommitAsync(userInfo);
+                await transaction.CommitAsync();
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                throw ex;
+            }
+        }
+    }
+
+    public async Task DeletePortfolioAndChangeMain(Portfolio portfolio, MyUser userInfo)
+    {
+        await using (var transaction = _uoW.DbContext.Database.BeginTransaction())
+        {
+            try
+            {
+                var newMainPortfolio = _uoW.PortfolioRepository.FindByCondition(s => s.MyUserId == userInfo.Id)
+                    .OrderByDescending(s => s.CreateRecordDate).FirstOrDefault();
+                if (newMainPortfolio != null)
+                    newMainPortfolio.IsMain = true;
+
+                _uoW.PortfolioRepository.Delete(portfolio);
+                await _uoW.CommitAsync(userInfo);
+                await transaction.CommitAsync();
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                throw ex;
+            }
+        }
+    }
+
+    public Portfolio GetPortfolioByIdWithPortfoliosMedia(Guid portfolioId, string userId)
+    {
+        var portfolio = _uoW.PortfolioRepository.FindByCondition(w => w.MyUserId == userId && w.Id == portfolioId)
+            .Include(s => s.PortfolioMedias)
+            .SingleOrDefault();
+        if (portfolio == null)
+            throw new Exception($"Portfolio not found with id {portfolioId}.");
+        return portfolio;
     }
 }

@@ -892,17 +892,55 @@ a:hover{
   overflow: auto;
 }
 
+.icon-advanced{
+  background-repeat: no-repeat;
+  background-size: cover; /* stretch the background to cover the whole element */
+
+  /* 
+     still inline, but has block features
+     meaning height and width can be set
+  */
+  display: inline-block;
+  height: 20px;
+  width: 16px;
+}
+
 .img-thumbnail-custom-portfolio{
   background-color: #fff;
   border: none !important;
-  height: 100%;
+  width: 125px !important;
+  height: 125px !important;
   object-fit: cover;
   border-radius: 0.5rem !important;
 }
 
+.div-select-layout{
+  border: 1px solid #202F4D33;
+  border-radius: 0.3rem;
+  cursor: pointer;
+}
+
+.div-select-layout:hover{
+  border: 1px solid #202F4D;
+  border-radius: 0.3rem;
+  background: #F0F2F3;
+}
+
+.div-select-layout-selected{
+  border: 1px solid #202f4d !important;
+  background: #F0F2F3;
+}
+
+
 #icon-color{
   color: #75CCDD !important;
   font-size: 12px !important;
+}
+
+.font-a-as-p{
+  font-size: 14px !important;
+  line-height: 24px !important;
+  cursor: pointer;
 }
 
 .no-scroll {

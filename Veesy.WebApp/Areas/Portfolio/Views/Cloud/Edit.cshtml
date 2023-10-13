@@ -30,12 +30,12 @@
                         @if (Model.PreviousMedia.Type == ".mp4")
                         {
                             <video autoplay="autoplay" muted loop class="img-rounded-trasparent w-25 shadow-1-strong rounded-05" title="@Model.PreviousMedia.OriginalFileName" alt="@Model.PreviousMedia.OriginalFileName">
-                                <source src="@Model.BasePath@Model.PreviousMedia.FileName?tr=w-300" type="video/mp4">
+                                <source src="@Model.BasePath@Model.PreviousMedia.FileName?tr=w-400" type="video/mp4">
                             </video>
                         }
                         else
                         {
-                            <img asp-append-version="true" src="@Model.BasePath@Model.PreviousMedia.FileName?tr=w-300" class="img-rounded-trasparent w-25 shadow-1-strong rounded-05" title="@Model.PreviousMedia.OriginalFileName" alt="@Model.PreviousMedia.OriginalFileName"/>
+                            <img asp-append-version="true" src="@Model.BasePath@Model.PreviousMedia.FileName?tr=w-400" class="img-rounded-trasparent w-25 shadow-1-strong rounded-05" title="@Model.PreviousMedia.OriginalFileName" alt="@Model.PreviousMedia.OriginalFileName"/>
                         }
                     </a>
                 </li>
@@ -65,7 +65,7 @@
             <div class="col-sm-12 col-md-5 ps-3">
                 <div class="row">
                     <div class="col-9 ps-0">
-                        <h3 class="mb-0 text-white veesy-overflow" id="filename-show">@Model.Media.OriginalFileName</h3>
+                        <h3 class="mb-0 text-white veesy-overflow" id="filename-show">@System.IO.Path.GetFileNameWithoutExtension(Model.Media.OriginalFileName)</h3>
                     </div>
                     <div class="col-3 text-end pe-0">
                         <a onclick="setTextAreaValue('filename-edit', '@System.IO.Path.GetFileNameWithoutExtension(Model.Media.OriginalFileName)'), openModal('#modalFileName')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
@@ -156,12 +156,12 @@
                         @if (Model.NextMedia.Type == ".mp4")
                         {
                             <video style="float: right" autoplay="autoplay" muted loop class="img-rounded-trasparent w-25 shadow-1-strong rounded-05" title="@Model.NextMedia.OriginalFileName" alt="@Model.NextMedia.OriginalFileName">
-                                <source src="@Model.BasePath@Model.NextMedia.FileName?tr=w-300" type="video/mp4">
+                                <source src="@Model.BasePath@Model.NextMedia.FileName?tr=w-400" type="video/mp4">
                             </video>
                         }
                         else
                         {
-                            <img style="float: right" asp-append-version="true" src="@Model.BasePath@Model.NextMedia.FileName?tr=w-300" class="w-25 shadow-1-strong rounded-05 img-rounded-trasparent" title="@Model.NextMedia.OriginalFileName" alt="@Model.NextMedia.OriginalFileName"/>
+                            <img style="float: right" asp-append-version="true" src="@Model.BasePath@Model.NextMedia.FileName?tr=w-400" class="w-25 shadow-1-strong rounded-05 img-rounded-trasparent" title="@Model.NextMedia.OriginalFileName" alt="@Model.NextMedia.OriginalFileName"/>
                         }
                     </a>
                 </li>
@@ -189,12 +189,12 @@
                         @if (Model.PreviousMedia.Type == ".mp4")
                         {
                             <video autoplay="autoplay" muted loop class="img-rounded-trasparent w-50 shadow-1-strong rounded-05" title="@Model.PreviousMedia.OriginalFileName" alt="@Model.PreviousMedia.OriginalFileName">
-                                <source src="@Model.BasePath@Model.PreviousMedia.FileName?tr=w-300" type="video/mp4">
+                                <source src="@Model.BasePath@Model.PreviousMedia.FileName?tr=w-400" type="video/mp4">
                             </video>
                         }
                         else
                         {
-                            <img asp-append-version="true" src="@Model.BasePath@Model.PreviousMedia.FileName?tr=w-300" class="img-rounded-trasparent w-50 shadow-1-strong rounded-05" title="@Model.PreviousMedia.OriginalFileName" alt="@Model.PreviousMedia.OriginalFileName"/>
+                            <img asp-append-version="true" src="@Model.BasePath@Model.PreviousMedia.FileName?tr=w-400" class="img-rounded-trasparent w-50 shadow-1-strong rounded-05" title="@Model.PreviousMedia.OriginalFileName" alt="@Model.PreviousMedia.OriginalFileName"/>
                         }
                     </a>
                 </li>
@@ -216,12 +216,12 @@
                         @if (Model.NextMedia.Type == ".mp4")
                         {
                             <video style="float: right" autoplay="autoplay" muted loop class="img-rounded-trasparent w-50 shadow-1-strong rounded-05" title="@Model.NextMedia.OriginalFileName" alt="@Model.NextMedia.OriginalFileName">
-                                <source src="@Model.BasePath@Model.NextMedia.FileName?tr=w-300" type="video/mp4">
+                                <source src="@Model.BasePath@Model.NextMedia.FileName?tr=w-400" type="video/mp4">
                             </video>
                         }
                         else
                         {
-                            <img style="float: right" asp-append-version="true" src="@Model.BasePath@Model.NextMedia.FileName?tr=w-300" class="w-50 shadow-1-strong rounded-05 img-rounded-trasparent" title="@Model.NextMedia.OriginalFileName" alt="@Model.NextMedia.OriginalFileName"/>
+                            <img style="float: right" asp-append-version="true" src="@Model.BasePath@Model.NextMedia.FileName?tr=w-400" class="w-50 shadow-1-strong rounded-05 img-rounded-trasparent" title="@Model.NextMedia.OriginalFileName" alt="@Model.NextMedia.OriginalFileName"/>
                         }
                     </a>
                 </li>
