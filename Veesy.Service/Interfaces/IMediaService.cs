@@ -15,4 +15,5 @@ public interface IMediaService
     Task DeleteMedia(Media media, MyUser user);
     public (Media, string, string) GetRandomMediaWithUsername();
 
+    List<(string FileName, long Size)> GetMediasNameAndSizeByUserId(string userId);
 }

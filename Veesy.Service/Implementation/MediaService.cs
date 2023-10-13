@@ -92,4 +92,8 @@ public class MediaService : IMediaService
         return (null,null, null);
     }
 
+    public List<(string FileName, long Size)> GetMediasNameAndSizeByUserId(string userId)
+    {
+        return _uoW.MediaRepository.FindByCondition(s => s.MyUserId == userId).Select(s => new ValueTuple<string, long>(s.OriginalFileName, s.Size)).ToList();
+    }
 }

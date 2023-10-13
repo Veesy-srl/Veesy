@@ -66,6 +66,7 @@ public class MediaHelper
     public async Task<List<(bool success, MediaDto? media, string fileName, string message)>> UploadFileAsync(Stream fileStream, string contentType, MyUser user)
     {
         //Il numero di file che trovo nella section dipende dal limite che imposto a dropzone
+        var mediaList = _mediaService.GetMediasNameAndSizeByUserId(user.Id);
         var boundary = GetBoundary(MediaTypeHeaderValue.Parse(contentType));
         var multipartReader = new MultipartReader(boundary, fileStream);
         var section = await multipartReader.ReadNextSectionAsync();
@@ -95,6 +96,13 @@ public class MediaHelper
                     if (!validateSize.Success)
                     {
                         filesUploadedStatus.Add(new(false, null, fileSection.FileName, validateSize.Message));
+                        section = await multipartReader.ReadNextSectionAsync();
+                        continue;
+                    }
+
+                    if (mediaList.Contains((fileSection.FileName, size)))
+                    {
+                        filesUploadedStatus.Add(new(false, null, fileSection.FileName, "File is already in cloud."));
                         section = await multipartReader.ReadNextSectionAsync();
                         continue;
                     }
