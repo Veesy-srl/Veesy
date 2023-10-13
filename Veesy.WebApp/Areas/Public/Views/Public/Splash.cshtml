@@ -1,0 +1,100 @@
+@{
+    ViewData["Title"] = "Splash";
+}
+
+<div class="overlay" id="overlay">
+    <div class="popup" id="popup">
+        <p id="popup-text">Testo del popup</p>
+    </div>
+</div>
+
+<div class="container-fluid p-lg-3 mt-5 pb-5">
+    <div class="row p-lg-5 mt-5 mt-lg-2">
+        <div class="col-sm-12 col-md-6">
+            <h3 style="color: #202f4d; font-size: 25px !important; line-height: 30px !important;">Discover all the creators discover all the creators <br/>discover all the creators discover all the creators <br/>discover all the creators</h3>
+            <div class="empty-veesy"></div>
+            <p><b>Veesy S.R.L.</b><br/>
+                Via Giacomo Matteotti 43<br/>
+                20832, Desio (MB)</p>
+             <div class="social-icons-row">
+                <div class="col">
+                    <a href="#" class="social-icon"><i class="fa-brands fa-facebook icon-color-veesy"></i></a>
+                    <a href="#" class="social-icon"><i class="fa-brands fa-instagram icon-color-veesy"></i></a>
+                    <a href="#" class="social-icon"><i class="fa-brands fa-linkedin icon-color-veesy"></i></a>
+                    <a href="#" class="social-icon"><i class="fa-brands fa-x-twitter icon-color-veesy"></i></a></div>
+            </div>
+            <div class="empty-veesy"></div>
+            <h3 style="color: #202f4d; font-size: 25px !important; line-height: 30px !important;">Any ideas? Drop us a few lines</h3>
+            <div class="col-md-6 mb-4 veesy-text-color" >
+                <a href="mailto:info@veesy.it" class="contact-veesy rounded-pill btn btn-primary btn-variant " type="submit">send us an email</a>
+                <a href="" class="contact-veesy rounded-pill btn btn-primary btn-variant" type="submit">book a call</a>
+            </div>
+            <div class="empty-veesy"></div>
+            <p class="mb-0">Veesy s.r.l. © 2023</p>
+            <p class="mb-0">Graphic Project br <a href="https://www.derein.net/" style="text-decoration: underline !important;"><b>derein</b></a></p>
+            <p class="mb-0">Web development by <a href="https://www.enigma-tech.it/" style="text-decoration: underline !important;"><b>enigma</b></a></p>
+        </div>
+    </div>
+</div>
+
+<style>
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.popup {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    transform: scale(1);
+    opacity: 1;
+    transition: transform 2s ease-in-out, opacity 2s ease-in-out;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-text {
+    font-size: 24px;
+    padding: 20px;
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const overlay = document.getElementById("overlay");
+    const popup = document.getElementById("popup");
+    const popupText = document.getElementById("popup-text");
+
+    setTimeout(function() {
+        popupText.textContent = "Nuovo testo del popup";
+    }, 2000);
+
+    overlay.style.display = "flex";
+
+    setTimeout(function() {
+        popup.style.opacity = "0";
+        setTimeout(function() {
+            overlay.style.display = "none";
+        }, 2000);
+    }, 4000); // Il popup scomparirà gradualmente dopo 2 secondi + 2 secondi
+});
+</script>

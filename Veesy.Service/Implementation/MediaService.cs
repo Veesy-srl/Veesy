@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Veesy.Domain.Data;
 using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
 using Veesy.Domain.Repositories;
@@ -8,10 +11,12 @@ namespace Veesy.Service.Implementation;
 public class MediaService : IMediaService
 {
     private readonly IVeesyUoW _uoW;
+    private readonly UserManager<MyUser> _userManager;
 
-    public MediaService(IVeesyUoW uoW)
+    public MediaService(UserManager<MyUser> userManager, IVeesyUoW uoW)
     {
         _uoW = uoW;
+        _userManager = userManager;
     }
 
     public List<Media> GetAllByUserId(MyUser user)
@@ -63,4 +68,28 @@ public class MediaService : IMediaService
         _uoW.MediaRepository.Delete(media);
         await _uoW.CommitAsync(user);
     }
+    
+    public (Media, string, string) GetRandomMediaWithUsername()
+    {
+        var Users = _userManager.Users.ToList();
+        Random random = new Random();
+
+        if (Users.Count > 0)
+        {
+            var randomUser = Users[random.Next(0, Users.Count)];
+
+            var randomMediaListForUser = _uoW.MediaRepository
+                .FindByCondition(s => s.MyUserId == randomUser.Id)
+                .ToList();
+
+            if (randomMediaListForUser.Any())
+            {
+                var randomMedia = randomMediaListForUser[random.Next(0, randomMediaListForUser.Count)];
+                return (randomMedia, randomUser.ProfileImageFileName, randomUser.UserName);
+            }
+        }
+
+        return (null,null, null);
+    }
+
 }
