@@ -46,6 +46,9 @@ public class UpdatePortfolioDto
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
+    public string Password { get; set; }
+    public bool IsPublic { get; set; }
+    public bool IsMain { get; set; }
 }
 
 public class UpdateMediaPortfolioDto

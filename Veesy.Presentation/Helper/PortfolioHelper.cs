@@ -60,7 +60,7 @@ public class PortfolioHelper
             Layout = VeesyConstants.PortfolioLayout.FourColumns,
             Name = newPortfolioDto.Name,
             Description = "",
-            IsPublic = false,
+            IsPublic = true,
             PortfolioMedias = potfoliosMedia,
             Note = "",
             Status = PortfolioContants.STATUS_DRAFT,
@@ -150,5 +150,54 @@ public class PortfolioHelper
         }
 
         return await _portfolioService.UpdatePortfolioMedias(portfoliosMediaToDelete, portfoliosMediaToAdd, userInfo);
+    }
+
+    public async Task<ResultDto> UpdatePassword(UpdatePortfolioDto portfolioDto, MyUser userInfo)
+    {
+        if(string.IsNullOrEmpty(portfolioDto.Password))
+            return new ResultDto(false, "Please insert password.");
+        if (portfolioDto.Password.Length < 6)
+            return new ResultDto(false, "Min characters are 6.");
+        var portfolio = _portfolioService.GetPortfolioById(portfolioDto.Id, userInfo.Id);
+        portfolio.Password = portfolioDto.Password;
+        portfolio.IsPublic = false;
+        await _portfolioService.UpdatePortfolio(portfolio, userInfo);
+        return new ResultDto(true, "");
+    }
+
+    public async Task<ResultDto> UpdateSecurity(UpdatePortfolioDto portfolioDto, MyUser userInfo)
+    {
+        var portfolio = _portfolioService.GetPortfolioById(portfolioDto.Id, userInfo.Id);
+        portfolio.IsPublic = portfolioDto.IsPublic;
+        await _portfolioService.UpdatePortfolio(portfolio, userInfo);
+        return new ResultDto(true, "");
+    }
+
+    public async Task<ResultDto> SetMainPortfolio(UpdatePortfolioDto portfolioDto, MyUser user)
+    {
+        var mainPortfolio = _portfolioService.GetMainPortfolioByUser(user);
+        if (mainPortfolio != null)
+            mainPortfolio.IsMain = false;
+        var portfolio = _portfolioService.GetPortfolioById(portfolioDto.Id, user.Id);
+        if(portfolio.Id == mainPortfolio.Id)
+            return new ResultDto(false, "This portfolio is already set as your main");
+        portfolio.IsMain = true;
+        var portfoliosToUpdate = new List<Portfolio>();
+        portfoliosToUpdate.Add(mainPortfolio);
+        portfoliosToUpdate.Add(portfolio);
+        await _portfolioService.UpdatePortfolios(portfoliosToUpdate, user);
+        return new ResultDto(true, "");
+    }
+
+    public async Task<ResultDto> DeletePortfolio(Guid portfolioId, MyUser userInfo)
+    {
+        var portfolio = _portfolioService.GetPortfolioByIdWithPortfoliosMedia(portfolioId, userInfo.Id);
+        if (portfolio == null)
+            return new ResultDto(false, "Portfolio not found.");
+        if (portfolio.IsMain)
+            return new ResultDto(false, "You can't delete main portfolio.");
+        await _portfolioService.DeletePortfolio(portfolio, userInfo);
+       
+        return new ResultDto(true, "");
     }
 }
