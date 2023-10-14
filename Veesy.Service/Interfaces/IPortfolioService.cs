@@ -11,10 +11,13 @@ public interface IPortfolioService
     IEnumerable<Portfolio> GetPortfoliosByUser(MyUser user);
     IEnumerable<Portfolio> GetPortfoliosByUserWithMedia(MyUser user);
     IEnumerable<PortfolioMedia> GetPortfliosMediaByMediaId(Guid mediaId);
-    Task<ResultDto> UpdatePortfolioMedias(List<PortfolioMedia> portfoliosMediaToDelete, List<PortfolioMedia> portfoliosMediaToAdd, MyUser userInfo);
+    List<PortfolioMedia> GetPortfliosMediaByPortfolioIdToReorder(Guid portfolioId, int index);
+    IEnumerable<PortfolioMedia> GetPortfliosMediaByPortfoliosId(List<Guid> portfoliosId);
+    Task<ResultDto> UpdatePortfolioMedias(List<PortfolioMedia> portfoliosMediaToDelete, List<PortfolioMedia> portfoliosMediaToAdd, List<PortfolioMedia> portfoliosMediaToUpdate, MyUser userInfo);
     Portfolio? GetMainPortfolioByUser(MyUser user);
     Task UpdatePortfolios(List<Portfolio> portfoliosToUpdate, MyUser user);
     Task DeletePortfolio(Portfolio portfolio, MyUser userInfo);
     Task DeletePortfolioAndChangeMain(Portfolio portfolio, MyUser userInfo);
     Portfolio GetPortfolioByIdWithPortfoliosMedia(Guid portfolioId, string userId);
+    IEnumerable<Portfolio> GetPortfoliosByMedia(Guid imgToDelete);
 }

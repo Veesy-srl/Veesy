@@ -1,14 +1,10 @@
-using AspNetCoreHero.ToastNotification.Abstractions;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
-using NuGet.Protocol;
 using Veesy.Domain.Constants;
 using Veesy.Domain.Models;
 using Veesy.Presentation.Helper;
 using Veesy.Presentation.Model.Cloud;
-using Veesy.Service.Dtos;
 
 namespace Veesy.WebApp.Areas.Public.Controllers;
 

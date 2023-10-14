@@ -1,9 +1,5 @@
 using MimeKit;
-using System.Drawing;
-using System.Net.Mail;
-using System.Net.Mime;
 using MimeKit.Text;
-using MimeKit.Utils;
 using ContentDisposition = MimeKit.ContentDisposition;
 using SmtpClient = MailKit.Net.Smtp.SmtpClient;
 

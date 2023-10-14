@@ -1,12 +1,10 @@
 using System.Web;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Identity.Client;
 using Veesy.Domain.Constants;
 using Veesy.Domain.Exceptions;
 using Veesy.Email;
 using Veesy.Domain.Models;
-using Veesy.Domain.Exceptions;
 using Veesy.Presentation.Model.Auth;
 using Veesy.Service.Interfaces;
 using Veesy.Validators;

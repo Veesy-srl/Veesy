@@ -8,8 +8,6 @@ using Veesy.Domain.Constants;
 using Veesy.Domain.Models;
 using Veesy.Presentation.Helper;
 using Veesy.Service.Dtos;
-using Veesy.WebApp.Areas.Auth.Controllers;
-using Veesy.WebApp.CustomDataAttribute;
 
 namespace Veesy.WebApp.Areas.Account.Controllers;
 

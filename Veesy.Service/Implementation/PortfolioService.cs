@@ -59,13 +59,24 @@ public class PortfolioService : IPortfolioService
         return _uoW.DbContext.PortfolioMedias.Where(s => s.MediaId == mediaId);
     }
 
-    public async Task<ResultDto> UpdatePortfolioMedias(List<PortfolioMedia> portfoliosMediaToDelete, List<PortfolioMedia> portfoliosMediaToAdd, MyUser userInfo)
+    public List<PortfolioMedia> GetPortfliosMediaByPortfolioIdToReorder(Guid portfolioId, int index)
+    {
+        return _uoW.DbContext.PortfolioMedias.Where(s => s.PortfolioId == portfolioId && s.SortOrder > index).ToList();
+    }
+
+    public IEnumerable<PortfolioMedia> GetPortfliosMediaByPortfoliosId(List<Guid> portfoliosId)
+    {
+        return _uoW.DbContext.PortfolioMedias.Where(s => portfoliosId.Contains(s.PortfolioId));
+    }
+
+    public async Task<ResultDto> UpdatePortfolioMedias(List<PortfolioMedia> portfoliosMediaToDelete, List<PortfolioMedia> portfoliosMediaToAdd, List<PortfolioMedia> portfoliosMediaToUpdate, MyUser userInfo)
     {
         await using (var transaction = _uoW.DbContext.Database.BeginTransaction())
         {
             try
             {
                 _uoW.DbContext.PortfolioMedias.RemoveRange(portfoliosMediaToDelete);
+                _uoW.DbContext.PortfolioMedias.UpdateRange(portfoliosMediaToUpdate);
                 _uoW.DbContext.PortfolioMedias.AddRange(portfoliosMediaToAdd);
                 await _uoW.CommitAsync(userInfo);
                 await transaction.CommitAsync();
@@ -140,5 +151,11 @@ public class PortfolioService : IPortfolioService
         if (portfolio == null)
             throw new Exception($"Portfolio not found with id {portfolioId}.");
         return portfolio;
+    }
+
+    public IEnumerable<Portfolio> GetPortfoliosByMedia(Guid imgToDelete)
+    {
+        return _uoW.PortfolioRepository.FindByCondition(s => s.PortfolioMedias.Select(s => s.MediaId).Contains(imgToDelete))
+            .Include(s => s.PortfolioMedias);
     }
 }

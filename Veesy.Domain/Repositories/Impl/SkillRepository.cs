@@ -2,7 +2,6 @@
 using Veesy.Domain.Data;
 using Veesy.Domain.Models;
 using Veesy.Domain.Repositories.Base;
-using Veesy.Domain.Repositories.Impl;
 
 namespace Veesy.Domain.Repositories.Impl;
 
