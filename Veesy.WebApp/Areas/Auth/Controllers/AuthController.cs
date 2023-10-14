@@ -2,7 +2,6 @@ using System.Web;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using NLog;
 using NuGet.Protocol;
 using Veesy.Domain.Models;

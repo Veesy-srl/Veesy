@@ -1,11 +1,8 @@
-using System.Collections;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
-using Veesy.Presentation.Model.Media;
 using Microsoft.Net.Http.Headers;
 using NLog;
-using NuGet.Protocol;
 using Veesy.Domain.Constants;
 using Veesy.Domain.Data;
 using Veesy.Domain.Exceptions;
@@ -25,12 +22,13 @@ public class MediaHelper
     private readonly IMediaService _mediaService;
     private readonly MediaValidators _mediaValidators;
     private readonly ISubscriptionPlanService _subscriptionPlanService;
+    private readonly IPortfolioService _portfolioService;
     
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     private static readonly FileExtensionContentTypeProvider Provider = new FileExtensionContentTypeProvider();
     private readonly IEnumerable<string> allowedExtensions = new List<string> { ".zip", ".bin", ".png", ".mp4", ".jpg", ".jpeg" };
 
-    public MediaHelper(IConfiguration config, ApplicationDbContext dbContext, VeesyBlobService veesyBlobService, IMediaService mediaService, MediaValidators mediaValidators, ISubscriptionPlanService subscriptionPlanService)
+    public MediaHelper(IConfiguration config, ApplicationDbContext dbContext, VeesyBlobService veesyBlobService, IMediaService mediaService, MediaValidators mediaValidators, ISubscriptionPlanService subscriptionPlanService, IPortfolioService portfolioService)
     {
         _config = config;
         _dbContext = dbContext;
@@ -38,6 +36,7 @@ public class MediaHelper
         _mediaService = mediaService;
         _mediaValidators = mediaValidators;
         _subscriptionPlanService = subscriptionPlanService;
+        _portfolioService = portfolioService;
     }
 
     public async Task<(ResultDto resultDto, string originalFilename, string newFileName)> UploadProfileImageOnAzure(Stream fileStream, string contentType)
@@ -83,6 +82,7 @@ public class MediaHelper
                 if (!validateExtension.Success)
                 {
                     filesUploadedStatus.Add(new (false, null, fileSection.FileName, validateExtension.Message));
+                    section = await multipartReader.ReadNextSectionAsync();
                     continue;
                 }
                 
@@ -144,7 +144,7 @@ public class MediaHelper
         var result = new List<(bool, string, string, string?)>();
         foreach (var imgCode in imgToDelete)
         {
-            var media = _mediaService.GetMediaById(imgCode);
+            var media = _mediaService.GetMediaByIdWithPortfoliosMedia(imgCode);
             try
             {
                 if (media == null)
@@ -158,7 +158,26 @@ public class MediaHelper
                     result.Add(new(false, media.OriginalFileName, "Access not allowed.", null));
                     continue;
                 }
-                await _mediaService.DeleteMedia(media, userInfo);
+                var portfolios = _portfolioService.GetPortfoliosByMedia(imgCode).ToList();
+                foreach (var portfolio in portfolios)
+                {
+                    var mediaPortfolio = media.PortfolioMedias.SingleOrDefault(s => s.PortfolioId == portfolio.Id);
+                    foreach (var portflioMedia in portfolio.PortfolioMedias)
+                    {
+                        if (portflioMedia.SortOrder > mediaPortfolio.SortOrder)
+                            portflioMedia.SortOrder--;
+                    }
+
+                    portfolio.PortfolioMedias = portfolio.PortfolioMedias.Where(s => s.MediaId != mediaPortfolio.MediaId).ToList();
+                }
+
+                var res = await _mediaService.DeleteMediaAndUpdatePortfolios(media, portfolios, userInfo);
+                if (!res.Success)
+                {
+                    result.Add(new(false, media.OriginalFileName, "Error deleting files.", null));
+                    continue;
+                }
+
                 await _veesyBlobService.DeleteBlobAsync($"{MediaCostants.BlobMediaSections.OriginalMedia}/{media.FileName}");
                 result.Add(new (true, media.OriginalFileName, "", imgCode.ToString()));
             }
@@ -174,7 +193,8 @@ public class MediaHelper
     public async Task<(bool success, string filename, string message, string? code, Media? previousMedia)> DeleteFile(Guid imgToDelete, MyUser userInfo)
     {
 
-        var media = _mediaService.GetMediaById(imgToDelete);
+        
+        var media = _mediaService.GetMediaByIdWithPortfoliosMedia(imgToDelete);
         if (media == null || media.MyUserId != userInfo.Id)
         {
             return new(false, imgToDelete.ToString(), "File not found.", null, null);
@@ -184,8 +204,21 @@ public class MediaHelper
         {
             return new(false, media.OriginalFileName, "Access not allowed.", null, null);
         }
+        var portfolios = _portfolioService.GetPortfoliosByMedia(imgToDelete).ToList();
+        foreach (var portfolio in portfolios)
+        {
+            var mediaPortfolio = media.PortfolioMedias.SingleOrDefault(s => s.PortfolioId == portfolio.Id);
+            foreach (var portfolioMedia in portfolio.PortfolioMedias)
+            {
+                if (portfolioMedia.SortOrder > mediaPortfolio.SortOrder)
+                    portfolioMedia.SortOrder--;
+            }
 
-        await _mediaService.DeleteMedia(media, userInfo);
+            portfolio.PortfolioMedias = portfolio.PortfolioMedias.Where(s => s.MediaId != mediaPortfolio.MediaId).ToList();
+        }
+        var result = await _mediaService.DeleteMediaAndUpdatePortfolios(media, portfolios, userInfo);
+        if (!result.Success)
+            return new(false, media.OriginalFileName, "Error during deleting media.", null, null);
         await _veesyBlobService.DeleteBlobAsync($"{MediaCostants.BlobMediaSections.OriginalMedia}/{media.FileName}");
         var previousMedia = _mediaService.GetPreviousMediaByDate(media.CreateRecordDate, userInfo);
         

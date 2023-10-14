@@ -129,11 +129,22 @@ public class PortfolioHelper
         var oldPortfolioMediae = _portfolioService.GetPortfliosMediaByMediaId(portfolioDto.MediaCode).ToList();
         var portfoliosMediaToDelete = new List<PortfolioMedia>();
         var portfoliosMediaToAdd = new List<PortfolioMedia>();
+        var portfoliosMediaToUpdate = new List<PortfolioMedia>();
         
         foreach (var item in oldPortfolioMediae)
         {
-            if(!portfolioDto.PortfolioSelected.Contains(item.PortfolioId))
+            if (!portfolioDto.PortfolioSelected.Contains(item.PortfolioId))
+            {
                 portfoliosMediaToDelete.Add(item);
+                var portfoliosMedia =
+                    _portfolioService.GetPortfliosMediaByPortfolioIdToReorder(item.PortfolioId, item.SortOrder);
+                foreach (var pf in portfoliosMedia)
+                {
+                    pf.SortOrder--;
+                    portfoliosMediaToUpdate.Add(pf);
+                }
+
+            }
         }
         
         foreach (var item in portfolioDto.PortfolioSelected)
@@ -149,7 +160,7 @@ public class PortfolioHelper
                 });
         }
 
-        return await _portfolioService.UpdatePortfolioMedias(portfoliosMediaToDelete, portfoliosMediaToAdd, userInfo);
+        return await _portfolioService.UpdatePortfolioMedias(portfoliosMediaToDelete, portfoliosMediaToAdd, portfoliosMediaToUpdate, userInfo);
     }
 
     public async Task<ResultDto> UpdatePassword(UpdatePortfolioDto portfolioDto, MyUser userInfo)

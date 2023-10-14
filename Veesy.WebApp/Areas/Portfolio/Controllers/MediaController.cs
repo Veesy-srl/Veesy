@@ -3,15 +3,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
-using NLog.Fluent;
 using NuGet.Protocol;
-using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
 using Veesy.Presentation.Helper;
 using Veesy.Presentation.Model.Cloud;
-using Veesy.Presentation.Model.Media;
 using Veesy.Service.Dtos;
-using Veesy.WebApp.Areas.Auth.Controllers;
 using Veesy.WebApp.CustomDataAttribute;
 
 namespace Veesy.WebApp.Areas.Portfolio.Controllers;

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Veesy.Domain.Data;
+using NLog;
 using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
 using Veesy.Domain.Repositories;
@@ -14,6 +14,8 @@ public class MediaService : IMediaService
     private readonly IVeesyUoW _uoW;
     private readonly UserManager<MyUser> _userManager;
 
+    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+    
     public MediaService(UserManager<MyUser> userManager, IVeesyUoW uoW)
     {
         _uoW = uoW;
@@ -64,10 +66,24 @@ public class MediaService : IMediaService
         return _uoW.MediaRepository.FindByCondition(s => s.MyUserId == userId).Sum(s => s.Size);
     }
 
-    public async Task DeleteMedia(Media media, MyUser user)
+    public async Task<ResultDto> DeleteMediaAndUpdatePortfolios(Media media, List<Portfolio> portfolios, MyUser user)
     {
-        _uoW.MediaRepository.Delete(media);
-        await _uoW.CommitAsync(user);
+        using (var transaction = _uoW.DbContext.Database.BeginTransaction())
+        {
+            try
+            {
+                _uoW.MediaRepository.Delete(media);
+                _uoW.PortfolioRepository.UpdateRange(portfolios);
+                await _uoW.CommitAsync(user);
+                await transaction.CommitAsync();
+                return new ResultDto(true, "");
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                return new ResultDto(false, ex.Message);
+            }
+        }
     }
 
     public List<(string, string, string)> GetRandomMediaWithUsername(int count)
@@ -107,5 +123,10 @@ public class MediaService : IMediaService
     public List<(string FileName, long Size)> GetMediasNameAndSizeByUserId(string userId)
     {
         return _uoW.MediaRepository.FindByCondition(s => s.MyUserId == userId).Select(s => new ValueTuple<string, long>(s.OriginalFileName, s.Size)).ToList();
+    }
+
+    public Media GetMediaByIdWithPortfoliosMedia(Guid imgCode)
+    {
+        return _uoW.MediaRepository.FindByCondition(s => s.Id == imgCode).Include(s => s.PortfolioMedias).SingleOrDefault();
     }
 }
