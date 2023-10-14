@@ -17,19 +17,11 @@ public class PublicHelper
         _mediaService = mediaService;
     }
 
-    public List<(Media Media, string userImg, string Username)> GetListMedia(int count)
+    public List<(string ImgPath, string userImg, string Username)> GetListMedia(int count)
     {
-        var mediaListWithUsernames = new List<(Media, string, string)>();
-        var i = 0;
-        while (i < count)
-        {
-            var randomMediaWithUser = _mediaService.GetRandomMediaWithUsername();
-            if (randomMediaWithUser.Item1 != null && randomMediaWithUser.Item2 != null)
-            {
-                mediaListWithUsernames.Add(randomMediaWithUser);
-                i++;
-            }
-        }
+        var mediaListWithUsernames = new List<(string, string, string)>();
+       
+        mediaListWithUsernames = _mediaService.GetRandomMediaWithUsername(count);
 
         return mediaListWithUsernames;
     }

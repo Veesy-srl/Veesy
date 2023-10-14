@@ -17,6 +17,8 @@ public static class RegisterDependencyInjection
         serviceCollection.AddScoped<IUsedSoftwareRepository, UsedSoftwareRepository>();
         serviceCollection.AddScoped<IMediaRepository, MediaRepository>();
         serviceCollection.AddScoped<IPortfolioRepository, PortfolioRepository>();
+        
+
         serviceCollection.AddScoped<IVeesyUoW, VeesyUoW>();
         
         /*Service Dependency Injection*/
@@ -27,7 +29,6 @@ public static class RegisterDependencyInjection
 
         /*Utils Dependency Injection*/
         serviceCollection.AddScoped<IEmailSender, EmailSender>();
-    
     
         /*Validator Dependency Injection*/
         serviceCollection.AddTransient<MyUserValidator>();

@@ -149,6 +149,11 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
     public List<InfoToShow> GetInfoToShowByUserId(string userInfoId)
     {
         return _applicationDbContext.InfosToShow.Include(s => s.MyUserInfoToShows.Where(s => s.MyUserId == userInfoId)).OrderBy(s => s.Info).ToList();
-
     }
+    
+    public List<MyUser> GetOnlyUserWithImage()
+    {
+        return _applicationDbContext.MyUsers.Include(s => s.Medias).Where(s => s.ProfileImageFileName != null).ToList();
+    }
+    
 }
