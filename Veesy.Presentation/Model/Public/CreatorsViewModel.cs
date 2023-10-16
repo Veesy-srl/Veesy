@@ -1,11 +1,10 @@
-using Veesy.Service.Dtos;
+using Veesy.Domain.Models;
 
 public class CreatorsViewModel
 {
-    public string Name { get; set; }
-    public string Surname { get; set; }
-    public string UserId { get; set; }
+    public List<string> Id { get; set; }
+    public List<string> Username { get; set; }
+    public List<string> Role { get; set; }
+    public List<string> FileNameImage { get; set; }
     public string BasePathImages { get; set; }
-    public string Role { get; set; }
-    public string FileName { get; set; }
 }

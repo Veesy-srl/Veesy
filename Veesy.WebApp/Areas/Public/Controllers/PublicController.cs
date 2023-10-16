@@ -56,12 +56,13 @@ public class PublicController : VeesyController
     {
         try
         {
-            return View();
+            var vm = _publicHelper.GetCreatorsViewModel();
+            return View(vm);
         }
         catch (Exception e)
         {
             Logger.Error(e, e.Message);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home", new { area = "Portfolio" });
         }
     }
     
