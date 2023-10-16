@@ -256,4 +256,10 @@ public class AccountService : IAccountService
     {
         return _uoW.MyUserRepository.GetInfoToShowByUserId(userInfo.Id);
     }
+
+    public List<MyUser> GetAllCreators()
+    {
+        return _uoW.MyUserRepository.GetOnlyUserWithImage().ToList();
+
+    }
 }

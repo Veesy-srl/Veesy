@@ -665,6 +665,11 @@ button:focus {
   box-shadow: 0 0 5px #333333;
 }
 
+.card-white-veesy-creators{
+  background-color: #F0F2F3;
+  border-radius: 10px;
+}
+
 .card-white-dashed-veesy{
   background-color: rgba(255, 255, 255, 0) !important;
   border-radius: 10px;

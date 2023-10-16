@@ -46,6 +46,5 @@ public class PortfolioService : IPortfolioService
         return _uoW.PortfolioRepository.FindByCondition(s => s.MyUserId == user.Id)
             .Include(s => s.PortfolioMedias)
             .ThenInclude(s => s.Media);
-
     }
 }

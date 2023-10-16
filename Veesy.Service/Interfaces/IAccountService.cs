@@ -32,4 +32,5 @@ public interface IAccountService
     Task<ResultDto> UpdateMyUserLanguageSpoken(List<MyUserLanguageSpoken> languageSpokenToDelete, List<MyUserLanguageSpoken> languageSpokenToAdd, MyUser user);
     List<LanguageSpoken> GetLanguagesSpokenWithUser(MyUser userInfo);
     List<InfoToShow> GetInfosToShowWithUser(MyUser userInfo);
+    List<MyUser> GetAllCreators();
 }
