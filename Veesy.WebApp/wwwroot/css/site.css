@@ -754,10 +754,12 @@ a{
 
 .img-rounded-ciano{
     border: 3px solid #75CCDD !important;
+    pointer-events: none;
 }
 
 .img-rounded-trasparent{
     border: 3px solid rgba(117, 204, 221, 0) !important;
+    pointer-events: none;
 }
 
 .img-rounded-trasparent:hover{

@@ -129,4 +129,9 @@ public class MediaService : IMediaService
     {
         return _uoW.MediaRepository.FindByCondition(s => s.Id == imgCode).Include(s => s.PortfolioMedias).SingleOrDefault();
     }
+
+    public List<string> GetAllMediaNameByUser(MyUser userInfo)
+    {
+        return _uoW.MediaRepository.FindByCondition(s => s.MyUserId == userInfo.Id).Select(s => s.OriginalFileName).ToList();
+    }
 }

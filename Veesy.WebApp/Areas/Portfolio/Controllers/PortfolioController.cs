@@ -228,6 +228,27 @@ public class PortfolioController : VeesyController
             _notyfService.Custom("Error updating portfolio. Please retry.", 10, "#ca0a0a");
             return Json(new { Result = false, Message = "Error updating portfolio. Please retry." });
         }
+    } 
+    
+    [HttpPost]
+    public async Task<JsonResult> UpdateLayout([FromBody] UpdatePortfolioDto portfolioDto)
+    {
+        try
+        {
+            var response = await _portfolioHelper.UpdateLayout(portfolioDto, UserInfo);
+            if (!response.Success)
+                _notyfService.Custom(response.Message, 10, "#ca0a0a");
+            else
+                _notyfService.Custom("Portfolio layout update correctly.", 10, "#75CCDD");
+            return Json(new { Result = response.Success, Message = response.Message });
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            Logger.Error($"PortfolioDto to update: {portfolioDto.ToJson()}");
+            _notyfService.Custom("Error updating portfolio layout. Please retry.", 10, "#ca0a0a");
+            return Json(new { Result = false, Message = "Error updating portfolio layout. Please retry." });
+        }
     }   
 
     [HttpPost]

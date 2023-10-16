@@ -49,6 +49,7 @@ public class UpdatePortfolioDto
     public string Password { get; set; }
     public bool IsPublic { get; set; }
     public bool IsMain { get; set; }
+    public int LayoutGrid { get; set; }
 }
 
 public class UpdateMediaPortfolioDto

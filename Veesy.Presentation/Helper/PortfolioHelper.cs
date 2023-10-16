@@ -149,15 +149,18 @@ public class PortfolioHelper
         
         foreach (var item in portfolioDto.PortfolioSelected)
         {
-            if(!oldPortfolioMediae.Any(s => s.PortfolioId == item))
+            if (!oldPortfolioMediae.Any(s => s.PortfolioId == item))
+            {
+                var newPortfolio = _portfolioService.GetPortfolioById(item, userInfo.Id);
                 portfoliosMediaToAdd.Add(new PortfolioMedia()
                 {
                     PortfolioId = item,
                     MediaId = portfolioDto.MediaCode,
                     IsActive = true,
-                    SortOrder = portfoliosMediaToAdd.Count,
+                    SortOrder = newPortfolio.PortfolioMedias.Count,
                     Description = ""
                 });
+            }
         }
 
         return await _portfolioService.UpdatePortfolioMedias(portfoliosMediaToDelete, portfoliosMediaToAdd, portfoliosMediaToUpdate, userInfo);
@@ -209,6 +212,16 @@ public class PortfolioHelper
             return new ResultDto(false, "You can't delete main portfolio.");
         await _portfolioService.DeletePortfolio(portfolio, userInfo);
        
+        return new ResultDto(true, "");
+    }
+
+    public async Task<ResultDto> UpdateLayout(UpdatePortfolioDto portfolioDto, MyUser userInfo)
+    {
+        var portfolio = _portfolioService.GetPortfolioById(portfolioDto.Id, userInfo.Id);
+        if (portfolio == null)
+            return new ResultDto(false, "Portfolio not found.");
+        portfolio.Layout = (VeesyConstants.PortfolioLayout)portfolioDto.LayoutGrid;
+        await _portfolioService.UpdatePortfolio(portfolio, userInfo);
         return new ResultDto(true, "");
     }
 }
