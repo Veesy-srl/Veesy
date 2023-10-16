@@ -1,3 +1,4 @@
+using System.Collections;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
@@ -134,6 +135,83 @@ public class MediaHelper
         return filesUploadedStatus;
     }
 
+    public async Task<List<(bool success, MediaDto? media, string fileName, string message)>> UploadFileAsyncToPortfolio(Stream fileStream, string? contentType, Guid portfolioId, MyUser user)
+    {
+        //Il numero di file che trovo nella section dipende dal limite che imposto a dropzone
+        var mediaList = _mediaService.GetMediasNameAndSizeByUserId(user.Id);
+        var boundary = GetBoundary(MediaTypeHeaderValue.Parse(contentType));
+        var multipartReader = new MultipartReader(boundary, fileStream);
+        var section = await multipartReader.ReadNextSectionAsync();
+        var filesUploadedStatus = new List<(bool success, MediaDto? media, string fileName, string message)>();
+        var subscription = _subscriptionPlanService.GetSubscriptionByUserId(user.Id);
+        while (section != null)
+        {
+            var fileSection = section.AsFileSection();
+            if (fileSection != null)
+            {
+                //File extension validation
+                var extension = Path.GetExtension(fileSection.FileName);
+                var validateExtension = _mediaValidators.ValidateMediaExtension(extension);
+                if (!validateExtension.Success)
+                {
+                    filesUploadedStatus.Add(new (false, null, fileSection.FileName, validateExtension.Message));
+                    section = await multipartReader.ReadNextSectionAsync();
+                    continue;
+                }
+                
+                //File size validation
+                await using (Stream stream = new MemoryStream())
+                {
+                    await fileSection.FileStream.CopyToAsync(stream);
+                    var size = stream.Length;
+                    var tmpSize = _mediaService.GetSizeMediaStorageByUserId(user.Id) + size; //Value in byte
+                    var validateSize = _mediaValidators.ValidateSizeUpload(size, tmpSize, subscription.AllowedMegaByte * 1024 * 1024, extension);
+                    if (!validateSize.Success)
+                    {
+                        filesUploadedStatus.Add(new(false, null, fileSection.FileName, validateSize.Message));
+                        section = await multipartReader.ReadNextSectionAsync();
+                        continue;
+                    }
+
+                    if (mediaList.Contains((fileSection.FileName, size)))
+                    {
+                        filesUploadedStatus.Add(new(false, null, fileSection.FileName, "File is already in cloud."));
+                        section = await multipartReader.ReadNextSectionAsync();
+                        continue;
+                    }
+
+                    var newFileName = $"{Guid.NewGuid().ToString().Replace("-", String.Empty)}{extension}";
+                    await _veesyBlobService.UploadFromStreamBlobAsync(stream, $"{MediaCostants.BlobMediaSections.OriginalMedia}/{newFileName}", contentType);
+                    var portfolioToLink = _portfolioService.GetPortfolioByIdWithPortfoliosMedia(portfolioId, user.Id);
+                    try
+                    {
+                        var result = await _mediaService.AddMedia(new Media()
+                        {
+                            FileName = newFileName,
+                            OriginalFileName = fileSection.FileName,
+                            Type = extension,
+                            MyUserId = user.Id,
+                            Size = size,
+                            PortfolioMedias = new List<PortfolioMedia>
+                            {
+                                new(){ PortfolioId = portfolioId, SortOrder = portfolioToLink.PortfolioMedias.Count, Description = "", IsActive = true}
+                            }
+                        }, user);
+                        filesUploadedStatus.Add(new(true, MapCloudDtos.MapMedia(result), fileSection.FileName, $"{fileSection.FileName} upload correctly."));
+                    }
+                    catch (Exception e)
+                    {
+                        //TODO: delete file from azure
+                        throw e;
+                    }
+                }
+            }
+            section = await multipartReader.ReadNextSectionAsync();
+        }
+
+        return filesUploadedStatus;
+    }
+
     public async Task<BlobElement> GetMediaFromBlob(string section, string fileName)
     {
         return await _veesyBlobService.GetBlobAsync($"{section}/{fileName}");
@@ -142,14 +220,17 @@ public class MediaHelper
     public async Task<List<(bool success, string filename, string message, string? code)>> DeleteFiles(List<Guid> imgToDelete, MyUser userInfo)
     {
         var result = new List<(bool, string, string, string?)>();
-        foreach (var imgCode in imgToDelete)
+        
+        var medias = _mediaService.GetMediasByIdWithPortfoliosMedia(imgToDelete);
+        var portfolios = _portfolioService.GetPortfoliosByMedias(imgToDelete).ToList();
+        var mediaToRemove = new List<Media>();
+        foreach (var media in medias)
         {
-            var media = _mediaService.GetMediaByIdWithPortfoliosMedia(imgCode);
             try
             {
-                if (media == null)
+                if (medias.Count == null)
                 {
-                    result.Add(new(false, imgCode.ToString(), "File not found.", null));
+                    result.Add(new(false, media.Id.ToString(), "File not found.", null));
                     continue;
                 }
 
@@ -158,8 +239,7 @@ public class MediaHelper
                     result.Add(new(false, media.OriginalFileName, "Access not allowed.", null));
                     continue;
                 }
-                var portfolios = _portfolioService.GetPortfoliosByMedia(imgCode).ToList();
-                foreach (var portfolio in portfolios)
+                foreach (var portfolio in portfolios.Where(s => s.PortfolioMedias.Select(s => s.MediaId).Contains(media.Id)))
                 {
                     var mediaPortfolio = media.PortfolioMedias.SingleOrDefault(s => s.PortfolioId == portfolio.Id);
                     foreach (var portflioMedia in portfolio.PortfolioMedias)
@@ -170,21 +250,23 @@ public class MediaHelper
 
                     portfolio.PortfolioMedias = portfolio.PortfolioMedias.Where(s => s.MediaId != mediaPortfolio.MediaId).ToList();
                 }
-
-                var res = await _mediaService.DeleteMediaAndUpdatePortfolios(media, portfolios, userInfo);
-                if (!res.Success)
-                {
-                    result.Add(new(false, media.OriginalFileName, "Error deleting files.", null));
-                    continue;
-                }
-
-                await _veesyBlobService.DeleteBlobAsync($"{MediaCostants.BlobMediaSections.OriginalMedia}/{media.FileName}");
-                result.Add(new (true, media.OriginalFileName, "", imgCode.ToString()));
+                mediaToRemove.Add(media);
             }
             catch (Exception e)
             {
                 result.Add(new(false, media.FileName, "Error deleting file. Please retry.", null));
             }
+        }
+        
+        var res = await _mediaService.DeleteMediasAndUpdatePortfolios(mediaToRemove, portfolios, userInfo);
+        if (!res.Success)
+        {
+            throw new Exception("Error deleting files.");
+        }
+        foreach (var media in mediaToRemove)
+        {
+            await _veesyBlobService.DeleteBlobAsync($"{MediaCostants.BlobMediaSections.OriginalMedia}/{media.FileName}");
+            result.Add(new (true, media.OriginalFileName, "", media.Id.ToString()));
         }
 
         return result;

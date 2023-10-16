@@ -7,6 +7,7 @@ using NuGet.Protocol;
 using Veesy.Domain.Models;
 using Veesy.Presentation.Helper;
 using Veesy.Presentation.Model.Cloud;
+using Veesy.Presentation.Model.Portfolio;
 using Veesy.Service.Dtos;
 using Veesy.WebApp.CustomDataAttribute;
 
@@ -162,6 +163,46 @@ public class MediaController : VeesyController
         {
             Logger.Error(ex, ex.Message);
             return File(await System.IO.File.ReadAllBytesAsync($"{_environment.WebRootPath}\\imgs\\notfound.jpg"), "image/jpeg");
+        }
+    }
+
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status415UnsupportedMediaType)]
+    [MultipartFormData]
+    [DisableFormValueModelBinding]
+    public async Task<IActionResult> UploadMediaInPortfolio(Guid PortfolioId)
+    {
+        try
+        {
+            var result = await _mediaHelper.UploadFileAsyncToPortfolio(HttpContext.Request.Body,  Request.ContentType, PortfolioId, UserInfo);
+            var successFiles = "Files upload: </br>";
+            var errorFiles = "Files not upload: </br>";
+            var response = new UploadMediaResponseDto();
+            foreach (var res in result)
+            {
+                if (res.success)
+                {
+                    successFiles += res.fileName + "</br>";
+                    response.NumberSuccessFile++;
+                    response.MediaDtos.Add(res.media);
+                }
+                else
+                {
+                    errorFiles += res.fileName + " - " + res.message + "</br>";
+                    response.NumberErrorFile++;
+                }
+            }
+
+            response.SuccessFileMessage = successFiles;
+            response.ErrorFileMessage = errorFiles;
+            return Ok(response.ToJson());
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            _notyfService.Custom("Error during upload file. Please retry.", 10, "#ca0a0a");
+            return BadRequest();
         }
     }
 }

@@ -65,6 +65,26 @@ public class MediaService : IMediaService
         return _uoW.MediaRepository.FindByCondition(s => s.MyUserId == userId).Sum(s => s.Size);
     }
 
+    public async Task<ResultDto> DeleteMediasAndUpdatePortfolios(List<Media> medias, List<Portfolio> portfolios, MyUser user)
+    {
+        using (var transaction = _uoW.DbContext.Database.BeginTransaction())
+        {
+            try
+            {
+                _uoW.MediaRepository.DeleteRange(medias);
+                _uoW.PortfolioRepository.UpdateRange(portfolios);
+                await _uoW.CommitAsync(user);
+                await transaction.CommitAsync();
+                return new ResultDto(true, "");
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                return new ResultDto(false, ex.Message);
+            }
+        }
+    }
+    
     public async Task<ResultDto> DeleteMediaAndUpdatePortfolios(Media media, List<Portfolio> portfolios, MyUser user)
     {
         using (var transaction = _uoW.DbContext.Database.BeginTransaction())
@@ -132,5 +152,10 @@ public class MediaService : IMediaService
     public List<string> GetAllMediaNameByUser(MyUser userInfo)
     {
         return _uoW.MediaRepository.FindByCondition(s => s.MyUserId == userInfo.Id).Select(s => s.OriginalFileName).ToList();
+    }
+
+    public List<Media> GetMediasByIdWithPortfoliosMedia(List<Guid> imgToDelete)
+    {
+        return _uoW.MediaRepository.FindByCondition(s => imgToDelete.Contains(s.Id)).Include(s => s.PortfolioMedias).ToList();
     }
 }

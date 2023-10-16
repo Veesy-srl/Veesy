@@ -20,4 +20,5 @@ public interface IPortfolioService
     Task DeletePortfolioAndChangeMain(Portfolio portfolio, MyUser userInfo);
     Portfolio GetPortfolioByIdWithPortfoliosMedia(Guid portfolioId, string userId);
     IEnumerable<Portfolio> GetPortfoliosByMedia(Guid imgToDelete);
+    IEnumerable<Portfolio> GetPortfoliosByMedias(List<Guid> imgToDelete);
 }

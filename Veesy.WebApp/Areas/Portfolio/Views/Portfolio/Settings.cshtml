@@ -190,6 +190,25 @@
             </div>
         </div>
         <div class="empty-veesy"></div>
+        <div id="div-uploader">
+            <form enctype="multipart/form-data" asp-route-PortfolioId="@Model.Portfolio.Id" asp-action="UploadMediaInPortfolio" asp-controller="Media" asp-area="Portfolio" class="dropzone card-grey-dashed-veesy mb-4" id="uploader">
+                <a id="dropzone-close-button" style="display: none;" onclick="hideDropZone()" class="ms-2 btn btn-light border fw-bolder shadow-none close-button-dropzone">
+                    <i class="fas fa-times-circle fa-2xs text-primary" id="icon-color" aria-hidden="true"></i>
+                    <span id="color-text-variant">close</span>
+                </a>
+                <div class="dz-message needsclick" id="message-uploader">
+                    <div id="div-uploader-icon" class="w-100 mb-1">
+                        <i id="uploader-icon" class="fa-solid fa-circle-plus fa-xl" style="color: #0D2045"></i>
+                    </div>
+                    <span id="uploader-text" class="text">
+                        Upload or drop files here. <br/> (Accepted formats: jpg, png, mov, mp4, gif)
+                    </span>
+                    <div class="progress-bar progress-bar-primary" role="progressbar" data-dz-uploadprogress>
+                        <span class="progress-text"></span>
+                    </div>
+                </div>
+            </form>
+        </div>
         <div>
             <button class="rounded-pill btn btn-primary btn-variant">Publish</button>
         </div>
@@ -470,23 +489,94 @@
         switchColumnLayout(integer)
     }
     </script>
+    
+    <script>
+    var div_uploader = document.getElementById("div-uploader");
+        /*Dropzone configuration*/
+        Dropzone.autoDiscover = false;
+        var uploader = null;
+        var msgUploader = document.getElementById("message-uploader");
+        var divUploader = document.getElementById("div-uploader-icon");
+        var iconUploader = document.getElementById("uploader-icon");
+        var txtUploader = document.getElementById("uploader-text");
+        let dropzone_processing = false;
+    
+        var dropzoneOptions = {
+            dictDefaultMessage: 'Upload or drop files here',
+            paramName: "file",
+            maxFilesize: 10000, // MB
+            addRemoveLinks: true,
+            parallelUploads: 1,
+            uploadMultiple: true,
+            acceptedFiles: "image/jpeg,image/png,image/gif,image/jpg,video/mp4,video/mov",
+            addedfiles: function (){
+                dropzone_processing = true;
+            },
+            uploadprogress: function(file, progress, bytesSent) {
+                if (file.previewElement) {
+                    var progressElement = file.previewElement.querySelector("[data-dz-uploadprogress]");
+                    progressElement.style.width = progress + "%";
+                }
+            },
+            success: function (file) {
+               this.removeFile(file);
+            },
+            successmultiple: function (file, response) {
+                const res = JSON.parse(response);
+                // TODO mostrare popup con success/error
+                if (res.NumberSuccessFile > 0){
+                    toastNotifyCustom(res.SuccessFileMessage, 10000, "#75ccdd", "")
+                    for (let i = 0; i < res.MediaDtos.length; i++){
+                        if (res.MediaDtos[i].IsVideo){
+                            document.getElementById("images-container").innerHTML +=
+                            '<div class="draggable m-0" name="image-gallery" tabindex="0" style="">'+
+                                 '<video autoplay="autoplay" muted="" loop="" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" title="'+ res.MediaDtos[i].OriginalFileName +'">'+
+                                     '<source src="' + '@Model.BasePathImages' + res.MediaDtos[i].FileName + '?tr=w-400" type="video/mp4">'+
+                                 '</video>'+
+                             '</div>';
+                         }
+                        else{
+                            document.getElementById("images-container").innerHTML +=
+                            '<div class="draggable m-0" name="image-gallery" tabindex="0">'+
+                                '<img src="' + '@Model.BasePathImages' + res.MediaDtos[i].FileName + '?tr=w-400" class="card-body m-0 p-0 rounded-05 img-rounded-trasparent w-100 p-0" title="'+ res.MediaDtos[i].OriginalFileName +'">' +
+                            '</div>'
+                                    
+                        }
+                    }
+                }    
+                if (res.NumberErrorFile > 0)
+                    toastNotifyCustom(res.ErrorFileMessage, 10000, "#ca0a0a", "")
+             },
+            errormultiple: function () {
+                toastNotifyCustom("Error during uploading files. Please retry.", 10000, "#ca0a0a", "")
+             },
+            queuecomplete: function (){
+               dropzone_processing = false;
+            }
+        };
+        uploader = document.querySelector('#uploader');
+        var newDropzone = new Dropzone(uploader, dropzoneOptions);
+    </script>
 }
-<style>
-    .draggable {
-        cursor: move;
-    }
-    
-    .draggable-source--is-dragging {
-        /* non togliere anche se non ha usi, serve per eliminare un elemento generato dal plugin */ 
-        visibility: hidden;
-    }
-    
-    img.rounded-corners {
-      border-radius: 20px;
-      width: 100%
-    }
-    .card-columns {
-        column-count: @((int)Model.Portfolio.Layout);
-    }
-</style>
-
+@section Style
+{
+    <link rel="stylesheet" href="~/css/dropzone_cloudpage.css" asp-append-version="true" />
+    <style>
+        .draggable {
+            cursor: move;
+        }
+        
+        .draggable-source--is-dragging {
+            /* non togliere anche se non ha usi, serve per eliminare un elemento generato dal plugin */ 
+            visibility: hidden;
+        }
+        
+        img.rounded-corners {
+          border-radius: 20px;
+          width: 100%
+        }
+        .card-columns {
+            column-count: @((int)Model.Portfolio.Layout);
+        }
+    </style>
+}
