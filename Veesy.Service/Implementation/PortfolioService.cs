@@ -161,13 +161,15 @@ public class PortfolioService : IPortfolioService
 
     public IEnumerable<Portfolio> GetPortfoliosByMedias(List<Guid> imgToDelete)
     {
-        var portfolios = new List<Portfolio>();
-        foreach (var item in imgToDelete)
-        {
-            portfolios.AddRange(_uoW.PortfolioRepository.FindByCondition(s => s.PortfolioMedias.Select(s => s.MediaId).Contains(item))
-                .Include(s => s.PortfolioMedias));
-        }
-
-        return portfolios.DistinctBy(s => s.Id);
+        // recupero i portfoli che contengo le immagini selezionate
+        var portfolios = _uoW.PortfolioRepository
+            .FindByCondition(s => 
+                s.PortfolioMedias
+                    .Select(s=>s.MediaId)
+                    .Any(w => imgToDelete.Contains(w))
+            )
+            .Include(s => s.PortfolioMedias);
+        
+        return portfolios;
     }
 }

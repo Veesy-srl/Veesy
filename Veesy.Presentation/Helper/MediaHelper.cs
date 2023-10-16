@@ -228,17 +228,12 @@ public class MediaHelper
         {
             try
             {
-                if (medias.Count == null)
-                {
-                    result.Add(new(false, media.Id.ToString(), "File not found.", null));
-                    continue;
-                }
-
                 if (media.MyUserId != userInfo.Id)
                 {
                     result.Add(new(false, media.OriginalFileName, "Access not allowed.", null));
                     continue;
                 }
+                // riassegno i SortOrder alle immagini, mantenendo l'ordine originale
                 foreach (var portfolio in portfolios.Where(s => s.PortfolioMedias.Select(s => s.MediaId).Contains(media.Id)))
                 {
                     var mediaPortfolio = media.PortfolioMedias.SingleOrDefault(s => s.PortfolioId == portfolio.Id);
@@ -248,6 +243,7 @@ public class MediaHelper
                             portflioMedia.SortOrder--;
                     }
 
+                    // rimuovo i portfolioMedias coinvolti
                     portfolio.PortfolioMedias = portfolio.PortfolioMedias.Where(s => s.MediaId != mediaPortfolio.MediaId).ToList();
                 }
                 mediaToRemove.Add(media);
