@@ -51,6 +51,20 @@ public class PublicController : VeesyController
         }
     }
     
+    [HttpGet("Creators")]
+    public IActionResult Creators()
+    {
+        try
+        {
+            return View();
+        }
+        catch (Exception e)
+        {
+            Logger.Error(e, e.Message);
+            return RedirectToAction("Index", "Home");
+        }
+    }
+    
     [HttpGet("About")]
     public IActionResult About()
     {
@@ -60,7 +74,7 @@ public class PublicController : VeesyController
             var mediaList = _publicHelper.GetListMedia(7);
             about.BasePath = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/";
             about.BasePathImages = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/";
-            about.MediaList = mediaList.Select(item => item.Media).ToList();
+            about.MediaList = mediaList.Select(item => item.ImgPath).ToList();
             about.MediaUser = mediaList.Select(item => item.userImg).ToList();
             about.Usernames = mediaList.Select(item => item.Username).ToList();
 

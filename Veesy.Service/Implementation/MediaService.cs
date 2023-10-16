@@ -84,28 +84,39 @@ public class MediaService : IMediaService
             }
         }
     }
-    
-    public (Media, string, string) GetRandomMediaWithUsername()
+
+    public List<(string, string, string)> GetRandomMediaWithUsername(int count)
     {
-        var Users = _userManager.Users.ToList();
+        var UsersWithImage = _uoW.MyUserRepository.GetOnlyUserWithImage();
         Random random = new Random();
 
-        if (Users.Count > 0)
+        if (UsersWithImage.Count > 0)
         {
-            var randomUser = Users[random.Next(0, Users.Count)];
+            List<(string, string, string)> result = new List<(string, string, string)>();
 
-            var randomMediaListForUser = _uoW.MediaRepository
-                .FindByCondition(s => s.MyUserId == randomUser.Id)
+            List<string> allImages = UsersWithImage
+                .SelectMany(user => user.Medias.Select(media => media.FileName))
                 .ToList();
 
-            if (randomMediaListForUser.Any())
+            while (result.Count < count && allImages.Count > 0)
             {
-                var randomMedia = randomMediaListForUser[random.Next(0, randomMediaListForUser.Count)];
-                return (randomMedia, randomUser.ProfileImageFileName, randomUser.UserName);
+                int randomImageIndex = random.Next(allImages.Count);
+                string userImage = allImages[randomImageIndex];
+                allImages.RemoveAt(randomImageIndex);
+
+                var user = UsersWithImage.FirstOrDefault(u => u.Medias.Any(m => m.FileName == userImage));
+                if (user != null)
+                {
+                    string randomUser = user.UserName;
+                    string userProfileImage = user.ProfileImageFileName;
+                    result.Add((userImage, userProfileImage, randomUser));
+                }
             }
+
+            return result;
         }
 
-        return (null,null, null);
+        return new List<(string, string, string)> { (null, null, null) };
     }
 
     public List<(string FileName, long Size)> GetMediasNameAndSizeByUserId(string userId)

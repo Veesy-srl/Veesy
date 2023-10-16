@@ -133,28 +133,16 @@
 
 <div class="row pb-5" style="cursor: pointer;">
     <div class="slider-about">
-        @for (var i = 0; i < 6; i++)
+        @for (var i = 0; i < Model.MediaUser.Count; i++)
         {
             <div>
-                <img class="p-3" width="360px" height="260px" style="border-radius: 30px;" src="@Model.BasePath@Model.MediaList[i].FileName">
+                <img class="p-3" width="360px" height="260px" style="border-radius: 30px;" src="@Model.BasePath@Model.MediaList[i].ToString()">
                 <span class="empty-veesy"></span>
                 <div class="text-center">
-                    @if (string.IsNullOrEmpty(@Model.MediaUser[i].ToString()))
-                    {
-                        <div class="d-flex align-items-center" style="margin-left: 20px;">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" class="img-thumbnail rounded-circle" alt="user-image" style="max-width: none!important; width: 60px !important; height: 60px !important;">
-                            <span style="margin-left: 10px; font-size: 14px;">by @Model.Usernames[i].ToString()</span>
-                        </div>
-
-                    }
-                    else
-                    {
-                        <div class="d-flex align-items-center" style="margin-left: 20px;">
-                            <img src="@Model.BasePathImages@Model.MediaUser[i].ToString()" style="width: 30px !important; height: 30px !important; max-width: none!important;" class="img-thumbnail-custom rounded-circle" alt="user-image">
-                            <span style="margin-left: 10px; font-size: 14px;">by @Model.Usernames[i].ToString()</span>
-                        </div>
-                        
-                    }
+                    <div class="d-flex align-items-center" style="margin-left: 20px;">
+                        <img src="@Model.BasePathImages@Model.MediaUser[i].ToString()" style="width: 30px !important; height: 30px !important; max-width: none!important;" class="img-thumbnail-custom rounded-circle" alt="user-image">
+                        <span style="margin-left: 10px; font-size: 14px;">by @Model.Usernames[i].ToString()</span>
+                    </div>
                 </div>
             </div>
         }
