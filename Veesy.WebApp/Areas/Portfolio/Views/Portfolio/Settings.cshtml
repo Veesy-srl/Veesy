@@ -140,7 +140,15 @@
                 @foreach (var item in VeesyConstants.GetAvailableLayouts())
                 {
                     <div class="ps-2 pe-2 col-sm-12 col-md-3">
-                        <div id="layout-div-@((int)item)" class="p-2 form-check div-select-layout">
+                        @{
+                            var css_select = "";
+                            if (Model.Portfolio.Layout == item)
+                            {
+                                css_select = "div-select-layout-selected";
+                            }
+                                
+                        }
+                        <div id="layout-div-@((int)item)" class="p-2 form-check div-select-layout @css_select">
                             <div class="d-flex me-2">
                                 <input style="visibility: hidden" class="form-check-input" type="radio" name="column-layout" asp-for="Portfolio.Layout" value="@item" id="layout-@item" onchange="switchColumnLayout(@((int)item))"/>
                                 <label class="ms-2 form-check-label" for="@item">@((int)item) columns</label>
@@ -149,7 +157,7 @@
                                 @{
                                     var url = "../../imgs/PortfolioLayout/col_" + (int)item + ".png";
                                 }
-                                <a onclick="ChangeLayout('@item', @((int)item))">
+                                <a onclick="ChangeLayout('@item', @((int)item)), UpdateLayout(@((int)item))">
                                     <img class="w-100" src="@url"/>
                                 </a>
                             </div>
@@ -278,7 +286,31 @@
     <script src="https://cdn.jsdelivr.net/npm/@@shopify/draggable@1.0.0-beta.11/lib/draggable.bundle.legacy.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@@shopify/draggable@1.0.0-beta.11/lib/sortable.js"></script>
 
-    <script>                                                                                                    
+    <script>
+    
+    let active_layout = @((int)Model.Portfolio.Layout);
+    
+    function UpdateLayout(layout) {
+        if (active_layout == layout)
+            return;
+        active_layout = layout;
+        var LayoutGrid = active_layout;
+        var Id = '@Model.Portfolio.Id'
+        var portfolioDto = {Id, LayoutGrid}
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("UpdateLayout", "Portfolio")',
+            data: JSON.stringify(portfolioDto),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (response) {
+            },
+            error: function (response) {
+                $('#load-spinner').css("display", "none");
+            }
+        })
+    }
+                                                                                                        
     function switchColumnLayout(columnsNumber) {
       var imagesContainer = document.getElementById("images-container");
       imagesContainer.classList.remove("card-columns")

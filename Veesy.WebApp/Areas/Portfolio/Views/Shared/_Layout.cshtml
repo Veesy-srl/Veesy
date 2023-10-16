@@ -69,7 +69,7 @@
                             </a>
 
                             <div class="dropdown-menu bg-grey-veesy" aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Portfolio" ? "a-ciano-header" : "menu-element")" href="#">Portfolio</a>
+                                <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Portfolio" ? "a-ciano-header" : "menu-element")" asp-action="List" asp-controller="Portfolio" asp-area="Portfolio">Portfolio</a>
                                 <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Cloud" ? "a-ciano-header" : "menu-element")" asp-action="List" asp-controller="Cloud" asp-area="Portfolio">Cloud</a>
 
                                 <a class="dropdown-item menu-element" href="#">Your Plan</a>
@@ -101,7 +101,7 @@
                                 <span id="color-text-variant">@username</span>
                             </a>
                             <div class="dropdown-menu bg-grey-veesy" aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Portfolio" ? "a-ciano-header" : "menu-element")" href="#">Portfolio</a>
+                                <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Portfolio" ? "a-ciano-header" : "menu-element")"  asp-action="List" asp-controller="Portfolio" asp-area="Portfolio">Portfolio</a>
                                 <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Cloud" ? "a-ciano-header" : "menu-element")" asp-area="Portfolio" asp-controller="Cloud" asp-action="List">Cloud</a>
                                 <a class="dropdown-item menu-element" href="#">Your Plan</a>
                                 <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Profile" ? "a-ciano-header" : "menu-element")" asp-action="Profile" asp-controller="Profile" asp-area="Account">Profile</a>

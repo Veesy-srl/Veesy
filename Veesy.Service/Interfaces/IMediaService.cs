@@ -17,4 +17,5 @@ public interface IMediaService
 
     List<(string FileName, long Size)> GetMediasNameAndSizeByUserId(string userId);
     Media GetMediaByIdWithPortfoliosMedia(Guid imgCode);
+    List<string> GetAllMediaNameByUser(MyUser userInfo);
 }

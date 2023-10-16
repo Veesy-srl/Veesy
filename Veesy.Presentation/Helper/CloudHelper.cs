@@ -67,8 +67,11 @@ public class CloudHelper
             return new ResultDto(false, "Transaction not allowed.");
         if(string.IsNullOrEmpty(mediaDto.OriginalFileName))
             return new ResultDto(false, "Please insert filename.");
-        if(mediaDto.OriginalFileName.Contains("/"))
-            return new ResultDto(false, "Characters '/' not allowed.");
+        if(!mediaDto.OriginalFileName.All(char.IsLetterOrDigit))
+            return new ResultDto(false, "Only alphanumeric characters are allowed.");
+        var names = _mediaService.GetAllMediaNameByUser(userInfo);
+        if(names.Contains(mediaDto.OriginalFileName))
+            return new ResultDto(false, $"Filename {mediaDto.OriginalFileName} already used.");
         media.OriginalFileName = mediaDto.OriginalFileName + media.Type;
         return await _mediaService.UpdateMedia(media, userInfo);
     }
