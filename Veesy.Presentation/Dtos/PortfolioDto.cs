@@ -129,7 +129,7 @@ public static class MapPortfolioDtos
             IsMain = portfolio.IsMain,
             NumberMedia = portfolio.PortfolioMedias.Count,
             Name = portfolio.Name,
-            IsVideo = MediaCostants.VideoExtensions.Contains(portfolio.PortfolioMedias.SingleOrDefault(s => s.SortOrder == 0).Media.Type.ToUpper()),
+            IsVideo = portfolio.PortfolioMedias.Count == 0 ? false : MediaCostants.VideoExtensions.Contains(portfolio.PortfolioMedias.SingleOrDefault(s => s.SortOrder == 0).Media.Type.ToUpper()),
             DefaultImageName = portfolio.PortfolioMedias.Count == 0
                 ? ""
                 : portfolio.PortfolioMedias.SingleOrDefault(s => s.SortOrder == 0).Media.FileName,

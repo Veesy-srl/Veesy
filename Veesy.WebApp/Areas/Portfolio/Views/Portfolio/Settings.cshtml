@@ -30,15 +30,21 @@
             <div class="d-flex mb-3">
                 <div class="col-12">
                     <div class="text-left">
-                        @if (Model.Portfolio.DefaultMedia == null)
+                        @if (Model.Portfolio.DefaultMedia.IsVideo.Value)
                         {
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" class="img-thumbnail rounded-circle" alt="user-image" style="max-width: none!important; width: 60px !important; height: 60px !important;">
+                            <video autoplay="autoplay" muted loop class="image-fit-radius" title="@Model.Portfolio.DefaultMedia.OriginalFileName">
+                                <source src="@Model.BasePathImages@Model.Portfolio.DefaultMedia.FileName?tr=w-400" type="video/mp4">
+                            </video>
                         }
                         else
                         {
-                            @if (MediaCostants.ImageExtensions.Contains(Model.Portfolio.DefaultMedia.Type.ToUpper()))
+                            if (@Model.Portfolio.DefaultMedia.FileName != "")
                             {
-                                <img src="@Model.BasePathImages@Model.Portfolio.DefaultMedia.FileName?tr=w-400" class="img-thumbnail-custom-portfolio w-50" alt="user-image">
+                                <img class="image-fit-radius" title="@Model.Portfolio.DefaultMedia.OriginalFileName" src="@Model.BasePathImages@Model.Portfolio.DefaultMedia.FileName?tr=w-400"/>
+                            }
+                            else
+                            {
+                                <img class="image-fit-radius" src="~/imgs/noimage.png"/>
                             }
                         }
                     </div>
