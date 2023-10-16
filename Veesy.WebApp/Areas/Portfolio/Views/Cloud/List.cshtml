@@ -1,3 +1,4 @@
+@using Veesy.Domain.Constants
 @model Veesy.Presentation.Model.Cloud.CloudViewModel
 @{
     ViewData["Title"] = "Cloud";
@@ -64,253 +65,28 @@
     </div>
 </div>
 <div class="row">
-    <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm"></div>
-    <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm" id="column-1">
-        @for (int i = 0; i < Model.Medias.Count; i = i+8)
+    <div class="p-1 mb-4 mb-lg-0 card-columns draggable-zone" id="images-container">
+        @foreach (var image in Model.Medias)
         {
-            <div id="div-for-remove-@Model.Medias[i].Code" class="media-container show-edit">
-                <a class="edit-button" onclick="EditMedia('@Model.Medias[i].Code'); return false;">
+            <div id="div-for-remove-@image.Code" class="media-container show-edit">
+                <a class="edit-button" onclick="EditMedia('@image.Code'); return false;">
                     <strong style="margin-right: 5px; font-size: 14px;">edit</strong>
                     <i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>
                 </a>
-                <a onclick="SelectMedia('@Model.Medias[i].Code')">
+                <a onclick="SelectMedia('@image.Code')">
                     <div class="img-div">
-                        @if (Model.Medias[i].IsVideo.HasValue && Model.Medias[i].IsVideo.Value)
-                        {
-                            <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
-                                <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
-                            </video>
-                        }
-                        else
-                        {
-                            <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05 mb-2" alt="@Model.Medias[i].OriginalFileName"/>
-                        }
-                    </div>
-                </a>
-            </div>
-        }
-    </div>
-    <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm" id="column-2">
-        @for (int i = 1; i < Model.Medias.Count; i = i+8)
-        {
-            <div id="div-for-remove-@Model.Medias[i].Code" class="media-container show-edit">
-                <a class="edit-button" onclick="EditMedia('@Model.Medias[i].Code'); return false;">
-                    <strong style="margin-right: 5px; font-size: 14px;">edit</strong>
-                    <i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>
-                </a>
-                <a onclick="SelectMedia('@Model.Medias[i].Code')">
-                    <div class="img-div">
-                        @if (Model.Medias[i].IsVideo.HasValue && Model.Medias[i].IsVideo.Value)
-                        {
-                            <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
-                                <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
-                            </video>
-                        }
-                        else
-                        {
-                            <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05 mb-2" alt="@Model.Medias[i].OriginalFileName"/>
-                        }
-                    </div>
-                </a>
-            </div>
-        }
-    </div>
-    <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm" id="column-3">
-        @for (int i = 2; i < Model.Medias.Count; i = i+8)
-        {
-            <div id="div-for-remove-@Model.Medias[i].Code" class="media-container show-edit">
-                <a class="edit-button" onclick="EditMedia('@Model.Medias[i].Code'); return false;">
-                    <strong style="margin-right: 5px; font-size: 14px;">edit</strong>
-                    <i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>
-                </a>
-                <a onclick="SelectMedia('@Model.Medias[i].Code')">
-                    <div class="img-div">
-                        @if (Model.Medias[i].IsVideo.HasValue && Model.Medias[i].IsVideo.Value)
-                        {
-                            <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
-                                <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
-                            </video>
-                        }
-                        else
-                        {
-                            <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05 mb-2" alt="@Model.Medias[i].OriginalFileName"/>
-                        }
-                    </div>
-                </a>
-            </div>
-        }
-    </div>
-    <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm" id="column-4">
-        @for (int i = 3; i < Model.Medias.Count; i = i+8)
-        {
-            <div id="div-for-remove-@Model.Medias[i].Code" class="media-container show-edit">
-                <a class="edit-button" onclick="EditMedia('@Model.Medias[i].Code'); return false;">
-                    <strong style="margin-right: 5px; font-size: 14px;">edit</strong>
-                    <i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>
-                </a>
-                <a onclick="SelectMedia('@Model.Medias[i].Code')">
-                    <div class="img-div">
-                        @if (Model.Medias[i].IsVideo.HasValue && Model.Medias[i].IsVideo.Value)
-                        {
-                            <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
-                                <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
-                            </video>
-                        }
-                        else
-                        {
-                            <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05 mb-2" alt="@Model.Medias[i].OriginalFileName"/>
-                        }
-                    </div>
-                </a>
-            </div>
-        }
-    </div>
-    <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm" id="column-5">
-        @for (int i = 4; i < Model.Medias.Count; i = i+8)
-        {
-            <div id="div-for-remove-@Model.Medias[i].Code" class="media-container show-edit">
-                <a class="edit-button" onclick="EditMedia('@Model.Medias[i].Code'); return false;">
-                    <strong style="margin-right: 5px; font-size: 14px;">edit</strong>
-                    <i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>
-                </a>
-                <a onclick="SelectMedia('@Model.Medias[i].Code')">
-                    <div class="img-div">
-                        @if (Model.Medias[i].IsVideo.HasValue && Model.Medias[i].IsVideo.Value)
-                        {
-                            <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
-                                <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
-                            </video>
-                        }
-                        else
-                        {
-                            <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05 mb-2" alt="@Model.Medias[i].OriginalFileName"/>
-                        }
-                    </div>
-                </a>
-            </div>
-        }
-    </div>
-    <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm" id="column-6">
-        @for (int i = 5; i < Model.Medias.Count; i = i+8)
-        {
-            <div id="div-for-remove-@Model.Medias[i].Code" class="media-container show-edit">
-                <a class="edit-button" onclick="EditMedia('@Model.Medias[i].Code'); return false;">
-                    <strong style="margin-right: 5px; font-size: 14px;">edit</strong>
-                    <i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>
-                </a>
-                <a onclick="SelectMedia('@Model.Medias[i].Code')">
-                    <div class="img-div">
-                        @if (Model.Medias[i].IsVideo.HasValue && Model.Medias[i].IsVideo.Value)
-                        {
-                            <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
-                                <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
-                            </video>
-                        }
-                        else
-                        {
-                            <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05 mb-2" alt="@Model.Medias[i].OriginalFileName"/>
-                        }
-                    </div>
-                </a>
-            </div>
-        }
-    </div>
-    <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm" id="column-7">
-        @for (int i = 6; i < Model.Medias.Count; i = i+8)
-        {
-            <div id="div-for-remove-@Model.Medias[i].Code" class="media-container show-edit">
-                <a class="edit-button" onclick="EditMedia('@Model.Medias[i].Code'); return false;">
-                    <strong style="margin-right: 5px; font-size: 14px;">edit</strong>
-                    <i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>
-                </a>
-                <a onclick="SelectMedia('@Model.Medias[i].Code')">
-                    <div class="img-div">
-                        @if (Model.Medias[i].IsVideo.HasValue && Model.Medias[i].IsVideo.Value)
-                        {
-                            <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
-                                <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
-                            </video>
-                        }
-                        else
-                        {
-                            <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05 mb-2" alt="@Model.Medias[i].OriginalFileName"/>
-                        }
-                    </div>
-                </a>
-            </div>
-        }
-    </div>
-    <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm" id="column-0">
-        @for (int i = 7; i < Model.Medias.Count; i = i+8)
-        {
-            <div id="div-for-remove-@Model.Medias[i].Code" class="media-container show-edit">
-                <a class="edit-button" onclick="EditMedia('@Model.Medias[i].Code'); return false;">
-                    <strong style="margin-right: 5px; font-size: 14px;">edit</strong>
-                    <i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>
-                </a>
-                <a  onclick="SelectMedia('@Model.Medias[i].Code')">
-                    <div class="img-div">
-                        @if (Model.Medias[i].IsVideo.HasValue && Model.Medias[i].IsVideo.Value)
-                        {
-                            <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
-                                <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
-                            </video>
-                        }
-                        else
-                        {
-                            <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05 mb-2" alt="@Model.Medias[i].OriginalFileName"/>
-                        }
-                    </div>
-                </a>
-            </div>
-        }
-    </div>
-    <div class="p-1 col mb-4 mb-lg-0 nodisplay-sm"></div>
-    <div class="p-1 col-6 mb-4 mb-lg-0 nodisplay-md" id="column-mobile-1">
-        @for (int i = 0; i < Model.Medias.Count; i = i+2)
-        {
-            <div id="div-for-remove-@Model.Medias[i].Code" class="media-container" onmouseover="showEditButton(this)" onmouseout="hideEditButton(this)">
-                <a class="edit-button" onclick="EditMedia('@Model.Medias[i].Code'); return false;">
-                    <strong style="margin-right: 5px; font-size: 14px;">edit</strong>
-                    <i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>
-                </a>
-                <a onclick="SelectMedia('@Model.Medias[i].Code')">
-                    <div class="img-div">
-                        @if (Model.Medias[i].IsVideo.HasValue && Model.Medias[i].IsVideo.Value)
-                        {
-                            <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
-                                <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
-                            </video>
-                        }
-                        else
-                        {
-                            <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05 mb-2" alt="@Model.Medias[i].OriginalFileName"/>
-                        }
-                    </div>
-                </a>
-            </div>
-        }
-    </div>
-    <div class="p-1 col-6 mb-4 mb-lg-0 nodisplay-md" id="column-mobile-0">
-        @for (int i = 1; i < Model.Medias.Count; i = i+2)
-        {
-            <div id="div-for-remove-@Model.Medias[i].Code" class="media-container"> 
-                <a class="edit-button" onclick="EditMedia('@Model.Medias[i].Code'); return false;">
-                    <strong style="margin-right: 5px; font-size: 14px;">edit</strong>
-                    <i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>
-                </a>
-                <a onclick="SelectMedia('@Model.Medias[i].Code')">
-                    <div class="img-div">
-                        @if (Model.Medias[i].IsVideo.HasValue && Model.Medias[i].IsVideo.Value)
-                        {
-                            <video autoplay="autoplay" muted loop id="img-@Model.Medias[i].Code" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="@Model.Medias[i].OriginalFileName">
-                                <source src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" type="video/mp4">
-                            </video>
-                        }
-                        else
-                        {
-                            <img asp-append-version="true" id="img-@Model.Medias[i].Code" src="@Model.BasePath@Model.Medias[i].FileName?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05 mb-2" alt="@Model.Medias[i].OriginalFileName"/>
-                        }
+                        <div class="draggable m-0" name="image-gallery">
+                            @if (MediaCostants.ImageExtensions.Contains(image.Type.ToUpper()))
+                            {
+                                <img id="img-@image.Code" src="@Model.BasePath@image.FileName?tr=w-400" class="card-body mb-2 rounded-05 img-rounded-trasparent w-100 p-0" title="@image.OriginalFileName"/>
+                            }
+                            else
+                            {
+                                <video id="img-@image.Code" autoplay="autoplay" muted loop class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" title="@image.OriginalFileName">
+                                    <source src="@Model.BasePath@image.FileName?tr=w-400" type="video/mp4">
+                                </video>
+                            }
+                        </div>
                     </div>
                 </a>
             </div>
@@ -332,9 +108,65 @@
         </div>
         <div class="float-end">
             <div class="d-flex align-items-center">
-                <a class="blue-link me-4 fw-bolder" style="font-size: 14px; margin-top: 2px;">+ add to portfolio</a>
-                <a class="rounded-pill btn btn-grey btn-padding" style="padding-left: 35px !important; padding-right:  35px !important; font-size:  15px;" type="submit">create portfolio</a>
+                @if (Model.Portfolios != null && Model.Portfolios.Count > 0)
+                {
+                    <a onclick="openModal('#modalAddMediaToPortfolio'), resetModalAdd()" class="blue-link me-4 fw-bolder" style="font-size: 14px; margin-top: 2px;">+ add to portfolio</a>
+                }
+                <a onclick="openModal('#modalCreatePortfolio'), ResetInput()" class="rounded-pill btn btn-grey btn-padding" style="padding-left: 35px !important; padding-right:  35px !important; font-size:  15px;" type="submit">create portfolio</a>
                 <a class="ms-4 me-2 mt-1" type="button" onclick="CloseAlert()"><i class="fa-solid fa-grey fa-circle-xmark"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalAddMediaToPortfolio" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color"><strong>Add to Portfolio</strong></h3>
+                <a onclick="closeModal('#modalAddMediaToPortfolio')"><i class="fa-solid fa-circle-xmark"></i></a>
+            </div>
+            <div id="input-portfolio-edit">
+                <div class="modal-body">
+                    <div class="row select-portfolio-modal">
+                        @foreach (var item in @Model.Portfolios)
+                        {
+                            <div class="col-sm-12 col-md-6 mb-4">
+                                <div id="div-select-portfolio-@item.Code" class="d-flex p-2 select-portfolio" onclick="SelectPortfolio('@item.Code')">
+                                    <div class="w-50">
+                                        @if (!item.IsVideo)
+                                        {
+                                            <img src="@Model.BasePath@item.DefaultImageName?tr=w-400" class="img-thumbnail-custom-portfolio w-100" title="@item.DefaultImageOriginalName">
+                                        }
+                                        else
+                                        {
+                                            <video autoplay="autoplay" muted loop class="img-thumbnail-custom-portfolio w-100" title="@item.DefaultImageOriginalName">
+                                                <source src="@Model.BasePath@item.DefaultImageName?tr=w-400" type="video/mp4">
+                                            </video>
+                                        }
+                                    </div>
+                                    <div class="w-50 ps-2">
+                                        <p class="mb-0"><strong>@item.Name</strong></p>
+                                        <p class="mb-0 text-grey">Updated on <br/>@item.LastUpdate</p>
+                                        <p class="mb-0 text-grey">@item.NumberMedia medias</p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>                
+                </div>
+                <div class="modal-footer">                
+                    <a onclick="AddToPortfolio()" class="mt-2 rounded-pill btn btn-primary btn-padding" type="submit">save</a>
+                </div>
+            </div>
+            <div id="success-portfolio-edit" style="display: none">
+                <div class="modal-body justify-content-center d-flex">
+                    <a id="portfolio-setting-link" class="mt-2 rounded-pill btn btn-primary" type="submit">view portfolio</a> 
+                </div>
+                <div class="modal-footer">    
+                    <div class="empty-veesy"></div>
+                    <div class="empty-veesy"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -399,6 +231,60 @@
 @section Scripts
 {
     <script>
+    if (screen.width < 600){
+        document.getElementById("images-container").style.columnCount = 2;
+    }
+    else{
+        document.getElementById("images-container").style.columnCount = 8;
+    }
+        
+    let mediacount = @Model.Medias.Count;
+
+    function resetModalAdd() {
+        document.getElementById("input-portfolio-edit").style.display = "block";
+        document.getElementById("success-portfolio-edit").style.display = "none";
+    }
+    
+    
+    function AddToPortfolio() {
+        $('#load-spinner').css("display", "block");
+        var Code = portfolioCodeSelected;
+        CodeImagesToAdd = []
+        for (const code in img_selected_id) {
+            CodeImagesToAdd.push(img_selected_id[code])
+        }
+        var addPortfolioDto = {CodeImagesToAdd, Code};
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("AddMedia", "Portfolio")',
+            data: JSON.stringify(addPortfolioDto),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (response) {
+                if(response.result){
+                    document.getElementById("input-portfolio-edit").style.display = "none";
+                    document.getElementById("success-portfolio-edit").style.display = "block";
+                    document.getElementById("portfolio-setting-link").setAttribute('href', "/portfolio/settings/" + response.code);   
+                }
+                $('#load-spinner').css("display", "none");
+            },
+            error: function (response) {
+                $('#load-spinner').css("display", "none");
+            }
+        })
+    }
+    
+    let portfolioCodeSelected = "";
+    function SelectPortfolio(portfolioCode) {
+        if (portfolioCodeSelected != ""){
+            document.getElementById("div-select-portfolio-" + portfolioCodeSelected).classList.remove("select-portfolio-selected");
+            document.getElementById("div-select-portfolio-" + portfolioCodeSelected).classList.add("select-portfolio");
+        }
+        portfolioCodeSelected = portfolioCode;
+        document.getElementById("div-select-portfolio-" + portfolioCodeSelected).classList.add("select-portfolio-selected");
+        document.getElementById("div-select-portfolio-" + portfolioCodeSelected).classList.remove("select-portfolio");
+    }
+    
     
     function ResetInput() {
         document.getElementById("input-portfolio").style.display = "block";
@@ -472,11 +358,11 @@
                         removeMediaFromList(response.codeToDelete[i]);
                         alert_portfolio.classList.remove("show");
                     }
-                    location.reload();
                 }
                 else{
                     toastNotifyCustom(response.message, 10000, "#ca0a0a", "")
                 }
+                closeModal('#modalDeleteMedia');
                 $('#load-spinner').css("display", "none");
             },
             error: function (response) {
@@ -493,7 +379,9 @@
     
     const alert_portfolio = document.getElementById("alert-portfolio");
     function SelectMedia(img_id) {
-        var media = document.getElementById('img-'+img_id); 
+        var media = document.getElementById('img-'+img_id);
+        //var media = screen.width < 600 ? medias[1] : medias[0];
+
         if(media.classList.contains("img-rounded-ciano")){
             media.classList.remove("img-rounded-ciano")
             media.classList.add("img-rounded-trasparent")
@@ -539,7 +427,7 @@
             paramName: "file",
             maxFilesize: 10000, // MB
             addRemoveLinks: true,
-            parallelUploads: 5,
+            parallelUploads: 1,
             uploadMultiple: true,
             acceptedFiles: "image/jpeg,image/png,image/gif,image/jpg,video/mp4,video/mov",
             addedfiles: function (){
@@ -552,6 +440,7 @@
                 }
             },
             success: function (file) {
+               mediacount++;
                this.removeFile(file);
             },
             successmultiple: function (file, response) {
@@ -569,27 +458,31 @@
                         imageNumber++;
                         var index = imageNumber % divider;
                         if (!res.MediaDtos[i].IsVideo){
-                            document.getElementById("column-" + mobile +  index).innerHTML +=
-                            '<div id="div-for-remove-' + res.MediaDtos[i].Code + '" class="media-container show-edit">' +
-                             '<a class="edit-button" onclick="EditMedia(\'' + res.MediaDtos[i].Code + '\'); return false;">' +
-                                 '<strong style="margin-right: 5px; font-size: 14px;">edit</strong>' +
-                                 '<i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>' +
-                             '</a><a onclick="SelectMedia(\'' + res.MediaDtos[i].Code + '\')">' +
-                                 '<div class="img-div">' +
-                                         '<img asp-append-version="true" id="img-' + res.MediaDtos[i].Code + '" src="' + '@Model.BasePath' + res.MediaDtos[i].FileName + '?tr=w-300" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05 mb-2" alt="'+ res.MediaDtos[i].OriginalFileName +'"/>' +
-                                 '</div></a></div>'
+                            document.getElementById("images-container").innerHTML +=
+                            '<div id="div-for-remove-' + res.MediaDtos[i].Code + '" class="media-container show-edit">'+
+                                            '<a class="edit-button" onclick="EditMedia(' + res.MediaDtos[i].Code + '); return false;">'+
+                                                '<strong style="margin-right: 5px; font-size: 14px;">edit</strong>'+
+                                                '<i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>'+
+                                            '</a>'+
+                                            '<a onclick="SelectMedia(' + res.MediaDtos[i].Code + ')">'+
+                                                '<div class="img-div">'+
+                                                    '<div class="draggable m-0" name="image-gallery">'+
+                                                        '<img id="img-' + res.MediaDtos[i].Code + '" src="@Model.BasePath' + res.MediaDtos[i].FileName + '?tr=w-400" class="card-body mb-2 rounded-05 img-rounded-trasparent w-100 p-0" title="' + res.MediaDtos[i].OriginalFileName + '"/>'+
+                            '</div></div></a></div>'
                          }
                         else{
-                            document.getElementById("column-"+ mobile + index).innerHTML +=
-                            '<div id="div-for-remove-' + res.MediaDtos[i].Code + '" class="media-container show-edit">' +
-                             '<a class="edit-button" onclick="EditMedia(\'' + res.MediaDtos[i].Code + '\'); return false;">' +
-                                 '<strong style="margin-right: 5px; font-size: 14px;">edit</strong>' +
-                                 '<i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>' +
-                             '</a><a onclick="SelectMedia(\'' + res.MediaDtos[i].Code + '\')">' +
-                                 '<div class="img-div">' +
-                                         '<video autoplay="autoplay" muted loop id="img-' + res.MediaDtos[i].Code + '" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" alt="'+ res.MediaDtos[i].OriginalFileName +'">' +
-                                              '<source src="' + '@Model.BasePath' + res.MediaDtos[i].FileName + '?tr=w-300" type="video/mp4">' +
-                                    '</video></div></a></div>'
+                            document.getElementById("images-container").innerHTML +=
+                            '<div id="div-for-remove-' + res.MediaDtos[i].Code + '" class="media-container show-edit">'+
+                                            '<a class="edit-button" onclick="EditMedia(' + res.MediaDtos[i].Code + '); return false;">'+
+                                                '<strong style="margin-right: 5px; font-size: 14px;">edit</strong>'+
+                                                '<i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>'+
+                                            '</a>'+
+                                            '<a onclick="SelectMedia(' + res.MediaDtos[i].Code + ')">'+
+                                                '<div class="img-div">'+
+                                                    '<div class="draggable m-0" name="image-gallery">'+
+                                                        '<video autoplay="autoplay" muted loop class="img-thumbnail-custom-portfolio w-100" title="' + res.MediaDtos[i].DefaultImageOriginalName + '">'+
+                                                                                                         '<source src="@Model.BasePath' + res.MediaDtos[i].DefaultImageName + '?tr=w-400" type="video/mp4">'+
+                                                                                                     '</video></div></div></a></div>'
                                     
                         }
                     }
@@ -645,9 +538,13 @@
             
             document.body.style.overflow = 'hidden';
         }
+        
+
         function hideDropZone() {
             document.getElementById("dropzone-close-button").style.display = "none";
-            div_uploader.classList.add("nodisplay-md");
+            if (mediacount != 0){
+                div_uploader.classList.add("nodisplay-md");
+            }
             uploader.classList.remove("dropzone-full-page");
             uploader.classList.add("card-grey-dashed-veesy");
             

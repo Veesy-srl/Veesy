@@ -3,6 +3,12 @@
 
 @{
     ViewData["Title"] = "Portfolio Settings";
+    var iconBack = "fa-regular";
+
+    if (Model.Portfolio.IsMain)
+    {
+        iconBack = "fa-solid";
+    }
 }
 
 <div class="row pt-7rem">
@@ -10,40 +16,43 @@
         <nav class="breadcrumb-container" aria-label="Percorso di navigazione">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><img src="~/imgs/dashboard_home_light-mode.png" style="width: 18px; margin-top: -5px;" class="me-2"><a class="breadcrumb-a me-2" asp-action="Index" asp-area="Portfolio" asp-controller="Home">dashboard</a><i class="fa-solid fa-chevron-right"></i></li>
-                <li class="breadcrumb-item"><a class="breadcrumb-a" asp-action="List"><strong>portfolio</strong></a><i class="fa-solid fa-chevron-right"></i></li>
+                <li class="breadcrumb-item"><a class="breadcrumb-a me-2" asp-action="List">portfolio</a><i class="fa-solid fa-chevron-right"></i></li>
                 <li class="breadcrumb-item"><a class="breadcrumb-a" href="#"><strong>settings</strong></a></li>
             </ol>
         </nav>
         <div class="w-80-veesy card-white-veesy p-3 mb-3">
             <div class="d-flex">
                 <div class="col-11">
-                    <p class="ms-2"><strong>@User.Identity.Name's Portfolio</strong></p>
+                    <p class="ms-2"><i style="color: #75CCDD" class="@iconBack icon-main-portfolio fa-star me-2"></i><strong id="portfolio-name-card">@Model.Portfolio.Name</strong></p>
                 </div>
                 <div class="col-1"><div class="text-end"><i class="fa-solid fa-circle fa-xs" style="color: #202F4D;"></i></div></div>
             </div>
             <div class="d-flex mb-3">
                 <div class="col-12">
                     <div class="text-left">
-                        @if (!Model.Portfolio.PortfolioMedias.Any())
+                        @if (Model.Portfolio.DefaultMedia == null)
                         {
                             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" class="img-thumbnail rounded-circle" alt="user-image" style="max-width: none!important; width: 60px !important; height: 60px !important;">
                         }
                         else
                         {
-                            <img src="@Model.BasePathImages@Model.Portfolio.PortfolioMedias.First().Media.FileName" style="width: 60px !important; height: 60px !important; max-width: none!important; " class="img-thumbnail-custom rounded-circle" alt="user-image">
+                            @if (MediaCostants.ImageExtensions.Contains(Model.Portfolio.DefaultMedia.Type.ToUpper()))
+                            {
+                                <img src="@Model.BasePathImages@Model.Portfolio.DefaultMedia.FileName?tr=w-400" class="img-thumbnail-custom-portfolio w-50" alt="user-image">
+                            }
                         }
                     </div>
                 </div>
             </div>
-            <div class="d-flex"><p class="mb-0">Updated on @Model.Portfolio.LastEditRecordDate</p></div>
-            <div class="d-flex"><p class="mb-0 veesy-overflow">@Model.Portfolio.PortfolioMedias.Count media uploaded</p></div>
-            <div class="d-flex"><p class="mb-0 veesy-overflow">2 images (TODO)</p></div>
-            <div class="d-flex"><p class="mb-0 veesy-overflow">8 videos (TODO)</p></div>
-            <button class="rounded-pill btn btn-primary btn-variant">Preview portfolio</button>
+            <div class="d-flex"><p class="mb-0 text-grey">Updated on @Model.Portfolio.LastEditRecordDate</p></div>
+            <div class="d-flex"><p class="mb-0 text-grey veesy-overflow">@Model.Portfolio.NumberMedia media uploaded</p></div>
+            <div class="d-flex"><p class="mb-0 mt-3 text-grey veesy-overflow">@Model.Portfolio.NumberImage images</p></div>
+            <div class="d-flex"><p class="mb-0 text-grey veesy-overflow">@Model.Portfolio.NumberVideo videos</p></div>
+            <a class="rounded-pill btn btn-primary btn-variant w-100 mt-3">Preview portfolio</a>
         </div>
     </div>
     <div class="col-sm-12 col-md-6">
-        <h2 class="text-color"><strong>@User.Identity.Name's Portfolio</strong></h2>
+        <h2 class="text-color"><strong id="portfolio-name-title">@Model.Portfolio.Name</strong></h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <a class="grey-link ms-2"><strong>learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a></p>
         <div class="empty-veesy"></div>
         <div class="row">
@@ -51,64 +60,154 @@
             <div class="col-sm-12 col-md-6 col-lg-6 ps-2 pe-2">
                 <hr class="hr"/>
                 <div class="d-flex">
-                    @if (string.IsNullOrEmpty(Model.Portfolio.Name))
-                    {
-                        <div class="col-9">
-                            <p class="mb-0"><strong>Portfolio Name:</strong></p>
-                            <p class="mb-0">Information missing</p>
-                        </div>
-                        <div class="col-3 text-end"><a onclick="openModal('#modalPortfolioName')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div>
-                    }
-                    else
-                    {
-                        <div class="col-9 profile-section">
-                            <p class="mb-0"><strong>Portfolio Name:</strong></p>
-                            <p class="mb-0 veesy-overflow">@Model.Portfolio.Name</p>
-                        </div>
-                        <div class="col-3 text-end"><a onclick="openModal('#modalPortfolioName')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
-                    }
+                    <div class="col-9 profile-section">
+                        <p class="mb-0"><strong>Portfolio Name:</strong></p>
+                        <p class="mb-0 veesy-overflow" id="portfolio-name">@Model.Portfolio.Name</p>
+                    </div>
+                    <div class="col-3 text-end"><a onclick="setTextAreaValue('portfolio-name-edit', '@Model.Portfolio.Name'), openModal('#modalName')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
                 </div>
                 <hr class="hr"/>
                 <div class="d-flex">
+                    @if (Model.Portfolio.IsPublic)
+                    {
+                        <div class="col-8">
+                            <p class="mb-0"><strong>Portfolio Password</strong></p>
+                            <a id="password-show" class="mb-0 veesy-overflow font-a-as-p" onclick="openModal('#modalPassword')">Your portfolio is public</a>
+                        </div>
+                        @if (string.IsNullOrEmpty(Model.Portfolio.Password))
+                        {
+                            <div class="col-4 text-end"><a onclick="openModal('#modalPassword')" class="grey-link"><i id="lock-icon" class="fa-solid fa-lock-open me-2"></i><strong id="lock-text">unlocked</strong></a></div>
+                        }
+                        else
+                        {
+                            <div class="col-4 text-end"><a onclick="ChangePortfolioSecurity()" class="grey-link"><i id="lock-icon" class="fa-solid fa-lock-open me-2"></i><strong id="lock-text">unlocked</strong></a></div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="col-8">
+                            <p class="mb-0"><strong>Portfolio Password</strong></p>
+                            <a id="password-show" class="mb-0 veesy-overflow font-a-as-p" onclick="openModal('#modalPassword')">@Model.Portfolio.Password</a>
+                        </div>
+                        <div class="col-4 text-end"><a onclick="ChangePortfolioSecurity()" class="grey-link"><i id="lock-icon" class="fa-solid fa-lock me-2"></i><strong id="lock-text">lock</strong></a></div>
+                    }
+                </div>
+                <hr class="hr"/>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-6 ps-2 pe-2">
+                <hr class="hr nodisplay-sm"/>
+                <div class="d-flex">
                     <div class="col-9">
-                        <p class="mb-0"><strong>Main Portfolio:</strong></p>
-                        <p class="mb-0 veesy-overflow">This portfolio is set as your main</p>
+                        <p class="mb-0"><strong><i style="color: #75CCDD" class="@iconBack icon-main-portfolio fa-star me-2"></i>Main Portfolio:</strong></p>
+                        @if (Model.Portfolio.IsMain)
+                        {
+                            <p class="mb-0 veesy-overflow" id="portfolio-main-text">This portfolio is set as your main</p>
+                        }
+                        else
+                        {
+                            <a class="grey-link mb-0 font-a-as-p" id="portfolio-main-text" onclick="ChangeMainPortfolio()">Make this your Main Portfolio</a>
+                        }
                     </div>
                     @* <div class="col-3 text-end"><a onclick="openModal('#modalExternalLink')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div> *@
                 </div>
+                <hr class="hr"/>
+                @if (Model.Portfolio.IsMain)
+                {
+                    <div class="d-flex">
+                        <div class="col-9">
+                            <p class="text-grey mb-0"><strong>Delete portfolio:</strong></p>
+                            <p class="mb-0 veesy-overflow">You can't delete main portfolio</p>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="d-flex">
+                        <div class="col-9">
+                            <a class="red-link mb-0 font-a-as-p" onclick="openModal('#modalDeletePortfolio')"><strong>Delete portfolio:</strong></a>
+                            <p class="mb-0 veesy-overflow">Your medias will be kept safe in cloud.</p>
+                        </div>
+                    </div>
+                }
                 <hr class="hr"/>
             </div>
         </div>
         <div class="empty-veesy"></div>
         <div class="row">
             <h3 class="text-color"><strong>Select layout</strong></h3>
-            <p class="mb-0 veesy-overflow">Remember that for <b>horizontal images</b>, 1 or 2 columns are more suitable choice, for <b>vertical images</b>, it's better to pick 3 or 4 columns.</p>
-            @foreach (var item in VeesyConstants.GetAvailableLayouts())
-            {
-                <div class="form-check col-3">
-                    <input class="form-check-input" type="radio" name="column-layout" asp-for="Portfolio.Layout" value="@item" id="@item" onchange="switchColumnLayout(@((int)item))"/>
-                    <label class="form-check-label" for="@item">@item.ToString()</label>
-                </div>
-            }
+            <p>Remember that for <b>horizontal images</b>, 1 or 2 columns are more suitable choice, for <b>vertical images</b>, it's better to pick 3 or 4 columns.</p>
+            <div class="ms-1 row">
+                @foreach (var item in VeesyConstants.GetAvailableLayouts())
+                {
+                    <div class="ps-2 pe-2 col-sm-12 col-md-3">
+                        @{
+                            var css_select = "";
+                            if (Model.Portfolio.Layout == item)
+                            {
+                                css_select = "div-select-layout-selected";
+                            }
+                                
+                        }
+                        <div id="layout-div-@((int)item)" class="p-2 form-check div-select-layout @css_select">
+                            <div class="d-flex me-2">
+                                <input style="visibility: hidden" class="form-check-input" type="radio" name="column-layout" asp-for="Portfolio.Layout" value="@item" id="layout-@item" onchange="switchColumnLayout(@((int)item))"/>
+                                <label class="ms-2 form-check-label" for="@item">@((int)item) columns</label>
+                            </div>
+                            <div>
+                                @{
+                                    var url = "../../imgs/PortfolioLayout/col_" + (int)item + ".png";
+                                }
+                                <a onclick="ChangeLayout('@item', @((int)item)), UpdateLayout(@((int)item))">
+                                    <img class="w-100" src="@url"/>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
         <div class="empty-veesy"></div>
         <div class="row">
             <h3 class="text-color"><strong>Your Images</strong></h3>
-            TODO mostrare immagini del portfolio
             <div class="card-columns draggable-zone" id="images-container">
                 @foreach (var image in Model.Portfolio.PortfolioMedias)
                 {
-                    <div class="draggable m-0" name="image-gallery">
-                        <img src="https://picsum.photos/600/400" class="card-body m-0 p-0 rounded-05 img-rounded-trasparent w-100 p-0"/>                        
-                    </div>
-                }
-                @foreach (var image in Model.Portfolio.PortfolioMedias)
-                {
-                    <div class="draggable m-0" name="image-gallery">
-                        <img src="https://picsum.photos/300/400" class="card-body m-0 p-0 rounded-05 img-rounded-trasparent w-100"/>                        
-                    </div>
+                    @if (MediaCostants.ImageExtensions.Contains(image.Media.Type.ToUpper()))
+                    {
+                        <div class="draggable m-0" name="image-gallery">
+                            <img src="@Model.BasePathImages@image.Media.FileName?tr=w-400" class="card-body m-0 p-0 rounded-05 img-rounded-trasparent w-100 p-0" title="@image.Media.OriginalFileName"/>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="draggable m-0" name="image-gallery">
+                            <video autoplay="autoplay" muted loop class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" title="@image.Media.OriginalFileName">
+                                <source src="@Model.BasePathImages@image.Media.FileName?tr=w-400" type="video/mp4">
+                            </video>
+                        </div>
+                    }
                 }
             </div>
+        </div>
+        <div class="empty-veesy"></div>
+        <div id="div-uploader">
+            <form enctype="multipart/form-data" asp-route-PortfolioId="@Model.Portfolio.Id" asp-action="UploadMediaInPortfolio" asp-controller="Media" asp-area="Portfolio" class="dropzone card-grey-dashed-veesy mb-4" id="uploader">
+                <a id="dropzone-close-button" style="display: none;" onclick="hideDropZone()" class="ms-2 btn btn-light border fw-bolder shadow-none close-button-dropzone">
+                    <i class="fas fa-times-circle fa-2xs text-primary" id="icon-color" aria-hidden="true"></i>
+                    <span id="color-text-variant">close</span>
+                </a>
+                <div class="dz-message needsclick" id="message-uploader">
+                    <div id="div-uploader-icon" class="w-100 mb-1">
+                        <i id="uploader-icon" class="fa-solid fa-circle-plus fa-xl" style="color: #0D2045"></i>
+                    </div>
+                    <span id="uploader-text" class="text">
+                        Upload or drop files here. <br/> (Accepted formats: jpg, png, mov, mp4, gif)
+                    </span>
+                    <div class="progress-bar progress-bar-primary" role="progressbar" data-dz-uploadprogress>
+                        <span class="progress-text"></span>
+                    </div>
+                </div>
+            </form>
         </div>
         <div>
             <button class="rounded-pill btn btn-primary btn-variant">Publish</button>
@@ -128,64 +227,356 @@
         <div class="empty-veesy"></div>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/@@shopify/draggable@1.0.0-beta.11/lib/draggable.bundle.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@@shopify/draggable@1.0.0-beta.11/lib/draggable.bundle.legacy.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@@shopify/draggable@1.0.0-beta.11/lib/sortable.js"></script>
 
-<style>
-    .draggable {
-        cursor: move;
-    }
-    
-    .draggable-source--is-dragging {
-        /* non togliere anche se non ha usi, serve per eliminare un elemento generato dal plugin */ 
-        visibility: hidden;
-    }
-    
-    img.rounded-corners {
-      border-radius: 20px;
-      width: 100%
-    }
-    
-    .draggable-zone {
-        border-style: dashed;
-        border-width: medium;
-        border-color: grey;
-        padding-bottom: 10px;
-        padding-top: 10px;
-    }
-    .card-columns {
-        column-count: @((int)Model.Portfolio.Layout);
-    }
-</style>
 
-<script>
+<div class="modal fade" id="modalName" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"></h3>
+                <a onclick="closeModal('#modalName')"><i class="fa-solid fa-circle-xmark"></i></a>
+            </div>
+            <div class="modal-body">
+                <p class="mb-1"><strong>Name*</strong></p>
+                <input type="text" id="portfolio-name-edit" rows="4" class="w-100 input-modal"/>
+                <p class="mt-2 mb-0">*required field</p>
+            </div>
+            <div class="modal-footer">                
+                <a onclick="UpdateName()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalPassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Portfolio password</strong></h3>
+                <a onclick="closeModal('#modalPassword')"><i class="fa-solid fa-circle-xmark"></i></a>
+            </div>
+            <div class="modal-body">
+                <p>Your password must be lorem ipsum.</p>
+                <p class="mb-1"><strong>Set password</strong></p>
+                <input type="text" id="password-edit" rows="4" class="w-100 input-modal"/>
+            </div>
+            <div class="modal-footer mt-2">                
+                <a onclick="UpdatePassword()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalDeletePortfolio" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Delete Portfolio</strong></h3>
+                <a onclick="closeModal('#modalDeletePortfolio')"><i class="fa-solid fa-grey fa-circle-xmark"></i></a>
+            </div>
+            <div class="empty-veesy"></div>
+            <div class="modal-body text-center">
+                <h5 id="confirm-delete-body">The portfolio @Model.Portfolio.Name will be delete permanently. Are you sure?</h5>
+            </div>
+            <div class="empty-veesy"></div>
+            <div class="row">  
+                <div class="col-4">
+                    <p class="ps-3 text-muted">
+                        <a style="text-decoration: underline !important; position: relative; top: 20px;" class="grey-link mt-3" onclick="closeModal('#modalDeletePortfolio')">back to portfolio</a>
+                    </p>
+                </div>
+                <div class="col-4 justify-content-center" style="display: flex">
+                    <form method="post" asp-controller="Portfolio" asp-action="DeletePortfolio">
+                        @Html.HiddenFor(s => s.Portfolio.Id)
+                        <button class="mt-2 rounded-pill btn btn-delete" type="submit">yes, delete</button>
+                    </form>
+                </div>
+                <div class="col-4"></div>
+            </div>
+            <div class="empty-veesy"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+
+    <script src="https://cdn.jsdelivr.net/npm/@@shopify/draggable@1.0.0-beta.11/lib/draggable.bundle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@@shopify/draggable@1.0.0-beta.11/lib/draggable.bundle.legacy.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@@shopify/draggable@1.0.0-beta.11/lib/sortable.js"></script>
+
+    <script>
     
+    let active_layout = @((int)Model.Portfolio.Layout);
+    
+    function UpdateLayout(layout) {
+        if (active_layout == layout)
+            return;
+        active_layout = layout;
+        var LayoutGrid = active_layout;
+        var Id = '@Model.Portfolio.Id'
+        var portfolioDto = {Id, LayoutGrid}
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("UpdateLayout", "Portfolio")',
+            data: JSON.stringify(portfolioDto),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (response) {
+            },
+            error: function (response) {
+                $('#load-spinner').css("display", "none");
+            }
+        })
+    }
+                                                                                                        
     function switchColumnLayout(columnsNumber) {
-        var imagesContainer = document.getElementById("images-container");
-        imagesContainer.classList.remove("card-columns")
-        imagesContainer.style.columnCount = columnsNumber
+      var imagesContainer = document.getElementById("images-container");
+      imagesContainer.classList.remove("card-columns")
+      imagesContainer.style.columnCount = columnsNumber
     }
     
     const sortable = new Sortable.default(
-    	document.querySelectorAll('.draggable-zone'), {
-    		draggable: '.draggable',
-            handle: ".draggable",
-            mirror: {
-                appendTo: "body",
-                constrainDimensions: true
-            },
-            delay: 50
-    	}
+        document.querySelectorAll('.draggable-zone'), {
+            draggable: '.draggable',
+              handle: ".draggable",
+              mirror: {
+                  appendTo: "body",
+                  constrainDimensions: true
+              },
+              delay: 50
+        }
     )
-    sortable.on('drag:start', (divElem) => {
-        console.log(divElem)
+        sortable.on('drag:start', (divElem) => {
+          console.log(divElem)
+          var imageElem = divElem.source.children[0]
+          imageElem.style.border = "3px solid #75CCDD"
+        })
+        sortable.on('drag:stop', (divElem) => {
         var imageElem = divElem.source.children[0]
-        imageElem.style.border = "3px solid #75CCDD"
-    })
-    sortable.on('drag:stop', (divElem) => {
-    	var imageElem = divElem.source.children[0]
-        imageElem.style.border = ''
-        //$("body").append($(".draggable-source--is-dragging"))
-    })
-</script>
+          imageElem.style.border = ''
+          //$("body").append($(".draggable-source--is-dragging"))
+        })
+    </script>
+
+    <script>
+    function UpdateName() {
+        $('#load-spinner').css("display", "block");
+        var Name = document.getElementById("portfolio-name-edit").value
+        var Id = '@Model.Portfolio.Id'
+        var portfolioDto = {Id, Name}
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("UpdateName", "Portfolio")',
+            data: JSON.stringify(portfolioDto),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (response) {
+                if(response.result){
+                    document.getElementById("portfolio-name-edit").value = Name;
+                    document.getElementById("portfolio-name-card").textContent = Name;
+                    document.getElementById("portfolio-name-title").textContent = Name;
+                    document.getElementById("portfolio-name").textContent = Name;
+                    closeModal('#modalName')
+                }
+                $('#load-spinner').css("display", "none");
+            },
+            error: function (response) {
+                $('#load-spinner').css("display", "none");
+            }
+        })
+    }
+    
+    function UpdatePassword() {
+        $('#load-spinner').css("display", "block");
+        var Password = document.getElementById("password-edit").value
+        portfolioPassword = Password;
+        var Id = '@Model.Portfolio.Id'
+        var portfolioDto = {Id, Password}
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("UpdatePassword", "Portfolio")',
+            data: JSON.stringify(portfolioDto),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (response) {
+                if(response.result){
+                    document.getElementById("password-show").textContent = Password;
+                    document.getElementById("lock-text").textContent = "lock";
+                    document.getElementById("lock-icon").classList.remove("fa-lock-open");
+                    document.getElementById("lock-icon").classList.add("fa-lock");
+                    closeModal('#modalPassword')
+                }
+                $('#load-spinner').css("display", "none");
+            },
+            error: function (response) {
+                $('#load-spinner').css("display", "none");
+            }
+        })
+    }
+    
+    let portfolioIsPublic = '@Model.Portfolio.IsPublic' == 'True' ? true : false;
+    let portfolioPassword = '@Model.Portfolio.Password';
+    function ChangePortfolioSecurity(value) {
+        portfolioIsPublic = !portfolioIsPublic;
+        var IsPublic = portfolioIsPublic;
+        var Id = '@Model.Portfolio.Id'
+        var portfolioDto = {Id, IsPublic}
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("UpdateSecurity", "Portfolio")',
+            data: JSON.stringify(portfolioDto),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (response) {
+                if(response.result){
+                    if (!IsPublic){
+                        document.getElementById("password-show").textContent = portfolioPassword;
+                        document.getElementById("lock-text").textContent = "lock";
+                        document.getElementById("lock-icon").classList.remove("fa-lock-open");
+                        document.getElementById("lock-icon").classList.add("fa-lock");
+                    }
+                    else{
+                        document.getElementById("password-show").textContent = "Your portfolio is public";
+                        document.getElementById("lock-text").textContent = "unlocked";
+                        document.getElementById("lock-icon").classList.add("fa-lock-open");
+                        document.getElementById("lock-icon").classList.remove("fa-lock");
+                    }
+                }
+                $('#load-spinner').css("display", "none");
+            },
+            error: function (response) {
+                $('#load-spinner').css("display", "none");
+            }
+        })
+    }
+    
+    function ChangeMainPortfolio() {
+        var Id = '@Model.Portfolio.Id'
+        var IsMain = true
+        var portfolioDto = {Id, IsMain}
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("SetMainPortfolio", "Portfolio")',
+            data: JSON.stringify(portfolioDto),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (response) {
+                if(response.result){
+                    document.getElementById("portfolio-main-text").textContent = "This portfolio is set as your main";
+                    document.getElementById("portfolio-main-text").classList.remove("grey-link")
+                    var icons = document.getElementsByClassName("icon-main-portfolio");
+                    for (let i = 0; i < icons.length; i++){
+                        icons[i].classList.remove("fa-regular")
+                        icons[i].classList.add("fa-solid")
+                    }
+                }
+                $('#load-spinner').css("display", "none");
+            },
+            error: function (response) {
+                $('#load-spinner').css("display", "none");
+            }
+        })
+    }
+    
+    function ChangeLayout(text, integer){
+        var divs = document.getElementsByClassName("div-select-layout-selected")
+        for(let i = 0; i < divs.length; i++){
+            divs[i].classList.remove("div-select-layout-selected")
+        }
+        document.getElementById("layout-div-" + integer).classList.add("div-select-layout-selected")
+        document.getElementById("layout-" + text).checked = true;
+        switchColumnLayout(integer)
+    }
+    </script>
+    
+    <script>
+    var div_uploader = document.getElementById("div-uploader");
+        /*Dropzone configuration*/
+        Dropzone.autoDiscover = false;
+        var uploader = null;
+        var msgUploader = document.getElementById("message-uploader");
+        var divUploader = document.getElementById("div-uploader-icon");
+        var iconUploader = document.getElementById("uploader-icon");
+        var txtUploader = document.getElementById("uploader-text");
+        let dropzone_processing = false;
+    
+        var dropzoneOptions = {
+            dictDefaultMessage: 'Upload or drop files here',
+            paramName: "file",
+            maxFilesize: 10000, // MB
+            addRemoveLinks: true,
+            parallelUploads: 1,
+            uploadMultiple: true,
+            acceptedFiles: "image/jpeg,image/png,image/gif,image/jpg,video/mp4,video/mov",
+            addedfiles: function (){
+                dropzone_processing = true;
+            },
+            uploadprogress: function(file, progress, bytesSent) {
+                if (file.previewElement) {
+                    var progressElement = file.previewElement.querySelector("[data-dz-uploadprogress]");
+                    progressElement.style.width = progress + "%";
+                }
+            },
+            success: function (file) {
+               this.removeFile(file);
+            },
+            successmultiple: function (file, response) {
+                const res = JSON.parse(response);
+                // TODO mostrare popup con success/error
+                if (res.NumberSuccessFile > 0){
+                    toastNotifyCustom(res.SuccessFileMessage, 10000, "#75ccdd", "")
+                    for (let i = 0; i < res.MediaDtos.length; i++){
+                        if (res.MediaDtos[i].IsVideo){
+                            document.getElementById("images-container").innerHTML +=
+                            '<div class="draggable m-0" name="image-gallery" tabindex="0" style="">'+
+                                 '<video autoplay="autoplay" muted="" loop="" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" title="'+ res.MediaDtos[i].OriginalFileName +'">'+
+                                     '<source src="' + '@Model.BasePathImages' + res.MediaDtos[i].FileName + '?tr=w-400" type="video/mp4">'+
+                                 '</video>'+
+                             '</div>';
+                         }
+                        else{
+                            document.getElementById("images-container").innerHTML +=
+                            '<div class="draggable m-0" name="image-gallery" tabindex="0">'+
+                                '<img src="' + '@Model.BasePathImages' + res.MediaDtos[i].FileName + '?tr=w-400" class="card-body m-0 p-0 rounded-05 img-rounded-trasparent w-100 p-0" title="'+ res.MediaDtos[i].OriginalFileName +'">' +
+                            '</div>'
+                                    
+                        }
+                    }
+                }    
+                if (res.NumberErrorFile > 0)
+                    toastNotifyCustom(res.ErrorFileMessage, 10000, "#ca0a0a", "")
+             },
+            errormultiple: function () {
+                toastNotifyCustom("Error during uploading files. Please retry.", 10000, "#ca0a0a", "")
+             },
+            queuecomplete: function (){
+               dropzone_processing = false;
+            }
+        };
+        uploader = document.querySelector('#uploader');
+        var newDropzone = new Dropzone(uploader, dropzoneOptions);
+    </script>
+}
+@section Style
+{
+    <link rel="stylesheet" href="~/css/dropzone_cloudpage.css" asp-append-version="true" />
+    <style>
+        .draggable {
+            cursor: move;
+        }
+        
+        .draggable-source--is-dragging {
+            /* non togliere anche se non ha usi, serve per eliminare un elemento generato dal plugin */ 
+            visibility: hidden;
+        }
+        
+        img.rounded-corners {
+          border-radius: 20px;
+          width: 100%
+        }
+        .card-columns {
+            column-count: @((int)Model.Portfolio.Layout);
+        }
+    </style>
+}

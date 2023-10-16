@@ -6,6 +6,7 @@ using NLog;
 using NuGet.Protocol;
 using Veesy.Domain.Models;
 using Veesy.Presentation.Helper;
+using Veesy.Presentation.Model.Portfolio;
 using Veesy.Service.Dtos;
 
 namespace Veesy.WebApp.Areas.Portfolio.Controllers;
@@ -47,7 +48,7 @@ public class PortfolioController : VeesyController
     {
         try
         {
-            var vm = _portfolioHelper.GetPortfolioSettingsViewModel(UserInfo);
+            var vm = _portfolioHelper.GetPortfolioSettingsViewModel(id, UserInfo);
             return View(vm);
         }
         catch (Exception ex)
@@ -57,9 +58,32 @@ public class PortfolioController : VeesyController
             return RedirectToAction("Index", "Home");
         }
     }
+    
+    [HttpPost]
+    public async Task<IActionResult> DeletePortfolio(PortfolioSettingsViewModel model)
+    {
+        try
+        {
+            var result = await _portfolioHelper.DeletePortfolio(model.Portfolio.Id, UserInfo);
+            if (result.Success)
+            {
+                _notyfService.Custom("Portfolio delete correctly.", 10, "#75CCDD");
+                return RedirectToAction("List", "Portfolio", new { area = "Portfolio" });
+            }
+            _notyfService.Custom(result.Message.Replace("'", "&#39;"), 10, "#ca0a0a");
+            return RedirectToAction("Settings", "Portfolio", new { area = "Portfolio", id = model.Portfolio.Id});
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            _notyfService.Custom("Error deleting file. Please retry.",10, "#ca0a0a");
+            return RedirectToAction("Settings", "Portfolio", new { area = "Portfolio", id = model.Portfolio.Id});
+        }
+    }
 
     #region API
 
+    [HttpPost]
     public async Task<JsonResult> Create([FromBody] NewPortfolioDto newPortfolioDto)
     {
         try
@@ -79,6 +103,175 @@ public class PortfolioController : VeesyController
             return Json(new { Result = false, Message = "Error creating portfolio. Please retry." });
         }
     }    
+    
+    [HttpPost]
+    public async Task<JsonResult> AddMedia([FromBody] EditPortfolioDto addPortfolioDto)
+    {
+        try
+        {
+            var response = await _portfolioHelper.AddMediaToPortfolio(addPortfolioDto, UserInfo);
+            if (!response.Success)
+                _notyfService.Custom(response.Message, 10, "#ca0a0a");
+            else
+                _notyfService.Custom("Portfolio update correctly.", 10, "#75CCDD");
+            return Json(new { Result = response.Success, Message = response.Message, Code = addPortfolioDto.Code });
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            Logger.Error($"EditPortfolioDto : {addPortfolioDto.ToJson()}");
+            _notyfService.Custom("Error adding media. Please retry.", 10, "#ca0a0a");
+            return Json(new { Result = false, Message = "Error adding media. Please retry." });
+        }
+    }    
+    
+    [HttpPost]
+    public async Task<JsonResult> UpdateName([FromBody] UpdatePortfolioDto portfolioDto)
+    {
+        try
+        {
+            var response = await _portfolioHelper.UpdateNamePortfolio(portfolioDto, UserInfo);
+            if (!response.Success)
+                _notyfService.Custom(response.Message, 10, "#ca0a0a");
+            else
+                _notyfService.Custom("Portfolio update correctly.", 10, "#75CCDD");
+            return Json(new { Result = response.Success, Message = response.Message });
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            Logger.Error($"PortfolioDto to update: {portfolioDto.ToJson()}");
+            _notyfService.Custom("Error updating portfolio. Please retry.", 10, "#ca0a0a");
+            return Json(new { Result = false, Message = "Error updating portfolio. Please retry." });
+        }
+    }  
+    
+    [HttpPost]
+    public async Task<JsonResult> UpdatePassword([FromBody] UpdatePortfolioDto portfolioDto)
+    {
+        try
+        {
+            var response = await _portfolioHelper.UpdatePassword(portfolioDto, UserInfo);
+            if (!response.Success)
+                _notyfService.Custom(response.Message, 10, "#ca0a0a");
+            else
+                _notyfService.Custom("Portfolio update correctly.", 10, "#75CCDD");
+            return Json(new { Result = response.Success, Message = response.Message });
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            Logger.Error($"PortfolioDto to update: {portfolioDto.ToJson()}");
+            _notyfService.Custom("Error updating portfolio. Please retry.", 10, "#ca0a0a");
+            return Json(new { Result = false, Message = "Error updating portfolio. Please retry." });
+        }
+    }
+    
+    [HttpPost]
+    public async Task<JsonResult> UpdateSecurity([FromBody] UpdatePortfolioDto portfolioDto)
+    {
+        try
+        {
+            var response = await _portfolioHelper.UpdateSecurity(portfolioDto, UserInfo);
+            if (!response.Success)
+                _notyfService.Custom(response.Message, 10, "#ca0a0a");
+            else
+                _notyfService.Custom("Portfolio update correctly.", 10, "#75CCDD");
+            return Json(new { Result = response.Success, Message = response.Message });
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            Logger.Error($"PortfolioDto to update: {portfolioDto.ToJson()}");
+            _notyfService.Custom("Error updating portfolio. Please retry.", 10, "#ca0a0a");
+            return Json(new { Result = false, Message = "Error updating portfolio. Please retry." });
+        }
+    }  
+    
+    [HttpPost]
+    public async Task<JsonResult> SetMainPortfolio([FromBody] UpdatePortfolioDto portfolioDto)
+    {
+        try
+        {
+            var response = await _portfolioHelper.SetMainPortfolio(portfolioDto, UserInfo);
+            if (!response.Success)
+                _notyfService.Custom(response.Message, 10, "#ca0a0a");
+            else
+                _notyfService.Custom("Portfolio update correctly.", 10, "#75CCDD");
+            return Json(new { Result = response.Success, Message = response.Message });
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            Logger.Error($"PortfolioDto to update: {portfolioDto.ToJson()}");
+            _notyfService.Custom("Error updating portfolio. Please retry.", 10, "#ca0a0a");
+            return Json(new { Result = false, Message = "Error updating portfolio. Please retry." });
+        }
+    }    
+    
+    [HttpPost]
+    public async Task<JsonResult> ChangeMediaPortfolio([FromBody] UpdateMediaPortfolioDto portfolioDto)
+    {
+        try
+        {
+            var response = await _portfolioHelper.UpdateMediaLinkedPortfolio(portfolioDto, UserInfo);
+            if (!response.Success)
+                _notyfService.Custom(response.Message, 10, "#ca0a0a");
+            else
+                _notyfService.Custom("Portfolio update correctly.", 10, "#75CCDD");
+            return Json(new { Result = response.Success, Message = response.Message });
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            Logger.Error($"PortfolioDto to update: {portfolioDto.ToJson()}");
+            _notyfService.Custom("Error updating portfolio. Please retry.", 10, "#ca0a0a");
+            return Json(new { Result = false, Message = "Error updating portfolio. Please retry." });
+        }
+    } 
+    
+    [HttpPost]
+    public async Task<JsonResult> UpdateLayout([FromBody] UpdatePortfolioDto portfolioDto)
+    {
+        try
+        {
+            var response = await _portfolioHelper.UpdateLayout(portfolioDto, UserInfo);
+            if (!response.Success)
+                _notyfService.Custom(response.Message, 10, "#ca0a0a");
+            else
+                _notyfService.Custom("Portfolio layout update correctly.", 10, "#75CCDD");
+            return Json(new { Result = response.Success, Message = response.Message });
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            Logger.Error($"PortfolioDto to update: {portfolioDto.ToJson()}");
+            _notyfService.Custom("Error updating portfolio layout. Please retry.", 10, "#ca0a0a");
+            return Json(new { Result = false, Message = "Error updating portfolio layout. Please retry." });
+        }
+    }   
+
+    [HttpPost]
+    public async Task<JsonResult> Delete([FromBody] Guid portfolioId)
+    {
+        try
+        {
+            var response = await _portfolioHelper.DeletePortfolio(portfolioId, UserInfo);
+            if (!response.Success)
+                _notyfService.Custom(response.Message, 10, "#ca0a0a");
+            else
+                _notyfService.Custom("Portfolio delete correctly.", 10, "#75CCDD");
+            return Json(new { Result = response.Success, Message = response.Message });
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            Logger.Error($"PortfolioDto to delete: {portfolioId}");
+            _notyfService.Custom("Error deleting portfolio. Please retry.", 10, "#ca0a0a");
+            return Json(new { Result = false, Message = "Error updating portfolio. Please retry." });
+        }
+    }   
 
     #endregion
+
 }

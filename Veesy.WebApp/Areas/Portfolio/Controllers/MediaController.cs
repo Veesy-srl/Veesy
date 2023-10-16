@@ -3,14 +3,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
-using NLog.Fluent;
 using NuGet.Protocol;
-using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
 using Veesy.Presentation.Helper;
-using Veesy.Presentation.Model.Media;
+using Veesy.Presentation.Model.Cloud;
+using Veesy.Presentation.Model.Portfolio;
 using Veesy.Service.Dtos;
-using Veesy.WebApp.Areas.Auth.Controllers;
 using Veesy.WebApp.CustomDataAttribute;
 
 namespace Veesy.WebApp.Areas.Portfolio.Controllers;
@@ -77,30 +75,26 @@ public class MediaController : VeesyController
         }
     }
     
-    [HttpGet]
-    public async Task<IActionResult> DeleteMedia(Guid imgToDelete)
+    [HttpPost]
+    public async Task<IActionResult> DeleteMedia(EditViewModel model)
     {
         try
         {
-            var result = await _mediaHelper.DeleteFile(imgToDelete, UserInfo);
-            var successFiles = "Files delete: <br/>";
-            var errorFiles = "Files not delete: <br/>";
-            var codeToDelete = result.Select(s => s.code);
-            foreach (var res in result)
+            var result = await _mediaHelper.DeleteFile(model.Media.Code, UserInfo);
+            if (result.success)
             {
-                if (res.success)
-                    successFiles += res.filename + "<br/>";
-                else
-                    errorFiles += res.filename + " - " + res.message + "<br/>";
+                _notyfService.Custom("Media delete correctly.", 10, "#75CCDD");
+                if (result.previousMedia != null)
+                    return RedirectToAction("Edit", "Cloud", new { area = "Portfolio", id = result.previousMedia.Id });
+                return RedirectToAction("List", "Cloud", new { area = "Portfolio" });
             }
-            if (successFiles != "Files delete: <br/>")
-                _notyfService.Custom(successFiles, 10, "#75CCDD");
-            if (errorFiles != "Files not delete: <br/>")
-                _notyfService.Custom(errorFiles, 10, "#ca0a0a");
-            return RedirectToAction("List", "Cloud", new { area = "Portfolio" });
+            _notyfService.Custom(result.message, 10, "#ca0a0a");
+            return RedirectToAction("Edit", "Cloud", new { area = "Portfolio", id = result.previousMedia.Id });
         }
         catch (Exception ex)
         {
+            Logger.Error(ex, ex.Message);
+            _notyfService.Custom("Error deleting file. Please retry.",10, "#ca0a0a");
             return RedirectToAction("List", "Cloud", new { area = "Portfolio" });
         }
     }
@@ -169,6 +163,46 @@ public class MediaController : VeesyController
         {
             Logger.Error(ex, ex.Message);
             return File(await System.IO.File.ReadAllBytesAsync($"{_environment.WebRootPath}\\imgs\\notfound.jpg"), "image/jpeg");
+        }
+    }
+
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status415UnsupportedMediaType)]
+    [MultipartFormData]
+    [DisableFormValueModelBinding]
+    public async Task<IActionResult> UploadMediaInPortfolio(Guid PortfolioId)
+    {
+        try
+        {
+            var result = await _mediaHelper.UploadFileAsyncToPortfolio(HttpContext.Request.Body,  Request.ContentType, PortfolioId, UserInfo);
+            var successFiles = "Files upload: </br>";
+            var errorFiles = "Files not upload: </br>";
+            var response = new UploadMediaResponseDto();
+            foreach (var res in result)
+            {
+                if (res.success)
+                {
+                    successFiles += res.fileName + "</br>";
+                    response.NumberSuccessFile++;
+                    response.MediaDtos.Add(res.media);
+                }
+                else
+                {
+                    errorFiles += res.fileName + " - " + res.message + "</br>";
+                    response.NumberErrorFile++;
+                }
+            }
+
+            response.SuccessFileMessage = successFiles;
+            response.ErrorFileMessage = errorFiles;
+            return Ok(response.ToJson());
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            _notyfService.Custom("Error during upload file. Please retry.", 10, "#ca0a0a");
+            return BadRequest();
         }
     }
 }

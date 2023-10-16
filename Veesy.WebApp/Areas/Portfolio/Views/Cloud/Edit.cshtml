@@ -1,5 +1,4 @@
 @model Veesy.Presentation.Model.Cloud.EditViewModel
-@using System.IO
 @using Veesy.Presentation.Helper
 @{
     ViewData["Title"] = "Edit Media";
@@ -11,7 +10,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><img src="~/imgs/dashboard_home_dark-mode.png" style="width: 18px; margin-top: -5px;" class="me-2"><a class="breadcrumb-a-white me-2 text-white" asp-area="Portfolio" asp-controller="Home" asp-action="Index">dashboard</a><i class="fa-solid fa-chevron-right text-white"></i></li>
                 <li class="breadcrumb-item"><a class="breadcrumb-a-white me-2 text-white" asp-area="Portfolio" asp-controller="Cloud" asp-action="List">cloud</a><i class="fa-solid fa-chevron-right text-white"></i></li>
-                <li class="breadcrumb-item"><a class="breadcrumb-a-white me-2 text-white" href="#"><strong>edit</strong></a></li>
+                <li class="breadcrumb-item"><a class="breadcrumb-a-white me-2 text-white" href="#"><strong>media</strong></a></li>
             </ol>
         </nav>
     </div>
@@ -30,12 +29,12 @@
                         @if (Model.PreviousMedia.Type == ".mp4")
                         {
                             <video autoplay="autoplay" muted loop class="img-rounded-trasparent w-25 shadow-1-strong rounded-05" title="@Model.PreviousMedia.OriginalFileName" alt="@Model.PreviousMedia.OriginalFileName">
-                                <source src="@Model.BasePath@Model.PreviousMedia.FileName?tr=w-300" type="video/mp4">
+                                <source src="@Model.BasePath@Model.PreviousMedia.FileName?tr=w-400" type="video/mp4">
                             </video>
                         }
                         else
                         {
-                            <img asp-append-version="true" src="@Model.BasePath@Model.PreviousMedia.FileName?tr=w-300" class="img-rounded-trasparent w-25 shadow-1-strong rounded-05" title="@Model.PreviousMedia.OriginalFileName" alt="@Model.PreviousMedia.OriginalFileName"/>
+                            <img asp-append-version="true" src="@Model.BasePath@Model.PreviousMedia.FileName?tr=w-400" class="img-rounded-trasparent w-25 shadow-1-strong rounded-05" title="@Model.PreviousMedia.OriginalFileName" alt="@Model.PreviousMedia.OriginalFileName"/>
                         }
                     </a>
                 </li>
@@ -50,7 +49,7 @@
             <div class="col-sm-12 col-md-7 text-center pe-3">
                 @if (Model.Media.Type == ".mp4")
                 {
-                    <video autoplay="autoplay" muted loop class="img-rounded-trasparent w-100 shadow-1-strong rounded" alt="@Model.Media.OriginalFileName">
+                    <video autoplay="autoplay" muted controls="controls" loop class="img-rounded-trasparent w-100 shadow-1-strong rounded" alt="@Model.Media.OriginalFileName">
                         <source src="@Model.BasePath@Model.Media.FileName?tr=w-1080" type="video/mp4">
                     </video>
                 }
@@ -65,7 +64,7 @@
             <div class="col-sm-12 col-md-5 ps-3">
                 <div class="row">
                     <div class="col-9 ps-0">
-                        <h3 class="mb-0 text-white veesy-overflow" id="filename-show">@Model.Media.OriginalFileName</h3>
+                        <h3 class="mb-0 text-white veesy-overflow" id="filename-show">@System.IO.Path.GetFileNameWithoutExtension(Model.Media.OriginalFileName)</h3>
                     </div>
                     <div class="col-3 text-end pe-0">
                         <a onclick="setTextAreaValue('filename-edit', '@System.IO.Path.GetFileNameWithoutExtension(Model.Media.OriginalFileName)'), openModal('#modalFileName')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
@@ -93,9 +92,16 @@
                     <hr class="hr"/>
                     <div class="col-9 ps-0">
                         <p class="mb-0 text-white"><strong>Link image to one of your portfolio</strong></p>
-                        <p class="mb-0 text-grey">Currently linked to Veesy Lightbox (default)</p>
+                        @{
+                            var portfoliosLinkText = "";
+                            if (Model.LinkedPortfolioDtos.Count == 0 || Model.LinkedPortfolioDtos.Count(s => s.Selected) > 0)
+                            {
+                                portfoliosLinkText = "Currently linked to Veesy Lightbox (default)";
+                            }
+                        }
+                        <p id="number-portfolio-link" class="mb-0 text-grey">@portfoliosLinkText</p>
                     </div>
-                    <div class="col-3 text-end pe-0"><a class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
+                    <div class="col-3 text-end pe-0"><a onclick="openModal('#modalLinkedPortfolio')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
                     <hr class="hr"/>
                     <div class="empty-veesy"></div>
                     <div class="col-12 ps-0 pe-0">
@@ -118,7 +124,7 @@
                         else
                         {
                             <div class="card-white-dashed-veesy p-3 mt-2" id="credits-area-empty" style="display: none">
-                                <p class="text-white">Add a note or quote collaborators who worked at this output.</p>
+                                <p class="text-white">Add a text or mention collaborators who worked at this output.</p>
                                 <div class="mt-4"><a onclick="ShowTextArea()" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add credits</strong></a></div>
                             </div>
                             <div id="credits-area">
@@ -142,19 +148,19 @@
         {
             <ul class="list-unstyled">
                 <li class="mb-3 edit-padding-right" style="float: right">
-                    <div class="arrow-edit-media rounded-05 center-content"><a asp-action="Edit" asp-area="Portfolio" asp-controller="Cloud" asp-route-id="@Model.NextMedia.Code"><img class="w-100" src="~/icon/arrow_right_dark mode.svg"/></a></div>
+                    <div class="arrow-edit-media rounded-05 center-content"><a class="w-100" asp-action="Edit" asp-area="Portfolio" asp-controller="Cloud" asp-route-id="@Model.NextMedia.Code"><img class="w-100" src="~/icon/arrow_right_dark mode.svg"/></a></div>
                 </li>
                 <li style="float: right" class="mt-2">
                     <a asp-action="Edit" asp-area="Portfolio" asp-controller="Cloud" asp-route-id="@Model.NextMedia.Code">
                         @if (Model.NextMedia.Type == ".mp4")
                         {
                             <video style="float: right" autoplay="autoplay" muted loop class="img-rounded-trasparent w-25 shadow-1-strong rounded-05" title="@Model.NextMedia.OriginalFileName" alt="@Model.NextMedia.OriginalFileName">
-                                <source src="@Model.BasePath@Model.NextMedia.FileName?tr=w-300" type="video/mp4">
+                                <source src="@Model.BasePath@Model.NextMedia.FileName?tr=w-400" type="video/mp4">
                             </video>
                         }
                         else
                         {
-                            <img style="float: right" asp-append-version="true" src="@Model.BasePath@Model.NextMedia.FileName?tr=w-300" class="w-25 shadow-1-strong rounded-05 img-rounded-trasparent" title="@Model.NextMedia.OriginalFileName" alt="@Model.NextMedia.OriginalFileName"/>
+                            <img style="float: right" asp-append-version="true" src="@Model.BasePath@Model.NextMedia.FileName?tr=w-400" class="w-25 shadow-1-strong rounded-05 img-rounded-trasparent" title="@Model.NextMedia.OriginalFileName" alt="@Model.NextMedia.OriginalFileName"/>
                         }
                     </a>
                 </li>
@@ -175,19 +181,19 @@
         {
             <ul class="list-unstyled w-100">
                 <li class="mb-3 edit-padding-left">
-                    <div class="arrow-edit-media rounded-05 center-content"><a asp-action="Edit" asp-area="Portfolio" asp-controller="Cloud" asp-route-id="@Model.PreviousMedia.Code"><img class="w-100" src="~/icon/arrow_left_dark mode.svg"/></a></div>
+                    <div class="arrow-edit-media rounded-05 center-content"><a class="w-100" asp-action="Edit" asp-area="Portfolio" asp-controller="Cloud" asp-route-id="@Model.PreviousMedia.Code"><img class="w-100" src="~/icon/arrow_left_dark mode.svg"/></a></div>
                 </li>
                 <li class="mt-2">
                     <a asp-action="Edit" asp-area="Portfolio" asp-controller="Cloud" asp-route-id="@Model.PreviousMedia.Code">
                         @if (Model.PreviousMedia.Type == ".mp4")
                         {
                             <video autoplay="autoplay" muted loop class="img-rounded-trasparent w-50 shadow-1-strong rounded-05" title="@Model.PreviousMedia.OriginalFileName" alt="@Model.PreviousMedia.OriginalFileName">
-                                <source src="@Model.BasePath@Model.PreviousMedia.FileName?tr=w-300" type="video/mp4">
+                                <source src="@Model.BasePath@Model.PreviousMedia.FileName?tr=w-400" type="video/mp4">
                             </video>
                         }
                         else
                         {
-                            <img asp-append-version="true" src="@Model.BasePath@Model.PreviousMedia.FileName?tr=w-300" class="img-rounded-trasparent w-50 shadow-1-strong rounded-05" title="@Model.PreviousMedia.OriginalFileName" alt="@Model.PreviousMedia.OriginalFileName"/>
+                            <img asp-append-version="true" src="@Model.BasePath@Model.PreviousMedia.FileName?tr=w-400" class="img-rounded-trasparent w-50 shadow-1-strong rounded-05" title="@Model.PreviousMedia.OriginalFileName" alt="@Model.PreviousMedia.OriginalFileName"/>
                         }
                     </a>
                 </li>
@@ -209,12 +215,12 @@
                         @if (Model.NextMedia.Type == ".mp4")
                         {
                             <video style="float: right" autoplay="autoplay" muted loop class="img-rounded-trasparent w-50 shadow-1-strong rounded-05" title="@Model.NextMedia.OriginalFileName" alt="@Model.NextMedia.OriginalFileName">
-                                <source src="@Model.BasePath@Model.NextMedia.FileName?tr=w-300" type="video/mp4">
+                                <source src="@Model.BasePath@Model.NextMedia.FileName?tr=w-400" type="video/mp4">
                             </video>
                         }
                         else
                         {
-                            <img style="float: right" asp-append-version="true" src="@Model.BasePath@Model.NextMedia.FileName?tr=w-300" class="w-50 shadow-1-strong rounded-05 img-rounded-trasparent" title="@Model.NextMedia.OriginalFileName" alt="@Model.NextMedia.OriginalFileName"/>
+                            <img style="float: right" asp-append-version="true" src="@Model.BasePath@Model.NextMedia.FileName?tr=w-400" class="w-50 shadow-1-strong rounded-05 img-rounded-trasparent" title="@Model.NextMedia.OriginalFileName" alt="@Model.NextMedia.OriginalFileName"/>
                         }
                     </a>
                 </li>
@@ -227,7 +233,7 @@
 </div>
 
 <div class="row justify-content-center">
-    <a asp-action="DeleteMedia" asp-area="Portfolio" asp-controller="Media" asp-route-imgToDelete="@Model.Media.Code" class="rounded-pill btn btn-delete">delete media</a>
+    <a onclick="openModal('#modalDeleteMedia')" class="rounded-pill btn btn-delete">delete media</a>
     <div class="empty-veesy"></div>
     <div class="empty-veesy"></div>
 </div>
@@ -251,9 +257,129 @@
     </div>
 </div>
 
+<div class="modal fade" id="modalLinkedPortfolio" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Nested Links</strong></h3>
+                <a onclick="closeModal('#modalLinkedPortfolio')"><i class="fa-solid fa-circle-xmark"></i></a>
+            </div>
+            <div class="modal-body">
+                <p>Select one of your portfolio.</p>
+                <div class="overflow-auto p-3 border-div-grey" style="background-color: white !important; max-height: 400px;">
+                    @foreach (var item in Model.LinkedPortfolioDtos)
+                    {
+                        <div class="form-check">
+                            <label class="form-check-label" style="cursor: pointer;" for="portfolioLinked-@item.Code">
+                                <strong>@item.Name</strong>
+                            </label>
+                            @{ var check = @item.Selected ? "checked" : ""; }
+                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="portfolioLinked-@item.Code" style="float: right !important; border: 1px solid rgba(0,0,0,.25) !important;">
+                        </div>
+                        <hr class="hr"/>
+                    }
+                </div>
+            </div>
+            <div class="modal-footer">                
+                <a onclick="ChangeMediaPortfolio()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalDeleteMedia" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Delete Medias</strong></h3>
+                <a onclick="closeModal('#modalDeleteMedia')"><i class="fa-solid fa-grey fa-circle-xmark"></i></a>
+            </div>
+            <div class="empty-veesy"></div>
+            <div class="modal-body text-center">
+                <h5><strong id="confirm-delete-body">@Model.Media.OriginalFileName will be delete permanently. Are you sure?</strong></h5>
+            </div>
+            <div class="empty-veesy"></div>
+            <div class="row">  
+                <div class="col-4">
+                    <p class="ps-3 text-muted">
+                        <a style="text-decoration: underline !important; position: relative; top: 20px;" class="grey-link mt-3" onclick="closeModal('#modalDeleteMedia')">back to media</a>
+                    </p>
+                </div>
+                <div class="col-4 justify-content-center" style="display: flex">
+                    <form method="post" asp-controller="Media" asp-action="DeleteMedia">
+                        @Html.HiddenFor(s => s.Media.Code)
+                        <button class="mt-2 rounded-pill btn btn-delete" type="submit">yes, delete</button>
+                    </form>
+                </div>
+                <div class="col-4"></div>
+            </div>
+            <div class="empty-veesy"></div>
+        </div>
+    </div>
+</div>
+
 @section Scripts
 {
     <script>
+    
+        function ChangeMediaPortfolio() {
+            $('#load-spinner').css("display", "block");
+            var codes = JSON.parse('@Html.Raw(Json.Serialize(Model.LinkedPortfolioDtos.Select(s => s.Code.ToString()).ToList()))');
+            
+            var PortfolioSelected = [];
+            
+            for (const code in codes) {
+                if(document.getElementById("portfolioLinked-"+codes[code]).checked)
+                    PortfolioSelected.push(codes[code])
+            }
+            
+            var MediaCode = '@Model.Media.Code';
+            
+            var UpdateMediaPortfolioDto = {PortfolioSelected, MediaCode}
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ChangeMediaPortfolio", "Portfolio")',
+                data: JSON.stringify(UpdateMediaPortfolioDto),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (response) {
+                    if(response.result){
+                        var text = PortfolioSelected.length == 0 ? "Currently linked to Veesy Lightbox (default)" : "Currently linked to " + PortfolioSelected.length + " portfolios"  
+                        document.getElementById("number-portfolio-link").textContent = text;
+                    }
+                    $('#load-spinner').css("display", "none");
+                },
+                error: function (response) {
+                    $('#load-spinner').css("display", "none");
+                }
+            })
+        }
+    
+        
+        function deleteMedia(code) {
+            $('#load-spinner').css("display", "block");
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("DeleteMedia", "Media")',
+                data: JSON.stringify(code),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (response) {
+                    if(response.result){
+                        //location.reload();
+                        return;
+                    }
+                    else{
+                        toastNotifyCustom(response.message, 10000, "#ca0a0a", "")
+                    }
+                    $('#load-spinner').css("display", "none");
+                },
+                error: function (response) {
+                    $('#load-spinner').css("display", "none");
+                }
+            })
+        }
+    
         function OpenImageNewTab(url) {
             window.open(url, '_blank');
         }

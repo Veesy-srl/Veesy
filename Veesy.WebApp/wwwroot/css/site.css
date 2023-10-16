@@ -759,10 +759,12 @@ a{
 
 .img-rounded-ciano{
     border: 3px solid #75CCDD !important;
+    pointer-events: none;
 }
 
 .img-rounded-trasparent{
     border: 3px solid rgba(117, 204, 221, 0) !important;
+    pointer-events: none;
 }
 
 .img-rounded-trasparent:hover{
@@ -875,9 +877,77 @@ a:hover{
   border-radius: 50px !important;
 }
 
+.select-portfolio{
+  border-radius: 0.5rem !important;
+  border: 1px solid #AAB0BB !important;
+  cursor: pointer;
+}
+
+.select-portfolio:hover {
+  background: #F0F2F3;
+  border: 1px solid #383B43 !important;
+}
+
+.select-portfolio-selected{
+  background: #F0F2F3;
+  border: 1px solid #383B43 !important;
+  border-radius: 0.5rem !important;
+}
+
+.select-portfolio-modal{
+  height: 260px;
+  overflow: auto;
+}
+
+.icon-advanced{
+  background-repeat: no-repeat;
+  background-size: cover; /* stretch the background to cover the whole element */
+
+  /* 
+     still inline, but has block features
+     meaning height and width can be set
+  */
+  display: inline-block;
+  height: 20px;
+  width: 16px;
+}
+
+.img-thumbnail-custom-portfolio{
+  background-color: #fff;
+  border: none !important;
+  width: 125px !important;
+  height: 125px !important;
+  object-fit: cover;
+  border-radius: 0.5rem !important;
+}
+
+.div-select-layout{
+  border: 1px solid #202F4D33;
+  border-radius: 0.3rem;
+  cursor: pointer;
+}
+
+.div-select-layout:hover{
+  border: 1px solid #202F4D;
+  border-radius: 0.3rem;
+  background: #F0F2F3;
+}
+
+.div-select-layout-selected{
+  border: 1px solid #202f4d !important;
+  background: #F0F2F3;
+}
+
+
 #icon-color{
   color: #75CCDD !important;
   font-size: 12px !important;
+}
+
+.font-a-as-p{
+  font-size: 14px !important;
+  line-height: 24px !important;
+  cursor: pointer;
 }
 
 .no-scroll {

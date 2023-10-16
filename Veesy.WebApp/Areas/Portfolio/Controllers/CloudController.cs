@@ -113,7 +113,7 @@ public class CloudController : VeesyController
             if (!result.Success)
                 _notyfService.Custom(result.Message, 10, "#ca0a0a");
             else
-                _notyfService.Custom("Credits update correctly.", 10, "#75CCDD");
+                _notyfService.Custom("Credits updated correctly.", 10, "#75CCDD");
             return Json(new { Result = result.Success, Message = result.Message });
         }
         catch (Exception ex)
