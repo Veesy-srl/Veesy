@@ -174,7 +174,7 @@
                 {
                     @if (MediaCostants.ImageExtensions.Contains(image.Media.Type.ToUpper()))
                     {
-                        <div class="draggable m-0" name="image-gallery">
+                        <div class="draggable m-0" name="image-gallery" mediaid="@image.MediaId">
                             <img src="@Model.BasePathImages@image.Media.FileName?tr=w-400" class="card-body m-0 p-0 rounded-05 img-rounded-trasparent w-100 p-0" title="@image.Media.OriginalFileName"/>
                         </div>
                     }
@@ -307,7 +307,7 @@
 
     <script>
     
-    let active_layout = @((int)Model.Portfolio.Layout);
+    let active_layout = @((int) Model.Portfolio.Layout);
     
     function UpdateLayout(layout) {
         if (active_layout == layout)
@@ -347,19 +347,41 @@
               delay: 50
         }
     )
-        sortable.on('drag:start', (divElem) => {
-          console.log(divElem)
-          var imageElem = divElem.source.children[0]
-          imageElem.style.border = "3px solid #75CCDD"
-        })
-        sortable.on('drag:stop', (divElem) => {
+    sortable.on('drag:start', (divElem) => {
+      console.log(divElem)
+      var imageElem = divElem.source.children[0]
+      imageElem.style.border = "3px solid #75CCDD"
+    })
+    sortable.on('drag:stop', (divElem) => {
         var imageElem = divElem.source.children[0]
-          imageElem.style.border = ''
-          //$("body").append($(".draggable-source--is-dragging"))
+        imageElem.style.border = ''
+        var sortOrderElements = document.getElementById("images-container").querySelectorAll('.draggable:not(.draggable-source--is-dragging)')
+        var sortOrder = [...sortOrderElements].map((elem, index)=> {
+            return {
+                mediaId: elem.getAttribute("mediaid"),
+                sortOrder: index
+            }
         })
-    </script>
-
-    <script>
+        var data = {
+            portfolioId: '@Model.Portfolio.Id',
+            newMediasSortOrder: sortOrder
+        }
+        $.ajax({
+          type: 'POST',
+          url: '@Url.Action("UpdateSortOrder", "Portfolio")',
+          data: JSON.stringify(data),
+          contentType: 'application/json; charset=utf-8',
+          dataType: 'json',
+          success: function (response) {
+              console.log("ordine cambiato")
+              //$('#load-spinner').css("display", "none");
+          },
+          error: function (response) {
+              //$('#load-spinner').css("display", "none");
+          }
+        })
+    })
+    
     function UpdateName() {
         $('#load-spinner').css("display", "block");
         var Name = document.getElementById("portfolio-name-edit").value
@@ -488,9 +510,7 @@
         document.getElementById("layout-" + text).checked = true;
         switchColumnLayout(integer)
     }
-    </script>
     
-    <script>
     var div_uploader = document.getElementById("div-uploader");
         /*Dropzone configuration*/
         Dropzone.autoDiscover = false;

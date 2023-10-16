@@ -270,8 +270,22 @@ public class PortfolioController : VeesyController
             _notyfService.Custom("Error deleting portfolio. Please retry.", 10, "#ca0a0a");
             return Json(new { Result = false, Message = "Error updating portfolio. Please retry." });
         }
-    }   
+    }
+    
+    [HttpPost]
+    public async Task<JsonResult> UpdateSortOrder([FromBody] UpdateMediaSortOrderDto dto)
+    {
+        try
+        {
+            await _portfolioHelper.UpdateSortOrder(dto, UserInfo);
+            return Json(new { });
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            return Json(new { Result = false, Message = "Error updating medias ordering. Please retry." });
+        }
+    }
 
     #endregion
-
 }

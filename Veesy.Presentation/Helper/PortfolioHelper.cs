@@ -224,4 +224,11 @@ public class PortfolioHelper
         await _portfolioService.UpdatePortfolio(portfolio, userInfo);
         return new ResultDto(true, "");
     }
+
+    public async Task UpdateSortOrder(UpdateMediaSortOrderDto dto, MyUser userInfo)
+    {
+        var portfolio = _portfolioService.GetPortfolioById(dto.PortfolioId, userInfo.Id);
+        
+        await _portfolioService.UpdateSortOrder();
+    }
 }

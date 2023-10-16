@@ -58,6 +58,18 @@ public class UpdateMediaPortfolioDto
     public Guid MediaCode { get; set; }
 }
 
+public class UpdateMediaSortOrderDto
+{
+    public Guid PortfolioId { get; set; }
+    public UpdateMediaSortOrderCoupleDto[] NewMediasSortOrder { get; set; }
+}
+
+public class UpdateMediaSortOrderCoupleDto
+{
+    public string MediaId { get; set; }
+    public int SortOrder { get; set; }
+}
+
 public class PortfolioThumbnailDto
 {
     public Guid Code { get; set; }

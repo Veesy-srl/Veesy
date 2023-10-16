@@ -17,8 +17,9 @@ public class PortfolioService : IPortfolioService
 
     public Portfolio GetPortfolioById(Guid portfolioId, string userId)
     {
-        var portfolio = _uoW.PortfolioRepository.FindByCondition(w => w.MyUserId == userId && w.Id == portfolioId)
-            .Include(s => s.PortfolioMedias)
+        var portfolio = _uoW.PortfolioRepository
+            .FindByCondition(w => w.MyUserId == userId && w.Id == portfolioId)
+            .Include(s => s.PortfolioMedias.OrderBy(ob=>ob.SortOrder))
             .ThenInclude(s => s.Media)
             .SingleOrDefault();
         if (portfolio == null)
@@ -171,5 +172,10 @@ public class PortfolioService : IPortfolioService
             .Include(s => s.PortfolioMedias);
         
         return portfolios;
+    }
+    
+    public async Task UpdateSortOrder()
+    {
+        // TODO
     }
 }
