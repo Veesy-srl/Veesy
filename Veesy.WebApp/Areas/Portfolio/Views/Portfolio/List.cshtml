@@ -25,7 +25,23 @@
                     <div class="col-3">
                         <div class='box m-0'> 
                             <div class='content1_1'>
-                                <img class="image-fit-radius" title="@item.DefaultImageOriginalName" src="@Model.BasePath@item.DefaultImageName?tr=w-400"/>
+                                @if (item.IsVideo)
+                                {
+                                    <video autoplay="autoplay" muted loop class="image-fit-radius" title="@item.DefaultImageOriginalName">
+                                        <source src="@Model.BasePath@item.DefaultImageName?tr=w-400" type="video/mp4">
+                                    </video>
+                                }
+                                else
+                                {
+                                    if (item.DefaultImageName == "")
+                                    {
+                                        <img class="image-fit-radius" title="@item.DefaultImageOriginalName" src="@Model.BasePath@item.DefaultImageName?tr=w-400"/>
+                                    }
+                                    else
+                                    {
+                                        <img class="image-fit-radius" src="~/imgs/noimage.png"/>
+                                    }
+                                }
                             </div> 
                         </div>
                     </div>

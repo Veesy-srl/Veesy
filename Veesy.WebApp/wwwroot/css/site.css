@@ -759,6 +759,9 @@ a{
 
 .img-rounded-trasparent{
     border: 3px solid rgba(117, 204, 221, 0) !important;
+}
+
+.img-rounded-trasparent:active{
     pointer-events: none;
 }
 
@@ -1047,6 +1050,9 @@ a:hover{
     display: inline-block;
     visibility: visible;
     opacity: 1;
+  }
+  .img-rounded-trasparent-hover{
+    
   }
 }
 
