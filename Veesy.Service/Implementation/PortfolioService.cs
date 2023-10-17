@@ -174,7 +174,7 @@ public class PortfolioService : IPortfolioService
         return portfolios;
     }
     
-    public async Task UpdateSortOrder()
+    public async Task UpdatePortfolioMediaSortOrder(Portfolio portfolio)
     {
         // TODO
     }

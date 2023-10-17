@@ -361,7 +361,7 @@
     sortable.on('drag:stop', (divElem) => {
         var imageElem = divElem.source.children[0]
         imageElem.style.border = ''
-        var sortOrderElements = document.getElementById("images-container").querySelectorAll('.draggable:not(.draggable-source--is-dragging)')
+        var sortOrderElements = document.getElementById("images-container").querySelectorAll('.draggable:not(.draggable--original)')
         var sortOrder = [...sortOrderElements].map((elem, index)=> {
             return {
                 mediaId: elem.getAttribute("mediaid"),
@@ -380,10 +380,10 @@
           dataType: 'json',
           success: function (response) {
               console.log("ordine cambiato")
-              //$('#load-spinner').css("display", "none");
+              toastNotifyCustom(response.message, 2000, "#75ccdd", "")
           },
           error: function (response) {
-              //$('#load-spinner').css("display", "none");
+              toastNotifyCustom(response.message, 10000, "#ca0a0a", "")
           }
         })
     })
@@ -584,9 +584,10 @@
         var newDropzone = new Dropzone(uploader, dropzoneOptions);
     </script>
 }
+
 @section Style
 {
-    <link rel="stylesheet" href="~/css/dropzone_cloudpage.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/notyf_override.css" asp-append-version="true" />
     <style>
         .draggable {
             cursor: move;

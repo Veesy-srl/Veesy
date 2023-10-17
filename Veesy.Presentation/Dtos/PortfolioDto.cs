@@ -66,7 +66,7 @@ public class UpdateMediaSortOrderDto
 
 public class UpdateMediaSortOrderCoupleDto
 {
-    public string MediaId { get; set; }
+    public Guid MediaId { get; set; }
     public int SortOrder { get; set; }
 }
 

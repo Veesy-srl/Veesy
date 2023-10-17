@@ -228,7 +228,15 @@ public class PortfolioHelper
     public async Task UpdateSortOrder(UpdateMediaSortOrderDto dto, MyUser userInfo)
     {
         var portfolio = _portfolioService.GetPortfolioById(dto.PortfolioId, userInfo.Id);
+        var now = DateTime.Now;
+        dto.NewMediasSortOrder.ToList().ForEach(fe =>
+        {
+            var mediaToUpd = portfolio.PortfolioMedias.SingleOrDefault(sd => sd.MediaId == fe.MediaId);
+            mediaToUpd!.SortOrder = fe.SortOrder;
+            mediaToUpd!.LastEditRecordDate = now;
+            mediaToUpd!.LastEditUserId = userInfo.Id;
+        });
         
-        await _portfolioService.UpdateSortOrder();
+        await _portfolioService.UpdatePortfolio(portfolio, userInfo);
     }
 }

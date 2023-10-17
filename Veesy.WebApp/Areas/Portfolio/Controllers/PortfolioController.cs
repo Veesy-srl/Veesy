@@ -278,7 +278,7 @@ public class PortfolioController : VeesyController
         try
         {
             await _portfolioHelper.UpdateSortOrder(dto, UserInfo);
-            return Json(new { });
+            return Json(new { Result = true, Message = "Sort order updated."});
         }
         catch (Exception ex)
         {

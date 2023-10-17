@@ -21,5 +21,5 @@ public interface IPortfolioService
     Portfolio GetPortfolioByIdWithPortfoliosMedia(Guid portfolioId, string userId);
     IEnumerable<Portfolio> GetPortfoliosByMedia(Guid imgToDelete);
     IEnumerable<Portfolio> GetPortfoliosByMedias(List<Guid> imgToDelete);
-    Task UpdateSortOrder();
+    Task UpdatePortfolioMediaSortOrder(Portfolio portfolio);
 }
