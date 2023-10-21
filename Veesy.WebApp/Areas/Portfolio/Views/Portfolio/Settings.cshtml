@@ -157,7 +157,14 @@
                         <div id="layout-div-@((int)item)" class="p-2 form-check div-select-layout @css_select">
                             <div class="d-flex me-2">
                                 <input style="visibility: hidden" class="form-check-input" type="radio" name="column-layout" asp-for="Portfolio.Layout" value="@item" id="layout-@item" onchange="switchColumnLayout(@((int)item))"/>
-                                <label class="ms-2 form-check-label" for="@item">@((int)item) columns</label>
+                                @if((int)item == 1)
+                                {
+                                    <label class="ms-2 form-check-label" for="@item">@((int)item) column</label>
+                                }
+                                else
+                                {
+                                    <label class="ms-2 form-check-label" for="@item">@((int)item) columns</label>
+                                }
                             </div>
                             <div>
                                 @{
@@ -174,7 +181,7 @@
         </div>
         <div class="empty-veesy"></div>
         <div class="row">
-            <h3 class="text-color"><strong>Your Images</strong></h3>
+            <h3 class="text-color"><strong>Your Medias</strong></h3>
             <div class="card-columns draggable-zone" id="images-container">
                 @foreach (var image in Model.Portfolio.PortfolioMedias)
                 {
@@ -380,7 +387,6 @@
           dataType: 'json',
           success: function (response) {
               console.log("ordine cambiato")
-              toastNotifyCustom(response.message, 2000, "#75ccdd", "")
           },
           error: function (response) {
               toastNotifyCustom(response.message, 10000, "#ca0a0a", "")

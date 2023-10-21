@@ -8,6 +8,7 @@ public class MyUser : IdentityUser
     public SubscriptionPlan SubscriptionPlan { get; set; }
     public string Name { get; set; }
     public string Surname { get; set; }
+    public string Fullname => Name + " " + Surname;
     public bool VeesyPage { get; set; }
     public int Status { get; set; }
     public DateTime CreateDate { get; set; }

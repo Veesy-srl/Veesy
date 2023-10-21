@@ -1,0 +1,164 @@
+@using Veesy.Domain.Constants
+@model Veesy.Presentation.Model.Portfolio.PortfolioViewModel
+
+@{
+    ViewData["Title"] = "Portfolio";
+}
+
+<div class="row pt-7rem ps-4 pe-4">
+    <div class="col-sm-12 col-md-8 mb-3">
+        <h1>@Model.PortfolioDto.PortfolioIntro</h1>
+        <div class="empty-veesy"></div>
+        <div class="empty-veesy"></div>
+        <h1><strong>@Model.PortfolioDto.UserFullName</strong></h1>
+        <h3>@Model.PortfolioDto.UserCategory</h3>
+    </div>
+    <div class="col-sm-12 col-md-4 mb-3 nodisplay-sm">
+        <div class="text-end">
+            <h5>Interest in my work?</h5>
+            <a href="mailto:@Model.PortfolioDto.UserEmail" class="rounded-pill btn btn-primary btn-variant">contact me</a>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="card-columns draggable-zone" id="images-container">
+        @foreach (var image in Model.PortfolioDto.PortfolioMedias)
+        {
+            @if (MediaCostants.ImageExtensions.Contains(image.Media.Type.ToUpper()))
+            {
+                <div class="draggable m-0" name="image-gallery" mediaid="@image.MediaId">
+                    <img src="@Model.BasePathImages@image.Media.FileName?tr=w-1080" class="card-body m-0 p-0 rounded-05 w-100 p-0" title="@image.Media.OriginalFileName"/>
+                </div>
+            }
+            else
+            {
+                <div class="draggable m-0" name="image-gallery">
+                    <video autoplay="autoplay" muted loop class="w-100 shadow-1-strong rounded-05" title="@image.Media.OriginalFileName">
+                        <source src="@Model.BasePathImages@image.Media.FileName?tr=w-1080" type="video/mp4">
+                    </video>
+                </div>
+            }
+        }
+    </div>
+</div>
+<div class="empty-veesy"></div>
+<div class="empty-veesy"></div>
+<div class="text-center">
+    <h5>Interest in my work?</h5>
+    <a href="mailto:@Model.PortfolioDto.UserEmail" class="rounded-pill btn btn-primary btn-variant">contact me</a>
+</div>
+<div class="empty-veesy"></div>
+<div class="empty-veesy"></div>
+
+<div class="creator-popup" onclick="OpenPopup()">
+    <div class="d-flex">
+        <div class="col-11">
+            <p class="text-white ms-2 mb-1 mt-1">MEET THE CREATOR</p>
+        </div>
+        <div class="col-1"><div class="text-end pt-1"><i class="fa-solid fa-circle fa-xs me-2" style="color: white;"></i></div></div>
+    </div>
+</div>
+
+<div class="creator-popup-full" id="popup-creator">
+    <div class="d-flex" style="cursor: pointer" onclick="ClosePopup()">
+        <div class="col-11">
+            <p class="text-white ms-2 mb-1 mt-1">MEET THE CREATOR</p>
+        </div>
+        <div class="col-1 pe-2"><div class="text-end pt-1"><i class="fa-solid fa-circle-xmark" style="color: white"></i></div></div>
+    </div>
+    <hr class="portfolio-hr"/> 
+    <div class="row creator-popup-body overflow-auto ms-0" style="max-height: 95%;">
+        <div class="empty-veesy"></div>
+        <div class="empty-veesy"></div>
+        <div class="col-sm-12 col-md-2 mb-3 text-center">
+            @if (string.IsNullOrEmpty(Model.PortfolioDto.UserImage))
+            {
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" class="img-thumbnail-custom" alt="user-image">
+            }
+            else
+            {
+                <img src="@Model.BasePathAzure@Model.PortfolioDto.UserImage" class="img-thumbnail-custom" alt="user-image">
+            }
+        </div>
+        <div class="col-sm-12 col-md-7 mb-3">
+            <h1 class="text-white"><strong>@Model.PortfolioDto.UserFullName</strong></h1>
+            <h3 class="text-white">- @Model.PortfolioDto.UserCategory</h3>
+            <div class="empty-veesy"></div>
+            <div><p class="text-white">@Model.PortfolioDto.UserDescription</p></div>
+            @if (Model.PortfolioDto.ShowFields)
+            {
+                <div class="empty-veesy"></div>
+                <div>
+                    <p class="text-white"><strong>Fields</strong></p>
+                    <div class="d-flex mb-4" style="max-width: 100%; flex-wrap: wrap;">
+                        @foreach (var item in Model.PortfolioDto.Sector)
+                        {
+                            <div class="pe-3 ps-3 div-white-rounded-blue-veesy d-flex"><a><i class="fa-solid fa-circle pe-2" style="color: #75CCDD"></i>@item</a></div>
+                        }
+                    </div>
+                </div>
+            }
+            @if (Model.PortfolioDto.ShowSoftSkill)
+            {
+                <div class="empty-veesy"></div>
+                <div>
+                    <p class="text-white"><strong>Soft skill</strong></p>
+                    <div class="d-flex mb-4" style="max-width: 100%; flex-wrap: wrap;">
+                        @foreach (var item in Model.PortfolioDto.SoftSkill)
+                        {
+                            <div class="pe-3 ps-3 div-white-rounded-blue-veesy d-flex"><a><i class="fa-solid fa-circle pe-2" style="color: #75CCDD"></i>@item</a></div>
+                        }
+                    </div>
+                </div>
+            }
+            @if (Model.PortfolioDto.ShowSoftware)
+            {
+                <div class="empty-veesy"></div>
+                <div>
+                    <p class="text-white"><strong>Softwares</strong></p>
+                    <div class="d-flex mb-4" style="max-width: 100%; flex-wrap: wrap;">
+                        @foreach (var item in Model.PortfolioDto.UsedSoftwares)
+                        {
+                            <div class="pe-3 ps-3 div-white-rounded-veesy"><a>@item</a></div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-sm-12 col-md-3 mb-3"></div>
+    </div>
+</div>
+<div id="blurred-background" class="blur-background" style="display: none"></div>
+
+@section Scripts
+{
+    <script>
+        function OpenPopup(){
+            document.getElementById("popup-creator").classList.add("creator-popup-full-open")
+            document.getElementById("popup-creator").classList.remove("creator-popup-full-close")
+            document.getElementById("blurred-background").style.display = "block"
+        }
+        function ClosePopup(){
+            document.getElementById("popup-creator").classList.remove("creator-popup-full-open")
+            document.getElementById("popup-creator").classList.add("creator-popup-full-close")
+            document.getElementById("blurred-background").style.display = "none"
+        }
+    </script>
+}
+
+@section Style
+{
+    <link rel="stylesheet" href="~/css/notyf_override.css" asp-append-version="true" />
+    <style>
+                
+        img.rounded-corners {
+          border-radius: 20px;
+          width: 100%
+        }
+        .card-columns {
+            column-count: @((int)Model.PortfolioDto.Layout);
+        }
+    </style>
+}

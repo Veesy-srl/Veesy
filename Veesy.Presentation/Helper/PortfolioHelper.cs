@@ -78,7 +78,8 @@ public class PortfolioHelper
         var vm = new PortfolioListViewModel()
         {
             PortfolioThumbnailDtos = MapPortfolioDtos.MapListPortfolioThumbnailDto(portfolios),
-            BasePath = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/"
+            BasePath = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/",
+            ApplicationUrl = _config["ApplicationUrl"]
         };
         return vm;
     }
@@ -238,5 +239,20 @@ public class PortfolioHelper
         });
         
         await _portfolioService.UpdatePortfolio(portfolio, userInfo);
+    }
+
+    public (PortfolioViewModel model, ResultDto result) GetPortfolioViewModel(Guid id, MyUser user)
+    {
+
+        var portfolio = _portfolioService.GetPortfolioByIdForPreview(id);
+        if (portfolio == null)
+            return (null, new ResultDto(false, "Portfolio not found"));
+
+        return (new PortfolioViewModel
+        {
+            PortfolioDto = MapPortfolioDtos.MapPreviewPortfolioDto(portfolio),
+            BasePathImages = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/",
+            BasePathAzure = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"
+        }, new ResultDto(true, ""));
     }
 }

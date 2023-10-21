@@ -9,6 +9,14 @@ public static class VeesyConstants
         public const string Plus = "Plus";
         public const string Beta = "Beta";
     }
+    public static class InfoToShow
+    {
+        public const string Software = "Software";
+        public const string SoftSkill = "Soft Skills";
+        public const string HardSkill = "Hard Skills";
+        public const string CV = "Downloadable CV";
+        public const string Fields = "Fields";
+    }
     
     public enum PortfolioLayout
     {

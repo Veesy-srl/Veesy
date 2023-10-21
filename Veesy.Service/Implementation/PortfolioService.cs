@@ -174,8 +174,23 @@ public class PortfolioService : IPortfolioService
         return portfolios;
     }
     
-    public async Task UpdatePortfolioMediaSortOrder(Portfolio portfolio)
+    public Portfolio? GetPortfolioByIdForPreview(Guid id)
     {
-        // TODO
+        return _uoW.PortfolioRepository.FindByCondition(s => s.Id == id)
+            .Include(s => s.PortfolioMedias)
+            .ThenInclude(s => s.Media)
+            .Include(s => s.MyUser)
+            .ThenInclude(s => s.MyUserSectors)
+            .ThenInclude(s => s.Sector)
+            .Include(s => s.MyUser)
+            .ThenInclude(s => s.MyUserSkills)
+            .ThenInclude(s => s.Skill)
+            .Include(s => s.MyUser)
+            .ThenInclude(s => s.MyUserUsedSoftwares)
+            .ThenInclude(s => s.UsedSoftware)
+            .Include(s => s.MyUser)
+            .ThenInclude(s => s.MyUserInfosToShow)
+            .ThenInclude(s => s.InfoToShow)
+            .SingleOrDefault();
     }
 }

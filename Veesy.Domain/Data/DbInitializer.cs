@@ -393,10 +393,10 @@ public class DbInitializer
 
         var infosToShow = new List<InfoToShow>()
         {
-            new (){LastEditUserId = "Init", CreateUserId = "init", Info = "Software"},
-            new (){LastEditUserId = "Init", CreateUserId = "init", Info = "Soft Skills"},
-            new (){LastEditUserId = "Init", CreateUserId = "init", Info = "Hard Skill"},
-            new (){LastEditUserId = "Init", CreateUserId = "init", Info = "Downloadable CV"},
+            new (){LastEditUserId = "Init", CreateUserId = "init", Info = VeesyConstants.InfoToShow.Fields},
+            new (){LastEditUserId = "Init", CreateUserId = "init", Info = VeesyConstants.InfoToShow.Software},
+            new (){LastEditUserId = "Init", CreateUserId = "init", Info = VeesyConstants.InfoToShow.CV},
+            new (){LastEditUserId = "Init", CreateUserId = "init", Info = VeesyConstants.InfoToShow.SoftSkill},
             
         };
         var dbInfoToShow = dbContext.InfosToShow.ToList();

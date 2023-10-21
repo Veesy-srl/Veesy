@@ -43,6 +43,27 @@ public class PortfolioController : VeesyController
         }
     }
     
+    [HttpGet("portfolio/{id}")]
+    public IActionResult Portfolio(Guid id)
+    {
+        try
+        {
+            var result = _portfolioHelper.GetPortfolioViewModel(id,UserInfo);
+            if (!result.result.Success)
+            {
+                _notyfService.Custom(result.result.Message, 10 , "#ca0a0a");
+                return RedirectToAction("Index", "Home", new { area = "Portfolio" });
+            }
+            return View(result.model);
+        }
+        catch (Exception e)
+        {
+            Logger.Error(e, e.Message);
+            _notyfService.Custom("Error retrieving portfolios. Please retry.", 10 , "#ca0a0a");
+            return RedirectToAction("Index", "Home");
+        }
+    }
+    
     [HttpGet("portfolio/settings/{id}")]
     public IActionResult Settings(Guid id)
     {
@@ -238,8 +259,6 @@ public class PortfolioController : VeesyController
             var response = await _portfolioHelper.UpdateLayout(portfolioDto, UserInfo);
             if (!response.Success)
                 _notyfService.Custom(response.Message, 10, "#ca0a0a");
-            else
-                _notyfService.Custom("Portfolio layout update correctly.", 10, "#75CCDD");
             return Json(new { Result = response.Success, Message = response.Message });
         }
         catch (Exception ex)
