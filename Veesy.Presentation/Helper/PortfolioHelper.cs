@@ -29,11 +29,6 @@ public class PortfolioHelper
         return vm;
     }
 
-    public void UpdatePortfolioSettings()
-    {
-        
-    }
-
     public async Task<(ResultDto result, Guid code)> CreateNewPortfolio(NewPortfolioDto newPortfolioDto, MyUser userInfo)
     {
         if(string.IsNullOrEmpty(newPortfolioDto.Name))
@@ -241,7 +236,7 @@ public class PortfolioHelper
         await _portfolioService.UpdatePortfolio(portfolio, userInfo);
     }
 
-    public (PortfolioViewModel model, ResultDto result) GetPortfolioViewModel(Guid id, MyUser user)
+    public (PortfolioViewModel model, ResultDto result) GetPortfolioPreviewViewModel(Guid id, MyUser user)
     {
 
         var portfolio = _portfolioService.GetPortfolioByIdForPreview(id);

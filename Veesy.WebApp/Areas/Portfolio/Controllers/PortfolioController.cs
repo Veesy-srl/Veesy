@@ -43,12 +43,12 @@ public class PortfolioController : VeesyController
         }
     }
     
-    [HttpGet("portfolio/{id}")]
-    public IActionResult Portfolio(Guid id)
+    [HttpGet("portfolio/preview/{id}")]
+    public IActionResult PortfolioPreview(Guid id)
     {
         try
         {
-            var result = _portfolioHelper.GetPortfolioViewModel(id,UserInfo);
+            var result = _portfolioHelper.GetPortfolioPreviewViewModel(id,UserInfo);
             if (!result.result.Success)
             {
                 _notyfService.Custom(result.result.Message, 10 , "#ca0a0a");
@@ -60,7 +60,7 @@ public class PortfolioController : VeesyController
         {
             Logger.Error(e, e.Message);
             _notyfService.Custom("Error retrieving portfolios. Please retry.", 10 , "#ca0a0a");
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home", new { area = "Portfolio" });
         }
     }
     

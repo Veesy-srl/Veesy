@@ -68,11 +68,7 @@
     <div class="p-1 mb-4 mb-lg-0 card-columns" id="images-container">
         @foreach (var image in Model.Medias)
         {
-            <div id="div-for-remove-@image.Code" class="media-container show-edit">
-                <a class="edit-button" onclick="EditMedia('@image.Code'); return false;">
-                    <strong style="margin-right: 5px; font-size: 14px;">edit</strong>
-                    <i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>
-                </a>
+            <div id="div-for-remove-@image.Code" class="media-container">
                 <a onclick="SelectMedia('@image.Code')">
                     <div class="img-div">
                         @if (MediaCostants.ImageExtensions.Contains(image.Type.ToUpper()))

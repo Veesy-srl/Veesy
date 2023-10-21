@@ -24,6 +24,7 @@ public class PreviewPortfolioDto
     public List<string> UsedSoftwares { get; set; }
     public List<string> SoftSkill { get; set; }
     public List<string> Sector { get; set; }
+    public List<string> LanguageSpoken { get; set; }
 }
 
 public class PortfolioDto
@@ -258,6 +259,7 @@ public static class MapPortfolioDtos
             Sector = portfolio.MyUser.MyUserSectors.Select(s => s.Sector.Name).ToList(),
             UsedSoftwares = portfolio.MyUser.MyUserUsedSoftwares.Select(s => s.UsedSoftware.Name).ToList(),
             SoftSkill = portfolio.MyUser.MyUserSkills.Where(s => s.Type == SkillConstants.SoftSkill).Select(s => s.Skill.Name).ToList(),
+            LanguageSpoken = portfolio.MyUser.MyUserLanguagesSpoken.Select(s => s.LanguageSpoken.Language).ToList(),
             ShowSoftSkill = portfolio.MyUser.MyUserInfosToShow.SingleOrDefault(s => s.InfoToShow.Info == VeesyConstants.InfoToShow.SoftSkill) != null,
             ShowFields = portfolio.MyUser.MyUserInfosToShow.SingleOrDefault(s => s.InfoToShow.Info == VeesyConstants.InfoToShow.Fields) != null,
             ShowCV = portfolio.MyUser.MyUserInfosToShow.SingleOrDefault(s => s.InfoToShow.Info == VeesyConstants.InfoToShow.CV) != null,

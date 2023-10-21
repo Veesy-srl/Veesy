@@ -1,3 +1,4 @@
+using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
@@ -14,13 +15,17 @@ public class PublicController : VeesyController
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     private readonly PublicHelper _publicHelper;
     private readonly IConfiguration _config;
+    private readonly PortfolioHelper _portfolioHelper;
+    private readonly INotyfService _notyfService;
 
 
-    public PublicController(UserManager<MyUser> userManager, PublicHelper publicHelper, IConfiguration config) : base(
+    public PublicController(UserManager<MyUser> userManager, PublicHelper publicHelper, IConfiguration config, PortfolioHelper portfolioHelper, INotyfService notyfService) : base(
         userManager, config)
     {
         _publicHelper = publicHelper;
         _config = config;
+        _portfolioHelper = portfolioHelper;
+        _notyfService = notyfService;
     }
     
     [HttpGet("Contacts")]
@@ -34,6 +39,27 @@ public class PublicController : VeesyController
         {
             Logger.Error(e, e.Message);
             return RedirectToAction("Index", "Home");
+        }
+    }
+    
+    [HttpGet("portfolio/{id}")]
+    public IActionResult Portfolio(Guid id)
+    {
+        try
+        {
+            var result = _portfolioHelper.GetPortfolioPreviewViewModel(id,UserInfo);
+            if (!result.result.Success)
+            {
+                _notyfService.Custom(result.result.Message, 10 , "#ca0a0a");
+                return RedirectToAction("Index", "Home", new { area = "Portfolio" });
+            }
+            return View(result.model);
+        }
+        catch (Exception e)
+        {
+            Logger.Error(e, e.Message);
+            _notyfService.Custom("Error retrieving portfolios. Please retry.", 10 , "#ca0a0a");
+            return RedirectToAction("Index", "Home", new { area = "Portfolio" });
         }
     }
     

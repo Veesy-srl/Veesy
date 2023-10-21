@@ -93,7 +93,7 @@ public class PortfolioService : IPortfolioService
 
     public Portfolio? GetMainPortfolioByUser(MyUser user)
     {
-        return _uoW.PortfolioRepository.FindByCondition(s => s.IsMain).SingleOrDefault();
+        return _uoW.PortfolioRepository.FindByCondition(s => s.IsMain && s.MyUserId == user.Id).SingleOrDefault();
     }
 
     public async Task UpdatePortfolios(List<Portfolio> portfoliosToUpdate, MyUser user)
@@ -177,7 +177,7 @@ public class PortfolioService : IPortfolioService
     public Portfolio? GetPortfolioByIdForPreview(Guid id)
     {
         return _uoW.PortfolioRepository.FindByCondition(s => s.Id == id)
-            .Include(s => s.PortfolioMedias)
+            .Include(s => s.PortfolioMedias.OrderBy(s => s.SortOrder))
             .ThenInclude(s => s.Media)
             .Include(s => s.MyUser)
             .ThenInclude(s => s.MyUserSectors)
@@ -191,6 +191,9 @@ public class PortfolioService : IPortfolioService
             .Include(s => s.MyUser)
             .ThenInclude(s => s.MyUserInfosToShow)
             .ThenInclude(s => s.InfoToShow)
+            .Include(s => s.MyUser)
+            .ThenInclude(s => s.MyUserLanguagesSpoken)
+            .ThenInclude(s => s.LanguageSpoken)
             .SingleOrDefault();
     }
 }

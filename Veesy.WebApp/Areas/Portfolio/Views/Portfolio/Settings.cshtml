@@ -54,7 +54,7 @@
             <div class="d-flex"><p class="mb-0 text-grey veesy-overflow">@Model.Portfolio.NumberMedia media uploaded</p></div>
             <div class="d-flex"><p class="mb-0 mt-3 text-grey veesy-overflow">@Model.Portfolio.NumberImage images</p></div>
             <div class="d-flex"><p class="mb-0 text-grey veesy-overflow">@Model.Portfolio.NumberVideo videos</p></div>
-            <a class="rounded-pill btn btn-primary btn-variant w-100 mt-3">Preview portfolio</a>
+            <a asp-action="PortfolioPreview" asp-controller="Portfolio" asp-area="Portfolio" asp-route-id="@Model.Portfolio.Id"  class="rounded-pill btn btn-primary btn-variant w-100 mt-3">Preview portfolio</a>
         </div>
     </div>
     <div class="col-sm-12 col-md-6">
@@ -187,13 +187,17 @@
                 {
                     @if (MediaCostants.ImageExtensions.Contains(image.Media.Type.ToUpper()))
                     {
-                        <div class="draggable m-0" name="image-gallery" mediaid="@image.MediaId">
+                        <div class="draggable m-0 pb-2 pt-2 show-edit" name="image-gallery" mediaid="@image.MediaId">            
+                            <a class="edit-button">
+                                <strong style="margin-right: 5px; font-size: 14px;">edit</strong>
+                                <i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>
+                            </a>
                             <img src="@Model.BasePathImages@image.Media.FileName?tr=w-400" class="card-body m-0 p-0 rounded-05 img-rounded-trasparent w-100 p-0" title="@image.Media.OriginalFileName"/>
                         </div>
                     }
                     else
                     {
-                        <div class="draggable m-0" name="image-gallery">
+                        <div class="draggable m-0 pb-2 pt-2" name="image-gallery" mediaid="@image.MediaId">
                             <video autoplay="autoplay" muted loop class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" title="@image.Media.OriginalFileName">
                                 <source src="@Model.BasePathImages@image.Media.FileName?tr=w-400" type="video/mp4">
                             </video>
@@ -320,7 +324,7 @@
 
     <script>
     
-    let active_layout = @((int) Model.Portfolio.Layout);
+    let active_layout = @((int)Model.Portfolio.Layout);
     
     function UpdateLayout(layout) {
         if (active_layout == layout)
@@ -386,6 +390,9 @@
           contentType: 'application/json; charset=utf-8',
           dataType: 'json',
           success: function (response) {
+              if (!response.result){
+                toastNotifyCustom(response.message, 10000, "#ca0a0a", "")
+              }
               console.log("ordine cambiato")
           },
           error: function (response) {
@@ -561,7 +568,7 @@
                     for (let i = 0; i < res.MediaDtos.length; i++){
                         if (res.MediaDtos[i].IsVideo){
                             document.getElementById("images-container").innerHTML +=
-                            '<div class="draggable m-0" name="image-gallery" tabindex="0" style="">'+
+                            '<div class="draggable m-0 pb-2 pt-2" name="image-gallery" mediaid="' + res.MediaDtos[i].Code + '" tabindex="0" style="">'+
                                  '<video autoplay="autoplay" muted="" loop="" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" title="'+ res.MediaDtos[i].OriginalFileName +'">'+
                                      '<source src="' + '@Model.BasePathImages' + res.MediaDtos[i].FileName + '?tr=w-400" type="video/mp4">'+
                                  '</video>'+
@@ -569,7 +576,7 @@
                          }
                         else{
                             document.getElementById("images-container").innerHTML +=
-                            '<div class="draggable m-0" name="image-gallery" tabindex="0">'+
+                            '<div class="draggable m-0 pb-2 pt-2" name="image-gallery" mediaid="' + res.MediaDtos[i].Code + '" tabindex="0">'+
                                 '<img src="' + '@Model.BasePathImages' + res.MediaDtos[i].FileName + '?tr=w-400" class="card-body m-0 p-0 rounded-05 img-rounded-trasparent w-100 p-0" title="'+ res.MediaDtos[i].OriginalFileName +'">' +
                             '</div>'
                                     

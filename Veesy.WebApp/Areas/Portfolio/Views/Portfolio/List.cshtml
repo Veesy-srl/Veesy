@@ -56,10 +56,10 @@
                         }
                         <h5><i style="color: #75CCDD" class="@iconBack icon-main-portfolio fa-star me-2"></i><strong>@item.Name</strong></h5>
                         <p class="veesy-grey-p" style="margin-bottom: 3rem">Updated on @item.LastUpdate<br/>@item.NumberMedia media uploaded</p>
-                        <a asp-action="Portfolio" asp-controller="Portfolio" asp-area="Portfolio" asp-route-id="@item.Code" class="grey-link">preview<i class="fa-solid fa-arrow-up-right-from-square ms-2"></i></a>
+                        <a asp-action="PortfolioPreview" asp-controller="Portfolio" asp-area="Portfolio" asp-route-id="@item.Code" class="grey-link">preview<i class="fa-solid fa-arrow-up-right-from-square ms-2"></i></a>
                     </div>
                     <div class="col-4 text-end">
-                        <a onclick="CopyLink('@Model.ApplicationUrl@Url.Action("Portfolio", "Portfolio", new {area = "Portfolio", id = @item.Code})')" class="grey-link ms-2"><i class="fa-regular fa-clone pe-1"></i><strong>copy link</strong></a>
+                        <a onclick="CopyLink('@Model.ApplicationUrl@Url.Action("Portfolio", "Public", new {area = "Public", id = @item.Code})')" class="grey-link ms-2"><i class="fa-regular fa-clone pe-1"></i><strong>copy link</strong></a>
                         <div style="margin-top: 5.3rem; align-items: flex-end" class="d-flex justify-content-between">
                             @{
                                 var visibility = @item.IsMain ? "hidden" : "visible";
