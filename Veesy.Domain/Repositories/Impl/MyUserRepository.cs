@@ -175,8 +175,16 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
     public List<MyUser> GetAllUsersWithMainPortfolio()
     {
         return _applicationDbContext.MyUsers
-            .Where(u => u.Portfolios.Any(p => p.IsMain == true))
-            .Include(u => u.Portfolios)
+            .Where(u => u.Portfolios.Any(p => p.IsMain == true && p.IsPublic == true))
+            .Include(u => u.Portfolios).Include(t => t.MyUserCategoriesWork).ThenInclude(g => g.CategoryWork)
+            .ToList();
+    }
+    
+    public List<MyUser> GetAllUsersWithMainPortfoliofiltered(string category)
+    {
+        return _applicationDbContext.MyUsers
+            .Where(u => u.Portfolios.Any(p => p.IsMain == true & p.IsPublic == true))
+            .Include(u => u.Portfolios).Include(t => t.MyUserCategoriesWork).ThenInclude(g => g.CategoryWork).Where(c => c.MyUserCategoriesWork.Any(cw => cw.CategoryWork.Name == category))
             .ToList();
     }
 }

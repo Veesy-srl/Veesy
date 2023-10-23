@@ -39,14 +39,28 @@ public class PublicHelper
     
     public CreatorsViewModel GetCreatorsViewModel()
     {
-        var userInfo = _accountService.GetAllCreators().ToList();
+        List<MyUser> userInfo = _accountService.GetAllCreators().ToList();
+        
+        List<MyUserCategoryWork> categoryWorks = new List<MyUserCategoryWork>();
+
+        foreach (var user in userInfo)
+        {
+            categoryWorks.AddRange(user.MyUserCategoriesWork);
+        }
+        categoryWorks = new List<MyUserCategoryWork>(new HashSet<MyUserCategoryWork>(categoryWorks));
+        
         return new CreatorsViewModel()
         {
-            Id = userInfo.Select(item => item.Id).ToList(),
-            FileNameImage =  userInfo.Select(item => item.ProfileImageFileName).ToList(),
-            BasePathImages = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/",
-            Role = userInfo.Select(item => item.Category).ToList(),
-            Username = userInfo.Select(item => item.UserName).ToList(),
+            User = userInfo,
+            CategoryWorks = categoryWorks.Select(category => category.CategoryWork.Name).ToList(),
+            BasePathImages = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"
         };
+    }
+    
+    public List<string> GetCreatorsFiltered(string category)
+    {
+        List<MyUser> userInfo = _accountService.GetFilteredCreators(category).ToList();
+
+        return userInfo.Select(info => info.Id).ToList();
     }
 }

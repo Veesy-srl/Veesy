@@ -31,5 +31,6 @@ public interface IMyUserRepository : IRepositoryBase<MyUser>
     List<Sector> GetSectors();
     public List<MyUser> GetOnlyRandomUserWithImage(int count);
     public List<MyUser> GetAllUsersWithMainPortfolio();
+    public List<MyUser> GetAllUsersWithMainPortfoliofiltered(string category);
 
 }

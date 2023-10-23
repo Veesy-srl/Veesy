@@ -1,3 +1,4 @@
+@using System.Reflection.Metadata
 @{
     ViewData["Title"] = "Creators";
 }
@@ -9,17 +10,23 @@
         </div>
     </div>
     <div class="row px-lg-5">
-        <h5 style="color: #202f4d;"><b>Filter by category</b></h5>
-        @for (var i = 0; i < Model.Id.Count; i++)
+        <div class="d-flex mb-4" style="max-width: 100%; flex-wrap: wrap;">
+            <h5 class="pe-2" style="color: #202f4d;"><b>Filter by category</b></h5>
+            @foreach (var category in Model.CategoryWorks)
+            {
+                <div class="pe-3 ps-3 div-white-rounded-blue-veesy-creators d-flex" style="top: -5px; position:  relative;" id="category-@category.ToString()" onclick="FilterCategory('@category.ToString()')"><a><i class="fa-solid fa-circle pe-2 fa-xs" id="category-i-@category.ToString()" style="color: #D2D5DB"></i><b>@category.ToString()</b></a></div>
+            }
+        </div>
+        @foreach (var user in Model.User)
         {
-            <div class="col-md-3 mt-2 mb-2">
+            <div class="col-md-3 mt-2 mb-2" id="@user.Id">
                 <div class="card-white-veesy-creators p-3 mb-3 d-flex position-relative" onmouseover="highlightCard(this)" onmouseout="resetCard(this)">
                     <div class="col-3">
                         <div class="text-center">
-                            
-                            @if (@Model.FileNameImage[i].ToString() != null)
+
+                            @if (user.ProfileImageFileName.ToString() != null)
                             {
-                                <img src="@Model.BasePathImages@Model.FileNameImage[i].ToString()" class="img-thumbnail-custom rounded-circle" alt="user-image">
+                                <img src="@Model.BasePathImages@user.ProfileImageFileName.ToString()" class="img-thumbnail-custom rounded-circle" alt="user-image">
                             }
                             else
                             {
@@ -30,13 +37,13 @@
                     </div>
                     <div class="m-4 col-7" style="color: #202F4D;">
                         <div class="row white-cursor-creators" style="font-size: 15px;">
-                            <strong>@Model.Username[i].ToString()</strong>
+                            <strong>@user.UserName.ToString()</strong>
                         </div>
                         <div class="row white-cursor-creators">
-                            @if (@Model.Role[i] != null)
+                            @if (@user.Category != null)
                             {
                                 <div style="font-size: 14px;">
-                                    @Model.Role[i].ToString()
+                                    @user.Category.ToString()
                                 </div>
                             }
                         </div>
@@ -70,6 +77,51 @@
         }
         card.querySelector(".fa-circle").style.color = "#202F4D";
         card.style.cursor = "";
+    }
+
+    function FilterCategory(category) {
+        $('#load-spinner').css("display", "block");
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("FilterCreators", "Public")',
+            data: { category: category },
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (response) {
+                if(response != null){
+                    FilterCategoryInPage(response, category);
+                }
+                $('#load-spinner').css("display", "none");
+            },
+            error: function (response) {
+                $('#load-spinner').css("display", "none");
+            }
+        })
+    }
+    
+    function FilterCategoryInPage(users, category) {
+        
+        @foreach (var category in Model.CategoryWorks)
+         {
+             <text>
+                document.getElementById('category-@category').classList.remove("creators-selected-button");
+                        document.getElementById('category-i-@category').classList.remove("creators-selected-i");
+             </text>
+         }
+                 
+        document.getElementById('category-' + category).classList.add("creators-selected-button");
+        document.getElementById('category-i-' + category).classList.add("creators-selected-i");
+        
+        @foreach (var user in Model.User)
+         {
+             <text>
+                document.getElementById('@user.Id').style.setProperty('display', 'none', 'important');
+             </text>
+         }
+                 
+        for(var i = 0; i < users.length; i++){
+            document.getElementById(users[i]).style.setProperty('display', 'block', 'important');
+        }
     }
 
 </script>

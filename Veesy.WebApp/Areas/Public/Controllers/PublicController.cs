@@ -66,6 +66,12 @@ public class PublicController : VeesyController
         }
     }
     
+    [HttpGet("FilterCreators")]
+    public List<string> FilterCreators(string category)
+    {
+        return _publicHelper.GetCreatorsFiltered(category);
+    }
+    
     [HttpGet("About")]
     public IActionResult About()
     {

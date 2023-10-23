@@ -76,8 +76,7 @@
                             <div class="dropdown-menu bg-grey-veesy" aria-labelledby="dropdownMenuLink">
                                 <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Portfolio" ? "a-ciano-header" : "menu-element")" asp-action="List" asp-controller="Portfolio" asp-area="Portfolio">Portfolio</a>
                                 <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Cloud" ? "a-ciano-header" : "menu-element")" asp-action="List" asp-controller="Cloud" asp-area="Portfolio">Cloud</a>
-
-                                <a class="dropdown-item menu-element" href="#">Your Plan</a>
+                                <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Public" ? "a-ciano-header" : "menu-element")" asp-action="PricingPlan" asp-controller="Public" asp-area="Public">Your Plan</a>
                                 <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Profile" ? "a-ciano-header" : "menu-element")" asp-action="Profile" asp-controller="Profile" asp-area="Account">Profile</a>
                                 <a class="dropdown-item menu-element" asp-action="Logout" asp-controller="Auth" asp-area="Auth">Log out</a>
                             </div>
@@ -108,7 +107,7 @@
                             <div class="dropdown-menu bg-grey-veesy" aria-labelledby="dropdownMenuLink">
                                 <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Portfolio" ? "a-ciano-header" : "menu-element")"  asp-action="List" asp-controller="Portfolio" asp-area="Portfolio">Portfolio</a>
                                 <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Cloud" ? "a-ciano-header" : "menu-element")" asp-area="Portfolio" asp-controller="Cloud" asp-action="List">Cloud</a>
-                                <a class="dropdown-item menu-element" href="#">Your Plan</a>
+                                <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Public" ? "a-ciano-header" : "menu-element")" asp-action="PricingPlan" asp-controller="Public" asp-area="Public">Your Plan</a>
                                 <a class="dropdown-item @(ViewContext.RouteData.Values["Controller"].ToString() == "Profile" ? "a-ciano-header" : "menu-element")" asp-action="Profile" asp-controller="Profile" asp-area="Account">Profile</a>
                                 <a class="dropdown-item menu-element" asp-action="Logout" asp-controller="Auth" asp-area="Auth">Log out</a>
                             </div>
@@ -126,7 +125,7 @@
                             <li class="m-4"><a asp-action="Creators" asp-controller="Public" asp-area="Public" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description2">Creators</a></li>
                             <li class="m-4"><a asp-action="About" asp-controller="Public" asp-area="Public" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description3">About</a></li>
                             <li class="m-4"><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description4">Match</a></li>
-                            <li class="m-4"><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description5">Profile</a></li>
+                            <li class="m-4"><a asp-action="Profile" asp-controller="Profile" asp-area="Account"  class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description5">Profile</a></li>
                             <li class="m-4"><a asp-action="Contacts" asp-controller="Public" asp-area="Public" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description6">Contact</a></li>
                         </ul>
                     </div>

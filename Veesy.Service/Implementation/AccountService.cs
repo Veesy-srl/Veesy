@@ -261,4 +261,11 @@ public class AccountService : IAccountService
     {
         return _uoW.MyUserRepository.GetAllUsersWithMainPortfolio().ToList();
     }
+    
+    public List<MyUser> GetFilteredCreators(string category)
+    {
+        return _uoW.MyUserRepository.GetAllUsersWithMainPortfoliofiltered(category).ToList();
+    }
+
+    
 }
