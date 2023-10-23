@@ -22,13 +22,19 @@ public class PublicHelper
         _config = config;
     }
 
-    public List<(string ImgPath, string userImg, string Username)> GetListMedia(int count)
+    public AboutMediaViewModel GetUserMediaList(int count)
     {
-        var mediaListWithUsernames = new List<(string, string, string)>();
-       
-        mediaListWithUsernames = _mediaService.GetRandomMediaWithUsername(count);
+        var UserList = _mediaService.GetRandomMediaWithUsername(count);
+        
+        AboutMediaViewModel List = new AboutMediaViewModel();
+        List.BasePath = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/";
+        List.BasePathImages = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/";
+        List.MediaList = UserList.Select(item => item.Medias[0].FileName).ToList();
+        List.MediaUser = UserList.Select(item => item.ProfileImageFileName).ToList();
+        List.Usernames = UserList.Select(item => item.UserName).ToList();
+        List.Id = UserList.Select((item => item.Id)).ToList();
 
-        return mediaListWithUsernames;
+        return List;
     }
     
     public CreatorsViewModel GetCreatorsViewModel()

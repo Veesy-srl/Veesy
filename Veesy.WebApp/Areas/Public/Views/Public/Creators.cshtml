@@ -16,18 +16,26 @@
                 <div class="card-white-veesy-creators p-3 mb-3 d-flex position-relative" onmouseover="highlightCard(this)" onmouseout="resetCard(this)">
                     <div class="col-3">
                         <div class="text-center">
-                            <img src="@Model.BasePathImages@Model.FileNameImage[i].ToString()" class="img-thumbnail-custom rounded-circle" alt="user-image">
+                            
+                            @if (@Model.FileNameImage[i].ToString() != null)
+                            {
+                                <img src="@Model.BasePathImages@Model.FileNameImage[i].ToString()" class="img-thumbnail-custom rounded-circle" alt="user-image">
+                            }
+                            else
+                            {
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" class="img-thumbnail-custom rounded-circle" alt="user-image">
+                            }
                         </div>
                         <a class="rounded-pill btn btn-variant" style="background-color: white; width:  160px; margin-top:  20px;" type="submit">meet the creator</a>
                     </div>
                     <div class="m-4 col-7" style="color: #202F4D;">
-                        <div class="row white-cursor-creators" style="font-size: 18px;">
+                        <div class="row white-cursor-creators" style="font-size: 15px;">
                             <strong>@Model.Username[i].ToString()</strong>
                         </div>
                         <div class="row white-cursor-creators">
                             @if (@Model.Role[i] != null)
                             {
-                                <div style="font-size: 17px;">
+                                <div style="font-size: 14px;">
                                     @Model.Role[i].ToString()
                                 </div>
                             }

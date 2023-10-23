@@ -186,10 +186,10 @@
                     <div class="mb-4 d-inline-flex"><b>INFO</b></div> 
                 </h4>
                 <div class="text-color">
-                    <a href="#">How it works</a><br/>
-                    <a href="#">Plans e Pricing</a><br/>
+                    <a asp-action="About" asp-controller="Public" asp-area="Public" >About</a><br/>
+                    <a asp-action="PricingPlan" asp-controller="Public" asp-area="Public">Plans & Pricing</a><br/>
                     <a href="#">FAQ</a><br/>
-                    <a href="#">Account</a>
+                    <a href="#">Log In</a>
                 </div>
             </div>
             <div class="col-md-3 mt-3 mt-md-5 veesy-text-color" >
@@ -197,7 +197,7 @@
                     <div class=" mb-4 d-inline-flex"><b>LEGAL</b></div> 
                 </h4>
                 <div class="text-color">
-                    <a href="#">Terms & Condition</a><br/>
+                    <a href="#">Privacy Policy</a><br/>
                     <a href="#">Cookies Policy</a><br/>
                     <a href="#">Community Rules</a>
                 </div>
@@ -210,8 +210,10 @@
             </div>
         </div>
         <div class="row">
-            <div class="mb-3 veesy-text-color">
-                <p>Veesy S.R.L. © 2023 All rights reserved - Vat.: 13005470961 - annual social capital € 10.000 - website by <a href="https://www.derein.net/" class="a-ciano">derein</a> & <a class="a-ciano" href="https://www.enigma-tech.it/">enigma</a></p>
+            <div class="mb-3 veesy-text-color d-flex justify-content-between">
+                <p class="d-none d-lg-block">Veesy S.R.L. © 2023 All rights reserved - Vat.: 13005470961 - annual social capital € 10.000</p>
+                <p class="text-end me-4 d-none d-lg-block">web project by <a href="https://www.derein.net/">derein</a> & <a href="https://www.enigma-tech.it/">enigma</a></p>
+                <p class="d-block d-lg-none d-inline">Veesy S.R.L. © 2023 All rights reserved - Vat.: 13005470961 - annual social capital € 10.000 - web project by <a href="https://www.derein.net/">derein</a> & <a href="https://www.enigma-tech.it/">enigma</a></p>
             </div>
         </div>
     </div>
