@@ -250,4 +250,21 @@ public class PortfolioHelper
             BasePathAzure = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"
         }, new ResultDto(true, ""));
     }
+
+    public async Task<ResultDto> RemoveMediaFromPortfolio(PortfolioMediaDto portfolioMediaDto, MyUser userInfo)
+    {
+        var portfolio = _portfolioService.GetPortfolioByIdWithPortfoliosMedia(portfolioMediaDto.PortfolioId, userInfo.Id);
+        var p_media = portfolio.PortfolioMedias.SingleOrDefault(s => s.MediaId == portfolioMediaDto.MediaId);
+        if (p_media == null)
+            return new ResultDto(false, "Media not found.");
+        foreach (var item in portfolio.PortfolioMedias.Where(s => s.SortOrder > p_media.SortOrder))
+        {
+            item.SortOrder--;
+        }
+
+        var listToDelete = new List<PortfolioMedia>() { p_media };
+        await _portfolioService.UpdatePortfolioMedias(listToDelete, new List<PortfolioMedia>(), portfolio.PortfolioMedias.Where(s=>s.MediaId != p_media.MediaId).ToList(),
+            userInfo);
+        return new ResultDto(true, "");
+    }
 }

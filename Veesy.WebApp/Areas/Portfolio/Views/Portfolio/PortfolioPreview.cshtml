@@ -24,25 +24,29 @@
 
 <div class="row">
     <div class="card-columns draggable-zone" id="images-container">
-        @foreach (var image in Model.PortfolioDto.PortfolioMedias)
-        {
-            @if (MediaCostants.ImageExtensions.Contains(image.Media.Type.ToUpper()))
+        @{
+            foreach (var image in Model.PortfolioDto.PortfolioMedias)
             {
-                <div class="draggable m-0 pb-2 pt-2" name="image-gallery" mediaid="@image.MediaId">
-                    <img src="@Model.BasePathImages@image.Media.FileName?tr=w-1080" class="card-body m-0 p-0 rounded-05 w-100 p-0" title="@image.Media.OriginalFileName"/>
-                </div>
-            }
-            else
-            {
-                <div class="draggable m-0 pb-2 pt-2" name="image-gallery">
-                    <video autoplay="autoplay" muted loop class="w-100 shadow-1-strong rounded-05" title="@image.Media.OriginalFileName">
-                        <source src="@Model.BasePathImages@image.Media.FileName?tr=w-1080" type="video/mp4">
-                    </video>
-                </div>
+                @if (MediaCostants.ImageExtensions.Contains(image.Media.Type.ToUpper()))
+                {
+                    
+                    <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.MediaId', false)" class="draggable m-0 p-2" name="image-gallery" mediaid="@image.MediaId">
+                        <img src="@Model.BasePathImages@image.Media.FileName?tr=w-1080" class="card-body m-0 p-0 rounded-05 w-100 p-0" title="@image.Media.OriginalFileName"/>
+                    </div>
+                }
+                else
+                {
+                    <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.MediaId', true)" class="draggable m-0 p-2" name="image-gallery">
+                        <video autoplay="autoplay" muted loop class="w-100 shadow-1-strong rounded-05" title="@image.Media.OriginalFileName">
+                            <source src="@Model.BasePathImages@image.Media.FileName?tr=w-1080" type="video/mp4">
+                        </video>
+                    </div>
+                }
             }
         }
     </div>
 </div>
+
 <div class="empty-veesy"></div>
 <div class="empty-veesy"></div>
 <div class="text-center">
@@ -52,7 +56,70 @@
 <div class="empty-veesy"></div>
 <div class="empty-veesy"></div>
 
-<div class="creator-popup" onclick="OpenPopup()">
+
+<div class="media-popup" id="media-popup">
+    <nav class="bg-grey-veesy navbar navbar-expand-sm navbar-toggleable-sm mb-3 fixed-top">
+        <div class="container-fluid">
+                
+            <h1 class="h3 mb-2 fw-normal">
+                <a role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" onclick="CloseMediaPopup()">
+                    <img src="/imgs/veesy_vettoriale_enigma.png" style="width: 75px; height: 25px; margin-top: 5px;">portfolio
+                </a>
+            </h1> 
+            <div class="float-end mb-2">
+                <div class="d-flex">
+                    <a onclick="CloseMediaPopup()" class="ms-2 btn btn-light border fw-bolder shadow-none" id="menuButton">
+                        <i class="fas fa-circle fa-2xs text-primary mr-2" id="icon-color" aria-hidden="true"></i>
+                        <span id="color-text-variant">close</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="row pt-4rem ps-4 pe-4" style="max-height: 100vh">
+        <div class="col-sm-12 col-md-2 center-content nodisplay-sm">
+            <ul class="list-unstyled">
+                <li class="mb-3 edit-padding-left">
+                    <div class="arrow-portfolio-media rounded-05 center-content"><a id="previous-media"><img class="w-100" src="~/icon/arrow_left_light mode.svg"/></a></div>
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-12 col-md-8">
+            <div id="external-div" class="mx-auto">
+                <div class="row text-center align-bottom show-edit" style="position:relative; max-height: 80vh; max-width: 100%; --bs-gutter-x: 0;">
+                    <a onclick="ShowOverlay(true)" id="open-credits" class="edit-button-portfolio-preview">
+                        <i class="fa-solid fa-plus"></i>
+                    </a>
+                    <div style="position: relative">
+                        <div id="text-overlay" class="text-overlay text-start p-4 rounded-05">
+                            <div class="row">
+                                <div class="col-3">
+                                    <p class="text-white"><strong>Image Credits</strong></p>
+                                    <p id="credit-text" class="text-white">Lorem ipsum: dolor sit amet. Consectetur: adipiscing elit. Quisque: lobortis efficitur erat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eu mattis lectus. Aenean eget elit ornare, pulvinar nulla et, tempor ligula. 2023© all rights reserved</p>
+                                </div>
+                            </div>
+                        </div>
+                        <video id="video-popup" style="display: none" autoplay="autoplay" muted controls="controls" loop class="img-ratio-portfolio rounded-05">
+                            <source type="video/mp4">
+                        </video>
+                        <img style="display: none" id="image-popup" asp-append-version="true" class="img-ratio-portfolio rounded-05"/>
+                    </div>
+                    <div class="empty-veesy"></div>
+                    <p><strong id="number-media"></strong></p>
+                </div>      
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-2 center-content nodisplay-sm">
+            <ul class="list-unstyled w-100">
+                <li class="mb-3 edit-padding-right" style="float: right">
+                    <div class="arrow-portfolio-media rounded-05 center-content"><a id="next-media"><img class="w-100" src="~/icon/arrow_right_light mode.svg"/></a></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="creator-popup" onclick="OpenCreatorPopup()">
     <div class="d-flex">
         <div class="col-11">
             <p class="text-white ms-2 mb-1 mt-1">MEET THE CREATOR</p>
@@ -62,7 +129,7 @@
 </div>
 
 <div class="creator-popup-full" id="popup-creator">
-    <div class="d-flex" style="cursor: pointer" onclick="ClosePopup()">
+    <div class="d-flex" style="cursor: pointer" onclick="CloseCreatorPopup()">
         <div class="col-11">
             <p class="text-white ms-2 mb-1 mt-1">MEET THE CREATOR</p>
         </div>
@@ -155,12 +222,97 @@
 @section Scripts
 {
     <script>
-        function OpenPopup(){
+        
+        function ShowOverlay(add) {
+            if (add){
+                document.getElementById("text-overlay").classList.add("text-overlay-selected")
+                document.getElementById("open-credits").onclick = function (){ShowOverlay(false)}
+            }
+            else{
+                document.getElementById("text-overlay").classList.remove("text-overlay-selected")
+                document.getElementById("open-credits").onclick = function (){ShowOverlay(true)}
+            }
+        }
+    
+    
+        var media = @Html.Raw(Json.Serialize(Model.PortfolioDto.PortfolioMedias))
+    
+        function getContainedSize(img) {
+          var ratio = img.naturalWidth/img.naturalHeight
+          var width = img.height*ratio
+          var height = img.height
+          if (width > img.width) {
+            width = img.width
+            height = img.width/ratio
+          }
+          var parentNodeWidth = img.parentNode.parentNode.offsetWidth;
+          var parentNodeHeight = img.parentNode.parentNode.offsetHeight;
+          var percent = (width / parentNodeWidth) * 100 - 2; 
+          var percentHeight = (height / parentNodeHeight) * 100;
+          
+          //document.getElementById("text-overlay").setAttribute("style","width: " + percent + "% !important; height: "+percentHeight+"%;");
+          document.getElementById("external-div").setAttribute("style","width: " + percent + "% !important");
+          return [width, height]
+        }
+        
+        function OpenMediaPopup(mediaId, IsVideo) {
+            document.getElementById("open-credits").onclick = function (){ShowOverlay(true)}
+            document.getElementById("text-overlay").classList.remove("text-overlay-selected")
+            document.body.style.overflowY = "hidden"; 
+            document.getElementById("media-popup").style.display = "block";
+            document.getElementById("image-popup").style.display = "none";
+            document.getElementById("video-popup").style.display = "none";
+            let obj = media.find((o, i) => {
+                if (o.mediaId === mediaId) {
+                    let src = media[i].media.fileName
+                    if(media[i].media.credits == null){
+                        document.getElementById("open-credits").style.display = "none"
+                        document.getElementById("credit-text").textContent = ""
+                    }
+                    else{
+                        document.getElementById("open-credits").style.display = "block"
+                        document.getElementById("credit-text").textContent = media[i].media.credits
+                    }
+                        
+                    if(IsVideo){
+                        document.getElementById("video-popup").src = '@Model.BasePathImages' + src;  
+                        document.getElementById("video-popup").style.display = "block";
+                        getContainedSize(document.getElementById("video-popup"))
+                    }
+                    else{
+                        document.getElementById("image-popup").src = '@Model.BasePathImages' + src;  
+                        document.getElementById("image-popup").style.display = "block";
+                        getContainedSize(document.getElementById("image-popup"))
+                    }
+                    document.getElementById("number-media").textContent = (i+1) + " / " + media.length
+                    if (i + 1 == media.length){
+                        document.getElementById("next-media").onclick = function() {OpenMediaPopup(media[0].media.code, media[0].media.isVideo)};
+                        document.getElementById("previous-media").onclick = function() {OpenMediaPopup(media[i-1].media.code, media[i-1].media.isVideo)};
+                    }
+                    else if (i == 0){
+                        document.getElementById("next-media").onclick = function() {OpenMediaPopup(media[i+1].media.code, media[i+1].media.isVideo)};
+                        document.getElementById("previous-media").onclick = function() {OpenMediaPopup(media[media.length - 1].media.code, media[media.length - 1].media.isVideo)};
+                    }
+                    else{
+                        document.getElementById("next-media").onclick = function() {OpenMediaPopup(media[i+1].media.code, media[i+1].media.isVideo)};
+                        document.getElementById("previous-media").onclick = function() {OpenMediaPopup(media[i-1].media.code, media[i-1].media.isVideo)};
+                    }
+                    return true; // stop searching
+                }
+            });
+        }
+        
+        function CloseMediaPopup() {
+            document.body.style.overflowY = "auto"; 
+            document.getElementById("media-popup").style.display = "none";
+        }
+    
+        function OpenCreatorPopup(){
             document.getElementById("popup-creator").classList.add("creator-popup-full-open")
             document.getElementById("popup-creator").classList.remove("creator-popup-full-close")
             document.getElementById("blurred-background").style.display = "block"
         }
-        function ClosePopup(){
+        function CloseCreatorPopup(){
             document.getElementById("popup-creator").classList.remove("creator-popup-full-open")
             document.getElementById("popup-creator").classList.add("creator-popup-full-close")
             document.getElementById("blurred-background").style.display = "none"

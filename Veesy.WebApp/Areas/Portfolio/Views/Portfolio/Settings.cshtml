@@ -187,17 +187,19 @@
                 {
                     @if (MediaCostants.ImageExtensions.Contains(image.Media.Type.ToUpper()))
                     {
-                        <div class="draggable m-0 pb-2 pt-2 show-edit" name="image-gallery" mediaid="@image.MediaId">            
-                            <a class="edit-button">
-                                <strong style="margin-right: 5px; font-size: 14px;">edit</strong>
-                                <i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>
+                        <div id="media-@image.MediaId" style="position: relative" class="draggable m-0 pb-2 pt-2 show-edit" name="image-gallery" mediaid="@image.MediaId">            
+                            <a onMouseDown="RemoveMediaFromPortfolio('@image.MediaId')" class="edit-button-portfolio">
+                                <p class="mb-0 text-white">remove</p>
                             </a>
                             <img src="@Model.BasePathImages@image.Media.FileName?tr=w-400" class="card-body m-0 p-0 rounded-05 img-rounded-trasparent w-100 p-0" title="@image.Media.OriginalFileName"/>
                         </div>
                     }
                     else
                     {
-                        <div class="draggable m-0 pb-2 pt-2" name="image-gallery" mediaid="@image.MediaId">
+                        <div id="media-@image.MediaId" style="position: relative" class="draggable m-0 pb-2 pt-2 show-edit" name="image-gallery" mediaid="@image.MediaId">
+                            <a onMouseDown="RemoveMediaFromPortfolio('@image.MediaId')" class="edit-button-portfolio">
+                                <p class="mb-0 text-white">remove</p>
+                            </a>
                             <video autoplay="autoplay" muted loop class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" title="@image.Media.OriginalFileName">
                                 <source src="@Model.BasePathImages@image.Media.FileName?tr=w-400" type="video/mp4">
                             </video>
@@ -217,7 +219,7 @@
                     <div id="div-uploader-icon" class="w-100 mb-1">
                         <i id="uploader-icon" class="fa-solid fa-circle-plus fa-xl" style="color: #0D2045"></i>
                     </div>
-                    <span id="uploader-text" class="text">
+                    <span id="uploader-text" style="color: #202F4D">
                         Upload or drop files here. <br/> (Accepted formats: jpg, png, mov, mp4, gif)
                     </span>
                     <div class="progress-bar progress-bar-primary" role="progressbar" data-dz-uploadprogress>
@@ -520,6 +522,28 @@
         })
     }
     
+    function RemoveMediaFromPortfolio(Id) {
+        var PortfolioId = '@Model.Portfolio.Id'
+        var MediaId = Id
+        var PortfolioMediaDto = {PortfolioId, MediaId}
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("RemoveMediaFromPortfolio", "Portfolio")',
+            data: JSON.stringify(PortfolioMediaDto),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (response) {
+                if(response.result){
+                    document.getElementById("media-" + Id).remove()
+                }
+                $('#load-spinner').css("display", "none");
+            },
+            error: function (response) {
+                $('#load-spinner').css("display", "none");
+            }
+        })
+    }
+    
     function ChangeLayout(text, integer){
         var divs = document.getElementsByClassName("div-select-layout-selected")
         for(let i = 0; i < divs.length; i++){
@@ -568,7 +592,10 @@
                     for (let i = 0; i < res.MediaDtos.length; i++){
                         if (res.MediaDtos[i].IsVideo){
                             document.getElementById("images-container").innerHTML +=
-                            '<div class="draggable m-0 pb-2 pt-2" name="image-gallery" mediaid="' + res.MediaDtos[i].Code + '" tabindex="0" style="">'+
+                            '<div id="media-' + res.MediaDtos[i].Code + '" style="position: relative" class="draggable m-0 pb-2 pt-2" name="image-gallery" mediaid="' + res.MediaDtos[i].Code + '" tabindex="0" style="">'+
+                                 '<a onMouseDown="RemoveMediaFromPortfolio(' + res.MediaDtos[i].Code + ')" class="edit-button-portfolio">'+
+                                    '<p class="mb-0 text-white">remove</p>'+
+                                 '</a>'+
                                  '<video autoplay="autoplay" muted="" loop="" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" title="'+ res.MediaDtos[i].OriginalFileName +'">'+
                                      '<source src="' + '@Model.BasePathImages' + res.MediaDtos[i].FileName + '?tr=w-400" type="video/mp4">'+
                                  '</video>'+
@@ -576,7 +603,10 @@
                          }
                         else{
                             document.getElementById("images-container").innerHTML +=
-                            '<div class="draggable m-0 pb-2 pt-2" name="image-gallery" mediaid="' + res.MediaDtos[i].Code + '" tabindex="0">'+
+                            '<div id="media-' + res.MediaDtos[i].Code + '" style="position: relative" class="draggable m-0 pb-2 pt-2" name="image-gallery" mediaid="' + res.MediaDtos[i].Code + '" tabindex="0">'+
+                                '<a onMouseDown="RemoveMediaFromPortfolio(' + res.MediaDtos[i].Code + ')" class="edit-button-portfolio">'+
+                                    '<p class="mb-0 text-white">remove</p>'+
+                                '</a>'+
                                 '<img src="' + '@Model.BasePathImages' + res.MediaDtos[i].FileName + '?tr=w-400" class="card-body m-0 p-0 rounded-05 img-rounded-trasparent w-100 p-0" title="'+ res.MediaDtos[i].OriginalFileName +'">' +
                             '</div>'
                                     

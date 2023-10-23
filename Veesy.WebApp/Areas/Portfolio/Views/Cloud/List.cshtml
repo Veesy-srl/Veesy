@@ -68,7 +68,11 @@
     <div class="p-1 mb-4 mb-lg-0 card-columns" id="images-container">
         @foreach (var image in Model.Medias)
         {
-            <div id="div-for-remove-@image.Code" class="media-container">
+            <div id="div-for-remove-@image.Code" class="media-container show-edit">
+                <a asp-action="Edit" asp-route-id="@image.Code" class="edit-button">
+                    <strong style="margin-right: 5px; font-size: 14px;">edit</strong>
+                    <i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>
+                </a>
                 <a onclick="SelectMedia('@image.Code')">
                     <div class="img-div">
                         @if (MediaCostants.ImageExtensions.Contains(image.Type.ToUpper()))
@@ -478,17 +482,17 @@
                         else{
                             document.getElementById("images-container").innerHTML +=
                             '<div id="div-for-remove-' + res.MediaDtos[i].Code + '" class="media-container show-edit">'+
-                                            '<a class="edit-button" onclick="EditMedia(\'' + res.MediaDtos[i].Code + '\'); return false;">'+
-                                                '<strong style="margin-right: 5px; font-size: 14px;">edit</strong>'+
-                                                '<i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>'+
-                                            '</a>'+
-                                            '<a onclick="SelectMedia(\'' + res.MediaDtos[i].Code + '\')">'+
-                                                '<div class="img-div">'+
-                                                    '<div class="draggable m-0" name="image-gallery">'+
-                                                        '<video id="img-' + res.MediaDtos[i].Code + '" autoplay="autoplay" muted loop class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" title="' + res.MediaDtos[i].DefaultImageOriginalName + '">'+
-                                                                                                         '<source src="@Model.BasePath' + res.MediaDtos[i].FileName + '?tr=w-400" type="video/mp4">'+
-                                                                                                     '</video></div></div></a></div>'
-                                    
+                                '<a class="edit-button" onclick="EditMedia(\'' + res.MediaDtos[i].Code + '\'); return false;">'+
+                                    '<strong style="margin-right: 5px; font-size: 14px;">edit</strong>'+
+                                    '<i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>'+
+                                '</a>'+
+                                '<a onclick="SelectMedia(\'' + res.MediaDtos[i].Code + '\')">'+
+                                    '<div class="img-div">'+
+                                        '<div class="draggable m-0" name="image-gallery">'+
+                                            '<video id="img-' + res.MediaDtos[i].Code + '" autoplay="autoplay" muted loop class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" title="' + res.MediaDtos[i].DefaultImageOriginalName + '">'+
+                                                '<source src="@Model.BasePath' + res.MediaDtos[i].FileName + '?tr=w-400" type="video/mp4">'+
+                                            '</video></div></div></a></div>'
+                        
                         }
                     }
                 }    

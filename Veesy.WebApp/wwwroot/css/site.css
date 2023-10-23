@@ -904,6 +904,10 @@ a:hover{
   padding-top: 7rem;
 }
 
+.pt-4rem{
+  padding-top: 5rem;
+}
+
 .w-125{
   width: 125% !important;
 }
@@ -1070,6 +1074,26 @@ a:hover{
   width: 20px;
 }
 
+.media-popup{
+  position: fixed;
+  background-color: #E2E5E7;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10000;
+  height:100vh;
+  display: none;
+  overflow: hidden;
+}
+
+.img-ratio-portfolio{
+  max-height: 80vh;
+  max-width: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
 #passwordconfirm-eye{
   width: 20px;
 }
@@ -1091,6 +1115,12 @@ a:hover{
   }
 
   .edit-button {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .edit-button-portfolio {
     display: inline-block !important;
     visibility: visible !important;
     opacity: 1 !important;
@@ -1126,9 +1156,98 @@ a:hover{
     visibility: visible;
     opacity: 1;
   }
+  .edit-button-portfolio{
+    display: inline-block;
+    visibility: visible;
+    opacity: 1;
+  }
   .img-rounded-trasparent-hover{
     
   }
+}
+
+.credits-overlay{
+  background-color: rgba(83, 107, 126, 0.5);
+  position: relative;
+  z-index: 9;
+  height: 100%;
+  color: #AAB0BB !important;
+  opacity: 0;
+}
+
+.text {
+  white-space: nowrap;
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+
+.container-test:hover .overlay {
+}
+
+
+.overlay {
+  position: absolute;
+  top: 86px;
+  background-color: #008CBA;
+  overflow: hidden;
+  transition: .5s ease;
+}
+
+.edit-button-portfolio-preview{
+  background-color: #536B7E !important;
+  padding: 1px 4px 1px 5px;
+  border-radius: 20px;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 10;
+  color: white !important;
+  width: 23px;
+  height: 23px;
+}
+
+.text-overlay{
+  background-color: rgba(83, 107, 126, 0.73) !important;
+  position: absolute;
+  z-index: 9;
+  color: white !important;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: 5s ease;
+  display: none;
+}
+
+.text-overlay-selected{
+  opacity: 1;
+  display: block;
+}
+
+.edit-button-portfolio-preview:hover{
+  color: white;
+}
+
+
+.edit-button-portfolio{
+  background-color: #E45B5A80 !important;
+  padding: 1px 4px 1px 4px;
+  border-radius: 20px;
+  position: absolute;
+  top: 15px;
+  right: 5px;
+  display: none;
+  opacity: 0;
+  z-index: 9;
+  visibility: hidden;
+  color: white !important;
+  -webkit-transition: opacity 600ms, visibility 600ms !important;
+  transition: opacity 600ms, visibility 600ms !important;
 }
 
 .edit-button {
@@ -1157,6 +1276,12 @@ a:hover{
 
 .arrow-edit-media{
   background-color: #728695 !important;
+  height: 50px !important;
+  width: 50px !important;
+}
+
+.arrow-portfolio-media{
+  background-color: #EEF0F2 !important;
   height: 50px !important;
   width: 50px !important;
 }
