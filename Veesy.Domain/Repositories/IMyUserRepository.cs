@@ -29,6 +29,8 @@ public interface IMyUserRepository : IRepositoryBase<MyUser>
     List<LanguageSpoken> GetLanguagesSpokenByUserId(string userInfoId);
     List<InfoToShow> GetInfoToShowByUserId(string userInfoId);
     List<Sector> GetSectors();
-    public List<MyUser> GetOnlyUserWithImage();
+    public List<MyUser> GetOnlyRandomUserWithImage(int count);
+    public List<MyUser> GetAllUsersWithMainPortfolio();
+    public List<MyUser> GetAllUsersWithMainPortfoliofiltered(string category);
 
 }

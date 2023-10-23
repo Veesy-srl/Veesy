@@ -105,38 +105,9 @@ public class MediaService : IMediaService
         }
     }
 
-    public List<(string, string, string)> GetRandomMediaWithUsername(int count)
+    public List<MyUser> GetRandomMediaWithUsername(int count)
     {
-        var UsersWithImage = _uoW.MyUserRepository.GetOnlyUserWithImage();
-        Random random = new Random();
-
-        if (UsersWithImage.Count > 0)
-        {
-            List<(string, string, string)> result = new List<(string, string, string)>();
-
-            List<string> allImages = UsersWithImage
-                .SelectMany(user => user.Medias.Select(media => media.FileName))
-                .ToList();
-
-            while (result.Count < count && allImages.Count > 0)
-            {
-                int randomImageIndex = random.Next(allImages.Count);
-                string userImage = allImages[randomImageIndex];
-                allImages.RemoveAt(randomImageIndex);
-
-                var user = UsersWithImage.FirstOrDefault(u => u.Medias.Any(m => m.FileName == userImage));
-                if (user != null)
-                {
-                    string randomUser = user.UserName;
-                    string userProfileImage = user.ProfileImageFileName;
-                    result.Add((userImage, userProfileImage, randomUser));
-                }
-            }
-
-            return result;
-        }
-
-        return new List<(string, string, string)> { (null, null, null) };
+        return _uoW.MyUserRepository.GetOnlyRandomUserWithImage(count);
     }
 
     public List<(string FileName, long Size)> GetMediasNameAndSizeByUserId(string userId)

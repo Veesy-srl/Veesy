@@ -92,20 +92,34 @@ public class PublicController : VeesyController
         }
     }
     
+    [HttpGet("FilterCreators")]
+    public List<string> FilterCreators(string category)
+    {
+        return _publicHelper.GetCreatorsFiltered(category);
+    }
+    
     [HttpGet("About")]
     public IActionResult About()
     {
         try
         {
-            AboutMediaViewModel about = new AboutMediaViewModel();
-            var mediaList = _publicHelper.GetListMedia(7);
-            about.BasePath = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/";
-            about.BasePathImages = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/";
-            about.MediaList = mediaList.Select(item => item.ImgPath).ToList();
-            about.MediaUser = mediaList.Select(item => item.userImg).ToList();
-            about.Usernames = mediaList.Select(item => item.Username).ToList();
+            var vm = _publicHelper.GetUserMediaList(7);
+            return View(vm);
 
-            return View(about);
+        }
+        catch (Exception e)
+        {
+            Logger.Error(e, e.Message);
+            return RedirectToAction("Index", "Home");
+        }
+    }
+    
+    [HttpGet("PricingPlan")]
+    public IActionResult PricingPlan()
+    {
+        try
+        {
+            return View();
         }
         catch (Exception e)
         {

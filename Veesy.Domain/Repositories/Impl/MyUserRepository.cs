@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Veesy.Domain.Data;
 using Veesy.Domain.Models;
 using Veesy.Domain.Repositories.Base;
+using System.Linq;
 
 namespace Veesy.Domain.Repositories.Impl;
 
@@ -151,9 +152,39 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
         return _applicationDbContext.InfosToShow.Include(s => s.MyUserInfoToShows.Where(s => s.MyUserId == userInfoId)).OrderBy(s => s.Info).ToList();
     }
     
-    public List<MyUser> GetOnlyUserWithImage()
+    public List<MyUser> GetOnlyRandomUserWithImage(int count)
     {
-        return _applicationDbContext.MyUsers.Include(s => s.Medias).Where(s => s.ProfileImageFileName != null).ToList();
+        var random = new Random();
+        var randomUsers = _applicationDbContext.MyUsers
+            .Where(u => u.ProfileImageFileName != null).Include(t=>t.Medias)
+            .ToList().OrderBy(u => random.Next()).Take(count).ToList();; // Carica tutti gli utenti che soddisfano il criterio
+
+        var usersWithRandomMedia = randomUsers.Select(user =>
+        {
+            if (user.Medias != null && user.Medias.Any())
+            {
+                int randomMediaIndex = random.Next(user.Medias.Count);
+                user.Medias = new List<Media> { user.Medias[randomMediaIndex] };
+            }
+            return user;
+        }).ToList();
+
+        return usersWithRandomMedia;
+    }
+
+    public List<MyUser> GetAllUsersWithMainPortfolio()
+    {
+        return _applicationDbContext.MyUsers
+            .Where(u => u.Portfolios.Any(p => p.IsMain == true && p.IsPublic == true))
+            .Include(u => u.Portfolios).Include(t => t.MyUserCategoriesWork).ThenInclude(g => g.CategoryWork)
+            .ToList();
     }
     
+    public List<MyUser> GetAllUsersWithMainPortfoliofiltered(string category)
+    {
+        return _applicationDbContext.MyUsers
+            .Where(u => u.Portfolios.Any(p => p.IsMain == true & p.IsPublic == true))
+            .Include(u => u.Portfolios).Include(t => t.MyUserCategoriesWork).ThenInclude(g => g.CategoryWork).Where(c => c.MyUserCategoriesWork.Any(cw => cw.CategoryWork.Name == category))
+            .ToList();
+    }
 }
