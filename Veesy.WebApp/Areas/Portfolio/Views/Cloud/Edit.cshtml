@@ -49,13 +49,13 @@
             <div class="col-sm-12 col-md-7 text-center pe-3">
                 @if (Model.Media.Type == ".mp4")
                 {
-                    <video autoplay="autoplay" muted controls="controls" loop class="img-rounded-trasparent w-100 shadow-1-strong rounded" alt="@Model.Media.OriginalFileName">
+                    <video autoplay="autoplay" muted controls="controls" loop class="w-100 shadow-1-strong rounded-05" alt="@Model.Media.OriginalFileName">
                         <source src="@Model.BasePath@Model.Media.FileName?tr=w-1080" type="video/mp4">
                     </video>
                 }
                 else
                 {
-                    <img asp-append-version="true" src="@Model.BasePath@Model.Media.FileName?tr=w-1080" class="w-100 shadow-1-strong rounded" alt="@Model.Media.OriginalFileName"/>
+                    <img asp-append-version="true" src="@Model.BasePath@Model.Media.FileName?tr=w-1080" class="w-100 shadow-1-strong rounded-05" alt="@Model.Media.OriginalFileName"/>
                 }
                 <div class="empty-veesy"></div>
                 <div class="empty-veesy"></div>
@@ -67,7 +67,7 @@
                         <h3 class="mb-0 text-white veesy-overflow" id="filename-show">@System.IO.Path.GetFileNameWithoutExtension(Model.Media.OriginalFileName)</h3>
                     </div>
                     <div class="col-3 text-end pe-0">
-                        <a onclick="setTextAreaValue('filename-edit', '@System.IO.Path.GetFileNameWithoutExtension(Model.Media.OriginalFileName)'), openModal('#modalFileName')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
+                        <a onclick="setTextAreaValue('filename-edit', '@System.IO.Path.GetFileNameWithoutExtension(Model.Media.OriginalFileName)'), openModal('#modalFileName')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i></a>
                     </div>
                     <hr class="hr"/>
                     
@@ -101,7 +101,7 @@
                         }
                         <p id="number-portfolio-link" class="mb-0 text-grey">@portfoliosLinkText</p>
                     </div>
-                    <div class="col-3 text-end pe-0"><a onclick="openModal('#modalLinkedPortfolio')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
+                    <div class="col-3 text-end pe-0"><a onclick="openModal('#modalLinkedPortfolio')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong></strong></a></div>
                     <hr class="hr"/>
                     <div class="empty-veesy"></div>
                     <div class="col-12 ps-0 pe-0">
@@ -114,7 +114,7 @@
                             </div>
                             <div id="credits-area" style="display: none">
                                 <p class="text-white" id="credits-show"></p>
-                                <a onclick="ShowTextArea()" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
+                                <a onclick="ShowTextArea()" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong></strong></a>
                             </div>
                             <div class="text-area-rounded mt-2 text-end" style="display: none" id="credits-area-input">
                                 <textarea id="credits-edit" class="text-area-rounded text-area-not-resizable w-100 p-2" style="height: 131.2px;" placeholder="Write your credits.."></textarea>
@@ -129,7 +129,7 @@
                             </div>
                             <div id="credits-area">
                                 <p class="text-white" id="credits-show">@Model.Media.Credits</p>
-                                <a onclick="ShowTextArea()" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
+                                <a onclick="ShowTextArea()" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong></strong></a>
                             </div>
                             <div class="text-area-rounded mt-2 text-end" style="display: none" id="credits-area-input">
                                 <textarea id="credits-edit" class="text-area-rounded text-area-not-resizable w-100 p-2" style="height: 131.2px;" placeholder="Write your credits..">@Model.Media.Credits</textarea>

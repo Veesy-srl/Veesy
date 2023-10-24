@@ -43,6 +43,27 @@ public class PortfolioController : VeesyController
         }
     }
     
+    [HttpGet("portfolio/preview/{id}")]
+    public IActionResult PortfolioPreview(Guid id)
+    {
+        try
+        {
+            var result = _portfolioHelper.GetPortfolioPreviewViewModel(id,UserInfo);
+            if (!result.result.Success)
+            {
+                _notyfService.Custom(result.result.Message, 10 , "#ca0a0a");
+                return RedirectToAction("Index", "Home", new { area = "Portfolio" });
+            }
+            return View(result.model);
+        }
+        catch (Exception e)
+        {
+            Logger.Error(e, e.Message);
+            _notyfService.Custom("Error retrieving portfolios. Please retry.", 10 , "#ca0a0a");
+            return RedirectToAction("Index", "Home", new { area = "Portfolio" });
+        }
+    }
+    
     [HttpGet("portfolio/settings/{id}")]
     public IActionResult Settings(Guid id)
     {
@@ -238,8 +259,6 @@ public class PortfolioController : VeesyController
             var response = await _portfolioHelper.UpdateLayout(portfolioDto, UserInfo);
             if (!response.Success)
                 _notyfService.Custom(response.Message, 10, "#ca0a0a");
-            else
-                _notyfService.Custom("Portfolio layout update correctly.", 10, "#75CCDD");
             return Json(new { Result = response.Success, Message = response.Message });
         }
         catch (Exception ex)
@@ -270,8 +289,43 @@ public class PortfolioController : VeesyController
             _notyfService.Custom("Error deleting portfolio. Please retry.", 10, "#ca0a0a");
             return Json(new { Result = false, Message = "Error updating portfolio. Please retry." });
         }
-    }   
+    }
+
+    [HttpPost]
+    public async Task<JsonResult> RemoveMediaFromPortfolio([FromBody] PortfolioMediaDto portfolio)
+    {
+        try
+        {
+            var response = await _portfolioHelper.RemoveMediaFromPortfolio(portfolio, UserInfo);
+            if (!response.Success)
+                _notyfService.Custom(response.Message, 10, "#ca0a0a");
+            else
+                _notyfService.Custom("Media remove correctly.", 10, "#75CCDD");
+            return Json(new { Result = response.Success, Message = response.Message });
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            Logger.Error($"PortfolioDto to delete: {portfolio}");
+            _notyfService.Custom("Error deleting portfolio. Please retry.", 10, "#ca0a0a");
+            return Json(new { Result = false, Message = "Error updating portfolio. Please retry." });
+        }
+    }
+    
+    [HttpPost]
+    public async Task<JsonResult> UpdateSortOrder([FromBody] UpdateMediaSortOrderDto dto)
+    {
+        try
+        {
+            await _portfolioHelper.UpdateSortOrder(dto, UserInfo);
+            return Json(new { Result = true, Message = "Sort order updated."});
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            return Json(new { Result = false, Message = "Error updating medias ordering. Please retry." });
+        }
+    }
 
     #endregion
-
 }

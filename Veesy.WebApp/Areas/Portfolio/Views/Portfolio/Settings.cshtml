@@ -30,15 +30,21 @@
             <div class="d-flex mb-3">
                 <div class="col-12">
                     <div class="text-left">
-                        @if (Model.Portfolio.DefaultMedia == null)
+                        @if (Model.Portfolio.DefaultMedia.IsVideo.Value)
                         {
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" class="img-thumbnail rounded-circle" alt="user-image" style="max-width: none!important; width: 60px !important; height: 60px !important;">
+                            <video autoplay="autoplay" muted loop class="image-fit-radius" title="@Model.Portfolio.DefaultMedia.OriginalFileName">
+                                <source src="@Model.BasePathImages@Model.Portfolio.DefaultMedia.FileName?tr=w-400" type="video/mp4">
+                            </video>
                         }
                         else
                         {
-                            @if (MediaCostants.ImageExtensions.Contains(Model.Portfolio.DefaultMedia.Type.ToUpper()))
+                            if (@Model.Portfolio.DefaultMedia.FileName != "")
                             {
-                                <img src="@Model.BasePathImages@Model.Portfolio.DefaultMedia.FileName?tr=w-400" class="img-thumbnail-custom-portfolio w-50" alt="user-image">
+                                <img class="image-fit-radius" title="@Model.Portfolio.DefaultMedia.OriginalFileName" src="@Model.BasePathImages@Model.Portfolio.DefaultMedia.FileName?tr=w-400"/>
+                            }
+                            else
+                            {
+                                <img class="image-fit-radius" src="~/imgs/noimage.png"/>
                             }
                         }
                     </div>
@@ -48,7 +54,7 @@
             <div class="d-flex"><p class="mb-0 text-grey veesy-overflow">@Model.Portfolio.NumberMedia media uploaded</p></div>
             <div class="d-flex"><p class="mb-0 mt-3 text-grey veesy-overflow">@Model.Portfolio.NumberImage images</p></div>
             <div class="d-flex"><p class="mb-0 text-grey veesy-overflow">@Model.Portfolio.NumberVideo videos</p></div>
-            <a class="rounded-pill btn btn-primary btn-variant w-100 mt-3">Preview portfolio</a>
+            <a asp-action="PortfolioPreview" asp-controller="Portfolio" asp-area="Portfolio" asp-route-id="@Model.Portfolio.Id"  class="rounded-pill btn btn-primary btn-variant w-100 mt-3">Preview portfolio</a>
         </div>
     </div>
     <div class="col-sm-12 col-md-6">
@@ -151,7 +157,14 @@
                         <div id="layout-div-@((int)item)" class="p-2 form-check div-select-layout @css_select">
                             <div class="d-flex me-2">
                                 <input style="visibility: hidden" class="form-check-input" type="radio" name="column-layout" asp-for="Portfolio.Layout" value="@item" id="layout-@item" onchange="switchColumnLayout(@((int)item))"/>
-                                <label class="ms-2 form-check-label" for="@item">@((int)item) columns</label>
+                                @if((int)item == 1)
+                                {
+                                    <label class="ms-2 form-check-label" for="@item">@((int)item) column</label>
+                                }
+                                else
+                                {
+                                    <label class="ms-2 form-check-label" for="@item">@((int)item) columns</label>
+                                }
                             </div>
                             <div>
                                 @{
@@ -168,19 +181,25 @@
         </div>
         <div class="empty-veesy"></div>
         <div class="row">
-            <h3 class="text-color"><strong>Your Images</strong></h3>
+            <h3 class="text-color"><strong>Your Medias</strong></h3>
             <div class="card-columns draggable-zone" id="images-container">
                 @foreach (var image in Model.Portfolio.PortfolioMedias)
                 {
                     @if (MediaCostants.ImageExtensions.Contains(image.Media.Type.ToUpper()))
                     {
-                        <div class="draggable m-0" name="image-gallery">
+                        <div id="media-@image.MediaId" style="position: relative" class="draggable m-0 pb-2 pt-2 show-edit" name="image-gallery" mediaid="@image.MediaId">            
+                            <a onMouseDown="RemoveMediaFromPortfolio('@image.MediaId')" class="edit-button-portfolio">
+                                <p class="mb-0 text-white">remove</p>
+                            </a>
                             <img src="@Model.BasePathImages@image.Media.FileName?tr=w-400" class="card-body m-0 p-0 rounded-05 img-rounded-trasparent w-100 p-0" title="@image.Media.OriginalFileName"/>
                         </div>
                     }
                     else
                     {
-                        <div class="draggable m-0" name="image-gallery">
+                        <div id="media-@image.MediaId" style="position: relative" class="draggable m-0 pb-2 pt-2 show-edit" name="image-gallery" mediaid="@image.MediaId">
+                            <a onMouseDown="RemoveMediaFromPortfolio('@image.MediaId')" class="edit-button-portfolio">
+                                <p class="mb-0 text-white">remove</p>
+                            </a>
                             <video autoplay="autoplay" muted loop class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" title="@image.Media.OriginalFileName">
                                 <source src="@Model.BasePathImages@image.Media.FileName?tr=w-400" type="video/mp4">
                             </video>
@@ -200,7 +219,7 @@
                     <div id="div-uploader-icon" class="w-100 mb-1">
                         <i id="uploader-icon" class="fa-solid fa-circle-plus fa-xl" style="color: #0D2045"></i>
                     </div>
-                    <span id="uploader-text" class="text">
+                    <span id="uploader-text" style="color: #202F4D">
                         Upload or drop files here. <br/> (Accepted formats: jpg, png, mov, mp4, gif)
                     </span>
                     <div class="progress-bar progress-bar-primary" role="progressbar" data-dz-uploadprogress>
@@ -347,19 +366,43 @@
               delay: 50
         }
     )
-        sortable.on('drag:start', (divElem) => {
-          console.log(divElem)
-          var imageElem = divElem.source.children[0]
-          imageElem.style.border = "3px solid #75CCDD"
-        })
-        sortable.on('drag:stop', (divElem) => {
+    sortable.on('drag:start', (divElem) => {
+      console.log(divElem)
+      var imageElem = divElem.source.children[0]
+      imageElem.style.border = "3px solid #75CCDD"
+    })
+    sortable.on('drag:stop', (divElem) => {
         var imageElem = divElem.source.children[0]
-          imageElem.style.border = ''
-          //$("body").append($(".draggable-source--is-dragging"))
+        imageElem.style.border = ''
+        var sortOrderElements = document.getElementById("images-container").querySelectorAll('.draggable:not(.draggable--original)')
+        var sortOrder = [...sortOrderElements].map((elem, index)=> {
+            return {
+                mediaId: elem.getAttribute("mediaid"),
+                sortOrder: index
+            }
         })
-    </script>
-
-    <script>
+        var data = {
+            portfolioId: '@Model.Portfolio.Id',
+            newMediasSortOrder: sortOrder
+        }
+        $.ajax({
+          type: 'POST',
+          url: '@Url.Action("UpdateSortOrder", "Portfolio")',
+          data: JSON.stringify(data),
+          contentType: 'application/json; charset=utf-8',
+          dataType: 'json',
+          success: function (response) {
+              if (!response.result){
+                toastNotifyCustom(response.message, 10000, "#ca0a0a", "")
+              }
+              console.log("ordine cambiato")
+          },
+          error: function (response) {
+              toastNotifyCustom(response.message, 10000, "#ca0a0a", "")
+          }
+        })
+    })
+    
     function UpdateName() {
         $('#load-spinner').css("display", "block");
         var Name = document.getElementById("portfolio-name-edit").value
@@ -479,6 +522,28 @@
         })
     }
     
+    function RemoveMediaFromPortfolio(Id) {
+        var PortfolioId = '@Model.Portfolio.Id'
+        var MediaId = Id
+        var PortfolioMediaDto = {PortfolioId, MediaId}
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("RemoveMediaFromPortfolio", "Portfolio")',
+            data: JSON.stringify(PortfolioMediaDto),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (response) {
+                if(response.result){
+                    document.getElementById("media-" + Id).remove()
+                }
+                $('#load-spinner').css("display", "none");
+            },
+            error: function (response) {
+                $('#load-spinner').css("display", "none");
+            }
+        })
+    }
+    
     function ChangeLayout(text, integer){
         var divs = document.getElementsByClassName("div-select-layout-selected")
         for(let i = 0; i < divs.length; i++){
@@ -488,9 +553,7 @@
         document.getElementById("layout-" + text).checked = true;
         switchColumnLayout(integer)
     }
-    </script>
     
-    <script>
     var div_uploader = document.getElementById("div-uploader");
         /*Dropzone configuration*/
         Dropzone.autoDiscover = false;
@@ -529,7 +592,10 @@
                     for (let i = 0; i < res.MediaDtos.length; i++){
                         if (res.MediaDtos[i].IsVideo){
                             document.getElementById("images-container").innerHTML +=
-                            '<div class="draggable m-0" name="image-gallery" tabindex="0" style="">'+
+                            '<div id="media-' + res.MediaDtos[i].Code + '" style="position: relative" class="draggable m-0 pb-2 pt-2" name="image-gallery" mediaid="' + res.MediaDtos[i].Code + '" tabindex="0" style="">'+
+                                 '<a onMouseDown="RemoveMediaFromPortfolio(' + res.MediaDtos[i].Code + ')" class="edit-button-portfolio">'+
+                                    '<p class="mb-0 text-white">remove</p>'+
+                                 '</a>'+
                                  '<video autoplay="autoplay" muted="" loop="" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" title="'+ res.MediaDtos[i].OriginalFileName +'">'+
                                      '<source src="' + '@Model.BasePathImages' + res.MediaDtos[i].FileName + '?tr=w-400" type="video/mp4">'+
                                  '</video>'+
@@ -537,7 +603,10 @@
                          }
                         else{
                             document.getElementById("images-container").innerHTML +=
-                            '<div class="draggable m-0" name="image-gallery" tabindex="0">'+
+                            '<div id="media-' + res.MediaDtos[i].Code + '" style="position: relative" class="draggable m-0 pb-2 pt-2" name="image-gallery" mediaid="' + res.MediaDtos[i].Code + '" tabindex="0">'+
+                                '<a onMouseDown="RemoveMediaFromPortfolio(' + res.MediaDtos[i].Code + ')" class="edit-button-portfolio">'+
+                                    '<p class="mb-0 text-white">remove</p>'+
+                                '</a>'+
                                 '<img src="' + '@Model.BasePathImages' + res.MediaDtos[i].FileName + '?tr=w-400" class="card-body m-0 p-0 rounded-05 img-rounded-trasparent w-100 p-0" title="'+ res.MediaDtos[i].OriginalFileName +'">' +
                             '</div>'
                                     
@@ -558,9 +627,10 @@
         var newDropzone = new Dropzone(uploader, dropzoneOptions);
     </script>
 }
+
 @section Style
 {
-    <link rel="stylesheet" href="~/css/dropzone_cloudpage.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/notyf_override.css" asp-append-version="true" />
     <style>
         .draggable {
             cursor: move;

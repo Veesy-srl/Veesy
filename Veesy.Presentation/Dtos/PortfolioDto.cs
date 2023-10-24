@@ -3,6 +3,30 @@ using Veesy.Domain.Models;
 
 namespace Veesy.Service.Dtos;
 
+public class PreviewPortfolioDto
+{
+    public Guid Code { get; set; }
+    public string MyUserId { get; set; } 
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public string UserDescription { get; set; }
+    public string UserFullName { get; set; }
+    public string UserCategory { get; set; }
+    public string PortfolioIntro { get; set; }
+    public VeesyConstants.PortfolioLayout Layout { get; set; }
+    public virtual List<PortfolioMediaDto> PortfolioMedias { get; set; }
+    public string UserEmail { get; set; }
+    public string UserImage { get; set; }
+    public bool ShowSoftSkill { get; set; }
+    public bool ShowFields { get; set; }
+    public bool ShowCV { get; set; }
+    public bool ShowSoftware { get; set; }
+    public List<string> UsedSoftwares { get; set; }
+    public List<string> SoftSkill { get; set; }
+    public List<string> Sector { get; set; }
+    public List<string> LanguageSpoken { get; set; }
+}
+
 public class PortfolioDto
 {
     public Guid Id { get; set; }
@@ -56,6 +80,18 @@ public class UpdateMediaPortfolioDto
 {
     public List<Guid> PortfolioSelected { get; set; }
     public Guid MediaCode { get; set; }
+}
+
+public class UpdateMediaSortOrderDto
+{
+    public Guid PortfolioId { get; set; }
+    public UpdateMediaSortOrderCoupleDto[] NewMediasSortOrder { get; set; }
+}
+
+public class UpdateMediaSortOrderCoupleDto
+{
+    public Guid MediaId { get; set; }
+    public int SortOrder { get; set; }
 }
 
 public class PortfolioThumbnailDto
@@ -117,7 +153,7 @@ public static class MapPortfolioDtos
             IsMain = portfolio.IsMain,
             NumberMedia = portfolio.PortfolioMedias.Count,
             Name = portfolio.Name,
-            IsVideo = MediaCostants.VideoExtensions.Contains(portfolio.PortfolioMedias.SingleOrDefault(s => s.SortOrder == 0).Media.Type.ToUpper()),
+            IsVideo = portfolio.PortfolioMedias.Count == 0 ? false : MediaCostants.VideoExtensions.Contains(portfolio.PortfolioMedias.SingleOrDefault(s => s.SortOrder == 0).Media.Type.ToUpper()),
             DefaultImageName = portfolio.PortfolioMedias.Count == 0
                 ? ""
                 : portfolio.PortfolioMedias.SingleOrDefault(s => s.SortOrder == 0).Media.FileName,
@@ -176,6 +212,58 @@ public static class MapPortfolioDtos
             IsActive = portfolioMedia.IsActive,
             SortOrder = portfolioMedia.SortOrder,
             Media = MapCloudDtos.MapMedia(portfolioMedia.Media)
+        };
+    }
+
+    public static List<PortfolioMediaDto> MapListPortfolioMedia(List<PortfolioMedia> portfolioMedias)
+    {
+        if (portfolioMedias == null)
+            return null;
+
+        var list = new List<PortfolioMediaDto>();
+        foreach (var portfolioMedia in portfolioMedias)
+        {
+            list.Add(new PortfolioMediaDto()
+            {
+                MediaId = portfolioMedia.MediaId,
+                PortfolioId = portfolioMedia.PortfolioId,
+                Description = portfolioMedia.Description,
+                IsActive = portfolioMedia.IsActive,
+                SortOrder = portfolioMedia.SortOrder,
+                Media = MapCloudDtos.MapMedia(portfolioMedia.Media)
+            });
+        }
+
+        return list;
+    }
+
+    public static PreviewPortfolioDto MapPreviewPortfolioDto(Portfolio? portfolio)
+    {
+        if (portfolio == null)
+            return null;
+
+        return new PreviewPortfolioDto()
+        {
+            Code = portfolio.Id,
+            Description = portfolio.Description,
+            PortfolioMedias = MapListPortfolioMedia(portfolio.PortfolioMedias),
+            Layout = portfolio.Layout,
+            UserDescription = portfolio.MyUser.Biografy,
+            UserFullName = portfolio.MyUser.Fullname,
+            MyUserId = portfolio.MyUserId,
+            Name = portfolio.Name,
+            UserCategory = portfolio.MyUser.Category,
+            PortfolioIntro = portfolio.MyUser.PortfolioIntro,
+            UserEmail = portfolio.MyUser.Email,
+            UserImage = portfolio.MyUser.ProfileImageFileName,
+            Sector = portfolio.MyUser.MyUserSectors.Select(s => s.Sector.Name).ToList(),
+            UsedSoftwares = portfolio.MyUser.MyUserUsedSoftwares.Select(s => s.UsedSoftware.Name).ToList(),
+            SoftSkill = portfolio.MyUser.MyUserSkills.Where(s => s.Type == SkillConstants.SoftSkill).Select(s => s.Skill.Name).ToList(),
+            LanguageSpoken = portfolio.MyUser.MyUserLanguagesSpoken.Select(s => s.LanguageSpoken.Language).ToList(),
+            ShowSoftSkill = portfolio.MyUser.MyUserInfosToShow.SingleOrDefault(s => s.InfoToShow.Info == VeesyConstants.InfoToShow.SoftSkill) != null,
+            ShowFields = portfolio.MyUser.MyUserInfosToShow.SingleOrDefault(s => s.InfoToShow.Info == VeesyConstants.InfoToShow.Fields) != null,
+            ShowCV = portfolio.MyUser.MyUserInfosToShow.SingleOrDefault(s => s.InfoToShow.Info == VeesyConstants.InfoToShow.CV) != null,
+            ShowSoftware = portfolio.MyUser.MyUserInfosToShow.SingleOrDefault(s => s.InfoToShow.Info == VeesyConstants.InfoToShow.Software) != null,
         };
     }
 }

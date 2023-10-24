@@ -29,11 +29,6 @@ public class PortfolioHelper
         return vm;
     }
 
-    public void UpdatePortfolioSettings()
-    {
-        
-    }
-
     public async Task<(ResultDto result, Guid code)> CreateNewPortfolio(NewPortfolioDto newPortfolioDto, MyUser userInfo)
     {
         if(string.IsNullOrEmpty(newPortfolioDto.Name))
@@ -78,7 +73,8 @@ public class PortfolioHelper
         var vm = new PortfolioListViewModel()
         {
             PortfolioThumbnailDtos = MapPortfolioDtos.MapListPortfolioThumbnailDto(portfolios),
-            BasePath = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/"
+            BasePath = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/",
+            ApplicationUrl = _config["ApplicationUrl"]
         };
         return vm;
     }
@@ -222,6 +218,53 @@ public class PortfolioHelper
             return new ResultDto(false, "Portfolio not found.");
         portfolio.Layout = (VeesyConstants.PortfolioLayout)portfolioDto.LayoutGrid;
         await _portfolioService.UpdatePortfolio(portfolio, userInfo);
+        return new ResultDto(true, "");
+    }
+
+    public async Task UpdateSortOrder(UpdateMediaSortOrderDto dto, MyUser userInfo)
+    {
+        var portfolio = _portfolioService.GetPortfolioById(dto.PortfolioId, userInfo.Id);
+        var now = DateTime.Now;
+        dto.NewMediasSortOrder.ToList().ForEach(fe =>
+        {
+            var mediaToUpd = portfolio.PortfolioMedias.SingleOrDefault(sd => sd.MediaId == fe.MediaId);
+            mediaToUpd!.SortOrder = fe.SortOrder;
+            mediaToUpd!.LastEditRecordDate = now;
+            mediaToUpd!.LastEditUserId = userInfo.Id;
+        });
+        
+        await _portfolioService.UpdatePortfolio(portfolio, userInfo);
+    }
+
+    public (PortfolioViewModel model, ResultDto result) GetPortfolioPreviewViewModel(Guid id, MyUser user)
+    {
+
+        var portfolio = _portfolioService.GetPortfolioByIdForPreview(id);
+        if (portfolio == null)
+            return (null, new ResultDto(false, "Portfolio not found"));
+
+        return (new PortfolioViewModel
+        {
+            PortfolioDto = MapPortfolioDtos.MapPreviewPortfolioDto(portfolio),
+            BasePathImages = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/",
+            BasePathAzure = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"
+        }, new ResultDto(true, ""));
+    }
+
+    public async Task<ResultDto> RemoveMediaFromPortfolio(PortfolioMediaDto portfolioMediaDto, MyUser userInfo)
+    {
+        var portfolio = _portfolioService.GetPortfolioByIdWithPortfoliosMedia(portfolioMediaDto.PortfolioId, userInfo.Id);
+        var p_media = portfolio.PortfolioMedias.SingleOrDefault(s => s.MediaId == portfolioMediaDto.MediaId);
+        if (p_media == null)
+            return new ResultDto(false, "Media not found.");
+        foreach (var item in portfolio.PortfolioMedias.Where(s => s.SortOrder > p_media.SortOrder))
+        {
+            item.SortOrder--;
+        }
+
+        var listToDelete = new List<PortfolioMedia>() { p_media };
+        await _portfolioService.UpdatePortfolioMedias(listToDelete, new List<PortfolioMedia>(), portfolio.PortfolioMedias.Where(s=>s.MediaId != p_media.MediaId).ToList(),
+            userInfo);
         return new ResultDto(true, "");
     }
 }

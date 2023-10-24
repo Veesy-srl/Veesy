@@ -17,8 +17,9 @@ public class PortfolioService : IPortfolioService
 
     public Portfolio GetPortfolioById(Guid portfolioId, string userId)
     {
-        var portfolio = _uoW.PortfolioRepository.FindByCondition(w => w.MyUserId == userId && w.Id == portfolioId)
-            .Include(s => s.PortfolioMedias)
+        var portfolio = _uoW.PortfolioRepository
+            .FindByCondition(w => w.MyUserId == userId && w.Id == portfolioId)
+            .Include(s => s.PortfolioMedias.OrderBy(ob=>ob.SortOrder))
             .ThenInclude(s => s.Media)
             .SingleOrDefault();
         if (portfolio == null)
@@ -92,7 +93,7 @@ public class PortfolioService : IPortfolioService
 
     public Portfolio? GetMainPortfolioByUser(MyUser user)
     {
-        return _uoW.PortfolioRepository.FindByCondition(s => s.IsMain).SingleOrDefault();
+        return _uoW.PortfolioRepository.FindByCondition(s => s.IsMain && s.MyUserId == user.Id).SingleOrDefault();
     }
 
     public async Task UpdatePortfolios(List<Portfolio> portfoliosToUpdate, MyUser user)
@@ -161,13 +162,38 @@ public class PortfolioService : IPortfolioService
 
     public IEnumerable<Portfolio> GetPortfoliosByMedias(List<Guid> imgToDelete)
     {
-        var portfolios = new List<Portfolio>();
-        foreach (var item in imgToDelete)
-        {
-            portfolios.AddRange(_uoW.PortfolioRepository.FindByCondition(s => s.PortfolioMedias.Select(s => s.MediaId).Contains(item))
-                .Include(s => s.PortfolioMedias));
-        }
-
-        return portfolios.DistinctBy(s => s.Id);
+        // recupero i portfoli che contengo le immagini selezionate
+        var portfolios = _uoW.PortfolioRepository
+            .FindByCondition(s => 
+                s.PortfolioMedias
+                    .Select(s=>s.MediaId)
+                    .Any(w => imgToDelete.Contains(w))
+            )
+            .Include(s => s.PortfolioMedias);
+        
+        return portfolios;
+    }
+    
+    public Portfolio? GetPortfolioByIdForPreview(Guid id)
+    {
+        return _uoW.PortfolioRepository.FindByCondition(s => s.Id == id)
+            .Include(s => s.PortfolioMedias.OrderBy(s => s.SortOrder))
+            .ThenInclude(s => s.Media)
+            .Include(s => s.MyUser)
+            .ThenInclude(s => s.MyUserSectors)
+            .ThenInclude(s => s.Sector)
+            .Include(s => s.MyUser)
+            .ThenInclude(s => s.MyUserSkills)
+            .ThenInclude(s => s.Skill)
+            .Include(s => s.MyUser)
+            .ThenInclude(s => s.MyUserUsedSoftwares)
+            .ThenInclude(s => s.UsedSoftware)
+            .Include(s => s.MyUser)
+            .ThenInclude(s => s.MyUserInfosToShow)
+            .ThenInclude(s => s.InfoToShow)
+            .Include(s => s.MyUser)
+            .ThenInclude(s => s.MyUserLanguagesSpoken)
+            .ThenInclude(s => s.LanguageSpoken)
+            .SingleOrDefault();
     }
 }
