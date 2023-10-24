@@ -24,7 +24,7 @@
                     <div class="col-3">
                         <div class="text-center">
 
-                            @if (user.ProfileImageFileName.ToString() != null)
+                            @if (user.ProfileImageFileName != null)
                             {
                                 <img src="@Model.BasePathImages@user.ProfileImageFileName.ToString()" class="img-thumbnail-custom rounded-circle" alt="user-image">
                             }
@@ -59,6 +59,10 @@
 </div>
 
 <script>
+
+    var ButtonFilter;
+    var CardFilter;
+
     function highlightCard(card) {
         card.style.backgroundColor = "#536B7E";
         var whiteCreators = card.querySelectorAll(".white-cursor-creators");
@@ -80,38 +84,39 @@
     }
 
     function FilterCategory(category) {
-        $('#load-spinner').css("display", "block");
-        $.ajax({
-            type: 'GET',
-            url: '@Url.Action("FilterCreators", "Public")',
-            data: { category: category },
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            success: function (response) {
-                if(response != null){
-                    FilterCategoryInPage(response, category);
+        if (document.getElementById('category-'+category).classList.contains('creators-selected-button')) {
+           DeleteFilter();
+        }else{
+            $('#load-spinner').css("display", "block");
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("FilterCreators", "Public")',
+                data: { category: category },
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (response) {
+                    if(response != null){
+                        FilterCategoryInPage(response, category);
+                    }
+                    $('#load-spinner').css("display", "none");
+                },
+                error: function (response) {
+                    $('#load-spinner').css("display", "none");
                 }
-                $('#load-spinner').css("display", "none");
-            },
-            error: function (response) {
-                $('#load-spinner').css("display", "none");
-            }
-        })
+            })
+        }
     }
     
     function FilterCategoryInPage(users, category) {
         
-        @foreach (var category in Model.CategoryWorks)
+         @foreach (var category in Model.CategoryWorks)
          {
              <text>
                 document.getElementById('category-@category').classList.remove("creators-selected-button");
-                        document.getElementById('category-i-@category').classList.remove("creators-selected-i");
+                document.getElementById('category-i-@category').classList.remove("creators-selected-i");
              </text>
          }
                  
-        document.getElementById('category-' + category).classList.add("creators-selected-button");
-        document.getElementById('category-i-' + category).classList.add("creators-selected-i");
-        
         @foreach (var user in Model.User)
          {
              <text>
@@ -119,9 +124,29 @@
              </text>
          }
                  
+        document.getElementById('category-' + category).classList.add("creators-selected-button");
+        document.getElementById('category-i-' + category).classList.add("creators-selected-i");
+                 
         for(var i = 0; i < users.length; i++){
             document.getElementById(users[i]).style.setProperty('display', 'block', 'important');
         }
+    }
+    
+    function DeleteFilter() {
+        @foreach (var category in Model.CategoryWorks)
+         {
+             <text>
+                document.getElementById('category-@category').classList.remove("creators-selected-button");
+                document.getElementById('category-i-@category').classList.remove("creators-selected-i");
+             </text>
+         }
+                 
+        @foreach (var user in Model.User)
+         {
+             <text>
+                document.getElementById('@user.Id').style.setProperty('display', 'block', 'important');
+             </text>
+         }
     }
 
 </script>
