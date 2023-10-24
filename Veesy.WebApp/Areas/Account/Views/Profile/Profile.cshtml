@@ -8,7 +8,7 @@
     <div class="col-sm-12 col-md-3 mb-3">
         <nav class="breadcrumb-container" aria-label="Percorso di navigazione">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><img src="~/imgs/dashboard_home_light-mode.png" style="width: 18px; margin-top: -5px;" class="me-2"><a class="breadcrumb-a me-2" asp-action="Index" asp-area="Portfolio" asp-controller="Home">dashboard</a><i class="fa-solid fa-chevron-right"></i></li>
+                <li class="breadcrumb-item"><img class="home-img me-2"><a class="breadcrumb-a me-2" asp-action="Index" asp-area="Portfolio" asp-controller="Home">dashboard</a><i class="fa-solid fa-chevron-right"></i></li>
                 <li class="breadcrumb-item"><a class="breadcrumb-a" href="#"><strong>profile</strong></a></li>
             </ol>
         </nav>
@@ -28,32 +28,32 @@
                 </div>
                 
                 <div class="col-8">
-                    <p class="ms-2" style="color: #202F4D;"><strong>@User.Identity.Name</strong></p>
+                    <p class="ms-2 user-profile text-color"><strong>@User.Identity.Name</strong></p>
                 </div>
-                <div class="col-1"><div class="text-end"><i class="fa-solid fa-circle fa-xs" style="color: #202F4D;"></i></div></div>
+                <div class="col-1"><div class="text-end"><i class="fa-solid fa-circle fa-xs text-color"></i></div></div>
             </div>
-            <h3 class="mt-4 mb-4" style="color: #202F4D;"><strong>@Model.FullName</strong></h3>
+            <h3 class="mt-4 mb-4 text-color" ><strong>@Model.FullName</strong></h3>
             @{
                 var workrole = "information missing";
                 var role_css = "text-danger";
                 if (!string.IsNullOrEmpty(Model.Role))
                 {
-                    role_css = "";
+                    role_css = "text-color";
                     workrole = Model.Role;
                 }
             }
-            <div class="d-flex"><p class="mb-0"><strong>Role:&nbsp;</strong></p><p class="@role_css mb-0">@workrole</p></div>
-            <div class="d-flex"><p class="mb-0"><strong>Email:&nbsp;</strong></p><p class="mb-0 veesy-overflow">@Model.Email</p></div>
+            <div class="d-flex"><p class="mb-0 text-color"><strong>Role:&nbsp;</strong></p><p class="@role_css mb-0">@workrole</p></div>
+            <div class="d-flex"><p class="mb-0 text-color"><strong>Email:&nbsp;</strong></p><p class="mb-0 veesy-overflow text-color">@Model.Email</p></div>
             @{
                 var phone = "information missing";
                 var css = "text-danger";
                 if (!string.IsNullOrEmpty(Model.PhoneNumber))
                 {
-                    css = "";
+                    css = "text-color";
                     phone = Model.PhoneNumber;
                 }
             }
-            <div class="d-flex"><p class="mb-0"><strong>Phone:&nbsp;</strong></p><p class="@css mb-0">@phone</p></div>
+            <div class="d-flex"><p class="mb-0 text-color"><strong>Phone:&nbsp;</strong></p><p class="@css mb-0">@phone</p></div>
             @if (string.IsNullOrEmpty(Model.PhoneNumber) || string.IsNullOrEmpty(Model.Email) || Model.RolesWork == null || Model.RolesWork.Count == 0)
             {
                 <div class="mt-4"><a asp-controller="Profile" asp-area="Account" asp-action="BasicInfo" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit basic info</strong></a></div>
@@ -66,17 +66,17 @@
     </div>
     <div class="col-sm-12 col-md-6">
         <h2 class="text-color"><strong>Your Profile</strong></h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <a class="grey-link ms-2"><strong>learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a></p>
+        <p class="text-color">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <a class="grey-link ms-2"><strong>learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a></p>
         <div class="empty-veesy"></div>
         <h3 class="text-color"><strong>General</strong></h3>
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-6 ps-2 pe-2">
-                <hr class="hr"/>
+                <hr class="hr color-hr" />
                 <div class="d-flex">
                     @if (string.IsNullOrEmpty(Model.Role))
                     {
                         <div class="col-9">
-                            <p class="mb-0"><strong>Role:</strong></p>
+                            <p class="mb-0 text-color"><strong>Role:</strong></p>
                             <p class="mb-0 color-red">Information missing</p>
                         </div>
                         <div class="col-3 text-end"><a onclick="openModal('#modalWorkRole')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div>
@@ -84,19 +84,19 @@
                     else
                     {
                         <div class="col-9 profile-section">
-                            <p class="mb-0"><strong>Role:</strong></p>
-                            <p class="mb-0 veesy-overflow">@Model.Role
+                            <p class="mb-0 text-color"><strong>Role:</strong></p>
+                            <p class="mb-0 veesy-overflow text-color">@Model.Role
                             </p>
                         </div>
                         <div class="col-3 text-end"><a onclick="openModal('#modalWorkRole'), setTextAreaValue('category-edit', '@Model.Role')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
                     }
                 </div>
-                <hr class="hr"/>
+                <hr class="hr color-hr"/>
                 <div class="d-flex">
                     @if (string.IsNullOrEmpty(Model.ExternalLink))
                     {
                         <div class="col-9">
-                            <p class="mb-0"><strong>External link:</strong></p>
+                            <p class="mb-0 text-color"><strong>External link:</strong></p>
                             <p class="mb-0 color-red">Information missing</p>
                         </div>
                         <div class="col-3 text-end"><a onclick="openModal('#modalExternalLink')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div>
@@ -104,21 +104,21 @@
                     else
                     {
                         <div class="col-9 profile-section">
-                            <p class="mb-0"><strong>External link:</strong></p>
-                            <p style="cursor: pointer" onclick="OpenUrlNewTab('@Model.ExternalLink')" class="mb-0 veesy-overflow">@Model.ExternalLink</p>
+                            <p class="mb-0 text-color"><strong>External link:</strong></p>
+                            <p style="cursor: pointer" onclick="OpenUrlNewTab('@Model.ExternalLink')" class="mb-0 veesy-overflow text-color">@Model.ExternalLink</p>
                         </div>
                         <div class="col-3 text-end"><a onclick="openModal('#modalExternalLink'), setTextAreaValue('external-link-edit', '@Model.ExternalLink')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
                     }
                 </div>
-                <hr class="hr"/>
+                <hr class="hr color-hr"/>
             </div>
             <div class="col-sm-12 col-md-6 pe-2 ps-2">
-                <hr class="hr nodisplay-sm"/>
+                <hr class="hr color-hr nodisplay-sm"/>
                 <div class="d-flex">
                     @if (Model.LanguagesSpoken.Count(s => s.Selected) == 0)
                     {
                         <div class="col-9">
-                            <p class="mb-0"><strong>Language Spoken:</strong></p>
+                            <p class="mb-0 text-color"><strong>Language Spoken:</strong></p>
                             <p class="mb-0 color-red">Information missing</p>
                         </div>
                         <div class="col-3 text-end"><a onclick="openModal('#modalLanguageSpoken')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div>
@@ -126,8 +126,8 @@
                     else
                     {
                         <div class="col-9 profile-section">
-                            <p class="mb-0"><strong>Language Spoken:</strong></p>
-                            <p class="mb-0 veesy-overflow">
+                            <p class="mb-0 text-color"><strong>Language Spoken:</strong></p>
+                            <p class="mb-0 veesy-overflow text-color">
                                 @{
                                     var languages = "";
                                     foreach (var language in Model.LanguagesSpoken.Where(s => s.Selected))
@@ -142,12 +142,12 @@
                         <div class="col-3 text-end"><a onclick="openModal('#modalLanguageSpoken')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
                     }
                 </div>
-                <hr class="hr"/>
+                <hr class="hr color-hr"/>
                 <div class="d-flex">
                         @if (Model.InfoToShow.Count(s => s.Selected) == 0)
                         {
                             <div class="col-9">
-                                <p class="mb-0"><strong>Show Profile info:</strong></p>
+                                <p class="mb-0 text-color"><strong>Show Profile info:</strong></p>
                                 <p class="mb-0 color-red">Information missing</p>
                             </div>
                             <div class="col-3 text-end"><a onclick="openModal('#modalInfoToShow')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div>
@@ -155,8 +155,8 @@
                         else
                         {
                             <div class="col-9 profile-section">
-                                <p class="mb-0"><strong>Show Profile info:</strong></p>
-                                <p class="mb-0 veesy-overflow">
+                                <p class="mb-0 text-color"><strong>Show Profile info:</strong></p>
+                                <p class="mb-0 veesy-overflow text-color">
                                     @{
                                         var infos = "";
                                         foreach (var info in Model.InfoToShow.Where(s => s.Selected))
@@ -171,7 +171,7 @@
                             <div class="col-3 text-end"><a onclick="openModal('#modalInfoToShow')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
                         }
                 </div>
-                <hr class="hr"/>
+                <hr class="hr color-hr"/>
             </div>
         </div>
         <div class="empty-veesy"></div>

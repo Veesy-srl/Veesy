@@ -60,8 +60,18 @@
 
 <script>
 
-    var ButtonFilter;
-    var CardFilter;
+    var ButtonFilter = [];
+    var CardFilter = [];
+    var DefaultCard = [];
+    
+    window.onload = function() {
+        @foreach (var user in Model.User)
+         {
+             <text>
+                   DefaultCard.push('@user.Id.ToString()');
+             </text>
+         }
+    }
 
     function highlightCard(card) {
         card.style.backgroundColor = "#536B7E";
@@ -85,8 +95,33 @@
 
     function FilterCategory(category) {
         if (document.getElementById('category-'+category).classList.contains('creators-selected-button')) {
-           DeleteFilter();
+            ButtonFilter = ButtonFilter.filter(function(item) {
+                return item !== category;
+            });
+            if (ButtonFilter.length == 0){
+                RestoreFilter();
+            }else{
+                $('#load-spinner').css("display", "block");
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("FilterCreators", "Public")',
+                    data: { category: category },
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    success: function (response) {
+                        if(response != null){
+                            RemoveUsers(response);
+                            ActionFilter();
+                        }
+                        $('#load-spinner').css("display", "none");
+                    },
+                    error: function (response) {
+                        $('#load-spinner').css("display", "none");
+                    }
+                })
+            }
         }else{
+            ButtonFilter.push(category);
             $('#load-spinner').css("display", "block");
             $.ajax({
                 type: 'GET',
@@ -96,7 +131,8 @@
                 dataType: 'json',
                 success: function (response) {
                     if(response != null){
-                        FilterCategoryInPage(response, category);
+                        AddUsers(response);
+                        ActionFilter();
                     }
                     $('#load-spinner').css("display", "none");
                 },
@@ -107,32 +143,21 @@
         }
     }
     
-    function FilterCategoryInPage(users, category) {
-        
-         @foreach (var category in Model.CategoryWorks)
-         {
-             <text>
-                document.getElementById('category-@category').classList.remove("creators-selected-button");
-                document.getElementById('category-i-@category').classList.remove("creators-selected-i");
-             </text>
-         }
-                 
-        @foreach (var user in Model.User)
-         {
-             <text>
-                document.getElementById('@user.Id').style.setProperty('display', 'none', 'important');
-             </text>
-         }
-                 
-        document.getElementById('category-' + category).classList.add("creators-selected-button");
-        document.getElementById('category-i-' + category).classList.add("creators-selected-i");
-                 
+    function AddUsers(users) {
         for(var i = 0; i < users.length; i++){
-            document.getElementById(users[i]).style.setProperty('display', 'block', 'important');
+           CardFilter.push(users[i]);
         }
     }
     
-    function DeleteFilter() {
+    function RemoveUsers(users) {
+        for(var i = 0; i < users.length; i++){
+           CardFilter = CardFilter.filter(function(item) {
+               return item !== users[i];
+           });
+        }
+    }
+    
+    function ActionFilter() {
         @foreach (var category in Model.CategoryWorks)
          {
              <text>
@@ -140,13 +165,39 @@
                 document.getElementById('category-i-@category').classList.remove("creators-selected-i");
              </text>
          }
-                 
+         
+         for (var i=0; i<ButtonFilter.length; i++)
+           {
+               document.getElementById('category-'+ButtonFilter[i]).classList.add("creators-selected-button");
+               document.getElementById('category-i-'+ButtonFilter[i]).classList.add("creators-selected-i");
+           }
+                          
         @foreach (var user in Model.User)
          {
              <text>
-                document.getElementById('@user.Id').style.setProperty('display', 'block', 'important');
+                document.getElementById('@user.Id').style.setProperty('display', 'none', 'important');
              </text>
          }
+         
+         for (var i=0; i<CardFilter.length; i++)
+        {
+             document.getElementById(CardFilter[i]).style.setProperty('display', 'block', 'important');
+        }
+    }
+    
+    function RestoreFilter() {
+        @foreach (var category in Model.CategoryWorks)
+         {
+             <text>
+                document.getElementById('category-@category').classList.remove("creators-selected-button");
+                document.getElementById('category-i-@category').classList.remove("creators-selected-i");
+             </text>
+         }
+             
+         for (var i=0; i<DefaultCard.length; i++)
+        {
+             document.getElementById(DefaultCard[i]).style.setProperty('display', 'block', 'important');
+        }
     }
 
 </script>

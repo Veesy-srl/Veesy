@@ -42,27 +42,6 @@ public class PublicController : VeesyController
         }
     }
     
-    [HttpGet("portfolio/{id}")]
-    public IActionResult Portfolio(Guid id)
-    {
-        try
-        {
-            var result = _portfolioHelper.GetPortfolioPreviewViewModel(id,UserInfo);
-            if (!result.result.Success)
-            {
-                _notyfService.Custom(result.result.Message, 10 , "#ca0a0a");
-                return RedirectToAction("Index", "Home", new { area = "Portfolio" });
-            }
-            return View(result.model);
-        }
-        catch (Exception e)
-        {
-            Logger.Error(e, e.Message);
-            _notyfService.Custom("Error retrieving portfolios. Please retry.", 10 , "#ca0a0a");
-            return RedirectToAction("Index", "Home", new { area = "Portfolio" });
-        }
-    }
-    
     [HttpGet("Splash")]
     public IActionResult Splash()
     {
