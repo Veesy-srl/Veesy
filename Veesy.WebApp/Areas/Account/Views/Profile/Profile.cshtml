@@ -180,13 +180,13 @@
             @if (string.IsNullOrEmpty(Model.PortfolioIntro))
             {
                 <div class="card-white-dashed-veesy p-3">
-                    <p>Write a short info about yourself, try to make it <strong>brief</strong> and <strong>catchy</strong></p>
+                    <p class="text-color">Write a short info about yourself, try to make it <strong>brief</strong> and <strong>catchy</strong></p>
                     <div class="mt-4"><a onclick="openModal('#modalPortfolioIntro')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add portfolio intro</strong></a></div>
                 </div>
             }
             else
             {
-                <p>@Model.PortfolioIntro</p>
+                <p class="text-color">@Model.PortfolioIntro</p>
                 <a onclick="openModal('#modalPortfolioIntro'), setTextAreaValue('portfolio-intro-text-edit', '@Model.PortfolioIntro.Replace("\'", "&#x27;")')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
 
             }
@@ -197,7 +197,7 @@
             @if (string.IsNullOrEmpty(Model.Biography))
             {
                 <div class="card-white-dashed-veesy p-3">
-                    <p>Write a bio about yourself, try to make it <strong>synthetic</strong> and <strong>professional</strong></p>
+                    <p class="text-color">Write a bio about yourself, try to make it <strong>synthetic</strong> and <strong>professional</strong></p>
                     <div class="mt-4"><a onclick="openModal('#modalBiography')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add bio</strong></a></div>
                 </div>
             }
@@ -211,7 +211,7 @@
         <div class="empty-veesy"></div>
         <div>
             <h3 class="text-color"><strong>Fields</strong></h3>
-            <p>Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,</p>
+            <p class="text-color">Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,</p>
             @if (Model.Sectors.Count(s => s.Selected) > 0)
             {
                 <div class="d-flex mb-4" style="max-width: 100%; flex-wrap: wrap;">
@@ -236,7 +236,7 @@
         <div class="empty-veesy"></div>
         <div>
             <h3 class="text-color"><strong>Soft skill</strong></h3>
-            <p>Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,</p>
+            <p class="text-color">Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,</p>
             @if (Model.SoftSkills.Count(s => s.Selected) > 0)
             {
                 <div class="d-flex mb-4" style="max-width: 100%; flex-wrap: wrap;">
@@ -261,7 +261,7 @@
         <div class="empty-veesy"></div>
         <div>
             <h3 class="text-color"><strong>Softwares</strong></h3>
-            <p>Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,</p>
+            <p class="text-color">Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,</p>
             @if (Model.UsedSoftwares.Count(s => s.Selected) > 0)
             {
                 <div class="d-flex mb-4 text-color" style="max-width: 100%; flex-wrap: wrap;">
@@ -286,7 +286,7 @@
         <div class="empty-veesy"></div>
         <div>
             <h3 class="text-color"><strong>Portfolios</strong></h3>
-            <p>You don't have any portfolio yet.</p>
+            <p class="text-color">You don't have any portfolio yet.</p>
             <a asp-controller="Cloud" asp-action="List" asp-area="Portfolio" class="rounded-pill btn btn-primary btn-variant">create your first portfolio</a>
         </div>
         <div class="empty-veesy"></div>
@@ -315,9 +315,9 @@
                 <a onclick="closeModal('#modalBiography')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
-                <p>Write a bio about yourself, try to make it synthetic and professional</p>
-                <textarea id="biography-text-edit" rows="4" class="w-100"></textarea>
-                <p class="mb-0"><strong>max. 500 characters</strong></p>  
+                <p class="text-color">Write a bio about yourself, try to make it synthetic and professional</p>
+                <textarea id="biography-text-edit" rows="4" class="w-100 text-profile"></textarea>
+                <p class="mb-0 text-color"><strong>max. 500 characters</strong></p>  
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdateBiography()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -334,8 +334,8 @@
                 <a onclick="closeModal('#modalExternalLink')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
-                <p>Insert an external link</p>
-                <input type="text" id="external-link-edit" rows="4" class="w-100 input-modal"/>
+                <p class="text-color">Insert an external link</p>
+                <input type="text" id="external-link-edit" rows="4" class="w-100 input-modal text-profile"/>
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdateExternalLink()" class="mt-2 rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -352,9 +352,9 @@
                 <a onclick="closeModal('#modalPortfolioIntro')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
-                <p>Write a short info about yourself, try to make it brief and catchy</p>
-                <textarea id="portfolio-intro-text-edit" rows="4" class="w-100"></textarea>
-                <p class="mb-0"><strong>max. 100 characters</strong></p>  
+                <p class="text-color">Write a short info about yourself, try to make it brief and catchy</p>
+                <textarea id="portfolio-intro-text-edit" rows="4" class="w-100 text-profile"></textarea>
+                <p class="mb-0 text-color"><strong>max. 100 characters</strong></p>  
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdatePortfolioIntro()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -371,9 +371,9 @@
                 <a onclick="closeModal('#modalWorkRole')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
-                <p>Write about your role.</p>
-                <textarea id="category-edit" rows="4" class="w-100"></textarea>
-                <p class="mb-0"><strong>max. 50 characters</strong></p>  
+                <p class="text-color">Write about your role.</p>
+                <textarea id="category-edit" rows="4" class="w-100 text-profile"></textarea>
+                <p class="mb-0 text-color"><strong>max. 50 characters</strong></p>  
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdateCategory()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -390,22 +390,22 @@
                 <a onclick="closeModal('#modalSoftware')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
-                <p>select a maximum of 10 software that you can check</p>
-                <div class="overflow-auto p-3 border-div-grey" style="background-color: white !important; max-height: 400px;">
+                <p class="text-color">select a maximum of 10 software that you can check</p>
+                <div class="overflow-auto p-3 border-div-grey" style="max-height: 400px;">
                     @foreach (var item in Model.UsedSoftwares)
                     {
                         <div class="form-check">
                             <label class="form-check-label" style="cursor: pointer;" for="flexCheckDefault-@item.Code">
-                                <strong>@item.Name</strong>
+                                <strong class="text-color">@item.Name</strong>
                             </label>
                             @{ var check = @item.Selected ? "checked" : ""; }
-                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="flexCheckDefault-@item.Code" style="float: right !important; border: 1px solid rgba(0,0,0,.25) !important;">
+                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="flexCheckDefault-@item.Code" style="float: right !important;">
                         </div>
                         <hr class="hr"/>
                     }
                 </div>
-                <p class="mt-4"><strong>Didn't find it?</strong> <a class="a-ciano" href="mailto:support@veesy.it">Contact us</a></p>
-                <p class="mb-0"><strong>max. 10</strong></p>
+                <p class="mt-4 text-color"><strong>Didn't find it?</strong> <a class="a-ciano" href="mailto:support@veesy.it">Contact us</a></p>
+                <p class="mb-0 text-color"><strong>max. 10</strong></p>
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdateUsedSoftware()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -422,22 +422,22 @@
                 <a onclick="closeModal('#modalSectors')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
-                <p>Select a maximum of 10 fields.</p>
-                <div class="overflow-auto p-3 border-div-grey" style="background-color: white !important; max-height: 400px;">
+                <p class="text-color">Select a maximum of 10 fields.</p>
+                <div class="overflow-auto p-3 border-div-grey" style="max-height: 400px;">
                     @foreach (var item in Model.Sectors)
                     {
                         <div class="form-check">
                             <label class="form-check-label" style="cursor: pointer;" for="sector-@item.Code">
-                                <strong>@item.Name</strong>
+                                <strong class="text-color">@item.Name</strong>
                             </label>
                             @{ var check = @item.Selected ? "checked" : ""; }
-                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="sector-@item.Code" style="float: right !important; border: 1px solid rgba(0,0,0,.25) !important;">
+                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="sector-@item.Code" style="float: right !important;">
                         </div>
                         <hr class="hr"/>
                     }
                 </div>
-                <p class="mt-4"><strong>Didn't find it?</strong> <a class="a-ciano" href="mailto:support@veesy.it">Contact us</a></p>
-                <p class="mb-0"><strong>max. 10</strong></p>
+                <p class="mt-4 text-color"><strong>Didn't find it?</strong> <a class="a-ciano" href="mailto:support@veesy.it">Contact us</a></p>
+                <p class="mb-0 text-color"><strong>max. 10</strong></p>
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdateSectors()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -454,22 +454,22 @@
                 <a onclick="closeModal('#modalSoftSkill')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
-                <p>Select a maximum of 10 skills which you are developing.</p>
-                <div class="overflow-auto p-3 border-div-grey" style="background-color: white !important; max-height: 400px;">
+                <p class="text-color">Select a maximum of 10 skills which you are developing.</p>
+                <div class="overflow-auto p-3 border-div-grey" style=" max-height: 400px;">
                     @foreach (var item in Model.SoftSkills)
                     {
                         <div class="form-check">
                             <label class="form-check-label" style="cursor: pointer;" for="softSkill-@item.Code">
-                                <strong>@item.Name</strong>
+                                <strong class="text-color">@item.Name</strong>
                             </label>
                             @{ var check = @item.Selected ? "checked" : ""; }
-                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="softSkill-@item.Code" style="float: right !important; border: 1px solid rgba(0,0,0,.25) !important;">
+                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="softSkill-@item.Code" style="float: right !important; ">
                         </div>
                         <hr class="hr"/>
                     }
                 </div>
-                <p class="mt-4"><strong>Didn't find it?</strong> <a class="a-ciano" href="mailto:support@veesy.it">Contact us</a></p>
-                <p class="mb-0"><strong>max. 5</strong></p>
+                <p class="mt-4 text-color"><strong>Didn't find it?</strong> <a class="a-ciano" href="mailto:support@veesy.it">Contact us</a></p>
+                <p class="mb-0 text-color"><strong>max. 5</strong></p>
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdateSoftSkills()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -518,22 +518,22 @@
                 <a onclick="closeModal('#modalLanguageSpoken')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
-                <p>Select a maximum of 5 languages spoken. <br/>Don't overdue! Just pick languages you are confident with.</p>
-                <div class="overflow-auto p-3 border-div-grey" style="background-color: white !important; max-height: 400px;">
+                <p class="text-color">Select a maximum of 5 languages spoken. <br/>Don't overdue! Just pick languages you are confident with.</p>
+                <div class="overflow-auto p-3 border-div-grey" style="max-height: 400px;">
                     @foreach (var item in Model.LanguagesSpoken)
                     {
                         <div class="form-check">
                             <label class="form-check-label" style="cursor: pointer;" for="languageSpoken-@item.Code">
-                                <strong>@item.Language</strong>
+                                <strong class="text-color">@item.Language</strong>
                             </label>
                             @{ var check = @item.Selected ? "checked" : ""; }
-                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="languageSpoken-@item.Code" style="float: right !important; border: 1px solid rgba(0,0,0,.25) !important;">
+                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="languageSpoken-@item.Code" style="float: right !important;">
                         </div>
                         <hr class="hr"/>
                     }
                 </div>
-                <p class="mt-4"><strong>Didn't find it?</strong> <a class="a-ciano" href="mailto:support@veesy.it">Contact us</a></p>
-                <p class="mb-0"><strong>max. 5</strong></p>
+                <p class="mt-4 text-color"><strong>Didn't find it?</strong> <a class="a-ciano" href="mailto:support@veesy.it">Contact us</a></p>
+                <p class="mb-0 text-color"><strong>max. 5</strong></p>
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdateLanguagesSpoken()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -550,18 +550,18 @@
                 <a onclick="closeModal('#modalInfoToShow')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
-                <p>Select info to show in portfolio.</p>
-                <div class="overflow-auto p-3 border-div-grey" style="background-color: white !important; max-height: 400px;">
+                <p class="text-color">Select info to show in portfolio.</p>
+                <div class="overflow-auto p-3 border-div-grey" style=" max-height: 400px;">
                     @foreach (var item in Model.InfoToShow)
                     {
                         <div class="form-check">
                             <label class="form-check-label" style="cursor: pointer;" for="infoToShow-@item.Code">
-                                <strong>@item.Name</strong>
+                                <strong class="text-color">@item.Name</strong>
                             </label>
                             @{ var check = @item.Selected ? "checked" : ""; }
-                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="infoToShow-@item.Code" style="float: right !important; border: 1px solid rgba(0,0,0,.25) !important;">
+                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="infoToShow-@item.Code" style="float: right !important;">
                         </div>
-                        <hr class="hr"/>
+                        <hr class="hr color-hr"/>
                     }
                 </div>
             </div>

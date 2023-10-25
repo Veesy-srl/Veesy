@@ -24,34 +24,34 @@
                 @if(ViewContext.RouteData.Values["Controller"].ToString() == "Cloud")
                 {
                     <a role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="breadcrumb-a-white text-white navbar-brand" asp-area="Portfolio" asp-controller="Cloud" asp-action="List">
-                        <img src="~/imgs/veesy_vettoriale_enigma_white.png" style="width: 75px; height: 25px; margin-top: 5px;">cloud
+                        <img class="header-logo-v">cloud
                     </a>
                 }
                 else if(ViewContext.RouteData.Values["Action"].ToString() == "Contacts"){
                     <a role="button" href="" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" >
-                        <img src="~/imgs/veesy_vettoriale_enigma.png" style="width: 75px; height: 25px; margin-top: 5px;">contacts
+                        <img class="header-logo">contacts
                     </a>
                 }
                 else if (ViewContext.RouteData.Values["Action"].ToString() == "Splash")
                 {
                     <a role="button" href="" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand">
-                        <img src="~/imgs/veesy_vettoriale_enigma.png" style="width: 75px; height: 25px; margin-top: 5px;">
+                        <img class="header-logo">
                     </a>
                 }
                 else if(ViewContext.RouteData.Values["Action"].ToString() == "About"){
                     <a role="button" href="" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" >
-                        <img src="~/imgs/veesy_vettoriale_enigma.png" style="width: 75px; height: 25px; margin-top: 5px;">about
+                        <img class="header-logo">about
                     </a>
                 }
                 else if(ViewContext.RouteData.Values["Action"].ToString() == "Creators"){
                     <a role="button" href="" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" >
-                        <img src="~/imgs/veesy_vettoriale_enigma.png" style="width: 75px; height: 25px; margin-top: 5px;">creators
+                        <img class="header-logo">creators
                     </a>
                 }
                 else
                 {
                     <a role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                        <img src="~/imgs/veesy_vettoriale_enigma.png" style="width: 75px; height: 25px; margin-top: 5px;">dashboard
+                        <img class="header-logo">dashboard
                     </a>
                 }
             </h1> 
@@ -134,12 +134,12 @@
                         <div class="vr custom-vr"></div>
                     </div>
                     <div class="description-container mt-5">
-                        <div id="description1" class="description-content mt-1" ><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p></div>
-                        <div id="description2" class="description-content mt-1" ><p>unknown printer took a galley of type and scrambled it to make a type speci</p></div>
-                        <div id="description3" class="description-content mt-1" ><p>essentially unchanged. It was popularised in the 1960s with the release of Letraset shee</p></div>
-                        <div id="description4" class="description-content mt-1" ><p>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet,</p></div>
-                        <div id="description5" class="description-content mt-1" ><p>unknown printer took a galley of type and scrambled</p></div>
-                        <div id="description6" class="description-content mt-1" ><p>Lorem Ipsum is simply dummy text of the printing</p></div>
+                        <div id="description1" class="description-content mt-1 text-color" ><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p></div>
+                        <div id="description2" class="description-content mt-1 text-color" ><p>unknown printer took a galley of type and scrambled it to make a type speci</p></div>
+                        <div id="description3" class="description-content mt-1 text-color" ><p>essentially unchanged. It was popularised in the 1960s with the release of Letraset shee</p></div>
+                        <div id="description4" class="description-content mt-1 text-color" ><p>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet,</p></div>
+                        <div id="description5" class="description-content mt-1 text-color" ><p>unknown printer took a galley of type and scrambled</p></div>
+                        <div id="description6" class="description-content mt-1 text-color" ><p>Lorem Ipsum is simply dummy text of the printing</p></div>
                     </div>
                 </div>
 
@@ -175,9 +175,9 @@
         <div class="row mb-3">
             <div class="col-md-3 mt-5 veesy-text-color" >
                 <h2 class="h2 mt-3 fw-normal">
-                    <div class=" mb-5 d-inline-flex" asp-area="" asp-controller="Home" asp-action="Index"><img src="/imgs/veesy_vettoriale_enigma.png" style="width: 120px; height: 40px;"></div> 
+                    <div class=" mb-5 d-inline-flex" asp-area="" asp-controller="Home" asp-action="Index"><img class="logo-footer"></div> 
                 </h2>
-                <p>Veesy S.R.L.<br/>
+                <p class="text-color">Veesy S.R.L.<br/>
                     Via Giacomo Matteotti 43<br/>
                     20832, Desio (MB)</p>
                 <div class="row mt-4 social-icons-row">
@@ -218,9 +218,9 @@
         </div>
         <div class="row">
             <div class="mb-3 veesy-text-color d-flex justify-content-between">
-                <p class="d-none d-lg-block">Veesy S.R.L. © 2023 All rights reserved - Vat.: 13005470961 - annual social capital € 10.000</p>
-                <p class="text-end me-4 d-none d-lg-block">web project by <a href="https://www.derein.net/">derein</a> & <a href="https://www.enigma-tech.it/">enigma</a></p>
-                <p class="d-block d-lg-none d-inline">Veesy S.R.L. © 2023 All rights reserved - Vat.: 13005470961 - annual social capital € 10.000 - web project by <a href="https://www.derein.net/">derein</a> & <a href="https://www.enigma-tech.it/">enigma</a></p>
+                <p class="d-none d-lg-block text-color">Veesy S.R.L. © 2023 All rights reserved - Vat.: 13005470961 - annual social capital € 10.000</p>
+                <p class="text-end me-4 d-none d-lg-block text-color">web project by <a href="https://www.derein.net/">derein</a> & <a href="https://www.enigma-tech.it/">enigma</a></p>
+                <p class="d-block d-lg-none d-inline text-color">Veesy S.R.L. © 2023 All rights reserved - Vat.: 13005470961 - annual social capital € 10.000 - web project by <a href="https://www.derein.net/">derein</a> & <a href="https://www.enigma-tech.it/">enigma</a></p>
             </div>
         </div>
     </div>

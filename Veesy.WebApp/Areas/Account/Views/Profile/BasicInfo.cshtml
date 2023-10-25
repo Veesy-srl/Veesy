@@ -7,7 +7,7 @@
     <div class="col-sm-12 col-md-3">
         <nav class="breadcrumb-container" aria-label="Percorso di navigazione">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><img src="/imgs/dashboard_home_light-mode.png" style="width: 18px; margin-top: -5px;" class="me-2"><a class="breadcrumb-a me-2" asp-area="Portfolio" asp-controller="Home" asp-action="Index">dashboard</a><i class="fa-solid fa-chevron-right"></i></li>
+                <li class="breadcrumb-item"><img class="home-img me-2"><a class="breadcrumb-a me-2" asp-area="Portfolio" asp-controller="Home" asp-action="Index">dashboard</a><i class="fa-solid fa-chevron-right"></i></li>
                 <li class="breadcrumb-item"><a class="breadcrumb-a me-2" asp-action="Profile">profile</a><i class="fa-solid fa-chevron-right"></i></li>
                 <li class="breadcrumb-item"><a class="breadcrumb-a" href="#"><strong>basic info</strong></a></li>
             </ol>
@@ -35,16 +35,16 @@
                 <hr class="hr"/>
                 <div class="d-flex">
                     <div class="col-9">
-                        <p class="mb-0"><strong>First and Last name*</strong></p>
-                        <p class="mb-0" id="fullname-show">@Model.Name @Model.Surname</p>
+                        <p class="mb-0 text-color"><strong>First and Last name*</strong></p>
+                        <p class="mb-0 text-color" id="fullname-show">@Model.Name @Model.Surname</p>
                     </div>
                     <div class="col-3 text-end"><a onclick="setTextAreaValue('name-edit', '@Model.Name'), setTextAreaValue('surname-edit', '@Model.Surname'), openModal('#modalFullname')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
                 </div>
                 <hr class="hr"/>
                 <div class="d-flex">
                     <div class="col-9">
-                        <p class="mb-0"><strong>Email*</strong></p>
-                        <p class="mb-0" id="email-show">@Model.Email</p>
+                        <p class="mb-0 text-color"><strong>Email*</strong></p>
+                        <p class="mb-0 text-color" id="email-show">@Model.Email</p>
                     </div>
                     <div class="col-3 text-end"><a onclick="setTextAreaValue('email-edit', '@Model.Email'), openModal('#modalEmail')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
                 </div>
@@ -53,7 +53,7 @@
                     @if (Model.CategoriesWork.Count(s => s.Selected) == 0)
                     {
                         <div class="col-9">
-                            <p class="mb-0"><strong>Category</strong></p>
+                            <p class="mb-0 text-color"><strong>Category</strong></p>
                             <p class="mb-0 color-red">Information missing</p>
                         </div>
                         <div class="col-3 text-end"><a onclick="openModal('#modalCategory')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div>
@@ -61,8 +61,8 @@
                     else
                     {
                         <div class="col-9">
-                            <p class="mb-0"><strong>Category</strong></p>
-                            <p class="mb-0 veesy-overflow" id="category-show">
+                            <p class="mb-0 text-color"><strong>Category</strong></p>
+                            <p class="mb-0 veesy-overflow text-color" id="category-show">
                                 @{
                                     var categories = "";
                                     foreach (var category in Model.CategoriesWork.Where(s => s.Selected))
@@ -84,7 +84,7 @@
                     @if (string.IsNullOrEmpty(@Model.VatNumber))
                     {
                         <div class="col-9">
-                            <p class="mb-0"><strong>VAT Number</strong></p>
+                            <p class="mb-0 text-color"><strong>VAT Number</strong></p>
                             <p class="mb-0 color-red" id="vat-number-show">information missing</p>
                         </div>
                         <div class="col-3 text-end">
@@ -94,8 +94,8 @@
                     else
                     {
                         <div class="col-9">
-                            <p class="mb-0"><strong>VAT Number</strong></p>
-                            <p class="mb-0" id="vat-number-show">@Model.VatNumber</p>
+                            <p class="mb-0 text-color"><strong>VAT Number</strong></p>
+                            <p class="mb-0 text-color" id="vat-number-show">@Model.VatNumber</p>
                         </div>
                         <div class="col-3 text-end">
                             <a id="vat-number-button" onclick="setTextAreaValue('vat-number-edit', '@Model.VatNumber'), openModal('#modalVAT')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
@@ -108,24 +108,24 @@
                 <hr class="hr"/>
                 <div class="d-flex">
                     <div class="col-9">
-                        <p class="mb-0"><strong>Username*</strong></p>
-                        <p class="mb-0" id="username-show">@Model.Username</p>
+                        <p class="mb-0 text-color"><strong>Username*</strong></p>
+                        <p class="mb-0 text-color" id="username-show">@Model.Username</p>
                     </div>
                     <div class="col-3 text-end"><a onclick="setTextAreaValue('username-edit', '@Model.Username'), openModal('#modalUsername')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
                 </div>
                 <hr class="hr"/>
                 <div class="d-flex">
                     <div class="col-9">
-                        <p class="mb-0"><strong>Password*</strong></p>
-                        <p class="mb-0">***********</p>
+                        <p class="mb-0 text-color"><strong>Password*</strong></p>
+                        <p class="mb-0 text-color">***********</p>
                     </div>
                     <div class="col-3 text-end"><a onclick="openModal('#modalPassword')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
                 </div>
                 <hr class="hr"/>
                 <div class="d-flex">
                     <div class="col-9">
-                        <p class="mb-0"><strong>Dashboard Language</strong></p>
-                        <p class="mb-0">English (default)</p>
+                        <p class="mb-0 text-color"><strong>Dashboard Language</strong></p>
+                        <p class="mb-0 text-color">English (default)</p>
                     </div>
                 </div>
                 <hr class="hr"/>
@@ -133,7 +133,7 @@
                 @if (string.IsNullOrEmpty(@Model.PhoneNumber))
                 {
                     <div class="col-9">
-                        <p class="mb-0"><strong>Phone Number</strong></p>
+                        <p class="mb-0 text-color"><strong>Phone Number</strong></p>
                         <p class="mb-0 color-red" id="phone-number-show">information missing</p>
                     </div>
                     <div class="col-3 text-end">
@@ -143,8 +143,8 @@
                 else
                 {
                     <div class="col-9">
-                        <p class="mb-0"><strong>Phone Number</strong></p>
-                        <p class="mb-0" id="phone-number-show">@Model.PhoneNumberPrefix @Model.PhoneNumber</p>
+                        <p class="mb-0 text-color"><strong>Phone Number</strong></p>
+                        <p class="mb-0 text-color" id="phone-number-show">@Model.PhoneNumberPrefix @Model.PhoneNumber</p>
                     </div>
                     <div class="col-3 text-end">
                         <a id="phone-number-button" onclick="setTextAreaValue('phone-number-prefix-edit', '@Model.PhoneNumberPrefix'), setTextAreaValue('phone-number-edit', '@Model.PhoneNumber'), openModal('#modalPhoneNumber')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
@@ -180,15 +180,15 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
-                        <p class="mb-1"><strong>First name*</strong></p>
-                        <input type="text" id="name-edit" rows="4" class="w-100 input-modal"/>
+                        <p class="mb-1 text-color"><strong>First name*</strong></p>
+                        <input type="text" id="name-edit" rows="4" class="w-100 input-modal text-profile" />
                     </div>
                     <div class="col-sm-12 col-md-6">
-                        <p class="mb-1"><strong>Last name*</strong></p>
-                        <input type="text" id="surname-edit" rows="4" class="w-100 input-modal"/>
+                        <p class="mb-1 text-color"><strong>Last name*</strong></p>
+                        <input type="text" id="surname-edit" rows="4" class="w-100 input-modal text-profile"/>
                     </div>
                 </div>
-                <p class="mt-2 mb-0">*required field</p>  
+                <p class="mt-2 mb-0 text-color">*required field</p>  
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdateFullname()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -207,15 +207,15 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
-                        <p class="mb-1"><strong>Old Password*</strong></p>
-                        <input type="password" id="old-password-edit" rows="4" class="w-100 input-modal"/>
+                        <p class="mb-1 text-color"><strong>Old Password*</strong></p>
+                        <input type="password" id="old-password-edit" rows="4" class="w-100 input-modal text-profile"/>
                     </div>
                     <div class="col-sm-12 col-md-6">
-                        <p class="mb-1"><strong>New Password*</strong></p>
-                        <input type="password" id="new-password-edit" rows="4" class="w-100 input-modal"/>
+                        <p class="mb-1 text-color"><strong>New Password*</strong></p>
+                        <input type="password" id="new-password-edit" rows="4" class="w-100 input-modal text-profile"/>
                     </div>
                 </div>
-                <p class="mt-2 mb-0">*required field</p>  
+                <p class="mt-2 mb-0 text-color">*required field</p>  
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdatePassword()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -232,9 +232,9 @@
                 <a onclick="closeModal('#modalEmail')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
-                <p class="mb-1"><strong>Email*</strong></p>
-                <input type="email" id="email-edit" rows="4" class="w-100 input-modal"/>
-                <p class="mt-2 mb-0">*required field</p>
+                <p class="mb-1 text-color"><strong>Email*</strong></p>
+                <input type="email" id="email-edit" rows="4" class="w-100 input-modal text-profile"/>
+                <p class="mt-2 mb-0 text-color">*required field</p>
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdateEmail()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -252,9 +252,9 @@
                 <a onclick="closeModal('#modalUsername')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
-                <p class="mb-1"><strong>Username*</strong></p>
-                <input type="text" id="username-edit" rows="4" class="w-100 input-modal"/>
-                <p class="mt-2 mb-0">*required field</p>
+                <p class="mb-1 text-color"><strong>Username*</strong></p>
+                <input type="text" id="username-edit" rows="4" class="w-100 input-modal text-profile"/>
+                <p class="mt-2 mb-0 text-color">*required field</p>
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdateUsername()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -271,8 +271,8 @@
                 <a onclick="closeModal('#modalVAT')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
-                <p class="mb-1"><strong>VAT Number*</strong></p>
-                <input type="text" id="vat-number-edit" rows="4" class="w-100 input-modal"/>
+                <p class="mb-1 text-color"><strong>VAT Number*</strong></p>
+                <input type="text" id="vat-number-edit" rows="4" class="w-100 input-modal text-profile"/>
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdateVATNumber()" class="mt-2 rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -289,14 +289,14 @@
                 <a onclick="closeModal('#modalPhoneNumber')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body row">
-                <p class="mb-1"><strong>Phone Number*</strong></p>
+                <p class="mb-1 text-color"><strong>Phone Number*</strong></p>
                 <div class="col-2">
-                    <input type="text" placeholder="+39" min="1" id="phone-number-prefix-edit" rows="4" class="w-100 input-modal"/>    
+                    <input type="text" placeholder="+39" min="1" id="phone-number-prefix-edit" rows="4" class="w-100 input-modal text-profile"/>    
                 </div>
                 <div class="col-10">
-                    <input type="number" min="1" id="phone-number-edit" rows="4" class="w-100 input-modal"/>    
+                    <input type="number" min="1" id="phone-number-edit" rows="4" class="w-100 input-modal text-profile"/>    
                 </div>
-                <p class="mt-2 mb-0">*required field</p>
+                <p class="mt-2 mb-0 text-color">*required field</p>
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdatePhoneNumber()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -313,22 +313,22 @@
                 <a onclick="closeModal('#modalCategory')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
-                <p>Select a maximum of 3 categories.</p>
-                <div class="overflow-auto p-3 border-div-grey" style="background-color: white !important; max-height: 400px;">
+                <p class="text-color">Select a maximum of 3 categories.</p>
+                <div class="overflow-auto p-3 border-div-grey" style=" max-height: 400px;">
                     @foreach (var item in Model.CategoriesWork)
                     {
                         <div class="form-check">
                             <label class="form-check-label" style="cursor: pointer;" for="category-@item.Code">
-                                <strong>@item.Name</strong>
+                                <strong class="text-color">@item.Name</strong>
                             </label>
                             @{ var check = @item.Selected ? "checked" : ""; }
-                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="category-@item.Code" style="float: right !important; border: 1px solid rgba(0,0,0,.25) !important;">
+                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="category-@item.Code" style="float: right !important;">
                         </div>
-                        <hr class="hr"/>
+                        <hr class="hr color-hr"/>
                     }
                 </div>
-                <p class="mt-4"><strong>Didn't find it?</strong> <a class="a-ciano" href="mailto:support@veesy.it">Contact us</a></p>
-                <p class="mb-0"><strong>max. 3</strong></p>
+                <p class="mt-4 text-color"><strong>Didn't find it?</strong> <a class="a-ciano" href="mailto:support@veesy.it">Contact us</a></p>
+                <p class="mb-0 text-color"><strong>max. 3</strong></p>
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdateCategoriesWork()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>

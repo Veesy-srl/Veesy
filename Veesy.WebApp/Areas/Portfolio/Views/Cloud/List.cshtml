@@ -100,7 +100,7 @@
     <div class="w-100">
         <div class="float-start">
             <div class="d-flex mt-2">
-                <p id="number_files" class="fw-bolder" style="margin-top: -2px;">1 files selected</p>
+                <p id="number_files" class="fw-bolder text-color" style="margin-top: -2px;">1 files selected</p>
                 <a onclick="confirmDelete(), openModal('#modalDeleteMedia')" class="red-link-underline ms-3" style="font-size: 14px;">delete</a>
             </div>
         </div>
@@ -151,7 +151,7 @@
                                         }
                                     </div>
                                     <div class="w-50 ps-2">
-                                        <p class="mb-0"><strong>@item.Name</strong></p>
+                                        <p class="mb-0 text-color"><strong>@item.Name</strong></p>
                                         <p class="mb-0 text-grey">Updated on <br/>@item.LastUpdate</p>
                                         <p class="mb-0 text-grey">@item.NumberMedia medias</p>
                                     </div>
@@ -185,7 +185,7 @@
                 <a onclick="closeModal('#modalDeleteMedia')"><i class="fa-solid fa-grey fa-circle-xmark"></i></a>
             </div>
             <div class="empty-veesy"></div>
-            <div class="modal-body text-center">
+            <div class="modal-body text-center text-color">
                 <h5><strong id="confirm-delete-body" style=" white-space: pre">0 Medias will be delete permanently. Are you sure?</strong></h5>
             </div>
             <div class="empty-veesy"></div>
@@ -212,9 +212,9 @@
             </div>
             <div id="input-portfolio">
                 <div class="modal-body">
-                    <p class="mb-0">name your Portfolio</p>
-                    <input type="text" id="portfolio-name-edit" rows="4" class="w-100 input-modal"/>
-                    <p class="mb-0"><strong>max. 50 characters</strong></p>
+                    <p class="mb-0 text-color">name your Portfolio</p>
+                    <input type="text" id="portfolio-name-edit" rows="4" class="w-100 input-modal text-profile"/>
+                    <p class="mb-0 text-color"><strong>max. 50 characters</strong></p>
                 </div>
                 <div class="modal-footer">                
                     <a onclick="CreateNewPortfolio()" class="mt-2 rounded-pill btn btn-primary btn-padding" type="submit">save</a>

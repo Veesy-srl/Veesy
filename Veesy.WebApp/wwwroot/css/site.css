@@ -1385,6 +1385,7 @@ a:hover{
 
 .border-div-grey{
   border: 1px solid #AAB0BB !important;
+  background-color: #ffffff;
 }
 
 textarea{
@@ -1600,4 +1601,24 @@ canvas {
 
 .user-profile{
   color: #202F4D;
+}
+
+.logo-footer {
+  width: 120px;
+  height: 40px;
+  content: url('../imgs/veesy_vettoriale_enigma.png');
+}
+
+.header-logo{
+  content: url('../imgs/veesy_vettoriale_enigma.png');
+  width: 75px; 
+  height: 25px; 
+  margin-top: 5px;
+}
+
+.header-logo-v{
+  content: url('../imgs/veesy_vettoriale_enigma_white.png');
+  width: 75px;
+  height: 25px;
+  margin-top: 5px;
 }
