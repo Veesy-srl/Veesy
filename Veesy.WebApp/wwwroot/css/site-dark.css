@@ -290,6 +290,10 @@
         color: #75CCDD !important;
     }
 
+    .text-profile::placeholder {
+        color: #F3F3F3;
+    }
+
     .dropdown:hover .dropdown-menu {
         box-shadow: 0 0 10px rgba(105, 100, 100, 0.4);
     }

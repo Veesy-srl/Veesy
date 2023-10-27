@@ -205,6 +205,14 @@ html {
   }
 }
 
+@media (max-width: 768px) {
+  .dark-light{
+    position: absolute;
+    top: -30px !important;
+    left: 52% !important;
+  }
+}
+
 .div-white-rounded-veesy{
   padding: 5px 5px 1px 5px;
   margin: 5px;
@@ -1621,4 +1629,10 @@ canvas {
   width: 75px;
   height: 25px;
   margin-top: 5px;
+}
+
+.dark-light{
+  position: absolute; 
+  top:  0px; 
+  left:  70%;
 }
