@@ -7,6 +7,7 @@ using Veesy.Domain.Models;
 using Veesy.Presentation.Helper;
 using Veesy.Presentation.Model.Cloud;
 using Veesy.Presentation.Model.Portfolio;
+using Veesy.Service.Dtos;
 
 namespace Veesy.WebApp.Areas.Public.Controllers;
 
@@ -72,10 +73,10 @@ public class PublicController : VeesyController
         }
     }
     
-    [HttpGet("FilterCreators")]
-    public List<string> FilterCreators(string category)
+    [HttpPost("FilterCreators")]
+    public List<string> FilterCreators([FromBody] CategoryDto Category)
     {
-        return _publicHelper.GetCreatorsFiltered(category);
+        return _publicHelper.GetCreatorsFiltered(Category.Category);
     }
     
     [HttpGet("About")]
@@ -85,7 +86,6 @@ public class PublicController : VeesyController
         {
             var vm = _publicHelper.GetUserMediaList(7);
             return View(vm);
-
         }
         catch (Exception e)
         {

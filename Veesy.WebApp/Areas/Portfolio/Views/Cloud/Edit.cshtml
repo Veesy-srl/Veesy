@@ -117,7 +117,7 @@
                                 <a onclick="ShowTextArea()" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong></strong></a>
                             </div>
                             <div class="text-area-rounded mt-2 text-end" style="display: none" id="credits-area-input">
-                                <textarea id="credits-edit" class="text-area-rounded text-area-not-resizable w-100 p-2" style="height: 131.2px;" placeholder="Write your credits.."></textarea>
+                                <textarea id="credits-edit" class="text-area-rounded text-area-not-resizable text-profile w-100 p-2" style="height: 131.2px;" placeholder="Write your credits.."></textarea>
                                 <a onclick="UpdateCredits()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
                             </div>
                         }
@@ -132,7 +132,7 @@
                                 <a onclick="ShowTextArea()" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong></strong></a>
                             </div>
                             <div class="text-area-rounded mt-2 text-end" style="display: none" id="credits-area-input">
-                                <textarea id="credits-edit" class="text-area-rounded text-area-not-resizable w-100 p-2" style="height: 131.2px;" placeholder="Write your credits..">@Model.Media.Credits</textarea>
+                                <textarea id="credits-edit" class="text-area-rounded text-area-not-resizable text-profile w-100 p-2" style="height: 131.2px;" placeholder="Write your credits..">@Model.Media.Credits</textarea>
                                 <a onclick="UpdateCredits()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
                             </div>
                         }
@@ -247,7 +247,7 @@
             </div>
             <div class="modal-body">
                 <p class="mb-1"><strong>Filename*</strong></p>
-                <input type="text" id="filename-edit" rows="4" class="w-100 input-modal"/>
+                <input type="text" id="filename-edit" rows="4" class="w-100 input-modal text-profile"/>
                 <p class="mt-2 mb-0">*required field</p>
             </div>
             <div class="modal-footer">                
@@ -266,15 +266,15 @@
             </div>
             <div class="modal-body">
                 <p>Select one of your portfolio.</p>
-                <div class="overflow-auto p-3 border-div-grey" style="background-color: white !important; max-height: 400px;">
+                <div class="overflow-auto p-3 border-div-grey" style=" max-height: 400px;">
                     @foreach (var item in Model.LinkedPortfolioDtos)
                     {
                         <div class="form-check">
                             <label class="form-check-label" style="cursor: pointer;" for="portfolioLinked-@item.Code">
-                                <strong>@item.Name</strong>
+                                <strong class="text-color">@item.Name</strong>
                             </label>
                             @{ var check = @item.Selected ? "checked" : ""; }
-                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="portfolioLinked-@item.Code" style="float: right !important; border: 1px solid rgba(0,0,0,.25) !important;">
+                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="portfolioLinked-@item.Code" style="float: right !important;">
                         </div>
                         <hr class="hr"/>
                     }
@@ -296,7 +296,7 @@
             </div>
             <div class="empty-veesy"></div>
             <div class="modal-body text-center">
-                <h5><strong id="confirm-delete-body">@Model.Media.OriginalFileName will be delete permanently. Are you sure?</strong></h5>
+                <h5 class="text-color"><strong id="confirm-delete-body">@Model.Media.OriginalFileName will be delete permanently. Are you sure?</strong></h5>
             </div>
             <div class="empty-veesy"></div>
             <div class="row">  
