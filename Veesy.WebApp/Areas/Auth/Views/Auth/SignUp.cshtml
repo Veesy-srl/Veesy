@@ -11,36 +11,36 @@
         <div class="row row-login-padding">
             <div class="col-md-6 offset-md-3">
                 <form method="post">
-                    <h1 class="h4 mb-2 mt-4 pt-5 mt-md-3 pt-md-0 fw-normal">First time here? <br/>Welcome!</h1>
+                    <h1 class="h4 mb-2 mt-4 pt-5 mt-md-3 pt-md-0 fw-normal text-color">First time here? <br/>Welcome!</h1>
                     <div style="height: 10px;"></div>
                     <div class="d-flex size-custom">
                         <div class="col-6 pe-2">
                             <div class="input-group">
                                 <p class="mb-0 fw-border size-custom"><strong>First Name*</strong></p>
-                                <input onkeydown="return alphaOnly(event);"  asp-for="Name" class="input--style-1" type="text">
+                                <input onkeydown="return alphaOnly(event);"  asp-for="Name" class="input--style-1 text-profile" type="text">
                             </div>
                         </div>
                         <div class="col-6 ps-2">
                             <div class="input-group">
                                 <p class="mb-0 fw-border size-custom"><strong>Last Name*</strong></p>
-                                <input onkeydown="return alphaOnly(event);" asp-for="Surname" class="input--style-1" type="text">
+                                <input onkeydown="return alphaOnly(event);" asp-for="Surname" class="input--style-1 text-profile" type="text">
                             </div>
                         </div>
                     </div>
                     <div class="input-group ">
                         <p class="mb-0 fw-border size-custom"><strong>Username*</strong></p>
-                        <input class="input--style-1" type="text" asp-for="Username">
+                        <input class="input--style-1 text-profile" type="text text-profile" asp-for="Username">
                     </div>
                     <div class="input-group">
                         <p class="mb-0 fw-border size-custom"><strong>Email*</strong></p>
-                        <input asp-for="Email" class="input--style-1" type="email">
+                        <input asp-for="Email" class="input--style-1 text-profile" type="email">
                     </div>
                     <div class="d-flex">
                         <div class="col-6 pe-2">
                             <div class="input-group">
                                 <p class="mb-0 fw-border size-custom"><strong>Password*</strong></p>
                                 <div class="d-flex w-100">
-                                    <input id="password" asp-for="Password" class="input--style-password" type="password">
+                                    <input id="password" asp-for="Password" class="input--style-password text-profile" type="password">
                                     <span class="input-group-append border-left-0">
                                         <a onclick="switchPassword()" class="input-group-text span--style-password bg-transparent">
                                             <img id="password-eye" src="/imgs/Auth/password-hidden_light-mode.png"/>
@@ -53,7 +53,7 @@
                             <div class="input-group">
                                 <p class="mb-0 fw-border size-custom"><strong>Repeat Password*</strong></p>
                                 <div class="d-flex w-100">
-                                    <input id="passwordconfirm" asp-for="ConfirmPassword" class="input--style-password" type="password">
+                                    <input id="passwordconfirm" asp-for="ConfirmPassword" class="input--style-password text-profile" type="password">
                                     <span class="input-group-append border-left-0">
                                         <a onclick="switchConfirmPassword()" class="input-group-text span--style-password bg-transparent">
                                             <img id="passwordconfirm-eye" src="/imgs/Auth/password-hidden_light-mode.png"/>
@@ -149,4 +149,3 @@
         });
     </script>
 }
-

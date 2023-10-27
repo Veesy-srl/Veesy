@@ -152,10 +152,10 @@
                </div>
 
            </div>
-           <div class="switch-container dark-light" >
+           <div class="switch-container dark-light" id="canvaId">
               <input type="checkbox" id="switchInp">
                 <label for="switchInp" class="pull-string">
-                  <canvas id="stringCanvas" width="150" height="100"></canvas>
+                  <canvas id="stringCanvas" width="100" height="100"></canvas>
                 </label>
           </div>
        </nav>
@@ -288,12 +288,14 @@
 
     menuButton.addEventListener('click', () => {
         menuPopup.classList.toggle('active');
+        document.getElementById('canvaId').style.display="none";
         document.body.classList.toggle('no-scroll');
         document.getElementById('none-popup').style.display = "block";
     });
 
     closeButton.addEventListener('click', () => {
       menuPopup.classList.remove('active');
+      document.getElementById('canvaId').style.display="block";
       document.body.classList.remove('no-scroll'); 
       document.getElementById('none-popup').style.display = "none";
     });
@@ -301,6 +303,7 @@
       // Chiudi il popup quando si clicca fuori da esso
       $(document).on('click', (e) => {
         if (!menuPopup.contains(e.target) && !menuButton.contains(e.target)) {
+          document.getElementById('canvaId').style.display="block";
           menuPopup.classList.remove('active');
           document.body.classList.remove('no-scroll'); 
         }

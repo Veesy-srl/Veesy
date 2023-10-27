@@ -7,6 +7,7 @@
     
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site-dark.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Veesy.WebApp.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/css/bootstrap-select.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
@@ -82,6 +83,12 @@
                        </div>
                    </div>
 
+                   <div class="switch-container dark-light-auth" id="canvaId">
+                         <input type="checkbox" id="switchInp">
+                           <label for="switchInp" class="pull-string">
+                             <canvas id="stringCanvas" width="100" height="100"></canvas>
+                           </label>
+                     </div>
                </div>
            </nav>
        </header>
@@ -105,7 +112,7 @@
         <div class="row mb-3">
             <div class="col-md-3 mt-5 veesy-text-color" >
                 <h2 class="h2 mt-3 fw-normal">
-                    <div class=" mb-5 d-inline-flex" asp-area="" asp-controller="Home" asp-action="Index"><img src="cid:logo" style="width: 120px; height: 40px;"></div> 
+                    <div class=" mb-5 d-inline-flex" asp-area="" asp-controller="Home" asp-action="Index"><img class="logo-footer"></div> 
                 </h2>
                 <p>Veesy S.R.L.<br/>
                     Via Giacomo Matteotti 43<br/>
@@ -175,17 +182,56 @@
 
     menuButton.addEventListener('click', () => {
         menuPopup.classList.toggle('active');
+         document.getElementById('canvaId').style.display="none";
         document.body.classList.toggle('no-scroll'); 
     });
 
     closeButton.addEventListener('click', () => {
       menuPopup.classList.remove('active');
+      document.getElementById('canvaId').style.display="block";
       document.body.classList.remove('no-scroll'); 
     });
+    
+    //Start Dark Mode
+        // Verifica se esiste una preferenza del tema nel localStorage
+        const savedTheme = localStorage.getItem("theme");
+        
+        // Ottieni l'elemento della checkbox e l'elemento root del documento
+        const checkbox = document.getElementById("switchInp");
+        const rootElement = document.documentElement;
+        
+        // Funzione per impostare il tema e lo stato "checked" della checkbox
+        function setTheme(theme) {
+          rootElement.setAttribute("data-bs-theme", theme);
+          localStorage.setItem("theme", theme);
+        }
+        
+        // Inizializza il tema in base alla preferenza salvata o al tema predefinito
+        if (savedTheme) {
+          setTheme(savedTheme);
+        } else {
+          setTheme("light"); // Imposta il tema predefinito
+        }
+        
+        // Imposta lo stato "checked" della checkbox iniziale all'avvio
+        checkbox.checked = rootElement.getAttribute("data-bs-theme") === "dark";
+        
+        // Aggiungi un listener per la checkbox
+        checkbox.addEventListener("click", () => {
+          if (checkbox.checked) {
+            setTheme("dark");
+          } else {
+            setTheme("light");
+          }
+        });
+    
+        //End Dark Mode
+        
     
       // Chiudi il popup quando si clicca fuori da esso
       $(document).on('click', (e) => {
         if (!menuPopup.contains(e.target) && !menuButton.contains(e.target)) {
+          document.getElementById('canvaId').style.display="block";
           menuPopup.classList.remove('active');
           document.body.classList.remove('no-scroll'); 
         }
@@ -213,15 +259,13 @@
             }
         });
         
-        //On/Off Switch
-        
         // some settings
-        const BEAD_COUNT = 60;
-        const BEAD_SIZE = 3; // radius for beads
-        const BEAD_DIST = 2; // how far apart beads should be. 400 is canvas size, so we're just dividing it
-        const INITIAL_X_MOMENTUM = -10; // x speed / second of bottom bead when the click happens
-        const GRAVITY = 20; // downward acceleration / second
-        const X_FRICTION = .05; // constant decrease in x acceleration / second
+        const BEAD_COUNT = 80;
+        const BEAD_SIZE = 2.5; // radius for beads
+        const BEAD_DIST = 80 / (BEAD_COUNT + 2); // how far apart beads should be. 400 is canvas size, so we're just dividing it
+        const INITIAL_X_MOMENTUM = -5; // x speed / second of bottom bead when the click happens
+        const GRAVITY = 4; // downward acceleration / second
+        const X_FRICTION = .01; // constant decrease in x acceleration / second
         
         // helpers
         function pythag (x1, y1, x2, y2) {
@@ -260,19 +304,20 @@
             var grd;
             if (lit) {
               grd = ctx.createRadialGradient(this.x, this.y, BEAD_SIZE, this.x - BEAD_SIZE / 2, this.y - BEAD_SIZE / 4, BEAD_SIZE * .75);
-              grd.addColorStop(1, "black");
-              grd.addColorStop(0, "black");
+              grd.addColorStop(1, "white");
+              grd.addColorStop(0, "white");
               ctx.fillStyle = grd;
             }
             else {
               grd = ctx.createRadialGradient(this.x, this.y, BEAD_SIZE, this.x - BEAD_SIZE / 2, this.y - BEAD_SIZE / 4, BEAD_SIZE * .75);
-              grd.addColorStop(1, "black");
-              grd.addColorStop(0, "black");
+              grd.addColorStop(1, "#0D2045");
+              grd.addColorStop(0, "#0D2045");
               ctx.fillStyle = grd;
             }
             ctx.fillStyle = grd;
             ctx.fill();
             var highlight = ctx.createRadialGradient(this.x, this.y, BEAD_SIZE, this.x + BEAD_SIZE / 3, this.y + BEAD_SIZE / 6, BEAD_SIZE);
+            
             ctx.fillStyle = highlight;
             ctx.fill();
             ctx.restore();
@@ -327,7 +372,6 @@
                   dx *= -1;
                   dy *= -1;
                 }
-                //console.log(d, (a * 180 / Math.PI), dx, dy);
         
                 if (this.parent instanceof Bead) {
                   this.x += dx / 2;
@@ -364,7 +408,6 @@
           let now = new Date().getTime();
           let deltaTime = now - lastTime;
           if (running) {
-            console.log('run');
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         
             if (beads[0].parent.y !== 0) {
@@ -379,7 +422,6 @@
             ctx.fillStyle = lit ? "#544f3f" : "#2c2a1e";
             // split into 2 so we can double down on positioning constraints
             beads.forEach(function (bead) {
-              //console.log(bead);
               bead.updateMomentum(deltaTime);
               bead.move();
               bead.positionBasedOnParent();
@@ -421,10 +463,6 @@
         // change lit state
         switchInp.addEventListener('change', function (e) {
           lit = this.checked;
-          if (lit)
-            switchBg.classList.add('lit');
-          else
-            switchBg.classList.remove('lit');
         });
 
   </script>

@@ -209,7 +209,14 @@ html {
   .dark-light{
     position: absolute;
     top: -30px !important;
-    left: 52% !important;
+    left: 53% !important;
+  }
+
+
+  .dark-light-auth{
+    position: absolute;
+    top: -30px !important;
+    left: 53% !important;
   }
 }
 
@@ -1208,17 +1215,6 @@ a:hover{
   opacity: 0;
 }
 
-.text {
-  white-space: nowrap;
-  color: white;
-  font-size: 20px;
-  position: absolute;
-  overflow: hidden;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-}
 
 .container-test:hover .overlay {
 }
@@ -1632,7 +1628,13 @@ canvas {
 }
 
 .dark-light{
-  position: absolute; 
-  top:  0px; 
-  left:  70%;
+  position: absolute;
+  top:  0px;
+  left:  72%;
+}
+
+.dark-light-auth{
+  position: absolute;
+  top:  0px;
+  left:  85%;
 }
