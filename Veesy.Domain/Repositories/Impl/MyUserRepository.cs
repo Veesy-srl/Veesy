@@ -176,7 +176,9 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
     {
         return _applicationDbContext.MyUsers
             .Where(u => u.Portfolios.Any(p => p.IsMain == true && p.IsPublic == true))
-            .Include(u => u.Portfolios).Include(t => t.MyUserCategoriesWork).ThenInclude(g => g.CategoryWork)
+            .Include(u => u.Portfolios)
+            .Include(t => t.MyUserCategoriesWork)
+            .ThenInclude(g => g.CategoryWork)
             .ToList();
     }
     

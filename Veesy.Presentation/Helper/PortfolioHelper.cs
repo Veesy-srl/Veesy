@@ -198,7 +198,7 @@ public class PortfolioHelper
     public async Task<ResultDto> UpdateSecurity(UpdatePortfolioDto portfolioDto, MyUser userInfo)
     {
         var portfolio = _portfolioService.GetPortfolioById(portfolioDto.Id, userInfo.Id);
-        portfolio.IsPublic = portfolioDto.IsPublic;
+        portfolio.IsPublic = !portfolioDto.IsPublic;
         await _portfolioService.UpdatePortfolio(portfolio, userInfo);
         return new ResultDto(true, "");
     }
