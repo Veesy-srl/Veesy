@@ -1638,3 +1638,47 @@ canvas {
   top:  0px;
   left:  85%;
 }
+
+.dark-light-img{
+  content: url('../imgs/Layout/switch_light mode.svg');
+  width: 100px;
+  height: 100px;
+  margin-top: -25px;
+}
+
+.molla-img {
+  transition: transform 0.6s ease; /* Aumenta il tempo di transizione a 0.6s per rallentare il movimento */
+  cursor: pointer;
+}
+
+.molla-img.clicked {
+  transform: translateY(20px);
+  transition: transform 0.6s ease; /* Aggiungi la stessa transizione anche qui */
+}
+
+.molla-img:active {
+  transform: translateY(0);
+  transition: transform 0.6s ease; /* Aggiungi la stessa transizione anche qui */
+}
+
+.molla-img:hover {
+  transform: translateY(10px);
+  transition: transform 0.6s ease; /* Aggiungi la stessa transizione anche qui */
+}
+
+
+.molla-img:active {
+  animation: bounce 0.6s; /* Aumenta il tempo dell'animazione di rimbalzo a 0.6s per rallentare il rimbalzo */
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-30px);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
+}

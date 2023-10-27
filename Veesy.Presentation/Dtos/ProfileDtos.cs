@@ -75,6 +75,11 @@ public class InfoToShowDto
 
 }
 
+public class CategoryDto
+{
+    public List<string> Category { get; set; }
+}
+
 public static class MapProfileDtos
 {    
     

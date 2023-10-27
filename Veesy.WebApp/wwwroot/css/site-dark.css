@@ -293,6 +293,23 @@
     .text-profile::placeholder {
         color: #F3F3F3;
     }
+    
+    .div-white-rounded-blue-veesy-creators{
+        background-color: #383b43; 
+    }
+
+    .card-white-veesy-creators{
+        background-color: #383B43;
+    }
+
+    .text-color-price{
+        color: #202F4D !important;
+    }
+    
+    .creators-selected-button{
+        border: 1px solid !important;
+        background-color: #060B19;
+    }
 
     .dropdown:hover .dropdown-menu {
         box-shadow: 0 0 10px rgba(105, 100, 100, 0.4);
@@ -313,7 +330,10 @@
     .bootstrap-select .dropdown-menu li a:hover{
         background-color: #A8A8A8 !important;
     }
-    
+
+    .dark-light-img{
+        content: url('../imgs/Layout/switch_dark mode.svg');
+    }
 }
 
 [data-bs-theme="dark"] a {

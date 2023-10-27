@@ -180,11 +180,14 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
             .ToList();
     }
     
-    public List<MyUser> GetAllUsersWithMainPortfoliofiltered(string category)
+    public List<MyUser> GetAllUsersWithMainPortfoliofiltered(List<string> categories)
     {
         return _applicationDbContext.MyUsers
-            .Where(u => u.Portfolios.Any(p => p.IsMain == true & p.IsPublic == true))
-            .Include(u => u.Portfolios).Include(t => t.MyUserCategoriesWork).ThenInclude(g => g.CategoryWork).Where(c => c.MyUserCategoriesWork.Any(cw => cw.CategoryWork.Name == category))
+            .Where(u => u.Portfolios.Any(p => p.IsMain && p.IsPublic))
+            .Include(u => u.Portfolios)
+            .Include(u => u.MyUserCategoriesWork)
+            .ThenInclude(cw => cw.CategoryWork)
+            .Where(u => u.MyUserCategoriesWork.Any(cw => categories.Contains(cw.CategoryWork.Name)))
             .ToList();
     }
 }

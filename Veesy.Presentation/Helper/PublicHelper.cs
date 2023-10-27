@@ -40,27 +40,40 @@ public class PublicHelper
     public CreatorsViewModel GetCreatorsViewModel()
     {
         List<MyUser> userInfo = _accountService.GetAllCreators().ToList();
-        
         List<MyUserCategoryWork> categoryWorks = new List<MyUserCategoryWork>();
+        List<MyUserCategoryWork> uniqueCategories = new List<MyUserCategoryWork>();
 
         foreach (var user in userInfo)
         {
             categoryWorks.AddRange(user.MyUserCategoriesWork);
         }
-        categoryWorks = new List<MyUserCategoryWork>(new HashSet<MyUserCategoryWork>(categoryWorks));
+        
+        foreach (var categoryWork in categoryWorks)
+        {
+            if (!uniqueCategories.Any(c => c.CategoryWorkId == categoryWork.CategoryWorkId))
+            {
+                uniqueCategories.Add(categoryWork);
+            }
+        }
         
         return new CreatorsViewModel()
         {
             User = userInfo,
-            CategoryWorks = categoryWorks.Select(category => category.CategoryWork.Name).ToList(),
+            CategoryWorks = uniqueCategories.Select(category => category.CategoryWork.Name).ToList(),
             BasePathImages = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"
         };
     }
     
-    public List<string> GetCreatorsFiltered(string category)
+    public List<string> GetCreatorsFiltered(List<string> category)
     {
         List<MyUser> userInfo = _accountService.GetFilteredCreators(category).ToList();
 
-        return userInfo.Select(info => info.Id).ToList();
+        var initialResults = _accountService.GetFilteredCreators(category);
+
+        var usersWithAllCategories = initialResults
+            .Where(u => category.All(category => u.MyUserCategoriesWork.Any(cw => cw.CategoryWork.Name == category)))
+            .ToList();
+        
+        return usersWithAllCategories.Select(info => info.Id).ToList();
     }
 }

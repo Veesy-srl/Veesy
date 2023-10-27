@@ -33,6 +33,6 @@ public interface IAccountService
     List<LanguageSpoken> GetLanguagesSpokenWithUser(MyUser userInfo);
     List<InfoToShow> GetInfosToShowWithUser(MyUser userInfo);
     List<MyUser> GetAllCreators();
-    public List<MyUser> GetFilteredCreators(string category);
+    public List<MyUser> GetFilteredCreators(List<string> category);
 
 }
