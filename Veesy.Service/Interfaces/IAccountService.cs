@@ -34,5 +34,6 @@ public interface IAccountService
     List<InfoToShow> GetInfosToShowWithUser(MyUser userInfo);
     List<MyUser> GetAllCreators();
     public List<MyUser> GetFilteredCreators(string category);
-
+    int NumberRecordCompiled(MyUser userInfo);
+    SubscriptionPlan GetUserSubscription(MyUser user);
 }

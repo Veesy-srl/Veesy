@@ -55,17 +55,17 @@ public class PortfolioService : IPortfolioService
 
     }
 
-    public IEnumerable<PortfolioMedia> GetPortfliosMediaByMediaId(Guid mediaId)
+    public IEnumerable<PortfolioMedia> GetPortfoliosMediaByMediaId(Guid mediaId)
     {
         return _uoW.DbContext.PortfolioMedias.Where(s => s.MediaId == mediaId);
     }
 
-    public List<PortfolioMedia> GetPortfliosMediaByPortfolioIdToReorder(Guid portfolioId, int index)
+    public List<PortfolioMedia> GetPortfoliosMediaByPortfolioIdToReorder(Guid portfolioId, int index)
     {
         return _uoW.DbContext.PortfolioMedias.Where(s => s.PortfolioId == portfolioId && s.SortOrder > index).ToList();
     }
 
-    public IEnumerable<PortfolioMedia> GetPortfliosMediaByPortfoliosId(List<Guid> portfoliosId)
+    public IEnumerable<PortfolioMedia> GetPortfoliosMediaByPortfoliosId(List<Guid> portfoliosId)
     {
         return _uoW.DbContext.PortfolioMedias.Where(s => portfoliosId.Contains(s.PortfolioId));
     }
@@ -94,6 +94,14 @@ public class PortfolioService : IPortfolioService
     public Portfolio? GetMainPortfolioByUser(MyUser user)
     {
         return _uoW.PortfolioRepository.FindByCondition(s => s.IsMain && s.MyUserId == user.Id).SingleOrDefault();
+    }
+    public Portfolio? GetMainPortfolioByUserWithMedias(MyUser user)
+    {
+        return _uoW.PortfolioRepository
+            .FindByCondition(s => s.IsMain && s.MyUserId == user.Id)
+            .Include(s => s.PortfolioMedias)
+            .ThenInclude(s => s.Media)
+            .SingleOrDefault();
     }
 
     public async Task UpdatePortfolios(List<Portfolio> portfoliosToUpdate, MyUser user)
@@ -195,5 +203,10 @@ public class PortfolioService : IPortfolioService
             .ThenInclude(s => s.MyUserLanguagesSpoken)
             .ThenInclude(s => s.LanguageSpoken)
             .SingleOrDefault();
+    }
+
+    public int GetPortfoliosNumberByUser(MyUser user)
+    {
+        return _uoW.PortfolioRepository.FindByCondition(s => s.MyUserId == user.Id).ToList().Count;
     }
 }
