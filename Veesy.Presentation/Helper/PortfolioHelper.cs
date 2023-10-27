@@ -122,7 +122,7 @@ public class PortfolioHelper
     /// <exception cref="NotImplementedException"></exception>
     public async Task<ResultDto> UpdateMediaLinkedPortfolio(UpdateMediaPortfolioDto portfolioDto, MyUser userInfo)
     {
-        var oldPortfolioMediae = _portfolioService.GetPortfliosMediaByMediaId(portfolioDto.MediaCode).ToList();
+        var oldPortfolioMediae = _portfolioService.GetPortfoliosMediaByMediaId(portfolioDto.MediaCode).ToList();
         var portfoliosMediaToDelete = new List<PortfolioMedia>();
         var portfoliosMediaToAdd = new List<PortfolioMedia>();
         var portfoliosMediaToUpdate = new List<PortfolioMedia>();
@@ -133,7 +133,7 @@ public class PortfolioHelper
             {
                 portfoliosMediaToDelete.Add(item);
                 var portfoliosMedia =
-                    _portfolioService.GetPortfliosMediaByPortfolioIdToReorder(item.PortfolioId, item.SortOrder);
+                    _portfolioService.GetPortfoliosMediaByPortfolioIdToReorder(item.PortfolioId, item.SortOrder);
                 foreach (var pf in portfoliosMedia)
                 {
                     pf.SortOrder--;
@@ -267,4 +267,5 @@ public class PortfolioHelper
             userInfo);
         return new ResultDto(true, "");
     }
+
 }

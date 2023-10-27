@@ -41,6 +41,7 @@ public static class RegisterDependencyInjection
         serviceCollection.AddTransient<CloudHelper>();
         serviceCollection.AddTransient<PortfolioHelper>();
         serviceCollection.AddTransient<PublicHelper>();
+        serviceCollection.AddTransient<HomeHelper>();
         
         return serviceCollection;
     }
