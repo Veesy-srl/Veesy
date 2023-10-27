@@ -33,7 +33,7 @@
         }
         <div class="@nodisplay_md" id="div-uploader">
             <form enctype="multipart/form-data" asp-action="UploadMedia" asp-controller="Media" asp-area="Portfolio" class="dropzone card-grey-dashed-veesy mb-4" id="uploader">
-                <a id="dropzone-close-button" style="display: none;" onclick="hideDropZone()" class="ms-2 btn btn-light border fw-bolder shadow-none close-button-dropzone">
+                <a id="dropzone-close-button" style="display: none;" onclick="PopUpConfirm()" class="ms-2 btn btn-light border fw-bolder shadow-none close-button-dropzone">
                     <i class="fas fa-times-circle fa-2xs text-primary" id="icon-color" aria-hidden="true"></i>
                     <span id="color-text-variant">close</span>
                 </a>
@@ -203,6 +203,29 @@
     </div>
 </div>
 
+<div style="z-index: 100000 !important;" class="modal fade" id="modalConfirmClose" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Close modal</strong></h3>
+                <a onclick="closeModal('#modalConfirmClose')"><i class="fa-solid fa-grey fa-circle-xmark"></i></a>
+            </div>
+            <div class="empty-veesy"></div>
+            <div class="modal-body text-center text-color">
+                <h5><strong id="confirm-delete-body">If you close this window you will not be able to see the progress of the upload. Are you sure?</strong></h5>
+            </div>
+            <div class="empty-veesy"></div>
+            <div class="row">  
+                <div class="col-4">
+                </div>
+                <div class="col-4 justify-content-center" style="display: flex"><a onclick="hideDropZone()" class="mt-2 rounded-pill btn btn-delete" type="submit">yes, close</a></div>
+                <div class="col-4"></div>
+            </div>
+            <div class="empty-veesy"></div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="modalCreatePortfolio" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -236,6 +259,16 @@
 @section Scripts
 {
     <script>
+    
+    function PopUpConfirm() {
+        if (dropzone_processing){
+            openModal("#modalConfirmClose")
+        }
+        else{
+            hideDropZone()
+        }
+    }
+    
     if (screen.width < 600){
         document.getElementById("images-container").style.columnCount = 2;
     }
@@ -550,6 +583,7 @@
         
 
         function hideDropZone() {
+            closeModal('#modalConfirmClose')
             document.getElementById("dropzone-close-button").style.display = "none";
             if (mediacount != 0){
                 div_uploader.classList.add("nodisplay-md");

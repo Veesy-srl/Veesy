@@ -20,6 +20,7 @@ public class PreviewPortfolioDto
     public bool ShowSoftSkill { get; set; }
     public bool ShowFields { get; set; }
     public bool ShowCV { get; set; }
+    public bool IsPublic { get; set; }
     public bool ShowSoftware { get; set; }
     public List<string> UsedSoftwares { get; set; }
     public List<string> SoftSkill { get; set; }
@@ -255,6 +256,7 @@ public static class MapPortfolioDtos
             UserCategory = portfolio.MyUser.Category,
             PortfolioIntro = portfolio.MyUser.PortfolioIntro,
             UserEmail = portfolio.MyUser.Email,
+            IsPublic = portfolio.IsPublic,
             UserImage = portfolio.MyUser.ProfileImageFileName,
             Sector = portfolio.MyUser.MyUserSectors.Select(s => s.Sector.Name).ToList(),
             UsedSoftwares = portfolio.MyUser.MyUserUsedSoftwares.Select(s => s.UsedSoftware.Name).ToList(),

@@ -36,13 +36,19 @@
             @{
                 var workrole = "information missing";
                 var role_css = "text-danger";
-                if (!string.IsNullOrEmpty(Model.Role))
+                if (Model.Category.Count != 0)
                 {
                     role_css = "text-color";
-                    workrole = Model.Role;
                 }
+
+                var category = "";
+                foreach (var cat in Model.Category)
+                {
+                    category += $"{cat.CategoryWork.Name}, ";
+                }
+                category = category.Substring(0, (category.Length - 2));
             }
-            <div class="d-flex"><p class="mb-0 text-color"><strong>Role:&nbsp;</strong></p><p class="@role_css mb-0">@workrole</p></div>
+            <div class="d-flex"><p class="mb-0 text-color"><strong>Category:&nbsp;</strong></p><p class="@role_css veesy-overflow mb-0">@category</p></div>
             <div class="d-flex"><p class="mb-0 text-color"><strong>Email:&nbsp;</strong></p><p class="mb-0 veesy-overflow text-color">@Model.Email</p></div>
             @{
                 var phone = "information missing";
