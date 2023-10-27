@@ -9,7 +9,7 @@ public static class MediaCostants
 
     public static string[] VideoExtensions =
     {
-        ".AVI", ".MP4", ".MOV"
+        ".MP4", ".MOV"
     };
 
     public static string[] GetType(string extension)

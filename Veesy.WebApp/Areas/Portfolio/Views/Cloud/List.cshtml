@@ -471,7 +471,7 @@
             addRemoveLinks: true,
             parallelUploads: 1,
             uploadMultiple: true,
-            acceptedFiles: "image/jpeg,image/png,image/gif,image/jpg,video/mp4,video/mov",
+            acceptedFiles: "image/jpeg,image/png,image/gif,image/jpg,video/*",
             addedfiles: function (){
                 dropzone_processing = true;
             },
@@ -522,7 +522,7 @@
                                 '<a onclick="SelectMedia(\'' + res.MediaDtos[i].Code + '\')">'+
                                     '<div class="img-div">'+
                                         '<div class="draggable m-0" name="image-gallery">'+
-                                            '<video id="img-' + res.MediaDtos[i].Code + '" autoplay="autoplay" muted loop class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" title="' + res.MediaDtos[i].DefaultImageOriginalName + '">'+
+                                            '<video id="img-' + res.MediaDtos[i].Code + '" autoplay="autoplay" muted loop class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" title="' + res.MediaDtos[i].OriginalFileName + '">'+
                                                 '<source src="@Model.BasePath' + res.MediaDtos[i].FileName + '?tr=w-400" type="video/mp4">'+
                                             '</video></div></div></a></div>'
                         
@@ -532,7 +532,7 @@
                 if (res.NumberErrorFile > 0)
                     toastNotifyCustom(res.ErrorFileMessage, 10000, "#ca0a0a", "")
              },
-            errormultiple: function () {
+            errormultiple: function (e) {
                 toastNotifyCustom("Error during uploading files. Please retry.", 10000, "#ca0a0a", "")
              },
             queuecomplete: function (){
