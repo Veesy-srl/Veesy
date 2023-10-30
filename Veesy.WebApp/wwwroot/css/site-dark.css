@@ -165,6 +165,10 @@
         background-color: #383B43 !important;
         color: #F3F3F3 !important;
     }
+    
+    .option-color-i{
+        color: #75CCDD;
+    }
 
     .fa-circle-xmark{
         color: #F3F3F3;
@@ -292,6 +296,12 @@
 
     .div-select-layout-selected{
         border: 2px solid #202f4d !important;
+        background: transparent;
+    }
+
+    .div-select-layout:hover{
+        border: 2px solid #202f4d !important;
+        background: transparent;
     }
     
     .text-profile::placeholder {

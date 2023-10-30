@@ -17,7 +17,7 @@
 @{
     var background = ViewContext.RouteData.Values["Controller"].ToString() == "Cloud" ? "bg-grey" : "bg-grey-veesy";
 }
-    <nav class="@background navbar navbar-expand-sm navbar-toggleable-sm mb-3 fixed-top">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm mb-3 fixed-top">
         <div class="container-fluid">
                 
             <h1 class="h3 mb-2 fw-normal">
@@ -95,13 +95,11 @@
                     
                     <button class="ms-2 btn btn-light border fw-bolder shadow-none" id="menuButton">
                         <i class="fas fa-circle fa-2xs text-primary mr-2" id="icon-color"></i>
-                        <span id="color-text-variant">menu</span>
+                         @if (ViewContext.RouteData.Values["Controller"].ToString() == "Public")
+                         {
+                             <span id="color-text-variant">menu</span>
+                         }
                     </button>
-                    
-                    <button class="ms-2 btn btn-light border fw-bolder shadow-none" id="secondButton">
-                        <i class="fas fa-circle fa-2xs text-primary mr-2" id="icon-color"></i>
-                    </button>
-
                 </div>
             </div>
             <div class="menu-popup" id="menuPopup">
@@ -328,30 +326,7 @@
         function closeModal(id){
             $(id).modal('hide');
         }
-         
-         function isPublicPage() {
-             var keywords = ["Creators", "About", "PricingPlan", "Contacts", "Splash"];
-             var url = window.location.href;
-     
-             for (var i = 0; i < keywords.length; i++) {
-                 if (url.indexOf(keywords[i]) >= 0) {
-                     return true; // Trovato almeno una delle parole
-                 }
-             }
-     
-             return false; // Nessuna delle parole trovata
-         }
-         
-         function isSmartphone() {
-             return window.innerWidth < 700;
-         }
-    
-        if (isPublicPage() || isSmartphone()) {
-            document.getElementById("menuButton").style.display = "block";
-            document.getElementById("secondButton").style.display = "none";
-        } else {
-            document.getElementById("menuButton").style.display = "none";
-            document.getElementById("secondButton").style.display = "block";
-        }
+
+       
 
   </script>
