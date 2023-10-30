@@ -16,33 +16,33 @@
                 <div class="pe-3 ps-3 div-white-rounded-blue-veesy-creators d-flex" style="top: -5px; position:  relative;" id="category-@category.ToString()" onclick="FilterCategory('@category.ToString()')"><a><i class="fa-solid fa-circle pe-2 fa-xs" id="category-i-@category.ToString()"></i><b>@category.ToString()</b></a></div>
             }
         </div>
-        @foreach (var user in Model.User)
+        @for(var u=0; u<Model.User.Count; u++)
         {
-            <div class="col-md-3 mt-2 mb-2" id="@user.Id">
+            <div class="col-md-3 mt-2 mb-2" id="@Model.User[u].Id">
                 <div class="card-white-veesy-creators p-3 mb-3 d-flex position-relative" onmouseover="highlightCard(this)" onmouseout="resetCard(this)">
                     <div class="col-3">
                         <div class="text-center">
 
-                            @if (user.ProfileImageFileName != null)
+                            @if (@Model.User[u].ProfileImageFileName != null)
                             {
-                                <img src="@Model.BasePathImages@user.ProfileImageFileName.ToString()" class="img-thumbnail-custom rounded-circle" alt="user-image">
+                                <img src="@Model.BasePathImages@Model.User[u].ProfileImageFileName.ToString()" class="img-thumbnail-custom rounded-circle" alt="user-image">
                             }
                             else
                             {
                                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" class="img-thumbnail-custom rounded-circle" alt="user-image">
                             }
                         </div>
-                        <a class="rounded-pill btn btn-variant color-text-creator" style="color: #202F4D !important; background-color: white; width:  160px; margin-top:  20px;" type="submit">meet the creator</a>
+                        <a class="rounded-pill btn btn-variant color-text-creator" href="@Model.ApplicationUrl@Url.Action("Portfolio", "Public", new {area = "Public", id = @Model.PortfolioId[u]})" style="color: #202F4D !important; background-color: white; width:  160px; margin-top:  20px;" type="submit">meet the creator</a>
                     </div>
                     <div class="m-4 col-7" style="color: #202F4D;">
                         <div class="row white-cursor-creators" style="font-size: 15px;">
-                            <strong class="text-color">@user.UserName.ToString()</strong>
+                            <strong class="text-color">@Model.User[u].UserName.ToString()</strong>
                         </div>
                         <div class="row white-cursor-creators">
-                            @if (@user.Category != null)
+                            @if (@Model.User[u].Category != null)
                             {
                                 <div class="text-color" style="font-size: 14px;">
-                                    @user.Category.ToString()
+                                    @Model.User[u].Category.ToString()
                                 </div>
                             }
                         </div>
@@ -52,6 +52,7 @@
                     </div>
                 </div>
             </div>
+            
         }
     </div>
 
@@ -83,7 +84,7 @@
     function FilterCategory(category) {
         if (document.getElementById('category-'+category).classList.contains('creators-selected-button')) {
             if (ButtonFilter.length == 1){
-                location.reload();
+                ResetFilter();
             }else{
                 ButtonFilter = ButtonFilter.filter(function(item) {
                     return item !== category;
@@ -114,8 +115,8 @@
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             success: function (response) {
-                if (response != null) {
-                    UpdateUsers(response);
+                if (response.result != false) {
+                    UpdateUsers(response.result);       
                     ActionFilter();
                 }
                 $('#load-spinner').css("display", "none");
@@ -153,5 +154,25 @@
              document.getElementById(CardFilter[i]).style.setProperty('display', 'block', 'important');
         }
     }
+    
+    function ResetFilter() {
+            ButtonFilter = [];
+            CardFilter = [];
+                        
+            @foreach (var category in Model.CategoryWorks)
+             {
+                 <text>
+                    document.getElementById('category-@category').classList.remove("creators-selected-button");
+                    document.getElementById('category-i-@category').classList.remove("creators-selected-i");
+                 </text>
+             }
+                        
+            @foreach (var user in Model.User)
+             {
+                 <text>
+                    document.getElementById('@user.Id').style.setProperty('display', 'block', 'important');
+                 </text>
+             }
+        }
 
 </script>

@@ -52,6 +52,8 @@ public class PublicHelper
         return new CreatorsViewModel()
         {
             User = userInfo,
+            ApplicationUrl = _config["ApplicationUrl"],
+            PortfolioId =userInfo.Select(p => p.Portfolios[0].Id).ToList(),
             CategoryWorks = categoryWorks.DistinctBy(s => s.CategoryWork.Name).Select(category => category.CategoryWork.Name).ToList(),
             BasePathImages = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"
         };

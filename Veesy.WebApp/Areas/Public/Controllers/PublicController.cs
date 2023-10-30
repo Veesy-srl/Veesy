@@ -58,6 +58,20 @@ public class PublicController : VeesyController
         }
     }
     
+    [HttpGet("FontTest")]
+    public IActionResult FontTest()
+    {
+        try
+        {
+            return View();
+        }
+        catch (Exception e)
+        {
+            Logger.Error(e, e.Message);
+            return RedirectToAction("Index", "Home");
+        }
+    }
+    
     [HttpGet("Creators")]
     public IActionResult Creators()
     {
@@ -74,9 +88,18 @@ public class PublicController : VeesyController
     }
     
     [HttpPost("FilterCreators")]
-    public List<string> FilterCreators([FromBody] CategoryDto Category)
+    public async Task<JsonResult> FilterCreators([FromBody] CategoryDto Category)
     {
-        return _publicHelper.GetCreatorsFiltered(Category.Category);
+        try
+        {
+            var result = _publicHelper.GetCreatorsFiltered(Category.Category);
+            return Json(new { Result = result.ToList() });
+        }
+        catch (Exception e)
+        {
+            Logger.Error(e, e.Message);
+            return Json(new { Result = false });
+        }
     }
     
     [HttpGet("About")]
