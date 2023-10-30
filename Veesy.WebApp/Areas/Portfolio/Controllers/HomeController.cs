@@ -21,7 +21,6 @@ public class HomeController : VeesyController
     {
         try
         {
-            return RedirectToAction("Profile", "Profile", new { area = "Account" });
             var vm = _homeHelper.GetDashboardViewModel(UserInfo);
             return View(vm);
         }
