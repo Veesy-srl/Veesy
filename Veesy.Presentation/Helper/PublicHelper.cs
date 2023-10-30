@@ -27,12 +27,14 @@ public class PublicHelper
         var UserList = _mediaService.GetRandomMediaWithUsername(count);
         
         AboutMediaViewModel List = new AboutMediaViewModel();
+        List.ApplicationUrl = _config["ApplicationUrl"];
         List.BasePath = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/";
         List.BasePathImages = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/";
         List.MediaList = UserList.Select(item => item.Medias[0].FileName).ToList();
         List.MediaUser = UserList.Select(item => item.ProfileImageFileName).ToList();
         List.Usernames = UserList.Select(item => item.UserName).ToList();
-        List.Id = UserList.Select((item => item.Id)).ToList();
+        List.Id = UserList.Select(item => item.Id).ToList();
+        List.PortfolioId = UserList.Select(item => item.Portfolios[0].Id).ToList();
 
         return List;
     }

@@ -17,7 +17,7 @@
 @{
     var background = ViewContext.RouteData.Values["Controller"].ToString() == "Cloud" ? "bg-grey" : "bg-grey-veesy";
 }
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm mb-3 fixed-top">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm mb-3 fixed-top" style="position: absolute; ">
         <div class="container-fluid">
                 
             <h1 class="h3 mb-2 fw-normal">
@@ -338,31 +338,4 @@
 
         }
          
-         function isPublicPage() {
-             var keywords = ["Creators", "About", "PricingPlan", "Contacts", "Splash"];
-             var url = window.location.href;
-     
-             for (var i = 0; i < keywords.length; i++) {
-                 if (url.indexOf(keywords[i]) >= 0) {
-                     return true; // Trovato almeno una delle parole
-                 }
-             }
-     
-             return false; // Nessuna delle parole trovata
-         }
-         
-         function isSmartphone() {
-             return window.innerWidth < 700;
-         }
-    
-        if (isPublicPage() || isSmartphone()) {
-            document.getElementById("menuButton").style.display = "block";
-            document.getElementById("secondButton").style.display = "none";
-        } else {
-            document.getElementById("menuButton").style.display = "none";
-            document.getElementById("secondButton").style.display = "block";
-        }
-
-       
-
   </script>
