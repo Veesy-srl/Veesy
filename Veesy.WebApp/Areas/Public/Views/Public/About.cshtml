@@ -135,6 +135,7 @@
     <div class="slider-about">
         @for (var i = 0; i < Model.MediaUser.Count; i++)
         {
+            <a href="@Model.ApplicationUrl@Url.Action("Portfolio", "Public", new {area = "Public", id = @Model.PortfolioId[i]})">
             <div>
                 <img class="p-3" width="360px" height="260px" style="border-radius: 30px;" src="@Model.BasePath@Model.MediaList[i].ToString()">
                 <span class="empty-veesy"></span>
@@ -145,6 +146,7 @@
                     </div>
                 </div>
             </div>
+            </a>
         }
     </div>
 </div>

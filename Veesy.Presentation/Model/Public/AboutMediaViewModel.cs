@@ -10,5 +10,7 @@ public class AboutMediaViewModel
     public string BasePath { get; set; }
     public string BasePathImages { get; set; }
     
+    public string ApplicationUrl { get; set; }
+    
     public List<Guid> PortfolioId { get; set; }
 }

@@ -27,6 +27,7 @@ public class PublicHelper
         var UserList = _mediaService.GetRandomMediaWithUsername(count);
         
         AboutMediaViewModel List = new AboutMediaViewModel();
+        List.ApplicationUrl = _config["ApplicationUrl"];
         List.BasePath = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/";
         List.BasePathImages = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/";
         List.MediaList = UserList.Select(item => item.Medias[0].FileName).ToList();
