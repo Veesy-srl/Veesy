@@ -25,4 +25,5 @@ public interface IPortfolioService
     Portfolio? GetPortfolioByIdForPreview(Guid id);
     int GetPortfoliosNumberByUser(MyUser user);
     Task SetPortfoliosToDraftByIds(List<Guid> portfolioDtoPortfolioSelected, MyUser user);
+    List<string> GetAllPortfolioNameDifferentByOne(Guid id, MyUser user);
 }

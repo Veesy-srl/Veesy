@@ -642,6 +642,18 @@ button:focus {
   cursor: pointer;
 }
 
+.grey-link-underline{
+  text-decoration: underline !important;
+  color: #AAB0BB !important;
+  cursor: pointer;
+}
+
+.grey-link-underline:hover{
+  color: #75CCDD !important;
+  text-decoration: none !important;
+  cursor: pointer;
+}
+
 .grey-danger-link{
   color: #AAB0BB !important;;
   text-decoration: none !important;
@@ -797,6 +809,12 @@ button:focus {
 
 .card-grey-dashed-veesy{
   background-color: #E2E5E7 !important;
+  border-radius: 10px;
+  border: 2px dashed #AAB0BB !important;
+}
+
+.card-grey-dashed-dropzone{
+  background-color: #FFFFFF33 !important;
   border-radius: 10px;
   border: 2px dashed #AAB0BB !important;
 }
