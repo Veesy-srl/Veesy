@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Veesy.Domain.Constants;
 using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
 using Veesy.Domain.Repositories;
@@ -208,5 +209,13 @@ public class PortfolioService : IPortfolioService
     public int GetPortfoliosNumberByUser(MyUser user)
     {
         return _uoW.PortfolioRepository.FindByCondition(s => s.MyUserId == user.Id).ToList().Count;
+    }
+
+    public async Task SetPortfoliosToDraftByIds(List<Guid> portfolioDtoPortfolioSelected, MyUser user)
+    {
+        var portfolios = _uoW.PortfolioRepository.FindByCondition(s => portfolioDtoPortfolioSelected.Contains(s.Id)).ToList();
+        portfolios.ForEach(s => s.Status = PortfolioContants.STATUS_DRAFT);
+        _uoW.PortfolioRepository.UpdateRange(portfolios);
+        await _uoW.CommitAsync(user);
     }
 }

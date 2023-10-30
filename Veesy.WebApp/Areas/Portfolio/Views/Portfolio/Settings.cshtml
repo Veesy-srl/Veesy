@@ -228,9 +228,6 @@
                 </div>
             </form>
         </div>
-        <div>
-            <button class="rounded-pill btn btn-primary btn-variant">Publish</button>
-        </div>
         <div class="empty-veesy"></div>
     </div>
     <div class="col-sm-12 col-md-3">
@@ -317,6 +314,31 @@
     </div>
 </div>
 
+@{
+    var css = ""; 
+    if (@Model.Portfolio.Status == PortfolioContants.STATUS_DRAFT)
+    {
+        css = "show";
+    }
+}
+
+<div id="alert-portfolio" class="@css custom-alert-cloud shadow alert bg-white alert-dismissible fade mobile-option-cloud" role="alert">
+    <div class="w-100">
+        <div class="float-start">
+            <div class="d-flex mt-2">
+                <p id="number_files" class="fw-bolder text-color" style="margin-top: -2px;">Some changes are unpublished</p>
+            </div>
+        </div>
+        <div class="float-end">
+            <div class="d-flex align-items-center">
+                <a onclick="CloseAlert()" class="blue-link me-4 fw-bolder" style="font-size: 14px; margin-top: 2px;">ignore</a>
+                <a onclick="PublishPortfolio()" class="rounded-pill btn btn-grey btn-padding" style="padding-left: 35px !important; padding-right:  35px !important; font-size:  15px;" type="submit">publish portfolio</a>
+                <a class="ms-4 me-2 mt-1" type="button" onclick="CloseAlert()"><i class="fa-solid fa-grey fa-circle-xmark"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts
 {
 
@@ -325,6 +347,10 @@
     <script src="https://cdn.jsdelivr.net/npm/@@shopify/draggable@1.0.0-beta.11/lib/sortable.js"></script>
 
     <script>
+    const alert_portfolio = document.getElementById("alert-portfolio");
+    function CloseAlert() {
+        alert_portfolio.classList.remove("show");
+    }
     
     let active_layout = @((int)Model.Portfolio.Layout);
     
@@ -342,6 +368,25 @@
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             success: function (response) {
+                alert_portfolio.classList.add("show");
+            },
+            error: function (response) {
+                $('#load-spinner').css("display", "none");
+            }
+        })
+    }
+    
+    function PublishPortfolio(layout) {
+
+        var portfolioId = '@Model.Portfolio.Id'
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Publish", "Portfolio")',
+            data: JSON.stringify(portfolioId),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (response) {
+                CloseAlert();
             },
             error: function (response) {
                 $('#load-spinner').css("display", "none");
@@ -394,6 +439,9 @@
           success: function (response) {
               if (!response.result){
                 toastNotifyCustom(response.message, 10000, "#ca0a0a", "")
+              }
+              else{
+                alert_portfolio.classList.add("show");
               }
               console.log("ordine cambiato")
           },
@@ -458,13 +506,13 @@
         })
     }
     
-    let portfolioIsPublic = '@Model.Portfolio.IsPublic' == 'True' ? true : false;
+    let portfolioIsPublish = '@Model.Portfolio.IsPublic' == 'True' ? true : false;
     let portfolioPassword = '@Model.Portfolio.Password';
     function ChangePortfolioSecurity(value) {
-        portfolioIsPublic = !portfolioIsPublic;
-        var IsPublic = portfolioIsPublic;
+        portfolioIsPublish = !portfolioIsPublish;
+        var IsPublish = portfolioIsPublish;
         var Id = '@Model.Portfolio.Id'
-        var portfolioDto = {Id, IsPublic}
+        var portfolioDto = {Id, IsPublish}
         $.ajax({
             type: 'POST',
             url: '@Url.Action("UpdateSecurity", "Portfolio")',
@@ -473,7 +521,7 @@
             dataType: 'json',
             success: function (response) {
                 if(response.result){
-                    if (!IsPublic){
+                    if (!IsPublish){
                         document.getElementById("password-show").textContent = portfolioPassword;
                         document.getElementById("lock-text").textContent = "lock";
                         document.getElementById("lock-icon").classList.remove("fa-lock-open");
@@ -571,7 +619,7 @@
             addRemoveLinks: true,
             parallelUploads: 1,
             uploadMultiple: true,
-            acceptedFiles: "image/jpeg,image/png,image/gif,image/jpg,video/mp4,video/mov",
+            acceptedFiles: "image/jpeg,image/png,image/gif,image/jpg,video/*",
             addedfiles: function (){
                 dropzone_processing = true;
             },

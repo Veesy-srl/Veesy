@@ -1,3 +1,4 @@
+using Veesy.Domain.Models;
 using Veesy.Service.Dtos;
 
 namespace Veesy.Presentation.Model.Account;
@@ -14,6 +15,7 @@ public class ProfileViewModel
     public string PhoneNumber { get; set; }
     public string ExternalLink { get; set; }
     public string Role { get; set; }
+    public List<MyUserCategoryWork> Category { get; set; }
     public List<RolesWorkDto> RolesWork { get; set; }
     public List<LanguageSpokenDto> LanguagesSpoken { get; set; }
     public List<InfoToShowDto> InfoToShow { get; set; }

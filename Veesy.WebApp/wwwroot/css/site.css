@@ -124,6 +124,7 @@
   left: 25% !important;
   bottom: 10px !important;
   position: fixed !important;
+  background-color: white;
   @media only screen and (max-width: 600px) {
     width: 90% !important;
     left: 5% !important;
@@ -148,10 +149,6 @@
 .alert-veesy{
   background-color: #E2E5E7 !important;
   border-color: #202F4D !important;
-}
-
-.alert-veesy-cloud{
-  background-color: #E2E5E7 !important;
 }
 
 .mobile-option-cloud{

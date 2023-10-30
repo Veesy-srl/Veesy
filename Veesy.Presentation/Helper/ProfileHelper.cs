@@ -51,6 +51,7 @@ public class ProfileHelper
             FileName = userInfo.ProfileImageFileName,
             BasePathImages = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/",
             ExternalLink = userInfo.ExternalLink,
+            Category = _accountService.GetCategoriesWorkByUser(userInfo),
             Role = userInfo.Category,
             PhoneNumber = userInfo.PhoneNumber,
             Username = userInfo.UserName,

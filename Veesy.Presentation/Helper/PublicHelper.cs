@@ -41,32 +41,22 @@ public class PublicHelper
     {
         List<MyUser> userInfo = _accountService.GetAllCreators().ToList();
         List<MyUserCategoryWork> categoryWorks = new List<MyUserCategoryWork>();
-        List<MyUserCategoryWork> uniqueCategories = new List<MyUserCategoryWork>();
 
         foreach (var user in userInfo)
         {
             categoryWorks.AddRange(user.MyUserCategoriesWork);
         }
         
-        foreach (var categoryWork in categoryWorks)
-        {
-            if (!uniqueCategories.Any(c => c.CategoryWorkId == categoryWork.CategoryWorkId))
-            {
-                uniqueCategories.Add(categoryWork);
-            }
-        }
-        
         return new CreatorsViewModel()
         {
             User = userInfo,
-            CategoryWorks = uniqueCategories.Select(category => category.CategoryWork.Name).ToList(),
+            CategoryWorks = categoryWorks.DistinctBy(s => s.CategoryWork.Name).Select(category => category.CategoryWork.Name).ToList(),
             BasePathImages = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"
         };
     }
     
     public List<string> GetCreatorsFiltered(List<string> category)
     {
-        List<MyUser> userInfo = _accountService.GetFilteredCreators(category).ToList();
 
         var initialResults = _accountService.GetFilteredCreators(category);
 

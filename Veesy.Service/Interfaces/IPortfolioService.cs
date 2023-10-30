@@ -24,4 +24,5 @@ public interface IPortfolioService
     IEnumerable<Portfolio> GetPortfoliosByMedias(List<Guid> imgToDelete);
     Portfolio? GetPortfolioByIdForPreview(Guid id);
     int GetPortfoliosNumberByUser(MyUser user);
+    Task SetPortfoliosToDraftByIds(List<Guid> portfolioDtoPortfolioSelected, MyUser user);
 }

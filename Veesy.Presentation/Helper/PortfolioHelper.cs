@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Configuration;
+using NLog;
 using Veesy.Domain.Constants;
 using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
@@ -12,6 +13,8 @@ public class PortfolioHelper
 {
     private readonly IConfiguration _config;
     private readonly IPortfolioService _portfolioService;
+    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
 
     public PortfolioHelper(IConfiguration config, IPortfolioService portfolioService)
     {
@@ -108,6 +111,8 @@ public class PortfolioHelper
                 });
         }
 
+        portfolio.Status = PortfolioContants.STATUS_DRAFT;
+
         await _portfolioService.UpdatePortfolio(portfolio, user);
         return new ResultDto(true, "");
     }
@@ -126,12 +131,15 @@ public class PortfolioHelper
         var portfoliosMediaToDelete = new List<PortfolioMedia>();
         var portfoliosMediaToAdd = new List<PortfolioMedia>();
         var portfoliosMediaToUpdate = new List<PortfolioMedia>();
+
+        var portfolioListToDraft = portfolioDto.PortfolioSelected;
         
         foreach (var item in oldPortfolioMediae)
         {
             if (!portfolioDto.PortfolioSelected.Contains(item.PortfolioId))
             {
                 portfoliosMediaToDelete.Add(item);
+                portfolioListToDraft.Add(item.PortfolioId);
                 var portfoliosMedia =
                     _portfolioService.GetPortfoliosMediaByPortfolioIdToReorder(item.PortfolioId, item.SortOrder);
                 foreach (var pf in portfoliosMedia)
@@ -156,10 +164,22 @@ public class PortfolioHelper
                     SortOrder = newPortfolio.PortfolioMedias.Count,
                     Description = ""
                 });
+                
+                newPortfolio.Status = PortfolioContants.STATUS_DRAFT;
             }
         }
 
-        return await _portfolioService.UpdatePortfolioMedias(portfoliosMediaToDelete, portfoliosMediaToAdd, portfoliosMediaToUpdate, userInfo);
+        var resultDto = await _portfolioService.UpdatePortfolioMedias(portfoliosMediaToDelete, portfoliosMediaToAdd, portfoliosMediaToUpdate, userInfo);
+        try
+        {
+            await _portfolioService.SetPortfoliosToDraftByIds(portfolioListToDraft.Distinct().ToList(), userInfo);
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+        }
+
+        return resultDto;
     }
 
     public async Task<ResultDto> UpdatePassword(UpdatePortfolioDto portfolioDto, MyUser userInfo)
@@ -178,7 +198,7 @@ public class PortfolioHelper
     public async Task<ResultDto> UpdateSecurity(UpdatePortfolioDto portfolioDto, MyUser userInfo)
     {
         var portfolio = _portfolioService.GetPortfolioById(portfolioDto.Id, userInfo.Id);
-        portfolio.IsPublic = portfolioDto.IsPublic;
+        portfolio.IsPublic = !portfolioDto.IsPublic;
         await _portfolioService.UpdatePortfolio(portfolio, userInfo);
         return new ResultDto(true, "");
     }
@@ -217,6 +237,7 @@ public class PortfolioHelper
         if (portfolio == null)
             return new ResultDto(false, "Portfolio not found.");
         portfolio.Layout = (VeesyConstants.PortfolioLayout)portfolioDto.LayoutGrid;
+        portfolio.Status = PortfolioContants.STATUS_DRAFT;
         await _portfolioService.UpdatePortfolio(portfolio, userInfo);
         return new ResultDto(true, "");
     }
@@ -224,14 +245,12 @@ public class PortfolioHelper
     public async Task UpdateSortOrder(UpdateMediaSortOrderDto dto, MyUser userInfo)
     {
         var portfolio = _portfolioService.GetPortfolioById(dto.PortfolioId, userInfo.Id);
-        var now = DateTime.Now;
         dto.NewMediasSortOrder.ToList().ForEach(fe =>
         {
             var mediaToUpd = portfolio.PortfolioMedias.SingleOrDefault(sd => sd.MediaId == fe.MediaId);
             mediaToUpd!.SortOrder = fe.SortOrder;
-            mediaToUpd!.LastEditRecordDate = now;
-            mediaToUpd!.LastEditUserId = userInfo.Id;
         });
+        portfolio.Status = PortfolioContants.STATUS_DRAFT;
         
         await _portfolioService.UpdatePortfolio(portfolio, userInfo);
     }
@@ -268,4 +287,45 @@ public class PortfolioHelper
         return new ResultDto(true, "");
     }
 
+    public async Task<ResultDto> PublishPortfolio(Guid portfolioId, MyUser userInfo)
+    {
+        var portfolio = _portfolioService.GetPortfolioById(portfolioId, userInfo.Id);
+        if (portfolio == null)
+            return new ResultDto(false, "Portfolio not found.");
+        portfolio.Status = PortfolioContants.STATUS_PUBLIC;
+        await _portfolioService.UpdatePortfolio(portfolio, userInfo);
+        return new ResultDto(true, "");
+    }
+
+    public (PortfolioViewModel model, ResultDto resultDto) GetPortfolioViewModel(Guid id)
+    {
+        var portfolio = _portfolioService.GetPortfolioByIdForPreview(id);
+        if (portfolio == null)
+            return (null, new ResultDto(false, "Portfolio not found"));
+
+        return (new PortfolioViewModel
+        {
+            Unlocked = false,
+            PortfolioDto = portfolio.Status == PortfolioContants.STATUS_PUBLIC ? MapPortfolioDtos.MapPreviewPortfolioDto(portfolio) : null,
+            IsPublish = portfolio.Status == PortfolioContants.STATUS_PUBLIC,
+            BasePathImages = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/",
+            BasePathAzure = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"
+        }, new ResultDto(true, ""));
+    }
+
+    public (PortfolioViewModel model, ResultDto resultDto) GetPostPortfolioViewModel(PortfolioViewModel model)
+    {
+        var portfolio = _portfolioService.GetPortfolioByIdForPreview(model.PortfolioDto.Code);
+        if (portfolio == null)
+            return (null, new ResultDto(false, "Portfolio not found"));
+        var unlocked = model.ControlPassword == 1 && model.Password == portfolio.Password;
+        return (new PortfolioViewModel
+        {
+            Unlocked = unlocked,
+            PortfolioDto = portfolio.Status == PortfolioContants.STATUS_PUBLIC ? MapPortfolioDtos.MapPreviewPortfolioDto(portfolio) : null,
+            IsPublish = portfolio.Status == PortfolioContants.STATUS_PUBLIC,
+            BasePathImages = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/",
+            BasePathAzure = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"
+        }, new ResultDto(true, ""));
+    }
 }

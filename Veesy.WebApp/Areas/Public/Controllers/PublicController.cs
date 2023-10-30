@@ -6,6 +6,7 @@ using Veesy.Domain.Constants;
 using Veesy.Domain.Models;
 using Veesy.Presentation.Helper;
 using Veesy.Presentation.Model.Cloud;
+using Veesy.Presentation.Model.Portfolio;
 using Veesy.Service.Dtos;
 
 namespace Veesy.WebApp.Areas.Public.Controllers;
@@ -105,5 +106,58 @@ public class PublicController : VeesyController
             Logger.Error(e, e.Message);
             return RedirectToAction("Index", "Home");
         }
+    }
+
+    [HttpGet("portfolio/{id}")]
+    public IActionResult Portfolio(Guid id)
+    {
+        try
+        {
+            var res = _portfolioHelper.GetPortfolioViewModel(id);
+            if (!res.resultDto.Success)
+            {
+                _notyfService.Custom(res.resultDto.Message, 10, "#ca0a0a");
+                return RedirectToAction("Error400");
+            }
+
+            return View(res.model);
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            return RedirectToAction("Error400");
+        }
+    }
+    
+    [HttpPost("portfolio/{id}")]
+    public IActionResult Portfolio(PortfolioViewModel model)
+    {
+        try
+        {
+            var res = _portfolioHelper.GetPostPortfolioViewModel(model);
+            if (!res.resultDto.Success)
+            {
+                _notyfService.Custom(res.resultDto.Message, 10, "#ca0a0a");
+                return RedirectToAction("Error400");
+            }
+            
+            if(!res.model.Unlocked && model.ControlPassword == 1)
+                _notyfService.Custom("Insert password is not correct.", 10, "#ca0a0a");
+
+            res.model.ControlPassword = 1;
+            
+            return View(res.model);
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            return RedirectToAction("Error400");
+        }
+    }
+    
+    [HttpGet("400")]
+    public IActionResult Error400()
+    {
+        return View();
     }
 }
