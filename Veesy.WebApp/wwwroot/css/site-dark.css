@@ -290,6 +290,10 @@
         color: #75CCDD !important;
     }
 
+    .div-select-layout-selected{
+        border: 2px solid #202f4d !important;
+    }
+    
     .text-profile::placeholder {
         color: #F3F3F3;
     }

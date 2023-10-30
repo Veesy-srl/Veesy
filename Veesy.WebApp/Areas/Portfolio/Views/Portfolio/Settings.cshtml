@@ -15,7 +15,7 @@
     <div class="col-sm-12 col-md-3 mb-3">
         <nav class="breadcrumb-container" aria-label="Percorso di navigazione">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><img src="~/imgs/dashboard_home_light-mode.png" style="width: 18px; margin-top: -5px;" class="me-2"><a class="breadcrumb-a me-2" asp-action="Index" asp-area="Portfolio" asp-controller="Home">dashboard</a><i class="fa-solid fa-chevron-right"></i></li>
+                <li class="breadcrumb-item"><img class="home-img me-2"><a class="breadcrumb-a me-2" asp-action="Index" asp-area="Portfolio" asp-controller="Home">dashboard</a><i class="fa-solid fa-chevron-right"></i></li>
                 <li class="breadcrumb-item"><a class="breadcrumb-a me-2" asp-action="List">portfolio</a><i class="fa-solid fa-chevron-right"></i></li>
                 <li class="breadcrumb-item"><a class="breadcrumb-a" href="#"><strong>settings</strong></a></li>
             </ol>
@@ -121,7 +121,7 @@
                 {
                     <div class="d-flex">
                         <div class="col-9">
-                            <p class="text-grey mb-0"><strong>Delete portfolio:</strong></p>
+                            <p class="text-danger mb-0"><strong>Delete portfolio:</strong></p>
                             <p class="mb-0 veesy-overflow">You can't delete main portfolio</p>
                         </div>
                     </div>
@@ -159,11 +159,11 @@
                                 <input style="visibility: hidden" class="form-check-input" type="radio" name="column-layout" asp-for="Portfolio.Layout" value="@item" id="layout-@item" onchange="switchColumnLayout(@((int)item))"/>
                                 @if((int)item == 1)
                                 {
-                                    <label class="ms-2 form-check-label" for="@item">@((int)item) column</label>
+                                    <label class="ms-2 form-check-label text-color" for="@item">@((int)item) column</label>
                                 }
                                 else
                                 {
-                                    <label class="ms-2 form-check-label" for="@item">@((int)item) columns</label>
+                                    <label class="ms-2 form-check-label text-color" for="@item">@((int)item) columns</label>
                                 }
                             </div>
                             <div>
@@ -256,9 +256,9 @@
                 <a onclick="closeModal('#modalName')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
-                <p class="mb-1"><strong>Name*</strong></p>
-                <input type="text" id="portfolio-name-edit" rows="4" class="w-100 input-modal"/>
-                <p class="mt-2 mb-0">*required field</p>
+                <p class="mb-1 text-color"><strong>Name*</strong></p>
+                <input type="text" id="portfolio-name-edit" rows="4" class="w-100 input-modal text-profile"/>
+                <p class="mt-2 mb-0 tet-color">*required field</p>
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdateName()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -275,9 +275,9 @@
                 <a onclick="closeModal('#modalPassword')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
-                <p>Your password must be lorem ipsum.</p>
-                <p class="mb-1"><strong>Set password</strong></p>
-                <input type="text" id="password-edit" rows="4" class="w-100 input-modal"/>
+                <p class="text-color">Your password must be lorem ipsum.</p>
+                <p class="mb-1 text-color"><strong>Set password</strong></p>
+                <input type="text" id="password-edit" rows="4" class="w-100 input-modal text-profile"/>
             </div>
             <div class="modal-footer mt-2">                
                 <a onclick="UpdatePassword()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -295,7 +295,7 @@
             </div>
             <div class="empty-veesy"></div>
             <div class="modal-body text-center">
-                <h5 id="confirm-delete-body">The portfolio @Model.Portfolio.Name will be delete permanently. Are you sure?</h5>
+                <h5 id="confirm-delete-body text-color">The portfolio @Model.Portfolio.Name will be delete permanently. Are you sure?</h5>
             </div>
             <div class="empty-veesy"></div>
             <div class="row">  
