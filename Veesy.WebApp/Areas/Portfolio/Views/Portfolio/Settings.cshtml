@@ -15,7 +15,7 @@
     <div class="col-sm-12 col-md-3 mb-3">
         <nav class="breadcrumb-container" aria-label="Percorso di navigazione">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><img src="~/imgs/dashboard_home_light-mode.png" style="width: 18px; margin-top: -5px;" class="me-2"><a class="breadcrumb-a me-2" asp-action="Index" asp-area="Portfolio" asp-controller="Home">dashboard</a><i class="fa-solid fa-chevron-right"></i></li>
+                <li class="breadcrumb-item"><img class="home-img me-2"><a class="breadcrumb-a me-2" asp-action="Index" asp-area="Portfolio" asp-controller="Home">dashboard</a><i class="fa-solid fa-chevron-right"></i></li>
                 <li class="breadcrumb-item"><a class="breadcrumb-a me-2" asp-action="List">portfolio</a><i class="fa-solid fa-chevron-right"></i></li>
                 <li class="breadcrumb-item"><a class="breadcrumb-a" href="#"><strong>settings</strong></a></li>
             </ol>
@@ -25,7 +25,7 @@
                 <div class="col-11">
                     <p class="ms-2"><i style="color: #75CCDD" class="@iconBack icon-main-portfolio fa-star me-2"></i><strong id="portfolio-name-card">@Model.Portfolio.Name</strong></p>
                 </div>
-                <div class="col-1"><div class="text-end"><i class="fa-solid fa-circle fa-xs" style="color: #202F4D;"></i></div></div>
+                <div class="col-1"><div class="text-end"><i class="fa-solid fa-circle fa-xs option-color-i" ></i></div></div>
             </div>
             <div class="d-flex mb-3">
                 <div class="col-12">
@@ -50,7 +50,7 @@
                     </div>
                 </div>
             </div>
-            <div class="d-flex"><p class="mb-0 text-grey">Updated on @Model.Portfolio.LastEditRecordDate</p></div>
+            <div class="d-flex"><p class="mb-0 text-grey text-color">Updated on @Model.Portfolio.LastEditRecordDate</p></div>
             <div class="d-flex"><p class="mb-0 text-grey veesy-overflow">@Model.Portfolio.NumberMedia media uploaded</p></div>
             <div class="d-flex"><p class="mb-0 mt-3 text-grey veesy-overflow">@Model.Portfolio.NumberImage images</p></div>
             <div class="d-flex"><p class="mb-0 text-grey veesy-overflow">@Model.Portfolio.NumberVideo videos</p></div>
@@ -64,7 +64,7 @@
         <div class="row">
             <h3 class="text-color"><strong>Main Settings</strong></h3>
             <div class="col-sm-12 col-md-6 col-lg-6 ps-2 pe-2">
-                <hr class="hr"/>
+                <hr class="hr color-hr"/>
                 <div class="d-flex">
                     <div class="col-9 profile-section">
                         <p class="mb-0"><strong>Portfolio Name:</strong></p>
@@ -72,7 +72,7 @@
                     </div>
                     <div class="col-3 text-end"><a onclick="setTextAreaValue('portfolio-name-edit', '@Model.Portfolio.Name'), openModal('#modalName')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
                 </div>
-                <hr class="hr"/>
+                <hr class="hr color-hr"/>
                 <div class="d-flex">
                     @if (Model.Portfolio.IsPublic)
                     {
@@ -98,10 +98,10 @@
                         <div class="col-4 text-end"><a onclick="ChangePortfolioSecurity()" class="grey-link"><i id="lock-icon" class="fa-solid fa-lock me-2"></i><strong id="lock-text">lock</strong></a></div>
                     }
                 </div>
-                <hr class="hr"/>
+                <hr class="hr color-hr"/>
             </div>
             <div class="col-sm-12 col-md-6 col-lg-6 ps-2 pe-2">
-                <hr class="hr nodisplay-sm"/>
+                <hr class="hr nodisplay-sm color-hr"/>
                 <div class="d-flex">
                     <div class="col-9">
                         <p class="mb-0"><strong><i style="color: #75CCDD" class="@iconBack icon-main-portfolio fa-star me-2"></i>Main Portfolio:</strong></p>
@@ -116,12 +116,12 @@
                     </div>
                     @* <div class="col-3 text-end"><a onclick="openModal('#modalExternalLink')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div> *@
                 </div>
-                <hr class="hr"/>
+                <hr class="hr color-hr"/>
                 @if (Model.Portfolio.IsMain)
                 {
                     <div class="d-flex">
                         <div class="col-9">
-                            <p class="text-grey mb-0"><strong>Delete portfolio:</strong></p>
+                            <p class="text-danger mb-0"><strong>Delete portfolio:</strong></p>
                             <p class="mb-0 veesy-overflow">You can't delete main portfolio</p>
                         </div>
                     </div>
@@ -135,7 +135,7 @@
                         </div>
                     </div>
                 }
-                <hr class="hr"/>
+                <hr class="hr color-hr"/>
             </div>
         </div>
         <div class="empty-veesy"></div>
@@ -159,11 +159,11 @@
                                 <input style="visibility: hidden" class="form-check-input" type="radio" name="column-layout" asp-for="Portfolio.Layout" value="@item" id="layout-@item" onchange="switchColumnLayout(@((int)item))"/>
                                 @if((int)item == 1)
                                 {
-                                    <label class="ms-2 form-check-label" for="@item">@((int)item) column</label>
+                                    <label class="ms-2 form-check-label text-color" for="@item">@((int)item) column</label>
                                 }
                                 else
                                 {
-                                    <label class="ms-2 form-check-label" for="@item">@((int)item) columns</label>
+                                    <label class="ms-2 form-check-label text-color" for="@item">@((int)item) columns</label>
                                 }
                             </div>
                             <div>
@@ -219,7 +219,7 @@
                     <div id="div-uploader-icon" class="w-100 mb-1">
                         <i id="uploader-icon" class="fa-solid fa-circle-plus fa-xl" style="color: #0D2045"></i>
                     </div>
-                    <span id="uploader-text" style="color: #202F4D">
+                    <span id="uploader-text" class="text-color">
                         Upload or drop files here. <br/> (Accepted formats: jpg, png, mov, mp4, gif)
                     </span>
                     <div class="progress-bar progress-bar-primary" role="progressbar" data-dz-uploadprogress>
@@ -253,9 +253,9 @@
                 <a onclick="closeModal('#modalName')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
-                <p class="mb-1"><strong>Name*</strong></p>
-                <input type="text" id="portfolio-name-edit" rows="4" class="w-100 input-modal"/>
-                <p class="mt-2 mb-0">*required field</p>
+                <p class="mb-1 text-color"><strong>Name*</strong></p>
+                <input type="text" id="portfolio-name-edit" rows="4" class="w-100 input-modal text-profile"/>
+                <p class="mt-2 mb-0 tet-color">*required field</p>
             </div>
             <div class="modal-footer">                
                 <a onclick="UpdateName()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -272,9 +272,9 @@
                 <a onclick="closeModal('#modalPassword')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
-                <p>Your password must be lorem ipsum.</p>
-                <p class="mb-1"><strong>Set password</strong></p>
-                <input type="text" id="password-edit" rows="4" class="w-100 input-modal"/>
+                <p class="text-color">Your password must be lorem ipsum.</p>
+                <p class="mb-1 text-color"><strong>Set password</strong></p>
+                <input type="text" id="password-edit" rows="4" class="w-100 input-modal text-profile"/>
             </div>
             <div class="modal-footer mt-2">                
                 <a onclick="UpdatePassword()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
@@ -292,7 +292,7 @@
             </div>
             <div class="empty-veesy"></div>
             <div class="modal-body text-center">
-                <h5 id="confirm-delete-body">The portfolio @Model.Portfolio.Name will be delete permanently. Are you sure?</h5>
+                <h5 id="confirm-delete-body text-color">The portfolio @Model.Portfolio.Name will be delete permanently. Are you sure?</h5>
             </div>
             <div class="empty-veesy"></div>
             <div class="row">  
@@ -322,7 +322,7 @@
     }
 }
 
-<div id="alert-portfolio" class="@css custom-alert-cloud shadow alert bg-white alert-dismissible fade mobile-option-cloud" role="alert">
+<div id="alert-portfolio" class="@css custom-alert-cloud shadow alert alert-dismissible fade mobile-option-cloud alert-veesy-cloud" role="alert">
     <div class="w-100">
         <div class="float-start">
             <div class="d-flex mt-2">
@@ -331,7 +331,7 @@
         </div>
         <div class="float-end">
             <div class="d-flex align-items-center">
-                <a onclick="CloseAlert()" class="blue-link me-4 fw-bolder" style="font-size: 14px; margin-top: 2px;">ignore</a>
+                <a onclick="CloseAlert()" class="blue-link me-4 fw-bolder text-color" style="font-size: 14px; margin-top: 2px;">ignore</a>
                 <a onclick="PublishPortfolio()" class="rounded-pill btn btn-grey btn-padding" style="padding-left: 35px !important; padding-right:  35px !important; font-size:  15px;" type="submit">publish portfolio</a>
                 <a class="ms-4 me-2 mt-1" type="button" onclick="CloseAlert()"><i class="fa-solid fa-grey fa-circle-xmark"></i></a>
             </div>

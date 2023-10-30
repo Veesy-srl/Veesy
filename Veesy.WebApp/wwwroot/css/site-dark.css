@@ -53,6 +53,24 @@
         cursor: pointer;
     }
 
+    .grey-link:hover{
+        color: #75CCDD !important;
+        text-decoration: none !important;
+        cursor: pointer;
+    }
+
+    .grey-link-underline{
+        color: #AAB0BB !important;
+        text-decoration: underline !important;
+        cursor: pointer;
+    }
+
+    .grey-link-underline:hover{
+        color: #75CCDD !important;
+        text-decoration: none !important;
+        cursor: pointer;
+    }
+
     .btn-white-variant {
         background-color: #F3F3F3;
         border: #F3F3F3;
@@ -164,6 +182,10 @@
     .text-profile{
         background-color: #383B43 !important;
         color: #F3F3F3 !important;
+    }
+    
+    .option-color-i{
+        color: #75CCDD;
     }
 
     .fa-circle-xmark{
@@ -290,6 +312,16 @@
         color: #75CCDD !important;
     }
 
+    .div-select-layout-selected{
+        border: 2px solid #202f4d !important;
+        background: transparent;
+    }
+
+    .div-select-layout:hover{
+        border: 2px solid #202f4d !important;
+        background: transparent;
+    }
+    
     .text-profile::placeholder {
         color: #F3F3F3;
     }

@@ -218,4 +218,9 @@ public class PortfolioService : IPortfolioService
         _uoW.PortfolioRepository.UpdateRange(portfolios);
         await _uoW.CommitAsync(user);
     }
+
+    public List<string> GetAllPortfolioNameDifferentByOne(Guid id, MyUser user)
+    {
+        return _uoW.PortfolioRepository.FindByCondition(s => s.Id != id && s.MyUserId == user.Id).Select(s => s.Name.ToUpper()).ToList();
+    }
 }

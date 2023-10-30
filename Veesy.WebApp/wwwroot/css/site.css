@@ -642,6 +642,18 @@ button:focus {
   cursor: pointer;
 }
 
+.grey-link-underline{
+  text-decoration: underline !important;
+  color: #AAB0BB !important;
+  cursor: pointer;
+}
+
+.grey-link-underline:hover{
+  color: #75CCDD !important;
+  text-decoration: none !important;
+  cursor: pointer;
+}
+
 .grey-danger-link{
   color: #AAB0BB !important;;
   text-decoration: none !important;
@@ -797,6 +809,12 @@ button:focus {
 
 .card-grey-dashed-veesy{
   background-color: #E2E5E7 !important;
+  border-radius: 10px;
+  border: 2px dashed #AAB0BB !important;
+}
+
+.card-grey-dashed-dropzone{
+  background-color: #FFFFFF33 !important;
   border-radius: 10px;
   border: 2px dashed #AAB0BB !important;
 }
@@ -1252,7 +1270,7 @@ a:hover{
   }
 
   footer{
-    margin-top: -30px !important;
+    margin-top: -37px !important;
   }
 
   #color-text-layout{
@@ -1555,11 +1573,6 @@ textarea{
   text-align: center;
   margin: -2px auto 0 auto;
   cursor: pointer;
-  filter: drop-shadow(3px 2px 3px rgba(0,0,0,.5));
-
-  .lit & {
-    filter: drop-shadow(100px 2px 1px rgba(0,0,0,.25));
-  }
 }
 canvas {
   border: none !important;
@@ -1740,6 +1753,10 @@ canvas {
 
 .molla-img:active {
   animation: bounce 0.6s; /* Aumenta il tempo dell'animazione di rimbalzo a 0.6s per rallentare il rimbalzo */
+}
+
+.option-color-i{
+  color: #202F4D;
 }
 
 @keyframes bounce {

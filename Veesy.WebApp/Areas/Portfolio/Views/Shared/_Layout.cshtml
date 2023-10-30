@@ -17,7 +17,7 @@
 @{
     var background = ViewContext.RouteData.Values["Controller"].ToString() == "Cloud" ? "bg-grey" : "bg-grey-veesy";
 }
-    <nav class="@background navbar navbar-expand-sm navbar-toggleable-sm mb-3 fixed-top">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm mb-3 fixed-top">
         <div class="container-fluid">
                 
             <h1 class="h3 mb-2 fw-normal">
@@ -95,13 +95,11 @@
                     
                     <button class="ms-2 btn btn-light border fw-bolder shadow-none" id="menuButton">
                         <i class="fas fa-circle fa-2xs text-primary mr-2" id="icon-color"></i>
-                        <span id="color-text-variant">menu</span>
+                         @if (ViewContext.RouteData.Values["Controller"].ToString() == "Public")
+                         {
+                             <span id="color-text-variant">menu</span>
+                         }
                     </button>
-                    
-                    <button class="ms-2 btn btn-light border fw-bolder shadow-none" id="secondButton">
-                        <i class="fas fa-circle fa-2xs text-primary mr-2" id="icon-color"></i>
-                    </button>
-
                 </div>
             </div>
             <div class="menu-popup" id="menuPopup">
@@ -328,6 +326,17 @@
         function closeModal(id){
             $(id).modal('hide');
         }
+        
+        function setTextAreaValue(textAreaId, valueToSet){
+            valueToSet = valueToSet.replaceAll("&#x27;", "'");
+            document.getElementById(textAreaId).value = valueToSet; 
+        }
+        
+        function CopyLink(content) {
+            navigator.clipboard.writeText(content);
+            toastNotifyCustom("Link copied!", 3000, "#75ccdd", "")
+
+        }
          
          function isPublicPage() {
              var keywords = ["Creators", "About", "PricingPlan", "Contacts", "Splash"];
@@ -353,5 +362,7 @@
             document.getElementById("menuButton").style.display = "none";
             document.getElementById("secondButton").style.display = "block";
         }
+
+       
 
   </script>
