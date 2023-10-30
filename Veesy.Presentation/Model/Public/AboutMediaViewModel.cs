@@ -9,4 +9,6 @@ public class AboutMediaViewModel
     public List<string> Id { get; set; }
     public string BasePath { get; set; }
     public string BasePathImages { get; set; }
+    
+    public List<Guid> PortfolioId { get; set; }
 }

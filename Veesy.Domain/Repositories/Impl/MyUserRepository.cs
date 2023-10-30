@@ -156,8 +156,9 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
     {
         var random = new Random();
         var randomUsers = _applicationDbContext.MyUsers
-            .Where(u => u.ProfileImageFileName != null).Include(t=>t.Medias)
-            .ToList().OrderBy(u => random.Next()).Take(count).ToList();; // Carica tutti gli utenti che soddisfano il criterio
+            .Where(u => u.ProfileImageFileName != null).Include(t=>t.Medias).Include(p => p.Portfolios)
+            .Where(u => u.Portfolios.Any(p => p.IsMain == true && p.IsPublic == true))
+            .ToList().OrderBy(u => random.Next()).Take(count).ToList();
 
         var usersWithRandomMedia = randomUsers.Select(user =>
         {
