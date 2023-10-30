@@ -85,7 +85,7 @@ public class PublicController : VeesyController
             Logger.Error(e, e.Message);
             return RedirectToAction("Index", "Home", new { area = "Portfolio" });
         }
-    }
+    } 
     
     [HttpPost("FilterCreators")]
     public async Task<JsonResult> FilterCreators([FromBody] CategoryDto Category)
