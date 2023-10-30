@@ -53,6 +53,24 @@
         cursor: pointer;
     }
 
+    .grey-link:hover{
+        color: #75CCDD !important;
+        text-decoration: none !important;
+        cursor: pointer;
+    }
+
+    .grey-link-underline{
+        color: #AAB0BB !important;
+        text-decoration: underline !important;
+        cursor: pointer;
+    }
+
+    .grey-link-underline:hover{
+        color: #75CCDD !important;
+        text-decoration: none !important;
+        cursor: pointer;
+    }
+
     .btn-white-variant {
         background-color: #F3F3F3;
         border: #F3F3F3;

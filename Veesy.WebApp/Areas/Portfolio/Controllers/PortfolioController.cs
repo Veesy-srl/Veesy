@@ -321,7 +321,7 @@ public class PortfolioController : VeesyController
             if (!response.Success)
                 _notyfService.Custom(response.Message, 10, "#ca0a0a");
             else
-                _notyfService.Custom("Media remove correctly.", 10, "#75CCDD");
+                _notyfService.Custom("Media removed correctly.", 10, "#75CCDD");
             return Json(new { Result = response.Success, Message = response.Message });
         }
         catch (Exception ex)

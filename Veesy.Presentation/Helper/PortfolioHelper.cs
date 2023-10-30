@@ -40,6 +40,9 @@ public class PortfolioHelper
             return (new ResultDto(false, "Max name characters are 50."), Guid.Empty);
         if (newPortfolioDto.CodeImagesToAdd == null || newPortfolioDto.CodeImagesToAdd.Count == 0)
             return (new ResultDto(false, "Select at least one image."), Guid.Empty);
+        var allPortfolioName = _portfolioService.GetAllPortfolioNameDifferentByOne(Guid.Empty, userInfo);
+        if (allPortfolioName.Contains(newPortfolioDto.Name.ToUpper()))
+            return (new ResultDto(false, "Name already used."), Guid.Empty);
         
         var portfoliosNumber = _portfolioService.GetPortfoliosByUser(userInfo).Count();
         var potfoliosMedia = new List<PortfolioMedia>();
@@ -88,6 +91,9 @@ public class PortfolioHelper
             return new ResultDto(false, "Please insert portfolio's name.");
         if (portfolioDto.Name.Length > 50)
             return new ResultDto(false, "Max name characters are 50.");
+        var allPortfolioName = _portfolioService.GetAllPortfolioNameDifferentByOne(portfolioDto.Id, userInfo);
+        if (allPortfolioName.Contains(portfolioDto.Name.ToUpper()))
+            return new ResultDto(false, "Name already used.");
         var portfolio = _portfolioService.GetPortfolioById(portfolioDto.Id, userInfo.Id);
         portfolio.Name = portfolioDto.Name;
         await _portfolioService.UpdatePortfolio(portfolio, userInfo);
