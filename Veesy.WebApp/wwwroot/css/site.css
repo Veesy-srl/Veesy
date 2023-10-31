@@ -452,6 +452,22 @@ input {
   color: white !important;
 }
 
+.btn-primary-about-variant-splash{
+  background-color: #202F4D !important;
+  border: #202F4D !important;
+  color: white !important;
+}
+
+.h1-variant-splash{
+  color: #202F4D;
+}
+
+.btn-primary-about-variant-splash:hover{
+  background-color: #202F4D !important;
+  border: #202F4D !important;
+  color: white !important;
+}
+
 .btn-delete {
   width: 130px !important;
   background-color: #E55B5B !important;
@@ -909,6 +925,19 @@ a{
   z-index: 9999;
 }
 
+.creator-popup-splash{
+  cursor: pointer;
+  position: fixed;
+  width: 300px;
+  padding-left: 5px;
+  background: #536B7E;
+  border-radius: 5px 5px 0px 0px;
+  bottom: 0px;
+  left: 20px;
+  float: left;
+  z-index: 9999;
+}
+
 .blur-background{
   background: rgba(176, 166, 166, 0.62);
   width: 100%;
@@ -948,6 +977,18 @@ a{
 .creator-popup-full-close{
   bottom: -100% !important;
   transition-duration: 0.8s;
+}
+
+.creator-popup-full-splash{
+  position: fixed;
+  width: 25%;
+  height: 29%;
+  background: #536B7E;
+  border-radius: 10px;
+  bottom: -100%;
+  left: 20px;
+  float: left;
+  z-index: 9999;
 }
 
 .a-ciano{
@@ -1652,6 +1693,12 @@ canvas {
 }
 
 .btn-primary-about {
+  background-color: white !important;
+  border: white !important;
+  color: #202F4D !important;
+}
+
+.btn-primary-about-splash {
   background-color: white !important;
   border: white !important;
   color: #202F4D !important;

@@ -264,6 +264,10 @@
         border: 1px solid #060B19;
         box-shadow: 0px 4px 10px rgba(243, 243, 243, 0.3);
     }
+    
+    .h1-variant-splash{
+        color: #F3F3F3;
+    }
 
     #color-text-footer{
         color: #F3F3F3;
@@ -293,6 +297,16 @@
     .btn-light::selection {
         background-color: #383C47 !important;
         border-color: #383C47 !important;
+    }
+
+    .btn-primary-about-variant-splash{
+        background-color: #F3F3F3 !important;
+        color: #202F4D !important;
+    }
+
+    .btn-primary-about-splash{
+        background-color: #383B43 !important;
+        color: #F3F3F3 !important;
     }
 
     #color-text-layout{
