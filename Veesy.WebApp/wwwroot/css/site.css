@@ -256,6 +256,16 @@ html {
   }
 }
 
+.btn-layout{
+  padding: 0.7rem 1rem !important;
+  margin-top: 8px;
+  border-radius: 7px;
+}
+
+.dropdown-item-layout{
+  padding: 0.7rem 1rem;
+}
+
 @media (max-width: 768px) {
   .dark-light{
     position: absolute;
