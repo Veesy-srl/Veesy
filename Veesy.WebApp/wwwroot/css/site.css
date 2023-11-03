@@ -350,6 +350,10 @@ html {
   background: #E2E5E7 !important;
 }
 
+.navbar-brand{
+  font-size: 1.3rem;
+}
+
 .color-about{
   color: #202F4D;
 }

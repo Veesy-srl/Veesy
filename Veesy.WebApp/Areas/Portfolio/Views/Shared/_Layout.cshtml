@@ -71,12 +71,12 @@
                         @if (username != null)
                         {
                             <a class="dropdown-toggle btn btn-light btn-layout border fw-bolder shadow-none">
-                                <img src='@imageSrc' style="width: 20px !important; height: 20px !important; max-width: none!important; " class="img-thumbnail-custom rounded-circle" alt="user-image">
+                                <img src='@imageSrc' style="width: 25px !important; height: 25px !important; max-width: none!important; " class="img-thumbnail-custom rounded-circle" alt="user-image">
                                 <span id="color-text-layout">@username</span>
                                 <i class="fa-solid fa-chevron-down"></i>
                             </a>
 
-                            <div class="dropdown-menu bg-grey-veesy" aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-menu bg-grey-veesy" style="padding: 0 0; margin-top: 4px;" aria-labelledby="dropdownMenuLink">
                                 <a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Controller"].ToString() == "Portfolio" ? "a-ciano-header" : "menu-element")" asp-action="List" asp-controller="Portfolio" asp-area="Portfolio">Portfolio</a>
                                 <a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Controller"].ToString() == "Cloud" ? "a-ciano-header" : "menu-element")" asp-action="List" asp-controller="Cloud" asp-area="Portfolio">Cloud</a>
                                 <a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Controller"].ToString() == "Public" ? "a-ciano-header" : "menu-element")" asp-action="PricingPlan" asp-controller="Public" asp-area="Public">Your Plan</a>
@@ -108,10 +108,10 @@
                     @if(username != null){
                         <div class="dropdown show" id="none-popup">
                             <a class="dropdown-toggle btn btn-light btn-layout border fw-bolder shadow-none">
-                                <img src='@imageSrc' style=" width: 20px !important; height: 20px !important; max-width: none!important;" class="img-thumbnail-custom rounded-circle" alt="user-image">
+                                <img src='@imageSrc' style=" width: 25px !important; height: 25px !important; max-width: none!important;" class="img-thumbnail-custom rounded-circle" alt="user-image">
                                 <span id="color-text-variant">@username</span>
                             </a>
-                            <div class="dropdown-menu bg-grey-veesy" aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-menu bg-grey-veesy" style="padding: 0 0; margin-top: 4px;" aria-labelledby="dropdownMenuLink">
                                 <a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Controller"].ToString() == "Portfolio" ? "a-ciano-header" : "menu-element")"  asp-action="List" asp-controller="Portfolio" asp-area="Portfolio">Portfolio</a>
                                 <a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Controller"].ToString() == "Cloud" ? "a-ciano-header" : "menu-element")" asp-area="Portfolio" asp-controller="Cloud" asp-action="List">Cloud</a>
                                 <a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Controller"].ToString() == "Public" ? "a-ciano-header" : "menu-element")" asp-action="PricingPlan" asp-controller="Public" asp-area="Public">Your Plan</a>
@@ -138,19 +138,19 @@
                     <div class="d-flex" style="height: 250px;">
                         <div class="vr custom-vr"></div>
                     </div>
-                    <div class="description-container mt-5">
-                        <div id="description1" class="description-content mt-1 text-color" ><p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p></div>
-                        <div id="description2" class="description-content mt-1 text-color" ><p>unknown printer took a galley of type and scrambled it to make a type speci</p></div>
-                        <div id="description3" class="description-content mt-1 text-color" ><p>essentially unchanged. It was popularised in the 1960s with the release of Letraset shee</p></div>
-                        <div id="description4" class="description-content mt-1 text-color" ><p>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet,</p></div>
-                        <div id="description6" class="description-content mt-1 text-color" ><p>Lorem Ipsum is simply dummy text of the printing</p></div>
+                    <div class="description-container mt-3">
+                        <div id="description1" class="description-content mt-1 text-color" ><b>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</b></div>
+                        <div id="description2" class="description-content mt-1 text-color" ><b>unknown printer took a galley of type and scrambled it to make a type speci</b></div>
+                        <div id="description3" class="description-content mt-1 text-color" ><b>essentially unchanged. It was popularised in the 1960s with the release of Letraset shee</b></div>
+                        <div id="description4" class="description-content mt-1 text-color" ><b>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet,</b></div>
+                        <div id="description6" class="description-content mt-1 text-color" ><b>Lorem Ipsum is simply dummy text of the printing</b></div>
                     </div>
                 </div>
 
 
                    <div class="menu-footer">
-                       <a href="#" id="color-text">privacy policy</a>
-                       <a href="#" class="cookie" id="color-text">cookie policy</a><br/>
+                       <a href="#" id="color-text" style="font-size: 14px !important;"><b>privacy policy</b></a>
+                       <a href="#" class="cookie"  style="font-size: 14px !important;" id="color-text"><b>cookie policy</b></a><br/>
                        <p href="#" class="copyright" id="color-text-footer">Veesy © 2023 all rights rederved - website by <a target="_blank" href="https://www.derein.net/" style="color: #202F4D">derein</a> & <a target="_blank" href="https://www.enigma-tech.it/" style="color: #202F4D">enigma</a> - VAT nr. 4840572639</p>
                    </div>
                </div>
