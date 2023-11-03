@@ -87,6 +87,18 @@
   padding-right: 3px;
 }
 
+.hr-color-dash{
+  color: rgba(0,0,0,0.3);
+}
+
+.circle-color-dash{
+  color: #202F4D;
+}
+
+.dashboard-header-border{
+  border-bottom: 1px solid #383B4366;
+}
+
 .edit-padding-left{
   padding-left: 3px;
 }
@@ -274,7 +286,10 @@ html {
     left: 53% !important;
   }
 
-
+  .dark-light-img{
+    margin-top: -5px !important;
+  }
+  
   .dark-light-auth{
     position: absolute;
     top: -30px !important;
@@ -317,6 +332,10 @@ html {
 }
 
 .bg-grey{
+  background-color: #536B7E !important;
+}
+
+.bg-grey-dash{
   background-color: #536B7E !important;
 }
 

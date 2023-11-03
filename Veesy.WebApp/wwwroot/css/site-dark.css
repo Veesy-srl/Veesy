@@ -277,11 +277,52 @@
         background-color: #383C47 !important;
     }
 
+    .dashboard-header-border{
+        border-bottom: 1px solid #E2E5E7;
+    }
+
+    .alternative-bottom-border-dash{
+        border-bottom: 1px solid rgba(255,255,255, 0.125);
+    }
+    
     .header-logo{
         content: url('../imgs/veesy_vettoriale_enigma_white.png');
         width: 75px;
         height: 25px;
         margin-top: 5px;
+    }
+
+    .bg-grey-dash{
+        background-color: #536B7E !important;
+    }
+
+    .hr-color-dash{
+        color: #F3F3F3;
+    }
+
+    .circle-color-dash{
+        color: #F3F3F3;
+    }
+    
+    .rounded-05-header {
+        border-radius: 0.4rem 0.4rem 0 0 !important;
+    }
+    
+    .card-dashboard{
+        border: 0px !important;
+    }
+    
+    .apexcharts-radialbar-hollow{
+        fill: #383B43;
+    }
+    
+    .card-body-dashboard{
+        background-color: #383B43;
+        border-radius: 0 0 0.4rem 0.4rem !important;
+    }
+    
+    .bg-white{
+        background-color: #383B43 !important;
     }
 
     .btn-light{
