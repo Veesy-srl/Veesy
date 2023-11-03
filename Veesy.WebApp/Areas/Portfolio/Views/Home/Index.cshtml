@@ -10,14 +10,16 @@
 
 
 <div class="padding-lg">
-<div class="row pt-3 p-4-lg">
+<div class="row pt-4 p-4-lg">
     <div class="empty-veesy nodisplay-sm"></div>
     <div class="empty-veesy nodisplay-sm"></div>
     <div class="col-sm-12 ps-3 col-md-4">
         <h1 class="text-color mt-2">Hello @Model.Name,<br/>welcome to your dashboard...</h1>
         <div class="empty-veesy"></div>
         <div class="empty-veesy"></div>
-        <p class="mb-0"><strong>Do you need some help?</strong></p>
+        <div class="col-12">
+            <a class="mb-0"><strong>Do you need some help?</strong></a>
+        </div>
         <a style="" class="grey-link-underline mb-4">Contact us</a>
         <div class="empty-veesy"></div>
     </div>
@@ -25,7 +27,7 @@
         <div class="card rounded-05">
             <div class="card-header rounded-05-header p-0 bg-white">
                 <div class="row m-0">
-                    <div class="col-9 mt-2 ">
+                    <div class="col-9 mt-2 mb-1">
                         <p class="mb-0">
                             <strong>OVERVIEW</strong>
                         </p>
@@ -36,51 +38,52 @@
                 </div>
             </div>
             <div class="card-body row p-0 m-0">
-                <div class="col-sm-12 col-lg-3 vertical-space mt-2 pb-2">
+                <div class="ps-3 col-sm-12 col-lg-3 vertical-space mt-3 pb-0">
                     <div style="position: relative; left: -30%; top: -20px;" id="chart"></div>
                     <div>
-                        <h3 style="position: relative; top: -18px;">Your profile is <strong>@Model.Percent%</strong> complete.</h3></div>
-                    <div class="mb-2"><a asp-controller="Profile" asp-area="Account" asp-action="Profile" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i>edit profile</a></div>
-                    <hr class="nodisplay-lg"/>
+                        <h3>Your Profile is <strong>@Model.Percent%</strong><br/> complete.</h3>
+                        <div class="mb-2 mt-3">
+                            <a asp-controller="Profile" asp-area="Account" asp-action="Profile" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i>edit profile</a>
+                        </div>
+                        <hr class="nodisplay-lg"/>
+                    </div>
                 </div>
-                <div class="col-sm-12 col-lg-3 vertical-space mt-2 pb-2">
-                    <div class="mt-4 pt-3">
+                <div class="ps-3 col-sm-12 col-lg-3 vertical-space mt-3 pb-0">
+                    <div class="mt-4 pt-1">
                         <div class="d-flex align-items-end">
-                            <h1 style="font-size: 75px !important;;"><strong>@Model.MediaNumber</strong></h1>
-                            <h3 style="font-size: 40px !important; color: #D2D5DB !important; ">/@Model.Subscription.AllowedMediaNumber</h3>
+                            <h1 style="font-size: 56px !important;;"><strong>@Model.MediaNumber</strong></h1>
+                            <h3 style="font-size: 30px !important; color: #D2D5DB !important; ">/@Model.Subscription.AllowedMediaNumber</h3>
                         </div>
                         <div style="height: 5px;" class="progress">
                             <div class="progress-bar" role="progressbar" aria-valuenow="@Model.MediaPercent" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
                     <div class="mt-4">
-                        <h3><strong>Files uploaded</strong> on your cloud.</h3>
-                        <div class="empty-veesy"></div>
+                        <h3><strong>Files uploaded</strong> on <br/> cloud.</h3>
+                        <div class="mb-2 mt-3"><a asp-action="List" asp-controller="Cloud" asp-area="Portfolio" class="grey-link">your cloud <i class="fa-solid fa-arrow-up-right-from-square"></i></a></div>
+                        <hr class="nodisplay-lg"/>
                     </div>
-                    <div class="mb-2"><a asp-action="List" asp-controller="Cloud" asp-area="Portfolio" class="grey-link">your cloud <i class="fa-solid fa-arrow-up-right-from-square"></i></a></div>
-                    <hr class="nodisplay-lg"/>
                 </div>
-                <div class="col-sm-12 col-lg-3  vertical-space mt-2 pb-2">
-                    <div class="mt-4 pt-3">
-                        <h1 style="font-size: 75px !important;;"><strong>@Model.PortfolioNumber.ToString("00")</strong></h1>
+                <div class="ps-3 col-sm-12 col-lg-3  vertical-space mt-3 pb-0">
+                    <div class="mt-4 pt-1">
+                        <h1 style="font-size: 56px !important;;"><strong>@Model.PortfolioNumber.ToString("00")</strong></h1>
                     </div>
                     <div class="mt-4 pt-2">
-                        <h3><strong>Portfolios </strong>created from your media.</h3>
-                        <div class="empty-veesy"></div>
+                        <h3><strong>Portfolios </strong>created from <br/> your media.</h3>
+                        <div class="mb-2 mt-3"><a asp-action="List" asp-controller="Portfolio" asp-area="Portfolio" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i>edit portfolios</a></div>
+                        <hr class="nodisplay-lg"/>
                     </div>
-                    <div class="mb-2"><a asp-action="List" asp-controller="Portfolio" asp-area="Portfolio" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i>edit portfolios</a></div>
-                    <hr class="nodisplay-lg"/>
                 </div>
-                <div class="col-sm-12 col-lg-3 border-card-subscription vertical-space bg-gradient-2 pb-2">
+                <div class="ps-3 col-sm-12 col-lg-3 pt-1 border-card-subscription vertical-space bg-gradient-2 pb-0">
                     <div class="mt-4">
-                        <h3>Your plan</h3>
+                        <h3 class="mb-0">Your plan</h3>
                         <h2 class="text-white"><strong>@Model.Subscription.Name</strong></h2>
                     </div>
                     <div>
-                        <h3 class="mb-0 text-white"><strong>@Model.Subscription.Price.ToString("0")€ /month</strong></h3>
+                        <h3 class="mb-0 text-white">@Model.Subscription.Price.ToString("0")€ /month</h3>
                         <h3 class="text-white">max. @Model.Subscription.AllowedMediaNumber media</h3>
+                        <div class="ms-2 mb-2 mt-3"><a asp-action="PricingPlan" asp-controller="Public" asp-area="Public" class="a-font-p grey-link-underline" type="submit">view plans</a></div>
                     </div>
-                    <div class="mb-2"><a asp-action="PricingPlan" asp-controller="Public" asp-area="Public" class="grey-link-underline" type="submit">view plans & upgrade</a></div>
                 </div>
             </div>
         </div>
@@ -88,27 +91,27 @@
 </div>
 
 
-<div class="row row-eq-height mt-3 pt-4 pb-4 p-4-lg mb-4">
+<div class="row mt-3 pt-3 pb-4 p-4-lg mb-4 row-eq-height">
     <div class="mb-4 ps-3 pe-3 h-100 col-sm-12 col-md-4 rounded-05">
-        <div class="pb-1 pt-1 bg-white card-header d-flex rounded-05-header">
+        <div class="pb-1 pt-0 bg-white card-header d-flex rounded-05-header">
             <div class="col-11">
-                <p class="mb-0">PORTFOLIO</p>
+                <p class="mt-2 mb-0"><strong>PORTFOLIO</strong></p>
             </div>
             <div class="col-1 text-end">
                 <i class="fa-solid fa-circle fa-2xs" style="color: #202F4D;"></i>
             </div>
         </div>
-        <div class="vertical-space card-body bg-white rounded-bottom rounded-05-footer">
-            <h3 style="font-size: 36px !important; line-height: 40px !important;" class="mt-4">Use your media, find work, show your projects to client</h3>
+        <div class="pt-0 vertical-space card-body bg-white rounded-bottom rounded-05-footer">
+            <h1 style="font-size: 27px !important; line-height: 30px !important;" class="mt-4">Use your media, find work, show your projects to clients.</h1>
             <div class="row pt-2">
                 @if (Model.PortfolioThumbnailDto != null)
                 {
-                    <div class="col-4">
+                    <div class="col-4 pe-0">
                         <div style="width: 100% !important;" class='box m-0'>
                             <div class='content1_1'>
                                 @if (Model.PortfolioThumbnailDto.IsVideo)
                                 {
-                                    <video autoplay="autoplay" muted loop class="image-fit-radius" title="@Model.PortfolioThumbnailDto.DefaultImageOriginalName">
+                                    <video autoplay="autoplay" muted loop class="image-fit-radius-dashboard" title="@Model.PortfolioThumbnailDto.DefaultImageOriginalName">
                                         <source src="@Model.BasePath@Model.PortfolioThumbnailDto.DefaultImageName?tr=w-400" type="video/mp4">
                                     </video>
                                 }
@@ -116,11 +119,11 @@
                                 {
                                     if (Model.PortfolioThumbnailDto.DefaultImageName == "")
                                     {
-                                        <img class="image-fit-radius" src="~/imgs/noimage.png"/>
+                                        <img class="image-fit-radius-dashboard" src="~/imgs/noimage.png"/>
                                     }
                                     else
                                     {
-                                        <img class="image-fit-radius" title="@Model.PortfolioThumbnailDto.DefaultImageOriginalName" src="@Model.BasePath@Model.PortfolioThumbnailDto.DefaultImageName?tr=w-400"/>
+                                        <img class="image-fit-radius-dashboard" title="@Model.PortfolioThumbnailDto.DefaultImageOriginalName" src="@Model.BasePath@Model.PortfolioThumbnailDto.DefaultImageName?tr=w-400"/>
                                     }
                                 }
                             </div>
@@ -137,38 +140,38 @@
                     <div class="text-center">No main portfolio yet</div>
                     <div class="empty-veesy"></div>
                 }
-                <hr class="mt-3 mb-0" style="color: rgba(0,0,0,0.3)"/>
             </div>
             <div class="row pt-2">
+                <hr style="color: rgba(0,0,0,0.3)"/>
                 <div class="col-6 pt-2">
                     @if (Model.PortfolioThumbnailDto != null)
                     {
-                        <a asp-controller="Portfolio" asp-action="Settings" asp-route-id="@Model.PortfolioThumbnailDto.Code" asp-area="Portfolio" class="grey-link ms-2"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit main portfolio</strong></a>
+                        <a asp-controller="Portfolio" asp-action="Settings" asp-route-id="@Model.PortfolioThumbnailDto.Code" asp-area="Portfolio" class="grey-link ms-2"><i class="fa-regular fa-pen-to-square pe-1"></i>edit main portfolio</a>
                     }
                 </div>
-                <div class="col-6 text-end"><a asp-controller="Portfolio" asp-action="List" asp-area="Portfolio" class="w-100 rounded-pill btn btn-primary" type="submit">go to portfolios</a></div>
+                <div class="col-6 text-end"><a asp-controller="Portfolio" asp-action="List" asp-area="Portfolio" class="w-100 rounded-pill btn btn-primary a-font-p" type="submit">go to portfolios</a></div>
             </div>
         </div>
     </div>
     <div class="mb-4 ps-3 pe-3 col-sm-12 col-md-4 rounded-05 h-100">
-        <div class="pb-1 pt-1 bg-grey card-header d-flex rounded-05-header">
+        <div style="border-bottom: 1px solid rgba(255,255,255, 0.125)" class="pb-1 pt-0 bg-grey card-header d-flex rounded-05-header">
             <div class="col-11">
-                <p class="text-white mb-0">CLOUD</p>
+                <p class="text-white mt-2 mb-0"><strong>CLOUD</strong></p>
             </div>
             <div class="col-1 text-end">
                 <i class="fa-solid fa-circle fa-2xs" style="color: #ffffff;"></i>
             </div>
         </div>
-        <div class="vertical-space card-body bg-grey rounded-bottom rounded-05-footer">
+        <div class="pt-0 vertical-space card-body bg-grey rounded-bottom rounded-05-footer">
             <div>
                 <p class="text-white mt-4 mb-0"><strong>Quick Upload: </strong>Upload and order your files to create your portfolios.</p>
-                <p class="text-white">Formats accepted: <strong>jpg, png, mov, mp4.</strong></p>
+                <p class="text-white mb-0">Formats accepted: <strong>jpg, png, mov, mp4.</strong></p>
             </div>
-            <div class="row p-2">
-                <div class="col-12 rounded p-2" style="color: transparent">
+            <div class="row">
+                <div class="col-12 rounded pt-4" style="color: transparent">
                     <div id="div-uploader">
                         <form enctype="multipart/form-data" asp-action="UploadMedia" asp-controller="Media" asp-area="Portfolio" class="dropzone card-grey-dashed-dropzone" id="uploader">
-                            <a id="dropzone-close-button" style="display: none;" onclick="hideDropZone()" class="ms-2 btn btn-light border fw-bolder shadow-none close-button-dropzone">
+                            <a id="dropzone-close-button" style="display: none;" onclick="hideDropZone()" class="p-0 ms-2 btn btn-light border fw-bolder shadow-none close-button-dropzone">
                                 <i class="fas fa-times-circle fa-2xs text-primary" id="icon-color" aria-hidden="true"></i>
                                 <span id="color-text-variant">close</span>
                             </a>
@@ -177,7 +180,7 @@
                                     <i id="uploader-icon" class="fa-solid fa-circle-plus fa-xl" style="color: #383B43"></i>
                                 </div>
                                 <span id="uploader-text" class="text-white">
-                                    Upload or drop files here.
+                                    upload or drop files here
                                 </span>
                                 <div class="progress-bar progress-bar-primary" role="progressbar" data-dz-uploadprogress>
                                     <span class="progress-text"></span>
@@ -187,41 +190,40 @@
                     </div>
                 </div>
             </div>
-            <div class="row pt-2">
-                <div class="col-6 pt-2"><a class="grey-link ms-2"><strong>how it works</strong><i class="fa-solid fa-arrow-up-right-from-square ms-2"></i></a></div>
-                <div class="col-6 text-end"><a asp-area="Portfolio" asp-controller="Cloud" asp-action="List" class="w-100 rounded-pill btn btn-white" type="submit">go to cloud</a></div>
+            <div class="row pt-4">
+                <div class="col-6 pt-2"><a class="grey-link ms-2">how it works<i class="fa-solid fa-arrow-up-right-from-square ms-2"></i></a></div>
+                <div class="col-6 text-end"><a asp-area="Portfolio" asp-controller="Cloud" asp-action="List" class="a-font-p w-100 rounded-pill btn btn-white" type="submit">go to cloud</a></div>
             </div>
         </div>
     </div>
     <div class="mb-4 ps-3 pe-3 col-sm-12 col-md-4 rounded-05 h-100">
-        <div style="border-bottom: 1px solid #D7DADF;" class="pb-1 pt-1 bg-blue card-header d-flex  rounded-05-header">
+        <div style="border-bottom: 1px solid #D7DADF;" class="pb-1 pt-0 bg-blue card-header d-flex  rounded-05-header">
             <div class="col-11">
-                <p class="text-white mb-0">PROFILE
+                <p class="text-white mt-2 mb-0"><strong>PROFILE</strong>
                 </p>
             </div>
             <div class="col-1 text-end">
                 <i class="fa-solid fa-circle fa-2xs" style="color: #ffffff;"></i>
             </div>
         </div>
-        <div class="vertical-space card-body bg-blue rounded-bottom rounded-05-footer">
+        <div class="pt-2 vertical-space card-body bg-blue rounded-bottom rounded-05-footer">
             <div class="row mt-4">
                 <div class="col-9">
-                    <h3 style="font-size: 36px !important; line-height: 40px !important;" class="text-white">@Model.Name @Model.Surname</h3>
+                    <h3 style="font-size: 27px !important; line-height: 30px !important;" class="text-white">@Model.Name @Model.Surname</h3>
                     <h5 class="text-white">- @Model.UserCategory</h5>  
                     <div class="empty-veesy"></div>
-                    <p class="text-white">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                    <p class="text-white">Nulla ut ullamcorper elit. Phasellus rutrum, metus pharetra faucibus pharetra, lectus risus facilisis massa, eget consectetur…</p>
                 </div>
                 <div class="col-3">
-                    <div class="text-end pe-2">
+                    <div class="text-end">
                         <img style="float: right" src="@Model.BaseAzurePath@Model.FileName" class="img-thumbnail-custom-dashboard rounded-circle" alt="user-image">
                     </div>
                 </div>
             </div>
             <div class="row pt-2">
                 <hr style="color: #D7DADF"/>
-                <div class="empty-veesy"></div>
-                <div class="col-6 pt-2"><a asp-controller="Profile" asp-area="Account" asp-action="Profile" class="grey-link ms-2"><strong>view profile <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a></div>
-                <div class="col-6 text-end"><a asp-controller="Profile" asp-area="Account" asp-action="Profile" class="w-100 rounded-pill btn btn-white" type="submit"><i class="fa-regular fa-pen-to-square pe-1"></i>edit profile</a></div>
+                <div class="col-6 pt-2"><a asp-controller="Profile" asp-area="Account" asp-action="Profile" class="grey-link ms-2">view profile <i class="fa-solid fa-arrow-up-right-from-square"></i></a></div>
+                <div class="col-6 text-end"><a asp-controller="Profile" asp-area="Account" asp-action="Profile" class="a-font-p w-100 rounded-pill btn btn-white" type="submit"><i class="fa-regular fa-pen-to-square pe-1"></i>edit profile</a></div>
             </div>
         </div>
     </div>
@@ -233,7 +235,13 @@
 {
     <style>
         .dropzone{
-            min-height: 200px;
+            min-height: 188px;
+        }
+        
+        #uploader-text{
+        
+          font-size: 13px !important;
+          line-height: 18px !important;
         }
     </style>
 }

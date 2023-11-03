@@ -42,7 +42,7 @@
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    height: 525px;
+    height: 450px;
   }
 }
 
@@ -165,19 +165,20 @@
 }
 
 p{
-  font-size: 14px !important;
-  line-height: 24px !important;
+  font-size: 12px !important;
+  line-height: 18px !important;
+  word-spacing: 2px;
   color: #202F4D;
 }
 
 h1{
-  font-size: 36px !important;
-  line-height: 43px !important;
+  font-size: 29px !important;
+  line-height: 32px !important;
 }
 
 h3{
-  font-size: 20px !important;
-  line-height: 25px !important;
+  font-size: 15px !important;
+  line-height: 19px !important;
 }
 
 body{
@@ -646,10 +647,22 @@ button:focus {
   content: none !important;
 }
 
+h5{
+  font-size: 15px !important;
+  line-height: 20px !important;
+}
+
+.a-font-p{
+  font-size: 12px !important;
+  line-height: 18px !important;
+}
+
 .grey-link{
   color: #AAB0BB !important;;
   text-decoration: none !important;
   cursor: pointer;
+  font-size: 12px !important;
+  line-height: 18px !important;
 }
 
 .grey-link:hover{
@@ -798,6 +811,13 @@ button:focus {
   height: 100%;
 }
 
+.image-fit-radius-dashboard{
+  border-radius: 5px;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
 .veesy-grey-p{
   color: #AAB0BB;
   margin-bottom: 1rem;
@@ -851,7 +871,7 @@ button:focus {
 
 .card-grey-dashed-dropzone{
   background-color: #FFFFFF33 !important;
-  border-radius: 10px;
+  border-radius: 5px;
   border: 2px dashed #AAB0BB !important;
 }
 
@@ -1793,7 +1813,7 @@ canvas {
 .dark-light-img{
   content: url('../imgs/Layout/switch_light mode.svg');
   width: 100px;
-  height: 100px;
+  height: 88px;
   margin-top: -25px;
 }
 
