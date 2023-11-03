@@ -58,7 +58,7 @@
             <div class="float-end mb-2">
                 <div class="d-flex">
                     
-                    <div class="nodisplay-sm dropdown show">
+                    <div class="nodisplay-sm dropdown show me-2">
                         @{
                             var imageSrc = ViewBag.BaseDirectory + ViewBag.ProfileImage;
 
@@ -70,13 +70,15 @@
                         }
                         @if (username != null)
                         {
-                            <a class="dropdown-toggle btn btn-light btn-layout border fw-bolder shadow-none">
-                                <img src='@imageSrc' style="width: 25px !important; height: 25px !important; max-width: none!important; " class="img-thumbnail-custom rounded-circle" alt="user-image">
-                                <span id="color-text-layout">@username</span>
-                                <i class="fa-solid fa-chevron-down"></i>
-                            </a>
+                            <div style="padding-bottom: 4px">
+                                <a class="dropdown-toggle btn btn-light btn-layout border fw-bolder shadow-none">
+                                    <img src='@imageSrc' style="width: 25px !important; height: 25px !important; max-width: none!important; " class="img-thumbnail-custom rounded-circle" alt="user-image">
+                                    <span id="color-text-layout">@username</span>
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </a>
+                            </div>
 
-                            <div class="dropdown-menu bg-grey-veesy" style="padding: 0 0; margin-top: 4px;" aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-menu bg-grey-veesy" style="padding: 0 0;" aria-labelledby="dropdownMenuLink">
                                 <a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Controller"].ToString() == "Portfolio" ? "a-ciano-header" : "menu-element")" asp-action="List" asp-controller="Portfolio" asp-area="Portfolio">Portfolio</a>
                                 <a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Controller"].ToString() == "Cloud" ? "a-ciano-header" : "menu-element")" asp-action="List" asp-controller="Cloud" asp-area="Portfolio">Cloud</a>
                                 <a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Controller"].ToString() == "Public" ? "a-ciano-header" : "menu-element")" asp-action="PricingPlan" asp-controller="Public" asp-area="Public">Your Plan</a>
@@ -93,26 +95,29 @@
                         }
 
                     </div>
-                    
-                    <button class="ms-2 btn btn-light border fw-bolder btn-layout shadow-none" id="menuButton">
-                        <i class="fas fa-circle fa-2xs text-primary mr-2" style="font-size: 5px;" id="icon-color"></i>
-                         @if (ViewContext.RouteData.Values["Controller"].ToString() == "Public")
-                         {
-                             <span id="color-text-variant">menu</span>
-                         }
-                    </button>
+                    <div style="padding-bottom: 2px">
+                        <button class="ms-2 btn btn-light border fw-bolder btn-layout shadow-none" id="menuButton">
+                            <i class="fas fa-circle fa-2xs text-primary mr-2" style="font-size: 5px;" id="icon-color"></i>
+                            @if (ViewContext.RouteData.Values["Controller"].ToString() == "Public")
+                            {
+                                <span id="color-text-variant">menu</span>
+                            }
+                        </button>
+                    </div>
                 </div>
             </div>
             <div class="menu-popup" id="menuPopup">
                 <div class="float-end d-flex">
                     @if(username != null){
                         <div class="dropdown show" id="none-popup">
-                            <a class="dropdown-toggle btn btn-light btn-layout border fw-bolder shadow-none">
-                                <img src='@imageSrc' style=" width: 25px !important; height: 25px !important; max-width: none!important;" class="img-thumbnail-custom rounded-circle" alt="user-image">
-                                <span id="color-text-variant">@username</span>
-                            </a>
-                            <div class="dropdown-menu bg-grey-veesy" style="padding: 0 0; margin-top: 4px;" aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Controller"].ToString() == "Portfolio" ? "a-ciano-header" : "menu-element")"  asp-action="List" asp-controller="Portfolio" asp-area="Portfolio">Portfolio</a>
+                            <div style="padding-bottom: 4px">
+                                <a class="dropdown-toggle btn btn-light btn-layout border fw-bolder shadow-none me-2">
+                                    <img src='@imageSrc' style=" width: 25px !important; height: 25px !important; max-width: none!important;" class="img-thumbnail-custom rounded-circle" alt="user-image">
+                                    <span id="color-text-variant">@username</span>
+                                </a>
+                            </div>
+                            <div class="dropdown-menu bg-grey-veesy" style="padding: 0 0;" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Controller"].ToString() == "Portfolio" ? "a-ciano-header" : "menu-element")" asp-action="List" asp-controller="Portfolio" asp-area="Portfolio">Portfolio</a>
                                 <a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Controller"].ToString() == "Cloud" ? "a-ciano-header" : "menu-element")" asp-area="Portfolio" asp-controller="Cloud" asp-action="List">Cloud</a>
                                 <a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Controller"].ToString() == "Public" ? "a-ciano-header" : "menu-element")" asp-action="PricingPlan" asp-controller="Public" asp-area="Public">Your Plan</a>
                                 <a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Controller"].ToString() == "Profile" ? "a-ciano-header" : "menu-element")" asp-action="Profile" asp-controller="Profile" asp-area="Account">Profile</a>
@@ -120,10 +125,12 @@
                             </div>
                         </div>
                     }
-                    <button class="ms-2 btn btn-light border btn-layout fw-bolder shadow-none" id="closeButton">
-                        <i class="fas fa-times-circle fa-2xs text-primary" id="icon-color"></i>
-                        <span id="color-text-variant">close</span>
-                    </button>
+                    <div style="padding-bottom: 2px">
+                        <button class="ms-2 btn btn-light border btn-layout fw-bolder shadow-none" id="closeButton">
+                            <i class="fas fa-times-circle fa-2xs text-primary" id="icon-color"></i>
+                            <span id="color-text-variant">close</span>
+                        </button>
+                    </div>
                 </div>
                 <div class="container center-content-menu">
                     <div class="menu-list">

@@ -38,8 +38,8 @@
                 </div>
             </div>
             <div class="card-body card-body-dashboard row p-0 m-0">
-                <div class="ps-3 col-sm-12 col-lg-3 vertical-space mt-3 pb-0">
-                    <div style="position: relative; left: -30%; top: -20px;" id="chart"></div>
+                <div class="ps-3 col-sm-12 col-lg-3 vertical-space pb-0">
+                    <div style="position: relative; left: -30%;" id="chart"></div>
                     <div>
                         <h3 class="text-color">Your Profile is <strong>@Model.Percent%</strong><br/> complete.</h3>
                         <div class="mb-2 mt-3">
@@ -54,7 +54,7 @@
                             <h1 style="font-size: 56px !important;" class="text-color"><strong>@Model.MediaNumber</strong></h1>
                             <h3 style="font-size: 30px !important; color: #D2D5DB !important;">/@Model.Subscription.AllowedMediaNumber</h3>
                         </div>
-                        <div style="height: 5px;" class="progress">
+                        <div style="height: 5px;" class="progress" id="progress-media">
                             <div class="progress-bar" role="progressbar" aria-valuenow="@Model.MediaPercent" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
@@ -101,7 +101,7 @@
                 <i class="fa-solid fa-circle fa-2xs circle-color-dash"></i>
             </div>
         </div>
-        <div class="pt-0 vertical-space card-body bg-white rounded-bottom rounded-05-footer">
+        <div class="pt-2 vertical-space card-body bg-white rounded-bottom rounded-05-footer">
             <h1 style="font-size: 27px !important; line-height: 30px !important;" class="mt-4 text-color">Use your media, find work, show your projects to clients.</h1>
             <div class="row pt-2">
                 @if (Model.PortfolioThumbnailDto != null)
@@ -179,8 +179,8 @@
                                 <div id="div-uploader-icon" class="w-100 mb-1">
                                     <i id="uploader-icon" class="fa-solid fa-circle-plus fa-xl" style="color: #383B43"></i>
                                 </div>
-                                <span id="uploader-text" class="text-white">
-                                    upload or drop files here
+                                <span id="uploader-text" style="color: white;" class="text-white">
+                                    upload or drop your files here
                                 </span>
                                 <div class="progress-bar progress-bar-primary" role="progressbar" data-dz-uploadprogress>
                                     <span class="progress-text"></span>
@@ -274,15 +274,6 @@
                 margin: 0,
                 size: "35%",
                 background: "#ffffff"
-              },
-              track: {
-                dropShadow: {
-                  enabled: true,
-                  top: 2,
-                  left: 0,
-                  blur: 4,
-                  opacity: 0.15
-                }
               }
             }
           },
@@ -419,8 +410,11 @@
             //hideDropZone();
         }
         
+        var allwidthprogress = document.getElementById("progress-media").offsetWidth
+        
+        var percent = (@Model.MediaPercent / 100) * allwidthprogress
         $(".progress-bar").animate({
-            width: @Model.MediaPercent.ToString()
+            width: percent
         }, 2500);
     
     </script>
