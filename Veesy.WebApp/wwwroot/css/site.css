@@ -924,6 +924,8 @@ h5{
 .button-white-dashed-veesy{
   margin: 5px;
   width: 50px;
+  padding-left: 10px;
+  padding-right: 10px;
   background-color: #F0F2F3;
   border-radius: 25px;
   border: 2px dashed #AAB0BB;
@@ -976,6 +978,8 @@ a{
   color: #202F4D !important;
   text-decoration: none !important;
   cursor: pointer !important;
+  font-size: 12px !important;
+  line-height: 18px !important;
 }
 
 .creator-popup{

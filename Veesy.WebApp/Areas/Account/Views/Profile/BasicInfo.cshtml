@@ -3,13 +3,14 @@
     ViewData["Title"] = "Basic Info";
 }
 
-<div class="row pt-7rem">
+<div class="padding-lg pt-7rem">
+<div class="row pt-4 p-4-lg">
     <div class="col-sm-12 col-md-3">
         <nav class="breadcrumb-container" aria-label="Percorso di navigazione">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><img class="home-img me-2"><a class="breadcrumb-a me-2" asp-area="Portfolio" asp-controller="Home" asp-action="Index">dashboard</a><i class="fa-solid fa-chevron-right"></i></li>
-                <li class="breadcrumb-item"><a class="breadcrumb-a me-2" asp-action="Profile">profile</a><i class="fa-solid fa-chevron-right"></i></li>
-                <li class="breadcrumb-item"><a class="breadcrumb-a" href="#"><strong>basic info</strong></a></li>
+                <li class="breadcrumb-item"><img class="home-img me-2"><a class="breadcrumb-a me-2 a-font-p" asp-area="Portfolio" asp-controller="Home" asp-action="Index">dashboard</a><img src="~/icon/dashboard_nest_light mode.svg" class="icon-svg-derein"></li>
+                <li class="breadcrumb-item"><a class="breadcrumb-a me-2 a-font-p" asp-action="Profile">profile</a><img src="~/icon/dashboard_nest_light mode.svg" class="icon-svg-derein"></li>
+                <li class="breadcrumb-item"><a class="breadcrumb-a a-font-p" href="#"><strong>basic info</strong></a></li>
             </ol>
         </nav>
     </div>
@@ -56,7 +57,7 @@
                             <p class="mb-0 text-color"><strong>Category</strong></p>
                             <p class="mb-0 color-red">Information missing</p>
                         </div>
-                        <div class="col-3 text-end"><a onclick="openModal('#modalCategory')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div>
+                        <div class="col-3 text-end"><a onclick="openModal('#modalCategory')" class="red-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div>
                     }
                     else
                     {
@@ -88,7 +89,7 @@
                             <p class="mb-0 color-red" id="vat-number-show">information missing</p>
                         </div>
                         <div class="col-3 text-end">
-                            <a id="vat-number-button" onclick="openModal('#modalVAT')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a>
+                            <a id="vat-number-button" onclick="openModal('#modalVAT')" class="red-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a>
                         </div>
                     }
                     else
@@ -130,37 +131,39 @@
                 </div>
                 <hr class="hr"/>
                 <div class="d-flex">
-                @if (string.IsNullOrEmpty(@Model.PhoneNumber))
-                {
-                    <div class="col-9">
-                        <p class="mb-0 text-color"><strong>Phone Number</strong></p>
-                        <p class="mb-0 color-red" id="phone-number-show">information missing</p>
-                    </div>
-                    <div class="col-3 text-end">
-                        <a id="phone-number-button" onclick="openModal('#modalPhoneNumber')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a>
-                    </div>
-                }
-                else
-                {
-                    <div class="col-9">
-                        <p class="mb-0 text-color"><strong>Phone Number</strong></p>
-                        <p class="mb-0 text-color" id="phone-number-show">@Model.PhoneNumberPrefix @Model.PhoneNumber</p>
-                    </div>
-                    <div class="col-3 text-end">
-                        <a id="phone-number-button" onclick="setTextAreaValue('phone-number-prefix-edit', '@Model.PhoneNumberPrefix'), setTextAreaValue('phone-number-edit', '@Model.PhoneNumber'), openModal('#modalPhoneNumber')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
-                    </div>
-                }
+                    @if (string.IsNullOrEmpty(@Model.PhoneNumber))
+                    {
+                        <div class="col-9">
+                            <p class="mb-0 text-color"><strong>Phone Number</strong></p>
+                            <p class="mb-0 color-red" id="phone-number-show">information missing</p>
+                        </div>
+                        <div class="col-3 text-end">
+                            <a id="phone-number-button" onclick="openModal('#modalPhoneNumber')" class="red-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-9">
+                            <p class="mb-0 text-color"><strong>Phone Number</strong></p>
+                            <p class="mb-0 text-color" id="phone-number-show">@Model.PhoneNumberPrefix @Model.PhoneNumber</p>
+                        </div>
+                        <div class="col-3 text-end">
+                            <a id="phone-number-button" onclick="setTextAreaValue('phone-number-prefix-edit', '@Model.PhoneNumberPrefix'), setTextAreaValue('phone-number-edit', '@Model.PhoneNumber'), openModal('#modalPhoneNumber')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
+                        </div>
+                    }
                 </div>
                 <hr class="hr"/>
             </div>
         </div>
         <div class="empty-veesy"></div>
     </div>
-    <div class="col-sm-12 col-md-3">
-        <div class="d-flex justify-content-center">
+    <div class="col-sm-12 col-md-3 pe-0">
+        <div class="empty-veesy"></div>
+        <div class="empty-veesy"></div>
+        <div class="d-flex justify-content-end ps-3">
             <div class="w-75-veesy card-blue-veesy p-3">
                 <div class="text-end"><i class="fa-solid fa-circle fa-2xs" style="color: #ffffff;"></i></div>
-                <p class="mb-0" style="color: white">Do you need some help?</p>
+                <p class="mb-0 text-white" style="font-size: 14px !important;">Do you need some help?</p>
                 <a class="a-ciano-underline" href="mailto:support@veesy.it">Contact us</a>
             </div>
         </div>
@@ -169,6 +172,10 @@
         <div class="empty-veesy"></div>
     </div>
 </div>
+</div>
+
+<div class="empty-veesy"></div>
+<div class="empty-veesy"></div>
 
 <div class="modal fade" id="modalFullname" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -191,7 +198,7 @@
                 <p class="mt-2 mb-0 text-color">*required field</p>  
             </div>
             <div class="modal-footer">                
-                <a onclick="UpdateFullname()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
+                <a onclick="UpdateFullname()" class="rounded-pill btn btn-primary btn-padding a-font-p" type="submit">save</a>
             </div>
         </div>
     </div>
@@ -218,7 +225,7 @@
                 <p class="mt-2 mb-0 text-color">*required field</p>  
             </div>
             <div class="modal-footer">                
-                <a onclick="UpdatePassword()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
+                <a onclick="UpdatePassword()" class="rounded-pill btn btn-primary btn-padding a-font-p" type="submit">save</a>
             </div>
         </div>
     </div>
@@ -237,7 +244,7 @@
                 <p class="mt-2 mb-0 text-color">*required field</p>
             </div>
             <div class="modal-footer">                
-                <a onclick="UpdateEmail()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
+                <a onclick="UpdateEmail()" class="rounded-pill btn btn-primary btn-padding a-font-p" type="submit">save</a>
             </div>
         </div>
     </div>
@@ -257,7 +264,7 @@
                 <p class="mt-2 mb-0 text-color">*required field</p>
             </div>
             <div class="modal-footer">                
-                <a onclick="UpdateUsername()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
+                <a onclick="UpdateUsername()" class="rounded-pill btn btn-primary btn-padding a-font-p" type="submit">save</a>
             </div>
         </div>
     </div>
@@ -275,7 +282,7 @@
                 <input type="text" id="vat-number-edit" rows="4" class="w-100 input-modal text-profile"/>
             </div>
             <div class="modal-footer">                
-                <a onclick="UpdateVATNumber()" class="mt-2 rounded-pill btn btn-primary btn-padding" type="submit">save</a>
+                <a onclick="UpdateVATNumber()" class="mt-2 rounded-pill btn btn-primary btn-padding a-font-p" type="submit">save</a>
             </div>
         </div>
     </div>
