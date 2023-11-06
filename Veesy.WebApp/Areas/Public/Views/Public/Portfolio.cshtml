@@ -209,7 +209,7 @@
                             {
                                 languages += $"{language}, ";
                             }
-                            languages = languages.Substring(0, (languages.Length - 2));
+                            languages = languages.Length >= 2 ? languages.Substring(0, (languages.Length - 2)) : "";
                         }
                         <p class="text-white">@languages</p>
                     </div>

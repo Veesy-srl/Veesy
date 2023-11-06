@@ -70,7 +70,7 @@
                                     {
                                         categories += $"{@category.Name}, ";
                                     }
-                                    categories = categories.Substring(0, (categories.Length - 2));
+                                    categories = categories.Length >= 2 ? categories.Substring(0, (categories.Length - 2)) : "";
                                 }
                                 @categories
                             </p>

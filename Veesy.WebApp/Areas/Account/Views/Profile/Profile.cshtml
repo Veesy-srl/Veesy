@@ -47,7 +47,7 @@
                 {
                     category += $"{cat.CategoryWork.Name}, ";
                 }
-                category = category.Substring(0, (category.Length - 2));
+                category = category.Length >= 2 ? category.Substring(0, (category.Length - 2)) : "";
             }
             <div class="d-flex"><p class="mb-0 text-color"><strong>Category:&nbsp;</strong></p><p class="@role_css veesy-overflow mb-0">@category</p></div>
             <div class="d-flex"><p class="mb-0 text-color"><strong>Email:&nbsp;</strong></p><p class="mb-0 veesy-overflow text-color">@Model.Email</p></div>
@@ -78,7 +78,7 @@
         <h3 class="text-color"><strong>General</strong></h3>
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-6 ps-2 pe-2">
-                <hr class="hr color-hr mt-0" />
+                <hr class="hr color-hr" />
                 <div class="d-flex">
                     @if (string.IsNullOrEmpty(Model.Role))
                     {
@@ -86,11 +86,11 @@
                             <p class="mb-0 text-color"><strong>Role:</strong></p>
                             <p class="mb-0 color-red">Information missing</p>
                         </div>
-                        <div class="col-3 text-end"><a onclick="openModal('#modalWorkRole')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div>
+                        <div class="col-3 text-end"><a onclick="openModal('#modalWorkRole')" class="red-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div>
                     }
                     else
                     {
-                        <div class="col-9 profile-section">
+                        <div class="col-9">
                             <p class="mb-0 text-color"><strong>Role:</strong></p>
                             <p class="mb-0 veesy-overflow text-color">@Model.Role
                             </p>
@@ -98,7 +98,7 @@
                         <div class="col-3 text-end"><a onclick="openModal('#modalWorkRole'), setTextAreaValue('category-edit', '@Model.Role')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
                     }
                 </div>
-                <hr class="hr color-hr mt-0"/>
+                <hr class="hr color-hr"/>
                 <div class="d-flex">
                     @if (string.IsNullOrEmpty(Model.ExternalLink))
                     {
@@ -110,17 +110,17 @@
                     }
                     else
                     {
-                        <div class="col-9 profile-section">
+                        <div class="col-9">
                             <p class="mb-0 text-color"><strong>External link:</strong></p>
                             <p style="cursor: pointer" onclick="OpenUrlNewTab('@Model.ExternalLink')" class="mb-0 veesy-overflow text-color">@Model.ExternalLink</p>
                         </div>
                         <div class="col-3 text-end"><a onclick="openModal('#modalExternalLink'), setTextAreaValue('external-link-edit', '@Model.ExternalLink')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
                     }
                 </div>
-                <hr class="hr color-hr mt-0"/>
+                <hr class="hr color-hr"/>
             </div>
             <div class="col-sm-12 col-md-6 pe-2 ps-2">
-                <hr class="hr color-hr mt-0 nodisplay-sm"/>
+                <hr class="hr color-hr nodisplay-sm"/>
                 <div class="d-flex">
                     @if (Model.LanguagesSpoken.Count(s => s.Selected) == 0)
                     {
@@ -128,11 +128,11 @@
                             <p class="mb-0 text-color"><strong>Language Spoken:</strong></p>
                             <p class="mb-0 color-red">Information missing</p>
                         </div>
-                        <div class="col-3 text-end"><a onclick="openModal('#modalLanguageSpoken')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div>
+                        <div class="col-3 text-end"><a onclick="openModal('#modalLanguageSpoken')" class="red-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div>
                     }
                     else
                     {
-                        <div class="col-9 profile-section">
+                        <div class="col-9">
                             <p class="mb-0 text-color"><strong>Language Spoken:</strong></p>
                             <p class="mb-0 veesy-overflow text-color">
                                 @{
@@ -141,7 +141,7 @@
                                     {
                                         languages += $"{language.Language}, ";
                                     }
-                                    languages = languages.Substring(0, (languages.Length - 2));
+                                    languages = languages.Length >= 2 ? languages.Substring(0, (languages.Length - 2)) : "";
                                 }
                                 @languages
                             </p>
@@ -149,7 +149,7 @@
                         <div class="col-3 text-end"><a onclick="openModal('#modalLanguageSpoken')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
                     }
                 </div>
-                <hr class="hr color-hr mt-0"/>
+                <hr class="hr color-hr"/>
                 <div class="d-flex">
                     @if (Model.InfoToShow.Count(s => s.Selected) == 0)
                     {
@@ -157,11 +157,11 @@
                             <p class="mb-0 text-color"><strong>Show Profile info:</strong></p>
                             <p class="mb-0 color-red">Information missing</p>
                         </div>
-                        <div class="col-3 text-end"><a onclick="openModal('#modalInfoToShow')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div>
+                        <div class="col-3 text-end"><a onclick="openModal('#modalInfoToShow')" class="red-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div>
                     }
                     else
                     {
-                        <div class="col-9 profile-section">
+                        <div class="col-9">
                             <p class="mb-0 text-color"><strong>Show Profile info:</strong></p>
                             <p class="mb-0 veesy-overflow text-color">
                                 @{
@@ -170,7 +170,7 @@
                                     {
                                         infos += $"{info.Name}, ";
                                     }
-                                    infos = infos.Substring(0, (infos.Length - 2));
+                                    infos = infos.Length >= 2 ? infos.Substring(0, (infos.Length - 2)) : "";
                                 }
                                 @infos
                             </p>
@@ -178,7 +178,7 @@
                         <div class="col-3 text-end"><a onclick="openModal('#modalInfoToShow')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
                     }
                 </div>
-                <hr class="hr color-hr mt-0"/>
+                <hr class="hr color-hr"/>
             </div>
         </div>
         <div class="pt-4 mt-4">
@@ -187,7 +187,7 @@
             {
                 <div class="card-white-dashed-veesy p-3">
                     <p class="text-color">Write a short info about yourself, try to make it <strong>brief</strong> and <strong>catchy</strong></p>
-                    <div class="mt-4"><a onclick="openModal('#modalPortfolioIntro')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add portfolio intro</strong></a></div>
+                    <div class="mt-4"><a onclick="openModal('#modalPortfolioIntro')" class="red-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add portfolio intro</strong></a></div>
                 </div>
             }
             else
