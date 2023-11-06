@@ -101,10 +101,6 @@
     }
 
     .home-img {
-        display: inline-block;
-        width: 18px;
-        height: 18px;
-        margin-top: -5px;
         content: url('../imgs/dashboard_home_dark-mode.png');
     }
 

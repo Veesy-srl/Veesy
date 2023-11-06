@@ -3,26 +3,26 @@
 @{
     ViewData["Title"] = "Portfolios";
 }
-
-<div class="row pt-7rem">
+<div class="padding-lg pt-7rem">
+    <div class="row  pt-4 p-4-lg">
     <div class="col-sm-12 col-md-3 mb-3">
         <nav class="breadcrumb-container" aria-label="Percorso di navigazione">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><img class="home-img me-2"><a class="breadcrumb-a me-2" asp-action="Index" asp-area="Portfolio" asp-controller="Home">dashboard</a><i class="fa-solid fa-chevron-right"></i></li>
-                <li class="breadcrumb-item"><a class="breadcrumb-a" href="#"><strong>portfolios</strong></a></li>
+                <li class="breadcrumb-item"><img class="home-img me-2"><a class="a-font-p breadcrumb-a me-2" asp-action="Index" asp-area="Portfolio" asp-controller="Home">dashboard</a><img src="~/icon/dashboard_nest_light mode.svg" class="icon-svg-derein"></li>
+                <li class="breadcrumb-item"><a class="breadcrumb-a a-font-p" href="#"><strong>portfolios</strong></a></li>
             </ol>
         </nav>
     </div>
     <div class="col-sm-12 col-md-6">
         <h2 class="text-color"><strong>Portfolios</strong></h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <a class="grey-link ms-2"><strong>learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a></p>
+        <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam. <a class="grey-link ms-2"><strong>learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a></p>
         <div class="empty-veesy"></div>
         @foreach (var item in Model.PortfolioThumbnailDtos)
         {
             <div id="portfolio-div-@item.Code">
                 <hr class="color-hr"/>
                 <div class="d-flex">
-                    <div class="col-3">
+                    <div class="col-4">
                         <div class='box m-0'> 
                             <div class='content1_1'>
                                 @if (item.IsVideo)
@@ -45,7 +45,7 @@
                             </div> 
                         </div>
                     </div>
-                    <div class="col-5">
+                    <div class="col-4 vertical-space">
                         @{
                             var iconBack = "fa-regular";
 
@@ -54,11 +54,14 @@
                                 iconBack = "fa-solid";
                             }
                         }
-                        <h5><i style="color: #75CCDD" class="@iconBack icon-main-portfolio fa-star me-2"></i><strong class="text-color">@item.Name</strong></h5>
-                        <p class="veesy-grey-p" style="margin-bottom: 3rem">Updated on @item.LastUpdate<br/>@item.NumberMedia media uploaded</p>
+                        <div>
+                            <h5><i style="color: #75CCDD" class="@iconBack icon-main-portfolio fa-star me-2"></i><strong class="text-color">@item.Name</strong></h5>
+                            <div class="empty-veesy"></div>
+                            <p class="veesy-text-color" style="margin-bottom: 3rem">Updated on @item.LastUpdate<br/>@item.NumberMedia media uploaded</p>
+                        </div>
                         <a asp-action="PortfolioPreview" asp-controller="Portfolio" asp-area="Portfolio" asp-route-id="@item.Code" class="grey-link">preview<i class="fa-solid fa-arrow-up-right-from-square ms-2"></i></a>
                     </div>
-                    <div class="col-4 text-end">
+                    <div class="col-4 text-end vertical-space">
                         <a onclick="CopyLink('@Model.ApplicationUrl@Url.Action("Portfolio", "Public", new {area = "Public", id = @item.Code})')" class="grey-link ms-2"><i class="fa-regular fa-clone pe-1"></i><strong>copy link</strong></a>
                         <div style="margin-top: 5.3rem; align-items: flex-end" class="d-flex justify-content-between">
                             @{
@@ -66,7 +69,7 @@
                             }
                             
                             <a class="grey-danger-link mt-2" onclick="openModal('#modalDeletePortfolio'), setPortfolioIdAndText('@item.Code', '@item.Name')" style="visibility: @visibility">delete</a>
-                            <a asp-action="Settings" asp-route-id="@item.Code" class="rounded-pill btn btn-primary mt-2"><i class="fa-regular fa-pen-to-square pe-1"></i>edit portfolio</a>
+                            <a asp-action="Settings" asp-route-id="@item.Code" class="a-font-p rounded-pill btn btn-primary mt-2"><i class="fa-regular fa-pen-to-square pe-1"></i>edit portfolio</a>
                         </div>
                     </div>
                 </div>
@@ -74,15 +77,17 @@
         }
         <hr class="color-hr"/>
         <div class="empty-veesy"></div>
-        <a asp-action="List" asp-controller="Cloud" class="rounded-pill btn btn-primary mt-2 btn-padding">create a new portfolio</a>
+        <a asp-action="List" asp-controller="Cloud" class="rounded-pill btn btn-primary mt-2 btn-padding a-font-p">create a new portfolio</a>
         <div class="empty-veesy"></div>
         <div class="empty-veesy"></div>
     </div>
-    <div class="col-sm-12 col-md-3">
-        <div class="d-flex justify-content-center">
+    <div class="col-sm-12 col-md-3 pe-0">
+        <div class="empty-veesy"></div>
+        <div class="empty-veesy"></div>
+        <div class="d-flex justify-content-end ps-3">
             <div class="w-75-veesy card-blue-veesy p-3">
                 <div class="text-end"><i class="fa-solid fa-circle fa-2xs" style="color: #ffffff;"></i></div>
-                <p class="mb-0" style="color: white">Do you need some help?</p>
+                <p class="mb-0 text-white" style="font-size: 14px !important;">Do you need some help?</p>
                 <a class="a-ciano-underline" href="mailto:support@veesy.it">Contact us</a>
             </div>
         </div>
@@ -91,7 +96,7 @@
         <div class="empty-veesy"></div>
     </div>
 </div>
-
+</div>
 <div class="modal fade" id="modalDeletePortfolio" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">

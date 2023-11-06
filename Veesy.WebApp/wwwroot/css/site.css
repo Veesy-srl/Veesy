@@ -803,7 +803,7 @@ h5{
 
 .box {
   position: relative;
-  width: 80%;
+  width: 90%;
   /* desired width */
   margin: 5px;
 }
@@ -851,7 +851,7 @@ h5{
 }
 
 .image-fit-radius{
-  border-radius: 10px;
+  border-radius: 5px;
   object-fit: cover;
   width: 100%;
   height: 100%;
@@ -883,7 +883,7 @@ h5{
   border-radius: 10px;
   -moz-box-shadow: 0 0 5px #333333;
   -webkit-box-shadow:0 0 5px #333333;
-  box-shadow: 0 0 5px #333333;
+  box-shadow: 0 0 5px rgba(51, 51, 51, 0.3);
 }
 
 .card-white-veesy-creators{
@@ -1156,6 +1156,11 @@ a:hover{
   vertical-align: 0 !important;
 }
 
+hr {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 .dropdown:hover .dropdown-menu {
   display: block;
   margin-top: 0px; /* remove the gap so it doesn't close */
@@ -1250,7 +1255,7 @@ a:hover{
 
 .div-select-layout{
   border: 1px solid #202F4D33;
-  border-radius: 0.3rem;
+  border-radius: 5px;
   cursor: pointer;
 }
 
@@ -1615,7 +1620,7 @@ textarea{
 
 .veesy-text-color{
   color: #202F4D;
-  font-size: 14px !important;
+  font-size: 12px !important;
   font-weight: 500;
 }
 
@@ -1752,9 +1757,9 @@ canvas {
 
 .home-img {
   display: inline-block;
-  width: 18px;
-  height: 18px;
-  margin-top: -5px;
+  width: 12px;
+  height: 12px;
+  margin-top: -2px;
   content: url('../imgs/dashboard_home_light-mode.png');
 }
 

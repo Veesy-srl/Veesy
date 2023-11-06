@@ -11,245 +11,249 @@
     }
 }
 
-<div class="row pt-7rem">
-    <div class="col-sm-12 col-md-3 mb-3">
-        <nav class="breadcrumb-container" aria-label="Percorso di navigazione">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><img class="home-img me-2"><a class="breadcrumb-a me-2" asp-action="Index" asp-area="Portfolio" asp-controller="Home">dashboard</a><i class="fa-solid fa-chevron-right"></i></li>
-                <li class="breadcrumb-item"><a class="breadcrumb-a me-2" asp-action="List">portfolio</a><i class="fa-solid fa-chevron-right"></i></li>
-                <li class="breadcrumb-item"><a class="breadcrumb-a" href="#"><strong>settings</strong></a></li>
-            </ol>
-        </nav>
-        <div class="w-80-veesy card-white-veesy p-3 mb-3">
-            <div class="d-flex">
-                <div class="col-11">
-                    <p class="ms-2"><i style="color: #75CCDD" class="@iconBack icon-main-portfolio fa-star me-2"></i><strong id="portfolio-name-card">@Model.Portfolio.Name</strong></p>
+<div class="padding-lg pt-7rem">
+    <div class="row  pt-4 p-4-lg">
+        <div class="col-sm-12 col-md-3 mb-3">
+            <nav class="breadcrumb-container" aria-label="Percorso di navigazione">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><img class="home-img me-2"><a class="breadcrumb-a me-2 a-font-p" asp-action="Index" asp-area="Portfolio" asp-controller="Home">dashboard</a><img src="~/icon/dashboard_nest_light mode.svg" class="icon-svg-derein"></li>
+                    <li class="breadcrumb-item"><a class="breadcrumb-a me-2 a-font-p" asp-action="List">portfolio</a><img src="~/icon/dashboard_nest_light mode.svg" class="icon-svg-derein"></li>
+                    <li class="breadcrumb-item"><a class="breadcrumb-a a-font-p" href="#"><strong>settings</strong></a></li>
+                </ol>
+            </nav>
+            <div class="w-80-veesy card-white-veesy p-3 mb-3">
+                <div class="d-flex">
+                    <div class="col-11">
+                        <p class="ms-2"><i style="color: #75CCDD" class="@iconBack icon-main-portfolio fa-star me-2"></i><strong id="portfolio-name-card">@Model.Portfolio.Name</strong></p>
+                    </div>
+                    <div class="col-1"><div class="text-end"><i class="fa-solid fa-circle fa-xs option-color-i" ></i></div></div>
                 </div>
-                <div class="col-1"><div class="text-end"><i class="fa-solid fa-circle fa-xs option-color-i" ></i></div></div>
-            </div>
-            <div class="d-flex mb-3">
-                <div class="col-12">
-                    <div class="text-left">
-                        @if (Model.Portfolio.DefaultMedia.IsVideo.Value)
-                        {
-                            <video autoplay="autoplay" muted loop class="image-fit-radius" title="@Model.Portfolio.DefaultMedia.OriginalFileName">
-                                <source src="@Model.BasePathImages@Model.Portfolio.DefaultMedia.FileName?tr=w-400" type="video/mp4">
-                            </video>
-                        }
-                        else
-                        {
-                            if (@Model.Portfolio.DefaultMedia.FileName != "")
+                <div class="d-flex mb-3">
+                    <div class="col-12">
+                        <div class="text-left">
+                            @if (Model.Portfolio.DefaultMedia.IsVideo.Value)
                             {
-                                <img class="image-fit-radius" title="@Model.Portfolio.DefaultMedia.OriginalFileName" src="@Model.BasePathImages@Model.Portfolio.DefaultMedia.FileName?tr=w-400"/>
+                                <video autoplay="autoplay" muted loop class="image-fit-radius" title="@Model.Portfolio.DefaultMedia.OriginalFileName">
+                                    <source src="@Model.BasePathImages@Model.Portfolio.DefaultMedia.FileName?tr=w-400" type="video/mp4">
+                                </video>
                             }
                             else
                             {
-                                <img class="image-fit-radius" src="~/imgs/noimage.png"/>
-                            }
-                        }
-                    </div>
-                </div>
-            </div>
-            <div class="d-flex"><p class="mb-0 text-grey text-color">Updated on @Model.Portfolio.LastEditRecordDate</p></div>
-            <div class="d-flex"><p class="mb-0 text-grey veesy-overflow">@Model.Portfolio.NumberMedia media uploaded</p></div>
-            <div class="d-flex"><p class="mb-0 mt-3 text-grey veesy-overflow">@Model.Portfolio.NumberImage images</p></div>
-            <div class="d-flex"><p class="mb-0 text-grey veesy-overflow">@Model.Portfolio.NumberVideo videos</p></div>
-            <a asp-action="PortfolioPreview" asp-controller="Portfolio" asp-area="Portfolio" asp-route-id="@Model.Portfolio.Id"  class="rounded-pill btn btn-primary btn-variant w-100 mt-3">Preview portfolio</a>
-        </div>
-    </div>
-    <div class="col-sm-12 col-md-6">
-        <h2 class="text-color"><strong id="portfolio-name-title">@Model.Portfolio.Name</strong></h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <a class="grey-link ms-2"><strong>learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a></p>
-        <div class="empty-veesy"></div>
-        <div class="row">
-            <h3 class="text-color"><strong>Main Settings</strong></h3>
-            <div class="col-sm-12 col-md-6 col-lg-6 ps-2 pe-2">
-                <hr class="hr color-hr"/>
-                <div class="d-flex">
-                    <div class="col-9 profile-section">
-                        <p class="mb-0"><strong>Portfolio Name:</strong></p>
-                        <p class="mb-0 veesy-overflow" id="portfolio-name">@Model.Portfolio.Name</p>
-                    </div>
-                    <div class="col-3 text-end"><a onclick="setTextAreaValue('portfolio-name-edit', '@Model.Portfolio.Name'), openModal('#modalName')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
-                </div>
-                <hr class="hr color-hr"/>
-                <div class="d-flex">
-                    @if (Model.Portfolio.IsPublic)
-                    {
-                        <div class="col-8">
-                            <p class="mb-0"><strong>Portfolio Password</strong></p>
-                            <a id="password-show" class="mb-0 veesy-overflow font-a-as-p" onclick="openModal('#modalPassword')">Your portfolio is public</a>
-                        </div>
-                        @if (string.IsNullOrEmpty(Model.Portfolio.Password))
-                        {
-                            <div class="col-4 text-end"><a onclick="openModal('#modalPassword')" class="grey-link"><i id="lock-icon" class="fa-solid fa-lock-open me-2"></i><strong id="lock-text">unlocked</strong></a></div>
-                        }
-                        else
-                        {
-                            <div class="col-4 text-end"><a onclick="ChangePortfolioSecurity()" class="grey-link"><i id="lock-icon" class="fa-solid fa-lock-open me-2"></i><strong id="lock-text">unlocked</strong></a></div>
-                        }
-                    }
-                    else
-                    {
-                        <div class="col-8">
-                            <p class="mb-0"><strong>Portfolio Password</strong></p>
-                            <a id="password-show" class="mb-0 veesy-overflow font-a-as-p" onclick="openModal('#modalPassword')">@Model.Portfolio.Password</a>
-                        </div>
-                        <div class="col-4 text-end"><a onclick="ChangePortfolioSecurity()" class="grey-link"><i id="lock-icon" class="fa-solid fa-lock me-2"></i><strong id="lock-text">lock</strong></a></div>
-                    }
-                </div>
-                <hr class="hr color-hr"/>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-6 ps-2 pe-2">
-                <hr class="hr nodisplay-sm color-hr"/>
-                <div class="d-flex">
-                    <div class="col-9">
-                        <p class="mb-0"><strong><i style="color: #75CCDD" class="@iconBack icon-main-portfolio fa-star me-2"></i>Main Portfolio:</strong></p>
-                        @if (Model.Portfolio.IsMain)
-                        {
-                            <p class="mb-0 veesy-overflow" id="portfolio-main-text">This portfolio is set as your main</p>
-                        }
-                        else
-                        {
-                            <a class="grey-link mb-0 font-a-as-p" id="portfolio-main-text" onclick="ChangeMainPortfolio()">Make this your Main Portfolio</a>
-                        }
-                    </div>
-                    @* <div class="col-3 text-end"><a onclick="openModal('#modalExternalLink')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div> *@
-                </div>
-                <hr class="hr color-hr"/>
-                @if (Model.Portfolio.IsMain)
-                {
-                    <div class="d-flex">
-                        <div class="col-9">
-                            <p class="text-danger mb-0"><strong>Delete portfolio:</strong></p>
-                            <p class="mb-0 veesy-overflow">You can't delete main portfolio</p>
-                        </div>
-                    </div>
-                }
-                else
-                {
-                    <div class="d-flex">
-                        <div class="col-9">
-                            <a class="red-link mb-0 font-a-as-p" onclick="openModal('#modalDeletePortfolio')"><strong>Delete portfolio:</strong></a>
-                            <p class="mb-0 veesy-overflow">Your medias will be kept safe in cloud.</p>
-                        </div>
-                    </div>
-                }
-                <hr class="hr color-hr"/>
-            </div>
-        </div>
-        <div class="empty-veesy"></div>
-        <div class="row">
-            <h3 class="text-color"><strong>Select layout</strong></h3>
-            <p>Remember that for <b>horizontal images</b>, 1 or 2 columns are more suitable choice, for <b>vertical images</b>, it's better to pick 3 or 4 columns.</p>
-            <div class="ms-1 row">
-                @foreach (var item in VeesyConstants.GetAvailableLayouts())
-                {
-                    <div class="ps-2 pe-2 col-sm-12 col-md-3">
-                        @{
-                            var css_select = "";
-                            if (Model.Portfolio.Layout == item)
-                            {
-                                css_select = "div-select-layout-selected";
-                            }
-                                
-                        }
-                        <div id="layout-div-@((int)item)" class="p-2 form-check div-select-layout @css_select">
-                            <div class="d-flex me-2">
-                                <input style="visibility: hidden" class="form-check-input" type="radio" name="column-layout" asp-for="Portfolio.Layout" value="@item" id="layout-@item" onchange="switchColumnLayout(@((int)item))"/>
-                                @if((int)item == 1)
+                                if (@Model.Portfolio.DefaultMedia.FileName != "")
                                 {
-                                    <label class="ms-2 form-check-label text-color" for="@item">@((int)item) column</label>
+                                    <img class="image-fit-radius" title="@Model.Portfolio.DefaultMedia.OriginalFileName" src="@Model.BasePathImages@Model.Portfolio.DefaultMedia.FileName?tr=w-400"/>
                                 }
                                 else
                                 {
-                                    <label class="ms-2 form-check-label text-color" for="@item">@((int)item) columns</label>
+                                    <img class="image-fit-radius" src="~/imgs/noimage.png"/>
                                 }
-                            </div>
-                            <div>
-                                @{
-                                    var url = "../../imgs/PortfolioLayout/col_" + (int)item + ".png";
-                                }
-                                <a onclick="ChangeLayout('@item', @((int)item)), UpdateLayout(@((int)item))">
-                                    <img class="w-100" src="@url"/>
-                                </a>
-                            </div>
+                            }
                         </div>
                     </div>
-                }
+                </div>
+                <div class="d-flex"><p class="mb-0 text-grey text-color">Updated on @Model.Portfolio.LastEditRecordDate</p></div>
+                <div class="d-flex"><p class="mb-0 text-grey veesy-overflow">@Model.Portfolio.NumberMedia media uploaded</p></div>
+                <div class="d-flex"><p class="mb-0 mt-3 text-grey veesy-overflow">@Model.Portfolio.NumberImage images</p></div>
+                <div class="d-flex"><p class="mb-0 text-grey veesy-overflow">@Model.Portfolio.NumberVideo videos</p></div>
+                <a asp-action="PortfolioPreview" asp-controller="Portfolio" asp-area="Portfolio" asp-route-id="@Model.Portfolio.Id"  class="rounded-pill btn btn-primary btn-variant w-100 mt-3">preview portfolio</a>
             </div>
         </div>
-        <div class="empty-veesy"></div>
-        <div class="row">
-            <h3 class="text-color"><strong>Your Medias</strong></h3>
-            <div class="card-columns draggable-zone" id="images-container">
-                @foreach (var image in Model.Portfolio.PortfolioMedias)
-                {
-                    @if (MediaCostants.ImageExtensions.Contains(image.Media.Type.ToUpper()))
+        <div class="col-sm-12 col-md-6">
+            <h2 class="text-color"><strong id="portfolio-name-title">@Model.Portfolio.Name</strong></h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <a class="grey-link ms-2"><strong>learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a></p>
+            <div class="empty-veesy"></div>
+            <div class="row">
+                <h3 class="text-color"><strong>Main Settings</strong></h3>
+                <div class="col-sm-12 col-md-6 col-lg-6 ps-2 pe-2">
+                    <hr class="hr color-hr"/>
+                    <div class="d-flex">
+                        <div class="col-9">
+                            <p class="mb-0"><strong>Portfolio Name:</strong></p>
+                            <p class="mb-0 veesy-overflow" id="portfolio-name">@Model.Portfolio.Name</p>
+                        </div>
+                        <div class="col-3 text-end"><a onclick="setTextAreaValue('portfolio-name-edit', '@Model.Portfolio.Name'), openModal('#modalName')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
+                    </div>
+                    <hr class="hr color-hr"/>
+                    <div class="d-flex">
+                        @if (Model.Portfolio.IsPublic)
+                        {
+                            <div class="col-8">
+                                <p class="mb-0"><strong>Portfolio Password</strong></p>
+                                <a id="password-show" class="mb-0 veesy-overflow a-font-p" onclick="openModal('#modalPassword')">Your portfolio is public</a>
+                            </div>
+                            @if (string.IsNullOrEmpty(Model.Portfolio.Password))
+                            {
+                                <div class="col-4 text-end"><a onclick="openModal('#modalPassword')" class="grey-link"><i id="lock-icon" class="fa-solid fa-lock-open me-2"></i><strong id="lock-text">unlocked</strong></a></div>
+                            }
+                            else
+                            {
+                                <div class="col-4 text-end"><a onclick="ChangePortfolioSecurity()" class="grey-link"><i id="lock-icon" class="fa-solid fa-lock-open me-2"></i><strong id="lock-text">unlocked</strong></a></div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="col-8">
+                                <p class="mb-0"><strong>Portfolio Password</strong></p>
+                                <a id="password-show" class="mb-0 veesy-overflow a-font-p" onclick="openModal('#modalPassword')">@Model.Portfolio.Password</a>
+                            </div>
+                            <div class="col-4 text-end"><a onclick="ChangePortfolioSecurity()" class="grey-link"><i id="lock-icon" class="fa-solid fa-lock me-2"></i><strong id="lock-text">lock</strong></a></div>
+                        }
+                    </div>
+                    <hr class="hr color-hr"/>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-6 ps-2 pe-2">
+                    <hr class="hr nodisplay-sm color-hr"/>
+                    <div class="d-flex">
+                        <div class="col-9">
+                            <p class="mb-0"><strong><i style="color: #75CCDD" class="@iconBack icon-main-portfolio fa-star me-2"></i>Main Portfolio:</strong></p>
+                            @if (Model.Portfolio.IsMain)
+                            {
+                                <p class="mb-0 veesy-overflow" id="portfolio-main-text">This portfolio is set as your main</p>
+                            }
+                            else
+                            {
+                                <a class="grey-link mb-0 a-font-p" id="portfolio-main-text" onclick="ChangeMainPortfolio()">Make this your Main Portfolio</a>
+                            }
+                        </div>
+                        @* <div class="col-3 text-end"><a onclick="openModal('#modalExternalLink')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div> *@
+                    </div>
+                    <hr class="hr color-hr"/>
+                    @if (Model.Portfolio.IsMain)
                     {
-                        <div id="media-@image.MediaId" style="position: relative" class="draggable m-0 pb-2 pt-2 show-edit" name="image-gallery" mediaid="@image.MediaId">            
-                            <a onMouseDown="RemoveMediaFromPortfolio('@image.MediaId')" class="edit-button-portfolio">
-                                <p class="mb-0 text-white">remove</p>
-                            </a>
-                            <img src="@Model.BasePathImages@image.Media.FileName?tr=w-400" class="card-body m-0 p-0 rounded-05 img-rounded-trasparent w-100 p-0" title="@image.Media.OriginalFileName"/>
+                        <div class="d-flex">
+                            <div class="col-9">
+                                <p class="text-danger mb-0"><strong>Delete portfolio:</strong></p>
+                                <a class="mb-0 veesy-overflow a-font-p">You can't delete main portfolio</a>
+                            </div>
                         </div>
                     }
                     else
                     {
-                        <div id="media-@image.MediaId" style="position: relative" class="draggable m-0 pb-2 pt-2 show-edit" name="image-gallery" mediaid="@image.MediaId">
-                            <a onMouseDown="RemoveMediaFromPortfolio('@image.MediaId')" class="edit-button-portfolio">
-                                <p class="mb-0 text-white">remove</p>
-                            </a>
-                            <video autoplay="autoplay" muted loop class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" title="@image.Media.OriginalFileName">
-                                <source src="@Model.BasePathImages@image.Media.FileName?tr=w-400" type="video/mp4">
-                            </video>
+                        <div class="d-flex">
+                            <div class="col-9">
+                                <a class="red-link mb-0 a-font-p" onclick="openModal('#modalDeletePortfolio')"><strong>Delete portfolio:</strong></a>
+                                <p class="mb-0 veesy-overflow">Your medias will be kept safe in cloud.</p>
+                            </div>
                         </div>
                     }
-                }
-            </div>
-        </div>
-        <div class="empty-veesy"></div>
-        <div id="div-uploader">
-            <form enctype="multipart/form-data" asp-route-PortfolioId="@Model.Portfolio.Id" asp-action="UploadMediaInPortfolio" asp-controller="Media" asp-area="Portfolio" class="dropzone card-grey-dashed-veesy mb-4" id="uploader">
-                <a id="dropzone-close-button" style="display: none;" onclick="hideDropZone()" class="ms-2 btn btn-light border fw-bolder shadow-none close-button-dropzone">
-                    <i class="fas fa-times-circle fa-2xs text-primary" id="icon-color" aria-hidden="true"></i>
-                    <span id="color-text-variant">close</span>
-                </a>
-                <div class="dz-message needsclick" id="message-uploader">
-                    <div id="div-uploader-icon" class="w-100 mb-1">
-                        <i id="uploader-icon" class="fa-solid fa-circle-plus fa-xl" style="color: #0D2045"></i>
-                    </div>
-                    <span id="uploader-text" class="text-color">
-                        Upload or drop files here. <br/> (Accepted formats: jpg, png, mov, mp4, gif)
-                    </span>
-                    <div class="progress-bar progress-bar-primary" role="progressbar" data-dz-uploadprogress>
-                        <span class="progress-text"></span>
-                    </div>
+                    <hr class="hr color-hr"/>
                 </div>
-            </form>
-        </div>
-        <div class="empty-veesy"></div>
-    </div>
-    <div class="col-sm-12 col-md-3">
-        <div class="d-flex justify-content-center">
-            <div class="w-75-veesy card-blue-veesy p-3">
-                <div class="text-end"><i class="fa-solid fa-circle fa-2xs" style="color: #ffffff;"></i></div>
-                <p class="mb-0" style="color: white">Do you need some help?</p>
-                <a class="a-ciano-underline" href="mailto:support@veesy.it">Contact us</a>
             </div>
+            <div class="empty-veesy"></div>
+            <div class="row">
+                <h3 class="text-color"><strong>Select layout</strong></h3>
+                <p>Remember that for <b>horizontal images</b>, 1 or 2 columns are more suitable choice, for <b>vertical images</b>, it's better to pick 3 or 4 columns.</p>
+                <div class="ms-1 ps-0 row">
+                    @foreach (var item in VeesyConstants.GetAvailableLayouts())
+                    {
+                        <div class="ps-2 pe-2 col-sm-12 col-md-3">
+                            @{
+                                var css_select = "";
+                                if (Model.Portfolio.Layout == item)
+                                {
+                                    css_select = "div-select-layout-selected";
+                                }
+                                    
+                            }
+                            <div id="layout-div-@((int)item)" class="p-2 form-check div-select-layout @css_select">
+                                <div class="d-flex me-2">
+                                    <input style="visibility: hidden" class="form-check-input" type="radio" name="column-layout" asp-for="Portfolio.Layout" value="@item" id="layout-@item" onchange="switchColumnLayout(@((int)item))"/>
+                                    @if((int)item == 1)
+                                    {
+                                        <label class="ms-2 form-check-label text-color" for="@item">@((int)item) column</label>
+                                    }
+                                    else
+                                    {
+                                        <label class="ms-2 form-check-label text-color" for="@item">@((int)item) columns</label>
+                                    }
+                                </div>
+                                <div>
+                                    @{
+                                        var url = "../../imgs/PortfolioLayout/col_" + (int)item + ".png";
+                                    }
+                                    <a onclick="ChangeLayout('@item', @((int)item)), UpdateLayout(@((int)item))">
+                                        <img class="w-100" src="@url"/>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="empty-veesy"></div>
+            <div class="empty-veesy"></div>
+            <div class="row mt-4">
+                <h3 class="text-color"><strong>Your Medias</strong></h3>
+                <div class="card-columns draggable-zone" id="images-container">
+                    @foreach (var image in Model.Portfolio.PortfolioMedias)
+                    {
+                        @if (MediaCostants.ImageExtensions.Contains(image.Media.Type.ToUpper()))
+                        {
+                            <div id="media-@image.MediaId" style="position: relative" class="draggable m-0 pb-2 pt-2 show-edit" name="image-gallery" mediaid="@image.MediaId">            
+                                <a onMouseDown="RemoveMediaFromPortfolio('@image.MediaId')" class="edit-button-portfolio">
+                                    <p class="mb-0 text-white">remove</p>
+                                </a>
+                                <img src="@Model.BasePathImages@image.Media.FileName?tr=w-400" class="card-body m-0 p-0 rounded-05 img-rounded-trasparent w-100 p-0" title="@image.Media.OriginalFileName"/>
+                            </div>
+                        }
+                        else
+                        {
+                            <div id="media-@image.MediaId" style="position: relative" class="draggable m-0 pb-2 pt-2 show-edit" name="image-gallery" mediaid="@image.MediaId">
+                                <a onMouseDown="RemoveMediaFromPortfolio('@image.MediaId')" class="edit-button-portfolio">
+                                    <p class="mb-0 text-white">remove</p>
+                                </a>
+                                <video autoplay="autoplay" muted loop class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" title="@image.Media.OriginalFileName">
+                                    <source src="@Model.BasePathImages@image.Media.FileName?tr=w-400" type="video/mp4">
+                                </video>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="empty-veesy"></div>
+            <div id="div-uploader">
+                <form enctype="multipart/form-data" asp-route-PortfolioId="@Model.Portfolio.Id" asp-action="UploadMediaInPortfolio" asp-controller="Media" asp-area="Portfolio" class="dropzone card-grey-dashed-veesy mb-4" id="uploader">
+                    <a id="dropzone-close-button" style="display: none;" onclick="hideDropZone()" class="ms-2 btn btn-light border fw-bolder shadow-none close-button-dropzone">
+                        <i class="fas fa-times-circle fa-2xs text-primary" id="icon-color" aria-hidden="true"></i>
+                        <span id="color-text-variant">close</span>
+                    </a>
+                    <div class="dz-message needsclick" id="message-uploader">
+                        <div id="div-uploader-icon" class="w-100 mb-1">
+                            <i id="uploader-icon" class="fa-solid fa-circle-plus fa-xl" style="color: #0D2045"></i>
+                        </div>
+                        <span id="uploader-text" class="text-color">
+                            Upload or drop files here. <br/> (Accepted formats: jpg, png, mov, mp4, gif)
+                        </span>
+                        <div class="progress-bar progress-bar-primary" role="progressbar" data-dz-uploadprogress>
+                            <span class="progress-text"></span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="empty-veesy"></div>
         </div>
-        <div class="empty-veesy"></div>
-        <div class="empty-veesy"></div>
-        <div class="empty-veesy"></div>
-    </div>
+        <div class="col-sm-12 col-md-3 pe-0">
+            <div class="empty-veesy"></div>
+            <div class="empty-veesy"></div>
+            <div class="d-flex justify-content-end ps-3">
+                <div class="w-75-veesy card-blue-veesy p-3">
+                    <div class="text-end"><i class="fa-solid fa-circle fa-2xs" style="color: #ffffff;"></i></div>
+                    <p class="mb-0 text-white" style="font-size: 14px !important;">Do you need some help?</p>
+                    <a class="a-ciano-underline" href="mailto:support@veesy.it">Contact us</a>
+                </div>
+            </div>
+            <div class="empty-veesy"></div>
+            <div class="empty-veesy"></div>
+            <div class="empty-veesy"></div>
+        </div>
 </div>
-
+</div>
 
 <div class="modal fade" id="modalName" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title text-color" id="exampleModalLongTitle"></h3>
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Portfolio Name</strong></h3>
                 <a onclick="closeModal('#modalName')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
@@ -331,8 +335,8 @@
         </div>
         <div class="float-end">
             <div class="d-flex align-items-center">
-                <a onclick="CloseAlert()" class="blue-link me-4 fw-bolder text-color" style="font-size: 14px; margin-top: 2px;">ignore</a>
-                <a onclick="PublishPortfolio()" class="rounded-pill btn btn-grey btn-padding" style="padding-left: 35px !important; padding-right:  35px !important; font-size:  15px;" type="submit">publish portfolio</a>
+                <a onclick="CloseAlert()" class="blue-link me-4 fw-bolder text-color a-font-p" style="font-size: 14px; margin-top: 2px;">ignore</a>
+                <a onclick="PublishPortfolio()" class="rounded-pill btn btn-grey btn-padding a-font-p" style="padding-left: 35px !important; padding-right:  35px !important; font-size:  15px;" type="submit">publish portfolio</a>
                 <a class="ms-4 me-2 mt-1" type="button" onclick="CloseAlert()"><i class="fa-solid fa-grey fa-circle-xmark"></i></a>
             </div>
         </div>
