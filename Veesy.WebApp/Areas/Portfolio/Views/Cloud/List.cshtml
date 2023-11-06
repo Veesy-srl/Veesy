@@ -7,88 +7,85 @@
 @section Style
 {
     <link rel="stylesheet" href="~/css/notyf_override.css" asp-append-version="true" />
-
 }
-
-<div class="row pt-7rem">
-    <div class="col-sm-12 col-md-3">
-        <nav class="breadcrumb-container" aria-label="Percorso di navigazione">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><img src="imgs/dashboard_home_dark-mode.png" style="width: 18px; margin-top: -5px;" class="me-2"><a class="breadcrumb-a-white me-2 text-white" asp-area="Portfolio" asp-controller="Home" asp-action="Index">dashboard</a><i class="fa-solid fa-chevron-right text-white"></i></li>
-                <li class="breadcrumb-item"><a class="breadcrumb-a-white me-2 text-white" asp-action="List"><strong>cloud</strong></a></li>
-            </ol>
-        </nav>
-    </div>
-    <div class="text-white col-sm-12 col-md-6">
-        <h1><strong>Cloud</strong></h1>
-        <div class="empty-veesy"></div>
-        <p class="text-white mb-0">Here you can upload your files. Drop files on the screen to upload. The recommended format is 4:3 horizontal or vertical, format accepted: jpg, png, mov, mp4, gif. <a class="grey-link ms-2"><strong>learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a></p>
-        <div class="empty-veesy nodisplay-md"></div>
-        @{
-            var nodisplay_md = "mt-4";
-            if (Model.Medias != null && Model.Medias.Count != 0)
-            {
-                nodisplay_md = "nodisplay-md";
+<div class="padding-lg pt-7rem">
+    <div class="row pt-4 p-4-lg">
+        <div class="col-sm-12 col-md-3">
+            <nav class="breadcrumb-container" aria-label="Percorso di navigazione">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><img src="imgs/dashboard_home_dark-mode.png" class="me-2 icon-derein"><a class="a-font-p breadcrumb-a-white me-2 text-white" asp-area="Portfolio" asp-controller="Home" asp-action="Index">dashboard</a><img src="icon/dashboard_nest_dark mode.svg" class="icon-svg-derein"></li>
+                    <li class="breadcrumb-item"><a class="a-font-p breadcrumb-a-white me-2 text-white" asp-action="List"><strong>cloud</strong></a></li>
+                </ol>
+            </nav>
+        </div>
+        <div class="text-white col-sm-12 col-md-6">
+            <h1><strong>Cloud</strong></h1>
+            <p style="margin-top: 20px;" class="text-white mb-0">Here you can upload your files. Drop files on the screen to upload. The recommended format is 4:3 horizontal or vertical, format accepted: jpg, png, mov, mp4, gif. <a class="grey-link ms-2"><strong>learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a></p>
+            <div class="empty-veesy nodisplay-md"></div>
+            @{
+                var nodisplay_md = "mt-4";
+                if (Model.Medias != null && Model.Medias.Count != 0)
+                {
+                    nodisplay_md = "nodisplay-md";
+                }
             }
-        }
-        <div class="@nodisplay_md" id="div-uploader">
-            <form enctype="multipart/form-data" asp-action="UploadMedia" asp-controller="Media" asp-area="Portfolio" class="dropzone card-grey-dashed-veesy mb-4" id="uploader">
-                <a id="dropzone-close-button" style="display: none;" onclick="PopUpConfirm()" class="ms-2 btn btn-light border fw-bolder shadow-none close-button-dropzone">
-                    <i class="fas fa-times-circle fa-2xs text-primary" id="icon-color" aria-hidden="true"></i>
-                    <span id="color-text-variant">close</span>
-                </a>
-                <div class="dz-message needsclick" id="message-uploader">
-                    <div id="div-uploader-icon" class="w-100 mb-1">
-                        <i id="uploader-icon" class="fa-solid fa-circle-plus fa-xl" style="color: #0D2045"></i>
+            <div class="@nodisplay_md" id="div-uploader">
+                <form enctype="multipart/form-data" asp-action="UploadMedia" asp-controller="Media" asp-area="Portfolio" class="dropzone card-grey-dashed-veesy mb-4" id="uploader">
+                    <a id="dropzone-close-button" style="display: none;" onclick="PopUpConfirm()" class="ms-2 btn btn-light border fw-bolder shadow-none close-button-dropzone">
+                        <i class="fas fa-times-circle fa-2xs text-primary" id="icon-color" aria-hidden="true"></i>
+                        <span id="color-text-variant">close</span>
+                    </a>
+                    <div class="dz-message needsclick" id="message-uploader">
+                        <div id="div-uploader-icon" class="w-100 mb-1">
+                            <i id="uploader-icon" class="fa-solid fa-circle-plus fa-xl" style="color: #383B43"></i>
+                        </div>
+                        <span id="uploader-text" class="text-white a-font-p">
+                            drag your files here <br/> or <br> <p class="text-white" style="text-decoration: underline">upload from device</p>
+                        </span>
+                        <div class="progress-bar progress-bar-primary" role="progressbar" data-dz-uploadprogress>
+                            <span class="progress-text"></span>
+                        </div>
                     </div>
-                    <span id="uploader-text" class="text-cloud">
-                        Upload or drop files here. <br/> (Accepted formats: jpg, png, mov, mp4, gif)
-                    </span>
-                    <div class="progress-bar progress-bar-primary" role="progressbar" data-dz-uploadprogress>
-                        <span class="progress-text"></span>
-                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-3 nodisplay-sm pe-0">
+            <div class="empty-veesy"></div>
+            <div class="d-flex mt-20 justify-content-end ps-3">
+                <div class="w-75-veesy card-blue-veesy p-3">
+                    <div class="text-end"><i class="fa-solid fa-circle fa-2xs" style="color: #ffffff;"></i></div>
+                    <p class="mb-0" style="color: white">Do you need some help?</p>
+                    <a class="a-ciano-underline" href="mailto:support@veesy.it">Contact us</a>
                 </div>
-            </form>
-        </div>
-    </div>
-    <div class="col-sm-12 col-md-3 nodisplay-sm">
-        <div class="d-flex justify-content-center">
-            <div class="w-75-veesy card-blue-veesy p-3">
-                <div class="text-end"><i class="fa-solid fa-circle fa-2xs" style="color: #ffffff;"></i></div>
-                <p class="mb-0" style="color: white">Do you need some help?</p>
-                <a class="a-ciano-underline" href="mailto:support@veesy.it">Contact us</a>
             </div>
         </div>
-        <div class="empty-veesy"></div>
-        <div class="empty-veesy"></div>
-        <div class="empty-veesy"></div>
     </div>
-</div>
-<div class="row">
-    <div class="p-1 mb-4 mb-lg-0 card-columns" id="images-container">
-        @foreach (var image in Model.Medias)
-        {
-            <div id="div-for-remove-@image.Code" class="media-container show-edit">
-                <a asp-action="Edit" asp-route-id="@image.Code" class="edit-button">
-                    <strong style="margin-right: 5px; font-size: 14px;">edit</strong>
-                    <i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>
-                </a>
-                <a onclick="SelectMedia('@image.Code')">
-                    <div class="img-div">
-                        @if (MediaCostants.ImageExtensions.Contains(image.Type.ToUpper()))
-                        {
-                            <img id="img-@image.Code" src="@Model.BasePath@image.FileName?tr=w-400" class="card-body mb-2 rounded-05 img-rounded-trasparent w-100 p-0" title="@image.OriginalFileName"/>
-                        }
-                        else
-                        {
-                            <video id="img-@image.Code" autoplay="autoplay" muted loop class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" title="@image.OriginalFileName">
-                                <source src="@Model.BasePath@image.FileName?tr=w-400" type="video/mp4">
-                            </video>
-                        }
-                    </div>
-                </a>
-            </div>
-        }
+    <div class="row mt-20 p-4-lg">
+        <div class="p-0 mb-4 mb-lg-0 card-columns" id="images-container">
+            @foreach (var image in Model.Medias)
+            {
+                <div id="div-for-remove-@image.Code" class="media-container show-edit">
+                    <a asp-action="Edit" asp-route-id="@image.Code" class="edit-button">
+                        <strong style="margin-right: 5px; font-size: 14px;">edit</strong>
+                        <i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>
+                    </a>
+                    <a onclick="SelectMedia('@image.Code')">
+                        <div class="img-div">
+                            @if (MediaCostants.ImageExtensions.Contains(image.Type.ToUpper()))
+                            {
+                                <img id="img-@image.Code" src="@Model.BasePath@image.FileName?tr=w-400" class="card-body mb-2 rounded-05 img-rounded-trasparent w-100 p-0" title="@image.OriginalFileName"/>
+                            }
+                            else
+                            {
+                                <video id="img-@image.Code" autoplay="autoplay" muted loop class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" title="@image.OriginalFileName">
+                                    <source src="@Model.BasePath@image.FileName?tr=w-400" type="video/mp4">
+                                </video>
+                            }
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
     </div>
 </div>
 

@@ -401,10 +401,6 @@
     .dropdown:hover .dropdown-menu {
         box-shadow: 0 0 10px rgba(105, 100, 100, 0.4);
     }
-
-    .text-cloud {
-        color: #F3F3F3;
-    }
     
     .filter-option-inner-inner{
         color: #F3F3F3;

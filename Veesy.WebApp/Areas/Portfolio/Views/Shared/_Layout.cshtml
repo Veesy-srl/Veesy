@@ -321,12 +321,12 @@
       });
       
         $(document).ready(function() {
-               $(".menu-list a").mouseenter(function() {
-                   var target = $(this).data('target');
-                   $(".description-content").hide();
-                   $(target).show();
-               });
+           $(".menu-list a").mouseenter(function() {
+               var target = $(this).data('target');
+               $(".description-content").hide();
+               $(target).show();
            });
+       });
         
         function openModal(id){
             $(id).modal('show');

@@ -67,6 +67,7 @@ public class MediaHelper
     {
         //Il numero di file che trovo nella section dipende dal limite che imposto a dropzone
         var mediaList = _mediaService.GetMediasNameAndSizeByUserId(user.Id);
+        var numberMediaOnCloud = mediaList.Count; 
         var boundary = GetBoundary(MediaTypeHeaderValue.Parse(contentType));
         var multipartReader = new MultipartReader(boundary, fileStream);
         var section = await multipartReader.ReadNextSectionAsync();
@@ -87,6 +88,13 @@ public class MediaHelper
                     continue;
                 }
                 
+                //Number media validation
+                if (numberMediaOnCloud >= subscription.AllowedMediaNumber)
+                    filesUploadedStatus.Add(new(false, null, fileSection.FileName,
+                        "Reached maximum subscription number media."));
+                else
+                    numberMediaOnCloud ++;
+                        
                 //File size validation
                 await using (Stream stream = new MemoryStream())
                 {
@@ -139,6 +147,7 @@ public class MediaHelper
     {
         //Il numero di file che trovo nella section dipende dal limite che imposto a dropzone
         var mediaList = _mediaService.GetMediasNameAndSizeByUserId(user.Id);
+        var numberMediaOnCloud = mediaList.Count; 
         var boundary = GetBoundary(MediaTypeHeaderValue.Parse(contentType));
         var multipartReader = new MultipartReader(boundary, fileStream);
         var section = await multipartReader.ReadNextSectionAsync();
@@ -158,6 +167,13 @@ public class MediaHelper
                     section = await multipartReader.ReadNextSectionAsync();
                     continue;
                 }
+                
+                //Number media validation
+                if (numberMediaOnCloud >= subscription.AllowedMediaNumber)
+                    filesUploadedStatus.Add(new(false, null, fileSection.FileName,
+                        "Reached maximum subscription number media."));
+                else
+                    numberMediaOnCloud ++;
                 
                 //File size validation
                 await using (Stream stream = new MemoryStream())

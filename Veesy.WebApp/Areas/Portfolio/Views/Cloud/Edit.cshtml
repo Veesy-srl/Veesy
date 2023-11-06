@@ -8,9 +8,9 @@
     <div class="col-sm-12 col-md-3">
         <nav class="breadcrumb-container" aria-label="Percorso di navigazione">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><img src="~/imgs/dashboard_home_dark-mode.png" style="width: 18px; margin-top: -5px;" class="me-2"><a class="breadcrumb-a-white me-2 text-white" asp-area="Portfolio" asp-controller="Home" asp-action="Index">dashboard</a><i class="fa-solid fa-chevron-right text-white"></i></li>
-                <li class="breadcrumb-item"><a class="breadcrumb-a-white me-2 text-white" asp-area="Portfolio" asp-controller="Cloud" asp-action="List">cloud</a><i class="fa-solid fa-chevron-right text-white"></i></li>
-                <li class="breadcrumb-item"><a class="breadcrumb-a-white me-2 text-white" href="#"><strong>media</strong></a></li>
+                <li class="breadcrumb-item"><img src="~/imgs/dashboard_home_dark-mode.png" class="me-2 icon-derein"><a class="breadcrumb-a-white me-2 text-white a-font-p" asp-area="Portfolio" asp-controller="Home" asp-action="Index">dashboard</a><img src="~/icon/dashboard_nest_dark mode.svg" class="icon-svg-derein"></li>
+                <li class="breadcrumb-item"><a class="breadcrumb-a-white me-2 text-white a-font-p" asp-area="Portfolio" asp-controller="Cloud" asp-action="List">cloud</a><img src="~/icon/dashboard_nest_dark mode.svg" class="icon-svg-derein"></li>
+                <li class="breadcrumb-item"><a class="breadcrumb-a-white me-2 text-white a-font-p" asp-action="List" asp-controller="Cloud" asp-area="Portfolio"><strong>media</strong></a></li>
             </ol>
         </nav>
     </div>
@@ -46,7 +46,7 @@
     </div>
     <div class="text-white col-sm-12 col-md-8">
         <div class="row">
-            <div class="col-sm-12 col-md-7 text-center pe-3">
+            <div class="col-sm-12 col-md-6 text-center pe-3">
                 @if (Model.Media.Type == ".mp4")
                 {
                     <video autoplay="autoplay" muted controls="controls" loop class="w-100 shadow-1-strong rounded-05" alt="@Model.Media.OriginalFileName">
@@ -61,7 +61,7 @@
                 <div class="empty-veesy"></div>
                 <div class="empty-veesy"></div>
             </div>
-            <div class="col-sm-12 col-md-5 ps-3">
+            <div class="col-sm-12 col-md-4 ps-3">
                 <div class="row">
                     <div class="col-9 ps-0">
                         <h3 class="mb-0 text-white veesy-overflow" id="filename-show">@System.IO.Path.GetFileNameWithoutExtension(Model.Media.OriginalFileName)</h3>
@@ -101,7 +101,7 @@
                         }
                         <p id="number-portfolio-link" class="mb-0 text-grey">@portfoliosLinkText</p>
                     </div>
-                    <div class="col-3 text-end pe-0"><a onclick="openModal('#modalLinkedPortfolio')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong></strong></a></div>
+                    <div class="col-3 text-end pe-0"><a onclick="openModal('#modalLinkedPortfolio')" class="grey-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i>edit</a></div>
                     <hr class="hr"/>
                     <div class="empty-veesy"></div>
                     <div class="col-12 ps-0 pe-0">
@@ -109,31 +109,31 @@
                         @if (string.IsNullOrEmpty(Model.Media.Credits))
                         {
                             <div class="card-white-dashed-veesy p-3 mt-2" id="credits-area-empty">
-                                <p class="text-white">Add a note or quote collaborators who worked at this output.</p>
-                                <div class="mt-4"><a onclick="ShowTextArea()" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add credits</strong></a></div>
+                                <p class="text-grey">Add a note or quote collaborators who worked at this output.</p>
+                                <div class="mt-4"><a onclick="ShowTextArea()" class="grey-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add credits</strong></a></div>
                             </div>
                             <div id="credits-area" style="display: none">
-                                <p class="text-white" id="credits-show"></p>
+                                <p class="text-grey" id="credits-show"></p>
                                 <a onclick="ShowTextArea()" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong></strong></a>
                             </div>
                             <div class="text-area-rounded mt-2 text-end" style="display: none" id="credits-area-input">
                                 <textarea id="credits-edit" class="text-area-rounded text-area-not-resizable text-profile w-100 p-2" style="height: 131.2px;" placeholder="Write your credits.."></textarea>
-                                <a onclick="UpdateCredits()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
+                                <a onclick="UpdateCredits()" class="rounded-pill btn btn-grey btn-padding a-font-p" type="submit">save</a>
                             </div>
                         }
                         else
                         {
                             <div class="card-white-dashed-veesy p-3 mt-2" id="credits-area-empty" style="display: none">
-                                <p class="text-white">Add a text or mention collaborators who worked at this output.</p>
-                                <div class="mt-4"><a onclick="ShowTextArea()" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add credits</strong></a></div>
+                                <p class="text-grey">Add a text or mention collaborators who worked at this output.</p>
+                                <div class="mt-4"><a onclick="ShowTextArea()" class="grey-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add credits</strong></a></div>
                             </div>
                             <div id="credits-area">
-                                <p class="text-white" id="credits-show">@Model.Media.Credits</p>
-                                <a onclick="ShowTextArea()" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong></strong></a>
+                                <p class="text-grey" id="credits-show">@Model.Media.Credits</p>
+                                <a onclick="ShowTextArea()" class="grey-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i>edit</a>
                             </div>
                             <div class="text-area-rounded mt-2 text-end" style="display: none" id="credits-area-input">
                                 <textarea id="credits-edit" class="text-area-rounded text-area-not-resizable text-profile w-100 p-2" style="height: 131.2px;" placeholder="Write your credits..">@Model.Media.Credits</textarea>
-                                <a onclick="UpdateCredits()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
+                                <a onclick="UpdateCredits()" class="rounded-pill btn btn-grey a-font-p btn-padding" type="submit">save</a>
                             </div>
                         }
                     </div>
@@ -231,12 +231,13 @@
         }
     </div>
 </div>
+<div class="empty-veesy"></div>
 
-<div class="row justify-content-center">
-    <a onclick="openModal('#modalDeleteMedia')" class="rounded-pill btn btn-delete">delete media</a>
-    <div class="empty-veesy"></div>
-    <div class="empty-veesy"></div>
-</div>
+@* <div class="row justify-content-center"> *@
+@*     <a onclick="openModal('#modalDeleteMedia')" class="rounded-pill btn btn-delete">delete media</a> *@
+@*     <div class="empty-veesy"></div> *@
+@*     <div class="empty-veesy"></div> *@
+@* </div> *@
 
 <div class="modal fade" id="modalFileName" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
