@@ -982,6 +982,11 @@ a{
   line-height: 18px !important;
 }
 
+.card-body-dashboard{
+  background-color: white;
+  border-radius: 0px 5px 0px 5px  ;
+}
+
 .creator-popup{
   cursor: pointer;
   position: fixed;
