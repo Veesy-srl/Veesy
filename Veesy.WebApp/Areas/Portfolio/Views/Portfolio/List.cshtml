@@ -66,7 +66,7 @@
                             }
                             
                             <a class="grey-danger-link mt-2" onclick="openModal('#modalDeletePortfolio'), setPortfolioIdAndText('@item.Code', '@item.Name')" style="visibility: @visibility">delete</a>
-                            <a asp-action="Settings" asp-route-id="@item.Code" class="rounded-pill btn btn-primary mt-2"><i class="fa-regular fa-pen-to-square pe-1"></i>edit portfolio</a>
+                            <button asp-action="Settings" asp-route-id="@item.Code" class="rounded-pill btn btn-primary mt-2"><i class="fa-regular fa-pen-to-square pe-1"></i>edit portfolio</button>
                         </div>
                     </div>
                 </div>
@@ -74,7 +74,7 @@
         }
         <hr class="color-hr"/>
         <div class="empty-veesy"></div>
-        <a asp-action="List" asp-controller="Cloud" class="rounded-pill btn btn-primary mt-2 btn-padding">create a new portfolio</a>
+        <button asp-action="List" asp-controller="Cloud" class="rounded-pill btn btn-primary mt-2 btn-padding">create a new portfolio</button>
         <div class="empty-veesy"></div>
         <div class="empty-veesy"></div>
     </div>
@@ -103,7 +103,7 @@
             <div class="modal-body text-center">
                 <h5 id="confirm-delete-body"></h5>
                 <div class="empty-veesy"></div>
-                <a onclick="DeletePortfolio()" class="mt-2 rounded-pill btn btn-delete" type="submit">yes, delete</a>
+                <button onclick="DeletePortfolio()" class="mt-2 rounded-pill btn btn-delete" type="submit">yes, delete</button>
             </div>
             <div class="empty-veesy"></div>
         </div>

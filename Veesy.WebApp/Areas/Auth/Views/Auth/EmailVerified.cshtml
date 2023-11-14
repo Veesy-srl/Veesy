@@ -13,7 +13,7 @@
                     well done,<br/>your email is confirmed!
                 </div>
 
-                <a asp-area="Portfolio" asp-controller="Home" asp-action="Index" asp-ac class="w-100 mt-4 rounded-pill btn btn-primary signup" type="submit">view dashboard</a>
+                <button asp-area="Portfolio" asp-controller="Home" asp-action="Index" asp-ac class="w-100 mt-4 rounded-pill btn btn-primary signup" type="submit">view dashboard</button>
                 <p class="mt-4 mb-3 fw-border size-custom">Didn't you get the email?
                     <a style="color:#75CCDD;" asp-action="SendEmailVerification" asp-route-email="@Model.Email" asp-area="Auth" asp-controller="Auth">Send again</a>
                 </p>

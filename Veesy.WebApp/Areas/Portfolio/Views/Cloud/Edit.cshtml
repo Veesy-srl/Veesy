@@ -118,7 +118,7 @@
                             </div>
                             <div class="text-area-rounded mt-2 text-end" style="display: none" id="credits-area-input">
                                 <textarea id="credits-edit" class="text-area-rounded text-area-not-resizable text-profile w-100 p-2" style="height: 131.2px;" placeholder="Write your credits.."></textarea>
-                                <a onclick="UpdateCredits()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
+                                <button onclick="UpdateCredits()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</button>
                             </div>
                         }
                         else
@@ -133,7 +133,7 @@
                             </div>
                             <div class="text-area-rounded mt-2 text-end" style="display: none" id="credits-area-input">
                                 <textarea id="credits-edit" class="text-area-rounded text-area-not-resizable text-profile w-100 p-2" style="height: 131.2px;" placeholder="Write your credits..">@Model.Media.Credits</textarea>
-                                <a onclick="UpdateCredits()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
+                                <button onclick="UpdateCredits()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</button>
                             </div>
                         }
                     </div>
@@ -233,7 +233,7 @@
 </div>
 
 <div class="row justify-content-center">
-    <a onclick="openModal('#modalDeleteMedia')" class="rounded-pill btn btn-delete">delete media</a>
+    <button onclick="openModal('#modalDeleteMedia')" class="rounded-pill btn btn-delete">delete media</button>
     <div class="empty-veesy"></div>
     <div class="empty-veesy"></div>
 </div>
@@ -251,7 +251,7 @@
                 <p class="mt-2 mb-0">*required field</p>
             </div>
             <div class="modal-footer">                
-                <a onclick="UpdateFileName()" class="mt-2 rounded-pill btn btn-primary btn-padding" type="submit">save</a>
+                <button onclick="UpdateFileName()" class="mt-2 rounded-pill btn btn-primary btn-padding" type="submit">save</button>
             </div>
         </div>
     </div>
@@ -281,7 +281,7 @@
                 </div>
             </div>
             <div class="modal-footer">                
-                <a onclick="ChangeMediaPortfolio()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</a>
+                <button onclick="ChangeMediaPortfolio()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</button>
             </div>
         </div>
     </div>
