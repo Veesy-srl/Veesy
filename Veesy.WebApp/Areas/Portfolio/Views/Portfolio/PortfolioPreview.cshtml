@@ -17,7 +17,7 @@
     <div class="col-sm-12 col-md-4 mb-3 nodisplay-sm">
         <div class="text-end">
             <h3 class="text-color" style="font-size: 20px !important;"><strong>Interested in my work?</strong></h3>
-            <a href="mailto:@Model.PortfolioDto.UserEmail" class="rounded-pill btn btn-primary btn-variant">contact me</a>
+            <button href="mailto:@Model.PortfolioDto.UserEmail" class="rounded-pill btn btn-primary btn-variant">contact me</button>
         </div>
     </div>
 </div>
@@ -53,7 +53,7 @@
 <div class="empty-veesy"></div>
 <div class="text-center">
     <h3 class="text-color" style="font-size: 20px !important;"><strong>Interested in my work?</strong></h3>
-    <a href="mailto:@Model.PortfolioDto.UserEmail" class="rounded-pill btn btn-primary btn-padding btn-variant">contact me</a>
+    <button href="mailto:@Model.PortfolioDto.UserEmail" class="rounded-pill btn btn-primary btn-padding btn-variant">contact me</button>
 </div>
 <div class="empty-veesy"></div>
 <div class="empty-veesy"></div>
@@ -124,7 +124,7 @@
 <div class="creator-popup" onclick="OpenCreatorPopup()">
     <div class="d-flex">
         <div class="col-11">
-            <p class="text-white ms-2 mb-1 mt-2">MEET THE CREATOR</p>
+            <p class="text-white ms-2 mb-1 mt-1">MEET THE CREATOR</p>
         </div>
         <div class="col-1"><div class="text-end pt-1"><i class="fa-solid fa-circle fa-xs me-2" style="color: white;"></i></div></div>
     </div>
@@ -133,7 +133,7 @@
 <div class="creator-popup-full" id="popup-creator">
     <div class="d-flex" style="cursor: pointer" onclick="CloseCreatorPopup()">
         <div class="col-11">
-            <p class="text-white ms-2 mb-1 mt-2">MEET THE CREATOR</p>
+            <p class="text-white ms-2 mb-1 mt-1">MEET THE CREATOR</p>
         </div>
         <div class="col-1 pe-2"><div class="text-end pt-1"><i class="fa-solid fa-circle-xmark" style="color: white"></i></div></div>
     </div>
@@ -156,7 +156,7 @@
             <h3 class="text-white">- @Model.PortfolioDto.UserCategory</h3>
             <div class="empty-veesy"></div>
             <div><p class="text-white">@Model.PortfolioDto.UserDescription</p></div>
-            @if (Model.PortfolioDto.ShowFields && Model.PortfolioDto.Sector.Count != 0)
+            @if (Model.PortfolioDto.ShowFields)
             {
                 <div class="empty-veesy"></div>
                 <div>
@@ -169,7 +169,7 @@
                     </div>
                 </div>
             }
-            @if (Model.PortfolioDto.ShowSoftSkill && Model.PortfolioDto.SoftSkill.Count != 0)
+            @if (Model.PortfolioDto.ShowSoftSkill)
             {
                 <div class="empty-veesy"></div>
                 <div>
@@ -182,7 +182,7 @@
                     </div>
                 </div>
             }
-            @if (Model.PortfolioDto.ShowSoftware && Model.PortfolioDto.UsedSoftwares.Count != 0)
+            @if (Model.PortfolioDto.ShowSoftware)
             {
                 <div class="empty-veesy"></div>
                 <div>
@@ -214,7 +214,7 @@
         </div>
         <div class="row text-end justify-content-end">
             <h3 class="text-white" style="font-size: 20px !important;"><strong>Interested in my work?</strong></h3>
-            <a href="mailto:@Model.PortfolioDto.UserEmail" class="rounded-pill w-25 btn div-white-rounded-veesy btn-variant">contact me</a>
+            <button href="mailto:@Model.PortfolioDto.UserEmail" class="rounded-pill w-25 btn div-white-rounded-veesy btn-variant">contact me</button>
         </div>
         <div class="empty-veesy"></div>
     </div>
@@ -277,12 +277,12 @@
                     }
                         
                     if(IsVideo){
-                        document.getElementById("video-popup").src = '@Model.BasePathImages' + src + "?tr=w-1080";  
+                        document.getElementById("video-popup").src = '@Model.BasePathImages' + src;  
                         document.getElementById("video-popup").style.display = "block";
                         getContainedSize(document.getElementById("video-popup"))
                     }
                     else{
-                        document.getElementById("image-popup").src = '@Model.BasePathImages' + src + "?tr=w-1080";  
+                        document.getElementById("image-popup").src = '@Model.BasePathImages' + src;  
                         document.getElementById("image-popup").style.display = "block";
                         getContainedSize(document.getElementById("image-popup"))
                     }

@@ -107,7 +107,7 @@
                 {
                     <a onclick="openModal('#modalAddMediaToPortfolio'), resetModalAdd()" class="blue-link me-4 fw-bolder" style="font-size: 14px; margin-top: 2px;">+ add to portfolio</a>
                 }
-                <a onclick="openModal('#modalCreatePortfolio'), ResetInput()" class="rounded-pill btn btn-grey btn-padding" style="padding-left: 35px !important; padding-right:  35px !important; font-size:  15px;" type="submit">create portfolio</a>
+                <button onclick="openModal('#modalCreatePortfolio'), ResetInput()" class="rounded-pill btn btn-grey btn-padding" style="padding-left: 35px !important; padding-right:  35px !important; font-size:  15px;" type="submit">create portfolio</button>
                 <a class="ms-4 me-2 mt-1" type="button" onclick="CloseAlert()"><i class="fa-solid fa-grey fa-circle-xmark"></i></a>
             </div>
         </div>
@@ -158,12 +158,12 @@
                     </div>                
                 </div>
                 <div class="modal-footer">                
-                    <a onclick="AddToPortfolio()" class="mt-2 rounded-pill btn btn-primary btn-padding" type="submit">save</a>
+                    <button onclick="AddToPortfolio()" class="mt-2 rounded-pill btn btn-primary btn-padding" type="submit">save</button>
                 </div>
             </div>
             <div id="success-portfolio-edit" style="display: none">
                 <div class="modal-body justify-content-center d-flex">
-                    <a id="portfolio-setting-link-edit" class="mt-2 rounded-pill btn btn-primary" type="submit">view portfolio</a> 
+                    <button id="portfolio-setting-link-edit" class="mt-2 rounded-pill btn btn-primary" type="submit">view portfolio</button> 
                 </div>
                 <div class="modal-footer">    
                     <div class="empty-veesy"></div>
@@ -237,12 +237,12 @@
                     <p class="mb-0 text-color"><strong>max. 50 characters</strong></p>
                 </div>
                 <div class="modal-footer">                
-                    <a onclick="CreateNewPortfolio()" class="mt-2 rounded-pill btn btn-primary btn-padding" type="submit">save</a>
+                    <button onclick="CreateNewPortfolio()" class="mt-2 rounded-pill btn btn-primary btn-padding" type="submit">save</button>
                 </div>
             </div>
             <div id="success-portfolio" style="display: none">
                 <div class="modal-body justify-content-center d-flex">
-                    <a id="portfolio-setting-link" class="mt-2 rounded-pill btn btn-primary" type="submit">view portfolio</a> 
+                    <button id="portfolio-setting-link" class="mt-2 rounded-pill btn btn-primary" type="submit">view portfolio</button> 
                 </div>
                 <div class="modal-footer">    
                     <div class="empty-veesy"></div>
