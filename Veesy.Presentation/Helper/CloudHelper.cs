@@ -67,7 +67,7 @@ public class CloudHelper
             return new ResultDto(false, "Transaction not allowed.");
         if(string.IsNullOrEmpty(mediaDto.OriginalFileName))
             return new ResultDto(false, "Please insert filename.");
-        if(!mediaDto.OriginalFileName.All(char.IsLetterOrDigit))
+        if(!mediaDto.OriginalFileName.Replace(" ", "").All(char.IsLetterOrDigit))
             return new ResultDto(false, "Only alphanumeric characters are allowed.");
         var names = _mediaService.GetAllMediaNameByUser(userInfo);
         if(names.Contains(mediaDto.OriginalFileName))

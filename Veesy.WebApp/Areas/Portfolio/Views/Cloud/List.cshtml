@@ -97,18 +97,18 @@
     <div class="w-100">
         <div class="float-start">
             <div class="d-flex mt-2">
-                <p id="number_files" class="fw-bolder text-color" style="margin-top: 2px;">1 files selected</p>
-                <a onclick="confirmDelete(), openModal('#modalDeleteMedia')" class="red-link-underline ms-3" style="font-size: 14px;">delete</a>
+                <p id="number_files" class="fw-bolder text-color">1 files selected</p>
+                <a onclick="confirmDelete(), openModal('#modalDeleteMedia')" class="red-link-underline ms-3 a-font-p" style="font-size: 14px;">delete</a>
             </div>
         </div>
         <div class="float-end">
             <div class="d-flex align-items-center">
                 @if (Model.Portfolios != null && Model.Portfolios.Count > 0)
                 {
-                    <a onclick="openModal('#modalAddMediaToPortfolio'), resetModalAdd()" class="blue-link me-4 fw-bolder" style="font-size: 14px; margin-top: 2px;">+ add to portfolio</a>
+                    <a onclick="openModal('#modalAddMediaToPortfolio'), resetModalAdd()" class="blue-link me-4 fw-bolder a-font-p" style="font-size: 14px; margin-top: 2px;">+ add to portfolio</a>
                 }
-                <button onclick="openModal('#modalCreatePortfolio'), ResetInput()" class="rounded-pill btn btn-grey btn-padding-20" style="padding-left: 35px !important; padding-right:  35px !important; font-size:  15px;" type="submit">create portfolio</button>
-                <a class="ms-4 me-2 mt-1" type="button" onclick="CloseAlert()"><i class="fa-solid fa-grey fa-circle-xmark"></i></a>
+                <button onclick="openModal('#modalCreatePortfolio'), ResetInput()" class="rounded-pill btn btn-grey btn-padding-20 a-font-p" style="padding-left: 35px !important; padding-right:  35px !important; font-size:  15px;" type="submit">create portfolio</button>
+                <a class="ms-4 me-2 mt-1" type="button" onclick="CloseAlert()"><i class="fa-solid fa-grey fa-circle-xmark a-font-p"></i></a>
             </div>
         </div>
     </div>
@@ -158,7 +158,7 @@
                     </div>                
                 </div>
                 <div class="modal-footer">                
-                    <button onclick="AddToPortfolio()" class="mt-2 rounded-pill btn btn-primary btn-padding" type="submit">save</button>
+                    <button onclick="AddToPortfolio()" class="mt-2 rounded-pill btn btn-primary btn-padding a-font-p" type="submit">save</button>
                 </div>
             </div>
             <div id="success-portfolio-edit" style="display: none">
@@ -237,7 +237,7 @@
                     <p class="mb-0 text-color"><strong>max. 50 characters</strong></p>
                 </div>
                 <div class="modal-footer">                
-                    <button onclick="CreateNewPortfolio()" class="mt-2 rounded-pill btn btn-primary btn-padding" type="submit">save</button>
+                    <button onclick="CreateNewPortfolio()" class="mt-2 rounded-pill btn btn-primary btn-padding a-font-p" type="submit">save</button>
                 </div>
             </div>
             <div id="success-portfolio" style="display: none">
