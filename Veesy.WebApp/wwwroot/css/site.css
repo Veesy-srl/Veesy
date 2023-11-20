@@ -164,7 +164,7 @@
 }
 
 .mobile-option-cloud{
-  padding: 1rem 1rem 0.2rem 1rem !important;
+  padding: 0.5rem 1rem 0.2rem 1rem !important;
 }
 
 .bd-example{
@@ -231,6 +231,11 @@ input{
 .btn-padding{
   padding-left: 50px;
   padding-right: 50px;
+}
+
+.btn-padding-20{
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .fa-circle-xmark{

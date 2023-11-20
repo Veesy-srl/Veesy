@@ -59,17 +59,19 @@
                             <div class="empty-veesy"></div>
                             <p class="veesy-text-color" style="margin-bottom: 3rem">Updated on @item.LastUpdate<br/>@item.NumberMedia media uploaded</p>
                         </div>
-                        <a asp-action="PortfolioPreview" asp-controller="Portfolio" asp-area="Portfolio" asp-route-id="@item.Code" class="grey-link">preview<i class="fa-solid fa-arrow-up-right-from-square ms-2"></i></a>
+                        <a asp-action="PortfolioPreview" asp-controller="Portfolio" asp-area="Portfolio" asp-route-id="@item.Code" class="grey-link">Preview<i class="fa-solid fa-arrow-up-right-from-square ms-2"></i></a>
                     </div>
                     <div class="col-4 text-end vertical-space">
-                        <a onclick="CopyLink('@Model.ApplicationUrl@Url.Action("Portfolio", "Public", new {area = "Public", id = @item.Code})')" class="grey-link ms-2"><i class="fa-regular fa-clone pe-1"></i><strong>copy link</strong></a>
+                        <a onclick="CopyLink('@Model.ApplicationUrl@Url.Action("Portfolio", "Public", new {area = "Public", id = @item.Code})')" class="grey-link ms-2"><i class="fa-regular fa-clone pe-1"></i><strong>Copy link</strong></a>
                         <div style="margin-top: 5.3rem; align-items: flex-end" class="d-flex justify-content-between">
                             @{
                                 var visibility = @item.IsMain ? "hidden" : "visible";
                             }
                             
                             <a class="grey-danger-link mt-2" onclick="openModal('#modalDeletePortfolio'), setPortfolioIdAndText('@item.Code', '@item.Name')" style="visibility: @visibility">delete</a>
-                            <button asp-action="Settings" asp-route-id="@item.Code" class="rounded-pill btn btn-primary mt-2"><i class="fa-regular a-font-p fa-pen-to-square pe-1"></i>edit portfolio</button>
+                            <form method="get" asp-action="Settings" asp-route-id="@item.Code">
+                                <button type="submit" class="rounded-pill btn-padding-20 btn btn-primary mt-2 a-font-p"><i class="fa-regular a-font-p fa-pen-to-square pe-1"></i>edit portfolio</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -77,7 +79,9 @@
         }
         <hr class="color-hr"/>
         <div class="empty-veesy"></div>
-        <button asp-action="List" asp-controller="Cloud" class="rounded-pill btn btn-primary a-font-p mt-2 btn-padding">create a new portfolio</button>
+        <form method="get" asp-action="List" asp-controller="Cloud">
+            <button type="submit" class="rounded-pill btn btn-primary a-font-p mt-2 btn-padding">create a new portfolio</button>
+        </form>
         <div class="empty-veesy"></div>
         <div class="empty-veesy"></div>
     </div>
