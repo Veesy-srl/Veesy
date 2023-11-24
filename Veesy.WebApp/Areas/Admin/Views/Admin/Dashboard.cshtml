@@ -1,0 +1,289 @@
+@model Veesy.Presentation.Model.Admin.DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "_Layout";
+}
+
+@section Style
+{
+  <style>
+    .vertical-center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+}
+
+<div class="row">
+  <div class="col-sm-12 col-md-3">
+    <div class="card">
+      <div class="card-body">
+        <div class="row alig n-items-start">
+          <div class="col-8">
+            <h5 class="card-title mb-9 fw-semibold"> Monthly Earnings </h5>
+            <h4 class="fw-semibold mb-3">$6,820</h4>
+            <div class="d-flex align-items-center pb-1">
+              <span class="me-2 rounded-circle bg-light-danger round-20 d-flex align-items-center justify-content-center">
+                <i class="ti ti-arrow-down-right text-danger"></i>
+              </span>
+              <p class="text-dark me-1 fs-3 mb-0">+9%</p>
+              <p class="fs-3 mb-0">last year</p>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="d-flex justify-content-end">
+              <div class="text-white bg-secondary rounded-circle p-6 d-flex align-items-center justify-content-center">
+                <i class="ti ti-currency-dollar fs-6"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12 col-md-3">
+    <div class="card">
+      <div class="card-body">
+        <div class="row alig n-items-start">
+          <div class="col-8">
+            <h5 class="card-title mb-9 fw-semibold"> Monthly Earnings </h5>
+            <h4 class="fw-semibold mb-3">$6,820</h4>
+            <div class="d-flex align-items-center pb-1">
+              <span class="me-2 rounded-circle bg-light-danger round-20 d-flex align-items-center justify-content-center">
+                <i class="ti ti-arrow-down-right text-danger"></i>
+              </span>
+              <p class="text-dark me-1 fs-3 mb-0">+9%</p>
+              <p class="fs-3 mb-0">last year</p>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="d-flex justify-content-end">
+              <div class="text-white bg-secondary rounded-circle p-6 d-flex align-items-center justify-content-center">
+                <i class="ti ti-currency-dollar fs-6"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12 col-md-3">
+    <div class="card">
+      <div class="card-body">
+        <div class="row alig n-items-start">
+          <div class="col-8">
+            <h5 class="card-title mb-9 fw-semibold"> Monthly Earnings </h5>
+            <h4 class="fw-semibold mb-3">$6,820</h4>
+            <div class="d-flex align-items-center pb-1">
+              <span class="me-2 rounded-circle bg-light-danger round-20 d-flex align-items-center justify-content-center">
+                <i class="ti ti-arrow-down-right text-danger"></i>
+              </span>
+              <p class="text-dark me-1 fs-3 mb-0">+9%</p>
+              <p class="fs-3 mb-0">last year</p>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="d-flex justify-content-end">
+              <div class="text-white bg-secondary rounded-circle p-6 d-flex align-items-center justify-content-center">
+                <i class="ti ti-currency-dollar fs-6"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12 col-md-3">
+    <div class="card">
+      <div class="card-body">
+        <div class="row alig n-items-start">
+          <div class="col-8">
+            <h5 class="card-title mb-9 fw-semibold"> Monthly Earnings </h5>
+            <h4 class="fw-semibold mb-3">$6,820</h4>
+            <div class="d-flex align-items-center pb-1">
+              <span class="me-2 rounded-circle bg-light-danger round-20 d-flex align-items-center justify-content-center">
+                <i class="ti ti-arrow-down-right text-danger"></i>
+              </span>
+              <p class="text-dark me-1 fs-3 mb-0">+9%</p>
+              <p class="fs-3 mb-0">last year</p>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="d-flex justify-content-end">
+              <div class="text-white bg-secondary rounded-circle p-6 d-flex align-items-center justify-content-center">
+                <i class="ti ti-currency-dollar fs-6"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-8 d-flex align-items-strech">
+    <div class="card w-100">
+      <div class="card-body">
+        <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
+          <div class="mb-3 mb-sm-0">
+            <h5 class="card-title fw-semibold">Media Overview</h5>
+          </div>
+          <div>
+            <select class="form-select">
+              <option value="1">March 2023</option>
+              <option value="2">April 2023</option>
+              <option value="3">May 2023</option>
+              <option value="4">June 2023</option>
+            </select>
+          </div>
+        </div>
+        <div id="chart"></div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4 d-flex align-items-stretch">
+    <div class="card w-100">
+      <div class="card-body p-4">
+        <div class="mb-4">
+          <h5 class="card-title fw-semibold mb-0">Last 4 today upload</h5>
+        </div>
+        
+          @if (Model.LastMediaUploadDtos.Count == 0)
+          {
+            <div style="height: 150px;"></div>
+            <div class="text-center vertical-center">
+              <h5>No medias upload yet</h5>
+            </div>
+          }
+          else
+          {
+            <ul class="timeline-widget mb-0 position-relative mb-n5">
+            @foreach (var item in Model.LastMediaUploadDtos)
+            {
+              <li class="timeline-item d-flex position-relative overflow-hidden">
+                <div class="timeline-time text-dark flex-shrink-0 text-end">@item.Date.ToString("HH:mm")</div>
+                <div class="timeline-badge-wrap d-flex flex-column align-items-center">
+                  <span class="timeline-badge border-2 border border-success flex-shrink-0 my-8"></span>
+                  <span class="timeline-badge-border d-block flex-shrink-0"></span>
+                </div>
+                <div class="w-100">
+                  <div class="w-100 timeline-desc fs-3 text-dark mt-n1"><i>@item.Username</i>  upload</div>
+                  <div class="w-100 timeline-desc fs-3 text-dark mt-n1" style="overflow: hidden; white-space: nowrap;text-overflow: ellipsis;"><strong>@item.Filename</strong></div>
+                  <div class="w-100 timeline-desc fs-3 text-dark mt-n1">@item.MediaSize Mb</div>
+                </div>
+              </li>
+            }
+          </ul>
+          }
+      </div>
+    </div>
+  </div>
+</div>
+
+@section Scripts
+{
+  <script src="~/assets/js/dashboard.js"></script>
+  
+  <script>
+   var chart = {
+      series: [
+        { name: "Number media", data: JSON.parse('@Html.Raw(Json.Serialize(Model.MediaOverviewDtos.Select(s => s.NumberMedia).ToList()))')},
+        { name: "Media size in Mb", data: JSON.parse('@Html.Raw(Json.Serialize(Model.MediaOverviewDtos.Select(s => s.MediaSize).ToList()))') },
+      ],
+  
+      chart: {
+        type: "bar",
+        height: 345,
+        offsetX: -15,
+        toolbar: { show: true },
+        foreColor: "#adb0bb",
+        fontFamily: 'inherit',
+        sparkline: { enabled: false },
+      },
+  
+  
+      colors: ["#5D87FF", "#49BEFF"],
+  
+  
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: "35%",
+          borderRadius: [6],
+          borderRadiusApplication: 'end',
+          borderRadiusWhenStacked: 'all'
+        },
+      },
+      markers: { size: 0 },
+  
+      dataLabels: {
+        enabled: false,
+      },
+  
+  
+      legend: {
+        show: false,
+      },
+  
+  
+      grid: {
+        borderColor: "rgba(0,0,0,0.1)",
+        strokeDashArray: 3,
+        xaxis: {
+          lines: {
+            show: false,
+          },
+        },
+      },
+  
+      xaxis: {
+        type: "category",
+        categories: JSON.parse('@Html.Raw(Json.Serialize(Model.MediaOverviewDtos.Select(s => s.Day.ToString()).ToList()))'),
+        labels: {
+          style: { cssClass: "grey--text lighten-2--text fill-color" },
+        },
+      },
+  
+  
+      yaxis: {
+        show: true,
+        min: 0,
+        max: @Model.MediaOverviewDtos.Max(s => s.MediaSize),
+        tickAmount: 4,
+        labels: {
+          style: {
+            cssClass: "grey--text lighten-2--text fill-color",
+          },
+        },
+      },
+      stroke: {
+        show: true,
+        width: 3,
+        lineCap: "butt",
+        colors: ["transparent"],
+      },
+  
+  
+      tooltip: { theme: "light" },
+  
+      responsive: [
+        {
+          breakpoint: 600,
+          options: {
+            plotOptions: {
+              bar: {
+                borderRadius: 3,
+              }
+            },
+          }
+        }
+      ]
+  
+  
+    };
+  
+    var chart = new ApexCharts(document.querySelector("#chart"), chart);
+    chart.render();
+  </script>
+}

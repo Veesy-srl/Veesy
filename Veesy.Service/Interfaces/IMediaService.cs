@@ -1,5 +1,6 @@
 using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
+using Veesy.Service.Implementation;
 
 namespace Veesy.Service.Interfaces;
 
@@ -21,4 +22,6 @@ public interface IMediaService
     List<string> GetAllMediaNameByUser(MyUser userInfo);
     List<Media> GetMediasByIdWithPortfoliosMedia(List<Guid> imgToDelete);
     int GetMediaNumber(MyUser user);
+    List<MediaService.MediaOverviewDto> GetMediaNumberByMonthGroupByDay(DateTime date);
+    List<Media> GetLastFourMediaUploaded();
 }

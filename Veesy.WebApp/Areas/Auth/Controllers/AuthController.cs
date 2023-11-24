@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
 using NuGet.Protocol;
+using Veesy.Domain.Constants;
 using Veesy.Domain.Models;
 using Veesy.Email;
 using Veesy.Presentation.Helper;
@@ -63,7 +64,11 @@ public class AuthController : Controller
                 return RedirectToAction("SendEmailVerification", new { email = user.Email });
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
             if (result.Succeeded)
-               return RedirectToAction("Index", "Home", new { area = "Portfolio" });
+            {
+                if((await _userManager.GetRolesAsync(user))[0] == Roles.Admin)
+                    return RedirectToAction("Dashboard", "Admin", new { area = "Admin" });
+                return RedirectToAction("Index", "Home", new { area = "Portfolio" });
+            }
             _notyfService.Custom("Email or password are invalid", 10, "#ca0a0a");
             return View(model);
         }

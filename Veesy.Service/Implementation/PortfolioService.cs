@@ -189,20 +189,6 @@ public class PortfolioService : IPortfolioService
             .Include(s => s.PortfolioMedias.OrderBy(s => s.SortOrder))
             .ThenInclude(s => s.Media)
             .Include(s => s.MyUser)
-            .ThenInclude(s => s.MyUserSectors)
-            .ThenInclude(s => s.Sector)
-            .Include(s => s.MyUser)
-            .ThenInclude(s => s.MyUserSkills)
-            .ThenInclude(s => s.Skill)
-            .Include(s => s.MyUser)
-            .ThenInclude(s => s.MyUserUsedSoftwares)
-            .ThenInclude(s => s.UsedSoftware)
-            .Include(s => s.MyUser)
-            .ThenInclude(s => s.MyUserInfosToShow)
-            .ThenInclude(s => s.InfoToShow)
-            .Include(s => s.MyUser)
-            .ThenInclude(s => s.MyUserLanguagesSpoken)
-            .ThenInclude(s => s.LanguageSpoken)
             .SingleOrDefault();
     }
 

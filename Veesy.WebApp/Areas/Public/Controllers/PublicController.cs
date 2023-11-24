@@ -19,15 +19,17 @@ public class PublicController : VeesyController
     private readonly IConfiguration _config;
     private readonly PortfolioHelper _portfolioHelper;
     private readonly INotyfService _notyfService;
+    private readonly SignInManager<MyUser> _signInManager;
 
 
-    public PublicController(UserManager<MyUser> userManager, PublicHelper publicHelper, IConfiguration config, PortfolioHelper portfolioHelper, INotyfService notyfService) : base(
+    public PublicController(UserManager<MyUser> userManager, PublicHelper publicHelper, IConfiguration config, PortfolioHelper portfolioHelper, INotyfService notyfService, SignInManager<MyUser> signInManager) : base(
         userManager, config)
     {
         _publicHelper = publicHelper;
         _config = config;
         _portfolioHelper = portfolioHelper;
         _notyfService = notyfService;
+        _signInManager = signInManager;
     }
     
     [HttpGet("Contacts")]
@@ -44,11 +46,15 @@ public class PublicController : VeesyController
         }
     }
     
-    [HttpGet("Splash")]
+    [HttpGet]
     public IActionResult Splash()
     {
         try
         {
+            if (_signInManager.IsSignedIn(User)) //verify if it's logged
+            {
+                return RedirectToAction("Index", "Home", new { area = "Portfolio" });
+            }
             return View();
         }
         catch (Exception e)

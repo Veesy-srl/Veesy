@@ -134,4 +134,36 @@ public class MediaService : IMediaService
     {
         return _uoW.MediaRepository.FindByCondition(s => s.MyUserId == user.Id).ToList().Count;
     }
+
+    public List<MediaOverviewDto> GetMediaNumberByMonthGroupByDay(DateTime date)
+    {
+        var res = _uoW.MediaRepository.FindByCondition(s => s.CreateRecordDate.Month == date.Month)
+            .GroupBy(s => s.CreateRecordDate.Day)
+            .Select(g => new MediaOverviewDto
+            {
+                Day = g.Key,
+                NumberMedia = g.Count(),
+                MediaSize = g.Sum(s => s.Size),
+                Date = g.Select(s => s.CreateRecordDate).FirstOrDefault()
+            })
+            .ToList();
+        return res;
+    }
+
+    public List<Media> GetLastFourMediaUploaded()
+    {
+        return _uoW.MediaRepository.FindByCondition(s => s.CreateRecordDate.Date == DateTime.Today)
+            .Include(s => s.MyUser)
+            .OrderByDescending(s => s.CreateRecordDate)
+            .Take(4)
+            .ToList();
+    }
+
+    public class MediaOverviewDto
+    {
+        public int NumberMedia { get; set; }
+        public long MediaSize { get; set; }
+        public int Day { get; set; }
+        public DateTime Date { get; set; }
+    }
 }

@@ -171,7 +171,7 @@
                 <div class="col-12 rounded pt-4" style="color: transparent">
                     <div id="div-uploader">
                         <form enctype="multipart/form-data" asp-action="UploadMedia" asp-controller="Media" asp-area="Portfolio" class="dropzone card-grey-dashed-dropzone" id="uploader">
-                            <a id="dropzone-close-button" style="display: none;" onclick="hideDropZone()" class="p-0 ms-2 btn btn-light border fw-bolder shadow-none close-button-dropzone">
+                            <a id="dropzone-close-button" style="padding: 0.7rem 1rem !important; display: none;" onclick="hideDropZone()" class="p-0 ms-2 btn btn-light border fw-bolder shadow-none close-button-dropzone">
                                 <i class="fas fa-times-circle fa-2xs text-primary" id="icon-color" aria-hidden="true"></i>
                                 <span id="color-text-variant">close</span>
                             </a>
@@ -216,7 +216,14 @@
                 </div>
                 <div class="col-3">
                     <div class="text-end">
-                        <img style="float: right" src="@Model.BaseAzurePath@Model.FileName" class="img-thumbnail-custom-dashboard rounded-circle" alt="user-image">
+                        @if (string.IsNullOrEmpty(Model.FileName))
+                        {
+                            <img style="float: right" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" class="img-thumbnail-custom-dashboard rounded-circle" alt="user-image">
+                        }
+                        else
+                        {
+                            <img style="float: right" src="@Model.BaseAzurePath@Model.FileName" class="img-thumbnail-custom-dashboard rounded-circle" alt="user-image">
+                        }
                     </div>
                 </div>
             </div>

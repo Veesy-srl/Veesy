@@ -14,12 +14,14 @@ public class PortfolioHelper
     private readonly IConfiguration _config;
     private readonly IPortfolioService _portfolioService;
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+    private readonly IAccountService _accountService;
 
 
-    public PortfolioHelper(IConfiguration config, IPortfolioService portfolioService)
+    public PortfolioHelper(IConfiguration config, IPortfolioService portfolioService, IAccountService accountService)
     {
         _config = config;
         _portfolioService = portfolioService;
+        _accountService = accountService;
     }
     
     public PortfolioSettingsViewModel GetPortfolioSettingsViewModel(Guid id, MyUser userInfo)
@@ -265,12 +267,18 @@ public class PortfolioHelper
     {
 
         var portfolio = _portfolioService.GetPortfolioByIdForPreview(id);
+        var infoToShow = _accountService.GetInfosToShowByUser(user);
+        var languageSpoken = _accountService.GetUserLanguageSpoken(user.Id);
+        var sector = infoToShow.SingleOrDefault(s => s.InfoToShow.Info == VeesyConstants.InfoToShow.Fields) != null ? _accountService.GetUserSector(user.Id) : new List<string>();
+        var usedSoftware = infoToShow.SingleOrDefault(s => s.InfoToShow.Info == VeesyConstants.InfoToShow.Software) != null ? _accountService.GetUserUsedSoftware(user.Id) : new List<string>();
+        var softSkill = infoToShow.SingleOrDefault(s => s.InfoToShow.Info == VeesyConstants.InfoToShow.SoftSkill) != null ? _accountService.GetUserSoftSkill(user.Id) : new List<string>();
+
         if (portfolio == null)
             return (null, new ResultDto(false, "Portfolio not found"));
 
         return (new PortfolioViewModel
         {
-            PortfolioDto = MapPortfolioDtos.MapPreviewPortfolioDto(portfolio),
+            PortfolioDto = MapPortfolioDtos.MapPreviewPortfolioDto(portfolio, languageSpoken, sector, usedSoftware, softSkill, infoToShow),
             BasePathImages = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/",
             BasePathAzure = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"
         }, new ResultDto(true, ""));
@@ -308,11 +316,17 @@ public class PortfolioHelper
         var portfolio = _portfolioService.GetPortfolioByIdForPreview(id);
         if (portfolio == null)
             return (null, new ResultDto(false, "Portfolio not found"));
-
+        
+        var infoToShow = _accountService.GetInfosToShowByUser(portfolio.MyUser);
+        var languageSpoken = _accountService.GetUserLanguageSpoken(portfolio.MyUserId);
+        var sector = infoToShow.SingleOrDefault(s => s.InfoToShow.Info == VeesyConstants.InfoToShow.Fields) != null ? _accountService.GetUserSector(portfolio.MyUserId) : new List<string>();
+        var usedSoftware = infoToShow.SingleOrDefault(s => s.InfoToShow.Info == VeesyConstants.InfoToShow.Software) != null ? _accountService.GetUserUsedSoftware(portfolio.MyUserId) : new List<string>();
+        var softSkill = infoToShow.SingleOrDefault(s => s.InfoToShow.Info == VeesyConstants.InfoToShow.SoftSkill) != null ? _accountService.GetUserSoftSkill(portfolio.MyUserId) : new List<string>();
+        
         return (new PortfolioViewModel
         {
             Unlocked = false,
-            PortfolioDto = portfolio.Status == PortfolioContants.STATUS_PUBLIC ? MapPortfolioDtos.MapPreviewPortfolioDto(portfolio) : null,
+            PortfolioDto = MapPortfolioDtos.MapPreviewPortfolioDto(portfolio, languageSpoken, sector, usedSoftware, softSkill, infoToShow),
             IsPublish = portfolio.Status == PortfolioContants.STATUS_PUBLIC,
             BasePathImages = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/",
             BasePathAzure = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"
@@ -324,11 +338,18 @@ public class PortfolioHelper
         var portfolio = _portfolioService.GetPortfolioByIdForPreview(model.PortfolioDto.Code);
         if (portfolio == null)
             return (null, new ResultDto(false, "Portfolio not found"));
+        
+        var infoToShow = _accountService.GetInfosToShowByUser(portfolio.MyUser);
+        var languageSpoken = _accountService.GetUserLanguageSpoken(portfolio.MyUserId);
+        var sector = infoToShow.SingleOrDefault(s => s.InfoToShow.Info == VeesyConstants.InfoToShow.Fields) != null ? _accountService.GetUserSector(portfolio.MyUserId) : new List<string>();
+        var usedSoftware = infoToShow.SingleOrDefault(s => s.InfoToShow.Info == VeesyConstants.InfoToShow.Software) != null ? _accountService.GetUserUsedSoftware(portfolio.MyUserId) : new List<string>();
+        var softSkill = infoToShow.SingleOrDefault(s => s.InfoToShow.Info == VeesyConstants.InfoToShow.SoftSkill) != null ? _accountService.GetUserSoftSkill(portfolio.MyUserId) : new List<string>();
+
         var unlocked = model.ControlPassword == 1 && model.Password == portfolio.Password;
         return (new PortfolioViewModel
         {
             Unlocked = unlocked,
-            PortfolioDto = portfolio.Status == PortfolioContants.STATUS_PUBLIC ? MapPortfolioDtos.MapPreviewPortfolioDto(portfolio) : null,
+            PortfolioDto = MapPortfolioDtos.MapPreviewPortfolioDto(portfolio, languageSpoken, sector, usedSoftware, softSkill, infoToShow),
             IsPublish = portfolio.Status == PortfolioContants.STATUS_PUBLIC,
             BasePathImages = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/",
             BasePathAzure = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"

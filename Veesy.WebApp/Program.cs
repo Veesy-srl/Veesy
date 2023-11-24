@@ -134,7 +134,7 @@ try
     
     app.MapControllerRoute(
         name: "default",
-        pattern: "{area=Portfolio}/{controller=Home}/{action=Index}");
+        pattern: "{area=Public}/{controller=Public}/{action=Splash}");
 
     using (var scope = app.Services.CreateScope())
     {

@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Veesy.Domain.Constants;
 using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
 using Veesy.Domain.Repositories;
@@ -303,5 +304,53 @@ public class AccountService : IAccountService
         return _uoW.MyUserRepository.FindByCondition(s => s.Id == user.Id)
             .Include(s => s.SubscriptionPlan)
             .SingleOrDefault().SubscriptionPlan;
+    }
+
+    public List<MyUser> GetFreelancer()
+    {
+        return _uoW.MyUserRepository.FindAll()
+            .Include(s => s.SubscriptionPlan)
+            .Where(s => s.SubscriptionPlan != null)
+            .ToList();
+    }
+
+    public MyUser GetUserById(string id)
+    {
+        return _uoW.MyUserRepository.FindByCondition(s => s.Id == id)
+            .Include(s => s.SubscriptionPlan)
+            .SingleOrDefault();
+    }
+
+    public List<string> GetUserSector(string userId)
+    {
+        return _uoW.DbContext.MyUserSectors
+            .Include(s => s.Sector)
+            .Where(s => s.MyUserId == userId)
+            .Select(s => s.Sector.Name)
+            .ToList();
+    }
+    public List<string> GetUserUsedSoftware(string userId)
+    {
+        return _uoW.DbContext.MyUserUsedSoftwares
+            .Include(s => s.UsedSoftware)
+            .Where(s => s.MyUserId == userId)
+            .Select(s => s.UsedSoftware.Name)
+            .ToList();
+    } 
+    public List<string> GetUserSoftSkill(string userId)
+    {
+        return _uoW.DbContext.MyUserSkills
+            .Include(s => s.Skill)
+            .Where(s => s.MyUserId == userId && s.Type == SkillConstants.SoftSkill)
+            .Select(s => s.Skill.Name)
+            .ToList();
+    }
+    public List<string> GetUserLanguageSpoken(string userId)
+    {
+        return _uoW.DbContext.MyUserLanguagesSpoken
+            .Include(s => s.LanguageSpoken)
+            .Where(s => s.MyUserId == userId)
+            .Select(s => s.LanguageSpoken.Language)
+            .ToList();
     }
 }

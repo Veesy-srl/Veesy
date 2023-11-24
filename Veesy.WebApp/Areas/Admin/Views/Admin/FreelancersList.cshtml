@@ -1,0 +1,74 @@
+@using Veesy.Domain.Constants
+@model Veesy.Presentation.Model.Admin.FreelancersListViewModel
+@{
+    ViewData["Title"] = "Freelancer";
+    Layout = "_Layout";
+}
+@section Style{
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+    <style>
+        table.dataTable thead .sorting:after,
+        table.dataTable thead .sorting:before,
+        table.dataTable thead .sorting_asc:after,
+        table.dataTable thead .sorting_asc:before,
+        table.dataTable thead .sorting_desc:after,
+        table.dataTable thead .sorting_desc:before, 
+        table.dataTable thead .sorting_asc_disabled:after,
+        table.dataTable thead .sorting_asc_disabled:before,
+        table.dataTable thead .sorting_asc_disabled:after,
+        table.dataTable thead .sorting_asc_disabled:before{
+          bottom: .5em;
+        }
+    </style>
+}
+
+<div class="row">
+    <div class="card">
+        <div class="card-body">
+            <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th class="th-sm">Name
+                    </th>
+                    <th class="th-sm">Email
+                    </th>
+                    <th class="th-sm">Phone
+                    </th>
+                    <th class="th-sm">Subscription Date
+                    </th>
+                    <th class="th-sm">Subscription
+                    </th>
+                    <th class="th-sm">Action
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var user in Model.FreelancerDtos)
+                {
+                    <tr>
+                        <td>@user.Fullname</td>
+                        <td><a href="mailto:@user.Email">@user.Email</a></td>
+                        <td><a href="tel:@user.PhoneNumber">@user.PhoneNumber</a></td>
+                        <td>@user.CreateDate</td>
+                        <td><button type="button" class="btn @VeesyConstants.SubscriptionPlan.SubscriptionSpan[@user.SubscriptionPlan] m-1">@user.SubscriptionPlan</button></td>
+                        <td><a style="cursor: pointer" asp-action="FreelancerInfo" asp-controller="Admin" asp-route-id="@user.Code" class="bg-primary rounded-circle p-2 text-white d-inline-flex "><i class="ti ti-eye fs-4"></i></a></td>
+                    </tr>
+
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+      
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+          $('#dtBasicExample').DataTable();
+          $('.dataTables_length').addClass('bs-select');
+        });
+    </script>
+}

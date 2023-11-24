@@ -14,7 +14,6 @@ using Veesy.WebApp.CustomDataAttribute;
 namespace Veesy.WebApp.Areas.Portfolio.Controllers;
 
 [Area("Portfolio")]
-[Authorize]
 public class MediaController : VeesyController
 {
 
@@ -35,6 +34,7 @@ public class MediaController : VeesyController
         _configuration = configuration;
     }
     
+    [Authorize]
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status415UnsupportedMediaType)]
@@ -75,6 +75,7 @@ public class MediaController : VeesyController
         }
     }
     
+    [Authorize]
     [HttpPost]
     public async Task<IActionResult> DeleteMedia(EditViewModel model)
     {
@@ -99,6 +100,7 @@ public class MediaController : VeesyController
         }
     }
     
+    [Authorize]
     [HttpPost]
     public async Task<JsonResult> DeleteMediaList([FromBody] List<Guid> imgToDelete)
     {
@@ -127,6 +129,7 @@ public class MediaController : VeesyController
         }
     }
     
+    [Authorize]
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status415UnsupportedMediaType)]
@@ -166,6 +169,7 @@ public class MediaController : VeesyController
         }
     }
 
+    [Authorize]
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status415UnsupportedMediaType)]

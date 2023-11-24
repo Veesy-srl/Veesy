@@ -36,6 +36,7 @@ public static class RegisterDependencyInjection
     
         /*Helper Dependency Injection*/
         serviceCollection.AddTransient<AuthHelper>();
+        serviceCollection.AddTransient<AdminHelper>();
         serviceCollection.AddTransient<MediaHelper>();
         serviceCollection.AddTransient<ProfileHelper>();
         serviceCollection.AddTransient<CloudHelper>();

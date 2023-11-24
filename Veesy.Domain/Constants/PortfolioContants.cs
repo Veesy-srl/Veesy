@@ -1,6 +1,6 @@
 namespace Veesy.Domain.Constants;
 
-public class PortfolioContants
+public static class PortfolioContants
 {
     public const int STATUS_DRAFT = 0;
     public static readonly string STATUS_DRAFT_DESC = "Draft";

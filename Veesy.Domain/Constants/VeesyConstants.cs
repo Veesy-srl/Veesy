@@ -8,6 +8,15 @@ public static class VeesyConstants
         public const string Pro = "Pro";
         public const string Plus = "Plus";
         public const string Beta = "Beta";
+
+        public static Dictionary<string, string> SubscriptionSpan = new Dictionary<string, string>
+        {
+            { "Free", "btn-light" },
+            { "Pro", "btn-success" },
+            { "Plus", "btn-primary" },
+            { "Beta", "btn-danger" },
+
+        };
     }
     public static class InfoToShow
     {
