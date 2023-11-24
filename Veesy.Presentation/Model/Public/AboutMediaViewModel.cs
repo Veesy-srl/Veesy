@@ -3,6 +3,7 @@ namespace Veesy.Presentation.Model.Cloud;
 public class AboutMediaViewModel
 {
     public List<string> MediaList { get; set; }
+    public List<string> Type { get; set; }
     public List<string> MediaUser { get; set; }
     public List<string> Usernames { get; set; }
     

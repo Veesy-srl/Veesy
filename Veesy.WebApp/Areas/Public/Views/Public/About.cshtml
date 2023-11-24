@@ -1,3 +1,4 @@
+@using Veesy.Domain.Constants
 @{
     ViewData["Title"] = "About";
 }
@@ -85,43 +86,43 @@
 </div>
 
 <div style="padding-bottom: 35px;">
-    <div class="container-fluid p-lg-5 mt-3 pb-5 background-image-about-2">
-        <div class="container mt-5 p-lg-5 p-2">
-            <div class="row about-top">
-                <div class="col-md-6 mb-5 mx-auto">
-                    <div class="blue-block rounded p-lg-5 p-4" style="background-color: #536B7E;">
-                        <h3 style="color: white; font-size: 25px !important; line-height: 30px !important;">Blocco are you a company o blocco investitori veesy</h3>
-                        <h5 style="font-size: 18px !important; line-height: 25px !important;" class="text-white mt-5">Lorem ipsum dolor sit amet consectetur<br/> dolor sit amet consectetur. Lorem ipsum dolor <br/>sit amet consectetur.</h5>
-                        <div class="empty-veesy"></div>
-                        <div class="col-md-12 mb-4 mt-5 veesy-text-color" >
-                            <button class="rounded-pill btn btn-primary-about btn-variant width-about" type="submit">view the form</button>
-                            <button class="rounded-pill btn btn-primary-about-variant btn-variant width-about" style="margin-left: 20px;" type="submit">talk with us</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 mb-4 mx-auto">
-                    <div class="red-block rounded p-lg-5 p-4" style="background-color: #202F4D;">
-                        <h3 style="color: white; font-size: 25px !important; line-height: 30px !important;">Blocco are you a freelancer o work with us, opportunities</h3>
-                        <hr class="mt-4 mb-2 text-white">
-                        <h5 style="font-size: 16px !important;" class="text-white">Build multiple portfolios</h5>
-                        <hr class="mt-2 mb-2 text-white">
-                        <h5 style="font-size: 16px !important;" class="text-white">Lorem ipsum dolor sit amet consectetur.</h5>
-                        <hr class="mt-2 mb-2 text-white">
-                        <h5 style="font-size: 16px !important;" class="text-white">Lorem ipsum dolor sit amet consectetur.</h5>
-                        <hr class="mt-2 mb-2 text-white">
-                        <h5 style="font-size: 16px !important;" class="text-white">Lorem ipsum dolor sit amet consectetur.</h5>
-                        <hr class="mt-2 mb-2 text-white">
-                        <h5 style="font-size: 16px !important;" class="text-white">Lorem ipsum dolor sit amet consectetur.</h5>
-                        <hr class="mt-2 mb-4 text-white">
-                        <div class="col-md-12 mb-1 mt-4 veesy-text-color" >
-                            <button class="rounded-pill btn btn-primary-about btn-variant" style="width: 30%;" type="submit">sign up</button>
-                            <a class="grey-link ms-2 mt-1 float-end">learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-                        </div>
-                    </div>
-                </div>
+  <div class="container-fluid p-lg-5 mt-3 pb-5 background-image-about-2">
+    <div class="container mt-5 p-lg-5 p-2">
+      <div class="row about-top d-flex flex-wrap">
+        <div class="col-md-6 mb-3 mx-auto">
+          <div class="blue-block rounded p-lg-5 p-4 option-height-about" style="background-color: #536B7E;">
+            <h3 style="color: white; font-size: 25px !important; line-height: 30px !important;">Blocco are you a company o blocco investitori veesy</h3>
+            <h5 style="font-size: 18px !important; line-height: 25px !important;" class="text-white mt-5">Lorem ipsum dolor sit amet consectetur<br/> dolor sit amet consectetur. Lorem ipsum dolor <br/>sit amet consectetur.</h5>
+            <div class="empty-veesy"></div>
+            <div class="col-md-12 mb-4 mt-5 veesy-text-color">
+              <button class="rounded-pill btn btn-primary-about btn-variant" type="submit">view the form</button>
+              <button class="rounded-pill btn btn-primary-about-variant btn-variant" style="margin-left: 20px;" type="submit">talk with us</button>
             </div>
+          </div>
         </div>
+        <div class="col-md-6 mb-3 mx-auto">
+          <div class="red-block rounded p-lg-5 p-4 option-height-about" style="background-color: #202F4D;">
+            <h3 style="color: white; font-size: 25px !important; line-height: 30px !important;">Blocco are you a freelancer o work with us, opportunities</h3>
+            <hr class="mt-4 mb-2 text-white">
+            <h5 style="font-size: 16px !important;" class="text-white">Build multiple portfolios</h5>
+            <hr class="mt-2 mb-2 text-white">
+            <h5 style="font-size: 16px !important;" class="text-white">Lorem ipsum dolor sit amet consectetur.</h5>
+            <hr class="mt-2 mb-2 text-white">
+            <h5 style="font-size: 16px !important;" class="text-white">Lorem ipsum dolor sit amet consectetur.</h5>
+            <hr class="mt-2 mb-2 text-white">
+            <h5 style="font-size: 16px !important;" class="text-white">Lorem ipsum dolor sit amet consectetur.</h5>
+            <hr class="mt-2 mb-2 text-white">
+            <h5 style="font-size: 16px !important;" class="text-white">Lorem ipsum dolor sit amet consectetur.</h5>
+            <hr class="mt-2 mb-4 text-white">
+            <div class="col-md-12 mb-1 mt-4 veesy-text-color">
+              <button class="rounded-pill btn btn-primary-about btn-variant" style="width: 30%;" type="submit">sign up</button>
+              <a class="grey-link ms-2 mt-1 float-end">learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 <div class="row pb-4">
     <div class="col-md-6 offset-md-3">
@@ -136,16 +137,25 @@
         @for (var i = 0; i < Model.MediaUser.Count; i++)
         {
             <a href="@Model.ApplicationUrl@Url.Action("Portfolio", "Public", new {area = "Public", id = @Model.PortfolioId[i]})">
-            <div>
-                <img class="p-3" width="360px" height="260px" style="border-radius: 30px;" src="@Model.BasePath@Model.MediaList[i].ToString()">
-                <span class="empty-veesy"></span>
-                <div class="text-center">
-                    <div class="d-flex align-items-center" style="margin-left: 20px;">
-                        <img src="@Model.BasePathImages@Model.MediaUser[i].ToString()" style="width: 30px !important; height: 30px !important; max-width: none!important;" class="img-thumbnail-custom rounded-circle" alt="user-image">
-                        <span class="color-about" style="margin-left: 10px; font-size: 14px;">by @Model.Usernames[i].ToString()</span>
+                <div>
+                    @if (MediaCostants.ImageExtensions.Contains((string)@Model.Type[i].ToUpper()))
+                    {
+                        <img class="p-3" width="360px" max-height="260px" style="border-radius: 30px;" src="@Model.BasePath@Model.MediaList[i].ToString()">
+                    }
+                    else
+                    {
+                        <video autoplay="autoplay" muted loop style="width: 360px; max-height: 260px; border-radius: 30px;" class="p-3" >
+                            <source src="@Model.BasePath@Model.MediaList[i].ToString()" type="video/mp4">
+                        </video>
+                    }
+                    <span class="empty-veesy"></span>
+                    <div class="text-center">
+                        <div class="d-flex align-items-center" style="margin-left: 20px;">
+                            <img src="@Model.BasePathImages@Model.MediaUser[i].ToString()" style="width: 30px !important; height: 30px !important; max-width: none!important;" class="img-thumbnail-custom rounded-circle" alt="user-image">
+                            <span class="color-about" style="margin-left: 10px; font-size: 14px;">by @Model.Usernames[i].ToString()</span>
+                        </div>
                     </div>
                 </div>
-            </div>
             </a>
         }
     </div>
