@@ -31,7 +31,6 @@ public class PublicHelper
         List.BasePath = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/";
         List.BasePathImages = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/";
         List.MediaList = UserList.Select(item => item.Medias[0].FileName).ToList();
-        List.Type = UserList.Select(item => item.Medias[0].Type).ToList();
         List.MediaUser = UserList.Select(item => item.ProfileImageFileName).ToList();
         List.Usernames = UserList.Select(item => item.UserName).ToList();
         List.Id = UserList.Select(item => item.Id).ToList();

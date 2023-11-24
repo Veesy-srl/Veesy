@@ -610,6 +610,12 @@ button:focus {
   height: 103vh;
 }
 
+img.lazy {
+  background-image: url('../imgs/placeholder-image.jpg');
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
+
 .input--style-1 {
   width: 100%;
   padding: 2px 4px;
@@ -1040,7 +1046,9 @@ a{
 
 .creator-popup-full{
   position: fixed;
-  width: 50%;
+  @media (min-width: 700px) {
+    width: 50%;
+  }
   height: 95%;
   background: #536B7E;
   border-radius: 5px 5px 0px 0px;
@@ -1062,7 +1070,9 @@ a{
 
 .creator-popup-full-splash{
   position: fixed;
-  width: 25%;
+  @media only screen and (min-width: 700px) {
+    width: 25%;
+  }
   height: 29%;
   background: #536B7E;
   border-radius: 10px;
@@ -1135,6 +1145,16 @@ a{
     margin-left: 0 !important;
     margin-top: 0 !important;
   }
+}
+
+@media only screen and (max-width: 600px) {
+  .option-portfolio-width{
+    max-width: 100%;
+  }
+}
+
+.option-portfolio-width{
+    width: 150%;
 }
 
 .a-ciano:hover{

@@ -138,16 +138,7 @@
         {
             <a href="@Model.ApplicationUrl@Url.Action("Portfolio", "Public", new {area = "Public", id = @Model.PortfolioId[i]})">
                 <div>
-                    @if (MediaCostants.ImageExtensions.Contains((string)@Model.Type[i].ToUpper()))
-                    {
-                        <img class="p-3" width="360px" max-height="260px" style="border-radius: 30px;" src="@Model.BasePath@Model.MediaList[i].ToString()">
-                    }
-                    else
-                    {
-                        <video autoplay="autoplay" muted loop style="width: 360px; max-height: 260px; border-radius: 30px;" class="p-3" >
-                            <source src="@Model.BasePath@Model.MediaList[i].ToString()" type="video/mp4">
-                        </video>
-                    }
+                    <img class="p-3" width="360px" height="260px" style="border-radius: 30px;" src="@Model.BasePath@Model.MediaList[i].ToString()">
                     <span class="empty-veesy"></span>
                     <div class="text-center">
                         <div class="d-flex align-items-center" style="margin-left: 20px;">

@@ -31,7 +31,7 @@
             }
             <div class="@nodisplay_md" id="div-uploader">
                 <form enctype="multipart/form-data" asp-action="UploadMedia" asp-controller="Media" asp-area="Portfolio" class="dropzone card-grey-dashed-veesy mb-4" id="uploader">
-                    <a id="dropzone-close-button" style="display: none;" onclick="PopUpConfirm()" class="ms-2 btn btn-light border fw-bolder shadow-none close-button-dropzone">
+                    <a id="dropzone-close-button" style="display: none;" onclick="PopUpConfirm()" class="ms-2 btn btn-light border btn-layout fw-bolder shadow-none close-button-dropzone">
                         <i class="fas fa-times-circle fa-2xs text-primary" id="icon-color" aria-hidden="true"></i>
                         <span id="color-text-variant">close</span>
                     </a>
@@ -163,7 +163,9 @@
             </div>
             <div id="success-portfolio-edit" style="display: none">
                 <div class="modal-body justify-content-center d-flex">
+                    <form id="portfolio-setting-link-edit" style="display: inline-block;">
                     <button id="portfolio-setting-link-edit" class="mt-2 rounded-pill btn btn-primary" type="submit">view portfolio</button> 
+                    </form>
                 </div>
                 <div class="modal-footer">    
                     <div class="empty-veesy"></div>
@@ -242,7 +244,9 @@
             </div>
             <div id="success-portfolio" style="display: none">
                 <div class="modal-body justify-content-center d-flex">
-                    <button id="portfolio-setting-link" class="mt-2 rounded-pill btn btn-primary" type="submit">view portfolio</button> 
+                    <form id="portfolio-setting-link" style="display: inline-block;">
+                        <button class="mt-2 rounded-pill btn btn-primary" type="submit">view portfolio</button>
+                    </form>
                 </div>
                 <div class="modal-footer">    
                     <div class="empty-veesy"></div>
@@ -299,7 +303,7 @@
                 if(response.result){
                     document.getElementById("input-portfolio-edit").style.display = "none";
                     document.getElementById("success-portfolio-edit").style.display = "block";
-                    document.getElementById("portfolio-setting-link-edit").setAttribute('href', "/portfolio/settings/" + response.code);   
+                    document.getElementById("portfolio-setting-link-edit").setAttribute('action', "/portfolio/settings/" + response.code);
                 }
                 $('#load-spinner').css("display", "none");
             },
@@ -345,7 +349,7 @@
                 if(response.result){
                     document.getElementById("input-portfolio").style.display = "none";
                     document.getElementById("success-portfolio").style.display = "block";
-                    document.getElementById("portfolio-setting-link").setAttribute('href', "/portfolio/settings/" + response.code);  
+                    document.getElementById("portfolio-setting-link").setAttribute('action', "/portfolio/settings/" + response.code);
                 }
                 $('#load-spinner').css("display", "none");
             },
