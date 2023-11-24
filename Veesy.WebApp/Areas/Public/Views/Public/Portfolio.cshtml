@@ -73,7 +73,8 @@
                 </h1> 
                 <div class="float-end mb-2">
                     <div class="d-flex">
-                        <a onclick="CloseMediaPopup()" class="ms-2 btn btn-light border fw-bolder shadow-none" id="menuButton">
+        
+                        <a onclick="CloseMediaPopup()" class="ms-2 btn btn-light border btn-layout fw-bolder shadow-none" id="menuButton">
                             <i class="fas fa-circle fa-2xs text-primary mr-2" id="icon-color" aria-hidden="true"></i>
                             <span id="color-text-variant">close</span>
                         </a>
@@ -260,7 +261,7 @@
               var percentHeight = (height / parentNodeHeight) * 100;
               
               //document.getElementById("text-overlay").setAttribute("style","width: " + percent + "% !important; height: "+percentHeight+"%;");
-              document.getElementById("external-div").setAttribute("style","width: " + percent + "% !important");
+              //document.getElementById("external-div").setAttribute("style","width: " + percent + "% !important");
               return [width, height]
             }
             
