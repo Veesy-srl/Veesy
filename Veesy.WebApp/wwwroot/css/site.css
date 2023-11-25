@@ -1740,6 +1740,7 @@ textarea{
   text-align: center;
   margin: -2px auto 0 auto;
   cursor: pointer;
+  filter: none !important;
 }
 canvas {
   border: none !important;
