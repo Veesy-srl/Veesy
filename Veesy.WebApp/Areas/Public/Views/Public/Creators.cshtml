@@ -120,10 +120,8 @@
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             success: function (response) {
-                if (response.result != false) {
-                    UpdateUsers(response.result);       
-                    ActionFilter();
-                }
+                UpdateUsers(response.result);       
+                ActionFilter();
                 $('#load-spinner').css("display", "none");
             },
             error: function (response) {

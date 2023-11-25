@@ -93,6 +93,10 @@ public class PublicController : VeesyController
         try
         {
             var result = _publicHelper.GetCreatorsFiltered(Category.Category);
+            if (result.Count == 0)
+            {
+                return Json(new { Result = new List<string>() });
+            }
             return Json(new { Result = result.ToList() });
         }
         catch (Exception e)
