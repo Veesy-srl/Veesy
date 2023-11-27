@@ -1,5 +1,5 @@
 @using Veesy.Domain.Constants
-@model Veesy.Presentation.Model.Admin.FreelancersListViewModel
+@model Veesy.Presentation.Model.Admin.CreatorsListViewModel
 @{
     ViewData["Title"] = "Freelancer";
     Layout = "_Layout";
@@ -51,7 +51,7 @@
                         <td><a href="tel:@user.PhoneNumber">@user.PhoneNumber</a></td>
                         <td>@user.CreateDate</td>
                         <td><button type="button" class="btn @VeesyConstants.SubscriptionPlan.SubscriptionSpan[@user.SubscriptionPlan] m-1">@user.SubscriptionPlan</button></td>
-                        <td><a style="cursor: pointer" asp-action="FreelancerInfo" asp-controller="Admin" asp-route-id="@user.Code" class="bg-primary rounded-circle p-2 text-white d-inline-flex "><i class="ti ti-eye fs-4"></i></a></td>
+                        <td><a style="cursor: pointer" asp-action="CreatorInfo" asp-controller="Admin" asp-route-id="@user.Code" class="bg-primary rounded-circle p-2 text-white d-inline-flex "><i class="ti ti-eye fs-4"></i></a></td>
                     </tr>
 
                 }

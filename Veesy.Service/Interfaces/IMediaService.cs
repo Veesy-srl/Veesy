@@ -21,7 +21,8 @@ public interface IMediaService
     Media GetMediaByIdWithPortfoliosMedia(Guid imgCode);
     List<string> GetAllMediaNameByUser(MyUser userInfo);
     List<Media> GetMediasByIdWithPortfoliosMedia(List<Guid> imgToDelete);
-    int GetMediaNumber(MyUser user);
+    int GetMediaNumberByUser(MyUser user);
+    int GetMediaNumber();
     List<MediaService.MediaOverviewDto> GetMediaNumberByMonthGroupByDay(DateTime date);
     List<Media> GetLastFourMediaUploaded();
 }

@@ -296,7 +296,7 @@ public class AccountService : IAccountService
         count = user.PortfolioIntro != "" ? count + 1 : count;
         count = user.PhoneNumber != "" ? count + 1 : count;
         count = user.Email != "" ? count + 1 : count;
-        return (count * 100 / 17) ;
+        return count ;
     }
 
     public SubscriptionPlan GetUserSubscription(MyUser user)
@@ -306,7 +306,7 @@ public class AccountService : IAccountService
             .SingleOrDefault().SubscriptionPlan;
     }
 
-    public List<MyUser> GetFreelancer()
+    public List<MyUser> GetCreators()
     {
         return _uoW.MyUserRepository.FindAll()
             .Include(s => s.SubscriptionPlan)
@@ -352,5 +352,35 @@ public class AccountService : IAccountService
             .Where(s => s.MyUserId == userId)
             .Select(s => s.LanguageSpoken.Language)
             .ToList();
+    }
+
+    public List<CreatorOverviewDto> GetCreatorNumberByMonthGroupByDay(DateTime date)
+    {
+        var res = _uoW.MyUserRepository.FindByCondition(s => s.CreateDate.Month == date.Month)
+            .GroupBy(s => s.CreateDate.Day)
+            .Select(g => new CreatorOverviewDto
+            {
+                Day = g.Key,
+                NumberCreator = g.Count(),
+                Date = g.Select(s => s.CreateDate).FirstOrDefault()
+            })
+            .ToList();
+        return res;
+    }
+
+    public List<MyUser> GetCreatorsPlus()
+    {
+        return _uoW.MyUserRepository.FindAll()
+            .Include(s => s.SubscriptionPlan)
+            .Include(s => s.Portfolios.Where(s => s.IsMain))
+            .Where(s => s.SubscriptionPlan != null && s.SubscriptionPlan.Name != VeesyConstants.SubscriptionPlan.Free)
+            .ToList();
+    }
+
+    public class CreatorOverviewDto
+    {
+        public int NumberCreator { get; set; }
+        public int Day { get; set; }
+        public DateTime Date { get; set; }
     }
 }

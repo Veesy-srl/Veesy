@@ -88,6 +88,7 @@ public class AuthHelper
 
         var newUser = new MyUser()
         {
+            CreateDate = now,
             Id = userID,
             Email = model.Email,
             UserName = model.Username,

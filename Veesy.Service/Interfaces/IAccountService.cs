@@ -1,5 +1,6 @@
 using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
+using Veesy.Service.Implementation;
 
 namespace Veesy.Service.Interfaces;
 
@@ -36,10 +37,12 @@ public interface IAccountService
     public List<MyUser> GetFilteredCreators(List<string> category);
     int NumberRecordCompiled(MyUser userInfo);
     SubscriptionPlan GetUserSubscription(MyUser user);
-    List<MyUser> GetFreelancer();
+    List<MyUser> GetCreators();
     MyUser GetUserById(string id);
     List<string> GetUserSector(string userId);
     List<string> GetUserUsedSoftware(string userId);
     List<string> GetUserSoftSkill(string userId);
     List<string> GetUserLanguageSpoken(string userId);
+    List<AccountService.CreatorOverviewDto> GetCreatorNumberByMonthGroupByDay(DateTime date);
+    List<MyUser> GetCreatorsPlus();
 }

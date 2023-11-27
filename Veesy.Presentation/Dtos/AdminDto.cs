@@ -11,6 +11,14 @@ public class MediaOverviewDto
     public int Year { get; set; }
 }
 
+public class CreatorOverviewDto
+{
+    public int NumberCreator { get; set; }
+    public int Day { get; set; }
+    public int Month { get; set; }
+    public int Year { get; set; }
+}
+
 public class LastMediaUpload
 {
     public float MediaSize { get; set; }
@@ -29,6 +37,7 @@ public class FrelancerDto
     public string PhoneNumber { get; set; }
     public string SubscriptionPlan { get; set; }
     public string Code { get; set; }
+    public Guid MainPortfolioCode { get; set; }
 }
 
 public class FrelancerInfoDto
@@ -45,11 +54,12 @@ public class FrelancerInfoDto
 
 public static class MapAdminDto{
     
-    public static List<FrelancerDto> MapFrelancerDtos(List<MyUser> users)
+    public static List<FrelancerDto> MapCreatorDtos(List<MyUser> users)
     {
         var frelancerDtos = new List<FrelancerDto>();
         users.ForEach(user => frelancerDtos.Add(new FrelancerDto()
         {
+            MainPortfolioCode = user.Portfolios == null || user.Portfolios.Count == 0 ? Guid.Empty : user.Portfolios[0].Id,
             Code = user.Id,
             FirstName = user.Name,
             LastName = user.Surname,

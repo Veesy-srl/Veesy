@@ -130,9 +130,14 @@ public class MediaService : IMediaService
         return _uoW.MediaRepository.FindByCondition(s => imgToDelete.Contains(s.Id)).Include(s => s.PortfolioMedias).ToList();
     }
 
-    public int GetMediaNumber(MyUser user)
+    public int GetMediaNumberByUser(MyUser user)
     {
         return _uoW.MediaRepository.FindByCondition(s => s.MyUserId == user.Id).ToList().Count;
+    }
+
+    public int GetMediaNumber()
+    {
+        return _uoW.MediaRepository.FindAll().Count();
     }
 
     public List<MediaOverviewDto> GetMediaNumberByMonthGroupByDay(DateTime date)

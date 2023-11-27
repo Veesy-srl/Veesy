@@ -48,7 +48,7 @@
                 <span>
                   <i class="ti ti-layout-dashboard"></i>
                 </span>
-                <span class="hide-menu">Dashboard</span>
+                <span class="hide-menu">Overview</span>
               </a>
             </li>
             <li class="nav-small-cap">
@@ -56,11 +56,35 @@
               <span class="hide-menu">MANAGE</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" asp-area="Admin" asp-controller="Admin" asp-action="FreelancersList" aria-expanded="false">
+              <a class="sidebar-link" asp-area="Admin" asp-controller="Admin" asp-action="CreatorsList" aria-expanded="false">
                 <span>
                   <i class="ti ti-users"></i>
                 </span>
-                <span class="hide-menu">Freelancers</span>
+                <span class="hide-menu">Creators</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" asp-area="Admin" asp-controller="Admin" asp-action="CreatorsNoFreeList" aria-expanded="false">
+                <span>
+                  <i class="ti ti-users"></i>
+                </span>
+                <span class="hide-menu">Cards</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" asp-area="Admin" asp-controller="Admin" asp-action="Match" aria-expanded="false">
+                <span>
+                  <i class="ti ti-heart-handshake"></i>
+                </span>
+                <span class="hide-menu">Match</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" asp-area="Admin" asp-controller="Admin" asp-action="ManageSubscriptions" aria-expanded="false">
+                <span>
+                  <i class="ti ti-coin"></i>
+                </span>
+                <span class="hide-menu">Subscriptions</span>
               </a>
             </li>
           </ul>
@@ -133,6 +157,14 @@
   <script src="~/assets/libs/simplebar/dist/simplebar.js"></script>
   @await Component.InvokeAsync("Notyf")
   @await RenderSectionAsync("Scripts", required: false)
+
+  <script>
+    function CopyLink(content) {
+      navigator.clipboard.writeText(content);
+      toastNotifyCustom("Text copied!", 3000, "#75ccdd", "")
+    }
+  </script>
+  
 </body>
 
 </html>
