@@ -269,7 +269,7 @@
             let obj = media.find((o, i) => {
                 if (o.mediaId === mediaId) {
                     let src = media[i].media.fileName
-                    if(media[i].media.credits == null){
+                    if(media[i].media.credits == null || media[i].media.credits.toString() == ""){
                         document.getElementById("open-credits").style.display = "none"
                         document.getElementById("credit-text").textContent = ""
                     }

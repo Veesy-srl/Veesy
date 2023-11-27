@@ -166,7 +166,10 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
             if (user.Medias != null && user.Medias.Any())
             {
                 int randomMediaIndex = random.Next(user.Medias.Count);
-                user.Medias = new List<Media> { user.Medias[randomMediaIndex] };
+                if (user.Medias[randomMediaIndex].Type != ".mp4")
+                {
+                    user.Medias = new List<Media> { user.Medias[randomMediaIndex] };
+                }
             }
             return user;
         }).ToList();

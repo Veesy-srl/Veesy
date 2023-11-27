@@ -1486,7 +1486,7 @@ hr {
 
 .edit-button-portfolio-preview{
   background-color: #536B7E !important;
-  padding: 1px 4px 1px 5px;
+  padding: 1px 4px 1px 4px;
   border-radius: 20px;
   position: absolute;
   top: 15px;
@@ -1740,6 +1740,7 @@ textarea{
   text-align: center;
   margin: -2px auto 0 auto;
   cursor: pointer;
+  filter: none !important;
 }
 canvas {
   border: none !important;
