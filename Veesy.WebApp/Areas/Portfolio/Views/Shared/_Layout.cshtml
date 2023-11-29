@@ -48,6 +48,11 @@
                     <a style="font-size: 22px !important;" role="button" href="" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" >
                         <img class="header-logo">creators
                     </a>
+                }else if (ViewContext.RouteData.Values["Controller"].ToString() == "Portfolio")
+                {
+                    <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Portfolio" asp-action="List">
+                        <img class="header-logo">portfolio
+                    </a>
                 }
                 else
                 {

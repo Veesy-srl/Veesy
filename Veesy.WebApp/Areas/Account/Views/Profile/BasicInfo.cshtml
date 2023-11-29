@@ -8,8 +8,8 @@
     <div class="col-sm-12 col-lg-3">
         <nav class="breadcrumb-container" aria-label="Percorso di navigazione">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><img class="home-img me-2"><a class="breadcrumb-a me-2 a-font-p" asp-area="Portfolio" asp-controller="Home" asp-action="Index">dashboard</a><img src="~/icon/dashboard_nest_light mode.svg" class="icon-svg-derein"></li>
-                <li class="breadcrumb-item"><a class="breadcrumb-a me-2 a-font-p" asp-action="Profile">profile</a><img src="~/icon/dashboard_nest_light mode.svg" class="icon-svg-derein"></li>
+                <li class="breadcrumb-item"><img class="home-img me-2"><a class="breadcrumb-a me-2 a-font-p" asp-area="Portfolio" asp-controller="Home" asp-action="Index">dashboard</a><img class="icon-svg-derein-option"></li>
+                <li class="breadcrumb-item"><a class="breadcrumb-a me-2 a-font-p" asp-action="Profile">profile</a><img class="icon-svg-derein-option"></li>
                 <li class="breadcrumb-item"><a class="breadcrumb-a a-font-p" href="#"><strong>basic info</strong></a></li>
             </ol>
         </nav>
@@ -33,7 +33,7 @@
         <div class="empty-veesy"></div>
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-6 ps-2 pe-2">
-                <hr class="hr"/>
+                <hr class="hr color-hr"/>
                 <div class="d-flex">
                     <div class="col-9">
                         <p class="mb-0 text-color"><strong>First and Last name*</strong></p>
@@ -41,7 +41,7 @@
                     </div>
                     <div class="col-3 text-end"><a onclick="setTextAreaValue('name-edit', '@Model.Name'), setTextAreaValue('surname-edit', '@Model.Surname'), openModal('#modalFullname')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
                 </div>
-                <hr class="hr"/>
+                <hr class="hr color-hr"/>
                 <div class="d-flex">
                     <div class="col-9">
                         <p class="mb-0 text-color"><strong>Email*</strong></p>
@@ -49,7 +49,7 @@
                     </div>
                     <div class="col-3 text-end"><a onclick="setTextAreaValue('email-edit', '@Model.Email'), openModal('#modalEmail')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
                 </div>
-                <hr class="hr"/>
+                <hr class="hr color-hr"/>
                 <div class="d-flex">
                     @if (Model.CategoriesWork.Count(s => s.Selected) == 0)
                     {
@@ -80,7 +80,7 @@
                         </div>
                     }
                 </div>
-                <hr class="hr"/>
+                <hr class="hr color-hr"/>
                 <div class="d-flex">
                     @if (string.IsNullOrEmpty(@Model.VatNumber))
                     {
@@ -103,10 +103,10 @@
                         </div>
                     }
                 </div>
-                <hr class="hr nodisplay-sm"/>
+                <hr class="hr color-hr nodisplay-sm"/>
             </div>
             <div class="col-sm-12 col-md-6 ps-2 pe-2">
-                <hr class="hr"/>
+                <hr class="hr color-hr"/>
                 <div class="d-flex">
                     <div class="col-9">
                         <p class="mb-0 text-color"><strong>Username*</strong></p>
@@ -114,7 +114,7 @@
                     </div>
                     <div class="col-3 text-end"><a onclick="setTextAreaValue('username-edit', '@Model.Username'), openModal('#modalUsername')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
                 </div>
-                <hr class="hr"/>
+                <hr class="hr color-hr"/>
                 <div class="d-flex">
                     <div class="col-9">
                         <p class="mb-0 text-color"><strong>Password*</strong></p>
@@ -122,14 +122,14 @@
                     </div>
                     <div class="col-3 text-end"><a onclick="openModal('#modalPassword')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
                 </div>
-                <hr class="hr"/>
+                <hr class="hr color-hr"/>
                 <div class="d-flex">
                     <div class="col-9">
                         <p class="mb-0 text-color"><strong>Language</strong></p>
                         <p class="mb-0 text-color">English (default)</p>
                     </div>
                 </div>
-                <hr class="hr"/>
+                <hr class="hr color-hr"/>
                 <div class="d-flex">
                     @if (string.IsNullOrEmpty(@Model.PhoneNumber))
                     {
@@ -152,7 +152,7 @@
                         </div>
                     }
                 </div>
-                <hr class="hr"/>
+                <hr class="hr color-hr"/>
             </div>
         </div>
         <div class="empty-veesy"></div>

@@ -158,7 +158,7 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
         var random = new Random();
         var randomUsers = _applicationDbContext.MyUsers
             .Where(u => u.ProfileImageFileName != null).Include(t=>t.Medias).Include(p => p.Portfolios)
-            .Where(u => u.Portfolios.Any(p => p.IsMain == true && p.IsPublic == true))
+            .Where(u => u.Portfolios.Any(p => p.IsMain == true && p.IsPublic == true && p.Status == 1))
             .ToList().OrderBy(u => random.Next()).Take(count).ToList();
 
         var usersWithRandomMedia = randomUsers.Select(user =>
@@ -190,12 +190,10 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
     public List<MyUser> GetAllUsersWithMainPortfoliofiltered(List<string> categories)
     {
         return _applicationDbContext.MyUsers
-            .Where(u => u.Portfolios.Any(p => p.IsMain && p.IsPublic))
+            .Where(u => u.Portfolios.Any(p => p.IsMain && p.IsPublic && p.Status == 1))
             .Include(u => u.Portfolios)
-            .Where(u => u.Portfolios.Any(p => p.IsMain == true && p.IsPublic == true))
             .Include(u => u.MyUserCategoriesWork)
             .ThenInclude(cw => cw.CategoryWork)
-            .Where(u => u.MyUserCategoriesWork.Any(cw => categories.Contains(cw.CategoryWork.Name)))
             .ToList();
     }
 }

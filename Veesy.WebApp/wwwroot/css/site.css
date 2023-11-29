@@ -1380,8 +1380,9 @@ hr {
 .img-ratio-portfolio{
   max-height: 80vh;
   max-width: 100%;
-  width: 100%;
-  object-fit: contain;
+  margin-left: auto;
+  margin-right: auto;
+  object-fit: cover;
 }
 
 .vertical-space{
@@ -1667,6 +1668,10 @@ textarea{
   color: #202F4D;
 }
 
+.bg-white-about{
+  background-color: white;
+}
+
 .social-icons-row {
   padding: 20px 0;
 }
@@ -1797,6 +1802,14 @@ canvas {
   height: 12px;
   margin-top: -2px;
   content: url('../imgs/dashboard_home_light-mode.png');
+}
+
+.icon-svg-derein-option {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-top: -2px;
+  content: url('../icon/dashboard_nest_light mode.svg');
 }
 
 .btn-primary-about {

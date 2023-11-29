@@ -88,22 +88,24 @@
         <div class="col-sm-12 col-md-8">
             <div id="external-div" class="mx-auto">
                 <div class="row text-center align-bottom show-edit" style="position:relative; max-height: 80vh; max-width: 100%; --bs-gutter-x: 0;">
-                    <a onclick="ShowOverlay(true)" id="open-credits" class="edit-button-portfolio-preview">
-                        <i class="fa-solid fa-plus"></i>
-                    </a>
                     <div style="position: relative">
-                        <div id="text-overlay" class="text-overlay text-start p-4 rounded-05">
-                            <div class="row">
-                                <div class="col-3">
-                                    <p class="text-white"><strong>Image Credits</strong></p>
-                                    <p id="credit-text" class="text-white">Lorem ipsum: dolor sit amet. Consectetur: adipiscing elit. Quisque: lobortis efficitur erat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eu mattis lectus. Aenean eget elit ornare, pulvinar nulla et, tempor ligula. 2023© all rights reserved</p>
+                        <div style="display: inline-block; position: relative;">
+                            <div id="text-overlay" class="text-overlay text-start p-4 rounded-05">
+                                <div class="row">
+                                    <div class="col-10">
+                                        <p class="text-white"><strong>Image Credits</strong></p>
+                                        <p id="credit-text" class="text-white">Lorem ipsum: dolor sit amet. Consectetur: adipiscing elit. Quisque: lobortis efficitur erat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eu mattis lectus. Aenean eget elit ornare, pulvinar nulla et, tempor ligula. 2023© all rights reserved</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <video id="video-popup" style="display: none" autoplay="autoplay" muted controls="controls" loop class="img-ratio-portfolio rounded-05">
-                            <source type="video/mp4">
-                        </video>
-                        <img style="display: none" id="image-popup" asp-append-version="true" class="img-ratio-portfolio rounded-05"/>
+                            <video id="video-popup" style="display: none" autoplay="autoplay" muted controls="controls" loop class="img-ratio-portfolio rounded-05">
+                                <source type="video/mp4">
+                            </video>
+                            <img style="display: none" id="image-popup" asp-append-version="true" class="img-ratio-portfolio rounded-05"/>
+                            <a onclick="ShowOverlay(true)" id="open-credits" style="position: absolute;" class=" edit-button-portfolio-preview">
+                                <i class="fa-solid fa-plus" id="openPlus"></i>
+                            </a>
+                        </div>   
                     </div>
                     <div class="empty-veesy"></div>
                     <p><strong id="number-media"></strong></p>
@@ -231,10 +233,14 @@
             if (add){
                 document.getElementById("text-overlay").classList.add("text-overlay-selected")
                 document.getElementById("open-credits").onclick = function (){ShowOverlay(false)}
+                document.getElementById("openPlus").classList.remove("fa-plus");
+                document.getElementById("openPlus").classList.add("fa-x");
             }
             else{
                 document.getElementById("text-overlay").classList.remove("text-overlay-selected")
                 document.getElementById("open-credits").onclick = function (){ShowOverlay(true)}
+                document.getElementById("openPlus").classList.remove("fa-x");
+                document.getElementById("openPlus").classList.add("fa-plus");
             }
         }
     

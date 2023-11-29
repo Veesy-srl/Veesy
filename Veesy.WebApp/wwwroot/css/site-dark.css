@@ -102,6 +102,10 @@
         content: url('../imgs/dashboard_home_dark-mode.png');
     }
 
+    .icon-svg-derein-option {
+        content: url('../icon/dashboard_nest_dark mode.svg');
+    }
+
     .text-color{
         color: #F3F3F3 !important;
     }
