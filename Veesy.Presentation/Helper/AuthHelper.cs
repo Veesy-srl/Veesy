@@ -86,7 +86,7 @@ public class AuthHelper
             });
         }
 
-        var newUser = new MyUser()
+        var newUser = new MyUser() 
         {
             CreateDate = now,
             Id = userID,
