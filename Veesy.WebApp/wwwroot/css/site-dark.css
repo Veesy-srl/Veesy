@@ -51,6 +51,11 @@
         cursor: pointer;
     }
 
+    .grey-profile{
+        color: #AAB0BB !important;;
+        text-decoration: none !important;
+    }
+
     .grey-link:hover{
         color: #75CCDD !important;
         text-decoration: none !important;

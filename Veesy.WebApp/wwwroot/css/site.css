@@ -731,6 +731,13 @@ h5{
   cursor: pointer;
 }
 
+.grey-profile{
+  color: #AAB0BB !important;;
+  text-decoration: none !important;
+  font-size: 12px !important;
+  line-height: 18px !important;
+}
+
 .padding-lg{
   @media (min-width: 992px) {
     padding-right: 0.9rem;

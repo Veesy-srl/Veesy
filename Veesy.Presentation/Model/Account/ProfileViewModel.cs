@@ -21,5 +21,8 @@ public class ProfileViewModel
     public List<InfoToShowDto> InfoToShow { get; set; }
     public string FileName { get; set; }
     public string BasePathImages { get; set; }
+    public List<PortfolioThumbnailDto> PortfolioThumbnailDtos { get; set; }
+    public string BasePath { get; set; }
+    public string ApplicationUrl { get; set; }
     public List<SectorDto> Sectors { get; set; }
 }

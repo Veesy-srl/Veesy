@@ -13,19 +13,20 @@ namespace Veesy.Presentation.Helper;
 public class ProfileHelper
 {
     private readonly IAccountService _accountService;
+    private readonly IPortfolioService _portfolioService;
     private readonly MyUserValidator _myUserValidator;
     private readonly UserManager<MyUser> _userManager;
     private readonly MediaHelper _mediaHelper;
     private readonly IConfiguration _config;
 
-    public ProfileHelper(IAccountService accountService, MyUserValidator myUserValidator, UserManager<MyUser> userManager, MediaHelper mediaHelper, IConfiguration config)
+    public ProfileHelper(IAccountService accountService, IPortfolioService portfolioService, MyUserValidator myUserValidator, UserManager<MyUser> userManager, MediaHelper mediaHelper, IConfiguration config)
     {
         _accountService = accountService;
         _myUserValidator = myUserValidator;
         _userManager = userManager;
         _mediaHelper = mediaHelper;
         _config = config;
-    }
+        _portfolioService = portfolioService; }
 
     public async Task<ResultDto> UpdateMyUserBio(string biography, MyUser user)
     {
@@ -46,9 +47,12 @@ public class ProfileHelper
     public ProfileViewModel GetProfileViewModel(MyUser userInfo)
     {
         var softskills = _accountService.GetSkillsWithUserByType(userInfo, SkillConstants.SoftSkill);
+        var portfolios = _portfolioService.GetPortfoliosByUserWithMedia(userInfo).ToList();
         return new ProfileViewModel()
         {
             FileName = userInfo.ProfileImageFileName,
+            BasePath = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/",
+            ApplicationUrl = _config["ApplicationUrl"],
             BasePathImages = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/",
             ExternalLink = userInfo.ExternalLink,
             Category = _accountService.GetCategoriesWorkByUser(userInfo),
@@ -64,7 +68,8 @@ public class ProfileHelper
             LanguagesSpoken = MapProfileDtos.MapLanguagesSpokenList(_accountService.GetLanguagesSpokenWithUser(userInfo)),
             InfoToShow = MapProfileDtos.MapInfoToShowList(_accountService.GetInfosToShowWithUser(userInfo)),
             SoftSkills = MapProfileDtos.MapSkillsList(softskills.ToList()),
-            Sectors = MapProfileDtos.MapSectorList(_accountService.GetSectorsWithUser(userInfo.Id))
+            Sectors = MapProfileDtos.MapSectorList(_accountService.GetSectorsWithUser(userInfo.Id)),
+            PortfolioThumbnailDtos = MapPortfolioDtos.MapListPortfolioThumbnailDto(portfolios)
         };
     }
 
