@@ -115,7 +115,7 @@
                 <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
                    aria-expanded="false">
                   @{
-                      var imageSrc = ViewBag.BaseDirectory + ViewBag.ProfileImage;
+                      var imageSrc = ViewBag.BaseDirectory + ViewBag.ProfileImage + "?tr=w-400";
 
                       string username = User.Identity.Name;
                       if (string.IsNullOrEmpty(ViewBag.ProfileImage))

@@ -45,4 +45,5 @@ public interface IAccountService
     List<string> GetUserLanguageSpoken(string userId);
     List<AccountService.CreatorOverviewDto> GetCreatorNumberByMonthGroupByDay(DateTime date);
     List<MyUser> GetCreatorsPlus();
+    int GetNumberPayingUsers();
 }

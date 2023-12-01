@@ -66,7 +66,7 @@
                     
                     <div class="nodisplay-sm dropdown show me-2">
                         @{
-                            var imageSrc = ViewBag.BaseDirectory + ViewBag.ProfileImage;
+                            var imageSrc = ViewBag.BaseDirectory + ViewBag.ProfileImage + "?tr=w-400";
 
                             string username = User.Identity.Name;
                             if (string.IsNullOrEmpty(ViewBag.ProfileImage))

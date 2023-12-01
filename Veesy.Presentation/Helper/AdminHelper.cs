@@ -70,6 +70,7 @@ public class AdminHelper
         var res = _mediaService.GetMediaNumberByMonthGroupByDay(DateTime.Now.AddMonths(-1));
         var resCreator = _accountService.GetCreatorNumberByMonthGroupByDay(DateTime.Now.AddMonths(-1));
         var lastMediaUploaded = _mediaService.GetLastFourMediaUploaded();
+        var numberPayingUsers = _accountService.GetNumberPayingUsers(); 
         var mediaOverview = new List<MediaOverviewDto>();
         var creatorOverview = new List<CreatorOverviewDto>();
         var creators = _accountService.GetCreators();
@@ -100,6 +101,7 @@ public class AdminHelper
             CreatorNumber = creators.Count,
             MediaOverviewDtos = mediaOverview,
             CreatorOverviewDtos = creatorOverview,
+            NumberPayingUsers = numberPayingUsers,
             LastMediaUploadDtos = MapAdminDto.MapLastMediaUploadDtos(lastMediaUploaded)
         };
         return vm;

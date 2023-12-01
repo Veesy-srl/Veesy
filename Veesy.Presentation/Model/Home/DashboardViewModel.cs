@@ -7,7 +7,7 @@ public class DashboardViewModel
 {
     public string Name { get; set; }
     public string Surname { get; set; }
-    public string BaseAzurePath { get; set; }
+    public string BaseProfileImage { get; set; }
     public string FileName { get; set; }
     public string UserCategory { get; set; }
     public string BasePath { get; set; }

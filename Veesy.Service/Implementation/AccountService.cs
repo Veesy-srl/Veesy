@@ -377,6 +377,13 @@ public class AccountService : IAccountService
             .ToList();
     }
 
+    public int GetNumberPayingUsers()
+    {
+        return _uoW.MyUserRepository.FindByCondition(s =>
+            s.SubscriptionPlan.Name != VeesyConstants.SubscriptionPlan.Free
+            ).Count();
+    }
+
     public class CreatorOverviewDto
     {
         public int NumberCreator { get; set; }

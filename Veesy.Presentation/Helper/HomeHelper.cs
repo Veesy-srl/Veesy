@@ -44,7 +44,7 @@ public class HomeHelper
             MediaNumber = numberMedia,
             MediaPercent = (numberMedia * 100) / subscription.AllowedMediaNumber,
             Subscription = subscription,
-            BaseAzurePath = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"
+            BaseProfileImage = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"
         };
     }
 }

@@ -21,7 +21,7 @@ public class VeesyController : Controller
     public override async void OnActionExecuting(ActionExecutingContext context)
     {
         UserInfo = _userManager.GetUserAsync(this.User).GetAwaiter().GetResult();
-        ViewBag.BaseDirectory = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/";
+        ViewBag.BaseDirectory = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/";
         ViewBag.ProfileImage = "";
         if (UserInfo != null)
             ViewBag.ProfileImage = UserInfo.ProfileImageFileName;

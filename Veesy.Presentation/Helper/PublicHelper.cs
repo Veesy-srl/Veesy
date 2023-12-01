@@ -29,7 +29,7 @@ public class PublicHelper
         AboutMediaViewModel List = new AboutMediaViewModel();
         List.ApplicationUrl = _config["ApplicationUrl"];
         List.BasePath = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/";
-        List.BasePathImages = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/";
+        List.BasePathImages = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/";
         List.MediaList = UserList.Select(item => item.Medias[0].FileName).ToList();
         List.MediaUser = UserList.Select(item => item.ProfileImageFileName).ToList();
         List.Usernames = UserList.Select(item => item.UserName).ToList();
@@ -55,7 +55,7 @@ public class PublicHelper
             ApplicationUrl = _config["ApplicationUrl"],
             PortfolioId =userInfo.Select(p => p.Portfolios[0].Id).ToList(),
             CategoryWorks = categoryWorks.DistinctBy(s => s.CategoryWork.Name).Select(category => category.CategoryWork.Name).ToList(),
-            BasePathImages = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"
+            BasePathImages = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"
         };
     }
     
