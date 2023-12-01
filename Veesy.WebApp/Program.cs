@@ -142,6 +142,7 @@ try
         var context = services.GetRequiredService<ApplicationDbContext>();
         var userManager = services.GetRequiredService<UserManager<MyUser>>();
         var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+        
         context.Database.Migrate();
         DbInitializer.SeedUsersAndRoles(userManager, roleManager, context, Configuration);
     }

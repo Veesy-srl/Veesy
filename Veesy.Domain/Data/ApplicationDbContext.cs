@@ -32,6 +32,7 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<MyUserLanguageSpoken> MyUserLanguagesSpoken { get; set; }
     public DbSet<LanguageSpoken> LanguagesSpoken { get; set; }
     public DbSet<InfoToShow> InfosToShow { get; set; }
+    public DbSet<MyUserSubscriptionPlan> MyUserSubscriptionPlans { get; set; }
 
     #region OnModelCreating
     protected override void OnModelCreating(ModelBuilder modelBuilder)

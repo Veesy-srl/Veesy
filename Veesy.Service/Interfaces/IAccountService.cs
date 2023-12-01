@@ -36,7 +36,6 @@ public interface IAccountService
     List<MyUser> GetAllCreators();
     public List<MyUser> GetFilteredCreators(List<string> category);
     int NumberRecordCompiled(MyUser userInfo);
-    SubscriptionPlan GetUserSubscription(MyUser user);
     List<MyUser> GetCreators();
     MyUser GetUserById(string id);
     List<string> GetUserSector(string userId);

@@ -16,8 +16,10 @@ public class SubscriptionPlanService : ISubscriptionPlanService
 
     public SubscriptionPlan GetSubscriptionByUserId(string userId)
     {
-        return _uoW.MyUserRepository.FindByCondition(s => s.Id == userId)
+        return _uoW.DbContext.MyUserSubscriptionPlans
             .Include(s => s.SubscriptionPlan)
-            .Select(s => s.SubscriptionPlan).FirstOrDefault();
+            .Where(s => s.MyUserId == userId)
+            .OrderBy(s => s.CreateRecordDate)
+            .LastOrDefault().SubscriptionPlan;
     }
 }

@@ -19,7 +19,7 @@
             <p><strong>Phone Number: </strong>@Model.User.PhoneNumberPrefix @Model.User.PhoneNumber</p>
         </div>
         <div class="col-sm-12 col-md-6">
-            <p><strong>Subscription: </strong>@Model.User.SubscriptionPlan.Name</p>
+            <p><strong>Subscription: </strong>@Model.User.MyUserSubscriptionPlans.LastOrDefault().SubscriptionPlan.Name</p>
             <p><strong>Category: </strong>@Model.User.Category</p>
             <p><strong>Created date: </strong>@Model.User.CreateDate.ToString("dd/MM/yyyy HH:mm")</p>
         </div>
@@ -38,7 +38,7 @@
                   <span class="me-2 rounded-circle bg-light-danger round-20 d-flex align-items-center justify-content-center">
                     <i class="ti ti-arrow-down-right text-danger"></i>
                   </span>
-                  <p class="text-dark me-1 fs-3 mb-0">@(@Model.Medias.Count * 100 / Model.User.SubscriptionPlan.AllowedMediaNumber)%</p>
+                  <p class="text-dark me-1 fs-3 mb-0">@(@Model.Medias.Count * 100 / Model.User.MyUserSubscriptionPlans.LastOrDefault().SubscriptionPlan.AllowedMediaNumber)%</p>
                   <p class="fs-3 mb-0">of plan</p>
                 </div>
               </div>
@@ -64,7 +64,7 @@
                   <span class="me-2 rounded-circle bg-light-danger round-20 d-flex align-items-center justify-content-center">
                     <i class="ti ti-arrow-down-right text-danger"></i>
                   </span>
-                  <p class="text-dark me-1 fs-3 mb-0">@((Model.Medias.Sum(s => s.Size) / (1024 * 1024)) * 100 / Model.User.SubscriptionPlan.AllowedMegaByte)%</p>
+                  <p class="text-dark me-1 fs-3 mb-0">@((Model.Medias.Sum(s => s.Size) / (1024 * 1024)) * 100 / Model.User.MyUserSubscriptionPlans.LastOrDefault().SubscriptionPlan.AllowedMegaByte)%</p>
                   <p class="fs-3 mb-0">of plan</p>
                 </div>
               </div>

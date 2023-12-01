@@ -95,7 +95,13 @@ public class AuthHelper
             Name = model.Name,
             Surname = model.Surname,
             MyUserCategoriesWork = categories,
-            SubscriptionPlanId = _accountService.GetSubscriptionPlanByName(VeesyConstants.SubscriptionPlan.Beta).Id,
+            MyUserSubscriptionPlans = new List<MyUserSubscriptionPlan>
+            {
+                new ()
+                {
+                    SubscriptionPlanId = _accountService.GetSubscriptionPlanByName(VeesyConstants.SubscriptionPlan.Beta).Id
+                }
+            },
             MyUserInfosToShow = myUserInfosToShow
         };
         

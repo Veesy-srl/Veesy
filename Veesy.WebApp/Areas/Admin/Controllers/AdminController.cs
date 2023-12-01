@@ -100,4 +100,9 @@ public class AdminController : VeesyController
             throw;
         }
     }
+
+    public IActionResult FactoryList()
+    {
+        return View();
+    }
 }
