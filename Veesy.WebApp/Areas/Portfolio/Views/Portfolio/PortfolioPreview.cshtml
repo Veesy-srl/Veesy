@@ -23,20 +23,20 @@
 </div>
 
 
-<div class="row pt-4 ps-0 pe-0">
-    <div class="card-columns draggable-zone ps-0 pe-0" id="images-container">
+<div class="row">
+    <div class="card-columns draggable-zone" id="images-container">
         @{
             foreach (var image in Model.PortfolioDto.PortfolioMedias)
             {
                 @if (MediaCostants.ImageExtensions.Contains(image.Media.Type.ToUpper()))
                 {
-                    <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.MediaId', false)" class="draggable m-0 p-2" name="image-gallery" mediaid="@image.MediaId">
-                        <img title="@image.Media.OriginalFileName" class="img-fluid lazy card-body m-0 rounded-05 w-100 p-0" data-src="@Model.BasePathImages@image.Media.FileName?tr=w-1080" />
+                    <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.MediaId', false)" class="draggable" name="image-gallery" mediaid="@image.MediaId">
+                        <img title="@image.Media.OriginalFileName" class="img-fluid lazy rounded-05 w-100" data-src="@Model.BasePathImages@image.Media.FileName?tr=w-1080" />
                     </div>
                 }
                 else
                 {
-                    <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.MediaId', true)" class="draggable m-0 p-2" name="image-gallery">
+                    <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.MediaId', true)" class="draggable mt-3" name="image-gallery">
                         <video autoplay="autoplay" muted loop class="w-100 shadow-1-strong rounded-05" title="@image.Media.OriginalFileName">
                           <data-src src="@Model.BasePathImages@image.Media.FileName?tr=w-1080" type="video/mp4"></data-src>
                         </video>

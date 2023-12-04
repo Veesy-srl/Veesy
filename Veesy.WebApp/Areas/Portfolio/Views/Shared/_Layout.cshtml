@@ -92,7 +92,7 @@
                             <div class="dropdown-menu bg-grey-veesy" style="padding: 0 0;" aria-labelledby="dropdownMenuLink">
                                 <a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Controller"].ToString() == "Portfolio" ? "a-ciano-header" : "menu-element")" asp-action="List" asp-controller="Portfolio" asp-area="Portfolio">Portfolio</a>
                                 <a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Controller"].ToString() == "Cloud" ? "a-ciano-header" : "menu-element")" asp-action="List" asp-controller="Cloud" asp-area="Portfolio">Cloud</a>
-                                <a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Controller"].ToString() == "Public" ? "a-ciano-header" : "menu-element")" asp-action="PricingPlan" asp-controller="Public" asp-area="Public">Your Plan</a>
+                                <a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Action"].ToString() == "Yourplan" ? "a-ciano-header" : "menu-element")" asp-action="PricingPlan" asp-controller="Public" asp-area="Public">Your Plan</a>
                                 <a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Controller"].ToString() == "Profile" ? "a-ciano-header" : "menu-element")" asp-action="Profile" asp-controller="Profile" asp-area="Account">Profile</a>
                                 @if (User.IsInRole(Roles.Admin))
                                 {
@@ -134,7 +134,7 @@
                             <div class="dropdown-menu bg-grey-veesy" style="padding: 0 0;" aria-labelledby="dropdownMenuLink">
                                 <a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Controller"].ToString() == "Portfolio" ? "a-ciano-header" : "menu-element")" asp-action="List" asp-controller="Portfolio" asp-area="Portfolio">Portfolio</a>
                                 <a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Controller"].ToString() == "Cloud" ? "a-ciano-header" : "menu-element")" asp-area="Portfolio" asp-controller="Cloud" asp-action="List">Cloud</a>
-                                <a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Controller"].ToString() == "Public" ? "a-ciano-header" : "menu-element")" asp-action="PricingPlan" asp-controller="Public" asp-area="Public">Your Plan</a>
+                                <a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Action"].ToString() == "Yourplan" ? "a-ciano-header" : "menu-element")" asp-action="PricingPlan" asp-controller="Public" asp-area="Public">Your Plan</a>
                                 <a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Controller"].ToString() == "Profile" ? "a-ciano-header" : "menu-element")" asp-action="Profile" asp-controller="Profile" asp-area="Account">Profile</a>
                                 @if (User.IsInRole(Roles.Admin))
                                 {
