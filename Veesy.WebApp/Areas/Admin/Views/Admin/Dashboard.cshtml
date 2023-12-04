@@ -14,7 +14,9 @@
     }
   </style>
 }
-
+@{
+  var nowMonth = DateTime.Now.Month; 
+}
 <div class="row">
   <div class="col-sm-12 col-md-3">
     <div class="card">
@@ -83,12 +85,24 @@
             <h5 class="card-title fw-semibold">Media Overview</h5>
           </div>
           <div>
-            <select class="form-select">
-              <option value="1">March 2023</option>
-              <option value="2">April 2023</option>
-              <option value="3">May 2023</option>
-              <option value="4">June 2023</option>
+            <select class="form-select" onchange="ChangeMediaGraph()" id="month-media">
+              <option value="1">January</option>
+              <option value="2">February</option>
+              <option value="3">March</option>
+              <option value="4">April</option>
+              <option value="5">May</option>
+              <option value="6">June</option>
+              <option value="7">July</option>
+              <option value="8">August</option>
+              <option value="9">September</option>
+              <option value="10">October</option>
+              <option value="11">November</option>
+              <option value="12">December</option>
             </select>
+            
+            <script>
+              document.getElementById("month-media").value = @nowMonth
+            </script>
           </div>
         </div>
         <div id="chart"></div>
@@ -138,36 +152,23 @@
       <div class="card w-100">
         <div class="card-body p-4">
           <div class="mb-4">
-            <h5 class="card-title fw-semibold mb-0">Last 4 today login</h5>
+            <h5 class="card-title fw-semibold mb-0">Last 5 user registered</h5>
           </div>
-          
-            @if (Model.LastMediaUploadDtos.Count == 0)
+            <ul class="timeline-widget mb-0 position-relative mb-n5">
+            @foreach (var item in Model.LastUsersCreated)
             {
-              <div style="height: 150px;"></div>
-              <div class="text-center vertical-center">
-                <h5>No medias upload yet</h5>
-              </div>
+              <li class="timeline-item d-flex position-relative overflow-hidden">
+                <div class="timeline-time text-dark flex-shrink-0 text-end">@item.CreateDate.ToString("dd/MM HH:mm")</div>
+                <div class="timeline-badge-wrap d-flex flex-column align-items-center">
+                  <span class="timeline-badge border-2 border border-success flex-shrink-0 my-8"></span>
+                  <span class="timeline-badge-border d-block flex-shrink-0"></span>
+                </div>
+                <div class="w-100">
+                  <div class="w-100 timeline-desc fs-3 text-dark mt-n1"><i>@item.UserName</i></div>
+                </div>
+              </li>
             }
-            else
-            {
-              <ul class="timeline-widget mb-0 position-relative mb-n5">
-              @foreach (var item in Model.LastMediaUploadDtos)
-              {
-                <li class="timeline-item d-flex position-relative overflow-hidden">
-                  <div class="timeline-time text-dark flex-shrink-0 text-end">@item.Date.ToString("HH:mm")</div>
-                  <div class="timeline-badge-wrap d-flex flex-column align-items-center">
-                    <span class="timeline-badge border-2 border border-success flex-shrink-0 my-8"></span>
-                    <span class="timeline-badge-border d-block flex-shrink-0"></span>
-                  </div>
-                  <div class="w-100">
-                    <div class="w-100 timeline-desc fs-3 text-dark mt-n1"><i>@item.Username</i>  upload</div>
-                    <div class="w-100 timeline-desc fs-3 text-dark mt-n1" style="overflow: hidden; white-space: nowrap;text-overflow: ellipsis;"><strong>@item.Filename</strong></div>
-                    <div class="w-100 timeline-desc fs-3 text-dark mt-n1">@item.MediaSize Mb</div>
-                  </div>
-                </li>
-              }
-            </ul>
-            }
+          </ul>
         </div>
       </div>
     </div>
@@ -179,12 +180,24 @@
             <h5 class="card-title fw-semibold">Creator Overview</h5>
           </div>
           <div>
-            <select class="form-select">
-              <option value="1">March 2023</option>
-              <option value="2">April 2023</option>
-              <option value="3">May 2023</option>
-              <option value="4">June 2023</option>
+            <select class="form-select" onchange="ChangeCreatorGraph()" id="month-creator">
+              <option value="1">January</option>
+              <option value="2">February</option>
+              <option value="3">March</option>
+              <option value="4">April</option>
+              <option value="5">May</option>
+              <option value="6">June</option>
+              <option value="7">July</option>
+              <option value="8">August</option>
+              <option value="9">September</option>
+              <option value="10">October</option>
+              <option value="11">November</option>
+              <option value="12">December</option>
             </select>
+            
+            <script>
+              document.getElementById("month-creator").value = @nowMonth
+            </script>
           </div>
         </div>
         <div id="chart-creator"></div>
@@ -196,9 +209,74 @@
 @section Scripts
 {
   <script src="~/assets/js/dashboard.js"></script>
-  
+
   <script>
-   var chart = {
+    function ChangeMediaGraph() {
+        $('#load-spinner').css("display", "block");
+        var month = document.getElementById("month-media").value
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("GetMediaUploadedByMonth", "Admin")' + "?month=" + month,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (response) {
+                if(response.result){
+                    chart.updateOptions({
+                      series: [
+                         { name: "Number media", data: response.mediaNumber},
+                         { name: "Media size in Mb", data: response.mediaSize},
+                      ],
+                      xaxis: {
+                        categories: response.categories
+                      }, 
+                      yaxis: {
+                        max: response.max
+                      }
+                    })   
+                }
+                $('#load-spinner').css("display", "none");
+            },
+            error: function (response) {
+                $('#load-spinner').css("display", "none");
+            }
+        })
+  }
+    
+    function ChangeCreatorGraph() {
+        $('#load-spinner').css("display", "block");
+        var month = document.getElementById("month-creator").value
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("GetCreatorsSubscribedByMonth", "Admin")' + "?month=" + month,
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (response) {
+                if(response.result){
+                    chart_creator.updateOptions({
+                      series: [
+                         { name: "Number creators", data: response.creatorNumber},
+                      ],
+                      xaxis: {
+                        categories: response.categories
+                      }, 
+                      yaxis: {
+                        max: response.max
+                      }
+                    })   
+                }
+                $('#load-spinner').css("display", "none");
+            },
+            error: function (response) {
+                $('#load-spinner').css("display", "none");
+            }
+        })
+  }
+    
+    @{
+      var maxmedia = @Model.MediaOverviewDtos.Count() == 0 ? 5 : @Model.MediaOverviewDtos.Max(s => s.MediaSize);
+    }
+   
+    var chart = {
       series: [
         { name: "Number media", data: JSON.parse('@Html.Raw(Json.Serialize(Model.MediaOverviewDtos.Select(s => s.NumberMedia).ToList()))')},
         { name: "Media size in Mb", data: JSON.parse('@Html.Raw(Json.Serialize(Model.MediaOverviewDtos.Select(s => s.MediaSize).ToList()))') },
@@ -261,7 +339,7 @@
       yaxis: {
         show: true,
         min: 0,
-        max: @Model.MediaOverviewDtos.Max(s => s.MediaSize),
+        max: @maxmedia,
         tickAmount: 4,
         labels: {
           style: {
@@ -295,12 +373,14 @@
   
     };
   
-   var chart = new ApexCharts(document.querySelector("#chart"), chart);
-   chart.render();
-   @{
-     var maxCreators = @Model.CreatorOverviewDtos.Count() == 0 ? 5 : @Model.CreatorOverviewDtos.Max(s => s.NumberCreator);
-   }
-   var chart_creator = {
+    var chart = new ApexCharts(document.querySelector("#chart"), chart);
+    
+    chart.render();
+    
+    @{
+      var maxCreators = @Model.CreatorOverviewDtos.Count() == 0 ? 5 : @Model.CreatorOverviewDtos.Max(s => s.NumberCreator);
+    }
+    var chart_creator = {
       series: [
         { name: "Number creator subscribed", data: JSON.parse('@Html.Raw(Json.Serialize(Model.CreatorOverviewDtos.Select(s => s.NumberCreator).ToList()))')},
       ],

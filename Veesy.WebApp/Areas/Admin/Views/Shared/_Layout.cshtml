@@ -80,7 +80,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" asp-area="Admin" asp-controller="Admin" asp-action="ManageSubscriptions" aria-expanded="false">
+              <a class="sidebar-link" asp-area="Admin" asp-controller="Admin" asp-action="SubscriptionsOverview" aria-expanded="false">
                 <span>
                   <i class="ti ti-coin"></i>
                 </span>
@@ -173,6 +173,12 @@
     }
   </script>
   
+<div id="load-spinner" style="top: 0px; display: none; position: fixed; z-index: 9999; padding-top: 500px !important; height: 100%; width: 100%; background-color: rgba(0, 0, 0, 0.5);" class="text-center">
+  <div class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
 </body>
 
 </html>

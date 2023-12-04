@@ -22,4 +22,21 @@ public class SubscriptionPlanService : ISubscriptionPlanService
             .OrderBy(s => s.CreateRecordDate)
             .LastOrDefault().SubscriptionPlan;
     }
+
+    public decimal GetEarningsByMonth(int month)
+    {
+        return _uoW.DbContext.MyUserSubscriptionPlans
+            .Include(s => s.SubscriptionPlan)
+            .Where(s => s.SubscriptionPlan.Price >= 0)
+            .Sum(s => s.SubscriptionPlan.Price);
+    }
+
+    public List<IGrouping<string,MyUserSubscriptionPlan>> GetMyUserSubscriptionPlanGoupByUserId()
+    {
+        return _uoW.DbContext.MyUserSubscriptionPlans
+            .Include(s => s.SubscriptionPlan)
+            .OrderBy(s => s.CreateRecordDate)
+            .GroupBy(s => s.MyUserId).ToList();
+    }
+
 }

@@ -364,9 +364,9 @@ public class AccountService : IAccountService
             .ToList();
     }
 
-    public List<CreatorOverviewDto> GetCreatorNumberByMonthGroupByDay(DateTime date)
+    public List<CreatorOverviewDto> GetCreatorNumberByMonthGroupByDay(int month, int year)
     {
-        var res = _uoW.MyUserRepository.FindByCondition(s => s.CreateDate.Month == date.Month)
+        var res = _uoW.MyUserRepository.FindByCondition(s => s.CreateDate.Month == month && s.CreateDate.Year == year)
             .GroupBy(s => s.CreateDate.Day)
             .Select(g => new CreatorOverviewDto
             {
@@ -381,7 +381,7 @@ public class AccountService : IAccountService
     public List<MyUser> GetCreatorsPlus()
     {
         return _uoW.MyUserRepository.FindAll()
-            .Include(s => s.MyUserSubscriptionPlans.OrderBy(s => s.CreateRecordDate))
+            .Include(s => s.MyUserSubscriptionPlans)
                 .ThenInclude(s => s.SubscriptionPlan)
             .Include(s => s.MyUserUsedSoftwares)
                 .ThenInclude(s => s.UsedSoftware)
@@ -390,7 +390,7 @@ public class AccountService : IAccountService
             .Include(s => s.MyUserSkills.Where(s => s.Type == SkillConstants.SoftSkill))
                 .ThenInclude(s => s.Skill)
             .Include(s => s.Portfolios.Where(s => s.IsMain))
-            .Where(s => s.MyUserSubscriptionPlans.LastOrDefault().SubscriptionPlan != null && s.MyUserSubscriptionPlans.LastOrDefault().SubscriptionPlan.Name != VeesyConstants.SubscriptionPlan.Free)
+            .Where(s => s.MyUserSubscriptionPlans.OrderBy(s => s.CreateRecordDate).LastOrDefault().SubscriptionPlan != null && s.MyUserSubscriptionPlans.OrderBy(s => s.CreateRecordDate).LastOrDefault().SubscriptionPlan.Name != VeesyConstants.SubscriptionPlan.Free)
             .ToList();
     }
 
@@ -399,8 +399,19 @@ public class AccountService : IAccountService
         return _uoW.MyUserRepository.FindAll()
             .Include(s => s.MyUserSubscriptionPlans)
                 .ThenInclude(s => s.SubscriptionPlan)
-            .Where(s => s.MyUserSubscriptionPlans.LastOrDefault().SubscriptionPlan.Name != VeesyConstants.SubscriptionPlan.Free )
+            .Where(s => s.MyUserSubscriptionPlans.OrderBy(s => s.CreateRecordDate).LastOrDefault().SubscriptionPlan.Name != VeesyConstants.SubscriptionPlan.Free )
             .Count();
+    }
+
+    public List<MyUser> GetLastFourLoginAttempt(int number)
+    {
+        return _uoW.MyUserRepository.FindByCondition(s => s.LastLoginTime != null)
+            .OrderByDescending(s => s.LastLoginTime).Take(number).ToList();
+    }
+
+    public List<MyUser> GetLastFourCreatedUser(int number)
+    {
+        return _uoW.MyUserRepository.FindAll().OrderByDescending(s => s.CreateDate).Take(number).ToList();
     }
 
     public class CreatorOverviewDto

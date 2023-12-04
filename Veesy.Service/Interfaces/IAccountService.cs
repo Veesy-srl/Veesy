@@ -42,7 +42,9 @@ public interface IAccountService
     List<string> GetUserUsedSoftware(string userId);
     List<string> GetUserSoftSkill(string userId);
     List<string> GetUserLanguageSpoken(string userId);
-    List<AccountService.CreatorOverviewDto> GetCreatorNumberByMonthGroupByDay(DateTime date);
+    List<AccountService.CreatorOverviewDto> GetCreatorNumberByMonthGroupByDay(int month, int year);
     List<MyUser> GetCreatorsPlus();
     int GetNumberPayingUsers();
+    List<MyUser> GetLastFourLoginAttempt(int number);
+    List<MyUser> GetLastFourCreatedUser(int number);
 }
