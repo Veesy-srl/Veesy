@@ -23,6 +23,6 @@ public interface IMediaService
     List<Media> GetMediasByIdWithPortfoliosMedia(List<Guid> imgToDelete);
     int GetMediaNumberByUser(MyUser user);
     int GetMediaNumber();
-    List<MediaService.MediaOverviewDto> GetMediaNumberByMonthGroupByDay(DateTime date);
+    List<MediaService.MediaOverviewDto> GetMediaNumberByMonthGroupByDay(int month, int year);
     List<Media> GetLastFourMediaUploaded();
 }

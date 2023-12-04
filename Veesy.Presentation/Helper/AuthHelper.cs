@@ -1,6 +1,7 @@
 using System.Web;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using NLog;
 using Veesy.Domain.Constants;
 using Veesy.Domain.Exceptions;
 using Veesy.Email;
@@ -18,6 +19,7 @@ public class AuthHelper
     private readonly IEmailSender _emailSender;
     private readonly MyUserValidator _myUserValidator;
     private readonly IAccountService _accountService;
+    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
     public AuthHelper(UserManager<MyUser> userManager, IConfiguration config, IEmailSender emailSender, MyUserValidator myUserValidator, IAccountService accountService)
     {
@@ -95,7 +97,14 @@ public class AuthHelper
             Name = model.Name,
             Surname = model.Surname,
             MyUserCategoriesWork = categories,
-            SubscriptionPlanId = _accountService.GetSubscriptionPlanByName(VeesyConstants.SubscriptionPlan.Beta).Id,
+            LastLoginTime = DateTime.Now,
+            MyUserSubscriptionPlans = new List<MyUserSubscriptionPlan>
+            {
+                new ()
+                {
+                    SubscriptionPlanId = _accountService.GetSubscriptionPlanByName(VeesyConstants.SubscriptionPlan.Beta).Id
+                }
+            },
             MyUserInfosToShow = myUserInfosToShow
         };
         
@@ -132,5 +141,18 @@ public class AuthHelper
     {
         model.CategoriesWork = _accountService.GetCategoriesWork();
         return model;
+    }
+
+    public void AddLastLogin(MyUser user)
+    {
+        try
+        {
+            user.LastLoginTime = DateTime.Now;
+            _userManager.UpdateAsync(user);
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+        }
     }
 }

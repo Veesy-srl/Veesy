@@ -53,7 +53,7 @@ public class ProfileHelper
             FileName = userInfo.ProfileImageFileName,
             BasePath = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/",
             ApplicationUrl = _config["ApplicationUrl"],
-            BasePathImages = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/",
+            BasePathImages = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/",
             ExternalLink = userInfo.ExternalLink,
             Category = _accountService.GetCategoriesWorkByUser(userInfo),
             Role = userInfo.Category,
@@ -306,7 +306,7 @@ public class ProfileHelper
             PhoneNumber = userInfo.PhoneNumber,
             PhoneNumberPrefix = userInfo.PhoneNumberPrefix,
             FileName = userInfo.ProfileImageFileName,
-            BasePathImages = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/",
+            BasePathImages = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/",
         };
     }
 

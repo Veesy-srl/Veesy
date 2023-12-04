@@ -80,11 +80,19 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" asp-area="Admin" asp-controller="Admin" asp-action="ManageSubscriptions" aria-expanded="false">
+              <a class="sidebar-link" asp-area="Admin" asp-controller="Admin" asp-action="SubscriptionsOverview" aria-expanded="false">
                 <span>
                   <i class="ti ti-coin"></i>
                 </span>
                 <span class="hide-menu">Subscriptions</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" asp-area="Admin" asp-controller="Admin" asp-action="FactoryList" aria-expanded="false">
+                <span>
+                  <i class="ti ti-building-store"></i>
+                </span>
+                <span class="hide-menu">Aziende</span>
               </a>
             </li>
           </ul>
@@ -115,7 +123,7 @@
                 <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
                    aria-expanded="false">
                   @{
-                      var imageSrc = ViewBag.BaseDirectory + ViewBag.ProfileImage;
+                      var imageSrc = ViewBag.BaseDirectory + ViewBag.ProfileImage + "?tr=w-400";
 
                       string username = User.Identity.Name;
                       if (string.IsNullOrEmpty(ViewBag.ProfileImage))
@@ -165,6 +173,12 @@
     }
   </script>
   
+<div id="load-spinner" style="top: 0px; display: none; position: fixed; z-index: 9999; padding-top: 500px !important; height: 100%; width: 100%; background-color: rgba(0, 0, 0, 0.5);" class="text-center">
+  <div class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
 </body>
 
 </html>

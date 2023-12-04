@@ -140,9 +140,9 @@ public class MediaService : IMediaService
         return _uoW.MediaRepository.FindAll().Count();
     }
 
-    public List<MediaOverviewDto> GetMediaNumberByMonthGroupByDay(DateTime date)
+    public List<MediaOverviewDto> GetMediaNumberByMonthGroupByDay(int month, int year)
     {
-        var res = _uoW.MediaRepository.FindByCondition(s => s.CreateRecordDate.Month == date.Month)
+        var res = _uoW.MediaRepository.FindByCondition(s => s.CreateRecordDate.Month == month && s.CreateRecordDate.Year == year)
             .GroupBy(s => s.CreateRecordDate.Day)
             .Select(g => new MediaOverviewDto
             {

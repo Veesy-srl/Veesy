@@ -4,8 +4,6 @@ namespace Veesy.Domain.Models;
 
 public class MyUser : IdentityUser
 {
-    public Guid? SubscriptionPlanId { get; set; }
-    public SubscriptionPlan SubscriptionPlan { get; set; }
     public string Name { get; set; }
     public string Surname { get; set; }
     public string Fullname => Name + " " + Surname;
@@ -22,7 +20,7 @@ public class MyUser : IdentityUser
     public string OrginalProfileImageName { get; set; }
     public string ProfileImageFileName { get; set; }
     public string PhoneNumberPrefix { get; set; }
-
+    public DateTime? LastLoginTime { get; set; }
     public virtual List<MyUserSector> MyUserSectors { get; set; }
     public virtual List<MyUserUsedSoftware> MyUserUsedSoftwares { get; set; }
     public virtual List<MyUserSkill> MyUserSkills { get; set; }
@@ -32,4 +30,5 @@ public class MyUser : IdentityUser
     public virtual List<MyUserRoleWork> MyUserRolesWork { get; set; }
     public virtual List<MyUserLanguageSpoken> MyUserLanguagesSpoken { get; set; }
     public virtual List<MyUserInfoToShow> MyUserInfosToShow { get; set; }
+    public virtual List<MyUserSubscriptionPlan> MyUserSubscriptionPlans { get; set; }
 }

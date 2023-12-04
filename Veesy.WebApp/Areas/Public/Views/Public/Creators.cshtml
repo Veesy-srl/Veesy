@@ -26,7 +26,7 @@
 
                                 @if (@Model.User[u].ProfileImageFileName != null)
                                 {
-                                    <img src="@Model.BasePathImages@Model.User[u].ProfileImageFileName.ToString()" class="img-thumbnail-custom rounded-circle" alt="user-image">
+                                    <img src="@Model.BasePathImages@Model.User[u].ProfileImageFileName?tr=w-400" class="img-thumbnail-custom rounded-circle" alt="user-image">
                                 }
                                 else
                                 {
@@ -80,9 +80,9 @@
         card.style.backgroundColor = "";
         var whiteCreators = card.querySelectorAll(".white-cursor-creators");
         for (var t = 0; t < whiteCreators.length; t++) {
-            whiteCreators[t].style.color = "";
+            whiteCreators[t].style.color = "#202F4D";
         }
-        card.querySelector(".fa-circle").style.color = "";
+        card.querySelector(".fa-circle").style.color = "#202F4D";
         card.style.cursor = "";
     }
 
@@ -135,12 +135,14 @@
          {
              <text>
                 document.getElementById('category-@category').classList.remove("creators-selected-button");
+                document.getElementById('category-i-@category').classList.remove("creators-selected-i");
              </text>
          }
          
          for (var i=0; i<ButtonFilter.length; i++)
            {
                document.getElementById('category-'+ButtonFilter[i]).classList.add("creators-selected-button");
+               document.getElementById('category-i-'+ButtonFilter[i]).classList.add("creators-selected-i");
            }
                           
         @foreach (var user in Model.User)
@@ -164,6 +166,7 @@
              {
                  <text>
                     document.getElementById('category-@category').classList.remove("creators-selected-button");
+                    document.getElementById('category-i-@category').classList.remove("creators-selected-i");
                  </text>
              }
                         

@@ -280,7 +280,7 @@ public class PortfolioHelper
         {
             PortfolioDto = MapPortfolioDtos.MapPreviewPortfolioDto(portfolio, languageSpoken, sector, usedSoftware, softSkill, infoToShow),
             BasePathImages = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/",
-            BasePathAzure = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"
+            BasePathAzure = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"
         }, new ResultDto(true, ""));
     }
 
@@ -329,7 +329,7 @@ public class PortfolioHelper
             PortfolioDto = MapPortfolioDtos.MapPreviewPortfolioDto(portfolio, languageSpoken, sector, usedSoftware, softSkill, infoToShow),
             IsPublish = portfolio.Status == PortfolioContants.STATUS_PUBLIC,
             BasePathImages = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/",
-            BasePathAzure = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"
+            BasePathAzure = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"
         }, new ResultDto(true, ""));
     }
 
@@ -352,7 +352,7 @@ public class PortfolioHelper
             PortfolioDto = MapPortfolioDtos.MapPreviewPortfolioDto(portfolio, languageSpoken, sector, usedSoftware, softSkill, infoToShow),
             IsPublish = portfolio.Status == PortfolioContants.STATUS_PUBLIC,
             BasePathImages = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/",
-            BasePathAzure = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"
+            BasePathAzure = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"
         }, new ResultDto(true, ""));
     }
 }

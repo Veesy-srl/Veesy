@@ -38,6 +38,10 @@ public class FrelancerDto
     public string SubscriptionPlan { get; set; }
     public string Code { get; set; }
     public Guid MainPortfolioCode { get; set; }
+    public List<string> Software { get; set; }
+    public string Category { get; set; }
+    public List<string> SoftSkill { get; set; }
+    public List<string> Fields { get; set; }
 }
 
 public class FrelancerInfoDto
@@ -65,7 +69,11 @@ public static class MapAdminDto{
             LastName = user.Surname,
             Email = user.Email,
             PhoneNumber = user.PhoneNumber,
-            SubscriptionPlan = user.SubscriptionPlan.Name,
+            SubscriptionPlan = user.MyUserSubscriptionPlans.LastOrDefault().SubscriptionPlan.Name,
+            Category = user.Category,
+            Fields = user.MyUserSectors.Select(s => s.Sector.Name).ToList(),
+            Software = user.MyUserUsedSoftwares.Select(s => s.UsedSoftware.Name).ToList(),
+            SoftSkill = user.MyUserSkills.Select(s => s.Skill.Name).ToList(),
             CreateDate = user.CreateDate.ToString("dd/MM/yy hh:mm")
         }));
         return frelancerDtos;

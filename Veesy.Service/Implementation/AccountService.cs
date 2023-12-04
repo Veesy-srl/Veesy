@@ -301,23 +301,33 @@ public class AccountService : IAccountService
 
     public SubscriptionPlan GetUserSubscription(MyUser user)
     {
-        return _uoW.MyUserRepository.FindByCondition(s => s.Id == user.Id)
+        return _uoW.DbContext.MyUserSubscriptionPlans
             .Include(s => s.SubscriptionPlan)
-            .SingleOrDefault().SubscriptionPlan;
+            .Where(s => s.MyUserId == user.Id)
+            .OrderBy(s => s.CreateRecordDate)
+            .LastOrDefault().SubscriptionPlan;
     }
 
     public List<MyUser> GetCreators()
     {
         return _uoW.MyUserRepository.FindAll()
-            .Include(s => s.SubscriptionPlan)
-            .Where(s => s.SubscriptionPlan != null)
+            .Include(s => s.MyUserSubscriptionPlans.OrderBy(s => s.CreateRecordDate))
+                .ThenInclude(s => s.SubscriptionPlan)
+            .Include(s => s.MyUserUsedSoftwares)
+                .ThenInclude(s => s.UsedSoftware)
+            .Include(s => s.MyUserSectors)
+                .ThenInclude(s => s.Sector)
+            .Include(s => s.MyUserSkills.Where(s => s.Type == SkillConstants.SoftSkill))
+                .ThenInclude(s => s.Skill)
+            .Where(s => s.MyUserSubscriptionPlans.Count != 0)
             .ToList();
     }
 
     public MyUser GetUserById(string id)
     {
         return _uoW.MyUserRepository.FindByCondition(s => s.Id == id)
-            .Include(s => s.SubscriptionPlan)
+            .Include(s => s.MyUserSubscriptionPlans.OrderBy(s => s.CreateRecordDate))
+                .ThenInclude(s => s.SubscriptionPlan)
             .SingleOrDefault();
     }
 
@@ -354,9 +364,9 @@ public class AccountService : IAccountService
             .ToList();
     }
 
-    public List<CreatorOverviewDto> GetCreatorNumberByMonthGroupByDay(DateTime date)
+    public List<CreatorOverviewDto> GetCreatorNumberByMonthGroupByDay(int month, int year)
     {
-        var res = _uoW.MyUserRepository.FindByCondition(s => s.CreateDate.Month == date.Month)
+        var res = _uoW.MyUserRepository.FindByCondition(s => s.CreateDate.Month == month && s.CreateDate.Year == year)
             .GroupBy(s => s.CreateDate.Day)
             .Select(g => new CreatorOverviewDto
             {
@@ -371,10 +381,37 @@ public class AccountService : IAccountService
     public List<MyUser> GetCreatorsPlus()
     {
         return _uoW.MyUserRepository.FindAll()
-            .Include(s => s.SubscriptionPlan)
+            .Include(s => s.MyUserSubscriptionPlans)
+                .ThenInclude(s => s.SubscriptionPlan)
+            .Include(s => s.MyUserUsedSoftwares)
+                .ThenInclude(s => s.UsedSoftware)
+            .Include(s => s.MyUserSectors)
+                .ThenInclude(s => s.Sector)
+            .Include(s => s.MyUserSkills.Where(s => s.Type == SkillConstants.SoftSkill))
+                .ThenInclude(s => s.Skill)
             .Include(s => s.Portfolios.Where(s => s.IsMain))
-            .Where(s => s.SubscriptionPlan != null && s.SubscriptionPlan.Name != VeesyConstants.SubscriptionPlan.Free)
+            .Where(s => s.MyUserSubscriptionPlans.OrderBy(s => s.CreateRecordDate).LastOrDefault().SubscriptionPlan != null && s.MyUserSubscriptionPlans.OrderBy(s => s.CreateRecordDate).LastOrDefault().SubscriptionPlan.Name != VeesyConstants.SubscriptionPlan.Free)
             .ToList();
+    }
+
+    public int GetNumberPayingUsers()
+    {
+        return _uoW.MyUserRepository.FindAll()
+            .Include(s => s.MyUserSubscriptionPlans)
+                .ThenInclude(s => s.SubscriptionPlan)
+            .Where(s => s.MyUserSubscriptionPlans.OrderBy(s => s.CreateRecordDate).LastOrDefault().SubscriptionPlan.Name != VeesyConstants.SubscriptionPlan.Free )
+            .Count();
+    }
+
+    public List<MyUser> GetLastFourLoginAttempt(int number)
+    {
+        return _uoW.MyUserRepository.FindByCondition(s => s.LastLoginTime != null)
+            .OrderByDescending(s => s.LastLoginTime).Take(number).ToList();
+    }
+
+    public List<MyUser> GetLastFourCreatedUser(int number)
+    {
+        return _uoW.MyUserRepository.FindAll().OrderByDescending(s => s.CreateDate).Take(number).ToList();
     }
 
     public class CreatorOverviewDto

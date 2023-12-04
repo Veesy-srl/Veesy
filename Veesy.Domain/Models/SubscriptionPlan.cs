@@ -21,5 +21,5 @@ public class SubscriptionPlan : TrackableEntity
     public int AllowedMegaByte { get; set; }
     public bool IsMediaFormatsInclude { get; set; } 
     public int AllowedMediaNumber { get; set; } 
-    public virtual List<MyUser> MyUsers { get; set; }
+    public virtual List<MyUserSubscriptionPlan> MyUserSubscriptionPlans { get; set; }
 }

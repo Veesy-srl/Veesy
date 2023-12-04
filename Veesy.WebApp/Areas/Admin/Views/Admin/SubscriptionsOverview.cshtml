@@ -1,0 +1,186 @@
+@model Veesy.Presentation.Model.Admin.SubscriptionOverviewViewModel
+@{
+    ViewData["Title"] = "Subscriptions Overview";
+    Layout = "_Layout";
+}
+
+<div class="row">
+  <div class="col-sm-12 col-md-3">
+    <div class="card">
+      <div class="card-body">
+        <div class="row alig n-items-start">
+          <div class="col-8">
+            <h5 class="card-title mb-9 fw-semibold">Earnings this month</h5>
+            <h4 class="fw-semibold mb-3">@Model.EarningsThisMonth €</h4>
+          </div>
+          <div class="col-4">
+            <div class="d-flex justify-content-end">
+              <div class="text-white bg-secondary rounded-circle p-6 d-flex align-items-center justify-content-center">
+                <i class="ti ti-currency-dollar fs-6"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12 col-md-3">
+    <div class="card">
+      <div class="card-body">
+        <div class="row alig n-items-start">
+          <div class="col-8">
+            <h5 class="card-title mb-9 fw-semibold">Earnings this year</h5>
+            <h4 class="fw-semibold mb-3">@Model.EarningsThisYear €</h4>
+          </div>
+          <div class="col-4">
+            <div class="d-flex justify-content-end">
+              <div class="text-white bg-secondary rounded-circle p-6 d-flex align-items-center justify-content-center">
+                <i class="ti ti-currency-dollar fs-6"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12 col-md-3">
+    <div class="card">
+      <div class="card-body">
+        <div class="row alig n-items-start">
+          <div class="col-8">
+            <h5 class="card-title mb-9 fw-semibold">User with payment plan</h5>
+            <h4 class="fw-semibold mb-3">@Model.NumberPayingUsers</h4>
+          </div>
+          <div class="col-4">
+            <div class="d-flex justify-content-end">
+              <div class="text-white bg-secondary rounded-circle p-6 d-flex align-items-center justify-content-center">
+                <i class="ti ti-currency-dollar fs-6"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12 d-flex align-items-strech">
+    <div class="card w-100">
+      <div class="card-body">
+        <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
+          <div class="mb-3 mb-sm-0">
+            <h5 class="card-title fw-semibold">Media Overview</h5>
+          </div>
+          <div>
+            <h3>@DateTime.Now.Year</h3>
+          </div>
+        </div>
+        <div id="chart"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section Scripts
+{
+  <script>
+  var chart = {
+        series: [
+          { name: "Earnings", data: JSON.parse('@Html.Raw(Json.Serialize(Model.EarningGraph.Select(s => s.Total).ToList()))')},
+        ],
+    
+        chart: {
+          type: "bar",
+          height: 345,
+          offsetX: -15,
+          toolbar: { show: true },
+          foreColor: "#adb0bb",
+          fontFamily: 'inherit',
+          sparkline: { enabled: false },
+        },
+    
+    
+        colors: ["#5D87FF", "#49BEFF"],
+    
+    
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            columnWidth: "35%",
+            borderRadius: [6],
+            borderRadiusApplication: 'end',
+            borderRadiusWhenStacked: 'all'
+          },
+        },
+        markers: { size: 0 },
+    
+        dataLabels: {
+          enabled: false,
+        },
+    
+    
+        legend: {
+          show: false,
+        },
+    
+    
+        grid: {
+          borderColor: "rgba(0,0,0,0.1)",
+          strokeDashArray: 3,
+          xaxis: {
+            lines: {
+              show: false,
+            },
+          },
+        },
+    
+        xaxis: {
+          type: "category",
+          categories: JSON.parse('@Html.Raw(Json.Serialize(Model.EarningGraph.Select(s => s.Month.ToString("D2")).ToList()))'),
+          labels: {
+            style: { cssClass: "grey--text lighten-2--text fill-color" },
+          },
+        },
+    
+    
+        yaxis: {
+          show: true,
+          min: 0,
+          max: @Decimal.ToInt32(Model.EarningGraph.Max(s => s.Total)),
+          tickAmount: 4,
+          labels: {
+            style: {
+              cssClass: "grey--text lighten-2--text fill-color",
+            },
+          },
+        },
+        stroke: {
+          show: true,
+          width: 3,
+          lineCap: "butt",
+          colors: ["transparent"],
+        },
+    
+    
+        tooltip: { theme: "light" },
+    
+        responsive: [
+          {
+            breakpoint: 600,
+            options: {
+              plotOptions: {
+                bar: {
+                  borderRadius: 3,
+                }
+              },
+            }
+          }
+        ]
+    
+    
+      };
+    
+     var chart = new ApexCharts(document.querySelector("#chart"), chart);
+     chart.render();
+  </script>
+}

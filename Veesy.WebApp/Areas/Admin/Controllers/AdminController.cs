@@ -59,11 +59,12 @@ public class AdminController : VeesyController
     }
 
     [HttpGet("subscriptions")]
-    public IActionResult ManageSubscriptions()
+    public IActionResult SubscriptionsOverview()
     {
         try
         {
-            return View();
+            var vm = _adminHelper.GetSusbscriptionsOverviewViewModel();
+            return View(vm);
         }
         catch (Exception ex)
         {
@@ -98,6 +99,41 @@ public class AdminController : VeesyController
         {
             Logger.Error(ex, ex.Message);
             throw;
+        }
+    }
+
+    public IActionResult FactoryList()
+    {
+        return View();
+    }
+
+    [HttpGet]
+    public JsonResult GetMediaUploadedByMonth(int month)
+    {
+        try
+        {
+            var result = _adminHelper.GetMediaUploadedByMonth(month);
+            var max = result.Count == 0 ? 2 : result.Max(s => s.MediaSize);
+            return Json(new { Result = true, Message = "Success", MediaNumber = result.Select(s => s.NumberMedia).ToList(), MediaSize = result.Select(s => s.MediaSize).ToList(), Categories = result.Select(s => s.Day).ToList(), Max = max});
+        }
+        catch (Exception ex)
+        {
+            return Json(new { Result = false, Message = "Error"});
+        }
+    }
+    
+    [HttpGet]
+    public JsonResult GetCreatorsSubscribedByMonth(int month)
+    {
+        try
+        {
+            var result = _adminHelper.GetCreatorsSubscribedByMonth(month);
+            var max = result.Count == 0 ? 2 : result.Max(s => s.NumberCreator);
+            return Json(new { Result = true, Message = "Success", CreatorNumber = result.Select(s => s.NumberCreator).ToList(),  Categories = result.Select(s => s.Day).ToList(), Max = max});
+        }
+        catch (Exception ex)
+        {
+            return Json(new { Result = false, Message = "Error"});
         }
     }
 }
