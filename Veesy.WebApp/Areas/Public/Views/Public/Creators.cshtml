@@ -5,55 +5,55 @@
 <div class="padding-lg pt-7rem">
     <div class="row p-4-lg">
         <div class="col-sm-12 col-md-6 mt-5">
-            <h3 class="text-color" style="font-size: 25px !important; line-height: 30px !important;">Discover all the creators <b>discover all the creators <br/>discover all</b> the creators discover all the creators <br/>discover all the creators</h3>
+            <h1 class="text-color">Discover all the creators <b>discover all the creators <br/>discover all</b> the creators discover all the creators <br/>discover all the creators</h1>
         </div>
     </div>
     <div class="row pt-4 p-4-lg">
         <div class="d-flex mb-4" style="max-width: 100%; flex-wrap: wrap;">
-            <h5 class="pe-2 text-color"><b>Filter by category</b></h5>
+            <h5 class="pe-2 text-color mt-1"><b>Filter by category</b></h5>
             @foreach (var category in Model.CategoryWorks)
             {
-                <div class="pe-3 ps-3 div-white-rounded-blue-veesy-creators d-flex" style="top: -5px; position:  relative;" id="category-@category.ToString()" onclick="FilterCategory('@category.ToString()')"><a><i class="fa-solid fa-circle pe-2 fa-xs" id="category-i-@category.ToString()"></i><b>@category.ToString()</b></a></div>
+                <div class="pe-3 ps-3 div-white-rounded-blue-veesy-creators d-flex" style="top: -5px; position:  relative;" id="category-@category.ToString()" onclick="FilterCategory('@category.ToString()')"><a><b>@category.ToString()</b></a></div>
             }
         </div>
         @for(var u=0; u<Model.User.Count; u++)
         {
-            <div class="col-md-3 mt-2 mb-2" id="@Model.User[u].Id">
-                <div class="card-white-veesy-creators p-3 mb-3 d-flex position-relative" onmouseover="highlightCard(this)" onmouseout="resetCard(this)">
-                    <div class="col-3">
-                        <div class="text-center">
+            <a method="get" asp-area="Public" asp-controller="Public" asp-action="Portfolio" asp-route-id="@Model.PortfolioId[u]">
+                <div class="col-md-3 mt-2 mb-2" id="@Model.User[u].Id" asp-area="Public" asp-controller="Public" asp-action="Portfolio" asp-route-id="@Model.PortfolioId[u]">
+                    <div class="card-white-veesy-creators p-3 mb-3 d-flex position-relative" onmouseover="highlightCard(this)" onmouseout="resetCard(this)">
+                        <div class="col-3">
+                            <div class="text-center">
 
-                            @if (@Model.User[u].ProfileImageFileName != null)
-                            {
-                                <img src="@Model.BasePathImages@Model.User[u].ProfileImageFileName.ToString()" class="img-thumbnail-custom rounded-circle" alt="user-image">
-                            }
-                            else
-                            {
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" class="img-thumbnail-custom rounded-circle" alt="user-image">
-                            }
+                                @if (@Model.User[u].ProfileImageFileName != null)
+                                {
+                                    <img src="@Model.BasePathImages@Model.User[u].ProfileImageFileName.ToString()" class="img-thumbnail-custom rounded-circle" alt="user-image">
+                                }
+                                else
+                                {
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" class="img-thumbnail-custom rounded-circle" alt="user-image">
+                                }
+                            </div>
+                            <button class="rounded-pill btn btn-variant color-text-creator" style="color: #202F4D !important; background-color: white; width:  180px; margin-top:  20px;" type="submit">meet the creator</button>
                         </div>
-                        <form method="get" asp-area="Public" asp-controller="Public" asp-action="Portfolio" asp-route-id="@Model.PortfolioId[u]">
-                            <button class="rounded-pill btn btn-variant color-text-creator" style="color: #202F4D !important; background-color: white; width:  160px; margin-top:  20px;" type="submit">meet the creator</button>
-                        </form>
-                    </div>
-                    <div class="m-4 col-7" style="color: #202F4D;">
-                        <div class="row white-cursor-creators" style="font-size: 15px;">
-                            <strong class="text-color">@Model.User[u].Name @Model.User[u].Surname</strong>
+                        <div class="m-4 col-7">
+                            <div class="row white-cursor-creators" style="font-size: 15px;">
+                                <strong>@Model.User[u].Name @Model.User[u].Surname</strong>
+                            </div>
+                            <div class="row white-cursor-creators">
+                                @if (@Model.User[u].Category != null)
+                                {
+                                    <div style="font-size: 15px;">
+                                        @Model.User[u].Category.ToString()
+                                    </div>
+                                }
+                            </div>
                         </div>
-                        <div class="row white-cursor-creators">
-                            @if (@Model.User[u].Category != null)
-                            {
-                                <div class="text-color" style="font-size: 14px;">
-                                    @Model.User[u].Category.ToString()
-                                </div>
-                            }
+                        <div style="position: absolute; top: 10px; right: 10px;">
+                            <i class="fa-solid fa-circle fa-xs color-dot-creators"></i>
                         </div>
-                    </div>
-                    <div style="position: absolute; top: 10px; right: 10px;">
-                        <i class="fa-solid fa-circle fa-xs" style="color: #202F4D;"></i>
                     </div>
                 </div>
-            </div>
+            </a>
             
         }
     </div>
@@ -80,9 +80,9 @@
         card.style.backgroundColor = "";
         var whiteCreators = card.querySelectorAll(".white-cursor-creators");
         for (var t = 0; t < whiteCreators.length; t++) {
-            whiteCreators[t].style.color = "#202F4D";
+            whiteCreators[t].style.color = "";
         }
-        card.querySelector(".fa-circle").style.color = "#202F4D";
+        card.querySelector(".fa-circle").style.color = "";
         card.style.cursor = "";
     }
 
@@ -135,14 +135,12 @@
          {
              <text>
                 document.getElementById('category-@category').classList.remove("creators-selected-button");
-                document.getElementById('category-i-@category').classList.remove("creators-selected-i");
              </text>
          }
          
          for (var i=0; i<ButtonFilter.length; i++)
            {
                document.getElementById('category-'+ButtonFilter[i]).classList.add("creators-selected-button");
-               document.getElementById('category-i-'+ButtonFilter[i]).classList.add("creators-selected-i");
            }
                           
         @foreach (var user in Model.User)
@@ -166,7 +164,6 @@
              {
                  <text>
                     document.getElementById('category-@category').classList.remove("creators-selected-button");
-                    document.getElementById('category-i-@category').classList.remove("creators-selected-i");
                  </text>
              }
                         

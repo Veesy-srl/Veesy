@@ -335,6 +335,10 @@ html {
   font-size: 15px;
 }
 
+.color-dot-creators{
+  color: #202F4D;
+}
+
 .div-white-rounded-veesy-portfolio{
   padding: 5px 5px 1px 5px;
   margin: 5px;
@@ -358,7 +362,7 @@ html {
   margin: 5px;
   background-color: #F0F2F3;
   border-radius: 25px;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .creators-selected-button{
@@ -1438,7 +1442,7 @@ hr {
 .description-container {
   width: 30%;
   height: 43%;
-  padding: 10px;
+  padding: 0px 10px;
   font-size: 12px;
 }
 .description-content {
@@ -1647,7 +1651,6 @@ hr {
 
 #color-text-footer{
   color: #202F4D;
-  font-size: 12px !important;
   font-weight: 500;
 }
 
