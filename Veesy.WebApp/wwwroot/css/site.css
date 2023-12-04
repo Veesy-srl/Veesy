@@ -5,6 +5,7 @@
   right: 20px !important;
   float: right !important;
 }
+
 .dz-success-mark svg g path{
   fill: #75CCDD !important;
 }
@@ -177,20 +178,39 @@
 }
 
 p{
-  font-size: 12px !important;
-  line-height: 18px !important;
+  font-size: 15px !important;
+  line-height: 22px !important;
   word-spacing: 2px;
   color: #202F4D;
 }
 
 h1{
-  font-size: 29px !important;
-  line-height: 32px !important;
+  font-size: 30px !important;
+  line-height: 36px !important;
+}
+
+.p-variant-price{
+  font-size: 14px !important;
+}
+
+.option-font-20{
+  font-size: 20px !important;
+  line-height: 27px !important;
+}
+
+.option-font-14{
+  font-size: 14px !important;
+  line-height: 22px !important;
+}
+
+h2 {
+  font-size: 30px;
+  line-height: 36px;
 }
 
 h3{
-  font-size: 15px !important;
-  line-height: 19px !important;
+  font-size: 18px !important;
+  line-height: 25px !important;
 }
 
 body{
@@ -315,6 +335,15 @@ html {
   font-size: 15px;
 }
 
+.div-white-rounded-veesy-portfolio{
+  padding: 5px 5px 1px 5px;
+  margin: 5px;
+  background-color: #F0F2F3;
+  border-radius: 25px;
+  border: 0;
+  font-size: 15px;
+}
+
 .div-white-rounded-blue-veesy{
   padding: 5px 5px 1px 5px;
   margin: 5px;
@@ -412,6 +441,10 @@ html {
   background-color: #202F4D;
 }
 
+.form-check{
+  padding-left: 0 !important;
+}
+
 
 .form-check-input {
   height: 1em !important;
@@ -474,7 +507,6 @@ input {
 .btn-variant{
   font-weight: 500 !important;
   padding: 0.4rem 1.2rem !important;
-  font-size: 0.8rem !important;
 }
 
 .btn-primary {
@@ -713,16 +745,16 @@ h5{
 }
 
 .a-font-p{
-  font-size: 12px !important;
-  line-height: 18px !important;
+  font-size: 15px !important;
+  line-height: 22px !important;
 }
 
 .grey-link{
   color: #AAB0BB !important;;
   text-decoration: none !important;
   cursor: pointer;
-  font-size: 12px !important;
-  line-height: 18px !important;
+  font-size: 15px !important;
+  line-height: 22px !important;
 }
 
 .grey-link:hover{
@@ -897,6 +929,7 @@ h5{
 .card-blue-veesy{
   background-color: #202F4D;
   border-radius: 10px;
+  padding: 0.8rem 1.2rem 1.6rem 1.2rem !important;
 }
 
 .card-white-veesy{
@@ -1117,7 +1150,7 @@ a{
   color: #75CCDD !important;
   text-decoration: underline !important;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .a-ciano-underline:hover{
@@ -1545,11 +1578,11 @@ hr {
 
 .edit-button {
   background-color: rgba(0, 0, 0, 0.6);
-  padding: 1px 4px 1px 4px;
+  padding: 4px 6px 2px 8px;
   border-radius: 20px;
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: 10px;
+  right: 10px;
   display: none;
   opacity: 0;
   z-index: 9;
@@ -1663,7 +1696,7 @@ textarea{
 
 .veesy-text-color{
   color: #202F4D;
-  font-size: 12px !important;
+  font-size: 15px !important;
   font-weight: 500;
 }
 

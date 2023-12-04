@@ -28,12 +28,12 @@
             <div class="card-header rounded-05-header p-0 bg-white" style="border-bottom: 0px;">
                 <div class="row m-0 dashboard-header-border">
                     <div class="col-9 mt-2 mb-1">
-                        <p class="mb-0">
+                        <p class="mb-0" style="font-size: 14px !important; line-height: 22px !important;">
                             <strong>OVERVIEW</strong>
                         </p>
                     </div>
                     <div style="border-radius: 0 0.5rem 0 0;" class="col-3 text-end bg-gradient-1">
-                        <i class="fa-solid fa-circle fa-2xs color-circle"></i>
+                        <i class="fa-solid fa-circle fa-2xs color-circle mt-3"></i>
                     </div>
                 </div>
             </div>
@@ -51,8 +51,8 @@
                 <div class="ps-3 col-sm-12 col-lg-3 vertical-space mt-3 pb-0">
                     <div class="mt-4 pt-1">
                         <div class="d-flex align-items-end mb-2">
-                            <h1 style="font-size: 56px !important;" class="text-color"><strong>@Model.MediaNumber</strong></h1>
-                            <h3 style="font-size: 30px !important; color: #D2D5DB !important;">/@Model.Subscription.AllowedMediaNumber</h3>
+                            <h1 style="font-size: 65px !important; line-height: 65px !important;" class="text-color"><strong>@Model.MediaNumber</strong></h1>
+                            <h3 style="font-size: 40px !important; line-height: 40px; color: #D2D5DB !important;">/@Model.Subscription.AllowedMediaNumber</h3>
                         </div>
                         <div style="height: 5px;" class="progress" id="progress-media">
                             <div class="progress-bar" role="progressbar" aria-valuenow="@Model.MediaPercent" aria-valuemin="0" aria-valuemax="100"></div>
@@ -66,7 +66,7 @@
                 </div>
                 <div class="ps-3 col-sm-12 col-lg-3  vertical-space mt-3 pb-0">
                     <div class="mt-4 pt-1">
-                        <h1 style="font-size: 56px !important;" class="text-color"><strong>@Model.PortfolioNumber.ToString("00")</strong></h1>
+                        <h1 style="font-size: 65px !important; line-height: 65px !important;" class="text-color"><strong>@Model.PortfolioNumber.ToString("00")</strong></h1>
                     </div>
                     <div class="mt-4 pt-2">
                         <h3 class="text-color"><strong>Portfolios </strong>created from <br/> your media.</h3>
@@ -95,14 +95,14 @@
     <div class="mb-4 ps-3 pe-3 h-100 col-sm-12 col-md-4 rounded-05">
         <div class="pb-1 pt-0 bg-white card-header d-flex rounded-05-header alternative-bottom-border-dash">
             <div class="col-11">
-                <p class="mt-2 mb-0"><strong>PORTFOLIO</strong></p>
+                <p class="mt-2 mb-0" style="font-size: 14px !important; line-height: 22px !important;"><strong>PORTFOLIO</strong></p>
             </div>
             <div class="col-1 text-end">
-                <i class="fa-solid fa-circle fa-2xs circle-color-dash"></i>
+                <i class="fa-solid fa-circle fa-2xs circle-color-dash mt-3"></i>
             </div>
         </div>
         <div class="pt-2 vertical-space card-body bg-white rounded-bottom rounded-05-footer">
-            <h1 style="font-size: 27px !important; line-height: 30px !important;" class="mt-4 text-color">Use your media, find work, show your projects to clients.</h1>
+            <h1 class="mt-3 text-color">Use your media, find work, show your projects to clients.</h1>
             <div class="row pt-2">
                 @if (Model.PortfolioThumbnailDto != null)
                 {
@@ -156,10 +156,10 @@
     <div class="mb-4 ps-3 pe-3 col-sm-12 col-md-4 rounded-05 h-100">
         <div style="border-bottom: 1px solid rgba(255,255,255, 0.125)" class="pb-1 pt-0 bg-grey-dash card-header d-flex rounded-05-header">
             <div class="col-11">
-                <p class="text-white mt-2 mb-0"><strong>CLOUD</strong></p>
+                <p class="text-white mt-2 mb-0" style="font-size: 14px !important; line-height: 22px !important;"><strong>CLOUD</strong></p>
             </div>
             <div class="col-1 text-end">
-                <i class="fa-solid fa-circle fa-2xs" style="color: #ffffff;"></i>
+                <i class="fa-solid fa-circle fa-2xs mt-3" style="color: #ffffff;"></i>
             </div>
         </div>
         <div class="pt-0 vertical-space card-body bg-grey-dash rounded-bottom rounded-05-footer">
@@ -199,11 +199,11 @@
     <div class="mb-4 ps-3 pe-3 col-sm-12 col-md-4 rounded-05 h-100">
         <div style="border-bottom: 1px solid rgba(255,255,255, 0.125);" class="pb-1 pt-0 bg-blue card-header d-flex  rounded-05-header">
             <div class="col-11">
-                <p class="text-white mt-2 mb-0"><strong>PROFILE</strong>
+                <p class="text-white mt-2 mb-0" style="font-size: 14px !important; line-height: 22px !important;"><strong>PROFILE</strong>
                 </p>
             </div>
             <div class="col-1 text-end">
-                <i class="fa-solid fa-circle fa-2xs" style="color: #ffffff;"></i>
+                <i class="fa-solid fa-circle fa-2xs mt-3" style="color: #ffffff;"></i>
             </div>
         </div>
         <div class="pt-2 vertical-space card-body bg-blue rounded-bottom rounded-05-footer">

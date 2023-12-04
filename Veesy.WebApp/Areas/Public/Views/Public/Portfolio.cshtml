@@ -14,13 +14,13 @@
             <h1 class="text-color">@Model.PortfolioDto.PortfolioIntro</h1>
             <div class="empty-veesy"></div>
             <div class="empty-veesy"></div>
-            <h1><strong class="text-color">@Model.PortfolioDto.UserFullName</strong></h1>
-            <h3 class="text-color">@Model.PortfolioDto.UserCategory</h3>
+            <h1 style="font-size: 20px !important; line-height: 27px !important;"><strong class="text-color">@Model.PortfolioDto.UserFullName</strong></h1>
+            <p class="text-color">@Model.PortfolioDto.UserCategory</p>
         </div>
         <div class="col-sm-12 col-md-4 mb-3 nodisplay-sm">
             <div class="text-end">
-                <h3 class="text-color" style="font-size: 20px !important;"><strong>Interested in my work?</strong></h3>
-                <button href="mailto:@Model.PortfolioDto.UserEmail" class="rounded-pill btn btn-primary btn-variant">contact me</button>
+                <h3 class="text-color" style="font-size: 20px !important; line-height: 27px !important;"><strong>Interested in my work?</strong></h3>
+                <button href="mailto:@Model.PortfolioDto.UserEmail" class="rounded-pill btn-primary btn-variant mt-2" style="font-size: 15px !important; line-height:  22px !important;">contact me</button>
             </div>
         </div>
     </div>
@@ -55,8 +55,8 @@
     <div class="empty-veesy"></div>
     <div class="empty-veesy"></div>
     <div class="text-center">
-        <h3 class="text-color" style="font-size: 20px !important;"><strong>Interested in my work?</strong></h3>
-        <button href="mailto:@Model.PortfolioDto.UserEmail" class="rounded-pill btn btn-primary btn-padding btn-variant">contact me</button>
+        <h3 class="text-color" style="font-size: 20px !important; line-height: 27px !important;"><strong>Interested in my work?</strong></h3>
+        <button href="mailto:@Model.PortfolioDto.UserEmail" class="rounded-pill btn-primary btn-padding btn-variant my-4" style="font-size: 15px !important; line-height:  22px !important;">contact me</button>
     </div>
     <div class="empty-veesy"></div>
     <div class="empty-veesy"></div>
@@ -68,7 +68,7 @@
                     
                 <h1 class="h3 mb-2 fw-normal">
                     <a role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" onclick="CloseMediaPopup()">
-                        <img src="/imgs/veesy_vettoriale_enigma.png" style="width: 75px; height: 25px; margin-top: 5px;">portfolio
+                        <img class="header-logo">portfolio
                     </a>
                 </h1> 
                 <div class="float-end mb-2">
@@ -82,7 +82,7 @@
                 </div>
             </div>
         </nav>
-        <div class="row pt-4rem ps-4 pe-4" style="max-height: 100vh">
+        <div class="bg-grey-veesy row pt-4rem ps-4 pe-4" style="max-height: 100vh">
             <div class="col-sm-12 col-md-2 center-content nodisplay-sm">
                 <ul class="list-unstyled">
                     <li class="mb-3 edit-padding-left">
@@ -92,7 +92,7 @@
             </div>
             <div class="col-sm-12 col-md-8">
                 <div id="external-div" class="mx-auto">
-                    <div class="row text-center align-bottom show-edit" style="position:relative; max-height: 80vh; max-width: 100%; --bs-gutter-x: 0;">
+                    <div class="row text-center align-bottom show-edit" style="position:relative; max-height: 100vh; max-width: 100%; --bs-gutter-x: 0;">
                         <div style="position: relative">
                             <div style="display: inline-block; position: relative;">
                                 <div id="text-overlay" class="text-overlay text-start p-4 rounded-05">
@@ -139,7 +139,7 @@
     <div class="creator-popup-full" id="popup-creator">
         <div class="d-flex" style="cursor: pointer" onclick="CloseCreatorPopup()">
             <div class="col-11">
-                <p class="text-white ms-2 mb-1 mt-2">MEET THE CREATOR</p>
+                <p class="text-white ms-2 mb-1 mt-2" style="font-size: 14px !important; line-height:  22px !important;">MEET THE CREATOR</p>
             </div>
             <div class="col-1 pe-2"><div class="text-end pt-1"><i class="fa-solid fa-circle-xmark" style="color: white"></i></div></div>
         </div>
@@ -159,7 +159,7 @@
             </div>
             <div class="col-sm-12 col-md-6 mb-3">
                 <h1 class="text-white"><strong>@Model.PortfolioDto.UserFullName</strong></h1>
-                <h3 class="text-white">- @Model.PortfolioDto.UserCategory</h3>
+                <h3 class="text-white option-font-20">- @Model.PortfolioDto.UserCategory</h3>
                 <div class="empty-veesy"></div>
                 <div><p class="text-white">@Model.PortfolioDto.UserDescription</p></div>
                 @if (Model.PortfolioDto.ShowFields && Model.PortfolioDto.Sector.Count != 0)
@@ -170,7 +170,7 @@
                         <div class="d-flex mb-4 option-portfolio-width" style="flex-wrap: wrap;">
                             @foreach (var item in Model.PortfolioDto.Sector)
                             {
-                                <div class="pe-3 ps-3 div-white-rounded-blue-veesy d-flex"><a><i class="fa-solid fa-circle pe-2" style="color: #75CCDD"></i>@item</a></div>
+                                <div class="pe-3 ps-3 div-white-rounded-blue-veesy d-flex option-font-14"><a><i class="fa-solid fa-circle pe-2" style="color: #75CCDD"></i>@item</a></div>
                             }
                         </div>
                     </div>
@@ -183,7 +183,7 @@
                         <div class="d-flex mb-4 option-portfolio-width" style="flex-wrap: wrap;">
                             @foreach (var item in Model.PortfolioDto.SoftSkill)
                             {
-                                <div class="pe-3 ps-3 div-white-rounded-blue-veesy d-flex"><a><i class="fa-solid fa-circle pe-2" style="color: #75CCDD"></i>@item</a></div>
+                                <div class="pe-3 ps-3 div-white-rounded-blue-veesy d-flex option-font-14"><a><i class="fa-solid fa-circle pe-2" style="color: #75CCDD"></i>@item</a></div>
                             }
                         </div>
                     </div>
@@ -196,7 +196,7 @@
                         <div class="d-flex mb-4 option-portfolio-width" style="flex-wrap: wrap;">
                             @foreach (var item in Model.PortfolioDto.UsedSoftwares)
                             {
-                                <div class="pe-3 ps-3 div-white-rounded-veesy"><a>@item</a></div>
+                                <div class="pe-3 ps-3 div-white-rounded-veesy option-font-14"><a>@item</a></div>
                             }
                         </div>
                     </div>
@@ -219,8 +219,8 @@
                 </div>
             </div>
             <div class="row text-end justify-content-end">
-                <h3 class="text-white" style="font-size: 20px !important;"><strong>Interested in my work?</strong></h3>
-                <button href="mailto:@Model.PortfolioDto.UserEmail" class="rounded-pill w-25 btn div-white-rounded-veesy btn-variant">contact me</button>
+                <h3 class="text-white" style="font-size: 20px !important; line-height:  27px!important;"><strong>Interested in my work?</strong></h3>
+                <button href="mailto:@Model.PortfolioDto.UserEmail" class="rounded-pill w-25 div-white-rounded-veesy-portfolio btn-variant mt-2" style="font-size: 15px !important; line-height:  22px !important;">contact me</button>
             </div>
             <div class="empty-veesy"></div>
         </div>

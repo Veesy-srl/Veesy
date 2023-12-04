@@ -53,6 +53,11 @@
                     <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Portfolio" asp-action="List">
                         <img class="header-logo">portfolio
                     </a>
+                }else if (ViewContext.RouteData.Values["Action"].ToString() == "Portfolio")
+                {
+                <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Portfolio" asp-action="List">
+                    <img class="header-logo">portfolio
+                </a>
                 }
                 else
                 {
