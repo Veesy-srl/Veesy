@@ -65,7 +65,7 @@ public class AuthController : Controller
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
             if (result.Succeeded)
             {
-                _authHelper.AddLastLogin(user);
+                //_authHelper.AddLastLogin(user);
                 if((await _userManager.GetRolesAsync(user))[0] == Roles.Admin)
                     return RedirectToAction("Dashboard", "Admin", new { area = "Admin" });
                 return RedirectToAction("Index", "Home", new { area = "Portfolio" });
