@@ -45,6 +45,11 @@
         color: #F3F3F3 !important;
     }
 
+    .btn-primary:hover {
+        background-color: #75CCDD !important;
+        color: #F3F3F3 !important;
+    }
+
     .grey-link{
         color: #AAB0BB !important;;
         text-decoration: none !important;
@@ -96,7 +101,6 @@
         color: #75CCDD !important;
         text-decoration: underline !important;
         cursor: pointer;
-        font-size: 14px;
     }
 
     .fa-chevron-right{
@@ -169,9 +173,21 @@
         background-color: #383B43;
         border: 1px solid #F3F3F3 !important;
     }
+    
+    .white-cursor-creators{
+        color: #F3F3F3;
+    }
+
+    .color-dot-creators{
+        color: #F3F3F3;
+    }
 
     .div-white-rounded-veesy{
         background-color: #383B43;
+    }
+
+    .div-white-rounded-veesy-portfolio{
+        background-color: #F3F3F3;
     }
 
     .input-modal {

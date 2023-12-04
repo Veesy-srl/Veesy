@@ -64,7 +64,7 @@
             <div class="col-sm-12 col-md-4 ps-3">
                 <div class="row">
                     <div class="col-9 ps-0">
-                        <h3 class="mb-0 text-white veesy-overflow" id="filename-show">@System.IO.Path.GetFileNameWithoutExtension(Model.Media.OriginalFileName)</h3>
+                        <h3 class="mb-0 text-white veesy-overflow option-font-20" id="filename-show">@System.IO.Path.GetFileNameWithoutExtension(Model.Media.OriginalFileName)</h3>
                     </div>
                     <div class="col-3 text-end pe-0">
                         <a onclick="setTextAreaValue('filename-edit', '@System.IO.Path.GetFileNameWithoutExtension(Model.Media.OriginalFileName)'), openModal('#modalFileName')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i></a>
@@ -84,7 +84,7 @@
                     </div>
                     <div class="empty-veesy"></div>
                     <div class="col-8 ps-0">
-                        <h5 class="mb-0 text-white veesy-overflow" id="filename-show">Nested Links</h5>
+                        <h5 class="mb-0 text-white veesy-overflow option-font-20" id="filename-show">Nested Links</h5>
                     </div>
                     <div class="col-4 text-end pe-0">
                         <a class="grey-link"><strong class="me-1">learn more</strong><i class="fa-solid fa-arrow-up-right-from-square pe-1"></i></a>
@@ -105,7 +105,7 @@
                     <hr class="hr"/>
                     <div class="empty-veesy"></div>
                     <div class="col-12 ps-0 pe-0">
-                        <h3 class="mb-0 text-white">Credits</h3>
+                        <h3 class="mb-0 text-white option-font-20">Credits</h3>
                         @if (string.IsNullOrEmpty(Model.Media.Credits))
                         {
                             <div class="card-white-dashed-veesy p-3 mt-2" id="credits-area-empty">

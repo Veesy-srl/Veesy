@@ -53,6 +53,11 @@
                     <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Portfolio" asp-action="List">
                         <img class="header-logo">portfolio
                     </a>
+                }else if (ViewContext.RouteData.Values["Action"].ToString() == "Portfolio")
+                {
+                <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Portfolio" asp-action="List">
+                    <img class="header-logo">portfolio
+                </a>
                 }
                 else
                 {
@@ -149,30 +154,30 @@
                 <div class="container center-content-menu">
                     <div class="menu-list">
                         <ul class="list-unstyled">
-                            <li class="m-4"><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description1">Gallery</a></li>
-                            <li class="m-4"><a asp-action="Creators" asp-controller="Public" asp-area="Public" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description2">Creators</a></li>
-                            <li class="m-4"><a asp-action="About" asp-controller="Public" asp-area="Public" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description3">About</a></li>
-                            <li class="m-4"><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description4">Match</a></li>
-                            <li class="m-4"><a asp-action="Contacts" asp-controller="Public" asp-area="Public" class="float-end fw-bolder p-2 menu-element font-weight-normal" id="color-text" data-target="#description6">Contact</a></li>
+                            <li><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" style="font-size: 30px !important; line-height: 36px !important;" id="color-text" data-target="#description1">Gallery</a></li>
+                            <li><a asp-action="Creators" asp-controller="Public" asp-area="Public" class="float-end fw-bolder p-2 menu-element font-weight-normal" style="font-size: 30px !important; line-height: 36px !important;" id="color-text" data-target="#description2">Creators</a></li>
+                            <li><a asp-action="About" asp-controller="Public" asp-area="Public" class="float-end fw-bolder p-2 menu-element font-weight-normal" style="font-size: 30px !important; line-height: 36px !important;" id="color-text" data-target="#description3">About</a></li>
+                            <li><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" style="font-size: 30px !important; line-height: 36px !important;" id="color-text" data-target="#description4">Match</a></li>
+                            <li><a asp-action="Contacts" asp-controller="Public" asp-area="Public" class="float-end fw-bolder p-2 menu-element font-weight-normal" style="font-size: 30px !important; line-height: 36px !important;" id="color-text" data-target="#description6">Contact</a></li>
                         </ul>
                     </div>
                     <div class="d-flex" style="height: 250px;">
                         <div class="vr custom-vr"></div>
                     </div>
-                    <div class="description-container mt-3">
-                        <div id="description1" class="description-content mt-1 text-color" ><b>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</b></div>
-                        <div id="description2" class="description-content mt-1 text-color" ><b>unknown printer took a galley of type and scrambled it to make a type speci</b></div>
-                        <div id="description3" class="description-content mt-1 text-color" ><b>essentially unchanged. It was popularised in the 1960s with the release of Letraset shee</b></div>
-                        <div id="description4" class="description-content mt-1 text-color" ><b>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet,</b></div>
-                        <div id="description6" class="description-content mt-1 text-color" ><b>Lorem Ipsum is simply dummy text of the printing</b></div>
+                    <div class="description-container">
+                        <div id="description1" class="description-content mt-1 text-color" ><p><b>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</b></p></div>
+                        <div id="description2" class="description-content mt-1 text-color" ><p><b>unknown printer took a galley of type and scrambled it to make a type speci</b></p></div>
+                        <div id="description3" class="description-content mt-1 text-color" ><p><b>essentially unchanged. It was popularised in the 1960s with the release of Letraset shee</b></p></div>
+                        <div id="description4" class="description-content mt-1 text-color" ><p><b>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet,</b></p></div>
+                        <div id="description6" class="description-content mt-1 text-color" ><p><b>Lorem Ipsum is simply dummy text of the printing</b></p></div>
                     </div>
                 </div>
 
 
                    <div class="menu-footer">
-                       <a href="#" id="color-text" style="font-size: 14px !important;"><b>privacy policy</b></a>
-                       <a href="#" class="cookie"  style="font-size: 14px !important;" id="color-text"><b>cookie policy</b></a><br/>
-                       <p href="#" class="copyright" id="color-text-footer">Veesy © 2023 all rights rederved - website by <a target="_blank" href="https://www.derein.net/" style="color: #202F4D">derein</a> & <a target="_blank" href="https://www.enigma-tech.it/" style="color: #202F4D">enigma</a> - VAT nr. 4840572639</p>
+                       <a href="#" id="color-text" class="option-font-20"><b>privacy policy</b></a>
+                       <a href="#" class="cookie option-font-20" id="color-text"><b>cookie policy</b></a><br/>
+                       <p href="#" class="copyright option-font-14" id="color-text-footer">Veesy © 2023 all rights rederved - website by <a target="_blank" href="https://www.derein.net/" style="color: #202F4D">derein</a> & <a target="_blank" href="https://www.enigma-tech.it/" style="color: #202F4D">enigma</a> - VAT nr. 4840572639</p>
                    </div>
                </div>
 

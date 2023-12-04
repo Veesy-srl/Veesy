@@ -63,7 +63,7 @@
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <a class="grey-link ms-2"><strong>learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a></p>
             <div class="empty-veesy"></div>
             <div class="row">
-                <h3 class="text-color"><strong>Main Settings</strong></h3>
+                <h3 class="text-color" style="font-size: 20px!important; line-height: 27px!important;"><strong>Main Settings</strong></h3>
                 <div class="col-sm-12 col-md-6 col-lg-6 ps-2 pe-2">
                     <hr class="hr color-hr"/>
                     <div class="d-flex">
@@ -141,7 +141,7 @@
             </div>
             <div class="empty-veesy"></div>
             <div class="row">
-                <h3 class="text-color"><strong>Select layout</strong></h3>
+                <h3 class="text-color" style="font-size: 20px!important; line-height: 27px!important;"><strong>Select layout</strong></h3>
                 <p>Remember that for <b>horizontal images</b>, 1 or 2 columns are more suitable choice, for <b>vertical images</b>, it's better to pick 3 or 4 columns.</p>
                 <div class="ms-1 ps-0 row">
                     @foreach (var item in VeesyConstants.GetAvailableLayouts())
@@ -183,7 +183,7 @@
             <div class="empty-veesy"></div>
             <div class="empty-veesy"></div>
             <div class="row mt-4">
-                <h3 class="text-color"><strong>Your Medias</strong></h3>
+                <h3 class="text-color" style="font-size: 20px!important; line-height: 27px!important;"><strong>Your Medias</strong></h3>
                 <div class="card-columns draggable-zone" id="images-container">
                     @foreach (var image in Model.Portfolio.PortfolioMedias)
                     {
@@ -213,7 +213,7 @@
             <div class="empty-veesy"></div>
             <div id="div-uploader">
                 <form enctype="multipart/form-data" asp-route-PortfolioId="@Model.Portfolio.Id" asp-action="UploadMediaInPortfolio" asp-controller="Media" asp-area="Portfolio" class="dropzone card-grey-dashed-veesy mb-4" id="uploader">
-                    <a id="dropzone-close-button" style="padding: 0.7rem 1rem !important; display: none;" onclick="hideDropZone()" class="ms-2 btn btn-light border fw-bolder shadow-none close-button-dropzone">
+                    <a id="dropzone-close-button" style="padding: 0.7rem 1rem !important; display: none;" onclick="hideDropZone()" class="ms-2 btn-light border fw-bolder shadow-none close-button-dropzone">
                         <i class="fas fa-times-circle fa-2xs text-primary" id="icon-color" aria-hidden="true"></i>
                         <span id="color-text-variant">close</span>
                     </a>
@@ -221,7 +221,7 @@
                         <div id="div-uploader-icon" class="w-100 mb-1">
                             <i id="uploader-icon" class="fa-solid fa-circle-plus fa-xl" style="color: #0D2045"></i>
                         </div>
-                        <span id="uploader-text" class="text-color">
+                        <span id="uploader-text" class="text-color" style="font-size: 15px!important; line-height:  22px!important;">
                             Upload or drop files here. <br/> (Accepted formats: jpg, png, mov, mp4, gif)
                         </span>
                         <div class="progress-bar progress-bar-primary" role="progressbar" data-dz-uploadprogress>
@@ -236,9 +236,9 @@
             <div class="empty-veesy"></div>
             <div class="empty-veesy"></div>
             <div class="d-flex justify-content-end ps-3">
-                <div class="w-75-veesy card-blue-veesy p-3">
+                <div class="w-75-veesy card-blue-veesy">
                     <div class="text-end"><i class="fa-solid fa-circle fa-2xs" style="color: #ffffff;"></i></div>
-                    <p class="mb-0 text-white" style="font-size: 14px !important;">Do you need some help?</p>
+                    <p class="mb-0 text-white">Do you need some help?</p>
                     <a class="a-ciano-underline" href="mailto:support@veesy.it">Contact us</a>
                 </div>
             </div>

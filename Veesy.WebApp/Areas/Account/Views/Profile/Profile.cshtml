@@ -33,7 +33,7 @@
                 </div>
                 <div class="col-1"><div class="text-end"><i class="fa-solid fa-circle fa-xs text-color"></i></div></div>
             </div>
-            <h3 class="mt-4 mb-4 text-color" ><strong>@Model.FullName</strong></h3>
+            <h3 class="mt-4 mb-4 text-color option-font-20"><strong>@Model.FullName</strong></h3>
             @{
                 var workrole = "information missing";
                 var role_css = "text-danger";
@@ -75,7 +75,7 @@
         <h2 class="text-color"><strong>Your Profile</strong></h2>
         <p class="text-color">Lorem ipsum dolor sit amet. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <a class="grey-link ms-2"><strong>learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a></p>
         <div class="empty-veesy"></div>
-        <h3 class="text-color"><strong>General</strong></h3>
+        <h3 class="text-color option-font-20"><strong>General</strong></h3>
         <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-6 ps-2 pe-2">
                 <hr class="hr color-hr" />
@@ -182,7 +182,7 @@
             </div>
         </div>
         <div class="pt-4 mt-4">
-            <h3 class="text-color"><strong>Portfolio intro</strong></h3>
+            <h3 class="text-color option-font-20"><strong>Portfolio intro</strong></h3>
             @if (string.IsNullOrEmpty(Model.PortfolioIntro))
             {
                 <div class="card-white-dashed-veesy p-3">
@@ -192,13 +192,13 @@
             }
             else
             {
-                <p class="text-color">@Model.PortfolioIntro</p>
+                <p class="text-color option-font-20" style="font-weight: 400;">@Model.PortfolioIntro</p>
                 <a onclick="openModal('#modalPortfolioIntro'), setTextAreaValue('portfolio-intro-text-edit', '@Model.PortfolioIntro.Replace("\'", "&#x27;")')" class="grey-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
 
             }
         </div>
         <div class="pt-4 mt-4">
-            <h3 class="text-color"><strong>Biography</strong></h3>
+            <h3 class="text-color option-font-20"><strong>Biography</strong></h3>
             @if (string.IsNullOrEmpty(Model.Biography))
             {
                 <div class="card-white-dashed-veesy p-3">
@@ -214,14 +214,14 @@
             }
         </div>
         <div class="pt-4 mt-4">
-            <h3 class="text-color"><strong>Fields</strong></h3>
+            <h3 class="text-color option-font-20"><strong>Fields</strong></h3>
             <p class="text-color">Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,</p>
             @if (Model.Sectors.Count(s => s.Selected) > 0)
             {
                 <div class="d-flex mb-4" style="max-width: 100%; flex-wrap: wrap;">
                     @foreach (var item in Model.Sectors.Where(s => s.Selected))
                     {
-                        <div class="pe-3 ps-3 div-white-rounded-blue-veesy d-flex"><a onclick="openModal('#modalSectors')"><i class="fa-solid fa-circle pe-2" style="color: #75CCDD"></i>@item.Name</a></div>
+                        <div class="pe-3 ps-3 div-white-rounded-blue-veesy d-flex option-font-14"><a onclick="openModal('#modalSectors')"><i class="fa-solid fa-circle pe-2 " style="color: #75CCDD"></i>@item.Name</a></div>
                     }
                 </div>
                 <a onclick="openModal('#modalSectors')" class="grey-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
@@ -238,14 +238,14 @@
             }
         </div>
         <div class="pt-4 mt-4">
-            <h3 class="text-color"><strong>Soft skill</strong></h3>
+            <h3 class="text-color option-font-20"><strong>Soft skill</strong></h3>
             <p class="text-color">Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,</p>
             @if (Model.SoftSkills.Count(s => s.Selected) > 0)
             {
                 <div class="d-flex mb-4" style="max-width: 100%; flex-wrap: wrap;">
                     @foreach (var item in Model.SoftSkills.Where(s => s.Selected))
                     {
-                        <div class="pe-3 ps-3 div-white-rounded-blue-veesy d-flex"><a onclick="openModal('#modalSoftSkill')" ><i class="fa-solid fa-circle pe-2" style="color: #75CCDD"></i>@item.Name</a></div>
+                        <div class="pe-3 ps-3 div-white-rounded-blue-veesy d-flex option-font-14"><a onclick="openModal('#modalSoftSkill')" ><i class="fa-solid fa-circle pe-2" style="color: #75CCDD"></i>@item.Name</a></div>
                     }
                 </div>
                 <a onclick="openModal('#modalSoftSkill')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
@@ -262,14 +262,14 @@
             }
         </div>
         <div class="pt-4 mt-4">
-            <h3 class="text-color"><strong>Softwares</strong></h3>
+            <h3 class="text-color option-font-20"><strong>Softwares</strong></h3>
             <p class="text-color">Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,</p>
             @if (Model.UsedSoftwares.Count(s => s.Selected) > 0)
             {
                 <div class="d-flex mb-4 text-color" style="max-width: 100%; flex-wrap: wrap;">
                     @foreach (var item in Model.UsedSoftwares.Where(s => s.Selected))
                     {
-                        <div class="pe-3 ps-3 div-white-rounded-veesy"><a onclick="openModal('#modalSoftware')" >@item.Name</a></div>
+                        <div class="pe-3 ps-3 div-white-rounded-veesy option-font-14"><a onclick="openModal('#modalSoftware')" >@item.Name</a></div>
                     }
                 </div>
                 <a onclick="openModal('#modalSoftware')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
@@ -286,7 +286,7 @@
             }
         </div>
         <div class="pt-4 mt-4">
-            <h3 class="text-color mb-4"><strong>Your Portfolios</strong></h3>
+            <h3 class="text-color mb-4 option-font-20"><strong>Your Portfolios</strong></h3>
             @if (Model.PortfolioThumbnailDtos.Count == 0)
             {
                 <p class="text-color">You don't have any portfolio yet.</p>
@@ -356,9 +356,9 @@
         <div class="empty-veesy"></div>
         <div class="empty-veesy"></div>
         <div class="d-flex justify-content-end ps-3">
-            <div class="w-75-veesy card-blue-veesy p-3">
+            <div class="w-75-veesy card-blue-veesy">
                 <div class="text-end"><i class="fa-solid fa-circle fa-2xs" style="color: #ffffff;"></i></div>
-                <p class="mb-0 text-white" style="font-size: 14px !important;">Do you need some help?</p>
+                <p class="mb-0 text-white">Do you need some help?</p>
                 <a class="a-ciano-underline" href="mailto:support@veesy.it">Contact us</a>
             </div>
         </div>
@@ -374,7 +374,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Biography</strong></h3>
+                <h3 class="modal-title text-color" style="font-size: 25px !important; line-height: 30px !important;" id="exampleModalLongTitle"><strong>Biography</strong></h3>
                 <a onclick="closeModal('#modalBiography')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
@@ -393,7 +393,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>External Link</strong></h3>
+                <h3 class="modal-title text-color" style="font-size: 25px !important; line-height: 30px !important;" id="exampleModalLongTitle"><strong>External Link</strong></h3>
                 <a onclick="closeModal('#modalExternalLink')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
@@ -411,7 +411,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Portfolio Intro</strong></h3>
+                <h3 class="modal-title text-color" style="font-size: 25px !important; line-height: 30px !important;" id="exampleModalLongTitle"><strong>Portfolio Intro</strong></h3>
                 <a onclick="closeModal('#modalPortfolioIntro')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
@@ -430,7 +430,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Role</strong></h3>
+                <h3 class="modal-title text-color" style="font-size: 25px !important; line-height: 30px !important;" id="exampleModalLongTitle"><strong>Role</strong></h3>
                 <a onclick="closeModal('#modalWorkRole')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
@@ -449,7 +449,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Softwares</strong></h3>
+                <h3 class="modal-title text-color" style="font-size: 25px !important; line-height: 30px !important;" id="exampleModalLongTitle"><strong>Softwares</strong></h3>
                 <a onclick="closeModal('#modalSoftware')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
@@ -481,7 +481,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Fields</strong></h3>
+                <h3 class="modal-title text-color" style="font-size: 25px !important; line-height: 30px !important;" id="exampleModalLongTitle"><strong>Fields</strong></h3>
                 <a onclick="closeModal('#modalSectors')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
@@ -513,7 +513,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Soft Skills</strong></h3>
+                <h3 class="modal-title text-color" style="font-size: 25px !important; line-height: 30px !important;" id="exampleModalLongTitle"><strong>Soft Skills</strong></h3>
                 <a onclick="closeModal('#modalSoftSkill')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
@@ -577,7 +577,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Languages Spoken</strong></h3>
+                <h3 class="modal-title text-color" style="font-size: 25px !important; line-height: 30px !important;" id="exampleModalLongTitle"><strong>Languages Spoken</strong></h3>
                 <a onclick="closeModal('#modalLanguageSpoken')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
@@ -609,7 +609,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Info to show</strong></h3>
+                <h3 class="modal-title text-color" style="font-size: 25px !important; line-height: 30px !important;" id="exampleModalLongTitle"><strong>Info to show</strong></h3>
                 <a onclick="closeModal('#modalInfoToShow')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
