@@ -111,7 +111,7 @@
 
                     </div>
                     <div style="padding-bottom: 2px">
-                        <button class="ms-2 btn btn-light border fw-bolder btn-layout shadow-none" id="menuButton">
+                        <button class="ms-2 btn btn-light border fw-bolder btn-layout shadow-none" style="padding: 0.75rem 1.2rem !important;" id="menuButton">
                             <i class="fas fa-circle fa-2xs text-primary mr-2" style="font-size: 5px;" id="icon-color"></i>
                             @if (ViewContext.RouteData.Values["Controller"].ToString() == "Public")
                             {
@@ -196,7 +196,7 @@
         <span class="sr-only">Loading...</span>
     </div>
 </div>
-<div class="@background container-fluid" style="padding-left: 22px; padding-right: 22px;">
+<div class="@background container-fluid" style="padding-left: 22px; padding-right: 22px; min-height: 102.5vh;">
     @RenderBody()
 </div>
 <footer class="footer" style="margin-top: -2.5%;">
@@ -243,7 +243,7 @@
                     <div class=" mb-3 d-inline-flex"><b>Do you need some help or want to share some ideas with us?</b></div> 
                 </h4>
                 <form method="get" asp-area="Public" asp-action="Contacts" asp-controller="Public">
-                    <button class="contact-veesy rounded-pill btn btn-primary btn-variant" type="submit">contact veesy</button>
+                    <button class="contact-veesy rounded-pill btn-primary btn-variant" type="submit">contact veesy</button>
                 </form>
             </div>
         </div>
