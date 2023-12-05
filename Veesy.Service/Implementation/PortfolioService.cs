@@ -53,7 +53,6 @@ public class PortfolioService : IPortfolioService
             .Include(s => s.PortfolioMedias)
             .ThenInclude(s => s.Media)
             .OrderByDescending(s => s.IsMain);
-
     }
 
     public IEnumerable<PortfolioMedia> GetPortfoliosMediaByMediaId(Guid mediaId)
