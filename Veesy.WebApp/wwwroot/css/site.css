@@ -6,10 +6,6 @@
   float: right !important;
 }
 
-::-webkit-scrollbar {
-  background-color: transparent;
-}
-
 .dz-success-mark svg g path{
   fill: #75CCDD !important;
 }

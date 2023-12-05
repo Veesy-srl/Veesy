@@ -101,8 +101,8 @@ public class PortfolioThumbnailDto
     public string Name { get; set; }
     public int NumberMedia { get; set; }
     public string LastUpdate { get; set; }
-    public string DefaultImageName { get; set; }
-    public string DefaultImageOriginalName { get; set; }
+    public string? DefaultImageName { get; set; }
+    public string? DefaultImageOriginalName { get; set; }
     public bool IsMain { get; set; }
     public bool IsVideo { get; set; }
 }
@@ -131,13 +131,14 @@ public static class MapPortfolioDtos
             NumberMedia = portfolio.PortfolioMedias.Count,
             Name = portfolio.Name,
             IsVideo = MediaCostants.VideoExtensions.Contains(portfolio.PortfolioMedias
-                .SingleOrDefault(s => s.SortOrder == 0).Media.Type.ToUpper()),
+                .SingleOrDefault(s => s.SortOrder == 0)
+                ?.Media.Type.ToUpper()),
             DefaultImageName = portfolio.PortfolioMedias.Count == 0
                 ? ""
-                : portfolio.PortfolioMedias.SingleOrDefault(s => s.SortOrder == 0).Media.FileName,
+                : portfolio.PortfolioMedias.SingleOrDefault(s => s.SortOrder == 0)?.Media.FileName,
             DefaultImageOriginalName = portfolio.PortfolioMedias.Count == 0
                 ? ""
-                : portfolio.PortfolioMedias.SingleOrDefault(s => s.SortOrder == 0).Media.OriginalFileName,
+                : portfolio.PortfolioMedias.SingleOrDefault(s => s.SortOrder == 0)?.Media.OriginalFileName,
             LastUpdate = portfolio.LastEditRecordDate.ToString("dd.MM.yyyy")
         };
     }
@@ -155,16 +156,15 @@ public static class MapPortfolioDtos
             IsMain = portfolio.IsMain,
             NumberMedia = portfolio.PortfolioMedias.Count,
             Name = portfolio.Name,
-            IsVideo = portfolio.PortfolioMedias.Count == 0
-                ? false
-                : MediaCostants.VideoExtensions.Contains(portfolio.PortfolioMedias
-                    .SingleOrDefault(s => s.SortOrder == 0).Media.Type.ToUpper()),
+            IsVideo = portfolio.PortfolioMedias.Count != 0 && MediaCostants.VideoExtensions.Contains(portfolio.PortfolioMedias
+                .SingleOrDefault(s => s.SortOrder == 0)
+                ?.Media.Type.ToUpper()),
             DefaultImageName = portfolio.PortfolioMedias.Count == 0
                 ? ""
-                : portfolio.PortfolioMedias.SingleOrDefault(s => s.SortOrder == 0).Media.FileName,
+                : portfolio.PortfolioMedias.SingleOrDefault(s => s.SortOrder == 0)?.Media.FileName,
             DefaultImageOriginalName = portfolio.PortfolioMedias.Count == 0
                 ? ""
-                : portfolio.PortfolioMedias.SingleOrDefault(s => s.SortOrder == 0).Media.OriginalFileName,
+                : portfolio.PortfolioMedias.SingleOrDefault(s => s.SortOrder == 0)?.Media.OriginalFileName,
             LastUpdate = portfolio.LastEditRecordDate.ToString("dd.MM.yyyy")
         }));
         return portfoliosDto;
