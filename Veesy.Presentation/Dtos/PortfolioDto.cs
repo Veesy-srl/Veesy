@@ -46,7 +46,7 @@ public class PortfolioDto
     public MediaDto DefaultMedia { get; set; }
     public int NumberMedia => NumberImage + NumberVideo;
     public VeesyConstants.PortfolioLayout Layout { get; set; }
-    public virtual List<PortfolioMediaDto> PortfolioMedias { get; set; }
+    public virtual List<PortfolioMediaDto>? PortfolioMedias { get; set; }
 
     public PortfolioDto()
     {
@@ -197,7 +197,7 @@ public static class MapPortfolioDtos
                 : portfolio.PortfolioMedias.Count(s => MediaCostants.VideoExtensions.Contains(s.Media.Type.ToUpper())),
             DefaultMedia = portfolio.PortfolioMedias.Count == 0
                 ? null
-                : MapCloudDtos.MapMedia(portfolio.PortfolioMedias.SingleOrDefault(s => s.SortOrder == 0).Media),
+                : MapCloudDtos.MapMedia(portfolio.PortfolioMedias.SingleOrDefault(s => s.SortOrder == 0)?.Media),
             PortfolioMedias = portfolio.PortfolioMedias?.Select(MapPortfolioMedia)?.ToList()
         };
     }

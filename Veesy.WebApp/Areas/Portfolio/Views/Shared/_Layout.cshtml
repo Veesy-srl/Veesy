@@ -111,7 +111,10 @@
 
                     </div>
                     <div style="padding-bottom: 2px">
-                        <button class="ms-2 btn btn-light border fw-bolder btn-layout shadow-none" style="padding: 0.75rem 1.2rem !important;" id="menuButton">
+                        @{
+                            string conditionalClass = ViewContext.RouteData.Values["Action"].ToString() == "Splash" ? "" : "custom-padding";
+                        }
+                        <button class="ms-2 btn btn-light border fw-bolder btn-layout shadow-none @conditionalClass" id="menuButton">
                             <i class="fas fa-circle fa-2xs text-primary mr-2" style="font-size: 5px;" id="icon-color"></i>
                             @if (ViewContext.RouteData.Values["Controller"].ToString() == "Public")
                             {
@@ -278,7 +281,10 @@
     const closeButton = document.getElementById('closeButton');
 
     window.onload = (event) => {
-      document.getElementById('none-popup').style.display = "none";
+      var popupNone = document.getElementById('none-popup');
+      if (popupNone != null){
+          popupNone.style.display = "none";
+      }
     };
     
     
@@ -321,14 +327,20 @@
         menuPopup.classList.toggle('active');
         document.getElementById('canvaId').style.display="none";
         document.body.classList.toggle('no-scroll');
-        document.getElementById('none-popup').style.display = "block";
+        var popupNone = document.getElementById('none-popup');
+          if (popupNone != null){
+              popupNone.style.display = "block";
+          }
     });
 
     closeButton.addEventListener('click', () => {
       menuPopup.classList.remove('active');
       document.getElementById('canvaId').style.display="block";
       document.body.classList.remove('no-scroll'); 
-      document.getElementById('none-popup').style.display = "none";
+      var popupNone = document.getElementById('none-popup');
+        if (popupNone != null){
+            popupNone.style.display = "none";
+        }
     });
     
       // Chiudi il popup quando si clicca fuori da esso

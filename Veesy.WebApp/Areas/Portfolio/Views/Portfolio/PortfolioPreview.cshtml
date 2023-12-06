@@ -122,12 +122,12 @@
     </div>
 </div>
 
-<div class="creator-popup" onclick="OpenCreatorPopup()">
+<div class="creator-popup" onclick="OpenCreatorPopup()" id="animatedPopup">
     <div class="d-flex">
         <div class="col-11">
             <p class="text-white ms-2 mb-1" style="margin-top:  2.5% !important;">MEET THE CREATOR</p>
         </div>
-        <div class="col-1"><div class="text-end pt-1"><i class="fa-solid fa-circle fa-xs me-2" style="color: white;"></i></div></div>
+        <div class="col-1"><div class="text-end pt-1"><i class="fa-solid fa-circle fa-xs me-2 mt-1" style="color: white;"></i></div></div>
     </div>
 </div>
 
@@ -136,7 +136,7 @@
         <div class="col-11">
             <p class="text-white ms-2 mb-1 mt-2" style="font-size: 14px !important; line-height:  22px !important;">MEET THE CREATOR</p>
         </div>
-        <div class="col-1 pe-2"><div class="text-end pt-1"><i class="fa-solid fa-circle-xmark" style="color: white"></i></div></div>
+        <div class="col-1 pe-2"><div class="text-end pt-1"><i class="fa-solid fa-circle-xmark mt-1" style="color: white"></i></div></div>
     </div>
     <hr class="portfolio-hr"/> 
     <div class="row creator-popup-body overflow-auto ms-0" style="max-height: 95%;">
@@ -272,6 +272,7 @@
             document.getElementById("media-popup").style.display = "block";
             document.getElementById("image-popup").style.display = "none";
             document.getElementById("video-popup").style.display = "none";
+            document.getElementById("video-popup").muted = "true";
             let obj = media.find((o, i) => {
                 if (o.mediaId === mediaId) {
                     let src = media[i].media.fileName
@@ -342,6 +343,32 @@
             
             $("video").lazy();
         });
+        
+        document.addEventListener('DOMContentLoaded', function () {
+            var animatedPopup = document.getElementById('animatedPopup');
+
+            function jumpEffect(iterations, currentIteration) {
+                if (currentIteration < iterations) {
+                    animatedPopup.classList.add('jump-animation');
+                    animatedPopup.style.transform = 'translateY(-10px)';
+
+                    setTimeout(function () {
+                        animatedPopup.classList.remove('jump-animation');
+                        animatedPopup.style.transform = 'translateY(0)';
+                    }, 500);
+
+                    setTimeout(function () {
+                        jumpEffect(iterations, currentIteration + 1);
+                    }, 1000);
+                }
+            }
+
+            function performJumpEffect() {
+                jumpEffect(3, 0);
+            }
+
+            setInterval(performJumpEffect, 25000); // 20000 millisecondi corrispondono a 20 secondi
+        });
     </script>
 }
 
@@ -358,5 +385,8 @@
             column-count: @((int)Model.PortfolioDto.Layout);
         }
         
+        .jump-animation {
+            transition: transform 0.5s ease-in-out;
+        }
     </style>
 }

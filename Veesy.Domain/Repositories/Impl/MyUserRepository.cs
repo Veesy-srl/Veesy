@@ -180,7 +180,7 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
     public List<MyUser> GetAllUsersWithMainPortfolio()
     {
         return _applicationDbContext.MyUsers
-            .Where(u => u.Portfolios.Any(p => p.IsMain == true && p.IsPublic == true && p.Status == 1))
+            .Where(u => u.ProfileImageFileName != null && u.Portfolios.Any(p => p.IsMain == true && p.IsPublic == true && p.Status == 1))
             .Include(u => u.Portfolios)
             .Include(t => t.MyUserCategoriesWork)
             .ThenInclude(g => g.CategoryWork)
@@ -190,7 +190,7 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
     public List<MyUser> GetAllUsersWithMainPortfoliofiltered(List<string> categories)
     {
         return _applicationDbContext.MyUsers
-            .Where(u => u.Portfolios.Any(p => p.IsMain && p.IsPublic && p.Status == 1))
+            .Where(u => u.ProfileImageFileName != null && u.Portfolios.Any(p => p.IsMain && p.IsPublic && p.Status == 1))
             .Include(u => u.Portfolios)
             .Include(u => u.MyUserCategoriesWork)
             .ThenInclude(cw => cw.CategoryWork)

@@ -38,5 +38,4 @@ public class SubscriptionPlanService : ISubscriptionPlanService
             .OrderBy(s => s.CreateRecordDate)
             .GroupBy(s => s.MyUserId).ToList();
     }
-
 }

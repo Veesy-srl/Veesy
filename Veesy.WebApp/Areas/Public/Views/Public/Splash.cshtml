@@ -119,7 +119,7 @@
     <div class="col-11">
       <p class="text-white ms-2 mb-1" style="margin-top:  2.5% !important;">LOOKING FOR A FREELANCER?</p>
     </div>
-    <div class="col-1"><div class="text-end pt-1"><i class="fa-solid fa-circle fa-xs me-2" style="color: white;"></i></div></div>
+    <div class="col-1"><div class="text-end pt-1"><i class="fa-solid fa-circle fa-xs me-2 mt-1" style="color: white;"></i></div></div>
   </div>
 </div>
 
@@ -128,7 +128,7 @@
     <div class="col-11">
       <p class="text-white ms-2 mb-1 mt-2">LOOKING FOR A FREELANCER?</p>
     </div>
-    <div class="col-1 pe-2"><div class="text-end pt-1"><i class="fa-solid fa-circle-xmark" style="color: white"></i></div></div>
+    <div class="col-1 pe-2"><div class="text-end pt-1"><i class="fa-solid fa-circle-xmark mt-1" style="color: white"></i></div></div>
   </div>
   <hr class="portfolio-hr"/> 
   <div class="row creator-popup-body overflow-auto ms-0">
@@ -325,4 +325,14 @@
         }, 100); 
       }, 2000); 
     });
+    
+ function OpenCreatorPopup() {
+    document.getElementById("popup-creator").classList.add("creator-popup-full-open");
+    document.getElementById("popup-creator").classList.remove("creator-popup-full-close");
+    document.getElementById("creator-popup-splash-id").style.display = "none";
+  }
+
+document.addEventListener('DOMContentLoaded', function () {
+  setTimeout(OpenCreatorPopup, 10000); 
+});
 </script>
