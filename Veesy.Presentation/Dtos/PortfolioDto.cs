@@ -247,7 +247,7 @@ public static class MapPortfolioDtos
             return null;
 
         return new PreviewPortfolioDto()
-        { 
+        {  
             Code = portfolio.Id,
             Description = portfolio.Description,
             PortfolioMedias = MapListPortfolioMedia(portfolio.PortfolioMedias),
