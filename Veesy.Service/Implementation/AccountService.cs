@@ -263,9 +263,9 @@ public class AccountService : IAccountService
         return _uoW.MyUserRepository.GetAllUsersWithMainPortfolio().ToList();
     }
     
-    public List<MyUser> GetFilteredCreators(List<string> category)
+    public List<MyUser> GetFilteredCreators()
     {
-        return _uoW.MyUserRepository.GetAllUsersWithMainPortfoliofiltered(category).ToList();
+        return _uoW.MyUserRepository.GetAllUsersWithMainPortfolio().ToList();
     }
 
     public int NumberRecordCompiled(MyUser userInfo)

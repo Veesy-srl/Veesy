@@ -179,21 +179,21 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
 
     public List<MyUser> GetAllUsersWithMainPortfolio()
     {
-        return _applicationDbContext.MyUsers
-            .Where(u => u.ProfileImageFileName != null && u.Portfolios.Any(p => p.IsMain == true && p.IsPublic == true && p.Status == 1))
+        var users = _applicationDbContext.MyUsers
+            .Where(u => u.ProfileImageFileName != null && u.Portfolios.Any(p => p.IsMain && p.IsPublic && p.Status == 1))
             .Include(u => u.Portfolios)
             .Include(t => t.MyUserCategoriesWork)
             .ThenInclude(g => g.CategoryWork)
             .ToList();
+
+        foreach (var user in users)
+        {
+            user.Portfolios = user.Portfolios
+                .OrderByDescending(p => p.IsMain && p.IsPublic && p.Status == 1)
+                .ToList();
+        }
+
+        return users;
     }
     
-    public List<MyUser> GetAllUsersWithMainPortfoliofiltered(List<string> categories)
-    {
-        return _applicationDbContext.MyUsers
-            .Where(u => u.ProfileImageFileName != null && u.Portfolios.Any(p => p.IsMain && p.IsPublic && p.Status == 1))
-            .Include(u => u.Portfolios)
-            .Include(u => u.MyUserCategoriesWork)
-            .ThenInclude(cw => cw.CategoryWork)
-            .ToList();
-    }
 }

@@ -34,7 +34,7 @@ public interface IAccountService
     List<LanguageSpoken> GetLanguagesSpokenWithUser(MyUser userInfo);
     List<InfoToShow> GetInfosToShowWithUser(MyUser userInfo);
     List<MyUser> GetAllCreators();
-    public List<MyUser> GetFilteredCreators(List<string> category);
+    public List<MyUser> GetFilteredCreators();
     int NumberRecordCompiled(MyUser userInfo);
     List<MyUser> GetCreators();
     MyUser GetUserById(string id);

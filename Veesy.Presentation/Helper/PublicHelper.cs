@@ -62,7 +62,7 @@ public class PublicHelper
     public List<string> GetCreatorsFiltered(List<string> category)
     {
 
-        var initialResults = _accountService.GetFilteredCreators(category);
+        var initialResults = _accountService.GetFilteredCreators();
 
         var usersWithAllCategories = initialResults
             .Where(u => category.All(category => u.MyUserCategoriesWork.Any(cw => cw.CategoryWork.Name == category)))
