@@ -31,7 +31,7 @@
                 <div class="d-flex mb-3">
                     <div class="col-12">
                         <div class="text-left">
-                            @if (Model.Portfolio.DefaultMedia.IsVideo.Value)
+                            @if (Model.Portfolio.DefaultMedia != null && Model.Portfolio.DefaultMedia.IsVideo.HasValue && Model.Portfolio.DefaultMedia.IsVideo.Value)
                             {
                                 <video autoplay="autoplay" muted loop class="image-fit-radius" title="@Model.Portfolio.DefaultMedia.OriginalFileName">
                                     <source src="@Model.BasePathImages@Model.Portfolio.DefaultMedia.FileName?tr=w-400" type="video/mp4">
@@ -39,7 +39,7 @@
                             }
                             else
                             {
-                                if (@Model.Portfolio.DefaultMedia.FileName != "")
+                                if (Model.Portfolio.DefaultMedia != null && !string.IsNullOrEmpty(Model.Portfolio.DefaultMedia.FileName))
                                 {
                                     <img class="image-fit-radius" title="@Model.Portfolio.DefaultMedia.OriginalFileName" src="@Model.BasePathImages@Model.Portfolio.DefaultMedia.FileName?tr=w-400"/>
                                 }
@@ -160,11 +160,11 @@
                                     <input style="visibility: hidden" class="form-check-input" type="radio" name="column-layout" asp-for="Portfolio.Layout" value="@item" id="layout-@item" onchange="switchColumnLayout(@((int)item))"/>
                                     @if((int)item == 1)
                                     {
-                                        <label class="ms-2 form-check-label text-color" for="@item">@((int)item) column</label>
+                                        <label class="ms-3 form-check-label text-color" for="@item">@((int)item) column</label>
                                     }
                                     else
                                     {
-                                        <label class="ms-2 form-check-label text-color" for="@item">@((int)item) columns</label>
+                                        <label class="ms-3 form-check-label text-color" for="@item">@((int)item) columns</label>
                                     }
                                 </div>
                                 <div>

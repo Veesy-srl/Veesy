@@ -40,7 +40,6 @@ public class VeesyUoW : IVeesyUoW
     
     public ISkillRepository SkillRepository => _skillRepository ??= new SkillRepository(_dbContext);
     
-    
     public void Dispose()
     {
         GC.SuppressFinalize(this);

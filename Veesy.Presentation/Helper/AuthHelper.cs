@@ -19,15 +19,17 @@ public class AuthHelper
     private readonly IEmailSender _emailSender;
     private readonly MyUserValidator _myUserValidator;
     private readonly IAccountService _accountService;
+    private readonly ISubscriptionPlanService _subscriptionPlanService;
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
-    public AuthHelper(UserManager<MyUser> userManager, IConfiguration config, IEmailSender emailSender, MyUserValidator myUserValidator, IAccountService accountService)
+    public AuthHelper(UserManager<MyUser> userManager, IConfiguration config, IEmailSender emailSender, MyUserValidator myUserValidator, IAccountService accountService, ISubscriptionPlanService subscriptionPlanService)
     {
         _userManager = userManager;
         _config = config;
         _emailSender = emailSender;
         _myUserValidator = myUserValidator;
         _accountService = accountService;
+        _subscriptionPlanService = subscriptionPlanService;
     }
 
     public async Task<ResultDto> SendEmailConfirmation(string email)
@@ -102,7 +104,9 @@ public class AuthHelper
             {
                 new ()
                 {
-                    SubscriptionPlanId = _accountService.GetSubscriptionPlanByName(VeesyConstants.SubscriptionPlan.Beta).Id
+                    SubscriptionPlanId = _accountService.GetSubscriptionPlanByName(VeesyConstants.SubscriptionPlan.Beta).Id,
+                    CreateUserId = userID,
+                    LastEditUserId = userID
                 }
             },
             MyUserInfosToShow = myUserInfosToShow
@@ -121,8 +125,11 @@ public class AuthHelper
             return new ResultDto(false, "The username entered has already been used.");
         
         IdentityResult result = await _userManager.CreateAsync(newUser, model.Password);
-        if (!result.Succeeded) 
+
+        if (!result.Succeeded)
+        {
             return new ResultDto(false, result.Errors.FirstOrDefault().Description);
+        }
         
         await _userManager.AddToRolesAsync(newUser, new[] { Roles.User });
         
