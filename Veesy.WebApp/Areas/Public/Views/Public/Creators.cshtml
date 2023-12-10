@@ -18,7 +18,7 @@
         </div>
         @for(var u=0; u<Model.User.Count; u++)
         {
-            <div class="col-md-3 mt-2 mb-2" id="@Model.User[u].Id">
+            <div class="col-md-4 col-lg-3 col-sm-6 mt-2 mb-2" id="@Model.User[u].Id">
                 <a method="get" asp-area="Public" asp-controller="Public" asp-action="Portfolio" asp-route-id="@Model.PortfolioId[u]">
                     <div class="card-white-veesy-creators p-3 mb-3 d-flex position-relative" onmouseover="highlightCard(this)" onmouseout="resetCard(this)">
                         <div class="col-3">
@@ -26,7 +26,7 @@
 
                                 @if (@Model.User[u].ProfileImageFileName != null)
                                 {
-                                    <img src="@Model.BasePathImages@Model.User[u].ProfileImageFileName?tr=w-400" class="img-thumbnail-custom rounded-circle" alt="user-image">
+                                    <img src="@Model.BasePathImages@Model.User[u].ProfileImageFileName?tr=w-400" class="img-thumbnail-custom-dashboard rounded-circle" alt="user-image">
                                 }
                                 else
                                 {

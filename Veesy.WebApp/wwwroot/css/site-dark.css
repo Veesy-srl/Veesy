@@ -90,6 +90,18 @@
         border: #F3F3F3;
         color: #202F4D !important;
     }
+    
+    .btn-white {
+        background-color: #F3F3F3 !important;
+        border: #F3F3F3 !important;
+        color: #202F4D !important;
+    }
+
+    .btn-white:hover {
+        background-color: #75CCDD !important;
+        border: #75CCDD !important;
+        color: white !important;
+    }
 
     .grey-link:hover{
         color: #75CCDD !important;;
@@ -188,6 +200,11 @@
 
     .div-white-rounded-veesy-portfolio{
         background-color: #F3F3F3;
+    }
+
+    .div-white-rounded-veesy-portfolio:hover{
+        background-color: #75CCDD !important;
+        color: white !important;
     }
 
     .input-modal {

@@ -348,6 +348,11 @@ html {
   font-size: 15px;
 }
 
+.div-white-rounded-veesy-portfolio:hover{
+  background-color: #75CCDD !important;
+  color: white !important;
+}
+
 .div-white-rounded-blue-veesy{
   padding: 5px 5px 1px 5px;
   margin: 5px;
@@ -606,7 +611,13 @@ button:focus {
 .btn-white {
   background-color: #ffffff;
   border: #ffffff;
-  color: #202F4D;
+  color: #202F4D !important;
+}
+
+.btn-white:hover {
+  background-color: #75CCDD !important;
+  border: #75CCDD !important;
+  color: white !important;
 }
 
 .btn-white-variant {
@@ -1002,12 +1013,12 @@ h5{
 .menu-popup {
   position: fixed;
   top: 0;
-  right: -52%;
+  right: -53%;
   width: 52%;
   height: 100%;
   background-color: #e2e5e7;
   border: 1px solid #ccc;
-  padding: 10px;
+  padding: 20px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.7);
   border-radius: 12px 0px 0px 12px;
   transition: right 0.3s ease;
@@ -1442,7 +1453,7 @@ hr {
 
 .description-container {
   width: 30%;
-  height: 43%;
+  height: 250px;
   padding: 0px 10px;
   font-size: 12px;
 }
@@ -1535,8 +1546,8 @@ hr {
   padding: 1px 4px 1px 4px;
   border-radius: 20px;
   position: absolute;
-  top: 15px;
-  right: 15px;
+  top: 20px;
+  right: 20px;
   z-index: 10;
   color: white !important;
   width: 23px;
@@ -1570,8 +1581,8 @@ hr {
   padding: 1px 4px 1px 4px;
   border-radius: 20px;
   position: absolute;
-  top: 15px;
-  right: 5px;
+  top: 20px;
+  right: 10px;
   display: none;
   opacity: 0;
   z-index: 9;

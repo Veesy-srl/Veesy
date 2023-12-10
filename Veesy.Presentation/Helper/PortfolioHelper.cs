@@ -29,6 +29,7 @@ public class PortfolioHelper
         var vm = new PortfolioSettingsViewModel();
         var portfolio = _portfolioService.GetPortfolioById(id, userInfo.Id);
         vm.Portfolio = MapPortfolioDtos.MapPortfolio(portfolio);
+        vm.ApplicationUrl = _config["ApplicationUrl"];
         vm.BasePathImages = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/";
 
         return vm;

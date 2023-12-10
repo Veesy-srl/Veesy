@@ -46,16 +46,16 @@
     </div>
     <div class="text-white col-sm-12 col-md-8">
         <div class="row">
-            <div class="col-sm-12 col-md-6 text-center pe-3">
+            <div class="col-sm-12 col-md-6 text-end pe-3">
                 @if (Model.Media.Type == ".mp4")
                 {
-                    <video autoplay="autoplay" muted controls="controls" loop class="w-100 shadow-1-strong rounded-05" alt="@Model.Media.OriginalFileName">
+                    <video style="max-height: 75vh; max-width: 100%" autoplay="autoplay" muted controls="controls" loop class="shadow-1-strong rounded-05" alt="@Model.Media.OriginalFileName">
                         <source src="@Model.BasePath@Model.Media.FileName?tr=w-1080" type="video/mp4">
                     </video>
                 }
                 else
                 {
-                    <img asp-append-version="true" src="@Model.BasePath@Model.Media.FileName?tr=w-1080" class="w-100 shadow-1-strong rounded-05" alt="@Model.Media.OriginalFileName"/>
+                    <img style="max-height: 75vh; max-width: 100%" asp-append-version="true" src="@Model.BasePath@Model.Media.FileName?tr=w-1080" class="shadow-1-strong rounded-05" alt="@Model.Media.OriginalFileName"/>
                 }
                 <div class="empty-veesy"></div>
                 <div class="empty-veesy"></div>
@@ -67,7 +67,7 @@
                         <h3 class="mb-0 text-white veesy-overflow option-font-20" id="filename-show">@System.IO.Path.GetFileNameWithoutExtension(Model.Media.OriginalFileName)</h3>
                     </div>
                     <div class="col-3 text-end pe-0">
-                        <a onclick="setTextAreaValue('filename-edit', '@System.IO.Path.GetFileNameWithoutExtension(Model.Media.OriginalFileName)'), openModal('#modalFileName')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i></a>
+                        <a onclick="setTextAreaValue('filename-edit', document.getElementById('filename-show').textContent), openModal('#modalFileName')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i></a>
                     </div>
                     <hr class="hr"/>
                     
@@ -440,7 +440,7 @@
                 dataType: 'json',
                 success: function (response) {
                     if(response.result){
-                        document.getElementById("filename-show").textContent = OriginalFileName + '@Model.Media.Type';
+                        document.getElementById("filename-show").textContent = OriginalFileName;
                         document.getElementById("filename-edit").value = OriginalFileName;
                         closeModal('#modalFileName');
                     }

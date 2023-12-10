@@ -19,7 +19,7 @@
     var background = ViewContext.RouteData.Values["Controller"].ToString() == "Cloud" ? "bg-grey" : "bg-grey-veesy";
 }
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm mb-3 fixed-top" style="position: absolute; ">
-        <div class="container-fluid">
+        <div class="container-fluid" style="margin-right: 20px; padding-right: 0px;">
                 
             <h1 class="h3 mb-2 fw-normal ms-3">
                 @if(ViewContext.RouteData.Values["Controller"].ToString() == "Cloud")
@@ -129,7 +129,7 @@
                     @if(username != null){
                         <div class="dropdown show" id="none-popup">
                             <div style="padding-bottom: 4px">
-                                <a class="dropdown-toggle btn btn-light btn-layout border fw-bolder shadow-none me-2">
+                                <a style="margin-top: 0px !important;" class="dropdown-toggle btn btn-light btn-layout border fw-bolder shadow-none me-2">
                                     <img src='@imageSrc' style=" width: 25px !important; height: 25px !important; max-width: none!important;" class="img-thumbnail-custom rounded-circle" alt="user-image">
                                     <span id="color-text-variant">@username</span>
                                 </a>
@@ -148,7 +148,7 @@
                         </div>
                     }
                     <div style="padding-bottom: 2px">
-                        <button class="ms-2 btn btn-light border btn-layout fw-bolder shadow-none" id="closeButton">
+                        <button style="margin-top: 0px !important;" class="ms-2 btn btn-light border btn-layout fw-bolder shadow-none" id="closeButton">
                             <i class="fas fa-times-circle fa-2xs text-primary" id="icon-color"></i>
                             <span id="color-text-variant">close</span>
                         </button>
@@ -157,11 +157,11 @@
                 <div class="container center-content-menu">
                     <div class="menu-list">
                         <ul class="list-unstyled">
-                            <li><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" style="font-size: 30px !important; line-height: 36px !important;" id="color-text" data-target="#description1">Gallery</a></li>
-                            <li><a asp-action="Creators" asp-controller="Public" asp-area="Public" class="float-end fw-bolder p-2 menu-element font-weight-normal" style="font-size: 30px !important; line-height: 36px !important;" id="color-text" data-target="#description2">Creators</a></li>
-                            <li><a asp-action="About" asp-controller="Public" asp-area="Public" class="float-end fw-bolder p-2 menu-element font-weight-normal" style="font-size: 30px !important; line-height: 36px !important;" id="color-text" data-target="#description3">About</a></li>
-                            <li><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" style="font-size: 30px !important; line-height: 36px !important;" id="color-text" data-target="#description4">Match</a></li>
-                            <li><a asp-action="Contacts" asp-controller="Public" asp-area="Public" class="float-end fw-bolder p-2 menu-element font-weight-normal" style="font-size: 30px !important; line-height: 36px !important;" id="color-text" data-target="#description6">Contact</a></li>
+                            <li><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" style="font-size: 25px !important; line-height: 30px !important;" id="color-text" data-target="#description1">Gallery</a></li>
+                            <li><a asp-action="Creators" asp-controller="Public" asp-area="Public" class="float-end fw-bolder p-2 menu-element font-weight-normal" style="font-size: 25px !important; line-height: 30px !important;" id="color-text" data-target="#description2">Creators</a></li>
+                            <li><a asp-action="About" asp-controller="Public" asp-area="Public" class="float-end fw-bolder p-2 menu-element font-weight-normal" style="font-size: 25px !important; line-height: 30px !important;" id="color-text" data-target="#description3">About</a></li>
+                            <li><a href="#" class="float-end fw-bolder p-2 menu-element font-weight-normal" style="font-size: 25px !important; line-height: 30px !important;" id="color-text" data-target="#description4">Match</a></li>
+                            <li><a asp-action="Contacts" asp-controller="Public" asp-area="Public" class="float-end fw-bolder p-2 menu-element font-weight-normal" style="font-size: 25px !important; line-height: 30px !important;" id="color-text" data-target="#description6">Contact</a></li>
                         </ul>
                     </div>
                     <div class="d-flex" style="height: 250px;">
@@ -188,7 +188,19 @@
            <div class="switch-container dark-light" id="canvaId">
               <input type="checkbox" id="switchInp">
               <label for="switchInp" class="pull-string">
-                  <img class="dark-light-img molla-img" id="molla-img">
+                  @if(ViewContext.RouteData.Values["Controller"].ToString() == "Cloud" &&
+                      (ViewContext.RouteData.Values["Action"].ToString() == "List" ))
+                  {
+                      <img style="content: url('../imgs/Layout/switch_dark mode.svg');" class="dark-light-img molla-img" id="molla-img">
+                  }
+                  else if (ViewContext.RouteData.Values["Controller"].ToString() == "Cloud" && ViewContext.RouteData.Values["Action"].ToString() == "Edit")
+                  {
+                      <img style="content: url('../../imgs/Layout/switch_dark mode.svg');" class="dark-light-img molla-img" id="molla-img">
+                  }
+                  else
+                  {
+                      <img class="dark-light-img molla-img" id="molla-img">
+                  }
               </label>
           </div>
        </nav>
@@ -225,7 +237,7 @@
                     <div class="mb-4 d-inline-flex"><b>INFO</b></div> 
                 </h4>
                 <div class="text-color">
-                    <a asp-action="About" asp-controller="Public" asp-area="Public" >About</a><br/>
+                    <a asp-action="About" asp-controller="Public" asp-area="Public">About</a><br/>
                     <a asp-action="PricingPlan" asp-controller="Public" asp-area="Public">Plans & Pricing</a><br/>
                     <a href="#">FAQ</a><br/>
                     <a href="#">Log In</a>

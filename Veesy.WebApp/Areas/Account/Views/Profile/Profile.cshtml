@@ -221,7 +221,7 @@
                 <div class="d-flex mb-4" style="max-width: 100%; flex-wrap: wrap;">
                     @foreach (var item in Model.Sectors.Where(s => s.Selected))
                     {
-                        <div class="pe-3 ps-3 div-white-rounded-blue-veesy d-flex option-font-14"><a onclick="openModal('#modalSectors')"><i class="fa-solid fa-circle pe-2 " style="color: #75CCDD"></i>@item.Name</a></div>
+                        <div class="pe-3 ps-3 div-white-rounded-blue-veesy d-flex option-font-14"><a onclick="openModal('#modalSectors')">@item.Name</a></div>
                     }
                 </div>
                 <a onclick="openModal('#modalSectors')" class="grey-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
@@ -245,7 +245,7 @@
                 <div class="d-flex mb-4" style="max-width: 100%; flex-wrap: wrap;">
                     @foreach (var item in Model.SoftSkills.Where(s => s.Selected))
                     {
-                        <div class="pe-3 ps-3 div-white-rounded-blue-veesy d-flex option-font-14"><a onclick="openModal('#modalSoftSkill')" ><i class="fa-solid fa-circle pe-2" style="color: #75CCDD"></i>@item.Name</a></div>
+                        <div class="pe-3 ps-3 div-white-rounded-blue-veesy d-flex option-font-14"><a onclick="openModal('#modalSoftSkill')">@item.Name</a></div>
                     }
                 </div>
                 <a onclick="openModal('#modalSoftSkill')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
@@ -269,7 +269,7 @@
                 <div class="d-flex mb-4 text-color" style="max-width: 100%; flex-wrap: wrap;">
                     @foreach (var item in Model.UsedSoftwares.Where(s => s.Selected))
                     {
-                        <div class="pe-3 ps-3 div-white-rounded-veesy option-font-14"><a onclick="openModal('#modalSoftware')" >@item.Name</a></div>
+                        <div class="pe-3 ps-3 div-white-rounded-blue-veesy option-font-14"><a onclick="openModal('#modalSoftware')" >@item.Name</a></div>
                     }
                 </div>
                 <a onclick="openModal('#modalSoftware')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>

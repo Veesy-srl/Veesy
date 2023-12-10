@@ -20,7 +20,7 @@
         @foreach (var item in Model.PortfolioThumbnailDtos)
         {
             <div id="portfolio-div-@item.Code">
-                <hr class="color-hr"/>
+                <hr style="margin-top: 20px; margin-bottom: 20px;" class="color-hr"/>
                 <div class="d-flex">
                     <div class="col-4">
                         <div class='box m-0'> 
@@ -59,7 +59,7 @@
                             <div class="empty-veesy"></div>
                             <p class="veesy-text-color" style="margin-bottom: 3rem">Updated on @item.LastUpdate<br/>@item.NumberMedia media uploaded</p>
                         </div>
-                        <a asp-action="PortfolioPreview" asp-controller="Portfolio" asp-area="Portfolio" asp-route-id="@item.Code" class="grey-link">Preview<i class="fa-solid fa-arrow-up-right-from-square ms-2"></i></a>
+                        <a target="_blank" asp-action="PortfolioPreview" asp-controller="Portfolio" asp-area="Portfolio" asp-route-id="@item.Code" class="grey-link">Preview<i class="fa-solid fa-arrow-up-right-from-square ms-2"></i></a>
                     </div>
                     <div class="col-4 text-end vertical-space">
                         <a onclick="CopyLink('@Model.ApplicationUrl@Url.Action("Portfolio", "Public", new {area = "Public", id = @item.Code})')" class="grey-link ms-2"><i class="fa-regular fa-clone pe-1"></i><strong>Copy link</strong></a>
@@ -77,7 +77,7 @@
                 </div>
             </div>
         }
-        <hr class="color-hr"/>
+        <hr style="margin-top: 20px; margin-bottom: 20px;" class="color-hr"/>
         <div class="empty-veesy"></div>
         <form method="get" asp-action="List" asp-controller="Cloud">
             <button type="submit" class="rounded-pill btn btn-primary a-font-p mt-2 btn-padding">create a new portfolio</button>

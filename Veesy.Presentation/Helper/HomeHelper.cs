@@ -38,6 +38,7 @@ public class HomeHelper
             BasePath = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/",
             ApplicationUrl = _config["ApplicationUrl"],
             Name = user.Name,
+            UserDescription = user.Biografy,
             PortfolioNumber = portfolioNumber,
             Surname = user.Surname,
             UserCategory = user.Category,

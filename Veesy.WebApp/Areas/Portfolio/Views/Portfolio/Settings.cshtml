@@ -55,11 +55,14 @@
                 <div class="d-flex"><p class="mb-0 text-grey veesy-overflow">@Model.Portfolio.NumberMedia media uploaded</p></div>
                 <div class="d-flex"><p class="mb-0 mt-3 text-grey veesy-overflow">@Model.Portfolio.NumberImage images</p></div>
                 <div class="d-flex"><p class="mb-0 text-grey veesy-overflow">@Model.Portfolio.NumberVideo videos</p></div>
-                <a asp-action="PortfolioPreview" asp-controller="Portfolio" asp-area="Portfolio" asp-route-id="@Model.Portfolio.Id"  class="rounded-pill btn btn-primary btn-variant w-100 mt-3">preview portfolio</a>
+                <a target="_blank" asp-action="PortfolioPreview" asp-controller="Portfolio" asp-area="Portfolio" asp-route-id="@Model.Portfolio.Id"  class="rounded-pill btn btn-primary btn-variant w-100 mt-3">preview portfolio</a>
             </div>
         </div>
         <div class="col-sm-12 col-md-6">
-            <h2 class="text-color"><strong id="portfolio-name-title">@Model.Portfolio.Name</strong></h2>
+            <div class="d-flex">
+                <h2 class="text-color"><strong id="portfolio-name-title">@Model.Portfolio.Name</strong></h2>
+                <a onclick="CopyLink('@Model.ApplicationUrl@Url.Action("Portfolio", "Public", new {area = "Public", id = @Model.Portfolio.Id})')" class="blue-link ms-2 mt-1"><i class="fa-regular fa-xl fa-clone pe-1"></i><strong></strong></a>
+            </div>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <a class="grey-link ms-2"><strong>learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a></p>
             <div class="empty-veesy"></div>
             <div class="row">
@@ -71,7 +74,7 @@
                             <p class="mb-0"><strong>Portfolio Name:</strong></p>
                             <p class="mb-0 veesy-overflow" id="portfolio-name">@Model.Portfolio.Name</p>
                         </div>
-                        <div class="col-3 text-end"><a onclick="setTextAreaValue('portfolio-name-edit', '@Model.Portfolio.Name'), openModal('#modalName')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
+                        <div class="col-3 text-end"><a onclick="setTextAreaValue('portfolio-name-edit', document.getElementById('portfolio-name').textContent), openModal('#modalName')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
                     </div>
                     <hr class="hr color-hr"/>
                     <div class="d-flex">
@@ -153,12 +156,12 @@
                                 {
                                     css_select = "div-select-layout-selected";
                                 }
-                                    
+
                             }
                             <div id="layout-div-@((int)item)" class="p-2 form-check div-select-layout @css_select">
                                 <div class="d-flex me-2">
                                     <input style="visibility: hidden" class="form-check-input" type="radio" name="column-layout" asp-for="Portfolio.Layout" value="@item" id="layout-@item" onchange="switchColumnLayout(@((int)item))"/>
-                                    @if((int)item == 1)
+                                    @if ((int)item == 1)
                                     {
                                         <label class="ms-3 form-check-label text-color" for="@item">@((int)item) column</label>
                                     }
@@ -189,7 +192,7 @@
                     {
                         @if (MediaCostants.ImageExtensions.Contains(image.Media.Type.ToUpper()))
                         {
-                            <div id="media-@image.MediaId" style="position: relative" class="draggable m-0 pb-2 pt-2 show-edit" name="image-gallery" mediaid="@image.MediaId">            
+                            <div id="media-@image.MediaId" style="position: relative" class="draggable m-0 pb-2 pt-2 show-edit" name="image-gallery" mediaid="@image.MediaId">
                                 <a onMouseDown="RemoveMediaFromPortfolio('@image.MediaId')" class="edit-button-portfolio">
                                     <p class="mb-0 text-white">remove</p>
                                 </a>
