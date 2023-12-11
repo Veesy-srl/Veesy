@@ -14,8 +14,10 @@
                 <h1 style="color: white;">Lorem ipsum dolor sit amet consectetur<br/>Lorem ipsum dolor sit amet consectetur <br/>Lorem ipsum dolor sit amet consectetur<br/>Lorem ipsum dolor sit amet consectetur<br/>Lorem ipsum dolor sit amet consectetur<br/>Lorem ipsum dolor sit amet consectetur </h1>
                 <div class="empty-veesy"></div>
                 <div class="empty-veesy"></div>
-                <div class="col-md-6 mb-4 veesy-text-color" >
-                    <button class="contact-veesy rounded-pill btn-primary-about btn-variant" type="submit">join veesy</button>
+                <div class="col-md-6 mb-4 veesy-text-color">
+                    <form method="get" asp-area="Auth" asp-controller="Auth" asp-action="SignUp">
+                        <button class="contact-veesy rounded-pill btn-primary-about btn-variant" type="submit">join veesy</button>
+                    </form>
                     <button class="contact-veesy rounded-pill btn-primary-about-variant btn-variant" style="margin-left: 20px;" type="submit">discover more</button>
                 </div>
             </div>
@@ -115,8 +117,10 @@
             <h5 style="font-size: 16px !important;" class="text-white">Lorem ipsum dolor sit amet consectetur.</h5>
             <hr class="mt-2 mb-4 text-white">
             <div class="col-md-12 mb-1 mt-4 veesy-text-color">
-              <button class="rounded-pill btn-primary-about btn-variant" style="width: 30%;" type="submit">sign up</button>
-              <a class="grey-link ms-2 mt-2 float-end">learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                <form method="get" asp-area="Auth" asp-controller="Auth" asp-action="SignUp">
+                    <button class="rounded-pill btn-primary-about btn-variant" style="width: 30%;" type="submit">sign up</button>
+                </form>
+                <a class="grey-link ms-2 mt-2 float-end">learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
             </div>
           </div>
         </div>

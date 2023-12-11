@@ -1114,7 +1114,7 @@ a{
   @media (min-width: 700px) {
     width: 50%;
   }
-  max-height: 95%;
+  max-height: 95vh;
   background: #536B7E;
   border-radius: 5px 5px 0px 0px;
   bottom: -100%;
