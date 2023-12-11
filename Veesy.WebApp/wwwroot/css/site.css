@@ -1105,7 +1105,7 @@ a{
   @media (min-width: 700px) {
     width: 50%;
   }
-  height: 95%;
+  max-height: 95%;
   background: #536B7E;
   border-radius: 5px 5px 0px 0px;
   bottom: -100%;
@@ -1823,7 +1823,7 @@ canvas {
   background-repeat: no-repeat; 
   background-attachment: fixed; 
   border-radius: 15px !important;
-  height: 700px;
+  height: 85vh;
 }
 
 .background-image-about-2{
@@ -1832,7 +1832,7 @@ canvas {
   background-repeat: no-repeat;
   background-attachment: fixed;
   border-radius: 15px !important;
-  height: 700px;
+  min-height: 90vh;
   @media only screen and (max-width: 600px) {
     height: 1000px !important;
   }

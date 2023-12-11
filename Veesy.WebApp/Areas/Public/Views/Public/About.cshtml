@@ -7,7 +7,7 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
 
 
-<div style="padding-top: 25px; padding-bottom: 25px;" >
+<div style="padding-top: 35px; padding-bottom: 25px;" >
     <div class="container-fluid p-3 mt-5 pb-5 background-image-about">
         <div class="row p-lg-5 mt-5 mt-lg-2">
             <div class="col-sm-12 col-md-6">
@@ -24,13 +24,13 @@
 </div>
 <div class="row">
     <div class="col-md-6 offset-md-3">
-        <div class="text-left mt-4">
+        <div class="text-left mt-4 pb-4">
             <h1 class="color-about">Lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur</h1>
         </div>
         <div class="text-center mt-4 mb-4">
             <img src="../imgs/SampleImg/Umberto_Gnocchi_Veesy_12-gigapixel-art-width-1500px-1024x576.jpg" style="border-radius: 15px;" alt="Immagine" class="img-fluid">
         </div>
-        <div class="text-left mt-4">
+        <div class="text-left mt-4 pt-4">
             <h6 class="color-about" style="font-size: 15px !important; line-height: 25px !important;">Lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit  <br/> <br/> amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur</h6>
         </div>
         <div class="text-left mt-5">
@@ -40,12 +40,12 @@
 </div>
 <div class="row mt-2">
     <div class="col-md-3 offset-md-3">
-        <div class="text-center mt-2 mb-4">
+        <div class="text-center mt-4 mb-4">
             <img src="../imgs/SampleImg/AFA_Restomod-1024x576.jpg" style="border-radius: 15px;" alt="Immagine" class="img-fluid">
         </div>
     </div>
     <div class="col-md-3">
-        <div class="text-center mt-2 mb-4">
+        <div class="text-center mt-4 mb-4">
             <img src="../imgs/SampleImg/AlienSceneRender_03_PP_8bit-1024x576.jpg" style="border-radius: 15px;" alt="Immagine" class="img-fluid">
         </div>
     </div>
@@ -70,16 +70,16 @@
         <div class="text-left mt-5 mt-2">
             <h1 class="color-about"><b>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum</b></h1>
         </div>
-        <div class="text-center mt-4 mb-4">
+        <div class="text-center mt-4 pt-4 mb-4">
             <img src="../imgs/SampleImg/Drill_Good-idea_06-copia-gigapixel-art-width-1500px-1024x691.jpeg" style="border-radius: 15px;" alt="Immagine" class="img-fluid">
         </div>
         <div class="text-left mt-5 mb-2">
             <h1 class="color-about"><b>Lorem ipsum</b></h1>
         </div>
-        <div class="text-left mt-4">
+        <div class="text-left mt-4 pt-3">
             <h6 class="color-about"  style="font-size: 15px !important; line-height: 25px !important;">Lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit  <br/> <br/> amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur</h6>
         </div>
-        <div class="text-left mt-4 mb-5">
+        <div class="text-left mt-4 mb-4 pt-4">
             <h1 class="color-about">Lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur</h1>
         </div>
     </div>
@@ -87,7 +87,7 @@
 
 <div style="padding-bottom: 35px;">
   <div class="container-fluid p-lg-5 mt-3 pb-5 background-image-about-2">
-    <div class="container mt-5 p-lg-5 p-2">
+    <div class="container p-lg-5">
       <div class="row about-top d-flex flex-wrap">
         <div class="col-md-6 mb-3 mx-auto">
           <div class="blue-block rounded p-lg-5 p-4 option-height-about" style="background-color: #536B7E;">
@@ -138,7 +138,7 @@
         {
             <a href="@Model.ApplicationUrl@Url.Action("Portfolio", "Public", new {area = "Public", id = @Model.PortfolioId[i]})">
                 <div>
-                    <img class="p-3" width="360px" height="260px" style="border-radius: 30px;" src="@Model.BasePath@Model.MediaList[i].ToString()">
+                    <img class="p-3" width="360px" height="260px" style="border-radius: 30px; object-fit: cover" src="@Model.BasePath@Model.MediaList[i].ToString()">
                     <span class="empty-veesy"></span>
                     <div class="text-center">
                         <div class="d-flex align-items-center" style="margin-left: 20px;">
