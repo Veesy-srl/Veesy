@@ -162,7 +162,16 @@
   <script src="~/assets/js/sidebarmenu.js"></script>
   <script src="~/assets/js/app.min.js"></script>
   <script src="~/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
-  <script src="~/assets/libs/simplebar/dist/simplebar.js"></script>
+<script src="~/assets/libs/simplebar/dist/simplebar.js"></script>
+<script>
+
+        function openModal(id){
+            $(id).modal('show');
+        }
+        function closeModal(id){
+            $(id).modal('hide');
+        }
+</script>
   @await Component.InvokeAsync("Notyf")
   @await RenderSectionAsync("Scripts", required: false)
 

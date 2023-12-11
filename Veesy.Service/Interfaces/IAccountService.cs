@@ -47,4 +47,8 @@ public interface IAccountService
     int GetNumberPayingUsers();
     List<MyUser> GetLastFourLoginAttempt(int number);
     List<MyUser> GetLastFourCreatedUser(int number);
+    SubscriptionPlan GetUserSubscriptionPlan(string userId);
+    SubscriptionPlan GetSubscriptionPlanById(Guid id);
+    Task AddNewUserSubscription(string userId, Guid id);
+    Task DeleteUserById(string id);
 }

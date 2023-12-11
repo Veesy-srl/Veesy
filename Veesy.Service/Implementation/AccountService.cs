@@ -414,6 +414,36 @@ public class AccountService : IAccountService
         return _uoW.MyUserRepository.FindAll().OrderByDescending(s => s.CreateDate).Take(number).ToList();
     }
 
+    public SubscriptionPlan GetUserSubscriptionPlan(string userId)
+    {
+        return _uoW.DbContext.MyUserSubscriptionPlans
+            .Include(s => s.SubscriptionPlan)
+            .OrderBy(s => s.CreateRecordDate)
+            .LastOrDefault(s => s.MyUserId == userId).SubscriptionPlan;
+    }
+
+    public SubscriptionPlan GetSubscriptionPlanById(Guid id)
+    {
+        return _uoW.DbContext.SubscriptionPlans.SingleOrDefault(s => s.Id == id);
+    }
+
+    public async Task AddNewUserSubscription(string userId, Guid id)
+    {
+        await _uoW.DbContext.MyUserSubscriptionPlans.AddAsync(new MyUserSubscriptionPlan()
+        {
+            MyUserId = userId,
+            SubscriptionPlanId = id
+        });
+        await _uoW.CommitAsync(userId);
+    }
+
+    public async Task DeleteUserById(string id)
+    {
+        var user = await _uoW.MyUserRepository.FindByCondition(s => s.Id == id).SingleOrDefaultAsync();
+        _uoW.MyUserRepository.Delete(user);
+        await _uoW.CommitAsync(id);
+    }
+
     public class CreatorOverviewDto
     {
         public int NumberCreator { get; set; }

@@ -18,14 +18,16 @@ public class ProfileHelper
     private readonly UserManager<MyUser> _userManager;
     private readonly MediaHelper _mediaHelper;
     private readonly IConfiguration _config;
+    private IMediaService _mediaService;
 
-    public ProfileHelper(IAccountService accountService, IPortfolioService portfolioService, MyUserValidator myUserValidator, UserManager<MyUser> userManager, MediaHelper mediaHelper, IConfiguration config)
+    public ProfileHelper(IAccountService accountService, IPortfolioService portfolioService, MyUserValidator myUserValidator, UserManager<MyUser> userManager, MediaHelper mediaHelper, IConfiguration config, IMediaService mediaService)
     {
         _accountService = accountService;
         _myUserValidator = myUserValidator;
         _userManager = userManager;
         _mediaHelper = mediaHelper;
         _config = config;
+        _mediaService = mediaService;
         _portfolioService = portfolioService; }
 
     public async Task<ResultDto> UpdateMyUserBio(string biography, MyUser user)
@@ -379,5 +381,26 @@ public class ProfileHelper
         }
         
         return await _accountService.UpdateMyUserRolesWork(rolesToDelete, rolesToAdd, userInfo);
+    }
+
+    public async Task<ResultDto> ChangeSubscriptionPlan(string name, MyUser userInfo)
+    {
+        var subscriptionPlan = _accountService.GetSubscriptionPlanByName(name);
+        var numberMedia = _mediaService.GetMediaNumberByUser(userInfo);
+        var mediaSize = _mediaService.GetSizeMediaStorageByUserId(userInfo.Id);
+        if (numberMedia > subscriptionPlan.AllowedMediaNumber)
+            return new ResultDto(false,
+                $"{subscriptionPlan.Name} plan is limited to {subscriptionPlan.AllowedMediaNumber} medias. Please remove {numberMedia - subscriptionPlan.AllowedMediaNumber} medias and retry.");
+        if (mediaSize > subscriptionPlan.AllowedMegaByte * 1024 * 1024)
+            return new ResultDto(false,
+                $"{subscriptionPlan.Name} plan is limited to {subscriptionPlan.AllowedMegaByte}Mb. Please remove {(mediaSize - subscriptionPlan.AllowedMegaByte * 1024 * 1024) / (1024 * 1024)}Mb and retry.");
+        await _accountService.AddNewUserSubscription(userInfo.Id, subscriptionPlan.Id);
+        return new ResultDto(true, $"{subscriptionPlan.Name} now is active.");
+    }
+
+    public async Task<ResultDto> DeleteAccount(string id)
+    {
+        await _accountService.DeleteUserById(id);
+        return new ResultDto(true, "User delete correctly.");
     }
 }

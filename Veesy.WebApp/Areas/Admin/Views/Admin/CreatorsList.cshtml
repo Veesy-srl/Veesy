@@ -62,7 +62,10 @@
                         <td>@user.Category</td>
                         <td>@user.CreateDate</td>
                         <td><button type="button" class="btn @VeesyConstants.SubscriptionPlan.SubscriptionSpan[@user.SubscriptionPlan] m-1">@user.SubscriptionPlan</button></td>
-                        <td><a style="cursor: pointer" asp-action="CreatorInfo" asp-controller="Admin" asp-route-id="@user.Code" class="bg-primary rounded-circle p-2 text-white d-inline-flex "><i class="ti ti-eye fs-4"></i></a></td>
+                        <td>
+                            <a style="cursor: pointer" asp-action="CreatorInfo" asp-controller="Admin" asp-route-id="@user.Code" class="bg-primary me-2 rounded-circle p-2 text-white d-inline-flex "><i class="ti ti-eye fs-4"></i></a>
+                            <a style="cursor: pointer" onclick="openModal('#modalConfirmDeleteUser'), setUserIdToDelete('@user.Code')" class="bg-danger rounded-circle p-2 text-white d-inline-flex "><i class="ti ti-trash fs-4"></i></a>
+                        </td>
                     </tr>
 
                 }
@@ -106,7 +109,12 @@
                                 softSkill = user.SoftSkill.Aggregate((x, y) => x + ", " + y);
                         }
                         <td>@softSkill</td>
-                        <td><a style="cursor: pointer" asp-action="CreatorInfo" asp-controller="Admin" asp-route-id="@user.Code" class="bg-primary rounded-circle p-2 text-white d-inline-flex "><i class="ti ti-eye fs-4"></i></a></td>
+                        <td>
+                            <div class="d-flex">
+                                <a style="cursor: pointer" asp-action="CreatorInfo" asp-controller="Admin" asp-route-id="@user.Code" class="bg-primary rounded-circle p-2 me-2 text-white d-inline-flex "><i class="ti ti-eye fs-4"></i></a>
+                                <a style="cursor: pointer" onclick="openModal('#modalConfirmDeleteUser'), setUserIdToDelete('@user.Code')" class="bg-danger rounded-circle p-2 text-white d-inline-flex "><i class="ti ti-trash fs-4"></i></a>
+                            </div>
+                        </td>
                     </tr>
 
                 }
@@ -116,11 +124,59 @@
     </div>
 </div>
 
+<div class="modal fade" id="modalConfirmDeleteUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Delete account</strong></h3>
+                <a onclick="closeModal('#modalConfirmDeleteUser')"><i class="fa-solid fa-grey fa-circle-xmark"></i></a>
+            </div>
+            <div class="empty-veesy"></div>
+            <div class="modal-body text-center">
+                <h5 id="confirm-delete-body">
+                    Are you sure to delete this user?
+                </h5>
+                <div class="empty-veesy"></div>
+                <button onclick="DeleteUser()" class="mt-2 rounded-pill btn btn-padding btn-danger a-font-p" type="submit">yes, remove</button>
+            </div>
+            <div class="empty-veesy"></div>
+        </div>
+    </div>
+</div>
+
 @section Scripts
 {
       
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
     <script>
+    
+        let userId = ''
+        
+        function setUserIdToDelete(id) {
+            userId = id
+        }
+        
+        function DeleteUser(){
+            $('#load-spinner').css("display", "block");
+        
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("DeleteAccount", "Profile", new {area = "Account"})',
+                data: JSON.stringify(userId),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (response) {
+                    if(response.result){
+                        location.reload()
+                    }
+                    $('#load-spinner').css("display", "none");
+                },
+                error: function (response) {
+                    $('#load-spinner').css("display", "none");
+                }
+            })
+        }
+    
         let FirstTableDisplay = document.getElementById("dtBasicExample").style.display
         let SecondTableDisplay = document.getElementById("dtBasicExample2").style.display
         

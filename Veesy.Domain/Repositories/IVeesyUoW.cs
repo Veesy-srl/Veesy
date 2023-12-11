@@ -8,6 +8,7 @@ public interface IVeesyUoW
     
     void Commit(MyUser user);
     void Rollback();
+    Task CommitAsync(string userId);
     Task CommitAsync(MyUser user);
     Task RollbackAsync();
     public ApplicationDbContext DbContext { get; }

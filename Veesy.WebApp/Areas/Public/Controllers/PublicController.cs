@@ -1,4 +1,5 @@
 using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
@@ -125,12 +126,14 @@ public class PublicController : VeesyController
         }
     }
     
-    [HttpGet("PricingPlan")]
+    [Authorize]
+    [HttpGet("pricing-plan")]
     public IActionResult PricingPlan()
     {
         try
         {
-            return View();
+            var vm = _publicHelper.GetSubscritionPlanViewModel(UserInfo);
+            return View(vm);
         }
         catch (Exception e)
         {

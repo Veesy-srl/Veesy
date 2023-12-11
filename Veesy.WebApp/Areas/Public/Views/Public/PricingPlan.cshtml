@@ -1,4 +1,6 @@
-﻿@{
+﻿@using Veesy.Domain.Constants
+@model Veesy.Presentation.Model.Cloud.SubscritionPlanViewModel
+@{
     ViewData["Title"] = "Plans Pricing";
 }
 <div class="padding-lg pt-7rem">
@@ -32,7 +34,10 @@
             <div class="bg-white-about card-header d-flex veesy-card-top">
                 <div class="col-11">
                     <p class="mb-0 mt-1">
-                        <strong class="text-color-price" style="font-size: 14px;">YOUR PLAN</strong>
+                        @if (Model.Subscription != null && (Model.Subscription.Name == VeesyConstants.SubscriptionPlan.Free || Model.Subscription.Name == VeesyConstants.SubscriptionPlan.Beta))
+                        {
+                            <strong class="text-color-price" style="font-size: 14px;">YOUR PLAN</strong>
+                        }
                     </p>
                 </div>
                 <div class="col-1 text-end">
@@ -96,16 +101,27 @@
                         </div>
                     </div>
                     <hr style="width: 95%; border: 1px solid grey; margin: 0 auto;">
-                            
+                    @if (Model.Subscription != null && (Model.Subscription.Name == VeesyConstants.SubscriptionPlan.Pro || Model.Subscription.Name == VeesyConstants.SubscriptionPlan.Plus))
+                    {
+                        <div class="col-12 pt-2"><a onclick="openModal('#modalChangeSubscription'), SetSubscription('@VeesyConstants.SubscriptionPlan.Free')" class="rounded-pill mt-4 mb-3 btn btn-primary w-100" style="font-size: 14px;" type="submit">downgrade</a></div>
+                    }
+                    else if (Model.Subscription == null)
+                    {
+                        <div class="col-12 pt-2"><a asp-action="Signup" asp-controller="Auth" asp-area="Auth" class="rounded-pill mt-4 mb-3 btn btn-primary w-100" style="font-size: 14px;" type="submit">subscribe</a></div>
+                    }
                 </div>
                         
             </div>
         </div>
         <div class="h-100 mt-2 col-sm-12 col-md-4">
-            <div class="card" id="grad-price" style="border: none;">
+            <div class="card" id="grad-price" style="border: none; border-radius: 8px;">
                 <div class="card-header d-flex veesy-card-top" style="border:none !important; background-color: transparent;">
                     <div class="col-11">
-                        <p class="mb-0">
+                        <p class="mb-0 mt-1">
+                            @if (Model.Subscription != null && (Model.Subscription.Name == VeesyConstants.SubscriptionPlan.Pro))
+                            {
+                                <strong class="text-color-price-white" style="font-size: 14px;">YOUR PLAN</strong>
+                            }
                         </p>
                     </div>
                     <div class="col-1 text-end">
@@ -181,7 +197,10 @@
                             </div>
                         </div>
                         <hr style="width: 95%; border: 1px solid #ffffff; margin: 0 auto;">
-                        <div class="col-12 pt-2"><a asp-action="Contacts" asp-controller="Public" asp-area="Public" class="rounded-pill mt-4 mb-3 btn btn-white-variant w-100" style="font-size: 14px;" type="submit">upgrade</a></div>
+                        @if (Model.Subscription != null && (Model.Subscription.Name == VeesyConstants.SubscriptionPlan.Free || Model.Subscription.Name == VeesyConstants.SubscriptionPlan.Beta))
+                        {
+                            <div class="col-12 pt-2"><a onclick="openModal('#modalChangeSubscription'), SetSubscription('@VeesyConstants.SubscriptionPlan.Pro')" class="rounded-pill mt-4 mb-3 btn btn-white w-100" style="font-size: 14px;" type="submit">upgrade</a></div>
+                        }
                     </div>
                 </div>
 
@@ -274,3 +293,55 @@
 </div>
 <div class="empty-veesy"></div>
 <div class="empty-veesy"></div>
+
+
+<div class="modal fade" id="modalChangeSubscription" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Update plan</strong></h3>
+                <a onclick="closeModal('#modalChangeSubscription')"><i class="fa-solid fa-grey fa-circle-xmark"></i></a>
+            </div>
+            <div class="empty-veesy"></div>
+            <div class="modal-body text-center">
+                <h5 id="confirm-delete-body">
+                    Are you sure to change your plan?
+                </h5>
+                <div class="empty-veesy"></div>
+                <button onclick="UpdateSubscription()" class="mt-2 rounded-pill btn btn-padding btn-primary a-font-p" type="submit">yes</button>
+            </div>
+            <div class="empty-veesy"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        var subscriptionName = "";
+        function SetSubscription(name) {
+            subscriptionName = name;            
+        }
+    
+        function UpdateSubscription(){
+            $('#load-spinner').css("display", "block");
+        
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ChangeSubscriptionPlan", "Profile", new {area = "Account"})',
+                data: JSON.stringify(subscriptionName),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (response) {
+                    if(response.result){
+                        location.reload()
+                    }
+                    $('#load-spinner').css("display", "none");
+                },
+                error: function (response) {
+                    $('#load-spinner').css("display", "none");
+                }
+            })
+        }
+    </script>
+}

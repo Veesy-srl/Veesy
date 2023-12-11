@@ -82,6 +82,46 @@ public class ProfileController : VeesyController
     }
     
     [HttpPost]
+    public async Task<JsonResult> DeleteAccount([FromBody] string id)
+    {
+        try
+        {
+            var result = await _profileHelper.DeleteAccount(id);
+            if(!result.Success)
+                _notyfService.Custom(result.Message, 10, "#ca0a0a");
+            else 
+                _notyfService.Custom(result.Message, 10, "#75CCDD");
+            return Json(new { Result = result.Success, Message = result.Message});
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            _notyfService.Custom("Error updating subscription plan. Please retry.", 10 , "#ca0a0a");
+            return Json(new { Result = false, Message = "Error saving subscription plan. Please retry." });
+        }
+    }
+    
+    [HttpPost]
+    public async Task<JsonResult> ChangeSubscriptionPlan([FromBody] string name)
+    {
+        try
+        {
+            var result = await _profileHelper.ChangeSubscriptionPlan(name, UserInfo);
+            if(!result.Success)
+                _notyfService.Custom(result.Message, 10, "#ca0a0a");
+            else 
+                _notyfService.Custom(result.Message, 10, "#75CCDD");
+            return Json(new { Result = result.Success, Message = result.Message});
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            _notyfService.Custom("Error updating subscription plan. Please retry.", 10 , "#ca0a0a");
+            return Json(new { Result = false, Message = "Error saving subscription plan. Please retry." });
+        }
+    }
+    
+    [HttpPost]
     public async Task<JsonResult> UpdatePortfolioIntro([FromBody] string introPortfolio)
     {
         try

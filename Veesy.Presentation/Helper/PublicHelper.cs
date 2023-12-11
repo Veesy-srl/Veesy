@@ -70,4 +70,13 @@ public class PublicHelper
         
         return usersWithAllCategories.Select(info => info.Id).ToList();
     }
+
+    public SubscritionPlanViewModel GetSubscritionPlanViewModel(MyUser userInfo)
+    {
+        var vm = new SubscritionPlanViewModel()
+        {
+            Subscription = _accountService.GetUserSubscriptionPlan(userInfo.Id)
+        };
+        return vm;
+    }
 }

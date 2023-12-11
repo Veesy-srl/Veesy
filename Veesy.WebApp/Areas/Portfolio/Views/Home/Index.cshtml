@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="card-body card-body-dashboard row p-0 m-0">
-                <div class="ps-3 col-sm-12 col-lg-3 vertical-space pb-0">
+                <div class="ps-3 col-sm-12 col-lg-3 card-body-background-radius card-body-background vertical-space pb-0">
                     <div style="position: relative; left: -30%;" id="chart"></div>
                     <div>
                         <h3 class="text-color">Your Profile is <strong>@Model.Percent%</strong><br/> complete.</h3>
@@ -48,7 +48,7 @@
                         <hr class="nodisplay-lg"/>
                     </div>
                 </div>
-                <div class="ps-3 col-sm-12 col-lg-3 vertical-space mt-2 pb-0">
+                <div class="ps-3 col-sm-12 col-lg-3 card-body-background vertical-space pt-2 pb-0">
                     <div class="mt-4 pt-1">
                         <div class="d-flex align-items-end mb-2">
                             <h1 style="font-size: 65px !important; line-height: 65px !important;" class="text-color"><strong>@Model.MediaNumber</strong></h1>
@@ -64,7 +64,7 @@
                         <hr class="nodisplay-lg"/>
                     </div>
                 </div>
-                <div class="ps-3 col-sm-12 col-lg-3  vertical-space mt-2 pb-0">
+                <div class="ps-3 col-sm-12 col-lg-3 card-body-background vertical-space pt-2 pb-0">
                     <div class="mt-4 pt-1">
                         <h1 style="font-size: 65px !important; line-height: 65px !important;" class="text-color"><strong>@Model.PortfolioNumber.ToString("00")</strong></h1>
                     </div>
@@ -130,7 +130,7 @@
                         </div>
                     </div>
                     <div class="col-8 vertical-space">
-                        <h5><a onclick="CopyLink('https://localhost:44337/portfolio/68ce29b1-efa6-4f3d-57d5-08dbc8ca076e')"><i style="color: #AAB0BB" class="fa-regular fa-clone me-2"></i></a><strong class="text-color">@Model.PortfolioThumbnailDto.Name</strong></h5>
+                        <h5><a onclick="CopyLink('https://localhost:44337/portfolio/68ce29b1-efa6-4f3d-57d5-08dbc8ca076e')"><i style="color: #202F4D" class="fa-regular fa-clone me-2"></i></a><strong class="text-color">@Model.PortfolioThumbnailDto.Name</strong></h5>
                         <p class="veesy-grey-p mb-0" style="margin-bottom: 2rem">Updated on @Model.PortfolioThumbnailDto.LastUpdate<br/>@Model.PortfolioThumbnailDto.NumberMedia media uploaded</p>
                     </div>
                 }

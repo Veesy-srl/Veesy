@@ -19,6 +19,10 @@ public class VeesyUoW : IVeesyUoW
     {
         await _dbContext.SaveChangesAsync(user.Id);
     }
+    public async Task CommitAsync(string userId)
+    {
+        await _dbContext.SaveChangesAsync(userId);
+    }
     public void Rollback() => _dbContext.Dispose();
     public async Task RollbackAsync() => await _dbContext.DisposeAsync();
     

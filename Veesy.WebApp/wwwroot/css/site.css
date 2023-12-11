@@ -1050,8 +1050,17 @@ a{
 }
 
 .card-body-dashboard{
-  background-color: white;
   border-radius: 0px 5px 0px 5px  ;
+}
+
+.card-body-background{
+  background-color: white;
+}
+
+.card-body-background-radius{
+  @media (min-width: 992px){
+    border-radius: 0px 0px 0px 5px;
+  }
 }
 
 .creator-popup{
@@ -1721,6 +1730,10 @@ textarea{
 
 .text-color-price{
   color: #202F4D;
+}
+
+.text-color-price-white{
+  color: #ffffff !important;
 }
 
 .bg-white-about{

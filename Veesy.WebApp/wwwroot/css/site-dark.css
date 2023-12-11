@@ -353,8 +353,11 @@
     }
     
     .card-body-dashboard{
-        background-color: #383B43;
         border-radius: 0 0 0.4rem 0.4rem !important;
+    }
+
+    .card-body-background{
+        background-color: #383B43;
     }
     
     .bg-white{
