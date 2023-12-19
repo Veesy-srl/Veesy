@@ -73,7 +73,7 @@
     </div>
     <div class="col-sm-12 col-md-6">
         <h2 class="text-color"><strong>Your Profile</strong></h2>
-        <p class="text-color">Lorem ipsum dolor sit amet. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <a class="grey-link ms-2"><strong>learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a></p>
+        <p class="text-color">More than a bio, it's the narrative of your creative journey. Take the stage and shine on it. <a class="grey-link ms-2"><strong>learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a></p>
         <div class="empty-veesy"></div>
         <h3 class="text-color option-font-20"><strong>General</strong></h3>
         <div class="row">
@@ -186,8 +186,8 @@
             @if (string.IsNullOrEmpty(Model.PortfolioIntro))
             {
                 <div class="card-white-dashed-veesy p-3">
-                    <p class="text-color">Write a short info about yourself, try to make it <strong>brief</strong> and <strong>catchy</strong></p>
-                    <div class="mt-4"><a onclick="openModal('#modalPortfolioIntro')" class="red-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add portfolio intro</strong></a></div>
+                    <p class="text-color">A short story can tell a long tale. Keep it engaging and true to your style.</p>
+                    <div class="mt-4"><a onclick="openModal('#modalPortfolioIntro')" class="red-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add intro</strong></a></div>
                 </div>
             }
             else
@@ -221,7 +221,7 @@
                 <div class="d-flex mb-4" style="max-width: 100%; flex-wrap: wrap;">
                     @foreach (var item in Model.Sectors.Where(s => s.Selected))
                     {
-                        <div class="pe-3 ps-3 div-white-rounded-blue-veesy d-flex option-font-14"><a onclick="openModal('#modalSectors')">@item.Name</a></div>
+                        <div class="div-white-rounded-blue-veesy d-flex option-font-14"><a onclick="openModal('#modalSectors')">@item.Name</a></div>
                     }
                 </div>
                 <a onclick="openModal('#modalSectors')" class="grey-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
@@ -238,14 +238,14 @@
             }
         </div>
         <div class="pt-4 mt-4">
-            <h3 class="text-color option-font-20"><strong>Soft skill</strong></h3>
+            <h3 class="text-color option-font-20"><strong>Soft skills</strong></h3>
             <p class="text-color">Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries,</p>
             @if (Model.SoftSkills.Count(s => s.Selected) > 0)
             {
                 <div class="d-flex mb-4" style="max-width: 100%; flex-wrap: wrap;">
                     @foreach (var item in Model.SoftSkills.Where(s => s.Selected))
                     {
-                        <div class="pe-3 ps-3 div-white-rounded-blue-veesy d-flex option-font-14"><a onclick="openModal('#modalSoftSkill')">@item.Name</a></div>
+                        <div class="div-white-rounded-blue-veesy d-flex option-font-14"><a onclick="openModal('#modalSoftSkill')">@item.Name</a></div>
                     }
                 </div>
                 <a onclick="openModal('#modalSoftSkill')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
@@ -269,7 +269,7 @@
                 <div class="d-flex mb-4 text-color" style="max-width: 100%; flex-wrap: wrap;">
                     @foreach (var item in Model.UsedSoftwares.Where(s => s.Selected))
                     {
-                        <div class="pe-3 ps-3 div-white-rounded-blue-veesy option-font-14"><a onclick="openModal('#modalSoftware')" >@item.Name</a></div>
+                        <div class="div-white-rounded-blue-veesy option-font-14"><a onclick="openModal('#modalSoftware')" >@item.Name</a></div>
                     }
                 </div>
                 <a onclick="openModal('#modalSoftware')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
@@ -299,7 +299,7 @@
                 @foreach (var item in Model.PortfolioThumbnailDtos)
                 {
                     <div id="portfolio-div-@item.Code" class="mt-2">
-                        <hr class="color-hr"/>
+                        <hr class="color-hr mb-3"/>
                         <div class="d-flex">
                             <div class="col-2">
                                 <div class='box m-0'> 
@@ -341,10 +341,10 @@
                         </div>
                     </div>
                 }
-                <hr class="color-hr"/>
+                <hr class="color-hr mt-3"/>
                 <div class="empty-veesy"></div>
                 <form method="get" asp-area="Portfolio" asp-action="List" asp-controller="Portfolio">
-                    <button type="submit" class="rounded-pill btn btn-primary a-font-p mt-2 btn-padding">view and edit portfolios</button>
+                    <button type="submit" class="rounded-pill btn btn-primary a-font-p mt-2 btn-padding">manage portfolios</button>
                 </form>
                 <div class="empty-veesy my-4"></div>
             }
@@ -467,7 +467,7 @@
                         <hr class="hr"/>
                     }
                 </div>
-                <p class="mt-4 text-color"><strong>Didn't find it?</strong> <a class="a-ciano" href="mailto:support@veesy.it">Contact us</a></p>
+                <p class="mt-4 text-color"><strong>Didn't find yours?</strong> <a class="a-ciano" href="mailto:support@veesy.it">Contact us</a></p>
                 <p class="mb-0 text-color"><strong>max. 10</strong></p>
             </div>
             <div class="modal-footer">                

@@ -198,6 +198,11 @@ h1{
   line-height: 27px !important;
 }
 
+.option-font-17{
+  font-size: 17px !important;
+  line-height: 27px !important;
+}
+
 .option-font-14{
   font-size: 14px !important;
   line-height: 22px !important;
@@ -327,7 +332,7 @@ html {
 }
 
 .div-white-rounded-veesy{
-  padding: 5px 5px 1px 5px;
+  padding: 4px 8px 1px 8px;
   margin: 5px;
   background-color: #F0F2F3;
   border-radius: 25px;
@@ -340,7 +345,7 @@ html {
 }
 
 .div-white-rounded-veesy-portfolio{
-  padding: 5px 5px 1px 5px;
+  padding: 4px 8px 1px 8px;
   margin: 5px;
   background-color: #F0F2F3;
   border-radius: 25px;
@@ -354,7 +359,16 @@ html {
 }
 
 .div-white-rounded-blue-veesy{
-  padding: 5px 5px 1px 5px;
+  padding: 4px 8px 1px 8px;
+  margin: 5px;
+  background-color: #F0F2F3;
+  border-radius: 25px;
+  border: 1px solid #202F4D !important;
+  font-size: 15px;
+}
+
+.div-white-rounded-blue-veesy-portfolio-preview{
+  padding: 4px 8px 1px 8px;
   margin: 5px;
   background-color: #F0F2F3;
   border-radius: 25px;
@@ -363,7 +377,7 @@ html {
 }
 
 .div-white-rounded-blue-veesy-creators{
-  padding: 5px 5px 1px 5px;
+  padding: 4px 8px 1px 8px;
   margin: 5px;
   background-color: #F0F2F3;
   border-radius: 25px;
@@ -1136,15 +1150,22 @@ a{
 .creator-popup-full-splash{
   position: fixed;
   @media only screen and (min-width: 700px) {
-    width: 25%;
+    width: 28%;
   }
-  height: 29%;
+  height: 34%;
   background: #536B7E;
   border-radius: 10px;
   bottom: -100%;
   left: 20px;
   float: left;
   z-index: 9999;
+}
+
+.option-variant-login{
+  @media only screen and (min-width: 700px) {
+    margin-left: -50px;
+    margin-right: -50px;
+  }
 }
 
 .a-ciano{
@@ -1354,7 +1375,7 @@ hr {
 }
 
 .div-select-layout{
-  border: 1px solid #202F4D33;
+  border: 1px solid #D2D5D6 !important;
   border-radius: 5px;
   cursor: pointer;
 }
@@ -1654,6 +1675,16 @@ hr {
   font-weight: 500;
 }
 
+#color-text-v{
+  color: #202F4D;
+  font-size: 17px !important;
+  line-height: 22px !important;
+  font-weight: 500;
+}
+
+.color-plus-cloud{
+  color: #383B43;
+}
 
 #color-text-layout{
   color: #202F4D;
@@ -1773,6 +1804,10 @@ textarea{
 }
 
 .contact-veesy{
+  width: 55%;
+}
+
+.contact-veesy-2{
   width: 45%;
 }
 
@@ -1925,7 +1960,7 @@ canvas {
 }
 
 .circle {
-  background-color: #A6ACB8;
+  background-color: #DADADA;
   border-radius: 50%;
   width: 18px; /* Regola questa larghezza secondo le tue esigenze */
   height: 18px; /* Regola questa altezza secondo le tue esigenze */

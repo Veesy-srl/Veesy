@@ -14,7 +14,9 @@
     <div class="empty-veesy nodisplay-sm"></div>
     <div class="empty-veesy nodisplay-sm"></div>
     <div class="col-sm-12 ps-3 col-md-4">
-        <h1 class="text-color mt-2">Hello @Model.Name,<br/>welcome to your dashboard...</h1>
+        <h1 class="text-color mt-2">
+            Welcome back, @Model.Name!<br/> Your creative space awaits.
+        </h1>
         <div class="empty-veesy"></div>
         <div class="empty-veesy"></div>
         <div class="col-12">
@@ -149,7 +151,7 @@
                         <a asp-controller="Portfolio" asp-action="Settings" asp-route-id="@Model.PortfolioThumbnailDto.Code" asp-area="Portfolio" class="grey-link ms-2"><i class="fa-regular fa-pen-to-square pe-1"></i>edit main portfolio</a>
                     }
                 </div>
-                <div class="col-6 text-end"><a asp-controller="Portfolio" asp-action="List" asp-area="Portfolio" class="w-100 rounded-pill btn btn-primary a-font-p" type="submit">go to portfolios</a></div>
+                <div class="col-6 text-end"><a asp-controller="Portfolio" asp-action="List" asp-area="Portfolio" class="w-100 rounded-pill btn btn-primary a-font-p" type="submit">Your Portfolios</a></div>
             </div>
         </div>
     </div>
@@ -230,7 +232,7 @@
             <div class="row pt-2">
                 <hr style="color: #D7DADF"/>
                 <div class="col-6 pt-2"><a asp-controller="Profile" asp-area="Account" asp-action="Profile" class="grey-link ms-2">view profile <i class="fa-solid fa-arrow-up-right-from-square"></i></a></div>
-                <div class="col-6 text-end"><a asp-controller="Profile" asp-area="Account" asp-action="Profile" class="a-font-p w-100 rounded-pill btn btn-white" type="submit"><i class="fa-regular fa-pen-to-square pe-1"></i>edit profile</a></div>
+                <div class="col-6 text-end"><a asp-controller="Profile" asp-area="Account" asp-action="Profile" class="a-font-p w-100 rounded-pill btn btn-white" type="submit"><i class="fa-regular fa-pen-to-square pe-1"></i>update profile</a></div>
             </div>
         </div>
     </div>

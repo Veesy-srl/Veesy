@@ -6,6 +6,10 @@
     .bg-grey{
         background: #060B19 !important;
     }
+
+    .blur-background{
+        background: rgba(25, 25, 25, 0.8) !important;
+    }
     
     .color-about{
         color: #F3F3F3;
@@ -194,10 +198,6 @@
         color: #F3F3F3;
     }
 
-    .div-white-rounded-veesy{
-        background-color: #383B43;
-    }
-
     .div-white-rounded-veesy-portfolio{
         background-color: #F3F3F3;
     }
@@ -308,9 +308,13 @@
     #color-text-footer{
         color: #F3F3F3;
     }
-
+    
     .menu-element:hover{
         background-color: #383C47 !important;
+    }
+    
+    .color-plus-cloud{
+        color: #F3F3F3;
     }
 
     .dashboard-header-border{
@@ -407,12 +411,12 @@
     }
 
     .div-select-layout-selected{
-        border: 2px solid #202f4d !important;
+        border: 2px solid #F3F3F3 !important;
         background: transparent;
     }
 
     .div-select-layout:hover{
-        border: 2px solid #202f4d !important;
+        border: 2px solid #F3F3F3 !important;
         background: transparent;
     }
     

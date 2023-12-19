@@ -61,7 +61,7 @@
         <div class="col-sm-12 col-md-6">
             <div class="d-flex">
                 <h2 class="text-color"><strong id="portfolio-name-title">@Model.Portfolio.Name</strong></h2>
-                <a onclick="CopyLink('@Model.ApplicationUrl@Url.Action("Portfolio", "Public", new {area = "Public", id = @Model.Portfolio.Id})')" class="blue-link ms-2 mt-1"><i class="fa-regular fa-xl fa-clone pe-1"></i><strong></strong></a>
+                <a onclick="CopyLink('@Model.ApplicationUrl@Url.Action("Portfolio", "Public", new {area = "Public", id = @Model.Portfolio.Id})')" class="blue-link ms-2 mt-1"><i class="fa-regular fa-l fa-clone pe-1"></i><strong></strong></a>
             </div>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <a class="grey-link ms-2"><strong>learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a></p>
             <div class="empty-veesy"></div>
@@ -108,10 +108,10 @@
                     <hr class="hr nodisplay-sm color-hr"/>
                     <div class="d-flex">
                         <div class="col-9">
-                            <p class="mb-0"><strong><i style="color: #75CCDD" class="@iconBack icon-main-portfolio fa-star me-2"></i>Main Portfolio:</strong></p>
+                            <p class="mb-0"><strong><i style="color: #75CCDD" class="@iconBack icon-main-portfolio fa-star me-2"></i>Featured Portfolio:</strong></p>
                             @if (Model.Portfolio.IsMain)
                             {
-                                <p class="mb-0 veesy-overflow" id="portfolio-main-text">This portfolio is set as your main</p>
+                                <p class="mb-0 veesy-overflow" id="portfolio-main-text">Select a Portfolio to feature on the Creators page</p>
                             }
                             else
                             {
@@ -126,7 +126,7 @@
                         <div class="d-flex">
                             <div class="col-9">
                                 <p class="text-danger mb-0"><strong>Delete portfolio:</strong></p>
-                                <a class="mb-0 veesy-overflow a-font-p">You can't delete main portfolio</a>
+                                <a class="mb-0 veesy-overflow a-font-p">You can't delete featured portfolio</a>
                             </div>
                         </div>
                     }
@@ -145,7 +145,7 @@
             <div class="empty-veesy"></div>
             <div class="row">
                 <h3 class="text-color" style="font-size: 20px!important; line-height: 27px!important;"><strong>Select layout</strong></h3>
-                <p>Remember that for <b>horizontal images</b>, 1 or 2 columns are more suitable choice, for <b>vertical images</b>, it's better to pick 3 or 4 columns.</p>
+                <p>We suggest using 1 or 2 columns for horizontal images, for vertical ones is better to pick 3 or 4 columns.</p>
                 <div class="ms-1 ps-0 row">
                     @foreach (var item in VeesyConstants.GetAvailableLayouts())
                     {
@@ -187,6 +187,7 @@
             <div class="empty-veesy"></div>
             <div class="row mt-4">
                 <h3 class="text-color" style="font-size: 20px!important; line-height: 27px!important;"><strong>Your Medias</strong></h3>
+                <p>Drag the medias and choose the best order.</p>
                 <div class="card-columns draggable-zone" id="images-container">
                     @foreach (var image in Model.Portfolio.PortfolioMedias)
                     {
@@ -194,7 +195,7 @@
                         {
                             <div id="media-@image.MediaId" style="position: relative" class="draggable m-0 pb-2 pt-2 show-edit" name="image-gallery" mediaid="@image.MediaId">
                                 <a onMouseDown="RemoveMediaFromPortfolio('@image.MediaId')" class="edit-button-portfolio">
-                                    <p class="mb-0 text-white">remove</p>
+                                    <p class="mb-0 px-2 text-white">remove</p>
                                 </a>
                                 <img src="@Model.BasePathImages@image.Media.FileName?tr=w-400" class="card-body m-0 p-0 rounded-05 img-rounded-trasparent w-100 p-0" title="@image.Media.OriginalFileName"/>
                             </div>
@@ -203,7 +204,7 @@
                         {
                             <div id="media-@image.MediaId" style="position: relative" class="draggable m-0 pb-2 pt-2 show-edit" name="image-gallery" mediaid="@image.MediaId">
                                 <a onMouseDown="RemoveMediaFromPortfolio('@image.MediaId')" class="edit-button-portfolio">
-                                    <p class="mb-0 text-white">remove</p>
+                                    <p class="mb-0 px-2 text-white">remove</p>
                                 </a>
                                 <video autoplay="autoplay" muted loop class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" title="@image.Media.OriginalFileName">
                                     <source src="@Model.BasePathImages@image.Media.FileName?tr=w-400" type="video/mp4">
@@ -225,7 +226,7 @@
                             <i id="uploader-icon" class="fa-solid fa-circle-plus fa-xl" style="color: #0D2045"></i>
                         </div>
                         <span id="uploader-text" class="text-color" style="font-size: 15px!important; line-height:  22px!important;">
-                            Upload or drop files here. <br/> (Accepted formats: jpg, png, mov, mp4, gif)
+                            Upload or drop medias here. <br/> (Accepted formats: jpg, png, mov, mp4, gif)
                         </span>
                         <div class="progress-bar progress-bar-primary" role="progressbar" data-dz-uploadprogress>
                             <span class="progress-text"></span>
@@ -649,7 +650,7 @@
                             document.getElementById("images-container").innerHTML +=
                             '<div id="media-' + res.MediaDtos[i].Code + '" style="position: relative" class="draggable m-0 pb-2 pt-2" name="image-gallery" mediaid="' + res.MediaDtos[i].Code + '" tabindex="0" style="">'+
                                  '<a onMouseDown="RemoveMediaFromPortfolio(' + res.MediaDtos[i].Code + ')" class="edit-button-portfolio">'+
-                                    '<p class="mb-0 text-white">remove</p>'+
+                                    '<p class="mb-0 px-2 text-white">remove</p>'+
                                  '</a>'+
                                  '<video autoplay="autoplay" muted="" loop="" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" title="'+ res.MediaDtos[i].OriginalFileName +'">'+
                                      '<source src="' + '@Model.BasePathImages' + res.MediaDtos[i].FileName + '?tr=w-400" type="video/mp4">'+
@@ -660,7 +661,7 @@
                             document.getElementById("images-container").innerHTML +=
                             '<div id="media-' + res.MediaDtos[i].Code + '" style="position: relative" class="draggable m-0 pb-2 pt-2" name="image-gallery" mediaid="' + res.MediaDtos[i].Code + '" tabindex="0">'+
                                 '<a onMouseDown="RemoveMediaFromPortfolio(' + res.MediaDtos[i].Code + ')" class="edit-button-portfolio">'+
-                                    '<p class="mb-0 text-white">remove</p>'+
+                                    '<p class="mb-0 px-2 text-white">remove</p>'+
                                 '</a>'+
                                 '<img src="' + '@Model.BasePathImages' + res.MediaDtos[i].FileName + '?tr=w-400" class="card-body m-0 p-0 rounded-05 img-rounded-trasparent w-100 p-0" title="'+ res.MediaDtos[i].OriginalFileName +'">' +
                             '</div>'

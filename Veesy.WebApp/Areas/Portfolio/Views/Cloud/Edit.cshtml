@@ -69,7 +69,7 @@
                     <div class="col-3 text-end pe-0">
                         <a onclick="setTextAreaValue('filename-edit', document.getElementById('filename-show').textContent), openModal('#modalFileName')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i></a>
                     </div>
-                    <hr class="hr"/>
+                    <hr class="hr mt-1"/>
                     
                     <div class="empty-veesy"></div>
                     <div class="col-12 ps-0 pe-0">
@@ -89,9 +89,9 @@
                     <div class="col-4 text-end pe-0">
                         <a class="grey-link"><strong class="me-1">learn more</strong><i class="fa-solid fa-arrow-up-right-from-square pe-1"></i></a>
                     </div>
-                    <hr class="hr"/>
+                    <hr class="hr mt-1"/>
                     <div class="col-9 ps-0">
-                        <p class="mb-0 text-white"><strong>Link image to one of your portfolio</strong></p>
+                        <p class="mb-0 text-white"><strong>Link this image to a portfolio</strong></p>
                         @{
                             var portfoliosLinkText = "";
                             if (Model.LinkedPortfolioDtos.Count == 0 || Model.LinkedPortfolioDtos.Count(s => s.Selected) > 0)
@@ -102,7 +102,7 @@
                         <p id="number-portfolio-link" class="mb-0 text-grey">@portfoliosLinkText</p>
                     </div>
                     <div class="col-3 text-end pe-0"><a onclick="openModal('#modalLinkedPortfolio')" class="grey-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i>edit</a></div>
-                    <hr class="hr"/>
+                    <hr class="hr mt-1"/>
                     <div class="empty-veesy"></div>
                     <div class="col-12 ps-0 pe-0">
                         <h3 class="mb-0 text-white option-font-20">Credits</h3>

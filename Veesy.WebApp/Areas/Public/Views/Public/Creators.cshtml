@@ -4,8 +4,8 @@
 }
 <div class="padding-lg pt-7rem">
     <div class="row p-4-lg">
-        <div class="col-sm-12 col-md-6 mt-5">
-            <h1 class="text-color">Discover all the creators <b>discover all the creators <br/>discover all</b> the creators discover all the creators <br/>discover all the creators</h1>
+        <div class="col-sm-12 col-md-7 mt-3">
+            <h1 class="text-color">A place to meet the minds behind the art. Browse through featured portfolios, find inspiration in every click, and connect with fellow visual artists.</h1>
         </div>
     </div>
     <div class="row pt-4 p-4-lg">
@@ -13,7 +13,7 @@
             <h5 class="pe-2 text-color mt-1"><b>Filter by category</b></h5>
             @foreach (var category in Model.CategoryWorks)
             {
-                <div class="pe-3 ps-3 div-white-rounded-blue-veesy-creators d-flex" style="top: -5px; position:  relative;" id="category-@category.ToString()" onclick="FilterCategory('@category.ToString()')"><a><b>@category.ToString()</b></a></div>
+                <div class="div-white-rounded-blue-veesy-creators d-flex" style="top: -5px; position:  relative;" id="category-@category.ToString()" onclick="FilterCategory('@category.ToString()')"><a><b>@category.ToString()</b></a></div>
             }
         </div>
         @for(var u=0; u<Model.User.Count; u++)
@@ -36,7 +36,7 @@
                             <button class="rounded-pill btn btn-white color-text-creator" style="background-color: white; width:  180px; margin-top:  20px;" type="submit">meet the creator</button>
                         </div>
                         <div class="m-4 col-7">
-                            <div class="row white-cursor-creators" style="font-size: 15px;">
+                            <div class="row white-cursor-creators" style="font-size: 20px; line-height: 30px; margin-bottom: 5px;">
                                 <strong>@Model.User[u].Name @Model.User[u].Surname</strong>
                             </div>
                             <div class="row white-cursor-creators">

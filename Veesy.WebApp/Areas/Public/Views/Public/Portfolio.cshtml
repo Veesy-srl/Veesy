@@ -76,6 +76,7 @@
         
                         <a onclick="CloseMediaPopup()" class="ms-2 btn btn-light border btn-layout fw-bolder shadow-none" id="menuButton">
                             <i class="fas fa-circle fa-2xs text-primary mr-2" id="icon-color" aria-hidden="true"></i>
+                            <i class="fas fa-times-circle fa-2xs text-primary" id="icon-color"></i>
                             <span id="color-text-variant">close</span>
                         </a>
                     </div>
@@ -170,7 +171,7 @@
                         <div class="d-flex mb-4 option-portfolio-width" style="flex-wrap: wrap;">
                             @foreach (var item in Model.PortfolioDto.Sector)
                             {
-                                <div class="pe-3 ps-3 div-white-rounded-blue-veesy d-flex option-font-14"><a><i class="fa-solid fa-circle pe-2" style="color: #75CCDD"></i>@item</a></div>
+                                <div class="div-white-rounded-blue-veesy-portfolio-preview d-flex option-font-14"><span>@item</span></div>
                             }
                         </div>
                     </div>
@@ -183,7 +184,7 @@
                         <div class="d-flex mb-4 option-portfolio-width" style="flex-wrap: wrap;">
                             @foreach (var item in Model.PortfolioDto.SoftSkill)
                             {
-                                <div class="pe-3 ps-3 div-white-rounded-blue-veesy d-flex option-font-14"><a><i class="fa-solid fa-circle pe-2" style="color: #75CCDD"></i>@item</a></div>
+                                <div class="div-white-rounded-blue-veesy-portfolio-preview d-flex option-font-14"><span>@item</span></div>
                             }
                         </div>
                     </div>
@@ -196,7 +197,7 @@
                         <div class="d-flex mb-4 option-portfolio-width" style="flex-wrap: wrap;">
                             @foreach (var item in Model.PortfolioDto.UsedSoftwares)
                             {
-                                <div class="pe-3 ps-3 div-white-rounded-veesy option-font-14"><a>@item</a></div>
+                                <div class="pe-3 ps-3 div-white-rounded-veesy option-font-14"><span>@item</span></div>
                             }
                         </div>
                     </div>

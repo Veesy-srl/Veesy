@@ -20,7 +20,7 @@
         </div>
         <div class="text-white col-sm-12 col-md-6">
             <h1><strong>Cloud</strong></h1>
-            <p style="margin-top: 20px;" class="text-white mb-0">Here you can upload your files. Drop files on the screen to upload. The recommended format is 4:3 horizontal or vertical, format accepted: jpg, png, mov, mp4, gif. <a class="grey-link ms-2"><strong>learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a></p>
+            <p style="margin-top: 20px;" class="text-white mb-0">Drag and drop your latest projects into the Cloud and watch your collection grow. With high-resolution storage and seamless sorting, preparing your masterpieces for the world has never been easier. Recommended formats are 4:3 horizontal and vertical. File formats accepted: jpeg, png, mov, mp4, gif. <a class="grey-link ms-2"><strong>learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a></p>
             <div class="empty-veesy nodisplay-md"></div>
             @{
                 var nodisplay_md = "mt-4";
@@ -37,10 +37,10 @@
                     </a>
                     <div class="dz-message needsclick" id="message-uploader">
                         <div id="div-uploader-icon" class="w-100 mb-1">
-                            <i id="uploader-icon" class="fa-solid fa-circle-plus fa-xl" style="color: #383B43"></i>
+                            <i id="uploader-icon" class="fa-solid fa-circle-plus fa-xl color-plus-cloud"></i>
                         </div>
                         <span id="uploader-text" class="text-white a-font-p">
-                            drag your files here <br/> or <br> <p class="text-white" style="text-decoration: underline">upload from device</p>
+                            drag & drop here <br/> or <br> <p class="text-white" style="text-decoration: underline">upload from device</p>
                         </span>
                         <div class="progress-bar progress-bar-primary" role="progressbar" data-dz-uploadprogress>
                             <span class="progress-text"></span>
@@ -73,7 +73,7 @@
                         <div class="img-div">
                             @if (MediaCostants.ImageExtensions.Contains(image.Type.ToUpper()))
                             {
-                                <img id="img-@image.Code" src="@Model.BasePath@image.FileName?tr=w-400" class="card-body mb-2 rounded-05 img-rounded-trasparent w-100 p-0" title="@image.OriginalFileName"/>
+                                <img id="img-@image.Code" src="@Model.BasePath@image.FileName?tr=w-400" class="card-body mb-3 rounded-05 img-rounded-trasparent w-100 p-0" title="@image.OriginalFileName"/>
                             }
                             else
                             {
@@ -510,7 +510,7 @@
                                             '<a onclick="SelectMedia(\'' + res.MediaDtos[i].Code + '\')">'+
                                                 '<div class="img-div">'+
                                                     '<div class="draggable m-0" name="image-gallery">'+
-                                                        '<img id="img-' + res.MediaDtos[i].Code + '" src="@Model.BasePath' + res.MediaDtos[i].FileName + '?tr=w-400" class="card-body mb-2 rounded-05 img-rounded-trasparent w-100 p-0" title="' + res.MediaDtos[i].OriginalFileName + '"/>'+
+                                                        '<img id="img-' + res.MediaDtos[i].Code + '" src="@Model.BasePath' + res.MediaDtos[i].FileName + '?tr=w-400" class="card-body mb-3 rounded-05 img-rounded-trasparent w-100 p-0" title="' + res.MediaDtos[i].OriginalFileName + '"/>'+
                             '</div></div></a></div>'
                          }
                         else{
