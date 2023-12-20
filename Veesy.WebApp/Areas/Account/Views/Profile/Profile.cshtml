@@ -325,23 +325,32 @@
                                 </div>
                             </div>
                             <div class="col-6 vertical-space">
+                                @{
+                                    var iconBack = "fa-regular";
+
+                                    if (item.IsMain)
+                                    {
+                                        iconBack = "fa-solid";
+                                    }
+                                }
                                 <div>
-                                    <h5><a onclick="CopyLink('@Model.ApplicationUrl@Url.Action("Portfolio", "Public", new {area = "Public", id = @item.Code})')" class="grey-link"><i class="fa-regular fa-clone pe-1"></i></a><strong class="text-color">@item.Name</strong></h5>
+                                    <h5 style="font-size: 20px !important; line-height: 27px;"><i style="color: #75CCDD" class="@iconBack icon-main-portfolio fa-star me-2"></i><strong class="text-color">@item.Name</strong></h5>
+                                    <p class="veesy-text-color">Updated on @item.LastUpdate<br/>@item.NumberMedia media uploaded</p>
                                 </div>
-                                <span class="grey-profile">Updated on @item.LastUpdate<br/>@item.NumberMedia media uploaded</span>
+                                <a target="_blank" asp-action="PortfolioPreview" asp-controller="Portfolio" asp-area="Portfolio" asp-route-id="@item.Code" class="grey-link">Preview<i class="fa-solid fa-arrow-up-right-from-square ms-2"></i></a>
                             </div>
                             <div class="col-4 text-end vertical-space">
-                                <a asp-area="Portfolio" asp-controller="Portfolio" asp-action="Settings" asp-route-id="@item.Code" class="grey-link ms-2"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit portfolio</strong></a>
+                                <a onclick="CopyLink('@Model.ApplicationUrl@Url.Action("Portfolio", "Public", new {area = "Public", id = @item.Code})')" class="grey-link ms-2"><i class="fa-regular fa-clone pe-1"></i><strong>Copy link</strong></a>
                                 <div style="justify-content: end;" class="d-flex">
-                                    <form method="get" asp-action="PortfolioPreview" asp-controller="Portfolio" asp-area="Portfolio" asp-route-id="@item.Code">
-                                        <button type="submit" class="rounded-pill btn-padding-20 btn btn-primary mt-2 a-font-p">preview portfolio</button>
+                                    <form method="get" asp-area="Portfolio" asp-controller="Portfolio"  asp-action="Settings" asp-route-id="@item.Code">
+                                        <button type="submit" class="rounded-pill btn-padding-20 btn btn-primary mt-2 a-font-p"><i class="fa-regular a-font-p fa-pen-to-square pe-1"></i>edit portfolio</button>
                                     </form>
                                 </div>
                             </div>
                         </div>
                     </div>
                 }
-                <hr class="color-hr mt-3"/>
+                <hr class="color-hr mb-3"/>
                 <div class="empty-veesy"></div>
                 <form method="get" asp-area="Portfolio" asp-action="List" asp-controller="Portfolio">
                     <button type="submit" class="rounded-pill btn btn-primary a-font-p mt-2 btn-padding">manage portfolios</button>

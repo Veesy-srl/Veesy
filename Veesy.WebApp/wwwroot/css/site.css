@@ -299,7 +299,7 @@ html {
   }
   
   .option-height-about{
-    min-height: 62vh !important;
+    min-height: 100% !important;
   }
 }
 
@@ -437,6 +437,22 @@ html {
 
 .color-about{
   color: #202F4D;
+}
+
+.arrow-edit-media {
+  transition: transform 0.3s ease-in-out;
+}
+
+.arrow-edit-media:hover {
+  transform: scale(0.9);
+}
+
+.arrow-portfolio-media{
+  transition: transform 0.3s ease-in-out;
+}
+
+.arrow-portfolio-media:hover {
+  transform: scale(0.9);
 }
 
 /*AUTH AREA*/
@@ -1291,10 +1307,15 @@ hr {
 }
 
 .menu-element:hover{
-  background-color: white;
-  border-radius: 2px;
+  background-color: #F0F2F3 !important;
+  border-radius: 5px;
   padding-left: 30px;
   transition-duration: 0.4s;
+}
+
+.menu-element{
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .veesy-overflow{
@@ -1573,7 +1594,6 @@ hr {
 
 .edit-button-portfolio-preview{
   background-color: #536B7E !important;
-  padding: 1px 4px 1px 4px;
   border-radius: 20px;
   position: absolute;
   top: 20px;
@@ -1652,20 +1672,18 @@ hr {
   width: 50px !important;
 }
 
+.icon-left-portfolio {
+  content: url('../icon/arrow_left_light mode.svg');
+}
+
+.icon-right-portfolio {
+  content: url('../icon/arrow_right_light mode.svg');
+}
+
 .arrow-portfolio-media{
   background-color: #EEF0F2 !important;
   height: 50px !important;
   width: 50px !important;
-}
-
-.menu-element:hover {
-  background-color: white !important;
-  border-radius: 5px;
-}
-
-.menu-element{
-  font-size: 14px;
-  font-weight: 600;
 }
 
 #color-text{
@@ -2061,6 +2079,10 @@ canvas {
   }
 }
 
+.custom-padding-variant{
+  padding: 0.72rem 1.2rem !important;
+}
+
 .custom-padding{
-  padding: 0.75rem 1.2rem !important;
+  padding: 0.73rem 1.2rem !important;
 }
