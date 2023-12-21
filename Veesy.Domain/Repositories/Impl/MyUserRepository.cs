@@ -156,11 +156,36 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
     public List<MyUser> GetOnlyRandomUserWithImage(int count)
     {
         var random = new Random();
-        var randomUsers = _applicationDbContext.MyUsers
-            .Where(u => u.ProfileImageFileName != null).Include(t=>t.Medias).Include(p => p.Portfolios)
-            .Where(u => u.Portfolios.Any(p => p.IsMain == true && p.IsPublic == true && p.Status == 1))
-            .ToList().OrderBy(u => random.Next()).Take(count).ToList();
+        
+        var usersWithAllPortfolios = _applicationDbContext.MyUsers
+            .Where(u => u.ProfileImageFileName != null)
+            .Include(t => t.Medias)
+            .Include(p => p.Portfolios)
+            .Where(u => u.Portfolios.Any(p => p.IsMain && p.IsPublic && p.Status == 1))
+            .ToList();
 
+        usersWithAllPortfolios.ForEach(user =>
+        {
+            var filteredPortfolios = user.Portfolios
+                .Where(p => p.IsMain && p.IsPublic && p.Status == 1)
+                .ToList();
+
+            var validPortfolioIds = filteredPortfolios.Select(p => p.Id).ToList();
+
+            user.Portfolios.RemoveAll(p => !validPortfolioIds.Contains(p.Id));
+
+            var validMediaIds = _applicationDbContext.PortfolioMedias
+                .Where(pm => validPortfolioIds.Contains(pm.PortfolioId))
+                .Select(pm => pm.MediaId)
+                .ToList();
+
+            user.Medias.RemoveAll(media => !validMediaIds.Contains(media.Id));
+        });
+
+        usersWithAllPortfolios.RemoveAll(user => user.Portfolios.Count == 0);
+        
+        var randomUsers = usersWithAllPortfolios.OrderBy(u => random.Next()).Take(count).ToList();
+        
         var usersWithRandomMedia = randomUsers.Select(user =>
         {
             if (user.Medias != null && user.Medias.Any())
@@ -186,6 +211,8 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
             .ThenInclude(g => g.CategoryWork)
             .ToList();
 
+        users.RemoveAll(u => u.ProfileImageFileName == null);
+        
         foreach (var user in users)
         {
             user.Portfolios = user.Portfolios

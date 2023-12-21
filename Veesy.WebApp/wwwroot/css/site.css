@@ -681,10 +681,10 @@ button:focus {
 }
 
 .logo-container{
-  background-image: url('../imgs/Auth/login-bg.png');
+  background-image: url('../imgs/Auth/Render_2-downscale-art-width-1500px-1024x1024.jpg');
   background-size: cover;
   background-position: center;
-  height: 103vh;
+  height: 106vh;
 }
 
 img.lazy {
