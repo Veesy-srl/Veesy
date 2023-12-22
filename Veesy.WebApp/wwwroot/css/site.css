@@ -2006,17 +2006,39 @@ canvas {
 }
 
 .header-logo{
-  content: url('../imgs/veesy_vettoriale_enigma.png');
+  content: url('../imgs/_Logo Veesy-b.png');
   width: 75px; 
   height: 25px; 
   margin-top: 5px;
+  margin-right: 5px;
+}
+
+.header-logo:hover{
+  content: url('../imgs/_Logo Veesy-lb-g-p.png');
 }
 
 .header-logo-v{
-  content: url('../imgs/veesy_vettoriale_enigma_white.png');
+  content: url('../imgs/_Logo Veesy-lb.png');
   width: 75px;
   height: 25px;
   margin-top: 5px;
+  margin-right: 5px;
+}
+
+.header-logo-v:hover{
+  content: url('../imgs/_Logo Veesy-lb-g-p.png');
+}
+
+.header-logo-auth{
+  content: url('../imgs/_Logo Veesy-lb.png');
+  width: 75px;
+  height: 25px;
+  margin-top: 5px;
+  margin-right: 5px;
+}
+
+.header-logo-auth:hover{
+  content: url('../imgs/_Logo Veesy-lb-g-p.png');
 }
 
 .dark-light{
