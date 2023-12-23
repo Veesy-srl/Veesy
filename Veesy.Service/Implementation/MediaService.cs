@@ -14,7 +14,6 @@ public class MediaService : IMediaService
     private readonly UserManager<MyUser> _userManager;
 
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-    
     public MediaService(UserManager<MyUser> userManager, IVeesyUoW uoW)
     {
         _uoW = uoW;
