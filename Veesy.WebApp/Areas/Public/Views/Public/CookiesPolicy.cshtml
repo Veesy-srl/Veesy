@@ -1,0 +1,21 @@
+@{
+    ViewData["Title"] = "Cookies Policy";
+}
+<div class="padding-lg pt-7rem">
+<div class="row p-4-lg">
+    <div class="col-sm-12 col-md-6 mt-5">
+        <h1 class="color-about">Cookies Policy</h1>
+        <div class="empty-veesy"></div>
+        <p>
+        @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+        @if (HttpContextAccessor.HttpContext != null && !HttpContextAccessor.HttpContext.Request.Host.Host.ToLower().Contains("localhost"))
+            {
+            <script id="CookieDeclaration" src="https://consent.cookiebot.com/5e418102-3e4a-4ebb-b99f-c192038a9391/cd.js" type="text/javascript" async></script>
+            }
+        </p>
+    </div>
+    <div class="empty-veesy"></div>
+    <div class="empty-veesy"></div>
+</div>
+</div>

@@ -45,6 +45,20 @@ public class PublicController : VeesyController
         }
     }
     
+    [HttpGet("CookiesPolicy")]
+    public IActionResult CookiesPolicy()
+    {
+        try
+        {
+            return View();
+        }
+        catch (Exception e)
+        {
+            Logger.Error(e, e.Message);
+            return RedirectToAction("Index", "Home");
+        }
+    }
+    
     [HttpGet]
     public IActionResult Splash()
     {
