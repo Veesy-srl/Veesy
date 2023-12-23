@@ -264,7 +264,7 @@ public class PortfolioHelper
         await _portfolioService.UpdatePortfolio(portfolio, userInfo);
     }
 
-    public (PortfolioViewModel model, ResultDto result) GetPortfolioPreviewViewModel(Guid id, MyUser user)
+    public (PortfolioViewModel model, ResultDto result) GetPortfolioPreviewViewModel(Guid id, bool open, MyUser user)
     {
 
         var portfolio = _portfolioService.GetPortfolioByIdForPreview(id);
@@ -279,6 +279,7 @@ public class PortfolioHelper
 
         return (new PortfolioViewModel
         {
+            OpenPopup = open, 
             PortfolioDto = MapPortfolioDtos.MapPreviewPortfolioDto(portfolio, languageSpoken, sector, usedSoftware, softSkill, infoToShow),
             BasePathImages = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/",
             BasePathAzure = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"

@@ -85,7 +85,7 @@
                 </li>
             </ul>
         </div>
-        <div class="col-sm-12 col-md-8 mb-5">
+        <div class="col-sm-12 col-md-8 mb-5 d-flex align-content-center" style="flex-wrap: wrap">
             <div id="external-div" class="mx-auto">
                 <div class="row text-center align-bottom show-edit" style="position:relative; max-height: 100vh; max-width: 100%; --bs-gutter-x: 0;">
                     <div style="position: relative">
@@ -345,6 +345,9 @@
         });
         
         document.addEventListener('DOMContentLoaded', function () {
+            if ('@Model.OpenPopup' == 'True'){
+                OpenCreatorPopup()    
+            }
             var animatedPopup = document.getElementById('animatedPopup');
 
             function jumpEffect(iterations, currentIteration) {

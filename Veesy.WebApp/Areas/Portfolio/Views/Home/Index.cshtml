@@ -231,7 +231,14 @@
             </div>
             <div class="row pt-2">
                 <hr style="color: #D7DADF"/>
-                <div class="col-6 pt-2"><a asp-controller="Profile" asp-area="Account" asp-action="Profile" class="grey-link ms-2">view profile <i class="fa-solid fa-arrow-up-right-from-square"></i></a></div>
+                @if (Model.PortfolioThumbnailDto != null)
+                {
+                    <div class="col-6 pt-2"><a asp-controller="Portfolio" asp-area="Portfolio" asp-action="PortfolioPreview" asp-route-id="@Model.PortfolioThumbnailDto.Code" asp-route-open="@true" class="grey-link ms-2">view main portfolio <i class="fa-solid fa-arrow-up-right-from-square"></i></a></div>
+                }
+                else
+                {
+                    <div class="col-6"></div>
+                }
                 <div class="col-6 text-end"><a asp-controller="Profile" asp-area="Account" asp-action="Profile" class="a-font-p w-100 rounded-pill btn btn-white" type="submit"><i class="fa-regular fa-pen-to-square pe-1"></i>update profile</a></div>
             </div>
         </div>

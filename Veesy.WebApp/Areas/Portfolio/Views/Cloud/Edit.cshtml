@@ -47,16 +47,21 @@
     <div class="text-white col-sm-12 col-md-8">
         <div class="row">
             <div class="col-sm-12 col-md-6 text-end pe-3">
-                @if (Model.Media.Type == ".mp4")
-                {
-                    <video style="max-height: 75vh; max-width: 100%" autoplay="autoplay" muted controls="controls" loop class="shadow-1-strong rounded-05" alt="@Model.Media.OriginalFileName">
-                        <source src="@Model.BasePath@Model.Media.FileName?tr=w-1080" type="video/mp4">
-                    </video>
-                }
-                else
-                {
-                    <img style="max-height: 75vh; max-width: 100%" asp-append-version="true" src="@Model.BasePath@Model.Media.FileName?tr=w-1080" class="shadow-1-strong rounded-05" alt="@Model.Media.OriginalFileName"/>
-                }
+                <div class="media-container show-edit">
+                    <a onclick="openModal('#modalDeleteMedia')" class="edit-button-bottom a-font-p">
+                        <strong style="margin-right: 5px; ">delete</strong>
+                    </a>
+                    @if (Model.Media.Type == ".mp4")
+                    {
+                        <video style="max-height: 75vh; max-width: 100%" autoplay="autoplay" muted controls="controls" loop class="shadow-1-strong rounded-05" alt="@Model.Media.OriginalFileName">
+                            <source src="@Model.BasePath@Model.Media.FileName?tr=w-1080" type="video/mp4">
+                        </video>
+                    }
+                    else
+                    {
+                        <img style="max-height: 75vh; max-width: 100%" asp-append-version="true" src="@Model.BasePath@Model.Media.FileName?tr=w-1080" class="shadow-1-strong rounded-05" alt="@Model.Media.OriginalFileName"/>
+                    }
+                </div>
                 <div class="empty-veesy"></div>
                 <div class="empty-veesy"></div>
                 <div class="empty-veesy"></div>
@@ -73,7 +78,7 @@
                     
                     <div class="empty-veesy"></div>
                     <div class="col-12 ps-0 pe-0">
-                        <p class="mb-0 text-white"><strong>Media url</strong></p>
+                        <p class="mb-0 text-white"><strong>Full Res Media</strong></p>
                         <p style="cursor: pointer" onclick="OpenImageNewTab('@Url.Action("SingleMedia", "Cloud", new {id = @Model.Media.Code})')" _target="blank" class="grey-link veesy-overflow"><i class="fa-solid fa-arrow-up-right-from-square pe-1"></i>https://beta.veesy.it/cloud/@Model.Media.OriginalFileName</p>
                     </div>
                     

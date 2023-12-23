@@ -55,11 +55,11 @@
                             }
                         }
                         <div>
-                            <h5 style="font-size: 20px !important; line-height: 27px;"><i style="color: #75CCDD" class="@iconBack icon-main-portfolio fa-star me-2"></i><strong class="text-color">@item.Name</strong></h5>
+                            <h5 style="font-size: 20px !important; line-height: 27px;"><a onclick="ChangeMainPortfolio('@item.Code')"><i id="new-main-@item.Code" style="color: #75CCDD" class="@iconBack icon-main-portfolio fa-star me-2"></i></a><strong class="text-color">@item.Name</strong></h5>
                             <div class="empty-veesy"></div>
                             <p class="veesy-text-color" style="margin-bottom: 3rem">Updated on @item.LastUpdate<br/>@item.NumberMedia media uploaded</p>
                         </div>
-                        <a target="_blank" asp-action="PortfolioPreview" asp-controller="Portfolio" asp-area="Portfolio" asp-route-id="@item.Code" class="grey-link">Preview<i class="fa-solid fa-arrow-up-right-from-square ms-2"></i></a>
+                        <a target="_blank" asp-action="PortfolioPreview" asp-controller="Portfolio" asp-area="Portfolio" asp-route-id="@item.Code" asp-route-open="@false" class="grey-link">Preview<i class="fa-solid fa-arrow-up-right-from-square ms-2"></i></a>
                     </div>
                     <div class="col-4 text-end vertical-space">
                         <a onclick="CopyLink('@Model.ApplicationUrl@Url.Action("Portfolio", "Public", new {area = "Public", id = @item.Code})')" class="grey-link ms-2"><i class="fa-regular fa-clone pe-1"></i><strong>Copy link</strong></a>
@@ -142,6 +142,35 @@
                     if(response.result){
                         document.getElementById("portfolio-div-" + portfolioId).style.display = "none";
                         closeModal('#modalDeletePortfolio')
+                    }
+                    $('#load-spinner').css("display", "none");
+                },
+                error: function (response) {
+                    $('#load-spinner').css("display", "none");
+                }
+            })
+        }
+        
+        function ChangeMainPortfolio(id) {
+            var Id = id
+            var IsMain = true
+            var portfolioDto = {Id, IsMain}
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("SetMainPortfolio", "Portfolio")',
+                data: JSON.stringify(portfolioDto),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (response) {
+                    if(response.result){
+                        //document.getElementById("portfolio-main-text").textContent = "This portfolio is set as your main";
+                        //document.getElementById("portfolio-main-text").classList.remove("grey-link")
+                        var icons = document.getElementsByClassName("icon-main-portfolio");
+                        for (let i = 0; i < icons.length; i++){
+                            icons[i].classList.remove("fa-solid")
+                            icons[i].classList.add("fa-regular")
+                        }
+                        document.getElementById("new-main-" + Id).classList.add("fa-solid")
                     }
                     $('#load-spinner').css("display", "none");
                 },

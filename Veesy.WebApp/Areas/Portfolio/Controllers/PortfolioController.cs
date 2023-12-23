@@ -43,12 +43,12 @@ public class PortfolioController : VeesyController
         }
     }
     
-    [HttpGet("portfolio/preview/{id}")]
-    public IActionResult PortfolioPreview(Guid id)
+    [HttpGet("portfolio/preview/{id}/{open}")]
+    public IActionResult PortfolioPreview(Guid id, bool open)
     {
         try
         {
-            var result = _portfolioHelper.GetPortfolioPreviewViewModel(id,UserInfo);
+            var result = _portfolioHelper.GetPortfolioPreviewViewModel(id, open,UserInfo);
             if (!result.result.Success)
             {
                 _notyfService.Custom(result.result.Message, 10 , "#ca0a0a");

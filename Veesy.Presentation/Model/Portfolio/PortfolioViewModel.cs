@@ -11,4 +11,5 @@ public class PortfolioViewModel
     public bool Unlocked { get; set; }
     public string Password { get; set; }
     public int ControlPassword { get; set; }
+    public bool OpenPopup { get; set; }
 }

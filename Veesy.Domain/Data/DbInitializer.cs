@@ -53,9 +53,9 @@ public class DbInitializer
         
         var subscriptionPlans = new List<SubscriptionPlan>()
         {
-            new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Beta", Description = "Beta", Price = 0.0m, AllowedMediaNumber = 20, AllowedMegaByte = 250, IsMediaFormatsInclude = false},
+            new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Beta", Description = "Beta", Price = 0.0m, AllowedMediaNumber = 50, AllowedMegaByte = 250, IsMediaFormatsInclude = false},
             new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Free", Description = "Free", Price = 0.0m, AllowedMediaNumber = 10, AllowedMegaByte = 100, IsMediaFormatsInclude = false},
-            new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Pro", Description = "Pro", Price = 1.0m, AllowedMediaNumber = 50, AllowedMegaByte = 5000, IsMediaFormatsInclude = false},
+            new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Pro", Description = "Pro", Price = 1.0m, AllowedMediaNumber = 100, AllowedMegaByte = 5000, IsMediaFormatsInclude = false},
             new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Plus", Description = "Plus", Price = 2.0m, AllowedMediaNumber = -1, AllowedMegaByte = 10000, IsMediaFormatsInclude = false},
         };
         var dbSubscriptions = dbContext.SubscriptionPlans.ToList();

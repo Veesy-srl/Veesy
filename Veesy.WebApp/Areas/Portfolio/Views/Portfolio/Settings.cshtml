@@ -55,7 +55,7 @@
                 <div class="d-flex"><p class="mb-0 text-grey veesy-overflow">@Model.Portfolio.NumberMedia media uploaded</p></div>
                 <div class="d-flex"><p class="mb-0 mt-3 text-grey veesy-overflow">@Model.Portfolio.NumberImage images</p></div>
                 <div class="d-flex"><p class="mb-0 text-grey veesy-overflow">@Model.Portfolio.NumberVideo videos</p></div>
-                <a target="_blank" asp-action="PortfolioPreview" asp-controller="Portfolio" asp-area="Portfolio" asp-route-id="@Model.Portfolio.Id"  class="rounded-pill btn btn-primary btn-variant w-100 mt-3">preview portfolio</a>
+                <a target="_blank" asp-action="PortfolioPreview" asp-controller="Portfolio" asp-area="Portfolio" asp-route-id="@Model.Portfolio.Id" asp-route-open="@false" class="rounded-pill btn btn-primary btn-variant w-100 mt-3">preview portfolio</a>
             </div>
         </div>
         <div class="col-sm-12 col-md-6">
