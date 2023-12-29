@@ -24,51 +24,45 @@
             <h1 class="h3 mb-2 fw-normal ms-3">
                 @if(ViewContext.RouteData.Values["Controller"].ToString() == "Cloud")
                 {
-                    <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="breadcrumb-a-white text-white navbar-brand" asp-area="Portfolio" asp-controller="Cloud" asp-action="List">
+                    <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="breadcrumb-a-white text-white navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
                         <img class="header-logo-v mr-2">cloud
                     </a>
                 }
                 else if(ViewContext.RouteData.Values["Action"].ToString() == "Contacts"){
-                    <a style="font-size: 22px !important;" role="button" href="" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" >
+                    <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
                         <img class="header-logo mr-2">contacts
                     </a>
                 }
                 else if (ViewContext.RouteData.Values["Action"].ToString() == "Splash")
                 {
-                    <a style="font-size: 22px !important;" role="button" href="" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand">
+                    <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
                         <img class="header-logo mr-2">
                     </a>
                 }
                 else if(ViewContext.RouteData.Values["Action"].ToString() == "About"){
-                    <a style="font-size: 22px !important;" role="button" href="" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" >
+                    <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand"  asp-area="Portfolio" asp-controller="Home" asp-action="Index">
                         <img class="header-logo mr-2">about
                     </a>
                 }
                 else if(ViewContext.RouteData.Values["Action"].ToString() == "Creators"){
-                    <a style="font-size: 22px !important;" role="button" href="" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" >
+                    <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand"  asp-area="Portfolio" asp-controller="Home" asp-action="Index">
                         <img class="header-logo mr-2">creators
                     </a>
                 }else if (ViewContext.RouteData.Values["Controller"].ToString() == "Portfolio")
                 {
-                    <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Portfolio" asp-action="List">
+                    <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
                         <img class="header-logo mr-2">portfolio
                     </a>
                 }else if (ViewContext.RouteData.Values["Action"].ToString() == "Portfolio")
                 {
-                <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Portfolio" asp-action="List">
-                    <img class="header-logo mr-2">portfolio
-                </a>
-                }
-                else if (ViewContext.RouteData.Values["Controller"].ToString() == "Profile")
-                {
                     <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
-                        <img class="header-logo mr-2">desk
+                        <img class="header-logo mr-2">portfolio
                     </a>
                 }
                 else
                 {
                     <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
-                        <img class="header-logo mr-2">dashboard
+                        <img class="header-logo mr-2">desk
                     </a>
                 }
             </h1> 
@@ -166,7 +160,7 @@
                             <li><a href="#" class="float-end fw-bolder my-1 p-2 menu-element font-weight-normal" style="font-size: 25px !important; line-height: 30px !important;" id="color-text" data-target="#description1">Gallery</a></li>
                             <li><a asp-action="Creators" asp-controller="Public" asp-area="Public" class="float-end my-1 fw-bolder p-2 menu-element font-weight-normal" style="font-size: 25px !important; line-height: 30px !important;" id="color-text" data-target="#description2">Creators</a></li>
                             <li><a asp-action="About" asp-controller="Public" asp-area="Public" class="float-end my-1 fw-bolder p-2 menu-element font-weight-normal" style="font-size: 25px !important; line-height: 30px !important;" id="color-text" data-target="#description3">About</a></li>
-                            <li><a href="#" class="float-end fw-bolder my-1 p-2 menu-element font-weight-normal" style="font-size: 25px !important; line-height: 30px !important;" id="color-text" data-target="#description4">Match</a></li>
+                            <li><a href="https://noteforms.com/forms/database-test-owzf1l" class="float-end fw-bolder my-1 p-2 menu-element font-weight-normal" style="font-size: 25px !important; line-height: 30px !important;" id="color-text" data-target="#description4">Match</a></li>
                             <li><a asp-action="Contacts" asp-controller="Public" asp-area="Public" class="float-end my-1 fw-bolder p-2 menu-element font-weight-normal" style="font-size: 25px !important; line-height: 30px !important;" id="color-text" data-target="#description6">Contact</a></li>
                         </ul>
                     </div>
