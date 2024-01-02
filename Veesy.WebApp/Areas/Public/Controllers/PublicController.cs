@@ -31,7 +31,7 @@ public class PublicController : VeesyController
         _signInManager = signInManager;
     }
     
-    [HttpGet("Contacts")]
+    [HttpGet("contacts")]
     public IActionResult Contacts()
     {
         try
@@ -45,7 +45,7 @@ public class PublicController : VeesyController
         }
     }
     
-    [HttpGet("CookiesPolicy")]
+    [HttpGet("cookies-policy")]
     public IActionResult CookiesPolicy()
     {
         try
@@ -91,7 +91,7 @@ public class PublicController : VeesyController
         }
     }
     
-    [HttpGet("Creators")]
+    [HttpGet("creators")]
     public IActionResult Creators()
     {
         try
@@ -106,7 +106,7 @@ public class PublicController : VeesyController
         }
     } 
     
-    [HttpPost("FilterCreators")]
+    [HttpPost]
     public async Task<JsonResult> FilterCreators([FromBody] CategoryDto Category)
     {
         try
@@ -125,7 +125,7 @@ public class PublicController : VeesyController
         }
     }
     
-    [HttpGet("About")]
+    [HttpGet("about")]
     public IActionResult About()
     {
         try

@@ -30,7 +30,7 @@ public class PublicHelper
         List.ApplicationUrl = _config["ApplicationUrl"];
         List.BasePath = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/";
         List.BasePathImages = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/";
-        List.MediaList = UserList.Select(item => item.Medias[0].FileName).ToList();
+        List.MediaList = UserList.Select(item => item.Portfolios[0].PortfolioMedias.FirstOrDefault(s => MediaCostants.ImageExtensions.Contains(s.Media.Type.ToUpper())).Media.FileName).ToList();
         List.MediaUser = UserList.Select(item => item.ProfileImageFileName).ToList();
         List.Usernames = UserList.Select(item => item.UserName).ToList();
         List.Id = UserList.Select(item => item.Id).ToList();

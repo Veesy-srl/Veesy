@@ -31,7 +31,17 @@
     </div>
     <div class="row pt-4 ps-2 pe-2">
         <div class="h-100 mt-2 col-sm-12 col-md-4">
-            <div class="bg-white-about card-header d-flex veesy-card-top">
+            @{
+                var cssHeader = "";
+                var cssBody = "";
+
+                if (Model.Subscription != null && (Model.Subscription.Name == VeesyConstants.SubscriptionPlan.Free || Model.Subscription.Name == VeesyConstants.SubscriptionPlan.Beta))
+                {
+                    cssHeader = "veesy-card-top";
+                    cssBody = "veesy-card-bottom";
+                }
+            }
+            <div class="bg-white-about card-header d-flex @cssHeader" style="border-radius: 8px 8px 0px 0px; border-bottom: none">
                 <div class="col-11">
                     <p class="mb-0 mt-1">
                         @if (Model.Subscription != null && (Model.Subscription.Name == VeesyConstants.SubscriptionPlan.Free || Model.Subscription.Name == VeesyConstants.SubscriptionPlan.Beta))
@@ -44,9 +54,9 @@
                     <i class="fa-solid fa-circle fa-2xs" style="color: #75CCDD;"></i>
                 </div>
             </div>
-            <div class="card-body bg-white-about veesy-card-bottom"> 
+            <div class="card-body bg-white-about @cssBody" style="border-radius: 0px 0px 8px 8px;"> 
                 <div class="d-flex justify-content-between mt-3">
-                    <h2 class="text-color-price" style="font-size: 1.7rem;"><b>Starter plan</b></h2>
+                    <h2 class="text-color-price" style="font-size: 1.7rem;"><b>Basic plan</b></h2>
                     <h6 class="text-color-price" style="margin-top: 0.4rem;"><b>Free forever</b></h6>
                 </div>
                 <h6 class="text-color-price p-1 ps-2 pe-2 card-price" style="font-size: 14px !important;"><b>Starter's Choice</b></h6>
@@ -285,7 +295,9 @@
                         </div>
                     </div>
                     <hr style="width: 95%; border: 1px solid grey; margin: 0 auto;">
-                    <div class="col-12"><button class="rounded-pill mt-2 btn btn-white w-100" style="font-size: 14px; color:  #74CBDC" type="submit">coming soon</button></div>
+                    <div class="col-12 text-center">
+                        <p class="mt-4">coming soon</p>
+                    </div>
                 </div>
             </div>
         </div>

@@ -26,8 +26,7 @@ public class HomeController : VeesyController
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            throw;
+            return RedirectToAction("Error400", "Public", new { area = "Public" });
         }
     }
 
