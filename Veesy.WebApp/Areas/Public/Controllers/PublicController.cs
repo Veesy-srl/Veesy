@@ -59,6 +59,20 @@ public class PublicController : VeesyController
         }
     }
     
+    [HttpGet("ProvacyPolicy")]
+    public IActionResult PrivacyPolicy()
+    {
+        try
+        {
+            return View();
+        }
+        catch (Exception e)
+        {
+            Logger.Error(e, e.Message);
+            return RedirectToAction("Index", "Home");
+        }
+    }
+    
     [HttpGet]
     public IActionResult Splash()
     {
