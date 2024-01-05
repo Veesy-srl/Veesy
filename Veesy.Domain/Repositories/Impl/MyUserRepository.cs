@@ -155,51 +155,19 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
     
     public List<MyUser> GetOnlyRandomUserWithImage(int count)
     {
-        var random = new Random();
-        
-        var usersWithAllPortfolios = _applicationDbContext.MyUsers
+        var user =  _applicationDbContext.MyUsers
             .Where(u => u.ProfileImageFileName != null)
-            .Include(t => t.Medias)
-            .Include(p => p.Portfolios)
-            .Where(u => u.Portfolios.Any(p => p.IsMain && p.IsPublic && p.Status == 1))
+            .Include(p => p.Portfolios.Where(s => s.IsMain && s.IsPublic && s.Status == 1))
+            .ThenInclude(s => s.PortfolioMedias)
+            .ThenInclude(s => s.Media)
+            .Where(u => u.Portfolios != null && u.Portfolios.Count > 0)
             .ToList();
-
-        usersWithAllPortfolios.ForEach(user =>
-        {
-            var filteredPortfolios = user.Portfolios
-                .Where(p => p.IsMain && p.IsPublic && p.Status == 1)
-                .ToList();
-
-            var validPortfolioIds = filteredPortfolios.Select(p => p.Id).ToList();
-
-            user.Portfolios.RemoveAll(p => !validPortfolioIds.Contains(p.Id));
-
-            var validMediaIds = _applicationDbContext.PortfolioMedias
-                .Where(pm => validPortfolioIds.Contains(pm.PortfolioId))
-                .Select(pm => pm.MediaId)
-                .ToList();
-
-            user.Medias.RemoveAll(media => !validMediaIds.Contains(media.Id));
-        });
-
-        usersWithAllPortfolios.RemoveAll(user => user.Portfolios.Count == 0);
         
-        var randomUsers = usersWithAllPortfolios.OrderBy(u => random.Next()).Take(count).ToList();
-        
-        var usersWithRandomMedia = randomUsers.Select(user =>
-        {
-            if (user.Medias != null && user.Medias.Any())
-            {
-                int randomMediaIndex = random.Next(user.Medias.Count);
-                if (user.Medias[randomMediaIndex].Type != ".mp4")
-                {
-                    user.Medias = new List<Media> { user.Medias[randomMediaIndex] };
-                }
-            }
-            return user;
-        }).ToList();
-
-        return usersWithRandomMedia;
+        return user.Where(s => s.Portfolios.Count > 0 &&
+                s.Portfolios[0].PortfolioMedias.Any(s => MediaCostants.ImageExtensions.Contains(s.Media.Type.ToUpper())))
+            .OrderBy(s => Guid.NewGuid())
+            .Take(count)
+            .ToList();
     }
 
     public List<MyUser> GetAllUsersWithMainPortfolio()

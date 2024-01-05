@@ -82,7 +82,14 @@
                         <h2 class="text-white"><strong>@Model.Subscription.Name</strong></h2>
                     </div>
                     <div>
-                        <h3 class="mb-0 text-white">@Model.Subscription.Price.ToString("0")€ /month</h3>
+                        @if (@Model.Subscription.Price > 10)
+                        {
+                            <h3 class="mb-0 text-white">@Model.Subscription.Price.ToString("0")€ /month</h3>
+                        }
+                        else
+                        {
+                            <h3 class="mb-0 text-white">free forever</h3>
+                        }
                         <h3 class="text-white">max. @Model.Subscription.AllowedMediaNumber media</h3>
                         <div class="ms-2 mb-3 mt-3"><a asp-action="PricingPlan" asp-controller="Public" asp-area="Public" class="a-font-p grey-link-underline" type="submit">view plans</a></div>
                     </div>
@@ -151,7 +158,7 @@
                         <a asp-controller="Portfolio" asp-action="Settings" asp-route-id="@Model.PortfolioThumbnailDto.Code" asp-area="Portfolio" class="grey-link ms-2"><i class="fa-regular fa-pen-to-square pe-1"></i>edit main portfolio</a>
                     }
                 </div>
-                <div class="col-6 text-end"><a asp-controller="Portfolio" asp-action="List" asp-area="Portfolio" class="w-100 rounded-pill btn btn-primary a-font-p" type="submit">Your Portfolios</a></div>
+                <div class="col-6 text-end"><a asp-controller="Portfolio" asp-action="List" asp-area="Portfolio" class="w-100 rounded-pill btn btn-primary a-font-p" type="submit">your portfolios</a></div>
             </div>
         </div>
     </div>
