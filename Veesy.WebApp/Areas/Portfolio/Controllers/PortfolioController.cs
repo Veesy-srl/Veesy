@@ -39,7 +39,7 @@ public class PortfolioController : VeesyController
         {
             Logger.Error(e, e.Message);
             _notyfService.Custom("Error retrieving portfolios. Please retry.", 10 , "#ca0a0a");
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Error400", "Public", new { area = "Public" });
         }
     }
     
@@ -52,7 +52,7 @@ public class PortfolioController : VeesyController
             if (!result.result.Success)
             {
                 _notyfService.Custom(result.result.Message, 10 , "#ca0a0a");
-                return RedirectToAction("Index", "Home", new { area = "Portfolio" });
+                return RedirectToAction("Error400", "Public", new { area = "Public" });
             }
             return View(result.model);
         }
@@ -60,7 +60,7 @@ public class PortfolioController : VeesyController
         {
             Logger.Error(e, e.Message);
             _notyfService.Custom("Error retrieving portfolios. Please retry.", 10 , "#ca0a0a");
-            return RedirectToAction("Index", "Home", new { area = "Portfolio" });
+            return RedirectToAction("Error400", "Public", new { area = "Public" });
         }
     }
     
@@ -76,7 +76,7 @@ public class PortfolioController : VeesyController
         {
             Logger.Error(ex, ex.Message);
             _notyfService.Custom("Error retrieving portfolio settings. Please retry.", 10 , "#ca0a0a");
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Error400", "Public", new { area = "Public" });
         }
     }
     

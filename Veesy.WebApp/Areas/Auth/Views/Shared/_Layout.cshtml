@@ -19,9 +19,12 @@
                <div class="container-fluid">
                    
                    <h1 class="h3 mb-2 fw-normal ms-3">
-                       <div class="navbar-brand d-inline-flex" asp-area="Public" asp-controller="Public" asp-action="Splash"><img class="header-logo-auth mr-2" style="width: 75px; height: 25px; margin-top:  10px;"/>
-                           <h5 id="loginLink" style="font-size: 22px !important;"  class="text-white fw-normal">&nbsplogin</h5>
-                           <h5 id="signupLink" style="font-size: 22px !important;"  class="text-white fw-normal">&nbspsign up</h5>
+                       <div class="navbar-brand d-inline-flex" asp-area="Public" asp-controller="Public" asp-action="Splash">
+                           <a asp-area="Public" asp-controller="Public" asp-action="Splash">
+                                <img class="header-logo-auth mr-2" style="width: 75px; height: 25px; margin-top:  10px;"/>
+                           </a>
+                           <h5 id="loginLink" style="font-size: 22px !important;" class="text-white fw-normal">&nbsplogin</h5>
+                           <h5 id="signupLink" style="font-size: 22px !important;" class="text-white fw-normal">&nbspsign up</h5>
                        </div>
                    </h1>
                    <div style="margin-right: 5px !important; padding-right: 0px !important;"  class="float-end mb-2">
@@ -131,8 +134,8 @@
                 <div class="text-color">
                     <a asp-action="About" asp-controller="Public" asp-area="Public" >About</a><br/>
                     <a asp-action="PricingPlan" asp-controller="Public" asp-area="Public">Plans & Pricing</a><br/>
-                    <a href="#">FAQ</a><br/>
-                    <a href="#">Log In</a>
+                    <a asp-action="Error400" asp-controller="Public" asp-area="Public" >FAQ</a><br/>
+                    <a asp-action="Login" asp-controller="Auth" asp-area="Auth">Log In</a>
                 </div>
             </div>
             <div class="col-md-3 mt-3 mt-md-5 veesy-text-color" >
@@ -140,9 +143,9 @@
                     <div class=" mb-4 d-inline-flex"><b>LEGAL</b></div> 
                 </h4>
                 <div class="text-color">
-                    <a href="#">Privacy Policy</a><br/>
+                    <a asp-action="PrivacyPolicy" asp-controller="Public" asp-area="Public">Privacy Policy</a><br/>
                     <a asp-action="CookiesPolicy" asp-controller="Public" asp-area="Public">Cookies Policy</a><br/>
-                    <a href="#">Community Rules</a>
+                    <a asp-action="Error400" asp-controller="Public" asp-area="Public">Community Rules</a>
                 </div>
             </div>
             <div class="col-md-3 mt-3 mt-md-5 mb-4 veesy-text-color" >

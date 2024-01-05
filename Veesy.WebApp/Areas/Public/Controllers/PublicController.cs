@@ -41,7 +41,7 @@ public class PublicController : VeesyController
         catch (Exception e)
         {
             Logger.Error(e, e.Message);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Error400");
         }
     }
     
@@ -55,7 +55,7 @@ public class PublicController : VeesyController
         catch (Exception e)
         {
             Logger.Error(e, e.Message);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Error400");
         }
     }
     
@@ -69,7 +69,7 @@ public class PublicController : VeesyController
         catch (Exception e)
         {
             Logger.Error(e, e.Message);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Error400");
         }
     }
     
@@ -87,7 +87,7 @@ public class PublicController : VeesyController
         catch (Exception e)
         {
             Logger.Error(e, e.Message);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Error400");
         }
     }
     
@@ -101,7 +101,7 @@ public class PublicController : VeesyController
         catch (Exception e)
         {
             Logger.Error(e, e.Message);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Error400");
         }
     }
     
@@ -116,7 +116,7 @@ public class PublicController : VeesyController
         catch (Exception e)
         {
             Logger.Error(e, e.Message);
-            return RedirectToAction("Index", "Home", new { area = "Portfolio" });
+            return RedirectToAction("Error400");
         }
     } 
     
@@ -150,7 +150,7 @@ public class PublicController : VeesyController
         catch (Exception e)
         {
             Logger.Error(e, e.Message);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Error400");
         }
     }
     
@@ -166,7 +166,7 @@ public class PublicController : VeesyController
         catch (Exception e)
         {
             Logger.Error(e, e.Message);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Error400");
         }
     }
 
