@@ -7,45 +7,45 @@
 
 <div class="padding-lg pt-7rem">
     <div class="row pt-4 p-4-lg">
-    <div class="col-sm-12 col-md-8 mb-3">
-        <h1 class="text-color">@Model.PortfolioDto.PortfolioIntro</h1>
-        <div class="empty-veesy"></div>
-        <div class="empty-veesy"></div>
-        <h1 style="font-size: 20px !important; line-height: 27px !important;"><strong class="text-color">@Model.PortfolioDto.UserFullName</strong></h1>
-        <p class="text-color">@Model.PortfolioDto.UserCategory</p>
-    </div>
-    <div class="col-sm-12 col-md-4 mb-3 nodisplay-sm">
-        <div class="text-end">
-            <h3 class="text-color" style="font-size: 20px !important; line-height:  27px !important;"><strong>Interested in my work?</strong></h3>
-            <button onclick="location.href='mailto:@Model.PortfolioDto.UserEmail';"  class="rounded-pill btn-primary btn-variant mt-2" style="font-size: 15px !important; line-height:  22px !important;">contact me</button>
+        <div class="col-sm-12 col-md-8 mb-3">
+            <h1 class="text-color">@Model.PortfolioDto.PortfolioIntro</h1>
+            <div class="empty-veesy"></div>
+            <div class="empty-veesy"></div>
+            <h1 style="font-size: 20px !important; line-height: 27px !important;"><strong class="text-color">@Model.PortfolioDto.UserFullName</strong></h1>
+            <p class="text-color">@Model.PortfolioDto.UserCategory</p>
+        </div>
+        <div class="col-sm-12 col-md-4 mb-3 nodisplay-sm">
+            <div class="text-end">
+                <h3 class="text-color" style="font-size: 20px !important; line-height:  27px !important;"><strong>Interested in my work?</strong></h3>
+                <button onclick="location.href='mailto:@Model.PortfolioDto.UserEmail';"  class="rounded-pill btn-primary btn-variant mt-2" style="font-size: 15px !important; line-height:  22px !important;">contact me</button>
+            </div>
         </div>
     </div>
-</div>
 
 
-<div class="row mx-2">
-    <div class="card-columns draggable-zone" id="images-container">
-        @{
-            foreach (var image in Model.PortfolioDto.PortfolioMedias)
-            {
-                @if (MediaCostants.ImageExtensions.Contains(image.Media.Type.ToUpper()))
+    <div class="row mx-2">
+        <div class="card-columns draggable-zone" id="images-container">
+            @{
+                foreach (var image in Model.PortfolioDto.PortfolioMedias)
                 {
-                    <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.MediaId', false)" class="draggable" name="image-gallery" mediaid="@image.MediaId">
-                        <img title="@image.Media.OriginalFileName" class="img-fluid lazy rounded-05 w-100 mt-3" data-src="@Model.BasePathImages@image.Media.FileName?tr=w-1080" />
-                    </div>
-                }
-                else
-                {
-                    <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.MediaId', true)" class="draggable" name="image-gallery">
-                        <video autoplay="autoplay" muted loop class="w-100 shadow-1-strong rounded-05 mt-3" title="@image.Media.OriginalFileName">
-                          <data-src src="@Model.BasePathImages@image.Media.FileName?tr=w-1080" type="video/mp4"></data-src>
-                        </video>
-                    </div>
+                    @if (MediaCostants.ImageExtensions.Contains(image.Media.Type.ToUpper()))
+                    {
+                        <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.MediaId', false)" class="draggable" name="image-gallery" mediaid="@image.MediaId">
+                            <img title="@image.Media.OriginalFileName" class="img-fluid lazy rounded-05 w-100 mt-3" data-src="@Model.BasePathImages@image.Media.FileName?tr=w-1080" />
+                        </div>
+                    }
+                    else
+                    {
+                        <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.MediaId', true)" class="draggable" name="image-gallery">
+                            <video autoplay="autoplay" muted loop class="w-100 shadow-1-strong rounded-05 mt-3" title="@image.Media.OriginalFileName">
+                              <data-src src="@Model.BasePathImages@image.Media.FileName?tr=w-1080" type="video/mp4"></data-src>
+                            </video>
+                        </div>
+                    }
                 }
             }
-        }
+        </div>
     </div>
-</div>
 </div>
 
 <div class="empty-veesy"></div>
@@ -93,7 +93,7 @@
                             <div id="text-overlay" class="text-overlay text-start p-4 rounded-05 mt-1">
                                 <div class="row">
                                     <div class="col-10">
-                                        <p class="text-white"><strong>Image Credits</strong></p>
+                                        <p class="text-white"><strong>IMAGE CREDITS</strong></p>
                                         <p id="credit-text" class="text-white">Lorem ipsum: dolor sit amet. Consectetur: adipiscing elit. Quisque: lobortis efficitur erat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eu mattis lectus. Aenean eget elit ornare, pulvinar nulla et, tempor ligula. 2023© all rights reserved</p>
                                     </div>
                                 </div>
@@ -224,9 +224,6 @@
 
 @section Scripts
 {
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.plugins.min.js"></script>
-
     <script>
         
         function ShowOverlay(add) {

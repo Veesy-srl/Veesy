@@ -32,4 +32,5 @@ public interface IMyUserRepository : IRepositoryBase<MyUser>
     public List<MyUser> GetOnlyRandomUserWithImage(int count);
     public List<MyUser> GetAllUsersWithMainPortfolio();
 
+    List<Media> GetRandomMedia(int count);
 }

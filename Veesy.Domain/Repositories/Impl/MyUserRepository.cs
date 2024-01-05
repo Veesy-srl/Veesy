@@ -190,5 +190,29 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
 
         return users;
     }
-    
+
+    public List<Media> GetRandomMedia(int count)
+    {
+        var portfolios =  _applicationDbContext.Portfolios
+            .Include(s => s.PortfolioMedias)
+            .ThenInclude(s => s.Media)
+            .Include(s => s.MyUser)
+            .Where(s => s.IsMain && s.IsPublic && s.Status == 1)
+            .OrderBy(s => new Guid())
+            .ToList();
+        var countPerAuthor = count / portfolios.Count;
+        var random = new Random();
+        var result = new List<PortfolioMedia>();
+
+        foreach (var group in portfolios)
+        {
+            var randomItems = group.PortfolioMedias.OrderBy(item => random.Next()).Take(countPerAuthor);
+            result.AddRange(randomItems);
+        }
+
+        var resultMedia = result.Select(s => s.Media).ToList();
+        resultMedia.ForEach(s => s.MyUser.Portfolios = null);
+        resultMedia.ForEach(s => s.MyUser.Medias = null);
+        return resultMedia;
+    }
 }

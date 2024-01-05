@@ -12,6 +12,7 @@ public class MediaDto
     public string Type { get; set; }
     public string UploadDate { get; set; }
     public string? Credits { get; set; }
+    public MyUser? Owner { get; set; }
     public bool? IsVideo => !string.IsNullOrEmpty(Type) ? MediaCostants.VideoExtensions.Contains(Type.ToUpper()) : null;
 }
 
@@ -60,7 +61,8 @@ public static class MapCloudDtos
             Size = x.Size,
             Type = x.Type,
             Credits = x.Credits,
-            UploadDate = x.CreateRecordDate.ToString("dd/MM/yyyy hh.mm")
+            UploadDate = x.CreateRecordDate.ToString("dd/MM/yyyy hh.mm"),
+            Owner = x.MyUser != null ? x.MyUser : null
         }).ToList();
     }
     
@@ -77,7 +79,8 @@ public static class MapCloudDtos
             Size = media.Size,
             Type = media.Type,
             Credits = media.Credits,
-            UploadDate = media.CreateRecordDate.ToString("dd/MM/yyyy hh.mm")
+            UploadDate = media.CreateRecordDate.ToString("dd/MM/yyyy hh.mm"),
+            Owner = media.MyUser != null ? media.MyUser : null
         };
     }
 }

@@ -120,6 +120,21 @@ public class PublicController : VeesyController
         }
     } 
     
+    [HttpGet("gallery")]
+    public IActionResult Gallery()
+    {
+        try
+        {
+            var vm = _publicHelper.GetGalleryViewModel();
+            return View(vm);
+        }
+        catch (Exception e)
+        {
+            Logger.Error(e, e.Message);
+            return RedirectToAction("Index", "Home", new { area = "Portfolio" });
+        }
+    } 
+    
     [HttpPost]
     public async Task<JsonResult> FilterCreators([FromBody] CategoryDto Category)
     {

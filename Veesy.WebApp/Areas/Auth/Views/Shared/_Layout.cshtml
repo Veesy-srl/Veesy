@@ -58,7 +58,7 @@
                        <div class="container center-content-menu">
                            <div class="menu-list">
                                <ul class="list-unstyled">
-                                   <li><a href="#" class="float-end fw-bolder my-1 p-2 menu-element font-weight-normal" style="font-size: 25px !important; line-height: 30px !important;" id="color-text" data-target="#description1">Gallery</a></li>
+                                   <li><a asp-area="Public" asp-controller="Public" asp-action="Gallery"  class="float-end fw-bolder my-1 p-2 menu-element font-weight-normal" style="font-size: 25px !important; line-height: 30px !important;" id="color-text" data-target="#description1">Gallery</a></li>
                                    <li><a asp-action="Creators" asp-controller="Public" asp-area="Public" class="float-end my-1 fw-bolder p-2 menu-element font-weight-normal" style="font-size: 25px !important; line-height: 30px !important;" id="color-text" data-target="#description2">Creators</a></li>
                                    <li><a asp-action="About" asp-controller="Public" asp-area="Public" class="float-end my-1 fw-bolder p-2 menu-element font-weight-normal" style="font-size: 25px !important; line-height: 30px !important;" id="color-text" data-target="#description3">About</a></li>
                                    <li><a asp-action="Profile" asp-controller="Profile" asp-area="Account" class="float-end my-1 fw-bolder p-2 menu-element font-weight-normal" style="font-size: 25px !important; line-height: 30px !important;" id="color-text" data-target="#description5">Profile</a></li>
@@ -81,7 +81,7 @@
                        <div class="menu-footer">
                            <a asp-action="PrivacyPolicy" asp-controller="Public" asp-area="Public" id="color-text-v">privacy policy</a>
                            <a asp-action="CookiesPolicy" asp-controller="Public" asp-area="Public" class="cookie" id="color-text-v" >cookie policy</a><br/>
-                           <p style="font-size: 14px !important;" href="#" class="copyright option-font-14" id="color-text-footer">Veesy © 2023 all rights reserved - made with love by <a target="_blank" href="https://www.derein.net/" style="color: #202F4D">derein</a> & <a target="_blank" href="https://www.enigma-tech.it/" style="color: #202F4D">enigma</a> - VAT nr. 13005470961</p>
+                           <p style="font-size: 14px !important;" href="#" class="copyright option-font-14" id="color-text-footer">Veesy © @DateTime.Now.Year all rights reserved - made with love by <a target="_blank" href="https://www.derein.net/" style="color: #202F4D">derein</a> & <a target="_blank" href="https://www.enigma-tech.it/" style="color: #202F4D">enigma</a> - VAT nr. 13005470961</p>
                        </div>
                    </div>
 

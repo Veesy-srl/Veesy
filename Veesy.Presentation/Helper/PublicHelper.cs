@@ -4,6 +4,7 @@ using Veesy.Domain.Constants;
 using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
 using Veesy.Presentation.Model.Cloud;
+using Veesy.Presentation.Model.Public;
 using Veesy.Service.Dtos;
 using Veesy.Service.Interfaces;
 
@@ -76,6 +77,18 @@ public class PublicHelper
         var vm = new SubscritionPlanViewModel()
         {
             Subscription = _accountService.GetUserSubscriptionPlan(userInfo.Id)
+        };
+        return vm;
+    }
+
+    public GalleryViewModel GetGalleryViewModel()
+    {
+
+        var vm = new GalleryViewModel()
+        {
+            MediaDtos = MapCloudDtos.MapMediaList(_mediaService.GetRandomMedia(50)),
+            BasePathImages = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/",
+            BasePathAzure = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"
         };
         return vm;
     }
