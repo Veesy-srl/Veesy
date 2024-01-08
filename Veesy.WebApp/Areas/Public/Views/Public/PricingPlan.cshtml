@@ -1,0 +1,359 @@
+﻿@using Veesy.Domain.Constants
+@model Veesy.Presentation.Model.Cloud.SubscritionPlanViewModel
+@{
+    ViewData["Title"] = "Plans Pricing";
+}
+<div class="padding-lg pt-7rem">
+    <div class="row pt-4 p-4-lg">
+        <div class="col-sm-12 col-md-3 mb-3">
+            <nav class="breadcrumb-container" aria-label="Percorso di navigazione">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><img class="home-img me-2"><a class="a-font-p breadcrumb-a me-2" asp-action="Index" asp-area="Portfolio" asp-controller="Home">desk</a><img class="icon-svg-derein-option"></li>
+                    <li class="breadcrumb-item"><a class="breadcrumb-a a-font-p" href="#"><strong>plans & pricing</strong></a></li>
+                </ol>
+            </nav>
+        </div>
+        <div class="col-sm-12 col-md-6">
+            <h2 class="text-color"><strong>Plans & Pricing</strong></h2>
+            <p class="mb-2 mt-2 text-color">Your art, your way. Dive into the world of Veesy where your creative vision is limitless. Select the plan that suits you best and start shaping your future today.</p>
+        </div>
+        <div class="col-sm-12 col-md-3 pe-0">
+            <div class="empty-veesy"></div>
+            <div class="empty-veesy"></div>
+            <div class="d-flex justify-content-end ps-3">
+                <div class="w-75-veesy card-blue-veesy">
+                    <div class="text-end"><i class="fa-solid fa-circle fa-2xs" style="color: #ffffff;"></i></div>
+                    <p class="mb-0 text-white" >Do you need some help?</p>
+                    <a class="a-ciano-underline" href="mailto:support@veesy.it">Contact us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-4 ps-2 pe-2">
+        <div class="h-100 mt-2 col-sm-12 col-md-4">
+            @{
+                var cssHeader = "";
+                var cssBody = "";
+
+                if (Model.Subscription != null && (Model.Subscription.Name == VeesyConstants.SubscriptionPlan.Free || Model.Subscription.Name == VeesyConstants.SubscriptionPlan.Beta))
+                {
+                    cssHeader = "veesy-card-top";
+                    cssBody = "veesy-card-bottom";
+                }
+            }
+            <div class="bg-white-about card-header d-flex @cssHeader" style="border-radius: 8px 8px 0px 0px; border-bottom: none">
+                <div class="col-11">
+                    <p class="mb-0 mt-1">
+                        @if (Model.Subscription != null && (Model.Subscription.Name == VeesyConstants.SubscriptionPlan.Free || Model.Subscription.Name == VeesyConstants.SubscriptionPlan.Beta))
+                        {
+                            <strong class="text-color-price" style="font-size: 14px;">YOUR PLAN</strong>
+                        }
+                    </p>
+                </div>
+                <div class="col-1 text-end">
+                    <i class="fa-solid fa-circle fa-2xs" style="color: #75CCDD;"></i>
+                </div>
+            </div>
+            <div class="card-body bg-white-about @cssBody" style="border-radius: 0px 0px 8px 8px;"> 
+                <div class="d-flex justify-content-between mt-3">
+                    <h2 class="text-color-price" style="font-size: 1.7rem;"><b>Basic plan</b></h2>
+                    <h6 class="text-color-price" style="margin-top: 0.4rem;"><b>Free forever</b></h6>
+                </div>
+                <h6 class="text-color-price p-1 ps-2 pe-2 card-price" style="font-size: 14px !important;"><b>Starter's Choice</b></h6>
+                <div class="row pt-2">
+                    <p class="mb-4 mt-2 text-color-price">Ideal for those embarking on their creative journey, offering essential tools and access.</p>
+                    <hr style="width: 95%; border: 1px solid grey; margin: 0 auto;">
+                    <div class="container mt-2">
+                        <div class="d-flex justify-content-between" style="cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#Collapse0" aria-expanded="false">
+                            <p class="text-color-price w-100 p-variant-price" style="margin-bottom: 5px;"><b>Cloud Space</b></p>
+                            <div class="circle">
+                                <i class="fa-sharp fa-regular fa-plus fa-xs" style="color: white;"></i>
+                            </div>
+                        </div>
+                        <div class="collapse" id="Collapse0">
+                            <p class="text-color-price p-variant-price">Store up to 10 medias in your personal cloud.</p>
+                        </div>
+                    </div>
+                    <hr style="width: 95%; border: 1px solid grey; margin: 0 auto;">
+                    <div class="container mt-2">
+                        <div class="d-flex justify-content-between" style="cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#Collapse1" aria-expanded="false">
+                            <p class="text-color-price w-100 p-variant-price" style="margin-bottom: 5px;"><b>Portfolio</b></p>
+                            <div class="circle">
+                                <i class="fa-sharp fa-regular fa-plus fa-xs" style="color: #F3F3F3;"></i>
+                            </div>
+                        </div>
+                        <div class="collapse" id="Collapse1">
+                            <p class="text-color-price p-variant-price">Create one portfolio to showcase your initial works.</p>
+                        </div>
+                    </div>
+                    <hr style="width: 95%; border: 1px solid grey; margin: 0 auto;">
+                    <div class="container mt-2">
+                        <div class="d-flex justify-content-between" style="cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#Collapse2" aria-expanded="false">
+                            <p class="text-color-price w-100 p-variant-price" style="margin-bottom: 5px;"><b>Discord Community Access</b></p>
+                            <div class="circle">
+                                <i class="fa-sharp fa-regular fa-plus fa-xs" style="color: #F3F3F3;"></i>
+                            </div>
+                        </div>
+                        <div class="collapse" id="Collapse2">
+                            <p class="text-color-price p-variant-price">Join Veesy’s Discord for networking and discussion.</p>
+                        </div>
+                    </div>
+                    <hr style="width: 95%; border: 1px solid grey; margin: 0 auto;">
+                    <div class="container mt-2">
+                        <div class="d-flex justify-content-between" style="cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#Collapse3" aria-expanded="false">
+                            <p class="text-color-price w-100 p-variant-price" style="margin-bottom: 5px;"><b>Resource Access</b></p>
+                            <div class="circle">
+                                <i class="fa-sharp fa-regular fa-plus fa-xs" style="color: #F3F3F3;"></i>
+                            </div>
+                        </div>
+                        <div class="collapse" id="Collapse3">
+                            <p class="text-color-price p-variant-price">Gain access to a selection of Veesy’s creative resources.</p>
+                        </div>
+                    </div>
+                    <hr style="width: 95%; border: 1px solid grey; margin: 0 auto;">
+                    @if (Model.Subscription != null && (Model.Subscription.Name == VeesyConstants.SubscriptionPlan.Pro || Model.Subscription.Name == VeesyConstants.SubscriptionPlan.Plus))
+                    {
+                        <div class="col-12 pt-2"><a onclick="openModal('#modalChangeSubscription'), SetSubscription('@VeesyConstants.SubscriptionPlan.Free')" class="rounded-pill mt-4 mb-3 btn btn-primary w-100" style="font-size: 14px;" type="submit">downgrade</a></div>
+                    }
+                    else if (Model.Subscription == null)
+                    {
+                        <div class="col-12 pt-2"><a asp-action="Signup" asp-controller="Auth" asp-area="Auth" class="rounded-pill mt-4 mb-3 btn btn-primary w-100" style="font-size: 14px;" type="submit">subscribe</a></div>
+                    }
+                </div>
+                        
+            </div>
+        </div>
+        <div class="h-100 mt-2 col-sm-12 col-md-4">
+            <div class="card" id="grad-price" style="border: none; border-radius: 8px;">
+                <div class="card-header d-flex veesy-card-top" style="border:none !important; background-color: transparent;">
+                    <div class="col-11">
+                        <p class="mb-0 mt-1">
+                            @if (Model.Subscription != null && (Model.Subscription.Name == VeesyConstants.SubscriptionPlan.Pro))
+                            {
+                                <strong class="text-color-price-white" style="font-size: 14px;">YOUR PLAN</strong>
+                            }
+                        </p>
+                    </div>
+                    <div class="col-1 text-end">
+                        <i class="fa-solid fa-circle fa-2xs" style="color: #ffffff;"></i>
+                    </div>
+                </div>
+                <div class="card-body veesy-card-bottom" style="border:none !important;">
+                    <div class="d-flex justify-content-between mt-3">
+                        <h2 style=" color: #ffffff; font-size: 1.7rem;"><b>Pro Plan</b></h2>
+                        <h6 style="color: #ffffff; margin-top: 0.4rem;"><b>€ 10/month</b></h6>
+                    </div>
+                    <h6 class="text-color-price p-1 ps-2 pe-2 card-price" style="font-size: 14px !important;"><img class="me-1" src="/imgs/PricingPlan/main_checked.png"/><b>Most Popular</b></h6>
+                    <div class="row pt-2">
+                        <p class="mb-4 mt-2" style="color: #ffffff;">Designed for creative professionals seeking advanced features, tailored matching and expanded network access.</p>
+                        <hr style="width: 95%; border: 1px solid #ffffff; margin: 0 auto;">
+                        <div class="container mt-2">
+                            <div class="d-flex justify-content-between" style="cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#Collapse4" aria-expanded="false">
+                                <p class=" w-100 p-variant-price" style="color: white; margin-bottom: 5px;"><b>Increased Cloud Storage</b></p>
+                                <div class="circle">
+                                    <i class="fa-sharp fa-regular fa-plus fa-xs" style="color: white;"></i>
+                                </div>
+                            </div>
+                            <div class="collapse" id="Collapse4">
+                                <p style="color: #ffffff;" class="p-variant-price">Manage up to 100 medias for diverse projects.</p>
+                            </div>
+                        </div>
+                        <hr style="width: 95%; border: 1px solid #ffffff; margin: 0 auto;">
+                        <div class="container mt-2">
+                            <div class="d-flex justify-content-between" style="cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#Collapse5" aria-expanded="false">
+                                <p class=" w-100 p-variant-price" style="color: #ffffff; margin-bottom: 5px;"><b>Unlimited Portfolios</b></p>
+                                <div class="circle">
+                                    <i class="fa-sharp fa-regular fa-plus fa-xs" style="color: white;"></i>
+                                </div>
+                            </div>
+                            <div class="collapse" id="Collapse5">
+                                <p style="color: #ffffff;" class="p-variant-price">Create as many portfolios as needed to display your work.</p>
+                            </div>
+                        </div>
+                        <hr style="width: 95%; border: 1px solid #ffffff; margin: 0 auto;">
+                        <div class="container mt-2">
+                            <div class="d-flex justify-content-between" style="cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#Collapse6" aria-expanded="false">
+                                <p class="w-100 p-variant-price" style="color: #ffffff; margin-bottom: 5px;"><b>Be a Featured Creator</b></p>
+                                <div class="circle">
+                                    <i class="fa-sharp fa-regular fa-plus fa-xs" style="color: white;"></i>
+                                </div>
+                            </div>
+                            <div class="collapse" id="Collapse6">
+                                <p style="color: #ffffff;" class="p-variant-price">Get your portfolio featured on Veesy’s Creators Page.</p>
+                            </div>
+                        </div>
+                        <hr style="width: 95%; border: 1px solid #ffffff; margin: 0 auto;">
+                        <div class="container mt-2">
+                            <div class="d-flex justify-content-between" style="cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#Collapse7" aria-expanded="false">
+                                <p class=" w-100 p-variant-price" style="color: #ffffff; margin-bottom: 5px;"><b>Full Community Access</b></p>
+                                <div class="circle">
+                                    <i class="fa-sharp fa-regular fa-plus fa-xs" style="color: white;"></i>
+                                </div>
+                            </div>
+                            <div class="collapse" id="Collapse7">
+                                <p style="color: #ffffff;" class="p-variant-price">Engage fully in the Veesy Discord Community.</p>
+                            </div>
+                        </div>
+                        <hr style="width: 95%; border: 1px solid #ffffff; margin: 0 auto;">
+                        <div class="container mt-2">
+                            <div class="d-flex justify-content-between" style="cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#Collapse8" aria-expanded="false">
+                                <p class=" w-100 p-variant-price" style="color: #ffffff; margin-bottom: 5px;"><b>Network Access</b></p>
+                                <div class="circle">
+                                    <i class="fa-sharp fa-regular fa-plus fa-xs" style="color: white;"></i>
+                                </div>
+                            </div>
+                            <div class="collapse" id="Collapse8">
+                                <p style="color: #ffffff;" class="p-variant-price">Enter Veesy Network for broader connections.</p>
+                            </div>
+                        </div>
+                        <hr style="width: 95%; border: 1px solid #ffffff; margin: 0 auto;">
+                        <div class="container mt-2">
+                            <div class="d-flex justify-content-between" style="cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#Collapse9" aria-expanded="false">
+                                <p class=" w-100 p-variant-price" style="color: #ffffff; margin-bottom: 5px;"><b>Veesy Match</b></p>
+                                <div class="circle">
+                                    <i class="fa-sharp fa-regular fa-plus fa-xs" style="color: white;"></i>
+                                </div>
+                            </div>
+                            <div class="collapse" id="Collapse9">
+                                <p style="color: #ffffff;" class="p-variant-price">Connect with clients and collaborators with projects tailored on your skills.</p>
+                            </div>
+                        </div>
+                        <hr style="width: 95%; border: 1px solid #ffffff; margin: 0 auto;">
+                        <div class="container mt-2">
+                            <div class="d-flex justify-content-between" style="cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#Collapse10" aria-expanded="false">
+                                <p class=" w-100 p-variant-price" style="color: #ffffff; margin-bottom: 5px;"><b>Veesy Learn</b></p>
+                                <div class="circle">
+                                    <i class="fa-sharp fa-regular fa-plus fa-xs" style="color: white;"></i>
+                                </div>
+                            </div>
+                            <div class="collapse" id="Collapse10">
+                                <p style="color: #ffffff;" class="p-variant-price">Access specialized training or become a mentor/teacher in your field.</p>
+                            </div>
+                        </div>
+                        <hr style="width: 95%; border: 1px solid #ffffff; margin: 0 auto;">
+                        @if (Model.Subscription != null && (Model.Subscription.Name == VeesyConstants.SubscriptionPlan.Free || Model.Subscription.Name == VeesyConstants.SubscriptionPlan.Beta))
+                        {
+                            <div class="col-12 pt-2"><a onclick="openModal('#modalChangeSubscription'), SetSubscription('@VeesyConstants.SubscriptionPlan.Pro')" class="rounded-pill mt-4 mb-3 btn btn-white w-100" style="font-size: 14px;" type="submit">upgrade</a></div>
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="h-100 mt-2 col-sm-12 col-md-4">
+            <div class="bg-white-about card-header d-flex veesy-card-top" style="border:none !important;">
+                <div class="col-11">
+                    <p class="mb-0">
+                    </p>
+                </div>
+                <div class="col-1 text-end">
+                    <i class="fa-solid fa-circle fa-2xs" style="color: #75CCDD;"></i>
+                </div>
+            </div>
+            <div class="card-body bg-white-about veesy-card-bottom" style="border:none !important;">
+                <div class="d-flex justify-content-between mt-3">
+                    <h2 class="text-color-price" style="font-size: 1.7rem;"><b>Plus plan</b></h2>
+                    <h6 class="text-color-price" style="margin-top: 0.4rem;"><b>Coming Soon</b></h6>
+                </div>
+                <h6 class="text-color-price p-1 card-price" style="visibility: hidden;"><b>Starter's Choice</b></h6>
+                <div class="row pt-2">
+                    <p class="mb-4 mt-2 text-color-price">The definitive choice for freelancers looking to elevate their professional journey, with superior resources and exclusive opportunities.</p>
+                    <hr style="width: 95%; border: 1px solid grey; margin: 0 auto;">
+                    <div class="container mt-2">
+                        <div class="d-flex justify-content-between" style="cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#Collapse11" aria-expanded="false">
+                            <p class="text-color-price w-100 p-variant-price" style="margin-bottom: 5px;"><b>All the amazing Pro Plan features</b></p>
+                            <div class="circle">
+                                <i class="fa-sharp fa-regular fa-plus fa-xs" style="color: white;"></i>
+                            </div>
+                        </div>
+                        <div class="collapse" id="Collapse11">
+                            <p class="text-color-price p-variant-price"></p>
+                        </div>
+                    </div>
+                    <hr style="width: 95%; border: 1px solid grey; margin: 0 auto;">
+                    <div class="container mt-2">
+                        <div class="d-flex justify-content-between" style="cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#Collapse12" aria-expanded="false">
+                            <p class="text-color-price w-100 p-variant-price" style="margin-bottom: 5px;"><b>Expanded Cloud Storage</b></p>
+                            <div class="circle">
+                                <i class="fa-sharp fa-regular fa-plus fa-xs" style="color: white;"></i>
+                            </div>
+                        </div>
+                        <div class="collapse" id="Collapse12">
+                            <p class="text-color-price p-variant-price">Enjoy space for up to 1000 media files.</p>
+                        </div>
+                    </div>
+                    <hr style="width: 95%; border: 1px solid grey; margin: 0 auto;">
+                    <div class="container mt-2">
+                        <div class="d-flex justify-content-between" style="cursor: pointer;" data-bs-toggle="collapse" data-bs-target="#Collapse13" aria-expanded="false">
+                            <p class="text-color-price w-100 p-variant-price" style="margin-bottom: 5px;"><b>Veesy Boost</b></p>
+                            <div class="circle">
+                                <i class="fa-sharp fa-regular fa-plus fa-xs" style="color: white;"></i>
+                            </div>
+                        </div>
+                        <div class="collapse" id="Collapse13">
+                            <p class="text-color-price p-variant-price">Receive targeted advice and resources to fast-track your career, from client management to art direction, from legal or financial support to project management.</p>
+                        </div>
+                    </div>
+                    <hr style="width: 95%; border: 1px solid grey; margin: 0 auto;">
+                    <div class="col-12 text-center">
+                        <p class="mt-4">coming soon</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="empty-veesy"></div>
+<div class="empty-veesy"></div>
+
+
+<div class="modal fade" id="modalChangeSubscription" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Update plan</strong></h3>
+                <a onclick="closeModal('#modalChangeSubscription')"><i class="fa-solid fa-grey fa-circle-xmark"></i></a>
+            </div>
+            <div class="empty-veesy"></div>
+            <div class="modal-body text-center">
+                <h5 id="confirm-delete-body">
+                    Are you sure to change your plan?
+                </h5>
+                <div class="empty-veesy"></div>
+                <button onclick="UpdateSubscription()" class="mt-2 rounded-pill btn btn-padding btn-primary a-font-p" type="submit">yes</button>
+            </div>
+            <div class="empty-veesy"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        var subscriptionName = "";
+        function SetSubscription(name) {
+            subscriptionName = name;            
+        }
+    
+        function UpdateSubscription(){
+            $('#load-spinner').css("display", "block");
+        
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ChangeSubscriptionPlan", "Profile", new {area = "Account"})',
+                data: JSON.stringify(subscriptionName),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (response) {
+                    if(response.result){
+                        location.reload()
+                    }
+                    $('#load-spinner').css("display", "none");
+                },
+                error: function (response) {
+                    $('#load-spinner').css("display", "none");
+                }
+            })
+        }
+    </script>
+}

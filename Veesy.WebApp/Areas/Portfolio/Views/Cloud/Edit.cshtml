@@ -1,0 +1,460 @@
+@model Veesy.Presentation.Model.Cloud.EditViewModel
+@using Veesy.Presentation.Helper
+@{
+    ViewData["Title"] = "Edit Media";
+}
+
+<div class="row pt-7rem">
+    <div class="col-sm-12 col-md-3">
+        <nav class="breadcrumb-container" aria-label="Percorso di navigazione">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><img src="~/imgs/dashboard_home_dark-mode.png" class="me-2 icon-derein"><a class="breadcrumb-a-white me-2 text-white a-font-p" asp-area="Portfolio" asp-controller="Home" asp-action="Index">desk</a><img src="~/icon/dashboard_nest_dark mode.svg" class="icon-svg-derein"></li>
+                <li class="breadcrumb-item"><a class="breadcrumb-a-white me-2 text-white a-font-p" asp-area="Portfolio" asp-controller="Cloud" asp-action="List">cloud</a><img src="~/icon/dashboard_nest_dark mode.svg" class="icon-svg-derein"></li>
+                <li class="breadcrumb-item"><a class="breadcrumb-a-white me-2 text-white a-font-p" asp-action="List" asp-controller="Cloud" asp-area="Portfolio"><strong>media</strong></a></li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12 col-md-2 center-content nodisplay-sm">
+        @if (Model.PreviousMedia != null)
+        {
+            <ul class="list-unstyled">
+                <li class="mb-3 edit-padding-left">
+                    <div class="arrow-edit-media rounded-05 center-content"><a asp-action="Edit" asp-area="Portfolio" asp-controller="Cloud" asp-route-id="@Model.PreviousMedia.Code"><img class="w-100" src="~/icon/arrow_left_dark mode.svg"/></a></div>
+                </li>
+                <li class="mt-2">
+                    <a asp-action="Edit" asp-area="Portfolio" asp-controller="Cloud" asp-route-id="@Model.PreviousMedia.Code">
+                        @if (Model.PreviousMedia.Type == ".mp4")
+                        {
+                            <video autoplay="autoplay" muted loop class="img-rounded-trasparent w-25 shadow-1-strong rounded-05" title="@Model.PreviousMedia.OriginalFileName" alt="@Model.PreviousMedia.OriginalFileName">
+                                <source src="@Model.BasePath@Model.PreviousMedia.FileName?tr=w-400" type="video/mp4">
+                            </video>
+                        }
+                        else
+                        {
+                            <img asp-append-version="true" src="@Model.BasePath@Model.PreviousMedia.FileName?tr=w-400" class="img-rounded-trasparent w-25 shadow-1-strong rounded-05" title="@Model.PreviousMedia.OriginalFileName" alt="@Model.PreviousMedia.OriginalFileName"/>
+                        }
+                    </a>
+                </li>
+                <li class="mt-2 w-50  edit-padding-left">
+                    <p class="text-white veesy-overflow">@Model.PreviousMedia.OriginalFileName</p>
+                </li>
+            </ul>
+        }
+    </div>
+    <div class="text-white col-sm-12 col-md-8">
+        <div class="row">
+            <div class="col-sm-12 col-md-6 text-end pe-3">
+                <div class="media-container show-edit">
+                    <a onclick="openModal('#modalDeleteMedia')" class="edit-button-bottom a-font-p">
+                        <strong style="margin-right: 5px; ">delete</strong>
+                    </a>
+                    @if (Model.Media.Type == ".mp4")
+                    {
+                        <video style="max-height: 75vh; max-width: 100%" autoplay="autoplay" muted controls="controls" loop class="shadow-1-strong rounded-05" alt="@Model.Media.OriginalFileName">
+                            <source src="@Model.BasePath@Model.Media.FileName?tr=w-1080" type="video/mp4">
+                        </video>
+                    }
+                    else
+                    {
+                        <img style="max-height: 75vh; max-width: 100%" asp-append-version="true" src="@Model.BasePath@Model.Media.FileName?tr=w-1080" class="shadow-1-strong rounded-05" alt="@Model.Media.OriginalFileName"/>
+                    }
+                </div>
+                <div class="empty-veesy"></div>
+                <div class="empty-veesy"></div>
+                <div class="empty-veesy"></div>
+            </div>
+            <div class="col-sm-12 col-md-4 ps-3">
+                <div class="row">
+                    <div class="col-9 ps-0">
+                        <h3 class="mb-0 text-white veesy-overflow option-font-20" id="filename-show">@System.IO.Path.GetFileNameWithoutExtension(Model.Media.OriginalFileName)</h3>
+                    </div>
+                    <div class="col-3 text-end pe-0">
+                        <a onclick="setTextAreaValue('filename-edit', document.getElementById('filename-show').textContent), openModal('#modalFileName')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i></a>
+                    </div>
+                    <hr class="hr mt-1"/>
+                    
+                    <div class="empty-veesy"></div>
+                    <div class="col-12 ps-0 pe-0">
+                        <p class="mb-0 text-white"><strong>Full Res Media</strong></p>
+                        <p style="cursor: pointer" onclick="OpenImageNewTab('@Url.Action("SingleMedia", "Cloud", new {id = @Model.Media.Code})')" _target="blank" class="grey-link veesy-overflow"><i class="fa-solid fa-arrow-up-right-from-square pe-1"></i>https://beta.veesy.it/cloud/@Model.Media.OriginalFileName</p>
+                    </div>
+                    
+                    <div class="empty-veesy"></div>
+                    <div class="col-12 ps-0 pe-0">
+                        <p class="mb-0 text-white"><strong>Details</strong></p>
+                        <p class="mb-0 text-grey">@MediaUtils.SizeSuffix(Model.Media.Size, 1) - Uploaded on @Model.Media.UploadDate</p>
+                    </div>
+                    <div class="empty-veesy"></div>
+                    <div class="col-8 ps-0">
+                        <h5 class="mb-0 text-white veesy-overflow option-font-20" id="filename-show">Nested Links</h5>
+                    </div>
+                    <div class="col-4 text-end pe-0">
+                        <a class="grey-link"><strong class="me-1">learn more</strong><i class="fa-solid fa-arrow-up-right-from-square pe-1"></i></a>
+                    </div>
+                    <hr class="hr mt-1"/>
+                    <div class="col-9 ps-0">
+                        <p class="mb-0 text-white"><strong>Link this image to a portfolio</strong></p>
+                        @{
+                            var portfoliosLinkText = "";
+                            if (Model.LinkedPortfolioDtos.Count == 0 || Model.LinkedPortfolioDtos.Count(s => s.Selected) > 0)
+                            {
+                                portfoliosLinkText = "Currently linked to Veesy Lightbox (default)";
+                            }
+                        }
+                        <p id="number-portfolio-link" class="mb-0 text-grey">@portfoliosLinkText</p>
+                    </div>
+                    <div class="col-3 text-end pe-0"><a onclick="openModal('#modalLinkedPortfolio')" class="grey-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i>edit</a></div>
+                    <hr class="hr mt-1"/>
+                    <div class="empty-veesy"></div>
+                    <div class="col-12 ps-0 pe-0">
+                        <h3 class="mb-0 text-white option-font-20">Credits</h3>
+                        @if (string.IsNullOrEmpty(Model.Media.Credits))
+                        {
+                            <div class="card-white-dashed-veesy p-3 mt-2" id="credits-area-empty">
+                                <p class="text-grey">Add a note or quote collaborators who worked at this artwork.</p>
+                                <div class="mt-4"><a onclick="ShowTextArea()" class="grey-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add credits</strong></a></div>
+                            </div>
+                            <div id="credits-area" style="display: none">
+                                <p class="text-grey" id="credits-show"></p>
+                                <a onclick="ShowTextArea()" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong></strong></a>
+                            </div>
+                            <div class="text-area-rounded mt-2 text-end" style="display: none" id="credits-area-input">
+                                <textarea id="credits-edit" class="text-area-rounded text-area-not-resizable text-profile w-100 p-2" style="height: 131.2px;" placeholder="Write your credits.."></textarea>
+                                <button onclick="UpdateCredits()" class="rounded-pill btn btn-grey a-font-p btn-padding" type="submit">save</button>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="card-white-dashed-veesy p-3 mt-2" id="credits-area-empty" style="display: none">
+                                <p class="text-grey">Add a text or mention collaborators who worked at this output.</p>
+                                <div class="mt-4"><a onclick="ShowTextArea()" class="grey-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add credits</strong></a></div>
+                            </div>
+                            <div id="credits-area">
+                                <p class="text-grey" id="credits-show">@Model.Media.Credits</p>
+                                <a onclick="ShowTextArea()" class="grey-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i>edit</a>
+                            </div>
+                            <div class="text-area-rounded mt-2 text-end" style="display: none" id="credits-area-input">
+                                <textarea id="credits-edit" class="text-area-rounded text-area-not-resizable text-profile w-100 p-2" style="height: 131.2px;" placeholder="Write your credits..">@Model.Media.Credits</textarea>
+                                <button onclick="UpdateCredits()" class="rounded-pill btn btn-grey a-font-p btn-padding" type="submit">save</button>
+                            </div>
+                        }
+                    </div>
+                    <div class="empty-veesy"></div>
+                    <div class="empty-veesy"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-2 center-content nodisplay-sm">
+        @if (Model.NextMedia != null)
+        {
+            <ul class="list-unstyled w-100">
+                <li class="mb-3 edit-padding-right" style="float: right">
+                    <div class="arrow-edit-media rounded-05 center-content"><a class="w-100" asp-action="Edit" asp-area="Portfolio" asp-controller="Cloud" asp-route-id="@Model.NextMedia.Code"><img class="w-100" src="~/icon/arrow_right_dark mode.svg"/></a></div>
+                </li>
+                <li style="float: right" class="mt-2">
+                    <a asp-action="Edit" asp-area="Portfolio" asp-controller="Cloud" asp-route-id="@Model.NextMedia.Code">
+                        @if (Model.NextMedia.Type == ".mp4")
+                        {
+                            <video style="float: right" autoplay="autoplay" muted loop class="img-rounded-trasparent w-25 shadow-1-strong rounded-05" title="@Model.NextMedia.OriginalFileName" alt="@Model.NextMedia.OriginalFileName">
+                                <source src="@Model.BasePath@Model.NextMedia.FileName?tr=w-400" type="video/mp4">
+                            </video>
+                        }
+                        else
+                        {
+                            <img style="float: right" asp-append-version="true" src="@Model.BasePath@Model.NextMedia.FileName?tr=w-400" class="w-25 shadow-1-strong rounded-05 img-rounded-trasparent" title="@Model.NextMedia.OriginalFileName" alt="@Model.NextMedia.OriginalFileName"/>
+                        }
+                    </a>
+                </li>
+                <li class="mt-2 w-50 edit-padding-right text-end" style="float: right">
+                    <p class="text-white veesy-overflow">@Model.NextMedia.OriginalFileName</p>
+                </li>
+            </ul>
+        }
+    </div>
+    
+</div>
+
+<div class="row nodisplay-md">
+    
+    @*PREVIOUS / NEXT MOBILE SECTION*@
+    <div class="col-6 center-content nodisplay-md">
+        @if (Model.PreviousMedia != null)
+        {
+            <ul class="list-unstyled w-100">
+                <li class="mb-3 edit-padding-left">
+                    <div class="arrow-edit-media rounded-05 center-content"><a class="w-100" asp-action="Edit" asp-area="Portfolio" asp-controller="Cloud" asp-route-id="@Model.PreviousMedia.Code"><img class="w-100" src="~/icon/arrow_left_dark mode.svg"/></a></div>
+                </li>
+                <li class="mt-2">
+                    <a asp-action="Edit" asp-area="Portfolio" asp-controller="Cloud" asp-route-id="@Model.PreviousMedia.Code">
+                        @if (Model.PreviousMedia.Type == ".mp4")
+                        {
+                            <video autoplay="autoplay" muted loop class="img-rounded-trasparent w-50 shadow-1-strong rounded-05" title="@Model.PreviousMedia.OriginalFileName" alt="@Model.PreviousMedia.OriginalFileName">
+                                <source src="@Model.BasePath@Model.PreviousMedia.FileName?tr=w-400" type="video/mp4">
+                            </video>
+                        }
+                        else
+                        {
+                            <img asp-append-version="true" src="@Model.BasePath@Model.PreviousMedia.FileName?tr=w-400" class="img-rounded-trasparent w-50 shadow-1-strong rounded-05" title="@Model.PreviousMedia.OriginalFileName" alt="@Model.PreviousMedia.OriginalFileName"/>
+                        }
+                    </a>
+                </li>
+                <li class="mt-2 w-50  edit-padding-left">
+                    <p class="text-white veesy-overflow">@Model.PreviousMedia.OriginalFileName</p>
+                </li>
+            </ul>
+        }
+    </div>
+    <div class="col-6 center-content nodisplay-md">
+        @if (Model.NextMedia != null)
+        {
+            <ul class="list-unstyled w-100">
+                <li class="mb-3 edit-padding-right" style="float: right">
+                    <div class="arrow-edit-media rounded-05 center-content"><a asp-action="Edit" asp-area="Portfolio" asp-controller="Cloud" asp-route-id="@Model.NextMedia.Code"><img class="w-100" src="~/icon/arrow_right_dark mode.svg"/></a></div>
+                </li>
+                <li style="float: right" class="mt-2">
+                    <a asp-action="Edit" asp-area="Portfolio" asp-controller="Cloud" asp-route-id="@Model.NextMedia.Code">
+                        @if (Model.NextMedia.Type == ".mp4")
+                        {
+                            <video style="float: right" autoplay="autoplay" muted loop class="img-rounded-trasparent w-50 shadow-1-strong rounded-05" title="@Model.NextMedia.OriginalFileName" alt="@Model.NextMedia.OriginalFileName">
+                                <source src="@Model.BasePath@Model.NextMedia.FileName?tr=w-400" type="video/mp4">
+                            </video>
+                        }
+                        else
+                        {
+                            <img style="float: right" asp-append-version="true" src="@Model.BasePath@Model.NextMedia.FileName?tr=w-400" class="w-50 shadow-1-strong rounded-05 img-rounded-trasparent" title="@Model.NextMedia.OriginalFileName" alt="@Model.NextMedia.OriginalFileName"/>
+                        }
+                    </a>
+                </li>
+                <li class="mt-2 w-50 edit-padding-right text-end" style="float: right">
+                    <p class="text-white veesy-overflow">@Model.NextMedia.OriginalFileName</p>
+                </li>
+            </ul>
+        }
+    </div>
+</div>
+<div class="empty-veesy"></div>
+
+@* <div class="row justify-content-center"> *@
+@*     <a onclick="openModal('#modalDeleteMedia')" class="rounded-pill btn btn-delete">delete media</a> *@
+@*     <div class="empty-veesy"></div> *@
+@*     <div class="empty-veesy"></div> *@
+@* </div> *@
+
+<div class="modal fade" id="modalFileName" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"></h3>
+                <a onclick="closeModal('#modalFileName')"><i class="fa-solid fa-circle-xmark"></i></a>
+            </div>
+            <div class="modal-body">
+                <p class="mb-1"><strong>Filename*</strong></p>
+                <input type="text" id="filename-edit" rows="4" class="w-100 input-modal text-profile"/>
+                <p class="mt-2 mb-0">*required field</p>
+            </div>
+            <div class="modal-footer">                
+                <button onclick="UpdateFileName()" class="mt-2 rounded-pill btn btn-primary btn-padding a-font-p" type="submit">save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalLinkedPortfolio" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Nested Links</strong></h3>
+                <a onclick="closeModal('#modalLinkedPortfolio')"><i class="fa-solid fa-circle-xmark"></i></a>
+            </div>
+            <div class="modal-body">
+                <p>Select one of your portfolio.</p>
+                <div class="overflow-auto p-3 border-div-grey" style=" max-height: 400px;">
+                    @foreach (var item in Model.LinkedPortfolioDtos)
+                    {
+                        <div class="form-check">
+                            <label class="form-check-label" style="cursor: pointer;" for="portfolioLinked-@item.Code">
+                                <strong class="text-color">@item.Name</strong>
+                            </label>
+                            @{ var check = @item.Selected ? "checked" : ""; }
+                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="portfolioLinked-@item.Code" style="float: right !important;">
+                        </div>
+                        <hr class="hr"/>
+                    }
+                </div>
+            </div>
+            <div class="modal-footer">                
+                <button onclick="ChangeMediaPortfolio()" class="rounded-pill btn btn-primary btn-padding a-font-p" type="submit">save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalDeleteMedia" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Delete Medias</strong></h3>
+                <a onclick="closeModal('#modalDeleteMedia')"><i class="fa-solid fa-grey fa-circle-xmark"></i></a>
+            </div>
+            <div class="empty-veesy"></div>
+            <div class="modal-body text-center">
+                <h5 class="text-color"><strong id="confirm-delete-body">@Model.Media.OriginalFileName will be delete permanently. Are you sure?</strong></h5>
+            </div>
+            <div class="empty-veesy"></div>
+            <div class="row">  
+                <div class="col-4">
+                    <p class="ps-3 text-muted">
+                        <a style="text-decoration: underline !important; position: relative; top: 20px;" class="grey-link mt-3" onclick="closeModal('#modalDeleteMedia')">back to media</a>
+                    </p>
+                </div>
+                <div class="col-4 justify-content-center" style="display: flex">
+                    <form method="post" asp-controller="Media" asp-action="DeleteMedia">
+                        @Html.HiddenFor(s => s.Media.Code)
+                        <button class="mt-2 rounded-pill btn btn-delete" type="submit">yes, delete</button>
+                    </form>
+                </div>
+                <div class="col-4"></div>
+            </div>
+            <div class="empty-veesy"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+    
+        function ChangeMediaPortfolio() {
+            $('#load-spinner').css("display", "block");
+            var codes = JSON.parse('@Html.Raw(Json.Serialize(Model.LinkedPortfolioDtos.Select(s => s.Code.ToString()).ToList()))');
+            
+            var PortfolioSelected = [];
+            
+            for (const code in codes) {
+                if(document.getElementById("portfolioLinked-"+codes[code]).checked)
+                    PortfolioSelected.push(codes[code])
+            }
+            
+            var MediaCode = '@Model.Media.Code';
+            
+            var UpdateMediaPortfolioDto = {PortfolioSelected, MediaCode}
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ChangeMediaPortfolio", "Portfolio")',
+                data: JSON.stringify(UpdateMediaPortfolioDto),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (response) {
+                    if(response.result){
+                        var text = PortfolioSelected.length == 0 ? "Currently linked to Veesy Lightbox (default)" : "Currently linked to " + PortfolioSelected.length + " portfolios"  
+                        document.getElementById("number-portfolio-link").textContent = text;
+                    }
+                    $('#load-spinner').css("display", "none");
+                },
+                error: function (response) {
+                    $('#load-spinner').css("display", "none");
+                }
+            })
+        }
+    
+        
+        function deleteMedia(code) {
+            $('#load-spinner').css("display", "block");
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("DeleteMedia", "Media")',
+                data: JSON.stringify(code),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (response) {
+                    if(response.result){
+                        //location.reload();
+                        return;
+                    }
+                    else{
+                        toastNotifyCustom(response.message, 10000, "#ca0a0a", "")
+                    }
+                    $('#load-spinner').css("display", "none");
+                },
+                error: function (response) {
+                    $('#load-spinner').css("display", "none");
+                }
+            })
+        }
+    
+        function OpenImageNewTab(url) {
+            window.open(url, '_blank');
+        }
+    
+        function UpdateCredits() {
+            $('#load-spinner').css("display", "block");
+            var Credits = document.getElementById("credits-edit").value
+            var media = {Code,  Credits};
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("UpdateCredits", "Cloud")',
+                data: JSON.stringify(media),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (response) {
+                    if(response.result){
+                        if (Credits != ""){
+                            document.getElementById("credits-area").style.display = "block";
+                            document.getElementById("credits-area-empty").style.display = "none";
+                            document.getElementById("credits-area-input").style.display = "none";
+                            document.getElementById("credits-show").textContent = Credits;
+                            document.getElementById("credits-edit").value = Credits;
+                        }
+                        else{
+                            document.getElementById("credits-area").style.display = "none";
+                            document.getElementById("credits-area-empty").style.display = "block";
+                            document.getElementById("credits-area-input").style.display = "none";
+                            document.getElementById("credits-show").textContent = "";
+                            document.getElementById("credits-edit").value = "";
+                        }
+                    }
+                    $('#load-spinner').css("display", "none");
+                },
+                error: function (response) {
+                    $('#load-spinner').css("display", "none");
+                }
+            })
+        }
+    
+        function ShowTextArea() {
+            document.getElementById("credits-area-empty").style.display = "none";
+            document.getElementById("credits-area").style.display = "none";
+            document.getElementById("credits-area-input").style.display = "";
+        }
+    
+        var Code = '@Model.Media.Code'
+    
+        function UpdateFileName(){
+            $('#load-spinner').css("display", "block");
+            var OriginalFileName = document.getElementById("filename-edit").value
+            var media = {Code,  OriginalFileName};
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("UpdateFilename", "Cloud")',
+                data: JSON.stringify(media),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (response) {
+                    if(response.result){
+                        document.getElementById("filename-show").textContent = OriginalFileName;
+                        document.getElementById("filename-edit").value = OriginalFileName;
+                        closeModal('#modalFileName');
+                    }
+                    $('#load-spinner').css("display", "none");
+                },
+                error: function (response) {
+                    $('#load-spinner').css("display", "none");
+                }
+            })
+        }
+    </script>
+}

@@ -1,0 +1,139 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using NLog;
+using Veesy.Domain.Constants;
+using Veesy.Domain.Models;
+using Veesy.Presentation.Helper;
+
+namespace Veesy.WebApp.Areas.Admin.Controllers;
+
+[Area("Admin")]
+[Authorize(Roles = Roles.Admin)]
+public class AdminController : VeesyController
+{
+
+    private readonly AdminHelper _adminHelper;
+    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
+    public AdminController(UserManager<MyUser> userManager, IConfiguration config, AdminHelper adminHelper) : base(userManager, config)
+    {
+        _adminHelper = adminHelper;
+    }
+    
+    [HttpGet("overview")]
+    public IActionResult Dashboard()
+    {
+        var vm = _adminHelper.GetDashboardViewModel();
+        return View(vm);
+    }
+    
+    [HttpGet("creators-list")]
+    public IActionResult CreatorsList()
+    {
+        try
+        {
+            var vm = _adminHelper.GetCreatorsListViewModel();
+            return View(vm);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+    
+    [HttpGet("creator/{id}")]
+    public IActionResult CreatorInfo(string id)
+    {
+        try
+        {
+            var vm = _adminHelper.GetCreatorViewModel(id);
+            return View(vm);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    [HttpGet("subscriptions")]
+    public IActionResult SubscriptionsOverview()
+    {
+        try
+        {
+            var vm = _adminHelper.GetSusbscriptionsOverviewViewModel();
+            return View(vm);
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            throw;
+        }
+    }
+
+    [HttpGet("match")]
+    public IActionResult Match()
+    {
+        try
+        {
+            return View();
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            throw;
+        }
+    }
+
+    [HttpGet("creators-plus-list")]
+    public IActionResult CreatorsNoFreeList()
+    {
+        try
+        {
+            var vm = _adminHelper.GetCreatorsPlusListViewModel();
+            return View(vm);
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            throw;
+        }
+    }
+
+    public IActionResult FactoryList()
+    {
+        return View();
+    }
+
+    [HttpGet]
+    public JsonResult GetMediaUploadedByMonth(int month)
+    {
+        try
+        {
+            var result = _adminHelper.GetMediaUploadedByMonth(month);
+            var max = result.Count == 0 ? 2 : result.Max(s => s.MediaSize);
+            return Json(new { Result = true, Message = "Success", MediaNumber = result.Select(s => s.NumberMedia).ToList(), MediaSize = result.Select(s => s.MediaSize).ToList(), Categories = result.Select(s => s.Day).ToList(), Max = max});
+        }
+        catch (Exception ex)
+        {
+            return Json(new { Result = false, Message = "Error"});
+        }
+    }
+    
+    [HttpGet]
+    public JsonResult GetCreatorsSubscribedByMonth(int month)
+    {
+        try
+        {
+            var result = _adminHelper.GetCreatorsSubscribedByMonth(month);
+            var max = result.Count == 0 ? 2 : result.Max(s => s.NumberCreator);
+            return Json(new { Result = true, Message = "Success", CreatorNumber = result.Select(s => s.NumberCreator).ToList(),  Categories = result.Select(s => s.Day).ToList(), Max = max});
+        }
+        catch (Exception ex)
+        {
+            return Json(new { Result = false, Message = "Error"});
+        }
+    }
+}

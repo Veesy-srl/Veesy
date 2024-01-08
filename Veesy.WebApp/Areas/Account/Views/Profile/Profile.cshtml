@@ -1,0 +1,969 @@
+@model Veesy.Presentation.Model.Account.ProfileViewModel
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<div class="padding-lg pt-7rem">
+<div class="row pt-4 p-4-lg">
+    <div class="col-sm-12 col-lg-3 mb-3">
+        <nav class="breadcrumb-container" aria-label="Percorso di navigazione">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><img class="home-img me-2"><a class="a-font-p breadcrumb-a me-2" asp-action="Index" asp-area="Portfolio" asp-controller="Home">desk</a><img class="icon-svg-derein-option"></li>
+                <li class="breadcrumb-item"><a class="breadcrumb-a a-font-p" href="#"><strong>profile</strong></a></li>
+            </ol>
+        </nav>
+        <div class="w-80-veesy card-white-veesy p-3 mb-3">
+            <div class="d-flex">
+                <div class="col-3">
+                    <div class="text-center">
+                        @if (string.IsNullOrEmpty(@Model.FileName))
+                        {
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" class="img-thumbnail rounded-circle" alt="user-image" style="max-width: none!important; width: 60px !important; height: 60px !important;">
+                        }
+                        else
+                        {
+                            <img src="@Model.BasePathImages@Model.FileName?tr=w-400" style="width: 60px !important; height: 60px !important; max-width: none!important; " class="img-thumbnail-custom rounded-circle" alt="user-image">
+                        }
+                    </div>
+                </div>
+                
+                <div class="col-8">
+                    <p class="ms-2 user-profile text-color"><strong>@User.Identity.Name</strong></p>
+                </div>
+                <div class="col-1"><div class="text-end"><i class="fa-solid fa-circle fa-xs text-color"></i></div></div>
+            </div>
+            <h3 class="mt-4 mb-4 text-color option-font-20"><strong>@Model.FullName</strong></h3>
+            @{
+                var workrole = "information missing";
+                var role_css = "text-danger";
+                if (Model.Category.Count != 0)
+                {
+                    role_css = "text-color";
+                }
+
+                var category = "";
+                foreach (var cat in Model.Category)
+                {
+                    category += $"{cat.CategoryWork.Name}, ";
+                }
+                category = category.Length >= 2 ? category.Substring(0, (category.Length - 2)) : "";
+            }
+            <div class="d-flex"><p class="mb-0 text-color"><strong>Category:&nbsp;</strong></p><p class="@role_css veesy-overflow mb-0">@category</p></div>
+            <div class="d-flex"><p class="mb-0 text-color"><strong>Email:&nbsp;</strong></p><p class="mb-0 veesy-overflow text-color">@Model.Email</p></div>
+            @{
+                var phone = "information missing";
+                var css = "text-danger";
+                if (!string.IsNullOrEmpty(Model.PhoneNumber))
+                {
+                    css = "text-color";
+                    phone = Model.PhoneNumber;
+                }
+            }
+            <div class="d-flex"><p class="mb-0 text-color"><strong>Phone:&nbsp;</strong></p><p class="@css mb-0">@phone</p></div>
+            @if (string.IsNullOrEmpty(Model.PhoneNumber) || string.IsNullOrEmpty(Model.Email) || Model.RolesWork == null || Model.RolesWork.Count == 0)
+            {
+                <div class="mt-4"><a asp-controller="Profile" asp-area="Account" asp-action="BasicInfo" class="a-font-p red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit basic info</strong></a></div>
+            }
+            else
+            {
+                <div class="mt-4"><a asp-controller="Profile" asp-area="Account" asp-action="BasicInfo" class="grey-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit basic info</strong></a></div>
+            }
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6">
+        <h2 class="text-color"><strong>Your Profile</strong></h2>
+        <p class="text-color">This is more than a bio, it's the narrative of your creative journey. Your Profile is your story, so take the stage and shine on it.<a class="grey-link ms-2"><strong>learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a></p>
+        <div class="empty-veesy"></div>
+        <h3 class="text-color option-font-20"><strong>General</strong></h3>
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-6 ps-2 pe-2">
+                <hr class="hr color-hr" />
+                <div class="d-flex">
+                    @if (string.IsNullOrEmpty(Model.Role))
+                    {
+                        <div class="col-9">
+                            <p class="mb-0 text-color"><strong>Role:</strong></p>
+                            <p class="mb-0 color-red">Information missing</p>
+                        </div>
+                        <div class="col-3 text-end"><a onclick="openModal('#modalWorkRole')" class="red-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div>
+                    }
+                    else
+                    {
+                        <div class="col-9">
+                            <p class="mb-0 text-color"><strong>Role:</strong></p>
+                            <p class="mb-0 veesy-overflow text-color">@Model.Role
+                            </p>
+                        </div>
+                        <div class="col-3 text-end"><a onclick="openModal('#modalWorkRole'), setTextAreaValue('category-edit', '@Model.Role')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
+                    }
+                </div>
+                <hr class="hr color-hr"/>
+                <div class="d-flex">
+                    @if (string.IsNullOrEmpty(Model.ExternalLink))
+                    {
+                        <div class="col-9">
+                            <p class="mb-0 text-color"><strong>External link:</strong></p>
+                            <p class="mb-0 color-red">Information missing</p>
+                        </div>
+                        <div class="col-3 text-end"><a onclick="openModal('#modalExternalLink')" class="red-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div>
+                    }
+                    else
+                    {
+                        <div class="col-9">
+                            <p class="mb-0 text-color"><strong>External link:</strong></p>
+                            <p style="cursor: pointer" onclick="OpenUrlNewTab('@Model.ExternalLink')" class="mb-0 veesy-overflow text-color">@Model.ExternalLink</p>
+                        </div>
+                        <div class="col-3 text-end"><a onclick="openModal('#modalExternalLink'), setTextAreaValue('external-link-edit', '@Model.ExternalLink')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
+                    }
+                </div>
+                <hr class="hr color-hr"/>
+            </div>
+            <div class="col-sm-12 col-md-6 pe-2 ps-2">
+                <hr class="hr color-hr nodisplay-sm"/>
+                <div class="d-flex">
+                    @if (Model.LanguagesSpoken.Count(s => s.Selected) == 0)
+                    {
+                        <div class="col-9">
+                            <p class="mb-0 text-color"><strong>Language Spoken:</strong></p>
+                            <p class="mb-0 color-red">Information missing</p>
+                        </div>
+                        <div class="col-3 text-end"><a onclick="openModal('#modalLanguageSpoken')" class="red-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div>
+                    }
+                    else
+                    {
+                        <div class="col-9">
+                            <p class="mb-0 text-color"><strong>Language Spoken:</strong></p>
+                            <p class="mb-0 veesy-overflow text-color">
+                                @{
+                                    var languages = "";
+                                    foreach (var language in Model.LanguagesSpoken.Where(s => s.Selected))
+                                    {
+                                        languages += $"{language.Language}, ";
+                                    }
+                                    languages = languages.Length >= 2 ? languages.Substring(0, (languages.Length - 2)) : "";
+                                }
+                                @languages
+                            </p>
+                        </div>
+                        <div class="col-3 text-end"><a onclick="openModal('#modalLanguageSpoken')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
+                    }
+                </div>
+                <hr class="hr color-hr"/>
+                <div class="d-flex">
+                    @if (Model.InfoToShow.Count(s => s.Selected) == 0)
+                    {
+                        <div class="col-9">
+                            <p class="mb-0 text-color"><strong>Show Profile info:</strong></p>
+                            <p class="mb-0 color-red">Information missing</p>
+                        </div>
+                        <div class="col-3 text-end"><a onclick="openModal('#modalInfoToShow')" class="red-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div>
+                    }
+                    else
+                    {
+                        <div class="col-9">
+                            <p class="mb-0 text-color"><strong>Show Profile info:</strong></p>
+                            <p class="mb-0 veesy-overflow text-color">
+                                @{
+                                    var infos = "";
+                                    foreach (var info in Model.InfoToShow.Where(s => s.Selected))
+                                    {
+                                        infos += $"{info.Name}, ";
+                                    }
+                                    infos = infos.Length >= 2 ? infos.Substring(0, (infos.Length - 2)) : "";
+                                }
+                                @infos
+                            </p>
+                        </div>
+                        <div class="col-3 text-end"><a onclick="openModal('#modalInfoToShow')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
+                    }
+                </div>
+                <hr class="hr color-hr"/>
+            </div>
+        </div>
+        <div class="pt-4 mt-4">
+            <h3 class="text-color option-font-20"><strong>Portfolio intro</strong></h3>
+            @if (string.IsNullOrEmpty(Model.PortfolioIntro))
+            {
+                <div class="card-white-dashed-veesy p-3">
+                    <p class="text-color">A short story can tell a long tale. Keep it engaging and true to your style.</p>
+                    <div class="mt-4"><a onclick="openModal('#modalPortfolioIntro')" class="red-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add intro</strong></a></div>
+                </div>
+            }
+            else
+            {
+                <p class="text-color option-font-20" style="font-weight: 400;">@Model.PortfolioIntro</p>
+                <a onclick="openModal('#modalPortfolioIntro'), setTextAreaValue('portfolio-intro-text-edit', '@Model.PortfolioIntro.Replace("\'", "&#x27;")')" class="grey-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
+
+            }
+        </div>
+        <div class="pt-4 mt-4">
+            <h3 class="text-color option-font-20"><strong>Biography</strong></h3>
+            @if (string.IsNullOrEmpty(Model.Biography))
+            {
+                <div class="card-white-dashed-veesy p-3">
+                    <p class="text-color">Write a bio about yourself, try to make it <strong>synthetic</strong> and <strong>professional</strong></p>
+                    <div class="mt-4"><a onclick="openModal('#modalBiography')" class="red-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add bio</strong></a></div>
+                </div>
+            }
+            else
+            {
+                <p>@Model.Biography</p>
+                <a onclick="openModal('#modalBiography'), setTextAreaValue('biography-text-edit', '@Model.Biography.Replace("\'", "&#x27;")')" class="grey-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
+
+            }
+        </div>
+        <div class="pt-4 mt-4">
+            <h3 class="text-color option-font-20"><strong>Fields</strong></h3>
+            <p class="text-color">Specify your area of expertise. Let us know the areas where you excel. Focus on your strengths rather than selecting too many fields. Choose from options.</p>
+            @if (Model.Sectors.Count(s => s.Selected) > 0)
+            {
+                <div class="d-flex mb-4" style="max-width: 100%; flex-wrap: wrap;">
+                    @foreach (var item in Model.Sectors.Where(s => s.Selected))
+                    {
+                        <div class="div-white-rounded-blue-veesy d-flex option-font-14"><a onclick="openModal('#modalSectors')">@item.Name</a></div>
+                    }
+                </div>
+                <a onclick="openModal('#modalSectors')" class="grey-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
+
+            }
+            else
+            {
+                <div class="d-flex">
+                    <a onclick="openModal('#modalSectors')" class="button-white-dashed-veesy">+</a>
+                    <a onclick="openModal('#modalSectors')" class="button-white-dashed-veesy">+</a>
+                    <a onclick="openModal('#modalSectors')" class="button-white-dashed-veesy">+</a>
+                </div>
+                <div class="mt-2"><a onclick="openModal('#modalSectors')" class="red-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add fields</strong></a></div>
+            }
+        </div>
+        <div class="pt-4 mt-4">
+            <h3 class="text-color option-font-20"><strong>Soft skills</strong></h3>
+            <p class="text-color">Add a personal touch to your profile by showcasing your soft skills. Be genuine – these skills make your profile stand out. Choose from options.</p>
+            @if (Model.SoftSkills.Count(s => s.Selected) > 0)
+            {
+                <div class="d-flex mb-4" style="max-width: 100%; flex-wrap: wrap;">
+                    @foreach (var item in Model.SoftSkills.Where(s => s.Selected))
+                    {
+                        <div class="div-white-rounded-blue-veesy d-flex option-font-14"><a onclick="openModal('#modalSoftSkill')">@item.Name</a></div>
+                    }
+                </div>
+                <a onclick="openModal('#modalSoftSkill')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
+
+            }
+            else
+            {
+                <div class="d-flex">
+                    <a onclick="openModal('#modalSoftSkill')" class="button-white-dashed-veesy">+</a>
+                    <a onclick="openModal('#modalSoftSkill')" class="button-white-dashed-veesy">+</a>
+                    <a onclick="openModal('#modalSoftSkill')" class="button-white-dashed-veesy">+</a>
+                </div>
+                <div class="mt-2"><a onclick="openModal('#modalSoftSkill')" class="red-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add soft skills</strong></a></div>
+            }
+        </div>
+        <div class="pt-4 mt-4">
+            <h3 class="text-color option-font-20"><strong>Softwares</strong></h3>
+            <p class="text-color">List the software tools you're proficient in. Be selective and realisti, choose applications you have mastered. This ensures you're matched with projects that truly fit your skill level.</p>
+            @if (Model.UsedSoftwares.Count(s => s.Selected) > 0)
+            {
+                <div class="d-flex mb-4 text-color" style="max-width: 100%; flex-wrap: wrap;">
+                    @foreach (var item in Model.UsedSoftwares.Where(s => s.Selected))
+                    {
+                        <div class="div-white-rounded-blue-veesy option-font-14"><a onclick="openModal('#modalSoftware')" >@item.Name</a></div>
+                    }
+                </div>
+                <a onclick="openModal('#modalSoftware')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
+
+            }
+            else
+            {
+                <div class="d-flex">
+                    <a onclick="openModal('#modalSoftware')" class="button-white-dashed-veesy">+</a>
+                    <a onclick="openModal('#modalSoftware')" class="button-white-dashed-veesy">+</a>
+                    <a onclick="openModal('#modalSoftware')" class="button-white-dashed-veesy">+</a>
+                </div>
+                <div class="mt-2"><a onclick="openModal('#modalSoftware')" class="red-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add softwares</strong></a></div>
+            }
+        </div>
+        <div class="pt-4 mt-4">
+            <h3 class="text-color mb-4 option-font-20"><strong>Your Portfolios</strong></h3>
+            @if (Model.PortfolioThumbnailDtos.Count == 0)
+            {
+                <p class="text-color">You don't have any portfolio yet.</p>
+                <form method="get" asp-area="Portfolio" asp-action="List" asp-controller="Cloud">
+                    <button class="rounded-pill btn btn-primary btn-variant">create your first portfolio</button>
+                </form>
+            }
+            else
+            {
+                @foreach (var item in Model.PortfolioThumbnailDtos)
+                {
+                    <div id="portfolio-div-@item.Code" class="mt-2">
+                        <hr class="color-hr mb-3"/>
+                        <div class="d-flex">
+                            <div class="col-2">
+                                <div class='box m-0'> 
+                                    <div class='content1_1'>
+                                        @if (item.IsVideo)
+                                        {
+                                            <video autoplay="autoplay" muted loop class="image-fit-radius" title="@item.DefaultImageOriginalName">
+                                                <source src="@Model.BasePath@item.DefaultImageName?tr=w-400" type="video/mp4">
+                                            </video>
+                                        }
+                                        else
+                                        {
+                                            if (item.DefaultImageName == "")
+                                            {
+                                                <img class="image-fit-radius" src="~/imgs/noimage.png"/>
+                                            }
+                                            else
+                                            {
+                                                <img class="image-fit-radius" title="@item.DefaultImageOriginalName" src="@Model.BasePath@item.DefaultImageName?tr=w-400"/>
+                                            }
+                                        }
+                                    </div> 
+                                </div>
+                            </div>
+                            <div class="col-6 vertical-space">
+                                @{
+                                    var iconBack = "fa-regular";
+
+                                    if (item.IsMain)
+                                    {
+                                        iconBack = "fa-solid";
+                                    }
+                                }
+                                <div>
+                                    <h5 style="font-size: 20px !important; line-height: 27px;"><i style="color: #75CCDD" class="@iconBack icon-main-portfolio fa-star me-2"></i><strong class="text-color">@item.Name</strong></h5>
+                                    <p class="veesy-text-color">Updated on @item.LastUpdate<br/>@item.NumberMedia media uploaded</p>
+                                </div>
+                                <a target="_blank" asp-action="PortfolioPreview" asp-controller="Portfolio" asp-area="Portfolio" asp-route-id="@item.Code" asp-route-open="@false" class="grey-link">Preview<i class="fa-solid fa-arrow-up-right-from-square ms-2"></i></a>
+                            </div>
+                            <div class="col-4 text-end vertical-space">
+                                <a onclick="CopyLink('@Model.ApplicationUrl@Url.Action("Portfolio", "Public", new {area = "Public", id = @item.Code})')" class="grey-link ms-2"><i class="fa-regular fa-clone pe-1"></i><strong>Copy link</strong></a>
+                                <div style="justify-content: end;" class="d-flex">
+                                    <form method="get" asp-area="Portfolio" asp-controller="Portfolio"  asp-action="Settings" asp-route-id="@item.Code">
+                                        <button type="submit" class="rounded-pill btn-padding-20 btn btn-primary mt-2 a-font-p"><i class="fa-regular a-font-p fa-pen-to-square pe-1"></i>edit portfolio</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <hr class="color-hr mb-3"/>
+                <div class="empty-veesy"></div>
+                <form method="get" asp-area="Portfolio" asp-action="List" asp-controller="Portfolio">
+                    <button type="submit" class="rounded-pill btn btn-primary a-font-p mt-2 btn-padding">manage portfolios</button>
+                </form>
+                <div class="empty-veesy my-4"></div>
+            }
+        </div>
+        <div class="empty-veesy"></div>
+        <div class="empty-veesy"></div>
+    </div>
+    <div class="col-sm-12 col-md-3 pe-0">
+        <div class="empty-veesy"></div>
+        <div class="empty-veesy"></div>
+        <div class="d-flex justify-content-end ps-3">
+            <div class="w-75-veesy card-blue-veesy">
+                <div class="text-end"><i class="fa-solid fa-circle fa-2xs" style="color: #ffffff;"></i></div>
+                <p class="mb-0 text-white">Do you need some help?</p>
+                <a class="a-ciano-underline" href="mailto:support@veesy.it">Contact us</a>
+            </div>
+        </div>
+        <div class="empty-veesy"></div>
+        <div class="empty-veesy"></div>
+        <div class="empty-veesy"></div>
+    </div>
+</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalBiography" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color" style="font-size: 25px !important; line-height: 30px !important;" id="exampleModalLongTitle"><strong>Biography</strong></h3>
+                <a onclick="closeModal('#modalBiography')"><i class="fa-solid fa-circle-xmark"></i></a>
+            </div>
+            <div class="modal-body">
+                <p class="text-color">Write a bio about yourself, try to make it synthetic and professional</p>
+                <textarea id="biography-text-edit" rows="4" class="w-100 text-profile"></textarea>
+                <p class="mb-0 text-color"><strong>max. 500 characters</strong></p>  
+            </div>
+            <div class="modal-footer">                
+                <button onclick="UpdateBiography()" class="rounded-pill btn btn-primary btn-padding a-font-p" type="submit">save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalExternalLink" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color" style="font-size: 25px !important; line-height: 30px !important;" id="exampleModalLongTitle"><strong>External Link</strong></h3>
+                <a onclick="closeModal('#modalExternalLink')"><i class="fa-solid fa-circle-xmark"></i></a>
+            </div>
+            <div class="modal-body">
+                <p class="text-color">Insert an external link</p>
+                <input type="text" id="external-link-edit" rows="4" class="w-100 input-modal text-profile"/>
+            </div>
+            <div class="modal-footer">                
+                <button onclick="UpdateExternalLink()" class="mt-2 rounded-pill btn btn-primary btn-padding a-font-p" type="submit">save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalPortfolioIntro" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color" style="font-size: 25px !important; line-height: 30px !important;" id="exampleModalLongTitle"><strong>Portfolio Intro</strong></h3>
+                <a onclick="closeModal('#modalPortfolioIntro')"><i class="fa-solid fa-circle-xmark"></i></a>
+            </div>
+            <div class="modal-body">
+                <p class="text-color">Write a short info about yourself, try to make it brief and catchy</p>
+                <textarea id="portfolio-intro-text-edit" rows="4" class="w-100 text-profile"></textarea>
+                <p class="mb-0 text-color"><strong>max. 100 characters</strong></p>  
+            </div>
+            <div class="modal-footer">                
+                <button onclick="UpdatePortfolioIntro()" class="rounded-pill btn btn-primary btn-padding a-font-p" type="submit">save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalWorkRole" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color" style="font-size: 25px !important; line-height: 30px !important;" id="exampleModalLongTitle"><strong>Role</strong></h3>
+                <a onclick="closeModal('#modalWorkRole')"><i class="fa-solid fa-circle-xmark"></i></a>
+            </div>
+            <div class="modal-body">
+                <p class="text-color">Write about your role.</p>
+                <textarea id="category-edit" rows="4" class="w-100 text-profile"></textarea>
+                <p class="mb-0 text-color"><strong>max. 50 characters</strong></p>  
+            </div>
+            <div class="modal-footer">                
+                <button onclick="UpdateCategory()" class="rounded-pill btn btn-primary btn-padding a-font-p" type="submit">save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalSoftware" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color" style="font-size: 25px !important; line-height: 30px !important;" id="exampleModalLongTitle"><strong>Softwares</strong></h3>
+                <a onclick="closeModal('#modalSoftware')"><i class="fa-solid fa-circle-xmark"></i></a>
+            </div>
+            <div class="modal-body">
+                <p class="text-color">select a maximum of 10 software that you can check</p>
+                <div class="overflow-auto p-3 border-div-grey" style="max-height: 400px;">
+                    @foreach (var item in Model.UsedSoftwares)
+                    {
+                        <div class="form-check">
+                            <label class="form-check-label" style="cursor: pointer;" for="flexCheckDefault-@item.Code">
+                                <strong class="text-color">@item.Name</strong>
+                            </label>
+                            @{ var check = @item.Selected ? "checked" : ""; }
+                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="flexCheckDefault-@item.Code" style="float: right !important;">
+                        </div>
+                        <hr class="hr"/>
+                    }
+                </div>
+                <p class="mt-4 text-color"><strong>Didn't find yours?</strong> <a class="a-ciano" href="mailto:support@veesy.it">Contact us</a></p>
+                <p class="mb-0 text-color"><strong>max. 10</strong></p>
+            </div>
+            <div class="modal-footer">                
+                <button onclick="UpdateUsedSoftware()" class="rounded-pill btn btn-primary btn-padding a-font-p" type="submit">save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalSectors" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color" style="font-size: 25px !important; line-height: 30px !important;" id="exampleModalLongTitle"><strong>Fields</strong></h3>
+                <a onclick="closeModal('#modalSectors')"><i class="fa-solid fa-circle-xmark"></i></a>
+            </div>
+            <div class="modal-body">
+                <p class="text-color">Select a maximum of 10 fields.</p>
+                <div class="overflow-auto p-3 border-div-grey" style="max-height: 400px;">
+                    @foreach (var item in Model.Sectors)
+                    {
+                        <div class="form-check">
+                            <label class="form-check-label" style="cursor: pointer;" for="sector-@item.Code">
+                                <strong class="text-color">@item.Name</strong>
+                            </label>
+                            @{ var check = @item.Selected ? "checked" : ""; }
+                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="sector-@item.Code" style="float: right !important;">
+                        </div>
+                        <hr class="hr"/>
+                    }
+                </div>
+                <p class="mt-4 text-color"><strong>Didn't find it?</strong> <a class="a-ciano" href="mailto:support@veesy.it">Contact us</a></p>
+                <p class="mb-0 text-color"><strong>max. 10</strong></p>
+            </div>
+            <div class="modal-footer">                
+                <button onclick="UpdateSectors()" class="rounded-pill btn btn-primary btn-padding a-font-p" type="submit">save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalSoftSkill" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color" style="font-size: 25px !important; line-height: 30px !important;" id="exampleModalLongTitle"><strong>Soft Skills</strong></h3>
+                <a onclick="closeModal('#modalSoftSkill')"><i class="fa-solid fa-circle-xmark"></i></a>
+            </div>
+            <div class="modal-body">
+                <p class="text-color">Select a maximum of 10 skills which you are developing.</p>
+                <div class="overflow-auto p-3 border-div-grey" style=" max-height: 400px;">
+                    @foreach (var item in Model.SoftSkills)
+                    {
+                        <div class="form-check">
+                            <label class="form-check-label" style="cursor: pointer;" for="softSkill-@item.Code">
+                                <strong class="text-color">@item.Name</strong>
+                            </label>
+                            @{ var check = @item.Selected ? "checked" : ""; }
+                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="softSkill-@item.Code" style="float: right !important; ">
+                        </div>
+                        <hr class="hr"/>
+                    }
+                </div>
+                <p class="mt-4 text-color"><strong>Didn't find it?</strong> <a class="a-ciano" href="mailto:support@veesy.it">Contact us</a></p>
+                <p class="mb-0 text-color"><strong>max. 5</strong></p>
+            </div>
+            <div class="modal-footer">                
+                <button onclick="UpdateSoftSkills()" class="rounded-pill btn btn-primary btn-padding a-font-p" type="submit">save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div class="modal fade" id="modalWorkRole" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Role</strong></h3>
+                <a onclick="closeModal('#modalWorkRole')"><i class="fa-solid fa-circle-xmark"></i></a>
+            </div>
+            <div class="modal-body">
+                <p>Select a maximum of 5 roles.</p>
+                <div class="overflow-auto p-3 border-div-grey" style="background-color: white !important; max-height: 400px;">
+                    @foreach (var item in Model.RolesWork)
+                    {
+                        <div class="form-check">
+                            <label class="form-check-label" style="cursor: pointer;" for="roleWork-@item.Code">
+                                <strong>@item.Name</strong>
+                            </label>
+                            @{ var check = @item.Selected ? "checked" : ""; }
+                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="roleWork-@item.Code" style="float: right !important;">
+                        </div>
+                        <hr class="hr"/>
+                    }
+                </div>
+                <p class="mt-4"><strong>Didn't find it?</strong> <a class="a-ciano" href="mailto:support@veesy.it">Contact us</a></p>
+                <p class="mb-0"><strong>max. 5</strong></p>
+            </div>
+            <div class="modal-footer">                
+                <a onclick="UpdateRolesWork()" class="rounded-pill btn btn-primary btn-padding a-font-p" type="submit">save</a>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+<div class="modal fade" id="modalLanguageSpoken" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color" style="font-size: 25px !important; line-height: 30px !important;" id="exampleModalLongTitle"><strong>Languages Spoken</strong></h3>
+                <a onclick="closeModal('#modalLanguageSpoken')"><i class="fa-solid fa-circle-xmark"></i></a>
+            </div>
+            <div class="modal-body">
+                <p class="text-color">Select a maximum of 5 languages spoken. <br/>Don't overdue! Just pick languages you are confident with.</p>
+                <div class="overflow-auto p-3 border-div-grey" style="max-height: 400px;">
+                    @foreach (var item in Model.LanguagesSpoken)
+                    {
+                        <div class="form-check">
+                            <label class="form-check-label" style="cursor: pointer;" for="languageSpoken-@item.Code">
+                                <strong class="text-color">@item.Language</strong>
+                            </label>
+                            @{ var check = @item.Selected ? "checked" : ""; }
+                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="languageSpoken-@item.Code" style="float: right !important;">
+                        </div>
+                        <hr class="hr"/>
+                    }
+                </div>
+                <p class="mt-4 text-color"><strong>Didn't find it?</strong> <a class="a-ciano" href="mailto:support@veesy.it">Contact us</a></p>
+                <p class="mb-0 text-color"><strong>max. 5</strong></p>
+            </div>
+            <div class="modal-footer">                
+                <button onclick="UpdateLanguagesSpoken()" class="rounded-pill btn btn-primary btn-padding a-font-p" type="submit">save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalInfoToShow" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color" style="font-size: 25px !important; line-height: 30px !important;" id="exampleModalLongTitle"><strong>Info to show</strong></h3>
+                <a onclick="closeModal('#modalInfoToShow')"><i class="fa-solid fa-circle-xmark"></i></a>
+            </div>
+            <div class="modal-body">
+                <p class="text-color">Select info to show in portfolio.</p>
+                <div class="overflow-auto p-3 border-div-grey" style=" max-height: 400px;">
+                    @foreach (var item in Model.InfoToShow)
+                    {
+                        <div class="form-check">
+                            <label class="form-check-label" style="cursor: pointer;" for="infoToShow-@item.Code">
+                                <strong class="text-color">@item.Name</strong>
+                            </label>
+                            @{ var check = @item.Selected ? "checked" : ""; }
+                            <input class="form-check-input" type="checkbox" @check value="@item.Code" id="infoToShow-@item.Code" style="float: right !important;">
+                        </div>
+                        <hr class="hr color-hr"/>
+                    }
+                </div>
+            </div>
+            <div class="modal-footer">                
+                <button onclick="UpdateInfoToShow()" class="rounded-pill btn btn-primary btn-padding a-font-p" type="submit">save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+
+    <script>
+    function OpenUrlNewTab(url) {
+        window.open(url, '_blank');
+    }
+
+function UpdateInfoToShow() {
+    $('#load-spinner').css("display", "block");
+    var codes = JSON.parse('@Html.Raw(Json.Serialize(Model.InfoToShow.Select(s => s.Code.ToString()).ToList()))');
+    
+    var data = [];
+    
+    for (const code in codes) {
+        if(document.getElementById("infoToShow-"+codes[code]).checked)
+            data.push(codes[code])
+    }
+    $.ajax({
+        type: 'POST',
+        url: '@Url.Action("UpdateInfoToShow", "Profile")',
+        data: JSON.stringify(data),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function (response) {
+            if(response.result){
+                location.reload()
+            }
+            $('#load-spinner').css("display", "none");
+        },
+        error: function (response) {
+            $('#load-spinner').css("display", "none");
+        }
+    })
+}
+
+function UpdateLanguagesSpoken() {
+    $('#load-spinner').css("display", "block");
+    var codes = JSON.parse('@Html.Raw(Json.Serialize(Model.LanguagesSpoken.Select(s => s.Code.ToString()).ToList()))');
+    
+    var data = [];
+    
+    for (const code in codes) {
+        if(document.getElementById("languageSpoken-"+codes[code]).checked)
+            data.push(codes[code])
+    }
+    $.ajax({
+        type: 'POST',
+        url: '@Url.Action("UpdateLanguageSpoken", "Profile")',
+        data: JSON.stringify(data),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function (response) {
+            if(response.result){
+                location.reload()
+            }
+            $('#load-spinner').css("display", "none");
+        },
+        error: function (response) {
+            $('#load-spinner').css("display", "none");
+        }
+    })
+}
+
+
+function UpdateRolesWork() {
+    $('#load-spinner').css("display", "block");
+    var codes = JSON.parse('@Html.Raw(Json.Serialize(Model.RolesWork.Select(s => s.Code.ToString()).ToList()))');
+    
+    var data = [];
+    
+    for (const code in codes) {
+        if(document.getElementById("roleWork-"+codes[code]).checked)
+            data.push(codes[code])
+    }
+    $.ajax({
+        type: 'POST',
+        url: '@Url.Action("UpdateRolesWork", "Profile")',
+        data: JSON.stringify(data),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function (response) {
+            if(response.result){
+                location.reload()
+            }
+            $('#load-spinner').css("display", "none");
+        },
+        error: function (response) {
+            $('#load-spinner').css("display", "none");
+        }
+    })
+}
+
+
+function UpdateExternalLink() {
+    $('#load-spinner').css("display", "block");
+    var externalLink = document.getElementById("external-link-edit").value
+
+    $.ajax({
+        type: 'POST',
+        url: '@Url.Action("UpdateExternalLink", "Profile")',
+        data: JSON.stringify(externalLink),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function (response) {
+            if(response.result){
+                location.reload()
+            }
+            $('#load-spinner').css("display", "none");
+        },
+        error: function (response) {
+            $('#load-spinner').css("display", "none");
+        }
+    })
+}
+
+
+// function UpdateHardSkills() {
+//     $('#load-spinner').css("display", "block");
+@*    var codes = JSON.parse('@Html.Raw(Json.Serialize(Model.HardSkills.Select(s => s.Code.ToString()).ToList()))');*@
+//    
+//     var data = [];
+//    
+//     for (const code in codes) {
+//         if(document.getElementById("hardSkill-"+codes[code]).checked)
+//             data.push(codes[code])
+//     }
+//     $.ajax({
+//         type: 'POST',
+//         url: '@Url.Action("UpdateHardSkills", "Profile")',
+//         data: JSON.stringify(data),
+//         contentType: 'application/json; charset=utf-8',
+//         dataType: 'json',
+//         success: function (response) {
+//             if(response.result){
+//                 location.reload()
+//             }
+//             $('#load-spinner').css("display", "none");
+//         },
+//         error: function (response) {
+//             $('#load-spinner').css("display", "none");
+//         }
+//     })
+// }
+
+function UpdateSectors() {
+    $('#load-spinner').css("display", "block");
+    var codes = JSON.parse('@Html.Raw(Json.Serialize(Model.Sectors.Select(s => s.Code.ToString()).ToList()))');
+    
+    var data = [];
+    
+    for (const code in codes) {
+        if(document.getElementById("sector-"+codes[code]).checked)
+            data.push(codes[code])
+    }
+    $.ajax({
+        type: 'POST',
+        url: '@Url.Action("UpdateSectors", "Profile")',
+        data: JSON.stringify(data),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function (response) {
+            if(response.result){
+                location.reload()
+            }
+            $('#load-spinner').css("display", "none");
+        },
+        error: function (response) {
+            $('#load-spinner').css("display", "none");
+        }
+    })
+}
+
+function UpdateSoftSkills() {
+    $('#load-spinner').css("display", "block");
+    var codes = JSON.parse('@Html.Raw(Json.Serialize(Model.SoftSkills.Select(s => s.Code.ToString()).ToList()))');
+    
+    var data = [];
+    
+    for (const code in codes) {
+        if(document.getElementById("softSkill-"+codes[code]).checked)
+            data.push(codes[code])
+    }
+    $.ajax({
+        type: 'POST',
+        url: '@Url.Action("UpdateSoftSkills", "Profile")',
+        data: JSON.stringify(data),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function (response) {
+            if(response.result){
+                location.reload()
+            }
+            $('#load-spinner').css("display", "none");
+        },
+        error: function (response) {
+            $('#load-spinner').css("display", "none");
+        }
+    })
+}
+
+
+//ADD EDIT BIOGRAPHY
+function UpdateBiography(){
+    $('#load-spinner').css("display", "block");
+    var biography = document.getElementById("biography-text-edit").value
+
+    $.ajax({
+        type: 'POST',
+        url: '@Url.Action("UpdateBiography", "Profile")',
+        data: JSON.stringify(biography),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function (response) {
+            if(response.result){
+                location.reload()
+            }
+            $('#load-spinner').css("display", "none");
+        },
+        error: function (response) {
+            $('#load-spinner').css("display", "none");
+        }
+    })
+}
+
+function UpdateUsedSoftware(){
+    $('#load-spinner').css("display", "block");
+    var codes = JSON.parse('@Html.Raw(Json.Serialize(Model.UsedSoftwares.Select(s => s.Code.ToString()).ToList()))');
+    
+    var data = [];
+    
+    for (const code in codes) {
+        if(document.getElementById("flexCheckDefault-"+codes[code]).checked)
+            data.push(codes[code])
+    }
+    $.ajax({
+        type: 'POST',
+        url: '@Url.Action("UpdateUsedSoftware", "Profile")',
+        data: JSON.stringify(data),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function (response) {
+            if(response.result){
+                location.reload()
+            }
+            $('#load-spinner').css("display", "none");
+        },
+        error: function (response) {
+            $('#load-spinner').css("display", "none");
+        }
+    })
+}
+
+function UpdatePortfolioIntro(){
+    $('#load-spinner').css("display", "block");
+    var introPortfolio = document.getElementById("portfolio-intro-text-edit").value
+
+    $.ajax({
+        type: 'POST',
+        url: '@Url.Action("UpdatePortfolioIntro", "Profile")',
+        data: JSON.stringify(introPortfolio),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function (response) {
+            if(response.result){
+                location.reload()
+            }
+            $('#load-spinner').css("display", "none");
+        },
+        error: function (response) {
+            $('#load-spinner').css("display", "none");
+        }
+    })
+}
+
+function UpdateCategory() {
+    $('#load-spinner').css("display", "block");
+    var category = document.getElementById("category-edit").value
+    $.ajax({
+        type: 'POST',
+        url: '@Url.Action("UpdateCategory", "Profile")',
+        data: JSON.stringify(category),
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function (response) {
+            if(response.result){
+                location.reload()
+                if (category != ""){
+                    // document.getElementById("category-show").classList.remove("color-red");
+                    // document.getElementById("category-button").classList.remove("red-link");
+                    // document.getElementById("category-button").classList.add("grey-link");
+                    // document.getElementById("category-show").textContent = category;
+                }
+                else{
+                    // document.getElementById("category-show").classList.add("color-red");
+                    // document.getElementById("category-button").classList.add("red-link");
+                    // document.getElementById("category-button").classList.remove("grey-link");
+                    // document.getElementById("category-show").textContent = "Information missing";    
+                }
+                closeModal('#modalWorkRole');
+            }
+            $('#load-spinner').css("display", "none");
+        },
+        error: function (response) {
+            $('#load-spinner').css("display", "none");
+        }
+    })
+}
+         
+  </script>
+}
+
+<style>
+.btn-padding {
+    background-color: #202F4D !important;
+    color: #fff !important;
+}
+
+.btn-padding:hover {
+    background-color: #75CCDD !important;
+    color: #fff !important;
+}
+</style>

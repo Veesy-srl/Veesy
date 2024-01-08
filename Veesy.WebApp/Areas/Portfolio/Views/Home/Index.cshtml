@@ -1,8 +1,444 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model Veesy.Presentation.Model.Home.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+ 
+<h1 class="h3 fw-normal">
+    <div class="navbar-brand d-inline-flex text-black" style="margin-top: 0.7rem!important;" asp-area="" asp-controller="Home" asp-action="Index"></div>
+</h1> 
+
+
+<div class="padding-lg">  
+<div class="row pt-4 p-4-lg">
+    <div class="empty-veesy nodisplay-sm"></div>
+    <div class="empty-veesy nodisplay-sm"></div>
+    <div class="col-sm-12 ps-3 col-md-4">
+        <h1 class="text-color mt-2">
+            Welcome back @Model.Name,<br/> your creative space awaits...
+        </h1>
+        <div class="empty-veesy"></div>
+        <div class="empty-veesy"></div>
+        <div class="col-12">
+            <a class="mb-0"><strong>Do you need some help?</strong></a>
+        </div>
+        <a href="mailto:info@veesy.it" class="grey-link-underline mb-4">Contact us</a>
+        <div class="empty-veesy"></div>
+    </div>
+    <div class="ps-3 pe-3 col-sm-12 col-md-8">
+        <div style="border: none" class="card card-dashboard rounded-05 bg-transparent">
+            <div class="card-header rounded-05-header p-0 bg-white" style="border-bottom: 0px;">
+                <div class="row m-0 dashboard-header-border">
+                    <div class="col-9 mt-2 mb-1">
+                        <p class="mb-0" style="font-size: 14px !important; line-height: 22px !important;">
+                            <strong>OVERVIEW</strong>
+                        </p>
+                    </div>
+                    <div style="border-radius: 0 0.5rem 0 0;" class="col-3 text-end bg-gradient-1">
+                        <i class="fa-solid fa-circle fa-2xs color-circle mt-3"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body card-body-dashboard row p-0 m-0">
+                <div class="ps-3 col-sm-12 col-lg-3 card-body-background-radius card-body-background vertical-space pb-0">
+                    <div style="position: relative; left: -30%;" id="chart"></div>
+                    <div>
+                        <h3 class="text-color">Your Profile is <strong>@Model.Percent%</strong><br/> complete.</h3>
+                        <div class="mb-3 mt-3">
+                            <a asp-controller="Profile" asp-area="Account" asp-action="Profile" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i>edit profile</a>
+                        </div>
+                        <hr class="nodisplay-lg"/>
+                    </div>
+                </div>
+                <div class="ps-3 col-sm-12 col-lg-3 card-body-background vertical-space pt-2 pb-0">
+                    <div class="mt-4 pt-1">
+                        <div class="d-flex align-items-end mb-2">
+                            <h1 style="font-size: 65px !important; line-height: 65px !important;" class="text-color"><strong>@Model.MediaNumber</strong></h1>
+                            <h3 style="font-size: 40px !important; line-height: 40px; color: #D2D5DB !important;" class="mb-4">/@Model.Subscription.AllowedMediaNumber</h3>
+                        </div>
+                        <div style="height: 5px;" class="progress" id="progress-media">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="@Model.MediaPercent" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="text-color"><strong>Files uploaded</strong> on <br/> cloud.</h3>
+                        <div class="mb-3 mt-3"><a asp-action="List" asp-controller="Cloud" asp-area="Portfolio" class="grey-link">your cloud <i class="fa-solid fa-arrow-up-right-from-square"></i></a></div>
+                        <hr class="nodisplay-lg"/>
+                    </div>
+                </div>
+                <div class="ps-3 col-sm-12 col-lg-3 card-body-background vertical-space pt-2 pb-0">
+                    <div class="mt-4 pt-1">
+                        <h1 style="font-size: 65px !important; line-height: 65px !important;" class="text-color"><strong>@Model.PortfolioNumber.ToString("00")</strong></h1>
+                    </div>
+                    <div class="mt-4 pt-2">
+                        <h3 class="text-color"><strong>Portfolios </strong>created from <br/> your media.</h3>
+                        <div class="mb-3 mt-3"><a asp-action="List" asp-controller="Portfolio" asp-area="Portfolio" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i>edit portfolios</a></div>
+                        <hr class="nodisplay-lg"/>
+                    </div>
+                </div>
+                <div class="ps-3 col-sm-12 col-lg-3 pt-1 border-card-subscription vertical-space bg-gradient-2 pb-0">
+                    <div class="mt-4 pt-1">
+                        <h3 class="mb-0">Your plan:</h3>
+                        <h2 class="text-white"><strong>@Model.Subscription.Name</strong></h2>
+                    </div>
+                    <div>
+                        @if (@Model.Subscription.Price > 0)
+                        {
+                            <h3 class="mb-0 text-white">@Model.Subscription.Price.ToString("0.00")€ /month</h3>
+                        }
+                        else
+                        {
+                            <h3 class="mb-0 text-white">free forever</h3>
+                        }
+                        <h3 class="text-white">max. @Model.Subscription.AllowedMediaNumber media</h3>
+                        <div class="ms-2 mb-3 mt-3"><a asp-action="PricingPlan" asp-controller="Public" asp-area="Public" class="a-font-p grey-link-underline" type="submit">view plans</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row mt-3 pt-3 pb-4 p-4-lg mb-4 row-eq-height">
+    <div class="mb-4 ps-3 pe-3 h-100 col-sm-12 col-md-4 rounded-05">
+        <div class="pb-1 pt-0 bg-white card-header d-flex rounded-05-header alternative-bottom-border-dash">
+            <div class="col-11">
+                <p class="mt-2 mb-0" style="font-size: 14px !important; line-height: 22px !important;"><strong>PORTFOLIO</strong></p>
+            </div>
+            <div class="col-1 text-end">
+                <i class="fa-solid fa-circle fa-2xs circle-color-dash mt-3"></i>
+            </div>
+        </div>
+        <div class="pt-2 vertical-space card-body bg-white rounded-bottom rounded-05-footer">
+            <h1 class="mt-3 text-color">Create stunning portfolios, and share your work effortlessly.</h1>
+            <div class="row pt-2">
+                @if (Model.PortfolioThumbnailDto != null)
+                {
+                    <div class="col-4 pe-0">
+                        <div style="width: 100% !important;" class='box m-0'>
+                            <div class='content1_1'>
+                                @if (Model.PortfolioThumbnailDto.IsVideo)
+                                {
+                                    <video autoplay="autoplay" muted loop class="image-fit-radius-dashboard" title="@Model.PortfolioThumbnailDto.DefaultImageOriginalName">
+                                        <source src="@Model.BasePath@Model.PortfolioThumbnailDto.DefaultImageName?tr=w-400" type="video/mp4">
+                                    </video>
+                                }
+                                else
+                                {
+                                    if (Model.PortfolioThumbnailDto.DefaultImageName == "")
+                                    {
+                                        <img class="image-fit-radius-dashboard" src="~/imgs/noimage.png"/>
+                                    }
+                                    else
+                                    {
+                                        <img class="image-fit-radius-dashboard" title="@Model.PortfolioThumbnailDto.DefaultImageOriginalName" src="@Model.BasePath@Model.PortfolioThumbnailDto.DefaultImageName?tr=w-400"/>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-8 vertical-space">
+                        <h5><a onclick="CopyLink('https://localhost:44337/portfolio/68ce29b1-efa6-4f3d-57d5-08dbc8ca076e')"><i style="color: #202F4D" class="fa-regular fa-clone me-2"></i></a><strong class="text-color">@Model.PortfolioThumbnailDto.Name</strong></h5>
+                        <p class="veesy-grey-p mb-0" style="margin-bottom: 2rem">Updated on @Model.PortfolioThumbnailDto.LastUpdate<br/>@Model.PortfolioThumbnailDto.NumberMedia media uploaded</p>
+                    </div>
+                }
+                else
+                {
+                    <div class="empty-veesy"></div>
+                    <div class="text-center">No main portfolio yet</div>
+                    <div class="empty-veesy"></div>
+                }
+            </div>
+            <div class="row pt-2">
+                <hr class="hr-color-dash" />
+                <div class="col-6 pt-2">
+                    @if (Model.PortfolioThumbnailDto != null)
+                    {
+                        <a asp-controller="Portfolio" asp-action="Settings" asp-route-id="@Model.PortfolioThumbnailDto.Code" asp-area="Portfolio" class="grey-link ms-2"><i class="fa-regular fa-pen-to-square pe-1"></i>edit main portfolio</a>
+                    }
+                </div>
+                <div class="col-6 text-end"><a asp-controller="Portfolio" asp-action="List" asp-area="Portfolio" class="w-100 rounded-pill btn btn-primary a-font-p" type="submit">your portfolios</a></div>
+            </div>
+        </div>
+    </div>
+    <div class="mb-4 ps-3 pe-3 col-sm-12 col-md-4 rounded-05 h-100">
+        <div style="border-bottom: 1px solid rgba(255,255,255, 0.125)" class="pb-1 pt-0 bg-grey-dash card-header d-flex rounded-05-header">
+            <div class="col-11">
+                <p class="text-white mt-2 mb-0" style="font-size: 14px !important; line-height: 22px !important;"><strong>CLOUD</strong></p>
+            </div>
+            <div class="col-1 text-end">
+                <i class="fa-solid fa-circle fa-2xs mt-3" style="color: #ffffff;"></i>
+            </div>
+        </div>
+        <div class="pt-0 vertical-space card-body bg-grey-dash rounded-bottom rounded-05-footer">
+            <div>
+                <p class="text-white mt-4 mb-0"><strong>Quick Upload: </strong>Upload and order your files to create your portfolios.</p>
+                <p class="text-white mb-0">Formats accepted: <strong>jpg, png, mov, mp4, gif.</strong></p>
+            </div>
+            <div class="row">
+                <div class="col-12 rounded pt-4" style="color: transparent">
+                    <div id="div-uploader">
+                        <form enctype="multipart/form-data" asp-action="UploadMedia" asp-controller="Media" asp-area="Portfolio" class="dropzone card-grey-dashed-dropzone" id="uploader">
+                            <a id="dropzone-close-button" style="padding: 0.7rem 1rem !important; display: none;" onclick="hideDropZone()" class="p-0 ms-2 btn btn-light border fw-bolder shadow-none close-button-dropzone">
+                                <i class="fas fa-times-circle fa-2xs text-primary" id="icon-color" aria-hidden="true"></i>
+                                <span id="color-text-variant">close</span>
+                            </a>
+                            <div class="pt-4 dz-message needsclick" id="message-uploader">
+                                <div id="div-uploader-icon" class="w-100 mb-1">
+                                    <i id="uploader-icon" class="fa-solid fa-circle-plus fa-xl" style="color: #383B43"></i>
+                                </div>
+                                <span id="uploader-text" style="color: white;" class="text-white">
+                                    upload or drop your files here
+                                </span>
+                                <div class="progress-bar progress-bar-primary" role="progressbar" data-dz-uploadprogress>
+                                    <span class="progress-text"></span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row pt-4">
+                <div class="col-6 pt-2"><a class="grey-link ms-2">how it works<i class="fa-solid fa-arrow-up-right-from-square ms-2"></i></a></div>
+                <div class="col-6 text-end"><a asp-area="Portfolio" asp-controller="Cloud" asp-action="List" class="a-font-p w-100 rounded-pill btn btn-white" type="submit">go to cloud</a></div>
+            </div>
+        </div>
+    </div>
+    <div class="mb-4 ps-3 pe-3 col-sm-12 col-md-4 rounded-05 h-100">
+        <div style="border-bottom: 1px solid rgba(255,255,255, 0.125);" class="pb-1 pt-0 bg-blue card-header d-flex  rounded-05-header">
+            <div class="col-11">
+                <p class="text-white mt-2 mb-0" style="font-size: 14px !important; line-height: 22px !important;"><strong>PROFILE</strong>
+                </p>
+            </div>
+            <div class="col-1 text-end">
+                <i class="fa-solid fa-circle fa-2xs mt-3" style="color: #ffffff;"></i>
+            </div>
+        </div>
+        <div class="pt-2 vertical-space card-body bg-blue rounded-bottom rounded-05-footer">
+            <div class="row mt-4">
+                <div class="col-9">
+                    <h3 style="font-size: 27px !important; line-height: 30px !important;" class="text-white">@Model.Name @Model.Surname</h3>
+                    <h5 class="text-white">- @Model.UserCategory</h5>  
+                    <div class="empty-veesy"></div>
+                    <p class="text-white">@Model.UserDescription</p>
+                </div>
+                <div class="col-3">
+                    <div class="text-end">
+                        @if (string.IsNullOrEmpty(Model.FileName))
+                        {
+                            <img style="float: right" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" class="img-thumbnail-custom-dashboard rounded-circle" alt="user-image">
+                        }
+                        else
+                        {
+                            <img style="float: right" src="@Model.BaseProfileImage@Model.FileName?tr=w-400" class="img-thumbnail-custom-dashboard rounded-circle" alt="user-image">
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="row pt-2">
+                <hr style="color: #D7DADF"/>
+                @if (Model.PortfolioThumbnailDto != null)
+                {
+                    <div class="col-6 pt-2"><a asp-controller="Portfolio" asp-area="Portfolio" asp-action="PortfolioPreview" asp-route-id="@Model.PortfolioThumbnailDto.Code" asp-route-open="@true" class="grey-link ms-2">view main portfolio <i class="fa-solid fa-arrow-up-right-from-square"></i></a></div>
+                }
+                else
+                {
+                    <div class="col-6"></div>
+                }
+                <div class="col-6 text-end"><a asp-controller="Profile" asp-area="Account" asp-action="Profile" class="a-font-p w-100 rounded-pill btn btn-white" type="submit"><i class="fa-regular fa-pen-to-square pe-1"></i>update profile</a></div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div class="empty-veesy"></div>
+
+@section Style
+{
+    <style>
+        .dropzone{
+            min-height: 188px;
+        }
+        
+        #uploader-text{
+        
+          font-size: 13px !important;
+          line-height: 18px !important;
+        }
+    </style>
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script>
+        
+        /*APEX CHART JS - RADIAL */
+        var options = {        
+          chart: {
+            height: 150,
+            type: "radialBar",
+          },
+          series: [@Model.Percent],
+          colors: ["#27415E"],
+          plotOptions: {
+            radialBar: {
+              dataLabels: {
+                total: {
+                  show: false,
+                },
+                value:{
+                  show: false
+                }
+              },
+              startAngle: -180,
+              endAngle: 180,
+              hollow: {
+                margin: 0,
+                size: "35%",
+                background: "#ffffff"
+              }
+            }
+          },
+          fill: {
+            type: "gradient",
+            gradient: {
+              shade: "dark",
+              type: "linear",
+              gradientToColors: ["#75CCDD"],
+              stops: [0, 100]
+            }
+          },
+          stroke: {
+            lineCap: "round"
+          },
+          labels: [""]
+        };
+        
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        
+        chart.render();
+        
+    var div_uploader = document.getElementById("div-uploader");
+    /*Dropzone configuration*/
+        Dropzone.autoDiscover = false;
+        var uploader = null;
+        var msgUploader = document.getElementById("message-uploader");
+        var divUploader = document.getElementById("div-uploader-icon");
+        var iconUploader = document.getElementById("uploader-icon");
+        var txtUploader = document.getElementById("uploader-text");
+        let dropzone_processing = false;
+    
+        var dropzoneOptions = {
+            dictDefaultMessage: 'Upload or drop files here',
+            paramName: "file",
+            maxFilesize: 10000, // MB
+            addRemoveLinks: true,
+            parallelUploads: 1,
+            uploadMultiple: true,
+            acceptedFiles: "image/jpeg,image/png,image/gif,image/jpg,video/*",
+            addedfiles: function (){
+                dropzone_processing = true;
+            },
+            uploadprogress: function(file, progress, bytesSent) {
+                if (file.previewElement) {
+                    var progressElement = file.previewElement.querySelector("[data-dz-uploadprogress]");
+                    progressElement.style.width = progress + "%";
+                }
+            },
+            success: function (file) {
+               this.removeFile(file);
+            },
+            successmultiple: function (file, response) {
+                const res = JSON.parse(response);
+                // TODO mostrare popup con success/error
+                if (res.NumberSuccessFile > 0){
+                    toastNotifyCustom(res.SuccessFileMessage, 10000, "#75ccdd", "")
+                }    
+                if (res.NumberErrorFile > 0)
+                    toastNotifyCustom(res.ErrorFileMessage, 10000, "#ca0a0a", "")
+             },
+            errormultiple: function () {
+                toastNotifyCustom("Error during uploading files. Please retry.", 10000, "#ca0a0a", "")
+             },
+            queuecomplete: function (){
+               hideDropZone()
+               dropzone_processing = false;
+            }
+        };
+                
+        uploader = document.querySelector('#uploader');
+        var newDropzone = new Dropzone(uploader, dropzoneOptions);
+        
+        // 1
+        window.addEventListener('dragenter', function(e) {
+            showDropZone();
+        });
+        
+        // 2
+        uploader.addEventListener('dragenter', allowDrag);
+        uploader.addEventListener('dragover', allowDrag);
+        
+        // 3
+        uploader.addEventListener('dragleave', function(e) {
+            console.log('dragleave');
+            //hideDropZone();
+        });
+        
+        // 4
+        uploader.addEventListener('drop', handleDrop);
+               
+    
+        function showDropZone() {
+            document.getElementById("dropzone-close-button").style.display = "block";
+            div_uploader.classList.remove("nodisplay-md");
+            uploader.classList.remove("card-grey-dashed-veesy");
+            uploader.classList.add("dropzone-full-page");
+            
+            divUploader.classList.remove("mb-1");
+            msgUploader.classList.add("text-center");
+            msgUploader.classList.add("h-100");
+            msgUploader.style.marginTop = "20%";
+            divUploader.classList.add("mb-4");
+            txtUploader.classList.add("text-white");
+            iconUploader.style.color = "#ffffff"
+            
+            document.body.style.overflow = 'hidden';
+        }
+        
+
+        function hideDropZone() {
+            document.getElementById("dropzone-close-button").style.display = "none";
+            uploader.classList.remove("dropzone-full-page");
+            uploader.classList.add("card-grey-dashed-veesy");
+            
+            msgUploader.classList.remove("text-center");
+            msgUploader.classList.remove("h-100");
+            msgUploader.style.marginTop = "2em";
+            divUploader.classList.remove("mb-4");
+            txtUploader.classList.remove("text-white");
+            iconUploader.style.color = "#202F4D"
+            divUploader.classList.add("mb-1");
+            
+            document.body.style.overflow = 'visible';
+        }
+        
+        function allowDrag(e) {
+            if (true) {  // Test that the item being dragged is a valid one
+                e.dataTransfer.dropEffect = 'copy';
+            }
+        }
+        
+        function handleDrop(e) {
+            //hideDropZone();
+        }
+        
+        var allwidthprogress = document.getElementById("progress-media").offsetWidth
+        
+        var percent = (@Model.MediaPercent / 100) * allwidthprogress
+        $(".progress-bar").animate({
+            width: percent
+        }, 2500);
+    
+    </script>
+}

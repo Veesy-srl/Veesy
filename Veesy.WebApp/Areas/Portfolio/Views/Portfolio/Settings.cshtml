@@ -1,0 +1,715 @@
+@using Veesy.Domain.Constants
+@model Veesy.Presentation.Model.Portfolio.PortfolioSettingsViewModel
+
+@{
+    ViewData["Title"] = "Portfolio Settings";
+    var iconBack = "fa-regular";
+
+    if (Model.Portfolio.IsMain)
+    {
+        iconBack = "fa-solid";
+    }
+}
+
+<div class="padding-lg pt-7rem">
+    <div class="row  pt-4 p-4-lg">
+        <div class="col-sm-12 col-md-3 mb-3">
+            <nav class="breadcrumb-container" aria-label="Percorso di navigazione">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><img class="home-img me-2"><a class="breadcrumb-a me-2 a-font-p" asp-action="Index" asp-area="Portfolio" asp-controller="Home">desk</a><img class="icon-svg-derein-option"></li>
+                    <li class="breadcrumb-item"><a class="breadcrumb-a me-2 a-font-p" asp-action="List">portfolio</a><img class="icon-svg-derein-option"></li>
+                    <li class="breadcrumb-item"><a class="breadcrumb-a a-font-p" href="#"><strong>settings</strong></a></li>
+                </ol>
+            </nav>
+            <div class="w-80-veesy card-white-veesy p-3 mb-3">
+                <div class="d-flex">
+                    <div class="col-11">
+                        <p class="ms-2"><i style="color: #75CCDD" class="@iconBack icon-main-portfolio fa-star me-2"></i><strong id="portfolio-name-card">@Model.Portfolio.Name</strong></p>
+                    </div>
+                    <div class="col-1"><div class="text-end"><i class="fa-solid fa-circle fa-xs option-color-i" ></i></div></div>
+                </div>
+                <div class="d-flex mb-3">
+                    <div class="col-12">
+                        <div class="text-left">
+                            @if (Model.Portfolio.DefaultMedia != null && Model.Portfolio.DefaultMedia.IsVideo.HasValue && Model.Portfolio.DefaultMedia.IsVideo.Value)
+                            {
+                                <video autoplay="autoplay" muted loop class="image-fit-radius" title="@Model.Portfolio.DefaultMedia.OriginalFileName">
+                                    <source src="@Model.BasePathImages@Model.Portfolio.DefaultMedia.FileName?tr=w-400" type="video/mp4">
+                                </video>
+                            }
+                            else
+                            {
+                                if (Model.Portfolio.DefaultMedia != null && !string.IsNullOrEmpty(Model.Portfolio.DefaultMedia.FileName))
+                                {
+                                    <img class="image-fit-radius" title="@Model.Portfolio.DefaultMedia.OriginalFileName" src="@Model.BasePathImages@Model.Portfolio.DefaultMedia.FileName?tr=w-400"/>
+                                }
+                                else
+                                {
+                                    <img class="image-fit-radius" src="~/imgs/noimage.png"/>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex"><p class="mb-0 text-grey text-color">Updated on @Model.Portfolio.LastEditRecordDate</p></div>
+                <div class="d-flex"><p class="mb-0 text-grey veesy-overflow">@Model.Portfolio.NumberMedia media uploaded</p></div>
+                <div class="d-flex"><p class="mb-0 mt-3 text-grey veesy-overflow">@Model.Portfolio.NumberImage images</p></div>
+                <div class="d-flex"><p class="mb-0 text-grey veesy-overflow">@Model.Portfolio.NumberVideo videos</p></div>
+                <a target="_blank" asp-action="PortfolioPreview" asp-controller="Portfolio" asp-area="Portfolio" asp-route-id="@Model.Portfolio.Id" asp-route-open="@false" class="rounded-pill btn btn-primary btn-variant w-100 mt-3">preview portfolio</a>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+            <div class="d-flex">
+                <h2 class="text-color"><strong id="portfolio-name-title">@Model.Portfolio.Name</strong></h2>
+                <a onclick="CopyLink('@Model.ApplicationUrl@Url.Action("Portfolio", "Public", new {area = "Public", id = @Model.Portfolio.Id})')" class="blue-link ms-2 mt-1"><i class="fa-regular fa-l fa-clone pe-1"></i><strong></strong></a>
+            </div>
+            <p>Dynamically rearrange and personalize your portfolio's layout. Easily drag and move images to create your ideal showcase, tailoring each element to reflect your unique style and professional vision. Remember to publish to apply changes. <a class="grey-link ms-2"><strong>learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a></p>
+            <div class="empty-veesy"></div>
+            <div class="row">
+                <h3 class="text-color" style="font-size: 20px!important; line-height: 27px!important;"><strong>Main Settings</strong></h3>
+                <div class="col-sm-12 col-md-6 col-lg-6 ps-2 pe-2">
+                    <hr class="hr color-hr"/>
+                    <div class="d-flex">
+                        <div class="col-9">
+                            <p class="mb-0"><strong>Portfolio Name:</strong></p>
+                            <p class="mb-0 veesy-overflow" id="portfolio-name">@Model.Portfolio.Name</p>
+                        </div>
+                        <div class="col-3 text-end"><a onclick="setTextAreaValue('portfolio-name-edit', document.getElementById('portfolio-name').textContent), openModal('#modalName')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
+                    </div>
+                    <hr class="hr color-hr"/>
+                    <div class="d-flex">
+                        @if (Model.Portfolio.IsPublic)
+                        {
+                            <div class="col-8">
+                                <p class="mb-0"><strong>Portfolio Password</strong></p>
+                                <a id="password-show" class="mb-0 veesy-overflow a-font-p" onclick="openModal('#modalPassword')">Your portfolio is public</a>
+                            </div>
+                            @if (string.IsNullOrEmpty(Model.Portfolio.Password))
+                            {
+                                <div class="col-4 text-end"><a onclick="openModal('#modalPassword')" class="grey-link"><i id="lock-icon" class="fa-solid fa-lock-open me-2"></i><strong id="lock-text">unlocked</strong></a></div>
+                            }
+                            else
+                            {
+                                <div class="col-4 text-end"><a onclick="ChangePortfolioSecurity()" class="grey-link"><i id="lock-icon" class="fa-solid fa-lock-open me-2"></i><strong id="lock-text">unlocked</strong></a></div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="col-8">
+                                <p class="mb-0"><strong>Portfolio Password</strong></p>
+                                <a id="password-show" class="mb-0 veesy-overflow a-font-p" onclick="openModal('#modalPassword')">@Model.Portfolio.Password</a>
+                            </div>
+                            <div class="col-4 text-end"><a onclick="ChangePortfolioSecurity()" class="grey-link"><i id="lock-icon" class="fa-solid fa-lock me-2"></i><strong id="lock-text">lock</strong></a></div>
+                        }
+                    </div>
+                    <hr class="hr color-hr"/>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-6 ps-2 pe-2">
+                    <hr class="hr nodisplay-sm color-hr"/>
+                    <div class="d-flex">
+                        <div class="col-9">
+                            <p class="mb-0"><strong><i style="color: #75CCDD" class="@iconBack icon-main-portfolio fa-star me-2"></i>Featured Portfolio:</strong></p>
+                            @if (Model.Portfolio.IsMain)
+                            {
+                                <p class="mb-0 veesy-overflow" id="portfolio-main-text">Featured on the Creators page</p>
+                            }
+                            else
+                            {
+                                <a class="grey-link mb-0 a-font-p" id="portfolio-main-text" onclick="ChangeMainPortfolio()">Make this your Main Portfolio</a>
+                            }
+                        </div>
+                        @* <div class="col-3 text-end"><a onclick="openModal('#modalExternalLink')" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>add info</strong></a></div> *@
+                    </div>
+                    <hr class="hr color-hr"/>
+                    @if (Model.Portfolio.IsMain)
+                    {
+                        <div class="d-flex">
+                            <div class="col-9">
+                                <p class="text-danger mb-0"><strong>Delete portfolio:</strong></p>
+                                <a class="mb-0 veesy-overflow a-font-p">You can't delete featured portfolio</a>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="d-flex">
+                            <div class="col-9">
+                                <a class="red-link mb-0 a-font-p" onclick="openModal('#modalDeletePortfolio')"><strong>Delete portfolio:</strong></a>
+                                <p class="mb-0 veesy-overflow">Your medias will be kept safe in cloud.</p>
+                            </div>
+                        </div>
+                    }
+                    <hr class="hr color-hr"/>
+                </div>
+            </div>
+            <div class="empty-veesy"></div>
+            <div class="row">
+                <h3 class="text-color" style="font-size: 20px!important; line-height: 27px!important;"><strong>Select layout</strong></h3>
+                <p>We suggest using 1 or 2 columns for horizontal images, for vertical ones is better to pick 3 or 4 columns.</p>
+                <div class="ms-1 ps-0 row">
+                    @foreach (var item in VeesyConstants.GetAvailableLayouts())
+                    {
+                        <div class="ps-2 pe-2 col-sm-12 col-md-3">
+                            @{
+                                var css_select = "";
+                                if (Model.Portfolio.Layout == item)
+                                {
+                                    css_select = "div-select-layout-selected";
+                                }
+
+                            }
+                            <div id="layout-div-@((int)item)" class="p-2 form-check div-select-layout @css_select">
+                                <div class="d-flex me-2">
+                                    <input style="visibility: hidden" class="form-check-input" type="radio" name="column-layout" asp-for="Portfolio.Layout" value="@item" id="layout-@item" onchange="switchColumnLayout(@((int)item))"/>
+                                    @if ((int)item == 1)
+                                    {
+                                        <label class="ms-3 form-check-label text-color" for="@item">@((int)item) column</label>
+                                    }
+                                    else
+                                    {
+                                        <label class="ms-3 form-check-label text-color" for="@item">@((int)item) columns</label>
+                                    }
+                                </div>
+                                <div>
+                                    @{
+                                        var url = "../../imgs/PortfolioLayout/col_" + (int)item + ".png";
+                                    }
+                                    <a onclick="ChangeLayout('@item', @((int)item)), UpdateLayout(@((int)item))">
+                                        <img class="w-100" src="@url"/>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="empty-veesy"></div>
+            <div class="empty-veesy"></div>
+            <div class="row mt-4">
+                <div class="d-flex justify-content-between align-items-end">
+                    <h3 class="text-color" style="font-size: 20px!important; line-height: 27px!important;"><strong>Your Medias</strong></h3>
+                    <form method="get" asp-action="List" asp-controller="Cloud" asp-area="Portfolio">
+                        <button type="submit" class="rounded-pill btn-padding-20 btn btn-primary mt-2 a-font-p">
+                            add media from cloud<i class="fa-regular a-font-p fa-plus ps-2"></i>
+                        </button>
+                    </form>
+                </div>
+                <p>Drag the medias and choose the best order.</p>
+                <div class="card-columns draggable-zone" id="images-container">
+                    @foreach (var image in Model.Portfolio.PortfolioMedias)
+                    {
+                        @if (MediaCostants.ImageExtensions.Contains(image.Media.Type.ToUpper()))
+                        {
+                            <div id="media-@image.MediaId" style="position: relative" class="draggable m-0 pb-2 pt-2 show-edit" name="image-gallery" mediaid="@image.MediaId">
+                                <a onMouseDown="RemoveMediaFromPortfolio('@image.MediaId')" class="edit-button-portfolio">
+                                    <p class="mb-0 px-2 text-white">remove</p>
+                                </a>
+                                <img src="@Model.BasePathImages@image.Media.FileName?tr=w-400" class="card-body m-0 p-0 rounded-05 img-rounded-trasparent w-100 p-0" title="@image.Media.OriginalFileName"/>
+                            </div>
+                        }
+                        else
+                        {
+                            <div id="media-@image.MediaId" style="position: relative" class="draggable m-0 pb-2 pt-2 show-edit" name="image-gallery" mediaid="@image.MediaId">
+                                <a onMouseDown="RemoveMediaFromPortfolio('@image.MediaId')" class="edit-button-portfolio">
+                                    <p class="mb-0 px-2 text-white">remove</p>
+                                </a>
+                                <video autoplay="autoplay" muted loop class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" title="@image.Media.OriginalFileName">
+                                    <source src="@Model.BasePathImages@image.Media.FileName?tr=w-400" type="video/mp4">
+                                </video>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="empty-veesy"></div>
+            <div id="div-uploader">
+                <form enctype="multipart/form-data" asp-route-PortfolioId="@Model.Portfolio.Id" asp-action="UploadMediaInPortfolio" asp-controller="Media" asp-area="Portfolio" class="dropzone card-grey-dashed-veesy mb-4" id="uploader">
+                    <a id="dropzone-close-button" style="padding: 0.7rem 1rem !important; display: none;" onclick="hideDropZone()" class="ms-2 btn-light border fw-bolder shadow-none close-button-dropzone">
+                        <i class="fas fa-times-circle fa-2xs text-primary" id="icon-color" aria-hidden="true"></i>
+                        <span id="color-text-variant">close</span>
+                    </a>
+                    <div class="dz-message needsclick" id="message-uploader">
+                        <div id="div-uploader-icon" class="w-100 mb-1">
+                            <i id="uploader-icon" class="fa-solid fa-circle-plus fa-xl" style="color: #0D2045"></i>
+                        </div>
+                        <span id="uploader-text" class="text-color" style="font-size: 15px!important; line-height:  22px!important;">
+                            Upload or drop medias here. <br/> (Accepted formats: jpg, png, mov, mp4, gif)
+                        </span>
+                        <div class="progress-bar progress-bar-primary" role="progressbar" data-dz-uploadprogress>
+                            <span class="progress-text"></span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="empty-veesy"></div>
+        </div>
+        <div class="col-sm-12 col-md-3 pe-0">
+            <div class="empty-veesy"></div>
+            <div class="empty-veesy"></div>
+            <div class="d-flex justify-content-end ps-3">
+                <div class="w-75-veesy card-blue-veesy">
+                    <div class="text-end"><i class="fa-solid fa-circle fa-2xs" style="color: #ffffff;"></i></div>
+                    <p class="mb-0 text-white">Do you need some help?</p>
+                    <a class="a-ciano-underline" href="mailto:support@veesy.it">Contact us</a>
+                </div>
+            </div>
+            <div class="empty-veesy"></div>
+            <div class="empty-veesy"></div>
+            <div class="empty-veesy"></div>
+        </div>
+</div>
+</div>
+
+<div class="modal fade" id="modalName" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Portfolio Name</strong></h3>
+                <a onclick="closeModal('#modalName')"><i class="fa-solid fa-circle-xmark"></i></a>
+            </div>
+            <div class="modal-body">
+                <p class="mb-1 text-color"><strong>Name*</strong></p>
+                <input type="text" id="portfolio-name-edit" rows="4" class="w-100 input-modal text-profile"/>
+                <p class="mt-2 mb-0 tet-color">*required field</p>
+            </div>
+            <div class="modal-footer">                
+                <button onclick="UpdateName()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalPassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Portfolio password</strong></h3>
+                <a onclick="closeModal('#modalPassword')"><i class="fa-solid fa-circle-xmark"></i></a>
+            </div>
+            <div class="modal-body">
+                <p class="text-color">Your password must be lorem ipsum.</p>
+                <p class="mb-1 text-color"><strong>Set password</strong></p>
+                <input type="text" id="password-edit" rows="4" class="w-100 input-modal text-profile"/>
+            </div>
+            <div class="modal-footer mt-2">                
+                <button onclick="UpdatePassword()" class="rounded-pill btn btn-primary btn-padding" type="submit">save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalDeletePortfolio" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Delete Portfolio</strong></h3>
+                <a onclick="closeModal('#modalDeletePortfolio')"><i class="fa-solid fa-grey fa-circle-xmark"></i></a>
+            </div>
+            <div class="empty-veesy"></div>
+            <div class="modal-body text-center">
+                <h5 id="confirm-delete-body text-color">The portfolio @Model.Portfolio.Name will be delete permanently. Are you sure?</h5>
+            </div>
+            <div class="empty-veesy"></div>
+            <div class="row">  
+                <div class="col-4">
+                    <p class="ps-3 text-muted">
+                        <a style="text-decoration: underline !important; position: relative; top: 20px;" class="grey-link mt-3" onclick="closeModal('#modalDeletePortfolio')">back to portfolio</a>
+                    </p>
+                </div>
+                <div class="col-4 justify-content-center" style="display: flex">
+                    <form method="post" asp-controller="Portfolio" asp-action="DeletePortfolio">
+                        @Html.HiddenFor(s => s.Portfolio.Id)
+                        <button class="mt-2 rounded-pill btn btn-delete" type="submit">yes, delete</button>
+                    </form>
+                </div>
+                <div class="col-4"></div>
+            </div>
+            <div class="empty-veesy"></div>
+        </div>
+    </div>
+</div>
+
+@{
+    var css = ""; 
+    if (@Model.Portfolio.Status == PortfolioContants.STATUS_DRAFT)
+    {
+        css = "show";
+    }
+}
+
+<div id="alert-portfolio" class="@css custom-alert-cloud shadow alert alert-dismissible fade mobile-option-cloud alert-veesy-cloud" role="alert">
+    <div class="w-100">
+        <div class="float-start">
+            <div class="d-flex mt-2">
+                <p id="number_files" class="fw-bolder text-color" style="margin-top: -2px;">Some changes are unpublished</p>
+            </div>
+        </div>
+        <div class="float-end">
+            <div class="d-flex align-items-center">
+                <a onclick="CloseAlert()" class="blue-link me-4 fw-bolder text-color a-font-p" style="font-size: 14px; margin-top: 2px;">ignore</a>
+                <button onclick="PublishPortfolio()" class="rounded-pill btn btn-grey btn-padding a-font-p" style="padding-left: 35px !important; padding-right:  35px !important; font-size:  15px;" type="submit">publish portfolio</button>
+                <a class="ms-4 me-2 mt-1" type="button" onclick="CloseAlert()"><i class="fa-solid fa-grey fa-circle-xmark"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+
+    <script src="https://cdn.jsdelivr.net/npm/@@shopify/draggable@1.0.0-beta.11/lib/draggable.bundle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@@shopify/draggable@1.0.0-beta.11/lib/draggable.bundle.legacy.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@@shopify/draggable@1.0.0-beta.11/lib/sortable.js"></script>
+
+    <script>
+    const alert_portfolio = document.getElementById("alert-portfolio");
+    function CloseAlert() {
+        alert_portfolio.classList.remove("show");
+    }
+    
+    let active_layout = @((int)Model.Portfolio.Layout);
+    
+    function UpdateLayout(layout) {
+        if (active_layout == layout)
+            return;
+        active_layout = layout;
+        var LayoutGrid = active_layout;
+        var Id = '@Model.Portfolio.Id'
+        var portfolioDto = {Id, LayoutGrid}
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("UpdateLayout", "Portfolio")',
+            data: JSON.stringify(portfolioDto),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (response) {
+                alert_portfolio.classList.add("show");
+            },
+            error: function (response) {
+                $('#load-spinner').css("display", "none");
+            }
+        })
+    }
+    
+    function PublishPortfolio(layout) {
+
+        var portfolioId = '@Model.Portfolio.Id'
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("Publish", "Portfolio")',
+            data: JSON.stringify(portfolioId),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (response) {
+                CloseAlert();
+            },
+            error: function (response) {
+                $('#load-spinner').css("display", "none");
+            }
+        })
+    }
+                                                                                                        
+    function switchColumnLayout(columnsNumber) {
+      var imagesContainer = document.getElementById("images-container");
+      imagesContainer.classList.remove("card-columns")
+      imagesContainer.style.columnCount = columnsNumber
+    }
+    
+    const sortable = new Sortable.default(
+        document.querySelectorAll('.draggable-zone'), {
+            draggable: '.draggable',
+              handle: ".draggable",
+              mirror: {
+                  appendTo: "body",
+                  constrainDimensions: true
+              },
+              delay: 50
+        }
+    )
+    sortable.on('drag:start', (divElem) => {
+      console.log(divElem)
+      var imageElem = divElem.source.children[0]
+      imageElem.style.border = "3px solid #75CCDD"
+    })
+    sortable.on('drag:stop', (divElem) => {
+        var imageElem = divElem.source.children[0]
+        imageElem.style.border = ''
+        var sortOrderElements = document.getElementById("images-container").querySelectorAll('.draggable:not(.draggable--original)')
+        var sortOrder = [...sortOrderElements].map((elem, index)=> {
+            return {
+                mediaId: elem.getAttribute("mediaid"),
+                sortOrder: index
+            }
+        })
+        var data = {
+            portfolioId: '@Model.Portfolio.Id',
+            newMediasSortOrder: sortOrder
+        }
+        $.ajax({
+          type: 'POST',
+          url: '@Url.Action("UpdateSortOrder", "Portfolio")',
+          data: JSON.stringify(data),
+          contentType: 'application/json; charset=utf-8',
+          dataType: 'json',
+          success: function (response) {
+              if (!response.result){
+                toastNotifyCustom(response.message, 10000, "#ca0a0a", "")
+              }
+              else{
+                alert_portfolio.classList.add("show");
+              }
+              console.log("ordine cambiato")
+          },
+          error: function (response) {
+              toastNotifyCustom(response.message, 10000, "#ca0a0a", "")
+          }
+        })
+    })
+    
+    function UpdateName() {
+        $('#load-spinner').css("display", "block");
+        var Name = document.getElementById("portfolio-name-edit").value
+        var Id = '@Model.Portfolio.Id'
+        var portfolioDto = {Id, Name}
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("UpdateName", "Portfolio")',
+            data: JSON.stringify(portfolioDto),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (response) {
+                if(response.result){
+                    document.getElementById("portfolio-name-edit").value = Name;
+                    document.getElementById("portfolio-name-card").textContent = Name;
+                    document.getElementById("portfolio-name-title").textContent = Name;
+                    document.getElementById("portfolio-name").textContent = Name;
+                    closeModal('#modalName')
+                }
+                $('#load-spinner').css("display", "none");
+            },
+            error: function (response) {
+                $('#load-spinner').css("display", "none");
+            }
+        })
+    }
+    
+    function UpdatePassword() {
+        $('#load-spinner').css("display", "block");
+        var Password = document.getElementById("password-edit").value
+        portfolioPassword = Password;
+        var Id = '@Model.Portfolio.Id'
+        var portfolioDto = {Id, Password}
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("UpdatePassword", "Portfolio")',
+            data: JSON.stringify(portfolioDto),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (response) {
+                if(response.result){
+                    document.getElementById("password-show").textContent = Password;
+                    document.getElementById("lock-text").textContent = "lock";
+                    document.getElementById("lock-icon").classList.remove("fa-lock-open");
+                    document.getElementById("lock-icon").classList.add("fa-lock");
+                    closeModal('#modalPassword')
+                }
+                $('#load-spinner').css("display", "none");
+            },
+            error: function (response) {
+                $('#load-spinner').css("display", "none");
+            }
+        })
+    }
+    
+    let portfolioIsPublish = '@Model.Portfolio.IsPublic' == 'True' ? true : false;
+    let portfolioPassword = '@Model.Portfolio.Password';
+    function ChangePortfolioSecurity(value) {
+        portfolioIsPublish = !portfolioIsPublish;
+        var IsPublish = portfolioIsPublish;
+        var Id = '@Model.Portfolio.Id'
+        var portfolioDto = {Id, IsPublish}
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("UpdateSecurity", "Portfolio")',
+            data: JSON.stringify(portfolioDto),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (response) {
+                if(response.result){
+                    if (!IsPublish){
+                        document.getElementById("password-show").textContent = portfolioPassword;
+                        document.getElementById("lock-text").textContent = "lock";
+                        document.getElementById("lock-icon").classList.remove("fa-lock-open");
+                        document.getElementById("lock-icon").classList.add("fa-lock");
+                    }
+                    else{
+                        document.getElementById("password-show").textContent = "Your portfolio is public";
+                        document.getElementById("lock-text").textContent = "unlocked";
+                        document.getElementById("lock-icon").classList.add("fa-lock-open");
+                        document.getElementById("lock-icon").classList.remove("fa-lock");
+                    }
+                }
+                $('#load-spinner').css("display", "none");
+            },
+            error: function (response) {
+                $('#load-spinner').css("display", "none");
+            }
+        })
+    }
+    
+    function ChangeMainPortfolio() {
+        var Id = '@Model.Portfolio.Id'
+        var IsMain = true
+        var portfolioDto = {Id, IsMain}
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("SetMainPortfolio", "Portfolio")',
+            data: JSON.stringify(portfolioDto),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (response) {
+                if(response.result){
+                    document.getElementById("portfolio-main-text").textContent = "This portfolio is set as your main";
+                    document.getElementById("portfolio-main-text").classList.remove("grey-link")
+                    var icons = document.getElementsByClassName("icon-main-portfolio");
+                    for (let i = 0; i < icons.length; i++){
+                        icons[i].classList.remove("fa-regular")
+                        icons[i].classList.add("fa-solid")
+                    }
+                }
+                $('#load-spinner').css("display", "none");
+            },
+            error: function (response) {
+                $('#load-spinner').css("display", "none");
+            }
+        })
+    }
+    
+    function RemoveMediaFromPortfolio(Id) {
+        var PortfolioId = '@Model.Portfolio.Id'
+        var MediaId = Id
+        var PortfolioMediaDto = {PortfolioId, MediaId}
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("RemoveMediaFromPortfolio", "Portfolio")',
+            data: JSON.stringify(PortfolioMediaDto),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (response) {
+                if(response.result){
+                    document.getElementById("media-" + Id).remove()
+                }
+                $('#load-spinner').css("display", "none");
+            },
+            error: function (response) {
+                $('#load-spinner').css("display", "none");
+            }
+        })
+    }
+    
+    function ChangeLayout(text, integer){
+        var divs = document.getElementsByClassName("div-select-layout-selected")
+        for(let i = 0; i < divs.length; i++){
+            divs[i].classList.remove("div-select-layout-selected")
+        }
+        document.getElementById("layout-div-" + integer).classList.add("div-select-layout-selected")
+        document.getElementById("layout-" + text).checked = true;
+        switchColumnLayout(integer)
+    }
+    
+    var div_uploader = document.getElementById("div-uploader");
+        /*Dropzone configuration*/
+        Dropzone.autoDiscover = false;
+        var uploader = null;
+        var msgUploader = document.getElementById("message-uploader");
+        var divUploader = document.getElementById("div-uploader-icon");
+        var iconUploader = document.getElementById("uploader-icon");
+        var txtUploader = document.getElementById("uploader-text");
+        let dropzone_processing = false;
+    
+        var dropzoneOptions = {
+            dictDefaultMessage: 'Upload or drop files here',
+            paramName: "file",
+            maxFilesize: 10000, // MB
+            addRemoveLinks: true,
+            parallelUploads: 1,
+            uploadMultiple: true,
+            acceptedFiles: "image/jpeg,image/png,image/gif,image/jpg,video/*",
+            addedfiles: function (){
+                dropzone_processing = true;
+            },
+            uploadprogress: function(file, progress, bytesSent) {
+                if (file.previewElement) {
+                    var progressElement = file.previewElement.querySelector("[data-dz-uploadprogress]");
+                    progressElement.style.width = progress + "%";
+                }
+            },
+            success: function (file) {
+               this.removeFile(file);
+            },
+            successmultiple: function (file, response) {
+                const res = JSON.parse(response);
+                // TODO mostrare popup con success/error
+                if (res.NumberSuccessFile > 0){
+                    toastNotifyCustom(res.SuccessFileMessage, 10000, "#75ccdd", "")
+                    for (let i = 0; i < res.MediaDtos.length; i++){
+                        if (res.MediaDtos[i].IsVideo){
+                            document.getElementById("images-container").innerHTML +=
+                            '<div id="media-' + res.MediaDtos[i].Code + '" style="position: relative" class="draggable m-0 pb-2 pt-2" name="image-gallery" mediaid="' + res.MediaDtos[i].Code + '" tabindex="0" style="">'+
+                                 '<a onMouseDown="RemoveMediaFromPortfolio(' + res.MediaDtos[i].Code + ')" class="edit-button-portfolio">'+
+                                    '<p class="mb-0 px-2 text-white">remove</p>'+
+                                 '</a>'+
+                                 '<video autoplay="autoplay" muted="" loop="" class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" title="'+ res.MediaDtos[i].OriginalFileName +'">'+
+                                     '<source src="' + '@Model.BasePathImages' + res.MediaDtos[i].FileName + '?tr=w-400" type="video/mp4">'+
+                                 '</video>'+
+                             '</div>';
+                         }
+                        else{
+                            document.getElementById("images-container").innerHTML +=
+                            '<div id="media-' + res.MediaDtos[i].Code + '" style="position: relative" class="draggable m-0 pb-2 pt-2" name="image-gallery" mediaid="' + res.MediaDtos[i].Code + '" tabindex="0">'+
+                                '<a onMouseDown="RemoveMediaFromPortfolio(' + res.MediaDtos[i].Code + ')" class="edit-button-portfolio">'+
+                                    '<p class="mb-0 px-2 text-white">remove</p>'+
+                                '</a>'+
+                                '<img src="' + '@Model.BasePathImages' + res.MediaDtos[i].FileName + '?tr=w-400" class="card-body m-0 p-0 rounded-05 img-rounded-trasparent w-100 p-0" title="'+ res.MediaDtos[i].OriginalFileName +'">' +
+                            '</div>'
+                                    
+                        }
+                    }
+                }    
+                if (res.NumberErrorFile > 0)
+                    toastNotifyCustom(res.ErrorFileMessage, 10000, "#ca0a0a", "")
+             },
+            errormultiple: function () {
+                toastNotifyCustom("Error during uploading files. Please retry.", 10000, "#ca0a0a", "")
+             },
+            queuecomplete: function (){
+               dropzone_processing = false;
+            }
+        };
+        uploader = document.querySelector('#uploader');
+        var newDropzone = new Dropzone(uploader, dropzoneOptions);
+    </script>
+}
+
+@section Style
+{
+    <link rel="stylesheet" href="~/css/notyf_override.css" asp-append-version="true" />
+    <style>
+        .draggable {
+            cursor: move;
+        }
+        
+        .draggable-source--is-dragging {
+            /* non togliere anche se non ha usi, serve per eliminare un elemento generato dal plugin */ 
+            visibility: hidden;
+        }
+        
+        img.rounded-corners {
+          border-radius: 20px;
+          width: 100%
+        }
+        .card-columns {
+            column-count: @((int)Model.Portfolio.Layout);
+        }
+    </style>
+}

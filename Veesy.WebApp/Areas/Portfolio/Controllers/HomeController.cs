@@ -1,13 +1,33 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Veesy.Domain.Models;
+using Veesy.Presentation.Helper;
 
-namespace Veesy.WebApp.Areas.Portfolio.Controllers
+namespace Veesy.WebApp.Areas.Portfolio.Controllers;
+
+[Area("Portfolio")]
+[Authorize]
+public class HomeController : VeesyController
 {
-    [Area("Portfolio")]
-    public class HomeController : Controller
+    private readonly HomeHelper _homeHelper;
+    public HomeController(UserManager<MyUser> userManager, IConfiguration config, HomeHelper homeHelper) : base(userManager, config)
     {
-        public IActionResult Index()
+        _homeHelper = homeHelper;
+    }
+    
+    [HttpGet("dashboard")]
+    public IActionResult Index()
+    {
+        try
         {
-            return View();
+            var vm = _homeHelper.GetDashboardViewModel(UserInfo);
+            return View(vm);
+        }
+        catch (Exception e)
+        {
+            return RedirectToAction("Error400", "Public", new { area = "Public" });
         }
     }
+
 }

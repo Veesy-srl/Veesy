@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
+      <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.2.0" />
+      <PackageReference Include="NReco.VideoConverter" Version="1.2.1" />
+      <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Veesy.Domain\Veesy.Domain.csproj" />
+      <ProjectReference Include="..\Veesy.Service\Veesy.Service.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Constants\" />
+    </ItemGroup>
+
+</Project>

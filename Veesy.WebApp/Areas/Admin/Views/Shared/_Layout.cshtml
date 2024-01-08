@@ -1,0 +1,193 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Veesy | @ViewData["Title"]</title>
+  <link rel="stylesheet" href="~/assets/css/styles.min.css" />
+</head>
+
+@await RenderSectionAsync("Style", required: false)
+
+<style>
+  
+.header-logo{
+  content: url('../../imgs/veesy_vettoriale_enigma.png');
+  width: 75px; 
+  height: 25px; 
+  margin-top: 5px;
+}
+</style>
+
+<body>
+  <!--  Body Wrapper -->
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+    data-sidebar-position="fixed" data-header-position="fixed">
+    <!-- Sidebar Start -->
+    <aside class="left-sidebar">
+      <!-- Sidebar scroll-->
+      <div>
+        <div class="brand-logo d-flex align-items-center justify-content-between">
+          <a href="#" class="text-nowrap logo-img">
+            <img class="header-logo"/>
+          </a>
+          <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+            <i class="ti ti-x fs-8"></i>
+          </div>
+        </div>
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+          <ul id="sidebarnav">
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">Home</span>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" asp-controller="Admin" asp-action="Dashboard" aria-expanded="false">
+                <span>
+                  <i class="ti ti-layout-dashboard"></i>
+                </span>
+                <span class="hide-menu">Overview</span>
+              </a>
+            </li>
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">MANAGE</span>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" asp-area="Admin" asp-controller="Admin" asp-action="CreatorsList" aria-expanded="false">
+                <span>
+                  <i class="ti ti-users"></i>
+                </span>
+                <span class="hide-menu">Creators</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" asp-area="Admin" asp-controller="Admin" asp-action="CreatorsNoFreeList" aria-expanded="false">
+                <span>
+                  <i class="ti ti-users"></i>
+                </span>
+                <span class="hide-menu">Cards</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="https://noteforms.com/forms/database-test-owzf1l" aria-expanded="false">
+                <span>
+                  <i class="ti ti-heart-handshake"></i>
+                </span>
+                <span class="hide-menu">Match</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" asp-area="Admin" asp-controller="Admin" asp-action="SubscriptionsOverview" aria-expanded="false">
+                <span>
+                  <i class="ti ti-coin"></i>
+                </span>
+                <span class="hide-menu">Subscriptions</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" asp-area="Admin" asp-controller="Admin" asp-action="FactoryList" aria-expanded="false">
+                <span>
+                  <i class="ti ti-building-store"></i>
+                </span>
+                <span class="hide-menu">Aziende</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <!-- End Sidebar navigation -->
+      </div>
+      <!-- End Sidebar scroll-->
+    </aside>
+    <!--  Sidebar End -->
+    <!--  Main wrapper -->
+    <div class="body-wrapper">
+      <!--  Header Start -->
+      <header class="app-header">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <ul class="navbar-nav">
+            <li class="nav-item d-block d-xl-none">
+              <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
+                <i class="ti ti-menu-2"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              
+            </li>
+          </ul>
+          <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+            <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
+              <li class="nav-item dropdown">
+                <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
+                   aria-expanded="false">
+                  @{
+                      var imageSrc = ViewBag.BaseDirectory + ViewBag.ProfileImage + "?tr=w-400";
+
+                      string username = User.Identity.Name;
+                      if (string.IsNullOrEmpty(ViewBag.ProfileImage))
+                      {
+                          imageSrc = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU";
+                      }
+                  }
+                  <img src="@imageSrc" alt="" width="35" height="35" class="rounded-circle">
+                </a>
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
+                  <div class="message-body">
+                    <a asp-area="Account" asp-controller="Profile" asp-action="Profile" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-user fs-6"></i>
+                      <p class="mb-0 fs-3">My Profile</p>
+                    </a>
+                    <a asp-area="Portfolio" asp-controller="Home" asp-action="Index" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-layout-dashboard fs-6"></i>
+                      <p class="mb-0 fs-3">Veesy Dashboard</p>
+                    </a>
+                    <a asp-action="Logout" asp-controller="Auth" asp-area="Auth" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      <!--  Header End -->
+      <div class="container-fluid">
+        @RenderBody()
+      </div>
+    </div>
+  </div>
+  <script src="~/assets/libs/jquery/dist/jquery.min.js"></script>
+  <script src="~/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="~/assets/js/sidebarmenu.js"></script>
+  <script src="~/assets/js/app.min.js"></script>
+  <script src="~/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
+<script src="~/assets/libs/simplebar/dist/simplebar.js"></script>
+<script>
+
+        function openModal(id){
+            $(id).modal('show');
+        }
+        function closeModal(id){
+            $(id).modal('hide');
+        }
+</script>
+  @await Component.InvokeAsync("Notyf")
+  @await RenderSectionAsync("Scripts", required: false)
+
+  <script>
+    function CopyLink(content) {
+      navigator.clipboard.writeText(content);
+      toastNotifyCustom("Text copied!", 3000, "#75ccdd", "")
+    }
+  </script>
+  
+<div id="load-spinner" style="top: 0px; display: none; position: fixed; z-index: 9999; padding-top: 500px !important; height: 100%; width: 100%; background-color: rgba(0, 0, 0, 0.5);" class="text-center">
+  <div class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
+</body>
+
+</html>
