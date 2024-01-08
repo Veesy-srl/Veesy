@@ -104,7 +104,7 @@ public class AuthHelper
             {
                 new ()
                 {
-                    SubscriptionPlanId = _accountService.GetSubscriptionPlanByName(VeesyConstants.SubscriptionPlan.Beta).Id,
+                    SubscriptionPlanId = _accountService.GetSubscriptionPlanByName(VeesyConstants.SubscriptionPlan.Free).Id,
                     CreateUserId = userID,
                     LastEditUserId = userID
                 }

@@ -22,13 +22,13 @@ public class DbInitializer
                 roleResult = roleManager.CreateAsync(new IdentityRole(roleName)).Result;
         }
 
-        var adm1 = userManager.FindByEmailAsync("lorenzo.vettori11@gmail.com").Result;
+        var adm1 = userManager.FindByEmailAsync("develop@enigma-tech.it").Result;
         if (adm1 == null)
         {
             adm1 = new MyUser
             {
-                UserName = "lore_vetto11",
-                Email = "lorenzo.vettori11@gmail.com",
+                UserName = "develop_enigma",
+                Email = "develop@enigma-tech.it",
                 EmailConfirmed = true
             };
 
@@ -36,27 +36,42 @@ public class DbInitializer
             var addedRole = userManager.AddToRolesAsync(adm1, new[] { Roles.Admin}).Result;
         }
 
-        var adm2 = userManager.FindByEmailAsync("lorenzo.vettori@enigma-tech.it").Result;
+        var adm2 = userManager.FindByEmailAsync("fabrizio@veesy.eu").Result;
         if (adm2 == null)
         {
             adm2 = new MyUser
             {
-                UserName = "lv_enigma",
-                Email = "lorenzo.vettori@enigma-tech.it",
+                UserName = "Fabrizio",
+                Email = "fabrizio@veesy.eu",
                 EmailConfirmed = true
             };
 
             IdentityResult result = userManager.CreateAsync(adm2, "Antani123!").Result;
-            var addedRole = userManager.AddToRolesAsync(adm2, new[] { Roles.User }).Result;
+            var addedRole = userManager.AddToRolesAsync(adm2, new[] { Roles.Admin }).Result;
+
+        }
+
+        var adm3 = userManager.FindByEmailAsync("massimiliano@veesy.eu").Result;
+        if (adm3 == null)
+        {
+            adm3 = new MyUser
+            {
+                UserName = "mnveesy",
+                Email = "massimiliano@veesy.eu",
+                EmailConfirmed = true
+            };
+
+            IdentityResult result = userManager.CreateAsync(adm3, "Antani123!").Result;
+            var addedRole = userManager.AddToRolesAsync(adm3, new[] { Roles.Admin }).Result;
 
         }
         
         var subscriptionPlans = new List<SubscriptionPlan>()
         {
-            new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Beta", Description = "Beta", Price = 0.0m, AllowedMediaNumber = 50, AllowedMegaByte = 250, IsMediaFormatsInclude = false},
-            new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Free", Description = "Free", Price = 0.0m, AllowedMediaNumber = 10, AllowedMegaByte = 100, IsMediaFormatsInclude = false},
-            new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Pro", Description = "Pro", Price = 1.0m, AllowedMediaNumber = 100, AllowedMegaByte = 5000, IsMediaFormatsInclude = false},
-            new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Plus", Description = "Plus", Price = 2.0m, AllowedMediaNumber = -1, AllowedMegaByte = 10000, IsMediaFormatsInclude = false},
+            new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Beta", Description = "Beta", Price = 0.0m, AllowedMediaNumber = 10, AllowedMegaByte = 250, IsMediaFormatsInclude = false},
+            new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Free", Description = "Free", Price = 0.0m, AllowedMediaNumber = 10, AllowedMegaByte = 250, IsMediaFormatsInclude = false},
+            new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Pro", Description = "Pro", Price = 10.0m, AllowedMediaNumber = 100, AllowedMegaByte = 5000, IsMediaFormatsInclude = false},
+            new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Plus", Description = "Plus", Price = 20.0m, AllowedMediaNumber = -1, AllowedMegaByte = 10000, IsMediaFormatsInclude = false},
         };
         var dbSubscriptions = dbContext.SubscriptionPlans.ToList();
         foreach (var item in subscriptionPlans)
