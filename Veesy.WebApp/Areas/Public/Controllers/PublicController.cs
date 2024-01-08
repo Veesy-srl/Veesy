@@ -237,4 +237,10 @@ public class PublicController : VeesyController
     {
         return View();
     }
+    
+    [HttpGet("404")]
+    public IActionResult Error404()
+    {
+        return View();
+    }
 }
