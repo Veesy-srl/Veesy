@@ -12,7 +12,7 @@ public class MediaDto
     public string Type { get; set; }
     public string UploadDate { get; set; }
     public string? Credits { get; set; }
-    public MyUser? Owner { get; set; }
+    public OwnerDto? Owner { get; set; }
     public bool? IsVideo => !string.IsNullOrEmpty(Type) ? MediaCostants.VideoExtensions.Contains(Type.ToUpper()) : null;
 }
 
@@ -36,6 +36,15 @@ public class LinkPortfolioDto{
     public bool Selected { get; set; }
 }
 
+public class OwnerDto{
+    public string Email { get; set; }
+    public string ProfileImageFileName { get; set; }
+    public string Name { get; set; }
+    public string Surname { get; set; }
+    public string Fullname => Name + " " + Surname;
+    public string Category { get; set; }
+}
+
 public static class MapCloudDtos
 {
 
@@ -50,6 +59,18 @@ public static class MapCloudDtos
         }));
         return portfoliosDto;
     }
+
+    public static OwnerDto MapOwnerDto(MyUser user)
+    {
+        return new OwnerDto()
+        {
+            ProfileImageFileName = user.ProfileImageFileName,
+            Email = user.Email,
+            Category = user.Category,
+            Name = user.Name,
+            Surname = user.Surname
+        };
+    }
     
     public static List<MediaDto> MapMediaList(List<Media> media)
     {
@@ -62,7 +83,7 @@ public static class MapCloudDtos
             Type = x.Type,
             Credits = x.Credits,
             UploadDate = x.CreateRecordDate.ToString("dd/MM/yyyy hh.mm"),
-            Owner = x.MyUser != null ? x.MyUser : null
+            Owner = x.MyUser != null ? MapOwnerDto(x.MyUser) : null
         }).ToList();
     }
     
@@ -80,7 +101,7 @@ public static class MapCloudDtos
             Type = media.Type,
             Credits = media.Credits,
             UploadDate = media.CreateRecordDate.ToString("dd/MM/yyyy hh.mm"),
-            Owner = media.MyUser != null ? media.MyUser : null
+            Owner = media.MyUser != null ? MapOwnerDto(media.MyUser) : null
         };
     }
 }
