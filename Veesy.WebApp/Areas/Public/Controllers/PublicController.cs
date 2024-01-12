@@ -183,6 +183,20 @@ public class PublicController : VeesyController
             return RedirectToAction("Error400");
         }
     }
+    
+    [HttpGet("terms-and-condition")]
+    public IActionResult TermsAndConditions()
+    {
+        try
+        {
+            return View();
+        }
+        catch (Exception e)
+        {
+            Logger.Error(e, e.Message);
+            return RedirectToAction("Error400");
+        }
+    }
 
     [HttpGet("portfolio/{id}")]
     public IActionResult Portfolio(Guid id)
