@@ -16,7 +16,7 @@ public class HomeController : VeesyController
         _homeHelper = homeHelper;
     }
     
-    [HttpGet("dashboard")]
+    [HttpGet("desk")]
     public IActionResult Index()
     {
         try

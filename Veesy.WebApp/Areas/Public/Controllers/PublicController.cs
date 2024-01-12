@@ -59,7 +59,7 @@ public class PublicController : VeesyController
         }
     }
     
-    [HttpGet("ProvacyPolicy")]
+    [HttpGet("privacy-policy")]
     public IActionResult PrivacyPolicy()
     {
         try
@@ -169,7 +169,6 @@ public class PublicController : VeesyController
         }
     }
     
-    [Authorize]
     [HttpGet("pricing-plan")]
     public IActionResult PricingPlan()
     {
