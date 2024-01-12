@@ -169,7 +169,6 @@ public class PublicController : VeesyController
         }
     }
     
-    [Authorize]
     [HttpGet("pricing-plan")]
     public IActionResult PricingPlan()
     {

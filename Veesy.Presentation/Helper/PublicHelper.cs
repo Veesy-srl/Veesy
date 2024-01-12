@@ -76,7 +76,7 @@ public class PublicHelper
     {
         var vm = new SubscritionPlanViewModel()
         {
-            Subscription = _accountService.GetUserSubscriptionPlan(userInfo.Id)
+            Subscription = userInfo == null ? null : _accountService.GetUserSubscriptionPlan(userInfo.Id)
         };
         return vm;
     }
