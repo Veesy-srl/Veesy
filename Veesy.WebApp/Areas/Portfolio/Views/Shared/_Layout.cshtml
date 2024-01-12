@@ -38,6 +38,16 @@
                         <img class="header-logo mr-2">cookies
                     </a>
                 }
+                else if(ViewContext.RouteData.Values["Action"].ToString() == "PrivacyPolicy"){
+                    <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
+                        <img class="header-logo mr-2">page
+                    </a>
+                }
+                else if(ViewContext.RouteData.Values["Action"].ToString() == "TermsAndConditions"){
+                    <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
+                        <img class="header-logo mr-2">page
+                    </a>
+                }
                 else if(ViewContext.RouteData.Values["Action"].ToString() == "Gallery"){
                     <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
                         <img class="header-logo mr-2">gallery
@@ -55,7 +65,7 @@
                         <img class="header-logo mr-2">404
                     </a>
                 }
-                else if (ViewContext.RouteData.Values["Action"].ToString() == "Error400")
+                else if (ViewContext.RouteData.Values["Action"].ToString() == "Error404")
                 {
                     <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
                         <img class="header-logo mr-2">400
@@ -261,7 +271,7 @@
                 <div class="text-color">
                     <a asp-action="About" asp-controller="Public" asp-area="Public">About</a><br/>
                     <a asp-action="PricingPlan" asp-controller="Public" asp-area="Public">Plans & Pricing</a><br/>
-                    <a asp-action="Error400" asp-controller="Public" asp-area="Public">FAQ</a><br/>
+                    <a asp-action="Error404" asp-controller="Public" asp-area="Public">FAQ</a><br/>
                 </div>
             </div>
             <div class="col-md-3 mt-3 mt-md-5 veesy-text-color" >
@@ -271,7 +281,7 @@
                 <div class="text-color">
                     <a target="_blank" asp-action="PrivacyPolicy" asp-controller="Public" asp-area="Public">Privacy Policy</a><br/>
                     <a asp-action="CookiesPolicy" asp-controller="Public" asp-area="Public">Cookies Policy</a><br/>
-                    <a asp-action="Error400" asp-controller="Public" asp-area="Public">Community Rules</a>
+                    <a asp-action="Error404" asp-controller="Public" asp-area="Public">Community Rules</a>
                 </div>
             </div>
             <div class="col-md-3 mt-3 mt-md-5 mb-4 veesy-text-color" >
