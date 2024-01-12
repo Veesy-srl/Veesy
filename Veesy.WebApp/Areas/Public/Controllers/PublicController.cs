@@ -184,7 +184,7 @@ public class PublicController : VeesyController
         }
     }
     
-    [HttpGet("terms-and-condition")]
+    [HttpGet("terms-and-conditions")]
     public IActionResult TermsAndConditions()
     {
         try
