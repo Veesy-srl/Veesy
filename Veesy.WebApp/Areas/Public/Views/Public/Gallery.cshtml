@@ -17,7 +17,7 @@
             <div class="col-6">
                 <div class="d-flex">
                     <p class="pt-1 mb-0 pe-2" for="customRange2">column</p>
-                    <input onchange="switchColumnLayout(this.value)" type="range" class="form-range range-cust" step="1" min="1" max="12" id="customRange2">
+                    <input onchange="switchColumnLayout(this.value)" type="range" class="form-range range-cust" value="4" step="1" min="1" max="12" id="customRange2">
                 </div>
             </div>
         </div>
@@ -37,15 +37,16 @@
         @{
             foreach (var image in Model.MediaDtos)
             {
+                var category = image?.Owner?.Category?.Replace("'", "\\'");
                 @if (MediaCostants.ImageExtensions.Contains(image.Type.ToUpper()))
                 {
-                    <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.Code', false, '@image.Owner.ProfileImageFileName', '@image.Owner.Fullname', '@image.Owner.Category', '@image.Owner.Email')" class="draggable media-div" name="image-gallery" mediaid="@image.Code">
+                    <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.Code', false, '@image.Owner.ProfileImageFileName', '@image.Owner.Fullname', '@category', '@image.Owner.Email')" class="draggable media-div" name="image-gallery" mediaid="@image.Code">
                         <img title="@image.Owner.Fullname" class="img-fluid lazy rounded-05 w-100 mt-3" data-src="@Model.BasePathImages@image.FileName?tr=w-1080" />
                     </div>
                 }
                 else
                 {
-                    <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.Code', true, '@image.Owner.ProfileImageFileName', '@image.Owner.Fullname', '@image.Owner.Category', '@image.Owner.Email')" class="draggable media-div" name="image-gallery">
+                    <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.Code', true, '@image.Owner.ProfileImageFileName', '@image.Owner.Fullname', '@category', '@image.Owner.Email')" class="draggable media-div" name="image-gallery">
                         <video autoplay="autoplay" muted loop class="w-100 shadow-1-strong rounded-05 mt-3" title="@image.Owner.Fullname">
                             <data-src src="@Model.BasePathImages@image.FileName?tr=w-1080" type="video/mp4"></data-src>
                         </video>
@@ -100,7 +101,7 @@
                             </video>
                             <img style="display: none" id="image-popup" asp-append-version="true" class="img-ratio-portfolio rounded-05 mt-1"/>
                             <a onclick="ShowOverlay(true)" id="open-credits" style="position: absolute;" class=" edit-button-portfolio-preview">
-                                <i class="fa-solid fa-plus" id="openPlus"></i>
+                                <i class="fa-solid fa-plus mt-1" id="openPlus"></i>
                             </a>
                         </div>   
                     </div>
@@ -122,7 +123,7 @@
         </div>
     </div>
     
-    <div class="creator-popup-gallery me-1 mb-3 creator-popup-full-close" id="popup-creator" style="border-radius: 5px">
+    <div class="creator-popup-gallery me-1 mb-3 ms-2 creator-popup-full-close" id="popup-creator" style="border-radius: 5px">
       <div class="d-flex" style="cursor: pointer" onclick="CloseCreatorPopup()">
         <div class="col-11">
           <p class="text-white ms-2 mb-1 mt-2">MEET THE CREATOR</p>
@@ -209,7 +210,11 @@
             document.getElementById("media-popup").style.display = "block";
             document.getElementById("image-popup").style.display = "none";
             document.getElementById("video-popup").style.display = "none";
+            if(user != " "){
             document.getElementById("creator-image").src = '@Model.BasePathAzure' + file;
+            }else{
+                document.getElementById("creator-image").src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU' + file;
+            }
             document.getElementById("creator-fullname").textContent = user;
             document.getElementById("creator-category").textContent = "- " + category
             document.getElementById("creator-link").href = "mailto:" + email
@@ -302,7 +307,7 @@
           width: 100%
         }
         .card-columns {
-            column-count: 6;
+            column-count: 4;
         }
         
         .jump-animation {

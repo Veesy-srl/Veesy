@@ -279,23 +279,23 @@ public class AccountService : IAccountService
             .Include(s => s.MyUserRolesWork)
             .SingleOrDefault();
         var count = 0;
-        count = user.MyUserSkills.Count != 0 ? 1 : count;
-        count = user.MyUserUsedSoftwares.Count != 0 ? count + 1 : count;
-        count = user.MyUserSectors.Count != 0 ? count + 1 : count;
-        count = user.MyUserCategoriesWork.Count != 0 ? count + 1 : count;
-        count = user.MyUserLanguagesSpoken.Count != 0 ? count + 1 : count;
-        count = user.MyUserRolesWork.Count != 0 ? count + 1 : count;
-        count = user.Name != "" ? count + 1 : count;
-        count = user.Surname != "" ? count + 1 : count;
-        count = user.Email != "" ? count + 1 : count;
-        count = user.VATNumber != "" ? count + 1 : count;
-        count = user.UserName != "" ? count + 1 : count;
-        count = user.Biografy != "" ? count + 1 : count;
-        count = user.Category != "" ? count + 1 : count;
-        count = user.ProfileImageFileName != "" ? count + 1 : count;
-        count = user.PortfolioIntro != "" ? count + 1 : count;
-        count = user.PhoneNumber != "" ? count + 1 : count;
-        count = user.Email != "" ? count + 1 : count;
+        count = user.MyUserSkills.Count != 0 ? 2 : count;
+        count = user.MyUserUsedSoftwares.Count != 0 ? count + 2 : count;
+        count = user.MyUserSectors.Count != 0 ? count + 2 : count;
+        count = user.MyUserCategoriesWork.Count != 0 ? count + 2 : count;
+        count = user.MyUserLanguagesSpoken.Count != 0 ? count + 2 : count;
+        count = user.MyUserRolesWork.Count != 0 ? count + 2 : count;
+        count = user.Name != null ? count + 1 : count;
+        count = user.Surname != null ? count + 1 : count;
+        count = user.Email != null ? count + 1 : count;
+        count = user.VATNumber != null ? count + 1 : count;
+        count = user.UserName != null ? count + 1 : count;
+        count = user.Biografy != null ? count + 2 : count;
+        count = user.Category != null ? count + 2 : count;
+        count = user.ProfileImageFileName != null ? count + 2 : count;
+        count = user.PortfolioIntro != null ? count + 2 : count;
+        count = user.PhoneNumber != null ? count + 1 : count;
+        count = user.Email != null ? count + 1 : count;
         return count ;
     }
 

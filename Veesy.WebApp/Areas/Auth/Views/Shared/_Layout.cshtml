@@ -80,8 +80,8 @@
 
                        <div class="menu-footer">
                            <a target="_blank" asp-action="PrivacyPolicy" asp-controller="Public" asp-area="Public" id="color-text-v">privacy policy</a>
-                           <a asp-action="CookiesPolicy" asp-controller="Public" asp-area="Public" class="cookie" id="color-text-v" >cookie policy</a><br/>
-                           <p style="font-size: 14px !important;" href="#" class="copyright option-font-14" id="color-text-footer">Veesy © @DateTime.Now.Year all rights reserved - VAT nr. 13005470961 - made with love by <a target="_blank" href="https://www.derein.net/" style="color: #202F4D">derein</a> & <a target="_blank" href="https://www.enigma-tech.it/" style="color: #202F4D">enigma</a></p>
+                           <a target="_blank" asp-action="CookiesPolicy" asp-controller="Public" asp-area="Public" class="cookie" id="color-text-v" >cookie policy</a><br/>
+                           <p style="font-size: 14px !important;" href="#" class="copyright option-font-14" id="color-text-footer">Veesy © @DateTime.Now.Year all rights reserved - made with love by <a target="_blank" href="https://www.derein.net/" style="color: #202F4D">derein</a> & <a target="_blank" href="https://www.enigma-tech.it/" style="color: #202F4D">enigma</a> - VAT nr. 13005470961</p>
                        </div>
                    </div>
 
@@ -105,7 +105,6 @@
 
 <div class="nodisplay-sm" style="margin-top: -8vh;">
     <div class="container-fluid">
-        <h6 style="color: white;">Azzurra</h6>
     </div>
 </div>
 
@@ -121,10 +120,10 @@
                     20832, Desio (MB)</p>
                 <div class="row mt-4 social-icons-row">
                     <div class="col">
-                        <a href="#" class="social-icon"><i class="fa-brands fa-facebook icon-color-veesy"></i></a>
-                        <a href="https://www.instagram.com/veesy.eu/" class="social-icon"><i class="fa-brands fa-instagram icon-color-veesy"></i></a>
-                        <a href="https://www.linkedin.com/company/veesy" class="social-icon"><i class="fa-brands fa-linkedin icon-color-veesy"></i></a>
-                        <a href="https://twitter.com/veesy_eu" class="social-icon"><i class="fa-brands fa-x-twitter icon-color-veesy"></i></a></div>
+                        <a target="_blank" href="#" class="social-icon"><i class="fa-brands fa-facebook icon-color-veesy"></i></a>
+                        <a target="_blank" href="https://www.instagram.com/veesy.eu/" class="social-icon"><i class="fa-brands fa-instagram icon-color-veesy"></i></a>
+                        <a target="_blank" href="https://www.linkedin.com/company/veesy" class="social-icon"><i class="fa-brands fa-linkedin icon-color-veesy"></i></a>
+                        <a target="_blank" href="https://twitter.com/veesy_eu" class="social-icon"><i class="fa-brands fa-x-twitter icon-color-veesy"></i></a></div>
                 </div>
             </div>
             <div class="col-md-3 mt-2 mt-md-5 veesy-text-color" >
@@ -144,7 +143,7 @@
                 </h4>
                 <div class="text-color">
                     <a target="_blank" asp-action="PrivacyPolicy" asp-controller="Public" asp-area="Public">Privacy Policy</a><br/>
-                    <a asp-action="CookiesPolicy" asp-controller="Public" asp-area="Public">Cookies Policy</a><br/>
+                    <a target="_blank" asp-action="CookiesPolicy" asp-controller="Public" asp-area="Public">Cookies Policy</a><br/>
                     <a asp-action="Error404" asp-controller="Public" asp-area="Public">Community Rules</a>
                 </div>
             </div>
@@ -157,9 +156,9 @@
         </div>
         <div class="row">
             <div class="mb-3 veesy-text-color d-flex justify-content-between">
-                <p style="font-size: 14px !important;" class="d-none d-lg-block">Veesy S.R.L. © 2023 All rights reserved - Vat.: 13005470961 - annual social capital € 10.000</p>
+                <p style="font-size: 14px !important;" class="d-none d-lg-block">Veesy S.R.L. © @DateTime.Now.Year All rights reserved - Vat.: 13005470961 - annual social capital € 10.000</p>
                 <p style="font-size: 14px !important;" class="text-end me-4 d-none d-lg-block">made with love by <a target=”_blank” href="https://www.derein.net/">derein</a> & <a target=”_blank” href="https://www.enigma-tech.it/">enigma</a></p>
-                <p style="font-size: 14px !important;" class="d-block d-lg-none d-inline">Veesy S.R.L. © 2023 All rights reserved - Vat.: 13005470961 - annual social capital € 10.000 - made with love by <a target=”_blank” href="https://www.derein.net/">derein</a> & <a target=”_blank” href="https://www.enigma-tech.it/">enigma</a></p>
+                <p style="font-size: 14px !important;" class="d-block d-lg-none d-inline">Veesy S.R.L. © @DateTime.Now.Year All rights reserved - Vat.: 13005470961 - annual social capital € 10.000 - made with love by <a target=”_blank” href="https://www.derein.net/">derein</a> & <a target=”_blank” href="https://www.enigma-tech.it/">enigma</a></p>
             </div>
         </div>
     </div>
@@ -251,7 +250,7 @@
             var signupLink = document.getElementById("signupLink");
             var loginLink = document.getElementById("loginLink");
         
-            if (url.includes("SignUp")) {
+            if (url.includes("SignUp") || url.includes("Signup") || url.includes("signUp") || url.includes("signup")) {
                 signupLink.style.display = "block";
                 loginLink.style.display = "none";
             } else {

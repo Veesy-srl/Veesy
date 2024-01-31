@@ -92,7 +92,7 @@
 <div class="empty-veesy"></div>
 <div class="empty-veesy"></div>
 
-<div id="alert-portfolio" class="custom-alert-cloud shadow alert alert-veesy-cloud alert-dismissible fade mobile-option-cloud" role="alert" >
+<div id="alert-portfolio" class="custom-alert-cloud shadow alert alert-veesy-cloud alert-dismissible fade mobile-option-cloud hidden" role="alert" >
     <div class="w-100">
         <div class="float-start">
             <div class="d-flex mt-2">
@@ -256,6 +256,12 @@
     </div>
 </div>
 
+<style>
+    .hidden{
+        display:  none;
+    }
+</style>
+
 @section Scripts
 {
     <script>
@@ -361,6 +367,7 @@
     let imageNumber = @Model.Medias.Count;
     function CloseAlert() {
         alert_portfolio.classList.remove("show");
+        alert_portfolio.classList.add("hidden");
         var items = document.getElementsByClassName("img-rounded-ciano");
         while (items.length > 0){
             items[0].classList.add("img-rounded-trasparent");
@@ -395,6 +402,7 @@
                         document.getElementById("div-for-remove-" + response.codeToDelete[i]).style.display = "none";
                         removeMediaFromList(response.codeToDelete[i]);
                         alert_portfolio.classList.remove("show");
+                        alert_portfolio.classList.add("hidden");
                         mediacount--;
                     }
                     
@@ -435,11 +443,13 @@
             img_selected_id.push(img_id);
         }
         if (img_selected_id.length > 0){
+            alert_portfolio.classList.remove("hidden");
             alert_portfolio.classList.add("show");
             document.getElementById("number_files").textContent = img_selected_id.length + " files selected"
         }
         else{
             alert_portfolio.classList.remove("show");
+            alert_portfolio.classList.add("hidden");
         }
         
     }

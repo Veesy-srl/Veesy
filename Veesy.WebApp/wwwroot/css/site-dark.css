@@ -481,6 +481,12 @@
     .dark-light-img{
         content: url('../imgs/Layout/switch_dark mode.svg');
     }
+
+    .blue-link:hover{
+        color: #383B43 !important;;
+        cursor: pointer !important;
+        text-decoration: none !important;
+    }
 }
 
 [data-bs-theme="dark"] a {

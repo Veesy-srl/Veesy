@@ -6,96 +6,222 @@
   <div class="row row-splash">
     <div class="col-md-2 mac-variant">
       <div class="box-splash">
-        <img class="img-splash img-variant-1" src="/imgs/Splash/Render_2-downscale-art-width-1500px-1024x1024.jpg" id="Immagine1">
+        @if (@Model.MediaDtos.Count > 0)
+        {
+          <img class="img-splash img-variant-1" src="@Model.BasePathImages@Model.MediaDtos[0].FileName" id="Immagine1"/>
+        }
+        else
+        {
+          <img class="img-splash img-variant-1" src="/imgs/Splash/Render_2-downscale-art-width-1500px-1024x1024.jpg" id="Immagine1">
+        }
       </div>
     </div>
     <div class="col-md-2 mac-variant d-none d-sm-block">
       <div class="box-splash">
-        <img class="img-splash img-variant" src="/imgs/Splash/The-Unfolding-Home-06-1024x1024.png" id="Immagine2">
+        @if (@Model.MediaDtos.Count > 1)
+        {
+          <img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[1].FileName" id="Immagine2"/>
+        }
+        else
+        {
+          <img class="img-splash img-variant" src="/imgs/Splash/The-Unfolding-Home-06-1024x1024.png" id="Immagine2">
+        }
       </div>
     </div>
     <div class="col-md-2 mac-variant d-none d-sm-block">
       <div class="box-splash">
-        <img class="img-splash img-variant" src="/imgs/Splash/SQUARE_Pizza-3-1024x1024.jpg" id="Immagine3">
+         @if (@Model.MediaDtos.Count > 2)
+          {
+            <img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[2].FileName" id="Immagine3"/>
+          }
+          else
+          {
+            <img class="img-splash img-variant" src="/imgs/Splash/SQUARE_Pizza-3-1024x1024.jpg" id="Immagine3">
+          }
       </div>
     </div>
     <div class="col-md-2 mac-variant d-none d-sm-block">
       <div class="box-splash">
-        <img class="img-splash img-variant" src="/imgs/Splash/Ducati_caferacer_1500-1024x968.jpg" id="Immagine4">
+        @if (@Model.MediaDtos.Count > 3)
+        {
+          <img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[3].FileName" id="Immagine4"/>
+        }
+        else
+        {
+          <img class="img-splash img-variant" src="/imgs/Splash/Ducati_caferacer_1500-1024x968.jpg" id="Immagine4">
+        }
       </div>
     </div>
     <div class="col-md-2 mac-variant d-none d-sm-block">
       <div class="box-splash">
-        <img class="img-splash img-variant" src="/imgs/Splash/chevy2_1500-1024x920.jpg" id="Immagine5">
+        @if (@Model.MediaDtos.Count > 4)
+        {
+          <img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[4].FileName" id="Immagine5"/>
+        }
+        else
+        {
+          <img class="img-splash img-variant" src="/imgs/Splash/chevy2_1500-1024x920.jpg" id="Immagine5">
+        }
       </div>
     </div>
     <div class="col-md-2 mac-variant d-none d-sm-block">
       <div class="box-splash">
-        <img class="img-splash img-variant" src="/imgs/Splash/Black_Museum_01-1024x1024.png" id="Immagine6">
+        @if (@Model.MediaDtos.Count > 5)
+        {
+          <img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[5].FileName" id="Immagine6"/>
+        }
+        else
+        {
+          <img class="img-splash img-variant" src="/imgs/Splash/Black_Museum_01-1024x1024.png" id="Immagine6">
+        }
       </div>
     </div>
   </div>
   <div class="row row-splash">
     <div class="col-md-2 mac-variant d-none d-sm-block">
       <div class="box-splash">
-        <img class="img-splash img-variant" src="/imgs/Splash/Winter-day_03-gigapixel-art-width-1500px-1024x1024.jpg" id="Immagine7">
+        @if (@Model.MediaDtos.Count > 6)
+        {
+          <img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[6].FileName" id="Immagine7"/>
+        }
+        else
+        {
+          <img class="img-splash img-variant" src="/imgs/Splash/Winter-day_03-gigapixel-art-width-1500px-1024x1024.jpg" id="Immagine7">
+        }
       </div>
     </div>
     <div class="col-md-2 mac-variant d-none d-sm-block">
       <div class="box-splash">
-        <img class="img-splash img-variant-8" src="/imgs/Splash/Tank-Girl-Redux_02-1024x1024.png" id="Immagine8">
+        @if (@Model.MediaDtos.Count > 7)
+        {
+          <img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[7].FileName" id="Immagine8"/>
+        }
+        else
+        {
+          <img class="img-splash img-variant-8" src="/imgs/Splash/Tank-Girl-Redux_02-1024x1024.png" id="Immagine8">
+        }
       </div>
     </div>
     <div class="col-md-2 mac-variant d-none d-sm-block">
       <div class="box-splash">
-        <img class="img-splash img-variant" src="/imgs/Splash/Residence-WULF-02-1024x1024.png" id="Immagine9">
+         @if (@Model.MediaDtos.Count > 8)
+          {
+            <img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[8].FileName" id="Immagine9"/>
+          }
+          else
+          {
+            <img class="img-splash img-variant" src="/imgs/Splash/Residence-WULF-02-1024x1024.png" id="Immagine9">
+          }
       </div>
     </div>
     <div class="col-md-2 mac-variant d-none d-sm-block">
       <div class="box-splash">
-        <img class="img-splash img-variant" src="/imgs/Splash/Night2-1024x1024.jpg" id="Immagine10">
+        @if (@Model.MediaDtos.Count > 9)
+        {
+          <img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[9].FileName" id="Immagine10"/>
+        }
+        else
+        {
+          <img class="img-splash img-variant" src="/imgs/Splash/Night2-1024x1024.jpg" id="Immagine10">
+        }
       </div>
     </div>
     <div class="col-md-2 mac-variant d-none d-sm-block">
       <div class="box-splash">
-        <img class="img-splash img-variant" src="/imgs/Splash/Night-Walk-1024x1024.jpg" id="Immagine11">
+        @if (@Model.MediaDtos.Count > 10)
+        {
+          <img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[10].FileName" id="Immagine11"/>
+        }
+        else
+        {
+          <img class="img-splash img-variant" src="/imgs/Splash/Night-Walk-1024x1024.jpg" id="Immagine11">
+        }
       </div>
     </div>
     <div class="col-md-2 mac-variant d-none d-sm-block">
       <div class="box-splash">
-        <img class="img-splash img-variant" src="/imgs/Splash/61dc6ed5ee986024c79e0b73_alcea_02.jpg" id="Immagine12">
+        @if (@Model.MediaDtos.Count > 11)
+        {
+          <img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[11].FileName" id="Immagine12"/>
+        }
+        else
+        {
+          <img class="img-splash img-variant" src="/imgs/Splash/61dc6ed5ee986024c79e0b73_alcea_02.jpg" id="Immagine12">
+        }
       </div>
     </div>
   </div>
   <div class="row row-splash">
     <div class="col-md-2 mac-variant">
       <div class="box-splash">
-        <img class="img-splash img-variant-13" src="/imgs/Splash/The-Unfolding-Home-06-1024x1024.png" id="Immagine13">
+        @if (@Model.MediaDtos.Count > 12)
+        {
+          <img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[12].FileName" id="Immagine13"/>
+        }
+        else
+        {
+          <img class="img-splash img-variant-13" src="/imgs/Splash/The-Unfolding-Home-06-1024x1024.png" id="Immagine13">
+        }
       </div>
     </div>
     <div class="col-md-2 mac-variant d-none d-sm-block">
       <div class="box-splash">
-        <img class="img-splash img-variant" src="/imgs/Splash/lamp2-copia-downscale-art-width-1500px-1024x1024.jpg" id="Immagine14">
+        @if (@Model.MediaDtos.Count > 13)
+        {
+          <img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[13].FileName" id="Immagine14"/>
+        }
+        else
+        {
+          <img class="img-splash img-variant" src="/imgs/Splash/lamp2-copia-downscale-art-width-1500px-1024x1024.jpg" id="Immagine14">
+        }
       </div>
     </div>
     <div class="col-md-2 mac-variant d-none d-sm-block">
       <div class="box-splash">
-        <img class="img-splash img-variant-15" src="/imgs/Splash/furyroad2-2-gigapixel-art-height-1500px-1024x1024 (1).jpg" id="Immagine15">
+        @if (@Model.MediaDtos.Count > 14)
+        {
+          <img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[14].FileName" id="Immagine15"/>
+        }
+        else
+        {
+          <img class="img-splash img-variant-15" src="/imgs/Splash/furyroad2-2-gigapixel-art-height-1500px-1024x1024 (1).jpg" id="Immagine15">
+        }
       </div>
     </div>
     <div class="col-md-2 mac-variant d-none d-sm-block">
       <div class="box-splash">
-        <img class="img-splash img-variant-16" src="/imgs/Splash/Curiosity-gigapixel-standard-width-1500px-1024x1024.jpeg" id="Immagine16">
+        @if (@Model.MediaDtos.Count > 15)
+        {
+          <img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[15].FileName" id="Immagine16"/>
+        }
+        else
+        {
+          <img class="img-splash img-variant-16" src="/imgs/Splash/Curiosity-gigapixel-standard-width-1500px-1024x1024.jpeg" id="Immagine16">
+        }
       </div>
     </div>
     <div class="col-md-2 mac-variant d-none d-sm-block">
       <div class="box-splash">
-        <img class="img-splash img-variant" src="/imgs/Splash/11-Vd-gigapixel-art-width-1500px-1024x1024.jpeg" id="Immagine17">
+        @if (@Model.MediaDtos.Count > 16)
+        {
+          <img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[16].FileName" id="Immagine17"/>
+        }
+        else
+        {
+          <img class="img-splash img-variant" src="/imgs/Splash/11-Vd-gigapixel-art-width-1500px-1024x1024.jpeg" id="Immagine17">
+        }
       </div>
     </div>
     <div class="col-md-2 mac-variant d-none d-sm-block">
       <div class="box-splash">
-        <img class="img-splash img-variant" src="/imgs/Splash/7-1024x1024.jpg" id="Immagine18">
+        @if (@Model.MediaDtos.Count > 17)
+        {
+          <img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[17].FileName" id="Immagine18"/>
+        }
+        else
+        {
+          <img class="img-splash img-variant" src="/imgs/Splash/7-1024x1024.jpg" id="Immagine18">
+        }
       </div>
     </div>
   </div>
@@ -119,7 +245,7 @@
     <div class="col-11">
       <p class="text-white ms-2 mb-1" style="margin-top:  2.5% !important;">LOOKING FOR A FREELANCER?</p>
     </div>
-    <div class="col-1"><div class="text-end pt-1"><i class="fa-solid fa-circle fa-xs me-2 mt-1" style="color: white;"></i></div></div>
+    <div class="col-1"><div class="text-end pt-1"><i class="fa-solid fa-circle fa-xs me-2" style="color: white;"></i></div></div>
   </div>
 </div>
 
@@ -146,10 +272,10 @@
 
 <div class="modal" id="fullScreenModal" style="z-index: 9999; display: none;" tabindex="-1" aria-labelledby="fullScreenModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-fullscreen">
-        <div class="modal-content" style="background-color: #060B19;">
+        <div class="modal-content" style="background-color: #040915;">
             <div class="modal-body">
                 <div id="message-container">
-                  <img class="message" style="width: 120px;" src="/imgs/veesy_vettoriale_enigma_white.png"/>
+                  <img class="message" style="width: 150px;" src="/imgs/mp4/logo-veesy.gif"/>
                 </div>
             </div>
         </div>
@@ -167,7 +293,7 @@
          margin-left: 0 !important;
     }
     .img-splash {
-      max-width: 95%;
+      max-width: 80%;
       height: auto;
       border-radius: 15px;
     }

@@ -108,7 +108,7 @@
                                 </video>
                                 <img style="display: none" id="image-popup" asp-append-version="true" class="img-ratio-portfolio rounded-05 mt-1"/>
                                 <a onclick="ShowOverlay(true)" id="open-credits" style="position: absolute;" class=" edit-button-portfolio-preview">
-                                    <i class="fa-solid fa-plus" id="openPlus"></i>
+                                    <i class="fa-solid fa-plus mt-1" id="openPlus"></i>
                                 </a>
                             </div>   
                         </div>
@@ -412,13 +412,62 @@ else if (!Model.PortfolioDto.IsPublic)
                 <div class="empty-veesy"></div>
                 <div class="col-lg-4 col-md-3 nodisplay-sm"></div>
                 <div class="col-lg-4 col-md-6 col-sm-12">
-                <div class="input-group">
-                    <p class="mb-0 fw-border size-custom"><strong>Password</strong></p>
-                    <input asp-for="Password" class="input--style-1" type="password">
-                    <button class="w-100 mt-2 rounded-pill btn btn-primary signup" type="submit">Unlock</button>
-                </div></div>
+                    <div class="input-group">
+                        <p class="mb-0 fw-border size-custom"><strong>Password</strong></p>
+                        <div class="d-flex w-100">
+                            <input asp-for="Password" id="password" class="input--style-1 input--style-password " type="password">
+                            <span class="input-group-append border-left-0">
+                                <a onclick="switchPassword()" class="input-group-text span--style-password bg-transparent">
+                                    <img id="password-eye" src="/imgs/Auth/password-hidden_light-mode.png"/>
+                                </a>
+                            </span>
+                        </div>
+                        <button class="w-100 mt-2 rounded-pill btn btn-primary signup" type="submit">Unlock</button>
+                    </div>
+                </div>
                 <div class="col-lg-4 col-md-3 nodisplay-sm"></div>
             </div>
         </div>
     </form>
 }
+
+<script>
+
+    var passwordClose = true;
+
+    function switchPassword(){
+        if (passwordClose){
+            passwordClose = false;
+            document.getElementById("password").type = "text";
+            document.getElementById("password-eye").src = "/imgs/Auth/password-shown.png";
+        }
+        else{
+            passwordClose = true;
+            document.getElementById("password").type = "password";
+            document.getElementById("password-eye").src = "/imgs/Auth/password-hidden_light-mode.png";
+        }
+    }
+</script>
+
+<style>
+        body {
+          margin: 0;
+          padding: 0;
+        }
+
+        img {
+          pointer-events: none;
+        }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+          var isImageRestricted = @Model.PortfolioDto.IsPublic.ToString().ToLower();
+    
+          if (!isImageRestricted) {
+            document.addEventListener("contextmenu", function(e) {
+              e.preventDefault();
+            });
+          }
+        });
+</script>

@@ -113,6 +113,11 @@ public class MediaService : IMediaService
     {
         return _uoW.MyUserRepository.GetRandomMedia(count);
     }
+    
+    public List<Media> GetRandomPhotos(int count)
+    {
+        return _uoW.MyUserRepository.GetRandomPhotos(count);
+    }
 
     public List<(string FileName, long Size)> GetMediasNameAndSizeByUserId(string userId)
     {

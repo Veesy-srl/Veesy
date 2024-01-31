@@ -30,7 +30,7 @@ public class HomeHelper
         var portfolio = _portfolioService.GetMainPortfolioByUserWithMedias(user);
         var portfolioNumber = _portfolioService.GetPortfoliosNumberByUser(user);
         var numberMedia = _mediaService.GetMediaNumberByUser(user);
-        var percent = (_accountService.NumberRecordCompiled(user) * 100 / 17);
+        var percent = (_accountService.NumberRecordCompiled(user) * 100 / 27);
         var subscription = _subscriptionPlanService.GetSubscriptionByUserId(user.Id);    
         return new DashboardViewModel()
         {

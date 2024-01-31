@@ -213,6 +213,59 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
         var resultMedia = result.Select(s => s.Media).ToList();
         resultMedia.ForEach(s => s.MyUser.Portfolios = null);
         resultMedia.ForEach(s => s.MyUser.Medias = null);
+        
+        resultMedia = Shuffle(resultMedia);
+        
         return resultMedia;
     }
+    
+    public List<Media> GetRandomPhotos(int count)
+    {
+        var portfolios = _applicationDbContext.Portfolios
+            .Include(s => s.PortfolioMedias)
+            .ThenInclude(s => s.Media)
+            .Include(s => s.MyUser)
+            .Where(s => s.IsMain && s.IsPublic && s.Status == 1)
+            .OrderBy(s => new Guid())
+            .ToList();
+
+        var countPerAuthor = count / portfolios.Count;
+        var random = new Random();
+        var result = new List<PortfolioMedia>();
+
+        foreach (var group in portfolios)
+        {
+            var randomPhotos = group.PortfolioMedias
+                .Where(item => item.Media.FileName.ToLower().Contains("jpg") || item.Media.FileName.ToLower().Contains("png"))
+                .OrderBy(item => random.Next())
+                .Take(countPerAuthor);
+
+            result.AddRange(randomPhotos);
+        }
+
+        var resultMedia = result.Select(s => s.Media).ToList();
+        resultMedia.ForEach(s => s.MyUser.Portfolios = null);
+        resultMedia.ForEach(s => s.MyUser.Medias = null);
+        
+        resultMedia = Shuffle(resultMedia);
+
+        return resultMedia;
+    }
+    
+    public static List<T> Shuffle<T>(List<T> list)
+    {
+        var random = new Random();
+        int n = list.Count;
+
+        for (int i = n - 1; i > 0; i--)
+        {
+            int j = random.Next(0, i + 1);
+            T temp = list[i];
+            list[i] = list[j];
+            list[j] = temp;
+        }
+
+        return list;
+    }
+
 }

@@ -92,4 +92,16 @@ public class PublicHelper
         };
         return vm;
     }
+    
+    public SplashViewModel GetSplashViewModel()
+    {
+
+        var vm = new SplashViewModel()
+        {
+            MediaDtos = MapCloudDtos.MapMediaList(_mediaService.GetRandomPhotos(16)),
+            BasePathImages = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/",
+            BasePathAzure = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"
+        };
+        return vm;
+    }
 }

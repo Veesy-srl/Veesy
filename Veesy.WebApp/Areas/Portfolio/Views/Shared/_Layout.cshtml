@@ -40,12 +40,12 @@
                 }
                 else if(ViewContext.RouteData.Values["Action"].ToString() == "PrivacyPolicy"){
                     <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
-                        <img class="header-logo mr-2">page
+                        <img class="header-logo mr-2">
                     </a>
                 }
                 else if(ViewContext.RouteData.Values["Action"].ToString() == "TermsAndConditions"){
                     <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
-                        <img class="header-logo mr-2">page
+                        <img class="header-logo mr-2">
                     </a>
                 }
                 else if(ViewContext.RouteData.Values["Action"].ToString() == "Gallery"){
@@ -62,13 +62,13 @@
                 else if (ViewContext.RouteData.Values["Action"].ToString() == "Error404")
                 {
                     <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
-                        <img class="header-logo mr-2">404
+                        <img class="header-logo mr-2">
                     </a>
                 }
-                else if (ViewContext.RouteData.Values["Action"].ToString() == "Error404")
+                else if (ViewContext.RouteData.Values["Action"].ToString() == "Error400")
                 {
                     <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
-                        <img class="header-logo mr-2">400
+                        <img class="header-logo mr-2">
                     </a>
                 }
                 else if(ViewContext.RouteData.Values["Action"].ToString() == "About"){
@@ -211,8 +211,8 @@
 
                    <div class="menu-footer">
                        <a target="_blank" asp-action="PrivacyPolicy" asp-controller="Public" asp-area="Public" id="color-text-v"><b>privacy policy</b></a>
-                       <a asp-action="CookiesPolicy" asp-controller="Public" asp-area="Public" class="cookie" id="color-text-v"><b>cookie policy</b></a><br/>
-                       <p href="#" style="font-size: 14px !important;"  class="copyright option-font-14" id="color-text-footer">Veesy © 2023 all rights reserved - made with love by - VAT nr. 13005470961 <a target="_blank" href="https://www.derein.net/" style="color: #202F4D">derein</a> & <a target="_blank" href="https://www.enigma-tech.it/" style="color: #202F4D">enigma</a></p>
+                       <a target="_blank" asp-action="CookiesPolicy" asp-controller="Public" asp-area="Public" class="cookie" id="color-text-v"><b>cookie policy</b></a><br/>
+                       <p style="font-size: 14px !important;" href="#" class="copyright option-font-14" id="color-text-footer">Veesy © @DateTime.Now.Year all rights reserved - made with love by <a target="_blank" href="https://www.derein.net/" style="color: #202F4D">derein</a> & <a target="_blank" href="https://www.enigma-tech.it/" style="color: #202F4D">enigma</a> - VAT nr. 13005470961</p>
                    </div>
                </div>
 
@@ -258,10 +258,10 @@
                     20832, Desio (MB)</p>
                 <div class="row mt-4 social-icons-row">
                     <div class="col">
-                        <a href="#" class="social-icon"><i class="fa-brands fa-facebook icon-color-veesy"></i></a>
-                        <a href="https://www.instagram.com/veesy.eu/" class="social-icon"><i class="fa-brands fa-instagram icon-color-veesy"></i></a>
-                        <a href="https://www.linkedin.com/company/veesy" class="social-icon"><i class="fa-brands fa-linkedin icon-color-veesy"></i></a>
-                        <a href="https://twitter.com/veesy_eu" class="social-icon"><i class="fa-brands fa-x-twitter icon-color-veesy"></i></a></div>
+                        <a target="_blank" href="#" class="social-icon"><i class="fa-brands fa-facebook icon-color-veesy"></i></a>
+                        <a target="_blank" href="https://www.instagram.com/veesy.eu/" class="social-icon"><i class="fa-brands fa-instagram icon-color-veesy"></i></a>
+                        <a target="_blank" href="https://www.linkedin.com/company/veesy" class="social-icon"><i class="fa-brands fa-linkedin icon-color-veesy"></i></a>
+                        <a target="_blank" href="https://twitter.com/veesy_eu" class="social-icon"><i class="fa-brands fa-x-twitter icon-color-veesy"></i></a></div>
                 </div>
             </div>
             <div class="col-md-2 mt-3 mt-md-5 veesy-text-color" >
@@ -280,7 +280,7 @@
                 </h4>
                 <div class="text-color">
                     <a target="_blank" asp-action="PrivacyPolicy" asp-controller="Public" asp-area="Public">Privacy Policy</a><br/>
-                    <a asp-action="CookiesPolicy" asp-controller="Public" asp-area="Public">Cookies Policy</a><br/>
+                    <a target="_blank" asp-action="CookiesPolicy" asp-controller="Public" asp-area="Public">Cookies Policy</a><br/>
                     <a asp-action="Error404" asp-controller="Public" asp-area="Public">Community Rules</a>
                 </div>
             </div>
@@ -295,7 +295,7 @@
             <div class="mb-3 veesy-text-color d-flex justify-content-between">
                 <p style="font-size: 14px !important;" class="d-none d-lg-block text-color">Veesy S.R.L. © @DateTime.Now.Year All rights reserved - Vat.: 13005470961 - annual social capital € 10.000</p>
                 <p style="font-size: 14px !important;" class="text-end me-4 d-none d-lg-block text-color">made with love by <a target=”_blank” href="https://www.derein.net/">derein</a> & <a target=”_blank” href="https://www.enigma-tech.it/">enigma</a></p>
-                <p style="font-size: 14px !important;" class="d-block d-lg-none d-inline text-color">Veesy S.R.L. © 2023 All rights reserved - Vat.: 13005470961 - annual social capital € 10.000 - made with love by <a target=”_blank” href="https://www.derein.net/">derein</a> & <a target=”_blank” href="https://www.enigma-tech.it/">enigma</a></p>
+                <p style="font-size: 14px !important;" class="d-block d-lg-none d-inline text-color">Veesy S.R.L. © @DateTime.Now.Year All rights reserved - Vat.: 13005470961 - annual social capital € 10.000 - made with love by <a target=”_blank” href="https://www.derein.net/">derein</a> & <a target=”_blank” href="https://www.enigma-tech.it/">enigma</a></p>
             </div>
         </div>
     </div>
