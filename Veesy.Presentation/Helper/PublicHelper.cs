@@ -86,9 +86,10 @@ public class PublicHelper
 
         var vm = new GalleryViewModel()
         {
-            MediaDtos = MapCloudDtos.MapMediaList(_mediaService.GetRandomMedia(50)),
+            MediaGalleryDtos = MapCloudDtos.MapMediaGalleryList(_mediaService.GetRandomMedia(50)),
             BasePathImages = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/",
-            BasePathAzure = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"
+            BasePathAzure = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/",
+            BasePathCode = _config["ApplicationUrl"]
         };
         return vm;
     }

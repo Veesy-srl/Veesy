@@ -16,6 +16,10 @@ public class MediaDto
     public bool? IsVideo => !string.IsNullOrEmpty(Type) ? MediaCostants.VideoExtensions.Contains(Type.ToUpper()) : null;
 }
 
+public class MediaGalleryDto: MediaDto
+{
+    public string PortfolioCode { get; set; }
+}
 public class UploadMediaResponseDto
 {
     public UploadMediaResponseDto()
@@ -83,6 +87,22 @@ public static class MapCloudDtos
             Type = x.Type,
             Credits = x.Credits,
             UploadDate = x.CreateRecordDate.ToString("dd/MM/yyyy hh.mm"),
+            Owner = x.MyUser != null ? MapOwnerDto(x.MyUser) : null
+        }).ToList();
+    }
+    
+    public static List<MediaGalleryDto> MapMediaGalleryList(List<Media> media)
+    {
+        return media.Select(x => new MediaGalleryDto()
+        {
+            Code = x.Id,
+            OriginalFileName = x.OriginalFileName,
+            FileName = x.FileName,
+            Size = x.Size,
+            Type = x.Type,
+            Credits = x.Credits,
+            UploadDate = x.CreateRecordDate.ToString("dd/MM/yyyy hh.mm"),
+            PortfolioCode = x.PortfolioMedias[0].Portfolio.Id.ToString(),
             Owner = x.MyUser != null ? MapOwnerDto(x.MyUser) : null
         }).ToList();
     }

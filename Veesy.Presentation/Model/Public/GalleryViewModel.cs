@@ -4,7 +4,9 @@ namespace Veesy.Presentation.Model.Public;
 
 public class GalleryViewModel
 {
-    public List<MediaDto> MediaDtos { get; set; }
+    public List<MediaGalleryDto> MediaGalleryDtos{ get; set; }
     public string BasePathImages { get; set; }
     public string BasePathAzure { get; set; }
+    
+    public string BasePathCode { get; set; }
 }

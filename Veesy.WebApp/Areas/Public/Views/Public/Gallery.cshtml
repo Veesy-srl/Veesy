@@ -35,18 +35,18 @@
 <div class="row">
     <div class="card-columns draggable-zone ps-0 pe-0" id="images-container">
         @{
-            foreach (var image in Model.MediaDtos)
+            foreach (var image in Model.MediaGalleryDtos)
             {
                 var category = image?.Owner?.Category?.Replace("'", "\\'");
                 @if (MediaCostants.ImageExtensions.Contains(image.Type.ToUpper()))
                 {
-                    <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.Code', false, '@image.Owner.ProfileImageFileName', '@image.Owner.Fullname', '@category', '@image.Owner.Email')" class="draggable media-div" name="image-gallery" mediaid="@image.Code">
+                    <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.Code', false, '@image.Owner.ProfileImageFileName', '@image.Owner.Fullname', '@category', '@image.PortfolioCode')" class="draggable media-div" name="image-gallery" mediaid="@image.Code">
                         <img title="@image.Owner.Fullname" class="img-fluid lazy rounded-05 w-100 mt-3" data-src="@Model.BasePathImages@image.FileName?tr=w-1080" />
                     </div>
                 }
                 else
                 {
-                    <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.Code', true, '@image.Owner.ProfileImageFileName', '@image.Owner.Fullname', '@category', '@image.Owner.Email')" class="draggable media-div" name="image-gallery">
+                    <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.Code', true, '@image.Owner.ProfileImageFileName', '@image.Owner.Fullname', '@category', '@image.PortfolioCode')" class="draggable media-div" name="image-gallery">
                         <video autoplay="autoplay" muted loop class="w-100 shadow-1-strong rounded-05 mt-3" title="@image.Owner.Fullname">
                             <data-src src="@Model.BasePathImages@image.FileName?tr=w-1080" type="video/mp4"></data-src>
                         </video>
@@ -114,7 +114,7 @@
             
         </div>
     </div>
-    <div class="creator-popup-gallery" id="creator-popup-id" onclick="OpenCreatorPopup()">
+    <div class="creator-popup-gallery ms-2" id="creator-popup-id" onclick="OpenCreatorPopup()">
         <div class="d-flex">
             <div class="col-11">
                 <p class="text-white ms-2 mb-1" style="margin-top:  2.5% !important;">MEET THE CREATOR</p>
@@ -143,7 +143,7 @@
         </div>
         <div class="row">
           <a class="ps-0 pe-0 pb-2" id="creator-link">
-            <button class="rounded-pill btn div-white-rounded-veesy btn-variant w-100">get in touch</button>
+            <button class="rounded-pill btn div-white-rounded-veesy btn-variant w-100">discover mode</button>
           </a>
         </div>
       </div>
@@ -201,9 +201,9 @@
           return [width, height]
         }
         
-        var media = @Html.Raw(Json.Serialize(Model.MediaDtos))
+        var media = @Html.Raw(Json.Serialize(Model.MediaGalleryDtos))
         
-        function OpenMediaPopup(mediaId, IsVideo, file, user, category, email) {
+        function OpenMediaPopup(mediaId, IsVideo, file, user, category, portfolioCode) {
             document.getElementById("open-credits").onclick = function (){ShowOverlay(true)}
             document.getElementById("text-overlay").classList.remove("text-overlay-selected")
             document.body.style.overflowY = "hidden"; 
@@ -215,9 +215,11 @@
             }else{
                 document.getElementById("creator-image").src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU' + file;
             }
+            var basePathCode = '@Model.BasePathCode';
+
             document.getElementById("creator-fullname").textContent = user;
             document.getElementById("creator-category").textContent = "- " + category
-            document.getElementById("creator-link").href = "mailto:" + email
+            document.getElementById("creator-link").href = basePathCode + "/portfolio/" + portfolioCode
             let obj = media.find((o, i) => {
                 if (o.code === mediaId) {
                     let src = media[i].fileName
