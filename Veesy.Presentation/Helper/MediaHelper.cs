@@ -90,8 +90,12 @@ public class MediaHelper
                 
                 //Number media validation
                 if (numberMediaOnCloud >= subscription.AllowedMediaNumber)
+                {
                     filesUploadedStatus.Add(new(false, null, fileSection.FileName,
                         "Reached maximum subscription number media."));
+                    section = await multipartReader.ReadNextSectionAsync();
+                    continue;
+                }
                 else
                     numberMediaOnCloud ++;
                         

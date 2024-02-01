@@ -77,6 +77,12 @@ public class UpdatePortfolioDto
     public int LayoutGrid { get; set; }
 }
 
+public class UpdateMediaNestedPortfolioDto
+{
+    public Guid PortfolioSelected { get; set; }
+    public Guid MediaCode { get; set; }
+}
+
 public class UpdateMediaPortfolioDto
 {
     public List<Guid> PortfolioSelected { get; set; }

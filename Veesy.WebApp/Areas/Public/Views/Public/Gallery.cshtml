@@ -38,15 +38,19 @@
             foreach (var image in Model.MediaGalleryDtos)
             {
                 var category = image?.Owner?.Category?.Replace("'", "\\'");
+                var hasCredits = false;
+                {
+                    hasCredits = !string.IsNullOrEmpty(image.Credits);
+                }
                 @if (MediaCostants.ImageExtensions.Contains(image.Type.ToUpper()))
                 {
-                    <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.Code', false, '@image.Owner.ProfileImageFileName', '@image.Owner.Fullname', '@category', '@image.PortfolioCode')" class="draggable media-div" name="image-gallery" mediaid="@image.Code">
+                    <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.Code', false, '@image.Owner.ProfileImageFileName', '@image.Owner.Fullname', '@category', '@image.PortfolioCode', '@image.NestedPortfolioLinks', '@hasCredits')" class="draggable media-div" name="image-gallery" mediaid="@image.Code">
                         <img title="@image.Owner.Fullname" class="img-fluid lazy rounded-05 w-100 mt-3" data-src="@Model.BasePathImages@image.FileName?tr=w-1080" />
                     </div>
                 }
                 else
                 {
-                    <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.Code', true, '@image.Owner.ProfileImageFileName', '@image.Owner.Fullname', '@category', '@image.PortfolioCode')" class="draggable media-div" name="image-gallery">
+                    <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.Code', true, '@image.Owner.ProfileImageFileName', '@image.Owner.Fullname', '@category', '@image.PortfolioCode', '@image.NestedPortfolioLinks', '@hasCredits')" class="draggable media-div" name="image-gallery">
                         <video autoplay="autoplay" muted loop class="w-100 shadow-1-strong rounded-05 mt-3" title="@image.Owner.Fullname">
                             <data-src src="@Model.BasePathImages@image.FileName?tr=w-1080" type="video/mp4"></data-src>
                         </video>
@@ -96,10 +100,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <video id="video-popup" style="display: none" autoplay="autoplay" muted controls="controls" loop class="img-ratio-portfolio rounded-05">
-                                <source type="video/mp4">
-                            </video>
-                            <img style="display: none" id="image-popup" asp-append-version="true" class="img-ratio-portfolio rounded-05 mt-1"/>
+                            <a onclick="OpenCreditsOrNestedLink()" style="cursor:pointer;">
+                                <video id="video-popup" style="display: none" autoplay="autoplay" muted controls="controls" loop class="img-ratio-portfolio rounded-05">
+                                    <source type="video/mp4">
+                                </video>
+                                <img style="display: none" id="image-popup" asp-append-version="true" class="img-ratio-portfolio rounded-05 mt-1"/>
+                            </a>
                             <a onclick="ShowOverlay(true)" id="open-credits" style="position: absolute;" class=" edit-button-portfolio-preview">
                                 <i class="fa-solid fa-plus mt-1" id="openPlus"></i>
                             </a>
@@ -153,6 +159,14 @@
 @section Scripts
 {
     <script>
+        
+        function OpenCreditsOrNestedLink() {
+            if(nowNestedPortfolioId != null && nowNestedPortfolioId != "")
+                location.href = '@Model.BasePathCode' + "/portfolio/" + nowNestedPortfolioId 
+            else if (nowHasCredits)
+                ShowOverlay(true)
+        }
+        
         $(function() {
             $('.lazy').Lazy({
                 
@@ -203,7 +217,12 @@
         
         var media = @Html.Raw(Json.Serialize(Model.MediaGalleryDtos))
         
-        function OpenMediaPopup(mediaId, IsVideo, file, user, category, portfolioCode) {
+        let nowNestedPortfolioId = ""
+        let nowHasCredits = false;
+        
+        function OpenMediaPopup(mediaId, IsVideo, file, user, category, portfolioCode, NestedPortfolioId, HasCredits) {
+            nowNestedPortfolioId = NestedPortfolioId;
+            nowHasCredits = HasCredits == 'True' ? true : false;
             document.getElementById("open-credits").onclick = function (){ShowOverlay(true)}
             document.getElementById("text-overlay").classList.remove("text-overlay-selected")
             document.body.style.overflowY = "hidden"; 

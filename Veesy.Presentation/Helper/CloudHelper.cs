@@ -44,12 +44,11 @@ public class CloudHelper
         var previousMedia = _mediaService.GetPreviousMediaByDate(mediaSelected.CreateRecordDate, userInfo);
         var nextMedia = _mediaService.GetNextMediaByDate(mediaSelected.CreateRecordDate, userInfo);
 
-        var portfolios = _portfolioService.GetPortfoliosByUserWithMedia(userInfo).ToList();
-        var LinkedPortfolioDtos = MapCloudDtos.MapLinkedPortfolioDtos(portfolios, mediaSelected);
+        var portfolios = _portfolioService.GetPortfoliosByUser(userInfo).ToList();
         
         var vm = new EditViewModel()
         {
-            LinkedPortfolioDtos = LinkedPortfolioDtos,
+            Portfolios = portfolios,
             Media = MapCloudDtos.MapMedia(mediaSelected),
             PreviousMedia =MapCloudDtos.MapMedia(previousMedia),
             NextMedia = MapCloudDtos.MapMedia(nextMedia),

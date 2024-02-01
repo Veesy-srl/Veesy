@@ -231,7 +231,7 @@ public class PortfolioController : VeesyController
     }    
     
     [HttpPost]
-    public async Task<JsonResult> ChangeMediaPortfolio([FromBody] UpdateMediaPortfolioDto portfolioDto)
+    public async Task<JsonResult> ChangeMediaNestedLink([FromBody] UpdateMediaNestedPortfolioDto portfolioDto)
     {
         try
         {
@@ -239,15 +239,15 @@ public class PortfolioController : VeesyController
             if (!response.Success)
                 _notyfService.Custom(response.Message, 10, "#ca0a0a");
             else
-                _notyfService.Custom("Portfolio update correctly.", 10, "#75CCDD");
+                _notyfService.Custom("Nested link update correctly.", 10, "#75CCDD");
             return Json(new { Result = response.Success, Message = response.Message });
         }
         catch (Exception ex)
         {
             Logger.Error(ex, ex.Message);
             Logger.Error($"PortfolioDto to update: {portfolioDto.ToJson()}");
-            _notyfService.Custom("Error updating portfolio. Please retry.", 10, "#ca0a0a");
-            return Json(new { Result = false, Message = "Error updating portfolio. Please retry." });
+            _notyfService.Custom("Error updating nested link. Please retry.", 10, "#ca0a0a");
+            return Json(new { Result = false, Message = "Error updating nested link. Please retry." });
         }
     } 
     
