@@ -38,19 +38,20 @@
             foreach (var image in Model.MediaGalleryDtos)
             {
                 var category = image?.Owner?.Category?.Replace("'", "\\'");
+                var name = image?.Owner?.Fullname?.Replace("'", "\\'");
                 var hasCredits = false;
                 {
                     hasCredits = !string.IsNullOrEmpty(image.Credits);
                 }
                 @if (MediaCostants.ImageExtensions.Contains(image.Type.ToUpper()))
                 {
-                    <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.Code', false, '@image.Owner.ProfileImageFileName', '@image.Owner.Fullname', '@category', '@image.PortfolioCode', '@image.NestedPortfolioLinks', '@hasCredits')" class="draggable media-div" name="image-gallery" mediaid="@image.Code">
+                    <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.Code', false, '@image.Owner.ProfileImageFileName', '@name', '@category', '@image.PortfolioCode', '@image.NestedPortfolioLinks', '@hasCredits')" class="draggable media-div" name="image-gallery" mediaid="@image.Code">
                         <img title="@image.Owner.Fullname" class="img-fluid lazy rounded-05 w-100 mt-3" data-src="@Model.BasePathImages@image.FileName?tr=w-1080" />
                     </div>
                 }
                 else
                 {
-                    <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.Code', true, '@image.Owner.ProfileImageFileName', '@image.Owner.Fullname', '@category', '@image.PortfolioCode', '@image.NestedPortfolioLinks', '@hasCredits')" class="draggable media-div" name="image-gallery">
+                    <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.Code', true, '@image.Owner.ProfileImageFileName', '@name', '@category', '@image.PortfolioCode', '@image.NestedPortfolioLinks', '@hasCredits')" class="draggable media-div" name="image-gallery">
                         <video autoplay="autoplay" muted loop class="w-100 shadow-1-strong rounded-05 mt-3" title="@image.Owner.Fullname">
                             <data-src src="@Model.BasePathImages@image.FileName?tr=w-1080" type="video/mp4"></data-src>
                         </video>

@@ -104,9 +104,9 @@
             <div class="d-flex align-items-center">
                 @if (Model.Portfolios != null && Model.Portfolios.Count > 0)
                 {
-                    <a onclick="openModal('#modalAddMediaToPortfolio'), resetModalAdd()" class="blue-link me-4 fw-bolder a-font-p" style="font-size: 14px; margin-top: 2px;">+ add to portfolio</a>
+                    <a onclick="openModal('#modalAddMediaToPortfolio'), resetModalAdd()" class="me-4 fw-bolder a-font-p" style="font-size: 14px; margin-top: 2px;">+ add to portfolio</a>
                 }
-                <button onclick="openModal('#modalCreatePortfolio'), ResetInput()" class="rounded-pill btn btn-grey btn-padding-20 a-font-p" style="padding-left: 35px !important; padding-right:  35px !important; font-size:  15px;" type="submit">create portfolio</button>
+                <button onclick="openModal('#modalCreatePortfolio'), ResetInput()" class="rounded-pill btn-primary btn-variant" style="padding-left: 35px !important; padding-right:  35px !important; font-size:  15px;" type="submit">create portfolio</button>
                 <a class="ms-4 me-2 mt-1" type="button" onclick="CloseAlert()"><i class="fa-solid fa-grey fa-circle-xmark a-font-p"></i></a>
             </div>
         </div>
