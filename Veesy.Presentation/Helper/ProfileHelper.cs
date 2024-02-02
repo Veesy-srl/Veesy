@@ -383,9 +383,10 @@ public class ProfileHelper
         return await _accountService.UpdateMyUserRolesWork(rolesToDelete, rolesToAdd, userInfo);
     }
 
-    public async Task<ResultDto> ChangeSubscriptionPlan(string name, MyUser userInfo)
+    public async Task<ResultDto> ChangeSubscriptionPlan(ChangeSubscriptionDto changeSubscriptionDto)
     {
-        var subscriptionPlan = _accountService.GetSubscriptionPlanByName(name);
+        var subscriptionPlan = _accountService.GetSubscriptionPlanByName(changeSubscriptionDto.SubscriptionName);
+        var userInfo = await _userManager.FindByIdAsync(changeSubscriptionDto.MyUserId);
         var numberMedia = _mediaService.GetMediaNumberByUser(userInfo);
         var mediaSize = _mediaService.GetSizeMediaStorageByUserId(userInfo.Id);
         if (numberMedia > subscriptionPlan.AllowedMediaNumber)

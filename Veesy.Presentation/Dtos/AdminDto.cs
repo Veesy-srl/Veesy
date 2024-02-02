@@ -11,6 +11,12 @@ public class MediaOverviewDto
     public int Year { get; set; }
 }
 
+public class ChangeSubscriptionDto
+{
+    public string SubscriptionName { get; set; }
+    public string MyUserId { get; set; }
+}
+
 public class CreatorOverviewDto
 {
     public int NumberCreator { get; set; }
