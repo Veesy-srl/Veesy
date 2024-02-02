@@ -61,7 +61,10 @@
                         <td><a href="tel:@user.PhoneNumber">@user.PhoneNumber</a></td>
                         <td>@user.Category</td>
                         <td>@user.CreateDate</td>
-                        <td><button type="button" class="btn @VeesyConstants.SubscriptionPlan.SubscriptionSpan[@user.SubscriptionPlan] m-1">@user.SubscriptionPlan</button></td>
+                        @{
+                            var subsc = VeesyConstants.SubscriptionPlan.Pro == @user.SubscriptionPlan ? VeesyConstants.SubscriptionPlan.Free : VeesyConstants.SubscriptionPlan.Pro; 
+                        }
+                        <td><button type="button" onclick="openModal('#modalChangeSubscription'), SetSubscription('@subsc', '@user.Code')" class="btn @VeesyConstants.SubscriptionPlan.SubscriptionSpan[@user.SubscriptionPlan] m-1">@user.SubscriptionPlan</button></td>
                         <td>
                             <a style="cursor: pointer" asp-action="CreatorInfo" asp-controller="Admin" asp-route-id="@user.Code" class="bg-primary me-2 rounded-circle p-2 text-white d-inline-flex "><i class="ti ti-eye fs-4"></i></a>
                             <a style="cursor: pointer" onclick="openModal('#modalConfirmDeleteUser'), setUserIdToDelete('@user.Code')" class="bg-danger rounded-circle p-2 text-white d-inline-flex "><i class="ti ti-trash fs-4"></i></a>
@@ -144,13 +147,67 @@
     </div>
 </div>
 
+<div class="modal fade" id="modalChangeSubscription" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Update plan</strong></h3>
+                <a onclick="closeModal('#modalChangeSubscription')"><i class="fa-solid fa-grey fa-circle-xmark"></i></a>
+            </div>
+            <div class="empty-veesy"></div>
+            <div class="modal-body text-center">
+                <h5 id="confirm-change-plan">
+                    Are you sure to change your plan?
+                </h5>
+                <div class="empty-veesy"></div>
+                <button onclick="UpdateSubscription()" class="mt-2 rounded-pill btn btn-padding btn-primary a-font-p" type="submit">yes</button>
+            </div>
+            <div class="empty-veesy"></div>
+        </div>
+    </div>
+</div>
+
 @section Scripts
 {
-      
+
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
     <script>
     
         let userId = ''
+        let subscriptionName = '';
+        
+        function SetSubscription(name, user) {
+            subscriptionName = name;       
+            userId = user;
+            document.getElementById("confirm-change-plan").innerHTML = "Are you sure you want to change plan in <strong>" + subscriptionName + "</strong>?"
+        }
+        
+    
+        function UpdateSubscription(){
+            $('#load-spinner').css("display", "block");
+            
+            var SubscriptionName = subscriptionName;
+            var MyUserId = userId
+            
+            var ChangeSubscriptionDto = {SubscriptionName, MyUserId}
+            
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ChangeSubscriptionPlan", "Profile", new { area = "Account" })',
+                data: JSON.stringify(ChangeSubscriptionDto),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (response) {
+                    if(response.result){
+                        location.reload()
+                    }
+                    $('#load-spinner').css("display", "none");
+                },
+                error: function (response) {
+                    $('#load-spinner').css("display", "none");
+                }
+            })
+        }
         
         function setUserIdToDelete(id) {
             userId = id
@@ -161,7 +218,7 @@
         
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("DeleteAccount", "Profile", new {area = "Account"})',
+                url: '@Url.Action("DeleteAccount", "Profile", new { area = "Account" })',
                 data: JSON.stringify(userId),
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
