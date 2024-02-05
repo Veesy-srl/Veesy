@@ -230,10 +230,10 @@
             document.getElementById("media-popup").style.display = "block";
             document.getElementById("image-popup").style.display = "none";
             document.getElementById("video-popup").style.display = "none";
-            if(user != " "){
-            document.getElementById("creator-image").src = '@Model.BasePathAzure' + file;
+            if(file !== ""){
+                document.getElementById("creator-image").src = '@Model.BasePathAzure' + file;
             }else{
-                document.getElementById("creator-image").src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU' + file;
+                document.getElementById("creator-image").src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU';
             }
             var basePathCode = '@Model.BasePathCode';
 
