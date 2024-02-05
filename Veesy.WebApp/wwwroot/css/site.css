@@ -38,6 +38,14 @@
   width: 100%;
 }
 
+
+.card-columns-gallery {
+  column-count: 4;
+  @media only screen and (max-width: 600px) {
+    column-count: 2;
+  }
+}
+
 .div-selector{
   position: relative;
   z-index: 1035;
@@ -730,10 +738,9 @@ button:focus {
 }
 
 .logo-container{
-  background-image: url('../imgs/Auth/Render_2-downscale-art-width-1500px-1024x1024.jpg');
   background-size: cover;
   background-position: center;
-  height: 106vh;
+  height: 100vh;
 }
 
 img.lazy {
@@ -1337,6 +1344,12 @@ a:hover{
 
 .pt-7rem{
   padding-top: 7rem;
+}
+
+.pt-7rem-mobile{
+  @media only screen and (max-width: 600px) {
+    padding-top: 7rem;
+  }
 }
 
 .pt-4rem{
