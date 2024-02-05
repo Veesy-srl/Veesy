@@ -5,7 +5,7 @@
     ViewData["Title"] = "Gallery";
 }
 
-<div id="galleryselector" class="gallery-selector d-flex justify-content-center">
+<div id="galleryselector" class="nodisplay-sm gallery-selector d-flex justify-content-center">
     <div class="div-selector btn-layout btn-light">
         <div class="row">
             <div class="col-6">
@@ -24,7 +24,7 @@
     </div>
 </div>
 
-<div class="padding-lg">
+<div class="padding-lg pt-7rem-mobile">
     <div class="row pt-4 p-4-lg">
         <div class="col-sm-12 col-md-8 mb-3">
             <h1 class="text-color">A monthly selection of vestibulum at nisa<br/> maximus consectetur vulputate eget ac <br/> augue istareiot</h1>
@@ -33,7 +33,7 @@
 </div>
 
 <div class="row">
-    <div class="card-columns draggable-zone ps-0 pe-0" id="images-container">
+    <div class="card-columns-gallery draggable-zone ps-0 pe-0" id="images-container">
         @{
             foreach (var image in Model.MediaGalleryDtos)
             {
@@ -287,7 +287,7 @@
         
         function switchColumnLayout(columnsNumber) {
           var imagesContainer = document.getElementById("images-container");
-          imagesContainer.classList.remove("card-columns")
+          imagesContainer.classList.remove("card-columns-gallery")
           imagesContainer.style.columnCount = columnsNumber
         }
         
@@ -327,9 +327,6 @@
         img.rounded-corners {
           border-radius: 20px;
           width: 100%
-        }
-        .card-columns {
-            column-count: 4;
         }
         
         .jump-animation {

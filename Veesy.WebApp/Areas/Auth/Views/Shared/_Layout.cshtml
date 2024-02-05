@@ -95,10 +95,19 @@
            </nav>
        </header>
 <div>
-    <div class="login-container" style="min-height: 100vh;">
-        <div class="logo-container vertical-center">
-            
-        </div>
+    <div class="login-container" style="height: 100vh;">
+        @if (ViewContext.RouteData.Values["Action"].ToString() == "SignUp")
+        {
+            <div style="background-image: url('../../imgs/Auth/Immagine per Sign Up.jpg');" class="logo-container vertical-center">
+
+            </div>
+        }
+        else
+        {
+            <div style="background-image: url('../../imgs/Auth/Immagine per Log In.jpg');" class="logo-container vertical-center">
+
+            </div>
+        }
         @RenderBody()
     </div>
 </div>
@@ -108,7 +117,7 @@
     </div>
 </div>
 
-<footer class="footer">
+<footer class="footer" style="top: 6vh !important;">
     <div class="container">
         <div class="row mb-3">
             <div class="col-md-3 mt-5 veesy-text-color" >
