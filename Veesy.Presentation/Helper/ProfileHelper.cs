@@ -34,6 +34,8 @@ public class ProfileHelper
     {
         if (biography.Length > 500)
             return new ResultDto(false, "Max characters is 500.");
+        
+        biography = biography.Replace("\n", " ");
         user.Biografy = string.IsNullOrEmpty(biography) ? null : biography;
         return await _accountService.UpdateUserProfile(user);
     }
@@ -42,6 +44,8 @@ public class ProfileHelper
     {
         if (introPortfolio.Length > 100)
             return new ResultDto(false, "Max characters is 100.");
+        
+        introPortfolio = introPortfolio.Replace("\n", " ");
         user.PortfolioIntro = string.IsNullOrEmpty(introPortfolio) ? null : introPortfolio;
         return await _accountService.UpdateUserProfile(user);
     }
@@ -270,6 +274,7 @@ public class ProfileHelper
     {
         if(category.Length > 100)
             return new ResultDto(false, "Max characters are 50.");
+        category = category.Replace("\n", " ");
         userInfo.Category = category;
         return await _accountService.UpdateUserProfile(userInfo);
     }
