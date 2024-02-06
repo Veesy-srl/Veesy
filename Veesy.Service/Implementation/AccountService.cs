@@ -295,7 +295,6 @@ public class AccountService : IAccountService
         count = user.ProfileImageFileName != null ? count + 2 : count;
         count = user.PortfolioIntro != null ? count + 2 : count;
         count = user.PhoneNumber != null ? count + 1 : count;
-        count = user.Email != null ? count + 1 : count;
         return count ;
     }
 
