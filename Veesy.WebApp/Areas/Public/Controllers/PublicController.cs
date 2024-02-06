@@ -31,8 +31,8 @@ public class PublicController : VeesyController
         _signInManager = signInManager;
     }
     
-    [HttpGet("contacts")]
-    public IActionResult Contacts()
+    [HttpGet("contact")]
+    public IActionResult Contact()
     {
         try
         {

@@ -27,7 +27,7 @@
 <div class="padding-lg pt-7rem-mobile">
     <div class="row pt-4 p-4-lg">
         <div class="col-sm-12 col-md-8 mb-3">
-            <h1 class="text-color">A monthly selection of vestibulum at nisa<br/> maximus consectetur vulputate eget ac <br/> augue istareiot</h1>
+            <h1 class="text-color">Wander through a curated exhibit of visual <br/> art that celebrates the diversity and skill <br/> of our community.</h1>
         </div>
     </div>
 </div>
@@ -43,8 +43,10 @@
                 {
                     hasCredits = !string.IsNullOrEmpty(image.Credits);
                 }
-                @if (MediaCostants.ImageExtensions.Contains(image.Type.ToUpper()))
+                
+                if (MediaCostants.ImageExtensions.Contains(image.Type.ToUpper()))
                 {
+                   
                     <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.Code', false, '@image.Owner.ProfileImageFileName', '@name', '@category', '@image.PortfolioCode', '@image.NestedPortfolioLinks', '@hasCredits')" class="draggable media-div" name="image-gallery" mediaid="@image.Code">
                         <img title="@image.Owner.Fullname" class="img-fluid lazy rounded-05 w-100 mt-3" data-src="@Model.BasePathImages@image.FileName?tr=w-1080" />
                     </div>
@@ -121,7 +123,7 @@
             
         </div>
     </div>
-    <div class="creator-popup-gallery ms-2" id="creator-popup-id" onclick="OpenCreatorPopup()">
+    <div class="creator-popup-gallery me-2" id="creator-popup-id" onclick="OpenCreatorPopup()">
         <div class="d-flex">
             <div class="col-11">
                 <p class="text-white ms-2 mb-1" style="margin-top:  2.5% !important;">MEET THE CREATOR</p>
@@ -130,7 +132,7 @@
         </div>
     </div>
     
-    <div class="creator-popup-gallery me-1 mb-3 ms-2 creator-popup-full-close" id="popup-creator" style="border-radius: 5px">
+    <div class="creator-popup-gallery mb-3 me-2 creator-popup-full-close" id="popup-creator" style="border-radius: 5px">
       <div class="d-flex" style="cursor: pointer" onclick="CloseCreatorPopup()">
         <div class="col-11">
           <p class="text-white ms-2 mb-1 mt-2">MEET THE CREATOR</p>
@@ -150,7 +152,7 @@
         </div>
         <div class="row">
           <a class="ps-0 pe-0 pb-2" id="creator-link">
-            <button class="rounded-pill btn div-white-rounded-veesy btn-variant w-100">discover mode</button>
+            <button class="rounded-pill btn div-white-rounded-veesy btn-variant w-100">discover more</button>
           </a>
         </div>
       </div>

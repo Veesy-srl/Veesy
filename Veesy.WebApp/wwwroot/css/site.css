@@ -1185,8 +1185,9 @@ a{
   background: #536B7E;
   border-radius: 5px 5px 0px 0px;
   bottom: 0px;
-  float: left;
+  float: right;
   z-index: 9999;
+  right: 0px;
 }
 
 .blur-background{
