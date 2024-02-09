@@ -503,3 +503,7 @@
 [data-bs-theme="dark"] p{
     color: #F3F3F3;
 }
+
+[data-bs-theme="dark"] #newMessage{
+    color: white !important;
+}

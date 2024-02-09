@@ -178,8 +178,6 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
             .Include(t => t.MyUserCategoriesWork)
             .ThenInclude(g => g.CategoryWork)
             .ToList();
-
-        users.RemoveAll(u => u.ProfileImageFileName == null);
         
         foreach (var user in users)
         {

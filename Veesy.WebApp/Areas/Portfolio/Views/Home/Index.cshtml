@@ -139,7 +139,7 @@
                         </div>
                     </div>
                     <div class="col-8 vertical-space">
-                        <h5><a class="blue-link-option" onclick="CopyLink('https://localhost:44337/portfolio/68ce29b1-efa6-4f3d-57d5-08dbc8ca076e')"><i class="fa-regular fa-clone me-2"></i></a><strong class="text-color">@Model.PortfolioThumbnailDto.Name</strong></h5>
+                        <h5><a class="blue-link-option" onclick="CopyLink('@Model.ApplicationUrl@Url.Action("Portfolio", "Public", new {area = "Public", id = @Model.PortfolioThumbnailDto.Code})')"><i class="fa-regular fa-clone me-2"></i></a><strong class="text-color">@Model.PortfolioThumbnailDto.Name</strong></h5>
                         <p class="veesy-grey-p mb-0" style="margin-bottom: 2rem">Updated on @Model.PortfolioThumbnailDto.LastUpdate<br/>@Model.PortfolioThumbnailDto.NumberMedia media uploaded</p>
                     </div>
                 }
@@ -173,7 +173,7 @@
         </div>
         <div class="pt-0 vertical-space card-body bg-grey-dash rounded-bottom rounded-05-footer">
             <div>
-                <p class="text-white mt-4 mb-0"><strong>Quick Upload: </strong>Upload and order your files to create your portfolios.</p>
+                <p class="text-white mt-4 mb-0"><strong>Quick Upload: </strong>Upload now and use anytime and everywhere.</p>
                 <p class="text-white mb-0">Formats accepted: <strong>jpg, png, mov, mp4, gif.</strong></p>
             </div>
             <div class="row">

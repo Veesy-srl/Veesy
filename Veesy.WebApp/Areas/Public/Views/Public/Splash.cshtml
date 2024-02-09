@@ -228,9 +228,10 @@
   
 </div>
 
-<div class="centered-text">
-  <h1 class="h1-variant-splash mb-3">Visual made <b>Easy.</b></h1>
-  <div class="col-md-12 mb-4 veesy-text-color">
+<div class="centered-text" id="VisualMade">
+</div>
+<div class="centered-text mt-3">
+  <div class="col-md-12 mb-4 veesy-text-color" style="margin-top: 100px;">
     <form method="get" asp-area="Auth" asp-controller="Auth" asp-action="SignUp" style="display: inline-block;">
       <button class="rounded-pill btn-primary-about-variant-splash btn-variant" style="margin-right: 15px;" type="submit">join</button>
     </form>
@@ -341,7 +342,7 @@
       
       .centered-text {
         position: fixed;
-        top: 55%;
+        top: 48%;
         left: 50%;
         transform: translate(-50%, -50%);
         text-align: center;
@@ -366,7 +367,7 @@
     
     .message-variant{
       text-align: center;
-      transition: 1s;
+      transition: 3s;
       position: fixed;
       top: 50%;
       left: 50%;
@@ -411,7 +412,7 @@
         document.getElementById("popup-creator").classList.remove("creator-popup-full-close");
         document.getElementById("creator-popup-splash-id").style.display = "none";
     }
-    function CloseCreatorPopup(){
+    function CloseCreatorPopup() {
         document.getElementById("popup-creator").classList.remove("creator-popup-full-open")
         document.getElementById("popup-creator").classList.add("creator-popup-full-close")
         document.getElementById("creator-popup-splash-id").style.display = "block";
@@ -429,6 +430,11 @@
          var colorTint = { r: 0, g: 0, b: 85 }; // Colore iniziale (blu)
          var targetColor = { r: 32, g: 47, b: 77 }; // Colore di destinazione (202F4D)
      
+         if (!isDarkThemeActive()) {
+             var newMessage = document.getElementById("newMessage");
+             cambiaColoreGradualmente(newMessage, "202F4D");
+         }
+
          var fadeOutInterval = setInterval(function() {
            if (opacity <= 0) {
              // Quando l'opacità raggiunge 0, nascondi il modal
@@ -448,25 +454,28 @@
          }, interval);
        }, 5000);
      });
-
     
     document.addEventListener("DOMContentLoaded", function () {
-      const messageContainer = document.getElementById("message-container");
+      const messageContainer = document.getElementById("VisualMade");
       const message = document.querySelector(".message");
-    
+      
       setTimeout(function () {
-        message.style.top = "38%";
-    
+        message.style.top = "38%"; 
+      }, 1800);
+              
+      setTimeout(function () {
         const newMessage = document.createElement("div");
         newMessage.classList.add("message-variant");
-        
-        newMessage.innerHTML = "<h1>Visual made <b>Easy.</b></h1>";
         newMessage.style.opacity = 0; 
+        newMessage.innerHTML = '<h1 id="newMessage">Visual made <b>Easy.</b></h1>';
+        messageContainer.style.zIndex = "99999";
+        messageContainer.style.color = "white";
+        newMessage.setAttribute("style", "width: 300px;");
         messageContainer.appendChild(newMessage);
     
         setTimeout(function () {
           newMessage.style.opacity = 1; 
-        }, 100); 
+        }, 50); 
       }, 2000); 
     });
     
@@ -479,4 +488,39 @@
 document.addEventListener('DOMContentLoaded', function () {
   setTimeout(OpenCreatorPopup, 10000); 
 });
+ 
+ function cambiaColoreGradualmente(elemento, coloreDesiderato) {
+     var coloreAttuale = [255, 255, 255];
+     var coloreObiettivo = hexToRgb(coloreDesiderato);
+     var passo = 10; 
+ 
+     var intervallo = setInterval(function() {
+         if (coloreAttuale[0] === coloreObiettivo[0] && coloreAttuale[1] === coloreObiettivo[1] && coloreAttuale[2] === coloreObiettivo[2]) {
+             clearInterval(intervallo);
+             document.getElementById("VisualMade").style.zIndex = "999";
+         } else {
+             for (var i = 0; i < 3; i++) {
+                 if (coloreAttuale[i] < coloreObiettivo[i]) {
+                     coloreAttuale[i] = Math.min(coloreAttuale[i] + passo, coloreObiettivo[i]);
+                 } else if (coloreAttuale[i] > coloreObiettivo[i]) {
+                     coloreAttuale[i] = Math.max(coloreAttuale[i] - passo, coloreObiettivo[i]);
+                 }
+             }
+             elemento.style.color = 'rgb(' + coloreAttuale.join(',') + ')';
+         }
+     }, 50); 
+ }
+ 
+ function hexToRgb(hex) {
+     var r = parseInt(hex.substring(0, 2), 16);
+     var g = parseInt(hex.substring(2, 4), 16);
+     var b = parseInt(hex.substring(4, 6), 16);
+     return [r, g, b];
+ }
+ 
+function isDarkThemeActive() {
+    const body = document.body;
+    const themeElement = body.hasAttribute('data-bs-theme') ? body : document.querySelector('[data-bs-theme="dark"]');
+    return themeElement && themeElement.getAttribute('data-bs-theme') === 'dark';
+}
 </script>
