@@ -169,16 +169,16 @@ public class AuthHelper
     {
         // Array di nomi di file
         string[] imageFiles = {
-            "ProfilePicNew-01.png",
-            "ProfilePicNew-02.png",
-            "ProfilePicNew-03.png",
-            "ProfilePicNew-04.png",
-            "ProfilePicNew-05.png",
-            "ProfilePicNew-06.png",
-            "ProfilePicNew-07.png",
-            "ProfilePicNew-08.png",
-            "ProfilePicNew-09.png",
-            "ProfilePicNew-10.png"
+            "ProfilePicNew-01.jpg",
+            "ProfilePicNew-02.jpg",
+            "ProfilePicNew-03.jpg",
+            "ProfilePicNew-04.jpg",
+            "ProfilePicNew-05.jpg",
+            "ProfilePicNew-06.jpg",
+            "ProfilePicNew-07.jpg",
+            "ProfilePicNew-08.jpg",
+            "ProfilePicNew-09.jpg",
+            "ProfilePicNew-10.jpg"
         };
 
         int randomIndex = random.Next(0, imageFiles.Length);
