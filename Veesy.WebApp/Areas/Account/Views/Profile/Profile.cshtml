@@ -95,7 +95,10 @@
                             <p class="mb-0 veesy-overflow text-color">@Model.Role
                             </p>
                         </div>
-                        <div class="col-3 text-end"><a onclick="openModal('#modalWorkRole'), setTextAreaValue('category-edit', '@Model.Role')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
+                        
+                        var role = Model.Role != null && Model.Role.Contains("'") ? Model.Role.Replace("'", "&#x27;") : Model.Role;
+
+                        <div class="col-3 text-end"><a onclick="openModal('#modalWorkRole'); setTextAreaValue('category-edit', '@role');" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
                     }
                 </div>
                 <hr class="hr color-hr"/>
@@ -114,7 +117,10 @@
                             <p class="mb-0 text-color"><strong>External link:</strong></p>
                             <p style="cursor: pointer" onclick="OpenUrlNewTab('@Model.ExternalLink')" class="mb-0 veesy-overflow text-color">@Model.ExternalLink</p>
                         </div>
-                        <div class="col-3 text-end"><a onclick="openModal('#modalExternalLink'), setTextAreaValue('external-link-edit', '@Model.ExternalLink')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
+                        
+                        var externalLink = Model.ExternalLink != null && Model.ExternalLink.Contains("'") ? Model.ExternalLink.Replace("'", "&#x27;") : Model.ExternalLink;
+                        
+                        <div class="col-3 text-end"><a onclick="openModal('#modalExternalLink'), setTextAreaValue('external-link-edit', '@externalLink')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
                     }
                 </div>
                 <hr class="hr color-hr"/>
@@ -193,7 +199,10 @@
             else
             {
                 <p class="text-color option-font-20" style="font-weight: 400;">@Model.PortfolioIntro</p>
-                <a onclick="openModal('#modalPortfolioIntro'), setTextAreaValue('portfolio-intro-text-edit', '@Model.PortfolioIntro.Replace("\'", "&#x27;")')" class="grey-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
+                                                                                                    
+                var portfolioIntro = Model.PortfolioIntro != null && Model.PortfolioIntro.Contains("'") ? Model.PortfolioIntro.Replace("'", "&#x27;") : Model.PortfolioIntro;
+
+                <a onclick="openModal('#modalPortfolioIntro'), setTextAreaValue('portfolio-intro-text-edit', '@portfolioIntro')" class="grey-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
 
             }
         </div>
@@ -209,7 +218,10 @@
             else
             {
                 <p>@Model.Biography</p>
-                <a onclick="openModal('#modalBiography'), setTextAreaValue('biography-text-edit', '@Model.Biography.Replace("\'", "&#x27;")')" class="grey-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
+                                   
+                var biography = Model.Biography != null && Model.Biography.Contains("'") ? Model.Biography.Replace("'", "&#x27;") : Model.Biography;
+
+                <a onclick="openModal('#modalBiography'), setTextAreaValue('biography-text-edit', '@biography')" class="grey-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
 
             }
         </div>

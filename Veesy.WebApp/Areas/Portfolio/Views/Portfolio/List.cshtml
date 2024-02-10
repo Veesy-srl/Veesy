@@ -55,7 +55,7 @@
                             }
                         }
                         <div>
-                            <h5 style="font-size: 20px !important; line-height: 27px;"><a onclick="ChangeMainPortfolio('@item.Code')"><i id="new-main-@item.Code" style="color: #75CCDD" class="@iconBack icon-main-portfolio fa-star me-2"></i></a><strong class="text-color">@item.Name</strong></h5>
+                            <h5 style="font-size: 20px !important; line-height: 27px;"><a onclick="openModal('#modalMainPortfolio'), setPortfolioIdForMain('@item.Code')"><i id="new-main-@item.Code" style="color: #75CCDD" class="@iconBack icon-main-portfolio fa-star me-2"></i></a><strong class="text-color">@item.Name</strong></h5>
                             <div class="empty-veesy"></div>
                             <p class="veesy-text-color" style="margin-bottom: 3rem">Updated on @item.LastUpdate<br/>@item.NumberMedia media uploaded</p>
                         </div>
@@ -120,6 +120,24 @@
     </div>
 </div>
 
+<div class="modal fade" id="modalMainPortfolio" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Main portfolio</strong></h3>
+                <a onclick="closeModal('#modalMainPortfolio')"><i class="fa-solid fa-grey fa-circle-xmark"></i></a>
+            </div>
+            <div class="empty-veesy"></div>
+            <div class="modal-body text-center text-color">
+                <h5 id="confirm-main-body">Are you sure you want to make this your featured portfolio?</h5>
+                <div class="empty-veesy"></div>
+                <button onclick="ChangeMainPortfolio()" class="mt-2 rounded-pill btn btn-primary a-font-p" type="submit">yes, set it</button>
+            </div>
+            <div class="empty-veesy"></div>
+        </div>
+    </div>
+</div>
+
 @section Scripts
 {
     <script>
@@ -128,6 +146,11 @@
         function setPortfolioIdAndText(id, name){
             portfolioId = id
             document.getElementById("confirm-delete-body").textContent = "The portfolio " + name + " will be delete permanently. Are you sure?";
+        }
+        
+        let portfolioIdMain
+        function setPortfolioIdForMain(id){
+            portfolioIdMain = id
         }
         
         function DeletePortfolio() {
@@ -151,8 +174,8 @@
             })
         }
         
-        function ChangeMainPortfolio(id) {
-            var Id = id
+        function ChangeMainPortfolio() {
+            var Id = portfolioIdMain
             var IsMain = true
             var portfolioDto = {Id, IsMain}
             $.ajax({
@@ -171,6 +194,7 @@
                             icons[i].classList.add("fa-regular")
                         }
                         document.getElementById("new-main-" + Id).classList.add("fa-solid")
+                        closeModal('#modalMainPortfolio')
                     }
                     $('#load-spinner').css("display", "none");
                 },

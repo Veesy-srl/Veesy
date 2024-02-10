@@ -11,15 +11,18 @@
 @await RenderSectionAsync("Style", required: false)
 
 <style>
+  .header-logo-auth{
+    content: url('../imgs/_Logo Veesy-lb.png');
+    width: 75px;
+    height: 25px;
+    margin-top: 5px;
+    margin-right: 5px;
+  }
   
-.header-logo{
-  content: url('../../imgs/veesy_vettoriale_enigma.png');
-  width: 75px; 
-  height: 25px; 
-  margin-top: 5px;
-}
+  .header-logo-auth:hover{
+    content: url('../imgs/_Logo Veesy-lb-g-p.png');
+  }
 </style>
-
 <body>
   <!--  Body Wrapper -->
   <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
@@ -30,7 +33,7 @@
       <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
           <a href="#" class="text-nowrap logo-img">
-            <img class="header-logo"/>
+            <img class="header-logo-auth mr-2" style="width: 75px; height: 25px; margin-top:  10px;"/>
           </a>
           <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
             <i class="ti ti-x fs-8"></i>

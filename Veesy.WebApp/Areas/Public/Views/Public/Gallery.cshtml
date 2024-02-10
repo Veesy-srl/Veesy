@@ -5,7 +5,7 @@
     ViewData["Title"] = "Gallery";
 }
 
-<div id="galleryselector" class="gallery-selector d-flex justify-content-center">
+<div id="galleryselector" class="nodisplay-sm gallery-selector d-flex justify-content-center">
     <div class="div-selector btn-layout btn-light">
         <div class="row">
             <div class="col-6">
@@ -17,35 +17,43 @@
             <div class="col-6">
                 <div class="d-flex">
                     <p class="pt-1 mb-0 pe-2" for="customRange2">column</p>
-                    <input onchange="switchColumnLayout(this.value)" type="range" class="form-range range-cust" step="1" min="1" max="12" id="customRange2">
+                    <input onchange="switchColumnLayout(this.value)" type="range" class="form-range range-cust" value="4" step="1" min="1" max="12" id="customRange2">
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="padding-lg">
+<div class="padding-lg pt-7rem-mobile">
     <div class="row pt-4 p-4-lg">
         <div class="col-sm-12 col-md-8 mb-3">
-            <h1 class="text-color">A monthly selection of vestibulum at nisa<br/> maximus consectetur vulputate eget ac <br/> augue istareiot</h1>
+            <h1 class="text-color">Wander through a curated exhibit of visual <br/> art that celebrates the diversity and skill <br/> of our community.</h1>
         </div>
     </div>
 </div>
 
 <div class="row">
-    <div class="card-columns draggable-zone ps-0 pe-0" id="images-container">
+    <div class="card-columns-gallery draggable-zone ps-0 pe-0" id="images-container">
         @{
-            foreach (var image in Model.MediaDtos)
+            foreach (var image in Model.MediaGalleryDtos)
             {
-                @if (MediaCostants.ImageExtensions.Contains(image.Type.ToUpper()))
+                var category = image?.Owner?.Category?.Replace("'", "\\'");
+                var name = image?.Owner?.Fullname?.Replace("'", "\\'");
+                var hasCredits = false;
                 {
-                    <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.Code', false, '@image.Owner.ProfileImageFileName', '@image.Owner.Fullname', '@image.Owner.Category', '@image.Owner.Email')" class="draggable media-div" name="image-gallery" mediaid="@image.Code">
+                    hasCredits = !string.IsNullOrEmpty(image.Credits);
+                }
+                
+                if (MediaCostants.ImageExtensions.Contains(image.Type.ToUpper()))
+                {
+                   
+                    <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.Code', false, '@image.Owner.ProfileImageFileName', '@name', '@category', '@image.PortfolioCode', '@image.NestedPortfolioLinks', '@hasCredits')" class="draggable media-div" name="image-gallery" mediaid="@image.Code">
                         <img title="@image.Owner.Fullname" class="img-fluid lazy rounded-05 w-100 mt-3" data-src="@Model.BasePathImages@image.FileName?tr=w-1080" />
                     </div>
                 }
                 else
                 {
-                    <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.Code', true, '@image.Owner.ProfileImageFileName', '@image.Owner.Fullname', '@image.Owner.Category', '@image.Owner.Email')" class="draggable media-div" name="image-gallery">
+                    <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.Code', true, '@image.Owner.ProfileImageFileName', '@name', '@category', '@image.PortfolioCode', '@image.NestedPortfolioLinks', '@hasCredits')" class="draggable media-div" name="image-gallery">
                         <video autoplay="autoplay" muted loop class="w-100 shadow-1-strong rounded-05 mt-3" title="@image.Owner.Fullname">
                             <data-src src="@Model.BasePathImages@image.FileName?tr=w-1080" type="video/mp4"></data-src>
                         </video>
@@ -95,12 +103,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <video id="video-popup" style="display: none" autoplay="autoplay" muted controls="controls" loop class="img-ratio-portfolio rounded-05">
-                                <source type="video/mp4">
-                            </video>
-                            <img style="display: none" id="image-popup" asp-append-version="true" class="img-ratio-portfolio rounded-05 mt-1"/>
+                            <a onclick="OpenCreditsOrNestedLink()" style="cursor:pointer;">
+                                <video id="video-popup" style="display: none" autoplay="autoplay" muted controls="controls" loop class="img-ratio-portfolio rounded-05">
+                                    <source type="video/mp4">
+                                </video>
+                                <img style="display: none" id="image-popup" asp-append-version="true" class="img-ratio-portfolio rounded-05 mt-1"/>
+                            </a>
                             <a onclick="ShowOverlay(true)" id="open-credits" style="position: absolute;" class=" edit-button-portfolio-preview">
-                                <i class="fa-solid fa-plus" id="openPlus"></i>
+                                <i class="fa-solid fa-plus mt-1" id="openPlus"></i>
                             </a>
                         </div>   
                     </div>
@@ -113,7 +123,7 @@
             
         </div>
     </div>
-    <div class="creator-popup-gallery" id="creator-popup-id" onclick="OpenCreatorPopup()">
+    <div class="creator-popup-gallery me-2" id="creator-popup-id" onclick="OpenCreatorPopup()">
         <div class="d-flex">
             <div class="col-11">
                 <p class="text-white ms-2 mb-1" style="margin-top:  2.5% !important;">MEET THE CREATOR</p>
@@ -122,7 +132,7 @@
         </div>
     </div>
     
-    <div class="creator-popup-gallery me-1 mb-3 creator-popup-full-close" id="popup-creator" style="border-radius: 5px">
+    <div class="creator-popup-gallery mb-3 me-2 creator-popup-full-close" id="popup-creator" style="border-radius: 5px">
       <div class="d-flex" style="cursor: pointer" onclick="CloseCreatorPopup()">
         <div class="col-11">
           <p class="text-white ms-2 mb-1 mt-2">MEET THE CREATOR</p>
@@ -142,7 +152,7 @@
         </div>
         <div class="row">
           <a class="ps-0 pe-0 pb-2" id="creator-link">
-            <button class="rounded-pill btn div-white-rounded-veesy btn-variant w-100">get in touch</button>
+            <button class="rounded-pill btn div-white-rounded-veesy btn-variant w-100">discover more</button>
           </a>
         </div>
       </div>
@@ -152,6 +162,14 @@
 @section Scripts
 {
     <script>
+        
+        function OpenCreditsOrNestedLink() {
+            if(nowNestedPortfolioId != null && nowNestedPortfolioId != "")
+                location.href = '@Model.BasePathCode' + "/portfolio/" + nowNestedPortfolioId 
+            else if (nowHasCredits)
+                ShowOverlay(true)
+        }
+        
         $(function() {
             $('.lazy').Lazy({
                 
@@ -200,19 +218,30 @@
           return [width, height]
         }
         
-        var media = @Html.Raw(Json.Serialize(Model.MediaDtos))
+        var media = @Html.Raw(Json.Serialize(Model.MediaGalleryDtos))
         
-        function OpenMediaPopup(mediaId, IsVideo, file, user, category, email) {
+        let nowNestedPortfolioId = ""
+        let nowHasCredits = false;
+        
+        function OpenMediaPopup(mediaId, IsVideo, file, user, category, portfolioCode, NestedPortfolioId, HasCredits) {
+            nowNestedPortfolioId = NestedPortfolioId;
+            nowHasCredits = HasCredits == 'True' ? true : false;
             document.getElementById("open-credits").onclick = function (){ShowOverlay(true)}
             document.getElementById("text-overlay").classList.remove("text-overlay-selected")
             document.body.style.overflowY = "hidden"; 
             document.getElementById("media-popup").style.display = "block";
             document.getElementById("image-popup").style.display = "none";
             document.getElementById("video-popup").style.display = "none";
-            document.getElementById("creator-image").src = '@Model.BasePathAzure' + file;
+            if(file !== ""){
+                document.getElementById("creator-image").src = '@Model.BasePathAzure' + file;
+            }else{
+                document.getElementById("creator-image").src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU';
+            }
+            var basePathCode = '@Model.BasePathCode';
+
             document.getElementById("creator-fullname").textContent = user;
             document.getElementById("creator-category").textContent = "- " + category
-            document.getElementById("creator-link").href = "mailto:" + email
+            document.getElementById("creator-link").href = basePathCode + "/portfolio/" + portfolioCode
             let obj = media.find((o, i) => {
                 if (o.code === mediaId) {
                     let src = media[i].fileName
@@ -260,7 +289,7 @@
         
         function switchColumnLayout(columnsNumber) {
           var imagesContainer = document.getElementById("images-container");
-          imagesContainer.classList.remove("card-columns")
+          imagesContainer.classList.remove("card-columns-gallery")
           imagesContainer.style.columnCount = columnsNumber
         }
         
@@ -300,9 +329,6 @@
         img.rounded-corners {
           border-radius: 20px;
           width: 100%
-        }
-        .card-columns {
-            column-count: 6;
         }
         
         .jump-animation {

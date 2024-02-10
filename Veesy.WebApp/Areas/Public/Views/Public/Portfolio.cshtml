@@ -31,16 +31,19 @@
             @{
                 foreach (var image in Model.PortfolioDto.PortfolioMedias)
                 {
+                    var hasCredits = false;
+                    {
+                        hasCredits = !string.IsNullOrEmpty(image.Media.Credits);
+                    }
                     @if (MediaCostants.ImageExtensions.Contains(image.Media.Type.ToUpper()))
                     {
-                        
-                        <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.MediaId', false)" class="draggable" name="image-gallery" mediaid="@image.MediaId">
+                        <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.MediaId', false, '@image.Media.NestedPortfolioLinks', '@hasCredits')" class="draggable" name="image-gallery" mediaid="@image.MediaId">
                             <img title="@image.Media.OriginalFileName" class="img-fluid lazy rounded-05 w-100 mt-3" data-src="@Model.BasePathImages@image.Media.FileName?tr=w-1080" />
                         </div>
                     }
                     else
                     {
-                        <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.MediaId', true)" class="draggable" name="image-gallery">
+                        <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.MediaId', true, '@image.Media.NestedPortfolioLinks', '@hasCredits')" class="draggable" name="image-gallery">
                             <video autoplay="autoplay" muted loop class="w-100 shadow-1-strong rounded-05 mt-3" title="@image.Media.OriginalFileName">
                               <data-src src="@Model.BasePathImages@image.Media.FileName?tr=w-1080" type="video/mp4"></data-src>
                             </video>
@@ -103,12 +106,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <video id="video-popup" style="display: none" autoplay="autoplay" muted controls="controls" loop class="img-ratio-portfolio rounded-05">
-                                    <source type="video/mp4">
-                                </video>
-                                <img style="display: none" id="image-popup" asp-append-version="true" class="img-ratio-portfolio rounded-05 mt-1"/>
+                                <a onclick="OpenCreditsOrNestedLink()" style="cursor:pointer;">
+                                    <video id="video-popup" style="display: none" autoplay="autoplay" muted controls="controls" loop class="img-ratio-portfolio rounded-05">
+                                        <source type="video/mp4">
+                                    </video>
+                                    <img style="display: none" id="image-popup" asp-append-version="true" class="img-ratio-portfolio rounded-05 mt-1"/>
+                                </a>
                                 <a onclick="ShowOverlay(true)" id="open-credits" style="position: absolute;" class=" edit-button-portfolio-preview">
-                                    <i class="fa-solid fa-plus" id="openPlus"></i>
+                                    <i class="fa-solid fa-plus mt-1" id="openPlus"></i>
                                 </a>
                             </div>   
                         </div>
@@ -230,6 +235,13 @@
     @section Scripts
     {
         <script>
+        
+            function OpenCreditsOrNestedLink() {
+                if(nowNestedPortfolioId != null && nowNestedPortfolioId != "")
+                    location.href = '@Model.ApplicationUrl' + "/portfolio/" + nowNestedPortfolioId 
+                else if (nowHasCredits)
+                    ShowOverlay(true)
+            }
             
             function ShowOverlay(add) {
                 if (add){
@@ -267,7 +279,12 @@
               return [width, height]
             }
             
-            function OpenMediaPopup(mediaId, IsVideo) {
+            let nowNestedPortfolioId = ""
+            let nowHasCredits = false;
+            
+            function OpenMediaPopup(mediaId, IsVideo, NestedPortfolioId, HasCredits) {
+                nowNestedPortfolioId = NestedPortfolioId;
+                nowHasCredits = HasCredits == 'True' ? true : false;
                 document.getElementById("open-credits").onclick = function (){ShowOverlay(true)}
                 document.getElementById("text-overlay").classList.remove("text-overlay-selected")
                 document.body.style.overflowY = "hidden"; 
@@ -298,16 +315,22 @@
                         }
                         document.getElementById("number-media").textContent = (i+1) + " / " + media.length
                         if (i + 1 == media.length){
-                            document.getElementById("next-media").onclick = function() {OpenMediaPopup(media[0].media.code, media[0].media.isVideo)};
-                            document.getElementById("previous-media").onclick = function() {OpenMediaPopup(media[i-1].media.code, media[i-1].media.isVideo)};
+                            var nextHasCredits = media[0].media.credits == null? 'False' : 'True'
+                            var prevHasCredits = media[i-1].media.credits == null ? 'False' : 'True'
+                            document.getElementById("next-media").onclick = function() {OpenMediaPopup(media[0].media.code, media[0].media.isVideo, media[0].media.nestedPortfolioLinks, nextHasCredits)};
+                            document.getElementById("previous-media").onclick = function() {OpenMediaPopup(media[i-1].media.code, media[i-1].media.isVideo, media[-1].media.nestedPortfolioLinks, prevHasCredits)};
                         }
                         else if (i == 0){
-                            document.getElementById("next-media").onclick = function() {OpenMediaPopup(media[i+1].media.code, media[i+1].media.isVideo)};
-                            document.getElementById("previous-media").onclick = function() {OpenMediaPopup(media[media.length - 1].media.code, media[media.length - 1].media.isVideo)};
+                            var nextHasCredits = media[i+1].media.credits == null? 'False' : 'True'
+                            var prevHasCredits = media[media.length-1].media.credits == null? 'False' : 'True'
+                            document.getElementById("next-media").onclick = function() {OpenMediaPopup(media[i+1].media.code, media[i+1].media.isVideo, media[i+1].media.nestedPortfolioLinks, nextHasCredits)};
+                            document.getElementById("previous-media").onclick = function() {OpenMediaPopup(media[media.length - 1].media.code, media[media.length - 1].media.isVideo, media[media.length - 1].media.nestedPortfolioLinks, prevHasCredits)};
                         }
                         else{
-                            document.getElementById("next-media").onclick = function() {OpenMediaPopup(media[i+1].media.code, media[i+1].media.isVideo)};
-                            document.getElementById("previous-media").onclick = function() {OpenMediaPopup(media[i-1].media.code, media[i-1].media.isVideo)};
+                            var nextHasCredits = media[i+1].media.credits == null ? 'False' : 'True'
+                            var prevHasCredits = media[i-1].media.credits == null? 'False' : 'True'
+                            document.getElementById("next-media").onclick = function() {OpenMediaPopup(media[i+1].media.code, media[i+1].media.isVideo, media[i+1].media.nestedPortfolioLinks, nextHasCredits)};
+                            document.getElementById("previous-media").onclick = function() {OpenMediaPopup(media[i-1].media.code, media[i-1].media.isVideo, media[i - 1].media.nestedPortfolioLinks, prevHasCredits)};
                         }
                         return true; // stop searching
                     }
@@ -412,13 +435,62 @@ else if (!Model.PortfolioDto.IsPublic)
                 <div class="empty-veesy"></div>
                 <div class="col-lg-4 col-md-3 nodisplay-sm"></div>
                 <div class="col-lg-4 col-md-6 col-sm-12">
-                <div class="input-group">
-                    <p class="mb-0 fw-border size-custom"><strong>Password</strong></p>
-                    <input asp-for="Password" class="input--style-1" type="password">
-                    <button class="w-100 mt-2 rounded-pill btn btn-primary signup" type="submit">Unlock</button>
-                </div></div>
+                    <div class="input-group">
+                        <p class="mb-0 fw-border size-custom"><strong>Password</strong></p>
+                        <div class="d-flex w-100">
+                            <input asp-for="Password" id="password" class="input--style-1 input--style-password " type="password">
+                            <span class="input-group-append border-left-0">
+                                <a onclick="switchPassword()" class="input-group-text span--style-password bg-transparent">
+                                    <img id="password-eye" src="/imgs/Auth/password-hidden_light-mode.png"/>
+                                </a>
+                            </span>
+                        </div>
+                        <button class="w-100 mt-2 rounded-pill btn btn-primary signup" type="submit">Unlock</button>
+                    </div>
+                </div>
                 <div class="col-lg-4 col-md-3 nodisplay-sm"></div>
             </div>
         </div>
     </form>
 }
+
+<script>
+
+    var passwordClose = true;
+
+    function switchPassword(){
+        if (passwordClose){
+            passwordClose = false;
+            document.getElementById("password").type = "text";
+            document.getElementById("password-eye").src = "/imgs/Auth/password-shown.png";
+        }
+        else{
+            passwordClose = true;
+            document.getElementById("password").type = "password";
+            document.getElementById("password-eye").src = "/imgs/Auth/password-hidden_light-mode.png";
+        }
+    }
+</script>
+
+<style>
+        body {
+          margin: 0;
+          padding: 0;
+        }
+
+        img {
+          pointer-events: none;
+        }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+          var isImageRestricted = @Model.PortfolioDto.IsPublic.ToString().ToLower();
+    
+          if (!isImageRestricted) {
+            document.addEventListener("contextmenu", function(e) {
+              e.preventDefault();
+            });
+          }
+        });
+</script>

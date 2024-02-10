@@ -15,13 +15,15 @@ public class PortfolioHelper
     private readonly IPortfolioService _portfolioService;
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     private readonly IAccountService _accountService;
+    private readonly IMediaService _mediaService;
 
 
-    public PortfolioHelper(IConfiguration config, IPortfolioService portfolioService, IAccountService accountService)
+    public PortfolioHelper(IConfiguration config, IPortfolioService portfolioService, IAccountService accountService, IMediaService mediaService)
     {
         _config = config;
         _portfolioService = portfolioService;
         _accountService = accountService;
+        _mediaService = mediaService;
     }
     
     public PortfolioSettingsViewModel GetPortfolioSettingsViewModel(Guid id, MyUser userInfo)
@@ -134,59 +136,15 @@ public class PortfolioHelper
     /// <param name="userInfo"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public async Task<ResultDto> UpdateMediaLinkedPortfolio(UpdateMediaPortfolioDto portfolioDto, MyUser userInfo)
+    public async Task<ResultDto> UpdateMediaLinkedPortfolio(UpdateMediaNestedPortfolioDto portfolioDto, MyUser userInfo)
     {
-        var oldPortfolioMediae = _portfolioService.GetPortfoliosMediaByMediaId(portfolioDto.MediaCode).ToList();
-        var portfoliosMediaToDelete = new List<PortfolioMedia>();
-        var portfoliosMediaToAdd = new List<PortfolioMedia>();
-        var portfoliosMediaToUpdate = new List<PortfolioMedia>();
-
-        var portfolioListToDraft = portfolioDto.PortfolioSelected;
+        var media = _mediaService.GetMediaById(portfolioDto.MediaCode);
+        if (portfolioDto.PortfolioSelected == Guid.Empty)
+            media.NestedPortfolioLinks = null;
+        else
+            media.NestedPortfolioLinks = portfolioDto.PortfolioSelected;
         
-        foreach (var item in oldPortfolioMediae)
-        {
-            if (!portfolioDto.PortfolioSelected.Contains(item.PortfolioId))
-            {
-                portfoliosMediaToDelete.Add(item);
-                portfolioListToDraft.Add(item.PortfolioId);
-                var portfoliosMedia =
-                    _portfolioService.GetPortfoliosMediaByPortfolioIdToReorder(item.PortfolioId, item.SortOrder);
-                foreach (var pf in portfoliosMedia)
-                {
-                    pf.SortOrder--;
-                    portfoliosMediaToUpdate.Add(pf);
-                }
-
-            }
-        }
-        
-        foreach (var item in portfolioDto.PortfolioSelected)
-        {
-            if (!oldPortfolioMediae.Any(s => s.PortfolioId == item))
-            {
-                var newPortfolio = _portfolioService.GetPortfolioById(item, userInfo.Id);
-                portfoliosMediaToAdd.Add(new PortfolioMedia()
-                {
-                    PortfolioId = item,
-                    MediaId = portfolioDto.MediaCode,
-                    IsActive = true,
-                    SortOrder = newPortfolio.PortfolioMedias.Count,
-                    Description = ""
-                });
-                
-                newPortfolio.Status = PortfolioContants.STATUS_DRAFT;
-            }
-        }
-
-        var resultDto = await _portfolioService.UpdatePortfolioMedias(portfoliosMediaToDelete, portfoliosMediaToAdd, portfoliosMediaToUpdate, userInfo);
-        try
-        {
-            await _portfolioService.SetPortfoliosToDraftByIds(portfolioListToDraft.Distinct().ToList(), userInfo);
-        }
-        catch (Exception ex)
-        {
-            Logger.Error(ex, ex.Message);
-        }
+        var resultDto = await _mediaService.UpdateMedia(media, userInfo);
 
         return resultDto;
     }
@@ -268,6 +226,9 @@ public class PortfolioHelper
     {
 
         var portfolio = _portfolioService.GetPortfolioByIdForPreview(id);
+        if(portfolio.MyUserId != user.Id)
+            return (null, new ResultDto(false, "Portfolio not found"));
+
         var infoToShow = _accountService.GetInfosToShowByUser(user);
         var languageSpoken = _accountService.GetUserLanguageSpoken(user.Id);
         var sector = infoToShow.SingleOrDefault(s => s.InfoToShow.Info == VeesyConstants.InfoToShow.Fields) != null ? _accountService.GetUserSector(user.Id) : new List<string>();
@@ -282,7 +243,8 @@ public class PortfolioHelper
             OpenPopup = open, 
             PortfolioDto = MapPortfolioDtos.MapPreviewPortfolioDto(portfolio, languageSpoken, sector, usedSoftware, softSkill, infoToShow),
             BasePathImages = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/",
-            BasePathAzure = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"
+            BasePathAzure = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/",
+            ApplicationUrl = _config["ApplicationUrl"]
         }, new ResultDto(true, ""));
     }
 

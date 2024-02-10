@@ -102,11 +102,11 @@ public class ProfileController : VeesyController
     }
     
     [HttpPost]
-    public async Task<JsonResult> ChangeSubscriptionPlan([FromBody] string name)
+    public async Task<JsonResult> ChangeSubscriptionPlan([FromBody] ChangeSubscriptionDto changeSubscriptionDto)
     {
         try
         {
-            var result = await _profileHelper.ChangeSubscriptionPlan(name, UserInfo);
+            var result = await _profileHelper.ChangeSubscriptionPlan(changeSubscriptionDto);
             if(!result.Success)
                 _notyfService.Custom(result.Message, 10, "#ca0a0a");
             else 

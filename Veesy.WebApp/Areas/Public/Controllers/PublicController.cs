@@ -31,8 +31,8 @@ public class PublicController : VeesyController
         _signInManager = signInManager;
     }
     
-    [HttpGet("contacts")]
-    public IActionResult Contacts()
+    [HttpGet("contact")]
+    public IActionResult Contact()
     {
         try
         {
@@ -82,7 +82,8 @@ public class PublicController : VeesyController
             {
                 return RedirectToAction("Index", "Home", new { area = "Portfolio" });
             }
-            return View();
+            var vm = _publicHelper.GetSplashViewModel();
+            return View(vm);
         }
         catch (Exception e)
         {

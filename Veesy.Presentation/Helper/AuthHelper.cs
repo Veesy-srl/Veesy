@@ -21,6 +21,7 @@ public class AuthHelper
     private readonly IAccountService _accountService;
     private readonly ISubscriptionPlanService _subscriptionPlanService;
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+    private static readonly Random random = new Random();
 
     public AuthHelper(UserManager<MyUser> userManager, IConfiguration config, IEmailSender emailSender, MyUserValidator myUserValidator, IAccountService accountService, ISubscriptionPlanService subscriptionPlanService)
     {
@@ -59,7 +60,7 @@ public class AuthHelper
             return new ResultDto(false, "Entered passwords do not match.");
         if(model.SelectedCategoriesWork == null || model.SelectedCategoriesWork.Count < 1 || model.SelectedCategoriesWork.Count > 3)
             return new ResultDto(false, "Select at least one category and not more than three.");
-
+        var imageDefault = SelectRandomImageName();
         var now = DateTime.Now;
         var categories = new List<MyUserCategoryWork>();
         var userID = Guid.NewGuid().ToString();
@@ -71,7 +72,8 @@ public class AuthHelper
                 CreateRecordDate = now,
                 LastEditRecordDate = now,
                 LastEditUserId = userID,
-                CreateUserId = userID
+                CreateUserId = userID,
+                
             });
         }
 
@@ -99,6 +101,7 @@ public class AuthHelper
             Name = model.Name,
             Surname = model.Surname,
             MyUserCategoriesWork = categories,
+            ProfileImageFileName = imageDefault,
             LastLoginTime = DateTime.Now,
             MyUserSubscriptionPlans = new List<MyUserSubscriptionPlan>
             {
@@ -162,4 +165,27 @@ public class AuthHelper
             Logger.Error(ex, ex.Message);
         }
     }
+    public static string SelectRandomImageName()
+    {
+        // Array di nomi di file
+        string[] imageFiles = {
+            "ProfilePicNew-01.jpg",
+            "ProfilePicNew-02.jpg",
+            "ProfilePicNew-03.jpg",
+            "ProfilePicNew-04.jpg",
+            "ProfilePicNew-05.jpg",
+            "ProfilePicNew-06.jpg",
+            "ProfilePicNew-07.jpg",
+            "ProfilePicNew-08.jpg",
+            "ProfilePicNew-09.jpg",
+            "ProfilePicNew-10.jpg"
+        };
+
+        int randomIndex = random.Next(0, imageFiles.Length);
+        
+        string randomFileName = imageFiles[randomIndex];
+        
+        return randomFileName;
+    }
+
 }

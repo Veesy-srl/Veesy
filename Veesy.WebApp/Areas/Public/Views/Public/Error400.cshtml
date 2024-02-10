@@ -9,9 +9,9 @@
 </div>
 <div class="d-flex flex-column align-items-center justify-content-center vh-100">
     <div class="row">
-        <div class="col-md-12">
-            <img title="Ooops" class="img-fluid" src="imgs/Page400/Ooops.png" alt="Immagine 1">
-            <img class="img-fluid" src="imgs/Page400/Group 7695.png" style="margin-top: -50px; position: relative; left: -100px;" alt="Immagine 2">
+        <div class="col-md-12 mobile-margin-top">
+            <img title="Ooops" class="img-fluid w-50" style="margin-left: 25%; margin-right: 25%;" src="imgs/Page400/Ooops.png" alt="Immagine 1">
+            <img class="img-fluid" src="imgs/Page400/Group 7695.png" style="margin-left: 67%; margin-top: -23%;" alt="Immagine 2">
         </div>
     </div>
     <div class="row mt-3">
@@ -20,10 +20,18 @@
         </div>
     </div>
     <div>
-         <div class="col-md-12 text-center">
-             <a asp-area="Portfolio" asp-controller="Home" asp-action="Index">
-                 <button class="rounded-pill btn-primary btn-variant mt-4" style="width: 250px;" type="submit">veesy.it</button>
-             </a>
-         </div>
+        <div class="col-md-12 text-center">
+            <a asp-area="Portfolio" asp-controller="Home" asp-action="Index">
+                <button class="rounded-pill btn-primary btn-variant mt-4" style="width: 250px;" type="submit">veesy.it</button>
+            </a>
+        </div>
     </div>
 </div>
+
+<style>
+     @@media (max-width: 767.98px) {
+            .mobile-margin-top {
+                margin-top: 150px; /* Regola il valore del margine top come desideri */
+            }
+        }
+</style>

@@ -3,39 +3,64 @@
     ViewData["Title"] = "Login";
 }
 
-    <div class="vertical-center text-center bg-grey-veesy bg-auth">
-        <div class="container">
-            <div class="row row-login-padding">
-                <div class="col-md-6 offset-md-3">
-                    <form method="post">
-                        <h1 class="h3 mb-2 mt-4 pt-5 mt-md-3 pt-md-0 fw-normal text-color option-variant-login">
-                            Welcome back! New adventures awaits. Log in.</h1>
-                        <div style="height: 20px;"></div>
-                        <div class="input-group">
-                            <p class="mb-0 fw-border size-custom"><strong>Username or Email</strong></p>
-                            <input asp-for="Email" class="input--style-1 text-profile" type="text" >
+<div class="vertical-center text-center bg-grey-veesy bg-auth">
+    <div class="container">
+        <div class="row row-login-padding">
+            <div class="col-md-6 offset-md-3">
+                <form method="post">
+                    <h1 class="h3 mb-2 mt-4 pt-5 mt-md-3 pt-md-0 fw-normal text-color option-variant-login">
+                        Welcome back! New adventures awaits. Log in.</h1>
+                    <div style="height: 20px;"></div>
+                    <div class="input-group">
+                        <p class="mb-0 fw-border size-custom"><strong>Username or Email</strong></p>
+                        <input asp-for="Email" class="input--style-1 text-profile" type="text" >
+                    </div>
+                    <div class="input-group">
+                        <p class="mb-0 fw-border size-custom"><strong>Password</strong></p>
+                        <div class="d-flex w-100">
+                            <input asp-for="Password" id="password" class="input--style-1 input--style-password text-profile" type="password" >
+                            <span class="input-group-append border-left-0">
+                                <a onclick="switchPassword()" class="input-group-text span--style-password bg-transparent">
+                                    <img id="password-eye" src="/imgs/Auth/password-hidden_light-mode.png"/>
+                                </a>
+                            </span>
                         </div>
-                        <div class="input-group">
-                            <p class="mb-0 fw-border size-custom"><strong>Password</strong></p>
-                            <input asp-for="Password" class="input--style-1 text-profile" type="password" >
-                        </div>
-                        <div class="empty-veesy"></div>
-                        <div class="form-check text-start">
-                            <input asp-for="RememberMe" type="checkbox" class="form-check-input mt-check-input border-0 ms-0" id="rememberme" checked>
-                            <p style="cursor: pointer; font-size: 14px !important;" class="pt-1 mb-0 form-check-label size-custom ps-2" for="rememberme"><strong>Remember me</strong></p>
-                        </div>
+                    </div>
+                    <div class="empty-veesy"></div>
+                    <div class="form-check text-start">
+                        <input asp-for="RememberMe" type="checkbox" class="form-check-input mt-check-input border-0 ms-0 me-1" id="rememberme" checked>
+                        <p style="cursor: pointer; font-size: 14px !important;" class="pt-1 mb-0 form-check-label size-custom ps-2" for="rememberme"><strong>Remember me</strong></p>
+                    </div>
                         
-                        <button class="a-font-p w-100 mt-2 rounded-pill btn btn-primary signup" type="submit">log in</button>
+                    <button class="a-font-p w-100 mt-2 rounded-pill btn btn-primary signup" type="submit">log in</button>
                         
-                        <p class="mt-3 text-muted">
-                            <a style="text-decoration: underline !important;" class="grey-link mt-3" asp-action="ForgotPassword" asp-area="Auth" asp-controller="Auth">Forgot your password?</a>
-                        </p>
+                    <p class="mt-3 text-muted">
+                        <a style="text-decoration: underline !important;" class="grey-link mt-3" asp-action="ForgotPassword" asp-area="Auth" asp-controller="Auth">Forgot your password?</a>
+                    </p>
                         
-                        <p style="font-size: 14px !important; line-height: 23px !important;" class="mt-4 mb-5 fw-border size-custom">Don't have an account?
-                            <a class="a-ciano" asp-action="SignUp" asp-area="Auth" asp-controller="Auth">Sign up</a>
-                        </p>
-                    </form>
-                </div>
+                    <p style="font-size: 14px !important; line-height: 23px !important;" class="mt-4 mb-5 fw-border size-custom">Don't have an account?
+                        <a class="a-ciano" asp-action="SignUp" asp-area="Auth" asp-controller="Auth">Sign up</a>
+                    </p>
+                </form>
             </div>
         </div>
     </div>
+</div>
+
+<script>
+
+    var passwordClose = true;
+
+    function switchPassword(){
+        if (passwordClose){
+            passwordClose = false;
+            document.getElementById("password").type = "text";
+            document.getElementById("password-eye").src = "/imgs/Auth/password-shown.png";
+        }
+        else{
+            passwordClose = true;
+            document.getElementById("password").type = "password";
+            document.getElementById("password-eye").src = "/imgs/Auth/password-hidden_light-mode.png";
+        }
+    }
+</script>

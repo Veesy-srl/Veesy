@@ -29,6 +29,8 @@ public class Media : TrackableEntity
     public string? Credits { get; set; }
     // public int Status { get; set; }
     public long Size { get; set; }
+    
+    public Guid? NestedPortfolioLinks { get; set; }
     // public int Width { get; set; }
     // public int Height { get; set; }
     public virtual List<MediaCategory> MediaCategories { get; set; }

@@ -79,7 +79,7 @@
                         <a target="_blank" class="text-muted text-decoration-underline" asp-action="PrivacyPolicy" asp-area="Public" asp-controller="Public">Privacy Policy</a>
                     </div>
                     <div class="d-flex text-center">
-                        <input type="checkbox" class=" form-check-input mt-check-input border-0" id="rememberme" checked>
+                        <input type="checkbox" class=" form-check-input mt-check-input border-0 me-1" id="rememberme" checked>
                         <p style="cursor: pointer; font-size: 14px !important; line-height: 23px !important;" class="mt-1 form-check-label size-custom" for="rememberme"><strong>Remember me</strong></p>
                     </div>
 
@@ -98,9 +98,10 @@
     <script>
     
         function alphaOnly(event) {
-          var key = event.keyCode;
-          return ((key >= 65 && key <= 90) || key == 8);
-        };
+            var key = event.key;
+        
+            return (/^[a-zA-ZÀ-ÖØ-öø-ÿ\s]$/.test(key) || key == 'Backspace');
+        }
         
         var passwordClose = true;
         var passworConfirmClose = true;

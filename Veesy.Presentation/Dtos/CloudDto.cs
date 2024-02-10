@@ -8,6 +8,7 @@ public class MediaDto
     public Guid Code { get; set; }
     public string OriginalFileName { get; set; }
     public string FileName { get; set; }
+    public Guid? NestedPortfolioLinks { get; set; }
     public long Size { get; set; }
     public string Type { get; set; }
     public string UploadDate { get; set; }
@@ -16,6 +17,10 @@ public class MediaDto
     public bool? IsVideo => !string.IsNullOrEmpty(Type) ? MediaCostants.VideoExtensions.Contains(Type.ToUpper()) : null;
 }
 
+public class MediaGalleryDto: MediaDto
+{
+    public string PortfolioCode { get; set; }
+}
 public class UploadMediaResponseDto
 {
     public UploadMediaResponseDto()
@@ -79,10 +84,28 @@ public static class MapCloudDtos
             Code = x.Id,
             OriginalFileName = x.OriginalFileName,
             FileName = x.FileName,
+            NestedPortfolioLinks = x.NestedPortfolioLinks,
             Size = x.Size,
             Type = x.Type,
             Credits = x.Credits,
             UploadDate = x.CreateRecordDate.ToString("dd/MM/yyyy hh.mm"),
+            Owner = x.MyUser != null ? MapOwnerDto(x.MyUser) : null
+        }).ToList();
+    }
+    
+    public static List<MediaGalleryDto> MapMediaGalleryList(List<Media> media)
+    {
+        return media.Select(x => new MediaGalleryDto()
+        {
+            Code = x.Id,
+            OriginalFileName = x.OriginalFileName,
+            FileName = x.FileName,
+            NestedPortfolioLinks = x.NestedPortfolioLinks,
+            Size = x.Size,
+            Type = x.Type,
+            Credits = x.Credits,
+            UploadDate = x.CreateRecordDate.ToString("dd/MM/yyyy hh.mm"),
+            PortfolioCode = x.PortfolioMedias[0].Portfolio.Id.ToString(),
             Owner = x.MyUser != null ? MapOwnerDto(x.MyUser) : null
         }).ToList();
     }
@@ -97,6 +120,7 @@ public static class MapCloudDtos
             Code = media.Id,
             OriginalFileName = media.OriginalFileName,
             FileName = media.FileName,
+            NestedPortfolioLinks = media.NestedPortfolioLinks,
             Size = media.Size,
             Type = media.Type,
             Credits = media.Credits,
