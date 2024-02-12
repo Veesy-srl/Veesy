@@ -308,7 +308,11 @@
     .logo-footer {
         width: 120px;
         height: 40px;
-        content: url('../imgs/veesy_vettoriale_enigma_white.png');
+        content: url('../imgs/_Logo Veesy-lb.png');
+    }
+    
+    .logo-footer:hover {
+        content: url('../imgs/_Logo Veesy-lb-g-p.png');
     }
 
     .menu-popup {
