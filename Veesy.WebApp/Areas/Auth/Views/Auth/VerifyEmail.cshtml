@@ -12,14 +12,14 @@
             <div class="col-md-6 offset-md-3">
                 <h1 class="h3 mb-2 mt-4 pt-5 mt-md-3 pt-md-0 fw-normal text-color">Welcome to <b>Veesy</b><br/> Community!</h1>
                 <div style="height: 20px;"></div>
-                <div class="text-center rounded size-custom" style="background-color: #B7DBE3; font-weight:  500;">
+                <div class="text-center rounded size-custom" style="background-color: #B7DBE3; font-weight:  500; font-size: 14px !important; line-height: 23px !important;">
                     well done,<br/>check your email and confirm your account!
                 </div>
 
                 <form method="get" asp-area="Auth" asp-controller="Auth" asp-action="Login">
                     <button class="a-font-p w-100 mt-4 rounded-pill btn btn-primary signup" type="submit">Login</button>
                 </form>
-                <p class="mt-4 mb-3 fw-border size-custom">Didn't you get the email?
+                <p style="font-size: 14px !important; line-height: 23px !important;" class="mt-4 mb-3 fw-border size-custom">Didn't you get the email?
                     <a class="a-ciano a-font-p" asp-action="SendEmailVerification" asp-route-email="@Model.Email" asp-area="Auth" asp-controller="Auth">send again</a>
                 </p>
             </div>
