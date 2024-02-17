@@ -235,6 +235,10 @@
                         {
                             <div class="col-12 pt-2"><a target="_blank" href="https://veesy.notion.site/Passa-al-Pro-5e48bf6748974067a3fee2f2bceef876" class="rounded-pill mt-4 mb-3 btn btn-white w-100" style="font-size: 14px;" type="submit">upgrade</a></div>
                         }
+                        else if (Model.Subscription == null)
+                        {
+                            <div class="col-12 pt-2"><a target="_blank" asp-action="SignUp" asp-controller="Auth" class="rounded-pill mt-4 mb-3 btn btn-white w-100" style="font-size: 14px;" type="submit">start trial</a></div>
+                        }
                     </div>
                 </div>
 
