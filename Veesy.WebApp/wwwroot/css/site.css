@@ -1175,6 +1175,7 @@ a{
   left: 20px;
   float: left;
   z-index: 9999;
+  display: none;
 }
 
 .creator-popup-gallery{

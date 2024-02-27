@@ -172,17 +172,23 @@
         
         $(function() {
             $('.lazy').Lazy({
-                
                 scrollDirection: 'vertical',
                 effect: 'fadeIn',
                 visibleOnly: true,
                 placeholder: "data:image/gif;base64,R0lGODlhEALAPQAPzl5uLr9Nrl8e7...",
                 onError: function(element) {
                     console.log('error loading ' + element.data('src'));
+                },
+                afterLoad: function(element) {
+                    element.removeClass('img-fluid lazy');
                 }
             });
             
-            $("video").lazy();
+            $("video").lazy({
+                afterLoad: function(element) {
+                    element.removeClass('img-fluid lazy');
+                }
+            });
         });
         
         function ShowOverlay(add) {
