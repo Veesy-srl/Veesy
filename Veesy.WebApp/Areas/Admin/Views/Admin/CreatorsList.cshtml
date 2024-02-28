@@ -1,4 +1,6 @@
 @using Veesy.Domain.Constants
+@using System.Globalization
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model Veesy.Presentation.Model.Admin.CreatorsListViewModel
 @{
     ViewData["Title"] = "Freelancer";
@@ -60,7 +62,18 @@
                         <td><a href="mailto:@user.Email">@user.Email</a></td>
                         <td><a href="tel:@user.PhoneNumber">@user.PhoneNumber</a></td>
                         <td>@user.Category</td>
-                        <td>@user.CreateDate</td>
+
+                        @{
+                            DateTime createDate;
+                            if (DateTime.TryParseExact(user.CreateDate, "dd/MM/yy HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out createDate))
+                            {
+                                <td data-sort="@createDate.ToString("yyyy-MM-ddTHH:mm:ss")">@createDate.ToString("dd/MM/yyyy HH:mm")</td>
+                            }
+                            else
+                            {
+                                <td>Data non valida</td>
+                            }
+                        }
                         @{
                             var subsc = VeesyConstants.SubscriptionPlan.Pro == @user.SubscriptionPlan ? VeesyConstants.SubscriptionPlan.Free : VeesyConstants.SubscriptionPlan.Pro; 
                         }
@@ -70,7 +83,6 @@
                             <a style="cursor: pointer" onclick="openModal('#modalConfirmDeleteUser'), setUserIdToDelete('@user.Code')" class="bg-danger rounded-circle p-2 text-white d-inline-flex "><i class="ti ti-trash fs-4"></i></a>
                         </td>
                     </tr>
-
                 }
                 </tbody>
             </table>
@@ -243,8 +255,12 @@
         }
     
         $(document).ready(function () {
-          $('#dtBasicExample').DataTable();
-          $('.dataTables_length').addClass('bs-select');
+            $('#dtBasicExample').DataTable({
+                "columnDefs": [
+                    { "type": "date", "targets": 4 }
+                ]
+            });
+            $('.dataTables_length').addClass('bs-select');
         });
         $(document).ready(function () {
           $('#dtBasicExample2').DataTable();
