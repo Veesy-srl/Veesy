@@ -173,14 +173,19 @@
     </div>
     <div class="card ms-2 me-2">
         <div class="card-header bg-white">
-            <div>
-                <h3>Media Analysis</h3>
+            <div class="card-title">
+                <div class="d-flex justify-content-between">
+                    <h3>Media Analysis</h3>
+                    <a style="cursor: pointer" onclick="openModal('#modalConfirmDeleteMedia')" class="bg-danger rounded p-2 text-white d-inline-flex "><i class="ti ti-trash pt-1 pe-2"></i>Delete medias</a>
+                </div>
             </div>
         </div>
         <div class="card-body">
             <table id="dtBasic2" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
                 <thead>
                 <tr>
+                    <th class="th-sm">Select
+                    </th>
                     <th class="th-sm">Name
                     </th>
                     <th class="th-sm">Link
@@ -196,7 +201,10 @@
                 <tbody>
                 @foreach (var item in Model.Medias)
                 {
-                    <tr>
+                    <tr id="media-@item.Id">
+                        <td>
+                            <input type="checkbox" id="selectable-@item.Id" onclick="TriggerSelectMedia('@item.Id')"/>
+                        </td>
                         <td>@item.OriginalFileName</td>
                         <td><a style="cursor: pointer;" class="text-primary" onclick="OpenImageNewTab('@Url.Action("SingleMedia", "Cloud", new { area = "Portfolio", id = @item.Id })')">View media</a></td>
                         @if (item.Size / (1024 * 1024) == 0)
@@ -218,10 +226,79 @@
     </div>
 </div>
 
+<div class="modal fade" id="modalConfirmDeleteMedia" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Delete medias</strong></h3>
+                <a onclick="closeModal('#modalConfirmDeleteMedia')"><i class="fa-solid fa-grey fa-circle-xmark"></i></a>
+            </div>
+            <div class="empty-veesy"></div>
+            <div class="modal-body text-center">
+                <h5 id="confirm-delete-body">
+                    Are you sure to delete this medias?
+                </h5>
+                <div class="empty-veesy"></div>
+                <button onclick="DeleteMedia()" class="mt-2 rounded-pill btn btn-padding btn-danger a-font-p" type="submit">yes, remove</button>
+            </div>
+            <div class="empty-veesy"></div>
+        </div>
+    </div>
+</div>
+
 @section Scripts
 {
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
     <script>
+        
+        let img_selected_id = [];
+        
+        function TriggerSelectMedia(id) {
+            if (document.getElementById("selectable-" + id).checked)
+                img_selected_id.push(id);
+            else 
+                removeMediaFromList(id);
+        }
+        
+        function removeMediaFromList(value){
+            const index = img_selected_id.indexOf(value);
+            if (index > -1) { // only splice array when item is found
+              img_selected_id.splice(index, 1); // 2nd parameter means remove one item only
+            }
+        }
+        
+        function DeleteMedia() {
+            $('#load-spinner').css("display", "block");
+            var data = [];
+            for (const code in img_selected_id) {
+                data.push(img_selected_id[code])
+            }
+            
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("DeleteMediaList", "Media", new {area = "Portfolio"})',
+                data: JSON.stringify(data),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (response) {
+                    if(response.result){
+                        for (let i = 0; i<response.codeToDelete.length; i++){
+                            document.getElementById("media-" + response.codeToDelete[i]).remove()
+                        }
+                        img_selected_id = []
+                    }
+                    else{
+                        toastNotifyCustom(response.message, 10000, "#ca0a0a", "")
+                    }
+                    closeModal('#modalConfirmDeleteMedia');
+                    $('#load-spinner').css("display", "none");
+                },
+                error: function (response) {
+                    $('#load-spinner').css("display", "none");
+                }
+            })
+        }
+    
         $(document).ready(function () {
           $('#dtBasicExample').DataTable();
           $('.dataTables_length').addClass('bs-select');

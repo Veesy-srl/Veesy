@@ -38,7 +38,7 @@ public class HomeHelper
             BasePath = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/",
             ApplicationUrl = _config["ApplicationUrl"],
             Name = user.Name,
-            UserDescription = user.Biografy,
+            UserDescription = user.Biografy.Length > 340 ? user.Biografy.Substring(0, 340) + "..." : user.Biografy,
             PortfolioNumber = portfolioNumber,
             Surname = user.Surname,
             UserCategory = user.Category,
