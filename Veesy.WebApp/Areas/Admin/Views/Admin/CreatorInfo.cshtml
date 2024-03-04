@@ -131,12 +131,14 @@
                     </th>
                     <th class="th-sm">Status
                     </th>
+                    <th class="th-sm">Action
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach (var item in Model.Portfolios)
                 {
-                    <tr>
+                    <tr id="portfolio-@item.Id">
                         <td>@item.Name</td>
                         <td>
                             @if (item.IsMain)
@@ -164,6 +166,7 @@
                             var status = @item.Status == PortfolioContants.STATUS_DRAFT ? "draft" : "publish";
                         }
                         <td>@status</td>
+                        <td><a style="cursor: pointer" onclick="openModal('#modalDeletePortfolio'), setPortfolioIdAndText('@item.Id', '@item.Name')" class="bg-danger rounded-circle p-2 text-white d-inline-flex "><i class="ti ti-trash fs-4"></i></a></td>
                     </tr>
 
                 }
@@ -246,10 +249,60 @@
     </div>
 </div>
 
+<div class="modal fade" id="modalDeletePortfolio" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Delete Portfolio</strong></h3>
+                <a onclick="closeModal('#modalDeletePortfolio')"><i class="fa-solid fa-grey fa-circle-xmark"></i></a>
+            </div>
+            <div class="empty-veesy"></div>
+            <div class="modal-body text-center">
+                <h5 id="confirm-delete-portfolio"></h5>
+                <div class="empty-veesy"></div>
+                <button onclick="DeletePortfolio()" class="mt-2 rounded-pill btn btn-danger a-font-p" type="submit">yes, delete</button>
+            </div>
+            <div class="empty-veesy"></div>
+        </div>
+    </div>
+</div>
+
 @section Scripts
 {
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
     <script>
+        
+        let portfolioId
+        function setPortfolioIdAndText(id, name){
+            portfolioId = id
+            document.getElementById("confirm-delete-portfolio").textContent = "The portfolio " + name + " will be delete permanently. Are you sure?";
+        }
+        
+        let portfolioIdMain
+        function setPortfolioIdForMain(id){
+            portfolioIdMain = id
+        }
+        
+        function DeletePortfolio() {
+            $('#load-spinner').css("display", "block");
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Delete", "Portfolio")',
+                data: JSON.stringify(portfolioId),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (response) {
+                    if(response.result){
+                        document.getElementById("portfolio-" + portfolioId).remove();
+                        closeModal('#modalDeletePortfolio')
+                    }
+                    $('#load-spinner').css("display", "none");
+                },
+                error: function (response) {
+                    $('#load-spinner').css("display", "none");
+                }
+            })
+        }
         
         let img_selected_id = [];
         
