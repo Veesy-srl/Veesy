@@ -31,14 +31,14 @@ public class HomeHelper
         var portfolioNumber = _portfolioService.GetPortfoliosNumberByUser(user);
         var numberMedia = _mediaService.GetMediaNumberByUser(user);
         var percent = (_accountService.NumberRecordCompiled(user) * 100 / 26);
-        var subscription = _subscriptionPlanService.GetSubscriptionByUserId(user.Id);    
+        var subscription = _subscriptionPlanService.GetSubscriptionByUserId(user.Id);
         return new DashboardViewModel()
         {
             PortfolioThumbnailDto = MapPortfolioDtos.MapPortfolioThumbnailDto(portfolio),
             BasePath = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/",
             ApplicationUrl = _config["ApplicationUrl"],
             Name = user.Name,
-            UserDescription = user.Biografy,
+            UserDescription = user.Biografy != null && user.Biografy.Length > 340 ? user.Biografy.Substring(0, 340) + "..." : user.Biografy,
             PortfolioNumber = portfolioNumber,
             Surname = user.Surname,
             UserCategory = user.Category,

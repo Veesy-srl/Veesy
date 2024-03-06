@@ -16,14 +16,16 @@ public class PortfolioHelper
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     private readonly IAccountService _accountService;
     private readonly IMediaService _mediaService;
+    private readonly ISubscriptionPlanService _subscriptionPlanService;
 
 
-    public PortfolioHelper(IConfiguration config, IPortfolioService portfolioService, IAccountService accountService, IMediaService mediaService)
+    public PortfolioHelper(IConfiguration config, IPortfolioService portfolioService, IAccountService accountService, IMediaService mediaService, ISubscriptionPlanService subscriptionPlanService)
     {
         _config = config;
         _portfolioService = portfolioService;
         _accountService = accountService;
         _mediaService = mediaService;
+        _subscriptionPlanService = subscriptionPlanService;
     }
     
     public PortfolioSettingsViewModel GetPortfolioSettingsViewModel(Guid id, MyUser userInfo)
@@ -39,6 +41,7 @@ public class PortfolioHelper
 
     public async Task<(ResultDto result, Guid code)> CreateNewPortfolio(NewPortfolioDto newPortfolioDto, MyUser userInfo)
     {
+        
         if(string.IsNullOrEmpty(newPortfolioDto.Name))
             return (new ResultDto(false, "Please insert portfolio's name."), Guid.Empty);
         if(newPortfolioDto.Name.Length > 50)
@@ -46,6 +49,11 @@ public class PortfolioHelper
         if (newPortfolioDto.CodeImagesToAdd == null || newPortfolioDto.CodeImagesToAdd.Count == 0)
             return (new ResultDto(false, "Select at least one image."), Guid.Empty);
         var allPortfolioName = _portfolioService.GetAllPortfolioNameDifferentByOne(Guid.Empty, userInfo);
+        
+        var subscription = _subscriptionPlanService.GetSubscriptionByUserId(userInfo.Id);
+        if(subscription.Name == VeesyConstants.SubscriptionPlan.Free && allPortfolioName.Count >= 1)
+            return (new ResultDto(false, "Limit portfolio reached."), Guid.Empty);
+        
         if (allPortfolioName.Contains(newPortfolioDto.Name.ToUpper()))
             return (new ResultDto(false, "Name already used."), Guid.Empty);
         

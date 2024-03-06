@@ -393,7 +393,11 @@ public class ProfileHelper
         var subscriptionPlan = _accountService.GetSubscriptionPlanByName(changeSubscriptionDto.SubscriptionName);
         var userInfo = await _userManager.FindByIdAsync(changeSubscriptionDto.MyUserId);
         var numberMedia = _mediaService.GetMediaNumberByUser(userInfo);
+        var numberPortfolio = _portfolioService.GetPortfoliosNumberByUser(userInfo);
         var mediaSize = _mediaService.GetSizeMediaStorageByUserId(userInfo.Id);
+        if(numberPortfolio >= 1 && subscriptionPlan.Name == VeesyConstants.SubscriptionPlan.Free)
+            return new ResultDto(false,
+                $"{subscriptionPlan.Name} plan is limited to 1 portfolio. Please remove {numberPortfolio - 1} portofolios and retry.");
         if (numberMedia > subscriptionPlan.AllowedMediaNumber)
             return new ResultDto(false,
                 $"{subscriptionPlan.Name} plan is limited to {subscriptionPlan.AllowedMediaNumber} medias. Please remove {numberMedia - subscriptionPlan.AllowedMediaNumber} medias and retry.");

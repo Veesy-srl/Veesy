@@ -158,6 +158,7 @@ public class PublicController : VeesyController
     [HttpGet("about")]
     public IActionResult About()
     {
+        return RedirectToAction("Error404");
         try
         {
             var vm = _publicHelper.GetUserMediaList(7);

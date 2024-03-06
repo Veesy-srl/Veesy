@@ -48,7 +48,7 @@ public class AdminHelper
         var vm = new CreatorViewModel()
         {
             ElemProfileCompiled = elementProfileCompiled,
-            ProfilePercentCompiled = (elementProfileCompiled * 100 / 17),
+            ProfilePercentCompiled = (elementProfileCompiled * 100 / 26),
             User = user,
             Medias = medias,
             Portfolios = portfolios.ToList()
