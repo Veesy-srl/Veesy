@@ -196,7 +196,7 @@ public class PortfolioHelper
 
     public async Task<ResultDto> DeletePortfolio(Guid portfolioId, MyUser userInfo)
     {
-        var portfolio = _portfolioService.GetPortfolioByIdWithPortfoliosMedia(portfolioId, userInfo.Id);
+        var portfolio = _portfolioService.GetPortfolioByIdWithPortfoliosMedia(portfolioId);
         if (portfolio == null)
             return new ResultDto(false, "Portfolio not found.");
         if (portfolio.IsMain)
