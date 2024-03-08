@@ -290,6 +290,28 @@ public class PortfolioController : VeesyController
             return Json(new { Result = false, Message = "Error updating portfolio. Please retry." });
         }
     }
+
+    [HttpPost]
+    [Authorize(Roles = "Admin")]
+    public async Task<JsonResult> DeleteByAdmin([FromBody] Guid portfolioId)
+    {
+        try
+        {
+            var response = await _portfolioHelper.DeletePortfolio(portfolioId, UserInfo);
+            if (!response.Success)
+                _notyfService.Custom(response.Message, 10, "#ca0a0a");
+            else
+                _notyfService.Custom("Portfolio deleted correctly.", 10, "#75CCDD");
+            return Json(new { Result = response.Success, Message = response.Message });
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            Logger.Error($"PortfolioDto to delete: {portfolioId}");
+            _notyfService.Custom("Error deleting portfolio. Please retry.", 10, "#ca0a0a");
+            return Json(new { Result = false, Message = "Error updating portfolio. Please retry." });
+        }
+    }
     
     [HttpPost]
     public async Task<JsonResult> Publish([FromBody] Guid portfolioId)

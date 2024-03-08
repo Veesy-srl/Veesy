@@ -395,7 +395,7 @@ public class ProfileHelper
         var numberMedia = _mediaService.GetMediaNumberByUser(userInfo);
         var numberPortfolio = _portfolioService.GetPortfoliosNumberByUser(userInfo);
         var mediaSize = _mediaService.GetSizeMediaStorageByUserId(userInfo.Id);
-        if(numberPortfolio >= 1 && subscriptionPlan.Name == VeesyConstants.SubscriptionPlan.Free)
+        if(numberPortfolio > 1 && subscriptionPlan.Name == VeesyConstants.SubscriptionPlan.Free)
             return new ResultDto(false,
                 $"{subscriptionPlan.Name} plan is limited to 1 portfolio. Please remove {numberPortfolio - 1} portofolios and retry.");
         if (numberMedia > subscriptionPlan.AllowedMediaNumber)

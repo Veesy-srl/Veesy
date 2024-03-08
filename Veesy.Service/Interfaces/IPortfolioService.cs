@@ -20,6 +20,7 @@ public interface IPortfolioService
     Task DeletePortfolio(Portfolio portfolio, MyUser userInfo);
     Task DeletePortfolioAndChangeMain(Portfolio portfolio, MyUser userInfo);
     Portfolio GetPortfolioByIdWithPortfoliosMedia(Guid portfolioId, string userId);
+    Portfolio GetPortfolioByIdWithPortfoliosMedia(Guid portfolioId);
     IEnumerable<Portfolio> GetPortfoliosByMedia(Guid imgToDelete);
     IEnumerable<Portfolio> GetPortfoliosByMedias(List<Guid> imgToDelete);
     Portfolio? GetPortfolioByIdForPreview(Guid id);

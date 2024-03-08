@@ -162,6 +162,16 @@ public class PortfolioService : IPortfolioService
         return portfolio;
     }
 
+    public Portfolio GetPortfolioByIdWithPortfoliosMedia(Guid portfolioId)
+    {
+        var portfolio = _uoW.PortfolioRepository.FindByCondition(w => w.Id == portfolioId)
+            .Include(s => s.PortfolioMedias)
+            .SingleOrDefault();
+        if (portfolio == null)
+            throw new Exception($"Portfolio not found with id {portfolioId}.");
+        return portfolio;
+    }
+
     public IEnumerable<Portfolio> GetPortfoliosByMedia(Guid imgToDelete)
     {
         return _uoW.PortfolioRepository.FindByCondition(s => s.PortfolioMedias.Select(s => s.MediaId).Contains(imgToDelete))
