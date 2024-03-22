@@ -54,7 +54,8 @@ public class CloudHelper
             NextMedia = MapCloudDtos.MapMedia(nextMedia),
             Username = userInfo.UserName,
             BasePath = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/",
-            BasePathAzure = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/"
+            BasePathAzure = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/",
+            BasePathCloud = $"{_config["ApplicationUrl"]}/cloud/"
         };
         return (new ResultDto(true, ""), vm);
     }
