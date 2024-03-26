@@ -11,4 +11,5 @@ public class EditViewModel
     public string? Username { get; set; }
     public string BasePathAzure { get; set; }
     public List<Domain.Models.Portfolio> Portfolios { get; set; }
+    public string BasePathCloud { get; set; }
 }

@@ -1,4 +1,5 @@
 using System.Collections;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
@@ -24,12 +25,13 @@ public class MediaHelper
     private readonly MediaValidators _mediaValidators;
     private readonly ISubscriptionPlanService _subscriptionPlanService;
     private readonly IPortfolioService _portfolioService;
+    private readonly UserManager<MyUser> _userManager;
     
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     private static readonly FileExtensionContentTypeProvider Provider = new FileExtensionContentTypeProvider();
     private readonly IEnumerable<string> allowedExtensions = new List<string> { ".zip", ".bin", ".png", ".mp4", ".jpg", ".jpeg" };
 
-    public MediaHelper(IConfiguration config, ApplicationDbContext dbContext, VeesyBlobService veesyBlobService, IMediaService mediaService, MediaValidators mediaValidators, ISubscriptionPlanService subscriptionPlanService, IPortfolioService portfolioService)
+    public MediaHelper(IConfiguration config, ApplicationDbContext dbContext, VeesyBlobService veesyBlobService, IMediaService mediaService, MediaValidators mediaValidators, ISubscriptionPlanService subscriptionPlanService, IPortfolioService portfolioService, UserManager<MyUser> userManager)
     {
         _config = config;
         _dbContext = dbContext;
@@ -38,6 +40,7 @@ public class MediaHelper
         _mediaValidators = mediaValidators;
         _subscriptionPlanService = subscriptionPlanService;
         _portfolioService = portfolioService;
+        _userManager = userManager;
     }
 
     public async Task<(ResultDto resultDto, string originalFilename, string newFileName)> UploadProfileImageOnAzure(Stream fileStream, string contentType)
@@ -244,11 +247,13 @@ public class MediaHelper
         var medias = _mediaService.GetMediasByIdWithPortfoliosMedia(imgToDelete);
         var portfolios = _portfolioService.GetPortfoliosByMedias(imgToDelete).ToList();
         var mediaToRemove = new List<Media>();
+        var usersInRole = await _userManager.GetUsersInRoleAsync(Roles.Admin);
+        var admin = usersInRole.Contains(userInfo);
         foreach (var media in medias)
         {
             try
             {
-                if (media.MyUserId != userInfo.Id)
+                if (!admin && media.MyUserId != userInfo.Id)
                 {
                     result.Add(new(false, media.OriginalFileName, "Access not allowed.", null));
                     continue;
@@ -297,8 +302,11 @@ public class MediaHelper
         {
             return new(false, imgToDelete.ToString(), "File not found.", null, null);
         }
+        
+        var usersInRole = await _userManager.GetUsersInRoleAsync(Roles.Admin);
+        var admin = usersInRole.Contains(userInfo);
 
-        if (media.MyUserId != userInfo.Id)
+        if (!admin && media.MyUserId != userInfo.Id)
         {
             return new(false, media.OriginalFileName, "Access not allowed.", null, null);
         }

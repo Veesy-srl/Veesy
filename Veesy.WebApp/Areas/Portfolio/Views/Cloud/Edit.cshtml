@@ -79,7 +79,7 @@
                     <div class="empty-veesy"></div>
                     <div class="col-12 ps-0 pe-0">
                         <p class="mb-0 text-white"><strong>Full Res Media</strong></p>
-                        <p style="cursor: pointer" onclick="OpenImageNewTab('@Url.Action("SingleMedia", "Cloud", new {id = @Model.Media.Code})')" _target="blank" class="grey-link veesy-overflow"><i class="fa-solid fa-arrow-up-right-from-square pe-1"></i>https://beta.veesy.it/cloud/@Model.Media.OriginalFileName</p>
+                        <p style="cursor: pointer" onclick="OpenImageNewTab('@Url.Action("SingleMedia", "Cloud", new {id = @Model.Media.Code})')" _target="blank" class="grey-link veesy-overflow"><i class="fa-solid fa-arrow-up-right-from-square pe-1"></i>@Model.BasePathCloud@Model.Media.OriginalFileName</p>
                     </div>
                     
                     <div class="empty-veesy"></div>

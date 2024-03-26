@@ -112,10 +112,10 @@ public class ProfileHelper
     {
         if (skillsCodes != null)
         {
-            if(skillType == SkillConstants.SoftSkill && skillsCodes.Count > 5)
-                return new ResultDto(false, "Select max 5 soft skills.");
-            if(skillType == SkillConstants.HardSkill && skillsCodes.Count > 5)
-                return new ResultDto(false, "Select max 5 hard skills.");
+            if(skillType == SkillConstants.SoftSkill && skillsCodes.Count > 10)
+                return new ResultDto(false, "Select max 10 soft skills.");
+            if(skillType == SkillConstants.HardSkill && skillsCodes.Count > 10)
+                return new ResultDto(false, "Select max 10 hard skills.");
         }
         var oldSkills = _accountService.GetSkillsByUserAndType(userInfo, skillType).ToList();
         var skillToDelete = new List<MyUserSkill>();

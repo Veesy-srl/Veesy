@@ -453,7 +453,7 @@
           dataType: 'json',
           success: function (response) {
               if (!response.result){
-                toastNotifyCustom(response.message, 10000, "#ca0a0a", "")
+                //toastNotifyCustom(response.message, 10000, "#ca0a0a", "")
               }
               else{
                 alert_portfolio.classList.add("show");
@@ -461,7 +461,7 @@
               console.log("ordine cambiato")
           },
           error: function (response) {
-              toastNotifyCustom(response.message, 10000, "#ca0a0a", "")
+              //toastNotifyCustom(response.message, 10000, "#ca0a0a", "")
           }
         })
     })
