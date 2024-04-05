@@ -198,6 +198,7 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
             .Where(s => s.IsMain && s.IsPublic && s.Status == 1)
             .OrderBy(s => new Guid())
             .ToList();
+        
         var countPerAuthor = count / portfolios.Count;
         var random = new Random();
         var result = new List<PortfolioMedia>();
@@ -208,11 +209,9 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
             result.AddRange(randomItems);
         }
 
-        var resultMedia = result.Select(s => s.Media).ToList();
+        var resultMedia = result.Select(s => s.Media).OrderBy(s => random.Next()).ToList();
         resultMedia.ForEach(s => s.MyUser.Portfolios = null);
         resultMedia.ForEach(s => s.MyUser.Medias = null);
-        
-        resultMedia = Shuffle(resultMedia);
         
         return resultMedia;
     }
@@ -227,25 +226,20 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
             .OrderBy(s => new Guid())
             .ToList();
 
-        var countPerAuthor = count / portfolios.Count;
         var random = new Random();
+        var countPerAuthor = count / portfolios.Count;
         var result = new List<PortfolioMedia>();
 
         foreach (var group in portfolios)
         {
-            var randomPhotos = group.PortfolioMedias
-                .Where(item => item.Media.FileName.ToLower().Contains("jpg") || item.Media.FileName.ToLower().Contains("png"))
-                .OrderBy(item => random.Next())
-                .Take(countPerAuthor);
-
+            var randomPhotos = group.PortfolioMedias.OrderBy(item => random.Next()).Take(countPerAuthor);
             result.AddRange(randomPhotos);
         }
 
-        var resultMedia = result.Select(s => s.Media).ToList();
+        var resultMedia = result.Select(s => s.Media).OrderBy(s => random.Next()).Where(s => MediaCostants.ImageExtensions.Contains(s.Type.ToUpper())).ToList();
+        
         resultMedia.ForEach(s => s.MyUser.Portfolios = null);
         resultMedia.ForEach(s => s.MyUser.Medias = null);
-        
-        resultMedia = Shuffle(resultMedia);
 
         return resultMedia;
     }
