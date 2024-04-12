@@ -13,7 +13,6 @@ public interface IMediaService
     Media? GetNextMediaByDate(DateTime mediaSelectedCreateRecordDate, MyUser user);
     Task<ResultDto> UpdateMedia(Media media, MyUser user);
     long GetSizeMediaStorageByUserId(string userId);
-    public List<MyUser> GetRandomMediaWithUsername(int count);
     public List<Media> GetRandomMedia(int count);
     Task<ResultDto> DeleteMediasAndUpdatePortfolios(List<Media> medias, List<Portfolio> portfolios, MyUser user);
     Task<ResultDto> DeleteMediaAndUpdatePortfolios(Media media, List<Portfolio> portfolios, MyUser user);

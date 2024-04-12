@@ -152,23 +152,6 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
     {
         return _applicationDbContext.InfosToShow.Include(s => s.MyUserInfoToShows.Where(s => s.MyUserId == userInfoId)).OrderBy(s => s.Info).ToList();
     }
-    
-    public List<MyUser> GetOnlyRandomUserWithImage(int count)
-    {
-        var user =  _applicationDbContext.MyUsers
-            .Where(u => u.ProfileImageFileName != null)
-            .Include(p => p.Portfolios.Where(s => s.IsMain && s.IsPublic && s.Status == 1))
-            .ThenInclude(s => s.PortfolioMedias)
-            .ThenInclude(s => s.Media)
-            .Where(u => u.Portfolios != null && u.Portfolios.Count > 0)
-            .ToList();
-        
-        return user.Where(s => s.Portfolios.Count > 0 &&
-                s.Portfolios[0].PortfolioMedias.Any(s => MediaCostants.ImageExtensions.Contains(s.Media.Type.ToUpper())))
-            .OrderBy(s => Guid.NewGuid())
-            .Take(count)
-            .ToList();
-    }
 
     public List<MyUser> GetAllUsersWithMainPortfolio()
     {

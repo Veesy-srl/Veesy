@@ -1,7 +1,7 @@
-using System.Collections.Immutable;
+using System.Drawing;
+using System.Net;
 using Microsoft.Extensions.Configuration;
 using Veesy.Domain.Constants;
-using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
 using Veesy.Presentation.Model.Cloud;
 using Veesy.Presentation.Model.Public;
@@ -23,21 +23,34 @@ public class PublicHelper
         _config = config;
     }
 
-    public AboutMediaViewModel GetUserMediaList(int count)
+    public async Task<AboutMediaViewModel> GetAboutInfo()
     {
-        var UserList = _mediaService.GetRandomMediaWithUsername(count);
+        var MediaDtos = MapCloudDtos.MapMediaList(_mediaService.GetRandomPhotos(6));
         
-        AboutMediaViewModel List = new AboutMediaViewModel();
-        List.ApplicationUrl = _config["ApplicationUrl"];
-        List.BasePath = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/";
-        List.BasePathImages = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/";
-        List.MediaList = UserList.Select(item => item.Portfolios[0].PortfolioMedias.FirstOrDefault(s => MediaCostants.ImageExtensions.Contains(s.Media.Type.ToUpper())).Media.FileName).ToList();
-        List.MediaUser = UserList.Select(item => item.ProfileImageFileName).ToList();
-        List.Usernames = UserList.Select(item => item.UserName).ToList();
-        List.Id = UserList.Select(item => item.Id).ToList();
-        List.PortfolioId = UserList.Select(item => item.Portfolios[0].Id).ToList();
+        var vm = new AboutMediaViewModel();
+        var BasePathImages = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/";
 
-        return List;
+        string immagineOrizzontale = string.Empty;
+        double rapportoMassimo = 0.0;
+
+        foreach (var media in MediaDtos)
+        {
+            string imageUrl = $"{BasePathImages}{media.FileName}";
+            string imageUrlReduced = imageUrl + "?tr=w-50";
+            (int larghezza, int altezza) = await GetImageDimensionsAsync(imageUrlReduced);
+
+            double rapporto = (double)larghezza / (double)altezza;
+
+            if (rapporto > rapportoMassimo)
+            {
+                rapportoMassimo = rapporto;
+                immagineOrizzontale = imageUrl;
+            }
+        }
+
+        vm.InitialImageUrl = immagineOrizzontale;
+    
+        return vm;
     }
     
     public CreatorsViewModel GetCreatorsViewModel()
@@ -104,5 +117,27 @@ public class PublicHelper
             BasePathAzure = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"
         };
         return vm;
+    }
+    
+    public static async Task<(int width, int height)> GetImageDimensionsAsync(string imageUrl)
+    {
+        try
+        {
+            using (HttpClient client = new HttpClient())
+            using (HttpResponseMessage response = await client.GetAsync(imageUrl, HttpCompletionOption.ResponseHeadersRead))
+            using (Stream stream = await response.Content.ReadAsStreamAsync())
+            using (Image image = Image.FromStream(stream, false, false))
+            {
+                int width = image.Width;
+                int height = image.Height;
+            
+                return (width, height);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Errore durante il recupero delle dimensioni dell'immagine: {ex.Message}");
+            throw;
+        }
     }
 }

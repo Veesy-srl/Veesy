@@ -1989,15 +1989,6 @@ canvas {
   top: 0.65rem;
 }
 
-.background-image-about{
-  background-image: url('../imgs/SampleImg/Umberto_Gnocchi_Veesy_11-gigapixel-art-width-1500px-1024x576.jpg');
-  background-size: cover; 
-  background-repeat: no-repeat; 
-  background-attachment: fixed; 
-  border-radius: 15px !important;
-  height: 85vh;
-}
-
 .background-image-about-2{
   background-image: url('../imgs/SampleImg/shipwreck-2-gigapixel-art-height-1500px-1024x1024.jpg');
   background-size: cover;
