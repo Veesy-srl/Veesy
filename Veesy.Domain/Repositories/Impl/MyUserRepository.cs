@@ -215,7 +215,7 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
 
         var random = new Random();
         var countPerAuthor = count / portfolios.Count;
-        if (portfolios.Count > 16)
+        if (portfolios.Count > count)
         {
             countPerAuthor = 1;
         }
