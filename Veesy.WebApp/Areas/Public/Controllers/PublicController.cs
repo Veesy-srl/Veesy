@@ -163,7 +163,7 @@ public class PublicController : VeesyController
             return View(vm);
         }
         catch (Exception e)
-        {
+        { 
             Logger.Error(e, e.Message);
             return RedirectToAction("Error400");
         }
