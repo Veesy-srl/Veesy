@@ -5,8 +5,9 @@
 <div style="padding-top: 35px; padding-bottom: 25px;">
     <div class="container-fluid p-3 mt-5 pb-5 background-image-about" style="background-image: url('@Model.InitialImageUrl');">
         <div class="row p-lg-5 mt-5 mt-lg-2">
-            <div class="col-sm-12 col-md-12 text-center" style="position: relative; top:  160px;">
-                <img src="imgs/_Logo Veesy-w.png" width="100px">
+            <div class="col-sm-12 col-md-12 text-center" style="position: relative; top:  120px;">
+                <img src="imgs/_Logo Veesy-w.png" width="120px">
+                <div class="empty-veesy"></div>
                 <div class="empty-veesy"></div>
                 <div class="empty-veesy"></div>
                 <h1 style="color: white;"><b>Freelancing is an art.</b></h1>
@@ -16,7 +17,7 @@
                 <div class="empty-veesy"></div>
                 <div class="mb-4 veesy-text-color d-flex align-items-center">
                     <form method="get" asp-area="Auth" asp-controller="Auth" asp-action="SignUp" class="flex-grow-1">
-                        <button class="rounded-pill btn-primary-about-variant btn-variant" id="button1" style="width: 200px; height:  40px;" type="submit">join veesy</button>
+                        <button class="rounded-pill btn-primary-about-variant btn-variant" id="button1" style="width: 180px; height:  40px;" type="submit">join veesy</button>
                     </form>
                 </div>
             </div>
@@ -26,15 +27,15 @@
 <div class="row">
     <div class="col-md-8 offset-md-2 mt-2 px-5">
         <div class="row justify-content-center">
-            <div class="col-md-1 col-4 d-none text-end color-about" id="discover" style="right: -20px; position: relative;">
+            <div class="col-md-2 col-4 d-none text-end color-about" id="discover">
                 <b>discover</b>
             </div>
             <a class="col-md-1 col-3 text-center justify-content-center color-about" id="qui" style="cursor: pointer; display: flex; align-items: center; justify-content: center;" href="#down" onmouseover="showText()" onmouseout="hideText()">
-                <div class="color-about about-circle-option" >
+                <div class="color-about about-circle-option">
                     <i class="fa-solid fa-chevron-down color-about" aria-hidden="true"></i>
                 </div>
             </a>
-            <div class="col-md-1 col-4 d-none text-start color-about" id="more" style="left: -20px; position: relative;">
+            <div class="col-md-2 col-4 d-none text-start color-about" id="more">
                 <b>more</b>
             </div>
         </div>
@@ -43,20 +44,20 @@
 <div class="row" id="down">
     <div class="col-md-8 offset-md-2 mt-2 px-md-5">
         <div class="text-left mt-5 pt-5">
-            <h1 class="color-about">Ciao, <b>creators: </b>siamo qui per te.</h1>
+            <h1 class="color-about">Ciao, <b>creator: </b>siamo qui per te.</h1>
         </div>
         <div class="text-left mt-4 pt-4">
-            <h1 class="color-about">Siamo <b>Veesy:</b> un ecosistema creato <b>da freelancer per freelancer,</b> fondato sul supporto costruttivo di una <b>community attiva</b> e sempre in espansione.</h1>
+            <h1 class="color-about">Siamo <img style="position: relative; top: 2px;" src="imgs/_Logo Veesy-b.png" width="85px"><b>:</b> un ecosistema creato <b><i>da freelancer per freelancer,</i></b> fondato sul supporto costruttivo di una <b>community attiva</b> e sempre in espansione.</h1>
         </div>
         <div class="text-left mt-5">
             <h1 class="color-about">Con noi trovi posto in un network professionalein cui riscoprire la magia della <b>creatività visual.</b> <u>La Tua.</u> Non pensare alla solita piattaforma digitale: qui, trovare contatti è solo <b>l'inizio della</b> <b>rivoluzione.</b></h1>
         </div>
          <div class="col-md-6 mt-5 mb-5 veesy-text-color d-flex align-items-center">
-             <form class="flex-grow-1">
-                 <button class="rounded-pill btn-primary-about btn-variant" type="submit">dimmi di più</button>
+             <form class="me-md-4 me-2">
+                 <button class="rounded-pill btn-primary-about1 btn-variant" style="width: 160px; height:  38px;"  type="submit">dimmi di più</button>
              </form>
-             <form class="flex-grow-1">
-                <button class="rounded-pill btn-primary-about-variant btn-variant" type="submit">mi unisco a voi!</button>
+             <form>
+                <button class="rounded-pill btn-primary-about-variant btn-variant" style="width: 185px; height: 38px;"  type="submit">mi unisco a voi!</button>
              </form>
         </div>
     </div>
@@ -72,15 +73,15 @@
 </div>
 
 <div class="row mt-5">
-    <div class="col-md-8 offset-md-2 px-5">
+    <div class="col-md-8 offset-md-2 px-md-5">
         <div class="text-center mt-4 mb-4">
-            <h1 class="color-about" style="font-size: 65px !important;"><b>Dal to do</b></h1>
-            <h1 class="mt-5 color-about" style="font-size: 65px !important; line-height: 1.4 !important;"><b>Al to dream</b>
+            <h1 class="color-about" style="font-size: 72px !important;"><b>Dal <i>to do</i></b></h1>
+            <h1 class="mt-5 color-about option-height" style="font-size: 72px !important;"><b>al <i>to dream</i></b>
                 <img class="img-fluid" src="imgs/Group%207695_g.png" style="margin-top: -6%;" alt="Immagine 1">
             </h1>
         </div>
-         <div class="text-center mt-4 mb-4">
-            <h3 class="color-about"><span style="color: #00DC8E; font-size: 30px;">*</span>e viceversa.</h3>
+         <div class="text-center mt-5 pt-3 mb-4">
+             <h3 class="color-about"><span style="color: #00DC8E; font-size: 30px;">*</span><b>e viceversa.</b></h3>
         </div>
     </div>
 </div>
@@ -102,7 +103,7 @@
                                   <h1 class="text-about-circle1 color-about"><b>01.</b></h1>
                               </div>
                           </div>
-                          <div class="col-10" style="z-index: 9 !important;">
+                          <div class="col-10 ps-md-4" style="z-index: 9 !important;">
                             <h3 class="text-right color-about">che ti fa realizzare i tuoi sogni, ma</h3>
                             <h3 class="text-right color-about fw-bold" style="margin-top: -5px;">passi la notte sulle modifiche;</h3>
                           </div>
@@ -149,6 +150,11 @@
             <img src="imgs/About/Gif-2.gif" style="border-radius: 15px;" alt="Immagine" class="img-fluid">
         </div>
     </div>
+    <div class="col-md-8 offset-md-2">
+        <div class="text-center mt-5 pt-5">
+            <h1 class="color-about"><b>Da oggi, tutte leggende metropolitane.</b></h1>
+        </div>
+    </div>
 </div>
 
 <div class="row mt-2 pb-5">
@@ -177,6 +183,23 @@
       height: 85vh;
     }
     
+    .option-height{
+        line-height: 0.4 !important;
+    }
+
+    .btn-primary-about1 {
+        background-color: #E2E5E7 !important;
+        border: #202F4D !important;
+        color: #202F4D !important;
+        border: 2px solid !important;
+    }
+    
+    .btn-primary-about1:hover {
+        background-color: #75CCDD !important;
+        border: #202F4D !important;
+        color: #202F4D !important;
+    }
+    
     .circle1 {
       width: 50px;
       height: 50px;
@@ -192,8 +215,8 @@
     
     .text-about-circle1{
         position:  relative;
-        top: 15px;
-        left: -15px;
+        top: 8px;
+        left: -12px;
     }
     
     .circle2 {
@@ -213,8 +236,8 @@
     
     .text-about-circle2{
         position:  relative;
-        top: 15px;
-        left: -20px;
+        top: 9px;
+        left: -18px;
     }
     
     .circle3 {
@@ -233,8 +256,8 @@
     
     .text-about-circle3{
         position: relative;
-        top: 20px;
-        left: -25px;
+        top: 6px;
+        left: -15px;
     }
     
     .overlay-text {
@@ -276,13 +299,10 @@
     }
     
      .option-circle-text-2{
-        margin-left: -15px; 
         z-index: 9 !important;
      }
      
      .option-circle-text-3{
-         left: -15px;
-         position: relative;
          z-index: 9 !important;
      }
 
@@ -303,8 +323,12 @@
         .option-circle-text-2{
             margin-left: 0px;
             z-index: 9 !important;
-            top: 18px;
+            top: 26px;
             position: relative;
+        }
+
+        .text-about-circle1{
+            top: 6px;
         }
         
         .font-option-circle-2{
@@ -319,12 +343,16 @@
         .option-circle-text-3{
             left: 15px;
             z-index: 9 !important;
-            top: 45px;
+            top: 48px;
             position: relative;
         }
         
         .text-option-mobile{
             font-size: 20px !important;
+        }
+
+        .option-height{
+            line-height: 1.4 !important;
         }
     }
   
@@ -384,14 +412,24 @@
 
     document.addEventListener("mousemove", function(event) {
         var isInsideImage = event.target === mainImage || event.target.closest("#imageContainer") !== null;
-    
+        var mouseY = event.clientY;
+        var imageRect = mainImage.getBoundingClientRect();
+        var bottomThreshold = imageRect.bottom - 75; // 50 pixels dalla parte inferiore dell'immagine
+
         if (isInsideImage) {
-            document.body.style.cursor = "none";
-            
-            customCursor.style.top = (event.clientY - 50) + "px";
-            customCursor.style.left = (event.clientX - 50) + "px";
+            if (mouseY < bottomThreshold) {
+                document.body.style.cursor = "none";
+                customCursor.style.display = "block";
+                customCursor.style.top = (event.clientY - 50) + "px";
+                customCursor.style.left = (event.clientX - 50) + "px";
+            } else {
+                document.body.style.cursor = "default";
+                customCursor.style.display = "none";
+            }
         } else {
             document.body.style.cursor = "default";
+            customCursor.style.display = "none";
         }
     });
+
 </script>
