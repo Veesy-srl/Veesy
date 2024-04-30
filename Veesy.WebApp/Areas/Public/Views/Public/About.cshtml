@@ -48,13 +48,13 @@
             <h1 class="color-about">Siamo <img style="position: relative; top: 2px;" src="imgs/_Logo Veesy-b.png" width="85px"><b>:</b> un ecosistema creato <b><i>da freelancer per freelancer,</i></b> fondato sul supporto costruttivo di una <b>community attiva</b> e sempre in espansione.</h1>
         </div>
         <div class="text-left mt-5">
-            <h1 class="color-about">Con noi trovi posto in un network professionalein cui riscoprire la magia della <b>creatività visual.</b> <u>La Tua.</u> Non pensare alla solita piattaforma digitale: qui, trovare contatti è solo <b>l'inizio della</b> <b>rivoluzione.</b></h1>
+            <h1 class="color-about">Con noi trovi posto in un network professionale in cui riscoprire la magia della <b>creatività visual.</b> <u>La Tua.</u> Non pensare alla solita piattaforma digitale: qui, trovare contatti è solo <b>l'inizio della</b> <b>rivoluzione.</b></h1>
         </div>
          <div class="col-md-6 mt-5 mb-5 veesy-text-color d-flex align-items-center">
-             <form class="me-md-4 me-2">
+             <a class="me-md-4 me-2" href="#down1">
                  <button class="rounded-pill btn-primary-about1 btn-variant" style="width: 160px; height:  38px;"  type="submit">dimmi di più</button>
-             </form>
-             <form>
+             </a>
+             <form method="get" asp-area="Auth" asp-controller="Auth" asp-action="SignUp" class="flex-grow-1">
                 <button class="rounded-pill btn-primary-about-variant btn-variant" style="width: 185px; height: 38px;"  type="submit">mi unisco a voi!</button>
              </form>
         </div>
@@ -64,13 +64,13 @@
     <div class="col-md-8 offset-md-2 px-md-5 px-0">
        <div class="text-center mt-4 mb-4" id="imageContainer">
            <video id="mainImage" controls style="border-radius: 15px; width: 100%;">
-               <source src="imgs/About/veesy_final.mp4" type="video/mp4">
+               <source src="imgs/About/veesy_video.mp4" type="video/mp4">
            </video>
        </div>
     </div>
 </div>
 
-<div class="row mt-5">
+<div class="row mt-5" id="down1">
     <div class="col-md-8 offset-md-2 px-md-5">
         <div class="text-center mt-4 mb-4">
             <h1 class="color-about" style="font-size: 72px !important;"><b>Dal <i>to do</i></b></h1>
@@ -161,10 +161,10 @@
             <h1 class="color-about">Con <b>Veesy, </b>da un "<span style="color: #FF61BB;">ciao</span>" arrivi a formare un nuovo <b>team creativo</b> e iniziare a scegliere i tuoi clienti, proprio come si fa con unə partner.</h1>
         </div>
         <div class="text-left mt-4 pt-4">
-            <h1 class="color-about">Con la giusta compibazione tra <b>strumenti smart, progetti stimolanti e collaboratori di valore,</b> crei la carriera che hai in mente. Con la tua autonomia ma mai da solə.</h1>
+            <h1 class="color-about">Con la giusta compinazione tra <b>strumenti smart, progetti stimolanti e collaboratori di valore,</b> crei la carriera che hai in mente. Con la tua autonomia ma mai da solə.</h1>
         </div>
          <div class="col-md-6 mt-5 mb-5 veesy-text-color d-flex align-items-center">
-             <form class="flex-grow-1">
+             <form method="get" asp-area="Auth" asp-controller="Auth" asp-action="SignUp" class="flex-grow-1">
                  <button class="rounded-pill btn-primary-about-variant btn-variant-1" id="button2"  style="width: 200px; height:  40px;" type="submit">mi unisco a voi!</button>
              </form> 
         </div>
@@ -398,6 +398,10 @@
         customCursor.style.display = "block";
     });
 
+    document.getElementById('mainImage').addEventListener('loadedmetadata', function() {
+        this.currentTime = 1.2;
+    });
+    
     document.addEventListener("mousemove", function(event) {
         var isInsideImage = event.target === mainImage || event.target.closest("#imageContainer") !== null;
         var mouseY = event.clientY;
