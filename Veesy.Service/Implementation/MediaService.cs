@@ -104,11 +104,6 @@ public class MediaService : IMediaService
         }
     }
 
-    public List<MyUser> GetRandomMediaWithUsername(int count)
-    {
-        return _uoW.MyUserRepository.GetOnlyRandomUserWithImage(count);
-    }
-
     public List<Media> GetRandomMedia(int count)
     {
         return _uoW.MyUserRepository.GetRandomMedia(count);

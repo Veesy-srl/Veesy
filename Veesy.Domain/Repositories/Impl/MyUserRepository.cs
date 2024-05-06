@@ -152,23 +152,6 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
     {
         return _applicationDbContext.InfosToShow.Include(s => s.MyUserInfoToShows.Where(s => s.MyUserId == userInfoId)).OrderBy(s => s.Info).ToList();
     }
-    
-    public List<MyUser> GetOnlyRandomUserWithImage(int count)
-    {
-        var user =  _applicationDbContext.MyUsers
-            .Where(u => u.ProfileImageFileName != null)
-            .Include(p => p.Portfolios.Where(s => s.IsMain && s.IsPublic && s.Status == 1))
-            .ThenInclude(s => s.PortfolioMedias)
-            .ThenInclude(s => s.Media)
-            .Where(u => u.Portfolios != null && u.Portfolios.Count > 0)
-            .ToList();
-        
-        return user.Where(s => s.Portfolios.Count > 0 &&
-                s.Portfolios[0].PortfolioMedias.Any(s => MediaCostants.ImageExtensions.Contains(s.Media.Type.ToUpper())))
-            .OrderBy(s => Guid.NewGuid())
-            .Take(count)
-            .ToList();
-    }
 
     public List<MyUser> GetAllUsersWithMainPortfolio()
     {
@@ -200,6 +183,10 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
             .ToList();
         
         var countPerAuthor = count / portfolios.Count;
+        if (portfolios.Count > 50)
+        {
+            countPerAuthor = 1;
+        }
         var random = new Random();
         var result = new List<PortfolioMedia>();
 
@@ -209,7 +196,7 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
             result.AddRange(randomItems);
         }
 
-        var resultMedia = result.Select(s => s.Media).OrderBy(s => random.Next()).ToList();
+        var resultMedia = result.Select(s => s.Media).OrderBy(s => random.Next()).Take(count).ToList();
         resultMedia.ForEach(s => s.MyUser.Portfolios = null);
         resultMedia.ForEach(s => s.MyUser.Medias = null);
         
@@ -227,7 +214,11 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
             .ToList();
 
         var random = new Random();
-        var countPerAuthor = count / portfolios.Count;
+        var countPerAuthor = count / portfolios.Count; 
+        if (portfolios.Count > count)
+        {
+            countPerAuthor = 1;
+        }
         var result = new List<PortfolioMedia>();
 
         foreach (var group in portfolios)
@@ -236,7 +227,7 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
             result.AddRange(randomPhotos);
         }
 
-        var resultMedia = result.Select(s => s.Media).OrderBy(s => random.Next()).Where(s => MediaCostants.ImageExtensions.Contains(s.Type.ToUpper())).ToList();
+        var resultMedia = result.Select(s => s.Media).OrderBy(s => random.Next()).Where(s => MediaCostants.ImageExtensions.Contains(s.Type.ToUpper())).Take(count).ToList();
         
         resultMedia.ForEach(s => s.MyUser.Portfolios = null);
         resultMedia.ForEach(s => s.MyUser.Medias = null);

@@ -1,5 +1,4 @@
 using AspNetCoreHero.ToastNotification.Abstractions;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
@@ -156,16 +155,31 @@ public class PublicController : VeesyController
     }
     
     [HttpGet("about")]
-    public IActionResult About()
+    public async Task<IActionResult> About()
     {
-        return RedirectToAction("Error404");
         try
         {
-            var vm = _publicHelper.GetUserMediaList(7);
+            var vm = await _publicHelper.GetAboutInfo();
             return View(vm);
         }
         catch (Exception e)
+        { 
+            Logger.Error(e, e.Message);
+            return RedirectToAction("Error400");
+        }
+    }
+    
+     
+    [HttpGet("landing")]
+    public async Task<IActionResult> Landing()
+    {
+        try
         {
+            var vm = await _publicHelper.GetAboutInfo();
+            return View(vm);
+        }
+        catch (Exception e)
+        { 
             Logger.Error(e, e.Message);
             return RedirectToAction("Error400");
         }

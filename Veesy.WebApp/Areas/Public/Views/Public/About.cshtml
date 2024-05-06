@@ -1,173 +1,543 @@
-@using Veesy.Domain.Constants
 @{
     ViewData["Title"] = "About";
 }
 
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
-
-
-<div style="padding-top: 35px; padding-bottom: 25px;" >
-    <div class="container-fluid p-3 mt-5 pb-5 background-image-about">
+<div style="padding-top: 35px; padding-bottom: 25px;" xmlns="http://www.w3.org/1999/html">
+    <div class="container-fluid p-3 mt-5 pb-5 background-image-about" style="background-image: url('@Model.InitialImageUrl');">
         <div class="row p-lg-5 mt-5 mt-lg-2">
-            <div class="col-sm-12 col-md-6">
-                <h1 style="color: white;">Lorem ipsum dolor sit amet consectetur<br/>Lorem ipsum dolor sit amet consectetur <br/>Lorem ipsum dolor sit amet consectetur<br/>Lorem ipsum dolor sit amet consectetur<br/>Lorem ipsum dolor sit amet consectetur<br/>Lorem ipsum dolor sit amet consectetur </h1>
+            <div class="col-sm-12 col-md-12 text-center" style="position: relative; top:  120px;">
+                <img src="imgs/_Logo Veesy-w.png" width="120px">
                 <div class="empty-veesy"></div>
                 <div class="empty-veesy"></div>
-                <div class="col-md-6 mb-4 veesy-text-color d-flex align-items-center">
+                <div class="empty-veesy"></div>
+                <h1 style="color: white; font-size: 40px !important; line-height: 40px !important;"><b>Freelancing is an art.</b></h1>
+                <h1  style="color: white; font-size: 40px !important; line-height: 40px !important;"><b>Not a task.</b></h1>
+                <div class="empty-veesy"></div>
+                <div class="empty-veesy"></div>
+                <div class="empty-veesy"></div>
+                <div class="mb-4 veesy-text-color d-flex align-items-center">
                     <form method="get" asp-area="Auth" asp-controller="Auth" asp-action="SignUp" class="flex-grow-1">
-                        <button class="contact-veesy rounded-pill btn-primary-about btn-variant w-100" type="submit">join veesy</button>
+                        <button class="rounded-pill btn-primary-about-variant btn-variant" id="button1" style="width: 180px; height:  40px;" type="submit">join veesy</button>
                     </form>
-                    <button class="contact-veesy rounded-pill btn-primary-about-variant btn-variant" style="margin-left: 20px;" type="submit">discover more</button>
                 </div>
             </div>
+        </div>
+        <div style="position: absolute; bottom:  50px; left: 50px;">
+            <h6>@Model.InitialAuthor</h6>
         </div>
     </div>
 </div>
 <div class="row">
-    <div class="col-md-6 offset-md-3">
-        <div class="text-left mt-4 pb-4">
-            <h1 class="color-about">Lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur</h1>
+    <div class="col-md-8 offset-md-2 mt-2 px-5">
+        <div class="row justify-content-center">
+            <div class="col-md-2 col-4 d-none text-end color-about" id="discover" style="right: -20px; position: relative;">
+                <b>discover</b>
+            </div>
+            <a class="col-md-1 col-3 text-center justify-content-center color-about" id="qui" style="cursor: pointer; display: flex; align-items: center; justify-content: center;" href="#down" onmouseover="showText()" onmouseout="hideText()">
+                <img src="imgs/__Group 7701.png" width="20px" style="position: relative; top: -3px;"/>
+            </a>
+            <div class="col-md-2 col-4 d-none text-start color-about" id="more" style="left: -20px; position: relative;">
+                <b>more</b>
+            </div>
         </div>
-        <div class="text-center mt-4 mb-4">
-            <img src="../imgs/SampleImg/Umberto_Gnocchi_Veesy_12-gigapixel-art-width-1500px-1024x576.jpg" style="border-radius: 15px;" alt="Immagine" class="img-fluid">
+    </div>
+</div> 
+<div class="row" id="down">
+    <div class="col-md-8 offset-md-2 mt-2 px-md-5">
+        <div class="text-left mt-5 pt-5">
+            <h1 class="color-about">Ciao, <b>creator: </b>siamo qui per te.</h1>
         </div>
         <div class="text-left mt-4 pt-4">
-            <h6 class="color-about" style="font-size: 15px !important; line-height: 25px !important;">Lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit  <br/> <br/> amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur</h6>
+            <h1 class="color-about">Siamo <img style="position: relative; top: 2px;" src="imgs/_Logo Veesy-b.png" width="85px"><b>:</b> un ecosistema creato <b><i>da freelancer per freelancer,</i></b> fondato sul supporto costruttivo di una <b>community attiva</b> e sempre in espansione.</h1>
         </div>
         <div class="text-left mt-5">
-            <h1 class="color-about"><b>Lorem ipsum</b></h1>
+            <h1 class="color-about">Con noi trovi posto in un network professionale in cui riscoprire la magia della <b>creatività visual.</b> <u>La tua.</u> Non pensare alla solita piattaforma digitale: qui, trovare contatti è solo <b>l'inizio della</b> <b>rivoluzione.</b></h1>
         </div>
+         <div class="col-md-6 mt-5 mb-5 veesy-text-color d-flex align-items-center">
+             <a class="me-md-4 me-2" href="#down1">
+                 <button class="rounded-pill btn-primary-about1 btn-variant" style="width: 160px; height:  38px;"  type="submit">dimmi di più</button>
+             </a>
+             <form method="get" asp-area="Auth" asp-controller="Auth" asp-action="SignUp" class="flex-grow-1">
+                <button class="rounded-pill btn-primary-about-variant btn-variant" style="width: 185px; height: 38px;"  type="submit">mi unisco a voi!</button>
+             </form>
+        </div>
+    </div>
+</div> 
+<div class="row mt-5">
+    <div class="col-md-8 offset-md-2 px-md-5 px-0">
+       <div class="text-center mt-4 mb-4" id="imageContainer">
+           <video id="mainImage" controls style="border-radius: 15px; width: 100%;">
+               <source src="imgs/About/veesy_video.mp4" type="video/mp4">
+           </video>
+       </div>
     </div>
 </div>
-<div class="row mt-2">
-    <div class="col-md-3 offset-md-3">
-        <div class="text-center mt-4 mb-4">
-            <img src="../imgs/SampleImg/AFA_Restomod-1024x576.jpg" style="border-radius: 15px;" alt="Immagine" class="img-fluid">
+
+<div class="row mt-5" id="down1">
+    <div class="col-md-8 offset-md-2 px-md-5">
+        <div class="text-center mt-5 mb-4">
+            <h1 class="color-about" style="font-size: 72px !important;"><b>Dal <i>to do</i></b></h1>
+            <h1 class="mt-5 color-about option-height" style="font-size: 72px !important;"><b>al <i>to dream</i></b>
+                <img class="img-fluid" src="imgs/Group%207695_g.png" style="margin-top: -6%;" alt="Immagine 1">
+            </h1>
         </div>
-    </div>
-    <div class="col-md-3">
-        <div class="text-center mt-4 mb-4">
-            <img src="../imgs/SampleImg/AlienSceneRender_03_PP_8bit-1024x576.jpg" style="border-radius: 15px;" alt="Immagine" class="img-fluid">
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-3 offset-md-3">
-        <div class="text-center mt-2 mb-4">
-            <img src="../imgs/SampleImg/Night_1-1024x576.jpg" style="border-radius: 15px;" alt="Immagine" class="img-fluid">
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="text-center mt-2 mb-4">
-            <img src="../imgs/SampleImg/Lelievre-fabric01-gigapixel-standard-width-1500px-1024x576.jpeg" style="border-radius: 15px;" alt="Immagine" class="img-fluid">
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-6 offset-md-3">
-        <div class="text-left mt-4">
-            <h6 class="color-about" style="font-size: 15px !important; line-height: 25px !important;">Lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit  <br/> <br/> amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur</h6>
-        </div>
-        <div class="text-left mt-5 mt-2">
-            <h1 class="color-about"><b>Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum</b></h1>
-        </div>
-        <div class="text-center mt-4 pt-4 mb-4">
-            <img src="../imgs/SampleImg/Drill_Good-idea_06-copia-gigapixel-art-width-1500px-1024x691.jpeg" style="border-radius: 15px;" alt="Immagine" class="img-fluid">
-        </div>
-        <div class="text-left mt-5 mb-2">
-            <h1 class="color-about"><b>Lorem ipsum</b></h1>
-        </div>
-        <div class="text-left mt-4 pt-3">
-            <h6 class="color-about"  style="font-size: 15px !important; line-height: 25px !important;">Lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit  <br/> <br/> amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur Lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur</h6>
-        </div>
-        <div class="text-left mt-4 mb-4 pt-4">
-            <h1 class="color-about">Lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur lorem ipsum dolor sit amet consectetur</h1>
+         <div class="text-center mt-5 pt-5 mb-4">
+             <h3 class="color-about"><span style="color: #00DC8E; font-size: 30px;">*</span><b>e viceversa.</b></h3>
         </div>
     </div>
 </div>
 
-<div style="padding-bottom: 35px;">
-  <div class="container-fluid p-lg-5 mt-3 pb-5 background-image-about-2">
-    <div class="container p-lg-5">
-      <div class="row about-top d-flex flex-wrap">
-        <div class="col-md-6 mb-3 mx-auto">
-          <div class="blue-block rounded p-lg-5 p-4 option-height-about" style="background-color: #536B7E;">
-            <h1 style="color: white;">Blocco are you a company o blocco investitori veesy</h1>
-            <h5 class="text-white mt-5 option-font-20">Lorem ipsum dolor sit amet consectetur<br/> dolor sit amet consectetur. <br/> Lorem ipsum dolor sit amet consectetur.</h5>
-            <div class="empty-veesy"></div>
-            <div class="col-md-12 mb-4 mt-5 veesy-text-color">
-              <button class="rounded-pill btn-primary-about btn-variant" type="submit">view the form</button>
-              <button class="rounded-pill btn-primary-about-variant btn-variant" style="margin-left: 20px;" type="submit">talk with us</button>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 mb-3 mx-auto">
-          <div class="red-block rounded p-lg-5 p-4 option-height-about" style="background-color: #202F4D;">
-            <h1 style="color: white;">Blocco are you a freelancer o work with us, opportunities</h1>
-            <hr class="mt-4 mb-2 text-white">
-            <h5 style="font-size: 16px !important;" class="text-white">Build multiple portfolios</h5>
-            <hr class="mt-2 mb-2 text-white">
-            <h5 style="font-size: 16px !important;" class="text-white">Lorem ipsum dolor sit amet consectetur.</h5>
-            <hr class="mt-2 mb-2 text-white">
-            <h5 style="font-size: 16px !important;" class="text-white">Lorem ipsum dolor sit amet consectetur.</h5>
-            <hr class="mt-2 mb-2 text-white">
-            <h5 style="font-size: 16px !important;" class="text-white">Lorem ipsum dolor sit amet consectetur.</h5>
-            <hr class="mt-2 mb-2 text-white">
-            <h5 style="font-size: 16px !important;" class="text-white">Lorem ipsum dolor sit amet consectetur.</h5>
-            <hr class="mt-2 mb-4 text-white">
-            <div class="col-md-12 mb-1 mt-4 veesy-text-color">
-                <form method="get" asp-area="Auth" asp-controller="Auth" asp-action="SignUp">
-                    <button class="rounded-pill btn-primary-about btn-variant" style="width: 30%;" type="submit">sign up</button>
-                </form>
-                <a class="grey-link ms-2 mt-2 float-end">learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="row pb-4">
-    <div class="col-md-6 offset-md-3">
-        <div class="text-left mt-4">
-            <h1 class="color-about"><b>Meet our investors or creators</b></h1>
+<div class="row">
+    <div class="col-md-8 offset-md-2 mt-5 px-md-5">
+        <div class="text-left mt-4 pt-4">
+            <h1 class="color-about">Lo sappiamo: trovare un buon equilibrio tra l'ennesima opportunità e il bisogno di una pausa sembra un'arte misteriosa.</h1>
+            <h1 class="color-about">Forse è per questo che sulla libera professione girano certe voci...</h1>
         </div>
     </div>
-</div>
-
-<div class="row pb-5" style="cursor: pointer;">
-    <div class="slider-about pb-5">
-        @for (var i = 0; i < Model.MediaUser.Count; i++)
-        {
-            <a href="@Model.ApplicationUrl@Url.Action("Portfolio", "Public", new {area = "Public", id = @Model.PortfolioId[i]})">
-                <div>
-                    <img class="p-3" width="360px" height="260px" style="border-radius: 30px; object-fit: cover" src="@Model.BasePath@Model.MediaList[i].ToString()">
-                    <span class="empty-veesy"></span>
-                    <div class="text-center">
-                        <div class="d-flex align-items-center" style="margin-left: 20px;">
-                            <img src="@Model.BasePathImages@Model.MediaUser[i]?tr=w-400" style="width: 30px !important; height: 30px !important; max-width: none!important;" class="img-thumbnail-custom rounded-circle" alt="user-image">
-                            <span class="color-about mt-1" style="margin-left: 10px; font-size: 15px !important;">by @Model.Usernames[i].ToString()</span>
-                        </div>
+    <div class="col-md-8 offset-md-2 mt-5 px-md-5">
+        <div class="row mt-5">
+            <div class="col-md-6">
+                <div class="text-left">
+                    <div class="row justify-content-end">
+                          <div class="col-2">
+                              <div class="circle1">
+                                  <h1 class="text-about-circle1 color-about"><b>01.</b></h1>
+                              </div>
+                          </div>
+                          <div class="col-10 ps-md-4" style="z-index: 9 !important;">
+                            <h3 class="text-right color-about">che ti fa realizzare i tuoi sogni, ma</h3>
+                            <h3 class="text-right color-about fw-bold" style="margin-top: -5px;">passi la notte sulle modifiche</h3>
+                          </div>
                     </div>
                 </div>
-            </a>
-        }
+            </div>
+            <div class="col-md-6">
+                <div class="text-left">
+                    <div class="row option-circle-2 mt-5 mt-md-0">
+                          <div class="col-md-3 col-2">
+                              <div class="circle2">
+                                  <h1 class="text-about-circle2 color-about"><b>02.</b></h1>
+                              </div>
+                          </div>
+                          <div class="col-md-9 col-10 option-circle-text-2">
+                               <h3 class="text-right color-about font-option-circle-2">puoi permetterti il tuo tempo, ma sei in</h3>
+                               <h3 class="text-right color-about fw-bold font-option-circle-2" style="margin-top: -5px;">eterno multitasking</h3>
+                          </div>
+                    </div>                  
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8 offset-md-2 mt-md-5 d-flex justify-content-center px-md-5">
+        <div class="mt-4 pt-4">
+            <div class="row justify-content-center">
+                <div class="col-md-4 col-2">
+                    <div class="circle3">
+                        <h1 class="text-about-circle3 color-about"><b>03.</b></h1>
+                    </div>
+                </div>
+                <div class="col-md-8 col-10 option-circle-text-3">
+                    <h3 class="text-right color-about font-option-circle-2">che ti fa realizzare i tuoi sogni, ma</h3>
+                    <h3 class="text-right color-about fw-bold font-option-circle-2" style="margin-top: -5px;">passi la notte sulle modifiche</h3>
+                </div>
+            </div> 
+        </div>
     </div>
 </div>
 
-<!-- Aggiungi il collegamento a jQuery -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<!-- Aggiungi il collegamento a slick-carousel JS -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<div class="row mt-5">
+    <div class="col-md-8 offset-md-2 px-md-5 px-0">
+        <div class="position-relative">
+            <img src="imgs/About/Gif-2.gif" style="border-radius: 15px;" alt="Immagine" class="img-fluid">
+        </div>
+    </div>
+    <div class="col-md-8 offset-md-2">
+        <div class="text-center mt-5 pt-5">
+            <h1 class="color-about"><b>Da oggi, tutte leggende metropolitane.</b></h1>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid mt-5 pt-5">
+    <div class="row margin-about">
+        <div class="col-md-4 col-12">
+            <div class="card mb-3 main-card" style="background-image: url('imgs/About/Frame.jpg'); background-size: cover; background-position: center center;">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center text-center" style="height: 100%;">
+                    <h1 class="card-title" style="color: #202F4D;"><b>Veesy</b></h1>
+                    <h3 class="card-text mt-3" style="padding-left: 20%; padding-right: 20%; color: white;">È un network innovativo e decentralizzato, potenziato da strumenti interconnessi.</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 col-12 ps-md-4">
+            <div class="scrollable-row" id="scrollable-row">
+                <div class="card" draggable="true" style="background-color: #F2A259;">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center" style="height: 100%; color: white;">
+                        <h1 class="card-title"><b>Desk</b></h1>
+                        <h3 class="card-text mt-3">I tuoi media <br>sempre con te.</h3>
+                    </div>
+                </div>
+                <div class="card" draggable="true" style="background-color: #00DC8E;">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center" style="height: 100%; color: #202F4D;">
+                        <h1 class="card-title"><b>Match</b></h1>
+                        <h3 class="card-text mt-3">Matching in <br>real time.</h3>
+                    </div>
+                </div>
+                <div class="card" draggable="true" style="background-color: #FF61BB;">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center" style="height: 100%; color: white;">
+                        <h1 class="card-title"><b>Boost</b></h1>
+                        <h3 class="card-text mt-3">Incubazione ed <br>Empowerment.</h3>
+                    </div>
+                </div>
+                <div class="card" draggable="true" style="background-color: #75ccdd;">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center" style="height: 100%; color: #202F4D;">
+                        <h1 class="card-title"><b>Learn</b></h1>
+                        <h3 class="card-text mt-3">Formazione <br>Professionale.</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5 pb-5">
+    <div class="col-md-8 offset-md-2 px-0 px-md-5">
+        <div class="text-left mt-5">
+            <h1 class="color-about">Con <b>Veesy, </b>da un "<span style="color: #FF61BB;">ciao</span>" arrivi a formare un nuovo <b>team creativo</b> e iniziare a scegliere i tuoi clienti, proprio come si fa con unə partner.</h1>
+        </div>
+        <div class="text-left mt-4 pt-4">
+            <h1 class="color-about">Con la giusta combinazione tra <b>strumenti smart, progetti stimolanti e connessioni di valore,</b> crei la carriera che hai in mente. Con la tua autonomia ma mai da solə.</h1>
+        </div>
+         <div class="col-md-6 mt-5 mb-5 veesy-text-color d-flex align-items-center">
+             <form method="get" asp-area="Auth" asp-controller="Auth" asp-action="SignUp" class="flex-grow-1">
+                 <button class="rounded-pill btn-primary-about-variant btn-variant-1" id="button2"  style="width: 200px; height:  40px;" type="submit">mi unisco a voi!</button>
+             </form> 
+        </div>
+    </div>
+</div>
+
+<style>
+
+    .scrollable-row {
+        overflow-x: hidden;
+        white-space: nowrap;
+        cursor: grab;
+    }
+
+    .main-card {
+        width: 100% !Important;
+    }
+
+    .card {
+        display: inline-block;
+        width: 33%;
+        margin-right: 25px;
+        cursor: grab;
+        height: 450px;
+        border-radius: 10px;
+        border: 0px;
+    }
+    
+    .background-image-about{
+      background-size: cover; 
+      background-repeat: no-repeat; 
+      background-position: center;
+      background-attachment: fixed; 
+      border-radius: 15px !important;
+      height: 85vh;
+    }
+    
+    .option-height{
+        line-height: 0.4 !important;
+    }
+
+    .btn-primary-about1 {
+        background-color: #E2E5E7 !important;
+        border: #202F4D !important;
+        color: #202F4D !important;
+        border: 2px solid !important;
+    }
+    
+    .btn-primary-about1:hover {
+        background-color: #75CCDD !important;
+        border: #202F4D !important;
+        color: #202F4D !important;
+    }
+    
+    .margin-about{
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+    
+    .circle1 {
+      width: 50px;
+      height: 50px;
+      background-color: #f97cc4;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      position: relative;
+      left: 30px;
+    }
+    
+    .text-about-circle1{
+        position:  relative;
+        top: 8px;
+        left: -12px;
+    }
+    
+    .circle2 {
+      width: 100px;
+      height: 100px;
+      background-color: #8BD1DF;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      position: relative;
+      top: -25px;
+      left: 40px;
+      z-index: 8;
+    }
+    
+    .text-about-circle2{
+        position:  relative;
+        top: 9px;
+        left: -18px;
+    }
+    
+    .circle3 {
+      width: 150px;
+      height: 150px;
+      background-color: #2DDEA0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      position: relative;
+      top: -47px;
+      left: 25px;
+    }
+    
+    .text-about-circle3{
+        position: relative;
+        top: 6px;
+        left: -15px;
+    }
+    
+    .overlay-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    .custom-cursor {
+        width: 100px;
+        height: 100px;
+        background-color: #FF61BB; 
+        border-radius: 50%; 
+        color: white;
+        font-size: 18px; 
+        display: none; 
+        position: fixed; 
+        pointer-events: none;
+        z-index: 9999;
+        top: 0;
+        left: 0;
+        text-align: center;
+        line-height: 100px;
+    }
+    
+    .option-circle-2{
+        justify-content: flex-end !important;
+    }
+    
+     .option-circle-text-2{
+        z-index: 9 !important;
+     }
+     
+     .option-circle-text-3{
+         z-index: 9 !important;
+     }
+
+    @@media screen and (max-width: 600px) {
+        .circle1 {
+            left:  5px;
+        }
+        
+        .circle2{
+            left:  -5px;
+            top: 0px;
+        }
+        
+        .option-circle-2{
+            justify-content: flex-start !important;
+        }
+        
+        .option-circle-text-2{
+            margin-left: 0px;
+            z-index: 9 !important;
+            top: 26px;
+            position: relative;
+        }
+
+        .text-about-circle1{
+            top: 6px;
+        }
+        
+        .font-option-circle-2{
+            font-size:  15px !important;
+        }
+        
+        .circle3{
+            left:  -15px;
+            top:  0px;
+        }
+
+        .margin-about{
+            margin-left: 0px;
+            margin-right: 0px;
+        }
+        
+        .option-circle-text-3{
+            left: 15px;
+            z-index: 9 !important;
+            top: 48px;
+            position: relative;
+        }
+        
+        .text-option-mobile{
+            font-size: 20px !important;
+        }
+
+        .option-height{
+            line-height: 1.4 !important;
+        }
+
+        .card {
+            display: inline-block;
+            width: 50%;
+            margin-right: 0px;
+            height: 200px;
+        }
+    }
+  
+</style>
+
 <script>
-    // Inizializza il plugin slick-carousel
-    $('.slider-about').slick({
-        slidesToShow: 4, // Numero di immagini visibili contemporaneamente
-        slidesToScroll: 1,
-        focusOnSelect: true,
-        variableWidth: true,
-        infinite: false,
-        centerPadding: 0
+    document.addEventListener("DOMContentLoaded", function() {
+        var button = document.querySelector("#button1");
+    
+        button.addEventListener("mouseover", function() {
+            button.textContent = "for free";
+        });
+    
+        button.addEventListener("mouseout", function() {
+            button.textContent = "join veesy";
+        });
+   
+        var button1 = document.querySelector("#button2");
+    
+        button1.addEventListener("mouseover", function() {
+            button1.textContent = "è gratis!";
+        });
+    
+        button1.addEventListener("mouseout", function() {
+            button1.textContent = "mi unisco a voi!";
+        });
     });
+
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    const scrollableRow = document.getElementById('scrollable-row');
+
+    scrollableRow.addEventListener('mousedown', (e) => {
+        isDown = true;
+        startX = e.pageX - scrollableRow.offsetLeft;
+        scrollLeft = scrollableRow.scrollLeft;
+    });
+
+    scrollableRow.addEventListener('mouseleave', () => {
+        isDown = false;
+    });
+
+    scrollableRow.addEventListener('mouseup', () => {
+        isDown = false;
+    });
+
+    scrollableRow.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - scrollableRow.offsetLeft;
+        const walk = (x - startX) * 1.5;
+        scrollableRow.scrollLeft = scrollLeft - walk;
+    });
+    
+     function showText() {
+         document.getElementById("discover").classList.remove("d-none");
+         document.getElementById("more").classList.remove("d-none");
+     }
+ 
+     function hideText() {
+         document.getElementById("discover").classList.add("d-none");
+         document.getElementById("more").classList.add("d-none");
+     }
+     
+    var customCursor = document.createElement("div");
+    customCursor.className = "custom-cursor";
+    customCursor.innerText = "play";
+    
+    document.body.appendChild(customCursor);
+    
+    document.addEventListener("mousemove", function(event) {
+        customCursor.style.top = (event.clientY - 50) + "px";
+        customCursor.style.left = (event.clientX - 50) + "px";
+    });
+    
+    document.getElementById("imageContainer").addEventListener("mouseout", function() {
+        customCursor.style.display = "none";
+    });
+    
+    document.getElementById("imageContainer").addEventListener("mouseover", function() {
+        customCursor.style.display = "block";
+    });
+
+    document.getElementById('mainImage').addEventListener('loadedmetadata', function() {
+        this.currentTime = 1.2;
+    });
+    
+    document.addEventListener("mousemove", function(event) {
+        var isInsideImage = event.target === mainImage || event.target.closest("#imageContainer") !== null;
+        var mouseY = event.clientY;
+        var imageRect = mainImage.getBoundingClientRect();
+        var bottomThreshold = imageRect.bottom - 75; // 50 pixels dalla parte inferiore dell'immagine
+
+        if (isInsideImage) {
+            if (mouseY < bottomThreshold) {
+                document.body.style.cursor = "none";
+                customCursor.style.display = "block";
+                customCursor.style.top = (event.clientY - 50) + "px";
+                customCursor.style.left = (event.clientX - 50) + "px";
+            } else {
+                document.body.style.cursor = "default";
+                customCursor.style.display = "none";
+            }
+        } else {
+            document.body.style.cursor = "default";
+            customCursor.style.display = "none";
+        }
+    });
+
+    scrollableRow.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        const delta = -1 * Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
+        scrollableRow.scrollLeft += delta * 40; // Incrementa o decrementa la posizione di scorrimento in base alla direzione del movimento
+    });
+    
 </script>
