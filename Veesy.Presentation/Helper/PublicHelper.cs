@@ -25,31 +25,50 @@ public class PublicHelper
 
     public async Task<AboutMediaViewModel> GetAboutInfo()
     {
-        var MediaDtos = MapCloudDtos.MapMediaList(_mediaService.GetRandomPhotos(6));
-        
         var vm = new AboutMediaViewModel();
         var BasePathImages = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/";
-
-        string immagineOrizzontale = string.Empty;
-        double rapportoMassimo = 0.0;
-
-        foreach (var media in MediaDtos)
+        
+        var imageList = new Dictionary<string, string>
         {
-            string imageUrl = $"{BasePathImages}{media.FileName}";
-            string imageUrlReduced = imageUrl + "?tr=w-50";
-            (int larghezza, int altezza) = await GetImageDimensionsAsync(imageUrlReduced);
+            {"c077aa3a3c5e4d4c85d5003881830b00a.jpg", "Umberto gnocchi"},
+            {"9442e5d989d6435ba6ce87d60d7ea3a5a.jpg", "Umberto Gnocchi"},
+            {"3e4ada1584b24b1b9573fe9335a229f9a.jpg", "Daniele Gay"},
+            {"d17ecc4058924974a037cd56d5755f6aa.png", "Lorenzo Leo"},
+            {"6d1a4659477a4f5f87200353156be7a7a.jpg", "Daniele Fabbri"},
+            {"d6212931ea2141f387c5c8e13eb74b7fa.jpg", "Mauro Fanti"},
+            {"86a30aa71c6d4158a2e210415f85a698a.jpg", "Umberto Ponzecchi"},
+            {"86f636e294a747949e8e519c3d3f8bcca.png", "Umberto Gnocchi"},
+            {"44b0588e631a4a9e9fef856e193dad95a.png", "Umberto Gnocchi"},
+            {"0de6ca7daf5f49a09d1b5a16d74adf92a.jpg", "Fabrizio Agostino Arienti"},
+            {"03c800beca17478fbfed0815c383b274a.jpg", "Flavio Monti"},
+            {"7c1662e674004a729e86fd3e98fe7e4fa.png", "Francesco Schito"},
+            {"42cd22f18dbb44bc97cf2996ed5376b4a.jpg", "Niccolò Brovelli"},
+            {"859316e749784e498546b221cb2bcf9aa.jpg", "Alessio Vittori"},
+            {"85f8596d19374f0ba4b68c875086a3b5a.jpg", "Niccolò Brovelli"},
+            {"b23e0e8c441645cca4b88f930365fe5ea.jpg", "Elena Fisogni"},
+            {"9c9b7f35e0de474da510e3cf3b9b11a8a.jpg", "Daniele Fabbri"},
+            {"605b1b92ca184b07aa09160df7f07419a.jpg", "Luigi Gioia"},
+            {"7475fe8680544df1991ef1148c220a02a.jpg", "Niccolò Brovelli"},
+            {"24ab0b8e429a4135af1ed804b7aad886a.jpg", "Raffaele Pallota"},
+            {"da34dda43db44a11ba46e5627ec9d835a.png", "Luigi Gioia"},
+            {"236abe662fac4adab52563e233316ed1a.png", "Laca Maldera"},
+            {"5d52857c28d5411493c45ce9a579575fa.png", "Lorenzo Leo"},
+            {"8b2bd54f6cac433d895447f5a9f524c6a.png", "Francesco Schito"},
+            {"36df68c0cac746a09df5d5bcbf5e6229a.jpg", "Alessio Vittori"},
+        };
 
-            double rapporto = (double)larghezza / (double)altezza;
+        var random = new Random();
+        var randomIndex = random.Next(imageList.Count);
+        var randomPair = imageList.ElementAt(randomIndex);
 
-            if (rapporto > rapportoMassimo)
-            {
-                rapportoMassimo = rapporto;
-                immagineOrizzontale = imageUrl;
-            }
-        }
+        var imageName = randomPair.Key;
+        var author = randomPair.Value;
 
-        vm.InitialImageUrl = immagineOrizzontale;
-    
+        var imageUrl = $"{BasePathImages}{imageName}";
+        
+        vm.InitialImageUrl = imageUrl;
+        vm.InitialAuthor = author;
+        
         return vm;
     }
     
@@ -117,27 +136,5 @@ public class PublicHelper
             BasePathAzure = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"
         };
         return vm;
-    }
-    
-    public static async Task<(int width, int height)> GetImageDimensionsAsync(string imageUrl)
-    {
-        try
-        {
-            using (HttpClient client = new HttpClient())
-            using (HttpResponseMessage response = await client.GetAsync(imageUrl, HttpCompletionOption.ResponseHeadersRead))
-            using (Stream stream = await response.Content.ReadAsStreamAsync())
-            using (Image image = Image.FromStream(stream, false, false))
-            {
-                int width = image.Width;
-                int height = image.Height;
-            
-                return (width, height);
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Errore durante il recupero delle dimensioni dell'immagine: {ex.Message}");
-            throw;
-        }
     }
 }
