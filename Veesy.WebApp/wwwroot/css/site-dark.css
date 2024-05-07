@@ -352,6 +352,10 @@
         margin-top: 5px;
         margin-right: 5px;
     }
+
+    .header-logo-about{
+        content: url('../imgs/_Logo Veesy-lb.png');
+    }
     
     .header-logo:hover{
         content: url('../imgs/_Logo Veesy-lb-g-p.png');
