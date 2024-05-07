@@ -2126,6 +2126,10 @@ canvas {
   margin-right: 5px;
 }
 
+.header-logo-about{
+  content: url('../imgs/_Logo Veesy-b.png');
+}
+
 .header-logo-v:hover{
   content: url('../imgs/_Logo Veesy-lb-g-p.png');
 }
