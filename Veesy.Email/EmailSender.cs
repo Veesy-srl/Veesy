@@ -14,43 +14,61 @@ public class EmailSender : IEmailSender
         _emailConfig = emailConfig;
     }
 
-    public async Task SendEmailAsync(Message message, string templatePATH, List<(string, string)> replacer)
+    public async Task SendEmailAsync(Message message, string templatePATH, List<(string, string)> replacer, List<string> imageFiles = null)
     {
-        var mailMessage = CreateEmailMessage(message, templatePATH, replacer);
+        var mailMessage = CreateEmailMessage(message, templatePATH, replacer, imageFiles);
         await SendAsync(mailMessage);
     }
         
-    private MimeMessage CreateEmailMessage(Message message, string templatePATH, List<(string, string)> replacer)
+   private MimeMessage CreateEmailMessage(Message message, string templatePATH, List<(string, string)> replacer, List<string> imageFiles = null)
+{
+    var emailMessage = new MimeMessage();
+    emailMessage.From.Add(new MailboxAddress("noreply | Veesy", _emailConfig.From));
+    emailMessage.To.AddRange(message.To);
+    emailMessage.Subject = message.Subject;
+
+    var builder = new BodyBuilder
     {
-        var emailMessage = new MimeMessage();
-        emailMessage.From.Add(new MailboxAddress("noreply | Veesy", _emailConfig.From));
-        emailMessage.To.AddRange(message.To);
-        emailMessage.Subject = message.Subject;
-        
-        string templateDirectory = Path.GetDirectoryName(Path.GetDirectoryName(templatePATH)); // Rimuovi le ultime due cartelle
-        string pathImmagine = Path.Combine(templateDirectory, "imgs", "veesy_vettoriale_enigma.png");
-        
-        var imageAttachment = new MimePart("image", "jpeg")
-        {
-            Content = new MimeContent(File.OpenRead(pathImmagine), ContentEncoding.Default),
-            ContentDisposition = new ContentDisposition(ContentDisposition.Inline),
-            ContentTransferEncoding = ContentEncoding.Base64,
-        };
-        
-        imageAttachment.ContentId = "logo";
-        emailMessage.Body = new TextPart(TextFormat.Html)
-        {
-            Text = EmailGetBody(templatePATH, replacer)
-        };
+        HtmlBody = EmailGetBody(templatePATH, replacer)
+    };
 
-        emailMessage.Body = new Multipart("mixed")
-        {
-            emailMessage.Body,
-            imageAttachment
-        };
+    string templateDirectory = Path.GetDirectoryName(Path.GetDirectoryName(templatePATH)); // Rimuovi le ultime due cartelle
+    string logoPath = Path.Combine(templateDirectory, "imgs", "_Logo Veesy-b.png");
 
-        return emailMessage;
+    var logoAttachment = new MimePart("image", "jpeg")
+    {
+        Content = new MimeContent(File.OpenRead(logoPath), ContentEncoding.Default),
+        ContentDisposition = new ContentDisposition(ContentDisposition.Inline),
+        ContentTransferEncoding = ContentEncoding.Base64,
+        ContentId = "logo",
+        FileName = "_Logo Veesy-b.png"
+    };
+
+    builder.LinkedResources.Add(logoAttachment);
+
+    if (imageFiles != null)
+    {
+        for (int i = 0; i < imageFiles.Count; i++)
+        {
+            string imageFile = imageFiles[i];
+            string imagePath = Path.Combine(templateDirectory, "imgs", imageFile);
+            var imageAttachment = new MimePart("image", "jpeg")
+            {
+                Content = new MimeContent(File.OpenRead(imagePath), ContentEncoding.Default),
+                ContentDisposition = new ContentDisposition(ContentDisposition.Inline)
+                {
+                    FileName = imageFile // Imposta il nome del file
+                },
+                ContentTransferEncoding = ContentEncoding.Base64,
+                ContentId = Path.GetFileNameWithoutExtension(imageFile) // Usa il nome del file senza estensione per il ContentId
+            };
+            builder.LinkedResources.Add(imageAttachment);
+        }
     }
+
+    emailMessage.Body = builder.ToMessageBody();
+    return emailMessage;
+}
 
     private string EmailGetBody(string templatePATH, List<(string, string)> replacer)
     {

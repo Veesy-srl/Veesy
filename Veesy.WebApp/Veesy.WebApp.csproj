@@ -230,6 +230,9 @@
     <Content Update="wwwroot\imgs\Auth\Immagine per Sign Up.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Update="wwwroot\MailTemplate\welcome-email.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
