@@ -248,6 +248,7 @@ public class AuthController : Controller
         try
         {
             await _authHelper.SendEmailConfirmation(email);
+            await _authHelper.SendEmailWelcome(email);
             return RedirectToAction("VerifyEmail", new { email = email });
         }
         catch (Exception e)
