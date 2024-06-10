@@ -34,7 +34,7 @@
                 <b>discover</b>
             </div>
             <a class="col-md-1 col-3 text-center justify-content-center color-about" id="qui" style="cursor: pointer; display: flex; align-items: center; justify-content: center;" href="#down" onmouseover="showText()" onmouseout="hideText()">
-                <img src="imgs/__Group 7701.png" width="20px" style="position: relative; top: -3px;"/>
+                <img class="image-about-go-down" width="20px" style="position: relative; top: -3px;"/>
             </a>
             <div class="col-md-2 col-4 d-none text-start color-about" id="more" style="left: -20px; position: relative;">
                 <b>more</b>
@@ -58,7 +58,7 @@
                  <button class="rounded-pill btn-primary-about1 btn-variant" style="width: 160px; height:  38px;"  type="submit">dimmi di più</button>
              </a>
              <form method="get" asp-area="Auth" asp-controller="Auth" asp-action="SignUp" class="flex-grow-1">
-                <button class="rounded-pill btn-primary-about-variant btn-variant" style="width: 185px; height: 38px;"  type="submit">mi unisco a voi!</button>
+                <button class="rounded-pill btn-primary-about-variant btn-variant" style="width: 185px; height: 38px;"  type="submit">entra (è gratis)</button>
              </form>
         </div>
     </div>
@@ -166,35 +166,35 @@
         <div class="col-md-4 col-12">
             <div class="card mb-3 main-card" style="background-image: url('imgs/About/Frame.jpg'); background-size: cover; background-position: center center;">
                 <div class="card-body d-flex flex-column justify-content-center align-items-center text-center" style="height: 100%;">
-                    <h1 class="card-title" style="color: #202F4D;"><b>Veesy</b></h1>
-                    <h3 class="card-text mt-3" style="padding-left: 20%; padding-right: 20%; color: white;">È un network innovativo e decentralizzato, potenziato da strumenti interconnessi.</h3>
+                    <h1 class="card-title" style="color: white;"><b>Network</b></h1>
+                    <h3 class="card-text mt-3" id="option-mobile-card" style="padding-left: 10%; padding-right: 10%; color: white;">Un ecosistema digitale progettato, creato e popolato da freelancer per rivoluzionare la vita da freelancer.</h3>
                 </div>
             </div>
         </div>
         <div class="col-md-8 col-12 ps-md-4">
             <div class="scrollable-row" id="scrollable-row">
-                <div class="card" draggable="true" style="background-color: #F2A259;">
-                    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center" style="height: 100%; color: white;">
-                        <h1 class="card-title"><b>Desk</b></h1>
-                        <h3 class="card-text mt-3">I tuoi media <br>sempre con te.</h3>
+                <div class="card" draggable="true" style="background-color: #75CCDD;">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center" style="height: 100%; color: #202F4D;">
+                        <h1 class="card-title" style="color: #202F4D;"><b>Desk</b></h1>
+                        <h3 class="card-text mt-3 tab-mobile-option">Tutti i tuoi media in tasca<br/> pronti da gestire, con cui<br/> creare tantissimi portfolio<br/> da condividere via link,<br/> ovunque ti trovi.</h3>
                     </div>
                 </div>
-                <div class="card" draggable="true" style="background-color: #00DC8E;">
+                <div class="card" draggable="true" style="background-color: #00DC8D;">
                     <div class="card-body d-flex flex-column justify-content-center align-items-center text-center" style="height: 100%; color: #202F4D;">
-                        <h1 class="card-title"><b>Match</b></h1>
-                        <h3 class="card-text mt-3">Matching in <br>real time.</h3>
+                        <h1 class="card-title" style="color: #202F4D;"><b>Match</b></h1>
+                        <h3 class="card-text mt-3 tab-mobile-option">Un modo rapido e stimolante<br/> per trovare clienti migliori,<br/> collaboratori di fiducia e<br/> partner certificati con cui<br/> gestire progetti più grandi.</h3>
                     </div>
                 </div>
                 <div class="card" draggable="true" style="background-color: #FF61BB;">
                     <div class="card-body d-flex flex-column justify-content-center align-items-center text-center" style="height: 100%; color: white;">
                         <h1 class="card-title"><b>Boost</b></h1>
-                        <h3 class="card-text mt-3">Incubazione ed <br>empowerment.</h3>
+                        <h3 class="card-text mt-3 tab-mobile-option">Consulenza fiscale, legale,<br/> artistica o di project<br/> management a tua<br/>disposizione, che tu sia all'inizio<br/> o nel pieno della tua carriera.</h3>
                     </div>
                 </div>
-                <div class="card" draggable="true" style="background-color: #75ccdd;">
-                    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center" style="height: 100%; color: #202F4D;">
+                <div class="card" draggable="true" style="background-color: #F2A259;">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center" style="height: 100%; color: white;">
                         <h1 class="card-title"><b>Learn</b></h1>
-                        <h3 class="card-text mt-3">Formazione <br>Professionale.</h3>
+                        <h3 class="card-text mt-3 tab-mobile-option">Opportunità di formazione<br/> continua e reciproca. Accedi<br/> a corsi e percorsi e diventa a<br/> tua volta mentore o<br/> insegnante.</h3>
                     </div>
                 </div>
             </div>
@@ -203,16 +203,16 @@
 </div>
 
 <div class="row mt-5 pb-5">
-    <div class="col-md-8 offset-md-2 px-0 px-md-5">
+    <div class="col-md-8 offset-md-2 px-2 px-md-5">
         <div class="text-left mt-5">
             <h1 class="color-about">Con <b>Veesy, </b>da un "<span style="color: #FF61BB;">ciao</span>" arrivi a formare un nuovo <b>team creativo</b> e iniziare a scegliere i tuoi clienti, proprio come si fa con unə partner.</h1>
         </div>
         <div class="text-left mt-4 pt-4">
-            <h1 class="color-about">Con la giusta combinazione tra <b>strumenti smart, progetti stimolanti e connessioni di valore,</b> crei la carriera che hai in mente. Con la tua autonomia ma mai da solə.</h1>
+            <h1 class="color-about">Con la giusta combinazione tra <b>strumenti smart, progetti stimolanti e connessioni di valore,</b> crei la carriera che hai in mente. Con la tua autonomia, ma mai da solə.</h1>
         </div>
          <div class="col-md-6 mt-5 mb-5 veesy-text-color d-flex align-items-center">
              <form method="get" asp-area="Auth" asp-controller="Auth" asp-action="SignUp" class="flex-grow-1">
-                 <button class="rounded-pill btn-primary-about-variant btn-variant-1" id="button2"  style="width: 200px; height:  40px;" type="submit">mi unisco a voi!</button>
+                 <button class="rounded-pill btn-primary-about-variant btn-variant-1" id="button2"  style="width: 200px; height:  40px;" type="submit">entra (è gratis)</button>
              </form> 
         </div>
     </div>
@@ -427,6 +427,11 @@
             margin-right: 0px;
             height: 200px;
         }
+
+        .tab-mobile-option{
+            font-size: 11px !important;
+            line-height: 16px !important;
+        }
     }
   
 </style>
@@ -450,7 +455,7 @@
         });
     
         button1.addEventListener("mouseout", function() {
-            button1.textContent = "mi unisco a voi!";
+            button1.textContent = "entra (è gratis)";
         });
     });
 
@@ -512,7 +517,7 @@
     });
 
     document.getElementById('mainImage').addEventListener('loadedmetadata', function() {
-        this.currentTime = 1.2;
+        this.currentTime = 212.8;
     });
     
     document.addEventListener("mousemove", function(event) {

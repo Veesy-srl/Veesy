@@ -356,6 +356,10 @@
     .header-logo-about{
         content: url('../imgs/_Logo Veesy-lb.png');
     }
+
+    .image-about-go-down{
+        content: url("../imgs/__Group 7701_w.png");
+    }
     
     .header-logo:hover{
         content: url('../imgs/_Logo Veesy-lb-g-p.png');
