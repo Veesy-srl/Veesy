@@ -238,7 +238,7 @@
 </div>*@
 
 <div class="centered-text-var" id="placeholder-1">
-  <h1 class="color-about" style="font-size: 40px !important; line-height: 45px !important;"><b>Freelancing is an art.<br/>Not a task.</b></h1>
+  <h1 class="color-about" style="font-size: 40px !important; line-height: 45px !important;"><b>Freelancing is an <i>art.</i><br/>Not a <i>task.</i></b></h1>
 </div>
 <div class="centered-text-var mt-3" id="placeholder-2">
   <div class="col-md-12 mb-4 veesy-text-color" style="margin-top: 100px;">
@@ -266,7 +266,7 @@
   </div>
 </div>
 <div class="container-fluid">
-  <div class="row" id="down">
+  <div class="row mt-5" id="down">
     <div class="col-md-8 mt-5 offset-md-2 mt-2 px-md-5">
       <div class="text-left mt-5 pt-5">
         <h1 class="color-about">Ciao, <b>creator: </b>siamo qui per te.</h1>
@@ -290,7 +290,7 @@
   <div class="row mt-5">
     <div class="col-md-8 offset-md-2 px-md-5 px-0">
       <div class="text-center mt-4 mb-4" id="imageContainer">
-        <video id="mainImage" controls style="border-radius: 15px; width: 100%;">
+        <video id="mainImage" controls style="border-radius: 15px; width: 100%;" poster="imgs/img_vid_veesy.png">
           <source src="imgs/About/veesy_video.mp4" type="video/mp4">
         </video>
       </div>
@@ -1024,10 +1024,6 @@ function isDarkThemeActive() {
 
     document.getElementById("imageContainer").addEventListener("mouseover", function() {
       customCursor.style.display = "block";
-    });
-
-    document.getElementById('mainImage').addEventListener('loadedmetadata', function() {
-      this.currentTime = 212.8;
     });
 
     document.addEventListener("mousemove", function(event) {
