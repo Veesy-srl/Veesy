@@ -1097,7 +1097,7 @@ h5{
 }
 
 .menu-popup {
-  z-index: 1040;
+  z-index: 99999;
   position: fixed;
   top: 0;
   right: -53%;
@@ -1595,6 +1595,10 @@ hr {
     width: 95% !important;
   }
 
+  .option-mobile-card{
+  font-size: 14px !important;
+  }
+
   .edit-button {
     display: inline-block !important;
     visibility: visible !important;
@@ -2012,6 +2016,10 @@ canvas {
   .about-top{
     margin-top: 20px;
   }
+}
+
+.image-about-go-down{
+  content: url("../imgs/__Group 7701.png");
 }
 
 .home-img {

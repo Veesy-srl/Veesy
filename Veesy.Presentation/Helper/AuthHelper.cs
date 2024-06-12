@@ -1,3 +1,4 @@
+using System.Net.Mail;
 using System.Web;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -49,6 +50,28 @@ public class AuthHelper
         List<(string, string)> replacer = new List<(string, string)> { ("[LinkVerifyMail]", message.Content) };
         var currentPath = Directory.GetCurrentDirectory();
         await _emailSender.SendEmailAsync(message, currentPath + "/wwwroot/MailTemplate/mail-verify-email.html", replacer);
+        return new ResultDto(true, "");
+    }
+    
+    public async Task<ResultDto> SendEmailWelcome(string email)
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+        if (user == null)
+        {
+            user = await _userManager.FindByNameAsync(email);
+            if (user == null)
+                return new ResultDto(false, "User not found");
+        }
+        var name = user.Fullname;
+        var recipients = new (string, string)[] { ("Noreply | Veesy", email) };
+        var link = "";
+        var message = new Message(new (string, string)[] { ("Noreply | Veesy", email) }, "Welcome to Veesy", link);
+        List<(string, string)> replacer = new List<(string, string)> { ("[name]", name) };
+        var currentPath = Directory.GetCurrentDirectory();
+        
+        var imageFiles = new List<string> { "welcome_image0.png", "Mailimage1.png", "Mailimage2.png"};
+        
+        await _emailSender.SendEmailAsync(message, currentPath + "/wwwroot/MailTemplate/welcome-email.html", replacer, imageFiles);
         return new ResultDto(true, "");
     }
 
