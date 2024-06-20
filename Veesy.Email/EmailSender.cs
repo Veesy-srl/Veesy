@@ -21,55 +21,54 @@ public class EmailSender : IEmailSender
     }
         
    private MimeMessage CreateEmailMessage(Message message, string templatePATH, List<(string, string)> replacer, List<string> imageFiles = null)
-{
-    var emailMessage = new MimeMessage();
-    emailMessage.From.Add(new MailboxAddress("noreply | Veesy", _emailConfig.From));
-    emailMessage.To.AddRange(message.To);
-    emailMessage.Subject = message.Subject;
-
-    var builder = new BodyBuilder
     {
-        HtmlBody = EmailGetBody(templatePATH, replacer)
-    };
+        var emailMessage = new MimeMessage();
+        emailMessage.From.Add(new MailboxAddress("noreply | Veesy", _emailConfig.From));
+        emailMessage.To.AddRange(message.To);
+        emailMessage.Subject = message.Subject;
 
-    string templateDirectory = Path.GetDirectoryName(Path.GetDirectoryName(templatePATH)); // Rimuovi le ultime due cartelle
-    string logoPath = Path.Combine(templateDirectory, "imgs", "_Logo Veesy-b.png");
-
-    var logoAttachment = new MimePart("image", "jpeg")
-    {
-        Content = new MimeContent(File.OpenRead(logoPath), ContentEncoding.Default),
-        ContentDisposition = new ContentDisposition(ContentDisposition.Inline),
-        ContentTransferEncoding = ContentEncoding.Base64,
-        ContentId = "logo",
-        FileName = "_Logo Veesy-b.png"
-    };
-
-    builder.LinkedResources.Add(logoAttachment);
-
-    if (imageFiles != null)
-    {
-        for (int i = 0; i < imageFiles.Count; i++)
+        var builder = new BodyBuilder
         {
-            string imageFile = imageFiles[i];
-            string imagePath = Path.Combine(templateDirectory, "imgs", imageFile);
-            var imageAttachment = new MimePart("image", "jpeg")
+            HtmlBody = EmailGetBody(templatePATH, replacer)
+        };
+
+        string templateDirectory = Path.GetDirectoryName(Path.GetDirectoryName(templatePATH)); // Rimuovi le ultime due cartelle
+        string logoPath = Path.Combine(templateDirectory, "imgs", "_Logo Veesy-b.png");
+
+        var logoAttachment = new MimePart("image", "jpeg")
+        {
+            Content = new MimeContent(File.OpenRead(logoPath), ContentEncoding.Default),
+            ContentDisposition = new ContentDisposition(ContentDisposition.Inline),
+            ContentTransferEncoding = ContentEncoding.Base64,
+            ContentId = "logo",
+            FileName = "_Logo Veesy-b.png"
+        };
+
+        builder.LinkedResources.Add(logoAttachment);
+        
+        if (imageFiles != null)
+        {
+            foreach (var imageFile in imageFiles)
             {
-                Content = new MimeContent(File.OpenRead(imagePath), ContentEncoding.Default),
-                ContentDisposition = new ContentDisposition(ContentDisposition.Inline)
+                string imagePath = Path.Combine(templateDirectory, "imgs", imageFile);
+                var imageAttachment = new MimePart("image", "jpeg")
                 {
-                    FileName = imageFile // Imposta il nome del file
-                },
-                ContentTransferEncoding = ContentEncoding.Base64,
-                ContentId = Path.GetFileNameWithoutExtension(imageFile) // Usa il nome del file senza estensione per il ContentId
-            };
-            builder.LinkedResources.Add(imageAttachment);
+                    Content = new MimeContent(File.OpenRead(imagePath), ContentEncoding.Default),
+                    ContentDisposition = new ContentDisposition(ContentDisposition.Inline)
+                    {
+                        FileName = imageFile
+                    },
+                    ContentTransferEncoding = ContentEncoding.Base64,
+                    ContentId = Path.GetFileNameWithoutExtension(imageFile)
+                };
+                builder.LinkedResources.Add(imageAttachment);
+            }
         }
+        
+        emailMessage.Body = builder.ToMessageBody();
+        return emailMessage;
     }
-
-    emailMessage.Body = builder.ToMessageBody();
-    return emailMessage;
-}
-
+   
     private string EmailGetBody(string templatePATH, List<(string, string)> replacer)
     {
             
