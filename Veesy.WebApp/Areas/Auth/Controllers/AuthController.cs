@@ -197,7 +197,7 @@ public class AuthController : Controller
         }
     }
     
-    [HttpGet]
+    [HttpGet] 
     public async Task<IActionResult> ConfirmEmailVerification(string token, string email)
     {
         try
