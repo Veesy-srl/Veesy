@@ -67,10 +67,16 @@ public class AuthHelper
         var link = "";
         var message = new Message(new (string, string)[] { ("Noreply | Veesy", email) }, "Welcome to Veesy", link);
         List<(string, string)> replacer = new List<(string, string)> { ("[name]", name) };
+
+        var imageFiles = new List<string> { 
+            "Welcome/mail-bottom_welcome.png", 
+            "Welcome/mail-top_welcome.png", 
+            "Welcome/social-facebook_welcome.png", 
+            "Welcome/social-instagram_welcome.png", 
+            "Welcome/social-linkedin_welcome.png", 
+            "Welcome/welcome_welcome.gif"
+        };
         var currentPath = Directory.GetCurrentDirectory();
-        
-        var imageFiles = new List<string> { "welcome_image0.png", "Mailimage1.png", "Mailimage2.png"};
-        
         await _emailSender.SendEmailAsync(message, currentPath + "/wwwroot/MailTemplate/welcome-email.html", replacer, imageFiles);
         return new ResultDto(true, "");
     }

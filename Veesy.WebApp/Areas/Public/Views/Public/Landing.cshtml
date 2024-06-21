@@ -521,7 +521,7 @@
         var mouseY = event.clientY;
         var imageRect = mainImage.getBoundingClientRect();
         var bottomThreshold = imageRect.bottom - 75; // 50 pixels dalla parte inferiore dell'immagine
-
+ 
         if (isInsideImage) {
             if (mouseY < bottomThreshold) {
                 document.body.style.cursor = "none";

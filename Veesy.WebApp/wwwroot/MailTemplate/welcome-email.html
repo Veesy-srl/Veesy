@@ -1,223 +1,738 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"
-      xmlns:cid="http://www.w3.org/1999/xhtml">
+<html
+        lang="en"
+        xmlns:v="urn:schemas-microsoft-com:vml"
+        xmlns:o="urn:schemas-microsoft-com:office:office"
+        xmlns:cid="http://www.w3.org/1999/xhtml"
+>
 <head>
-  <meta charset="utf-8">
-  <meta name="x-apple-disable-message-reformatting">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
-  <!--[if mso]>
-    <xml><o:officedocumentsettings><o:pixelsperinch>96</o:pixelsperinch></o:officedocumentsettings></xml>
-  <![endif]-->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700" rel="stylesheet" media="screen">
+    <meta charset="utf-8" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="x-apple-disable-message-reformatting" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="supported-color-schemes" content="light dark" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+            name="format-detection"
+            content="telephone=no, date=no, address=no, email=no"
+    />
+    <!--[if mso]>
+    <xml
+    ><o:officedocumentsettings
+    ><o:pixelsperinch>96</o:pixelsperinch></o:officedocumentsettings
+    ></xml
+    >
+    <![endif]-->
     <style>
-.hover-underline:hover {
-  text-decoration: underline !important;
-}
-@media (max-width: 600px) {
-  .sm-w-full {
-    width: 100% !important;
-  }
-  .sm-px-24 {
-    padding-left: 24px !important;
-    padding-right: 24px !important;
-  }
-  .sm-py-32 {
-    padding-top: 32px !important;
-    padding-bottom: 32px !important;
-  }
-  .sm-leading-32 {
-    line-height: 32px !important;
-  }
-  #mobile-l{
-    margin-top: 4% !important;
-  }
-}
+        :root {
+            color-scheme: light dark;
+            supported-color-schemes: light dark;
+        }
 
-.footer-l {
-  background-color: #E2E5E7;
-  padding: 20px 0;
-}
+        /* Modalita Scura (dark) colori */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #e2e5e7 !important;
+            }
+            .wrapper {
+                background-color: #ffffff !important;
+            }
+            .footer-l {
+                background-color: #e2e5e7 !important;
+            }
+            #main-bg {
+                background-color: #e2e5e7 !important;
+            }
+            .spacer-bg {
+                background-color: #e2e5e7 !important;
+            }
+        }
 
-.container-l {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            word-break: break-word;
+            background-color: #e2e5e7;
+            -webkit-font-smoothing: antialiased;
+        }
+        td {
+            padding: 0;
+        }
+        img {
+            border: 0;
+        }
 
-.footer-content-l {
-  flex: 1;
-}
+        #main-bg {
+            background-color: #e2e5e7;
+        }
+        .spacer-bg {
+            background-color: #e2e5e7;
+        }
 
-.veesy-text-color-l {
-  color: #333;
-}
+        .p-left {
+            padding-left: 40px;
+        }
+        .px-dynamic {
+            padding: 0 40px;
+        }
 
-/* Stili per schermi più piccoli come telefoni */
-@media screen and (max-width: 768px) {
-  .container-l {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
+        .wrapper {
+            width: 100%;
+            table-layout: fixed;
+            background-color: #ffffff;
+            mso-line-height-rule: exactly;
+            font-family: Helvetica, sans-serif;
+        }
 
-  .footer-content-l {
-    width: 100%;
-  }
-}
-</style>
+        .main {
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .hover-underline:hover {
+            text-decoration: underline !important;
+        }
+
+        #rounded-list {
+            padding: 30px 40px;
+            border-radius: 100% / 10%;
+        }
+
+        .footer-l {
+            background-color: #e2e5e7;
+            padding: 0 40px;
+        }
+
+        .container-l {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .footer-content-l {
+            flex: 1;
+        }
+
+        .veesy-text-color-l {
+            color: #333333;
+        }
+
+        @media (max-width: 600px) {
+            .p-left {
+                padding-left: 20px;
+            }
+            .px-dynamic {
+                padding: 0 20px;
+            }
+            .sm-w-full {
+                width: 100% !important;
+            }
+            .sm-leading-32 {
+                line-height: 32px !important;
+            }
+            #rounded-list {
+                padding: 15px 20px;
+                border-radius: 200% / 10%;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .container-l {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
-<body style="margin: 0; width: 100%; padding: 0; word-break: break-word; -webkit-font-smoothing: antialiased; background-color: #E2E5E7;">
-    <div style="font-family: 'Montserrat', sans-serif; mso-line-height-rule: exactly; display: none;"></div>
-      <div role="article" aria-roledescription="email" aria-label="" lang="en" style="font-family: 'Montserrat', sans-serif; mso-line-height-rule: exactly;">
-        <table style="width: 100%; font-family: Montserrat, -apple-system, 'Segoe UI', sans-serif;" cellpadding="0" cellspacing="0" role="presentation">
-          <tr>
-            <td align="center" style="mso-line-height-rule: exactly; background-color: #E2E5E7; font-family: Montserrat, -apple-system, 'Segoe UI', sans-serif;">
-              <table class="sm-w-full" style="width: 600px;" cellpadding="0" cellspacing="0" role="presentation">
-                <tr>
-                  <td class="sm-py-32 sm-px-24" style="mso-line-height-rule: exactly; padding: 30px; text-align: center; font-family: Montserrat, -apple-system, 'Segoe UI', sans-serif;">
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <img src="cid:Mailimage1" style="width: 250px; margin-left: 50%;">
-                  </td>
-                </tr>
-              <tr>
-                <td align="center" class="sm-px-24" style=" mso-line-height-rule: exactly;">
-                  <table style="width: 100%;" cellpadding="0" cellspacing="0" role="presentation">
+<body>
+<center
+        lang="en"
+        aria-label=""
+        role="article"
+        class="wrapper"
+        aria-roledescription="email"
+        style="background-color: #fff"
+>
+    <table class="main" cellpadding="0" cellspacing="0" role="presentation">
+        <tr>
+            <td
+                    align="center"
+                    style="mso-line-height-rule: exactly; background-color: #ffffff"
+            >
+                <table
+                        cellpadding="0"
+                        cellspacing="0"
+                        class="sm-w-full"
+                        role="presentation"
+                        style="max-width: 800px"
+                >
                     <tr>
-                      <td class="sm-px-24" style="mso-line-height-rule: exactly; border-radius: 4px; background-color: #E2E5E7; text-align: left; font-family: Montserrat, -apple-system, 'Segoe UI', sans-serif; font-size: 17px; line-height: 24px; color: #626262;">
-                        <div style="margin-top: 0.7rem!important;">
-                          <img src="cid:logo" style="width: 120px; height: 40px;">
-                        </div>
-                        <p class="sm-leading-32" style="color: #202F4D; line-height: 1.5; mso-line-height-rule: exactly; margin-top: 25px; margin-bottom: 15px; font-size: 16px; font-weight: 400;">
-                          Ciao [name],
-                        </p>
-                        <p class="sm-leading-32" style="color: #202F4D; line-height: 1.5; mso-line-height-rule: exactly; margin-top: 25px; margin-bottom: 15px; font-size: 16px; font-weight: 400;">
-                          Evviva!
-                        </p></br>
-                        <p class="sm-leading-32" style="color: #202F4D; line-height: 1.5; mso-line-height-rule: exactly; margin-top: 25px; margin-bottom: 15px; font-size: 16px; font-weight: 400;">
-                          Sei su <b>Veesy</b>, la community-piattaforma-ecosistema dove la creatività incontra (finalmente) l'efficienza.
-                        </p></br>
-                        <p class="sm-leading-32" style="color: #202F4D; line-height: 1.5; mso-line-height-rule: exactly; margin-top: 25px; margin-bottom: 15px; font-size: 16px; font-weight: 400;">
-                          Imposta il tuo profilo e mettiti all'opera!
-                        </p>
-                        <div style="margin-top: 25px;margin-bottom: 25px;">
-                        <img src="cid:welcome_image0" style="width: 300px;">
-                        </div>
-                        <p class="sm-leading-32" style="color: #202F4D; line-height: 1.5; mso-line-height-rule: exactly; margin-top: 25px; margin-left: auto; margin-right: auto; margin-bottom: 25px; font-size: 15px; font-weight: 400; text-align: center;">
-                          <b>Come si fa?</b>
-                        </p>
-                        <div style="position: relative; width: 100%; height: 900px; background-color: #202F4D; padding: 20px;">
-                          <table role="presentation" style="margin-top: 70px; border-collapse: collapse; width: 100%; max-width: 600px;">
-                            <tr>
-                              <td style="width:50px;height:50px;background-color:#1D4053;border-radius:50%; margin-left: 20px;"></td>
-                              <td style="color:#01d78c;font-size:22px;">
-                                <b style="margin-left: 10px;">01. Entra nel nostro server Discord</b>
-                              </td>
-                            </tr>
-                          </table>
-                          <p class="sm-leading-32" style="color: white; line-height: 1.5; mso-line-height-rule: exactly; margin-top: 25px; margin-bottom: 15px; font-size: 16px; font-weight: 400;">
-                            Il server ufficiale Discord è il cuore della community Veesy. Qui, tutto è organizzato per incontrare altrə creator, trovare opportunità, accedere a mentorship e risorse speciali. Dopo essere entrat su Discord, trovi il canale <span style="color: #01d78c !important;">#welcome</span> dove il nostro team ti accoglierà e spiegherà tutto quello che c’è da sapere! No community, no party.
-                          </p>
-                          <a href="#">
-                            <p class="sm-leading-32" style="color: #01d78c !important; text-decoration: underline; color: white; line-height: 1.5; mso-line-height-rule: exactly; margin-top: 25px; margin-bottom: 15px; font-size: 16px; font-weight: 400;">
-                              Nuovə su Discord?
-                            </p>
-                          </a>
-                          <table role="presentation" style="margin-top: 50px; border-collapse: collapse; width: 100%; max-width: 600px;">
-                            <tr>
-                              <td style="width:50px;height:50px;background-color:#293F5B;border-radius:50%; margin-left: 20px;"></td>
-                              <td style="color:#487A91;font-size:22px;">
-                                <b style="margin-left: 10px;">02. Esplora Veesy Desk</b>
-                              </td>
-                            </tr>
-                          </table>
-                          <p class="sm-leading-32" style="color: white; line-height: 1.5; mso-line-height-rule: exactly; margin-top: 25px; margin-bottom: 15px; font-size: 16px; font-weight: 400;">
-                            Entra nella tua nuova dashboard super funzionale, organizza e gestisci i tuoi media, crea e modifica in tempo reale tutti i portfolio che vuoi e condividili tramite link con chi vuoi.                          
-                          </p>
-                          <a href="#">
-                            <p class="sm-leading-32" style="color: #487A91 !important; text-decoration: underline; color: white; line-height: 1.5; mso-line-height-rule: exactly; margin-top: 25px; margin-bottom: 15px; font-size: 16px; font-weight: 400;">
-                              Vai al Desk
-                            </p>
-                          </a>
-                          <table role="presentation" style="margin-top: 50px; border-collapse: collapse; width: 100%; max-width: 600px;">
-                            <tr>
-                              <td style="width:50px;height:50px;background-color:#373458;border-radius:50%; margin-left: 20px;"></td>
-                              <td style="color:#E05AAC;font-size:22px;">
-                                <b style="margin-left: 10px;">03. Crea il tuo profilo</b>
-                              </td>
-                            </tr>
-                          </table>
-                          <p class="sm-leading-32" style="color: white; line-height: 1.5; mso-line-height-rule: exactly; margin-top: 25px; margin-bottom: 15px; font-size: 16px; font-weight: 400;"> 
-                            Inserisci le tue info più interessanti, la tua immagine preferita e tienile aggiornate! Saranno il tuo biglietto da visita per presentarti e migliorare la tua visibilità. Questo ci aiuterà a trovare i match perfetti per te.                          
-                          </p>
-                          <a href="#">
-                            <p class="sm-leading-32" style="color: #E05AAC !important; text-decoration: underline; color: white; line-height: 1.5; mso-line-height-rule: exactly; margin-top: 25px; margin-bottom: 15px; font-size: 16px; font-weight: 400;">
-                              Crea profilo
-                            </p>
-                          </a>
-                        </div>
-                        <p class="sm-leading-32" style="color: #202F4D; line-height: 1.5; mso-line-height-rule: exactly; margin-top: 50px;  margin-bottom: 16px; font-size: 16px; font-weight: 400; text-align: center;">
-                          Et Voilà! Benvenutə nella rivoluzione del freelancing!
-                        </p>
-                        <p class="sm-leading-32" style="color: #202F4D; line-height: 1.5; mso-line-height-rule: exactly; margin-top: 25px; margin-bottom: 16px; font-size: 16px; font-weight: 400;">
-                          Ti serve una mano? Siamo qui per aiutarti a navigare la piattaforma e sfruttarne al massimo le potenzialità. Se hai domande o hai bisogno di aiuto, contattaci: ti accompagneremo passo passo lungo il tuo nuovo viaggio creativo.
-                        </p>
-                        <p class="sm-leading-32" style="color: #202F4D; line-height: 1.5; mso-line-height-rule: exactly; margin-top: 25px; margin-bottom: 16px; font-size: 18px; font-weight: 400;">
-                          Ci vediamo a bordo,<br><b>Il Team Veesy</b>
-                        </p>
-                        </td>
-                        </tr>
-                        <tr>
-                          <td style="font-family: 'Montserrat', sans-serif; mso-line-height-rule: exactly; height: 20px;"></td>
-                        </tr>
-                      <tr>
-                        <td>
-                          <div class="footer-l">
-                            <div class="container-l">
-                              <div class="footer-content-l">
-                                <p style="color: rgb(32, 47, 77)">Veesy s.r.l.<br/>
-                                  Via Giacomo matteotti 43<br/>
-                                  20832, Desio (MB)<br/>
-                                  VAT 13005470961<br/>
-                                  annual social capital € 10.000</p>
-                                  <div class="row mb-3 mt-4 social-icons-row">
-                                    <div class="col">
-                                      <!--<img src="Veesy.WebApp/wwwroot/imgs/Auth/social_in_light mode.svg" alt="Facebook" style="width: 24px; height: 24px;">
-                                      <img href="https://www.instagram.com/veesy.eu/" src="instagram-icon.png" alt="Instagram" style="width: 24px; height: 24px;">
-                                      <img href="https://www.linkedin.com/company/veesy/" src="linkedin-icon.png" alt="LinkedIn" style="width: 24px; height: 24px;">
-                                      <img src="twitter-icon.png" alt="Twitter" style="width: 24px; height: 24px;">-->
-                                    </div>
-                                  </div>
-                              </div>
-                              <div class="footer-content-l veesy-text-color" style="margin-top: 2%; margin-left: 10%;" id="mobile-l">
-                                <div style="color: rgb(32, 47, 77)">
-                                  <a href="mailto:support@veesy.it" style="text-decoration: underline;  color: rgb(32, 47, 77)">contact us</a> if you want to unsubscribe<br/>
-                                  <a href="mailto:support@veesy.it" target="_blank" style="text-decoration: underline;  color: rgb(32, 47, 77)">open email</a> in your browser<br/>
-                                </div>
-                                <div style="margin-left: 50%;">
-                                  <img src="cid:Mailimage2" style="width: 250px;">
-                                </div>
-                              </div>
-                            </div>
-                          </div>
+                        <td
+                                align="center"
+                                class="sm-px-2"
+                                style="mso-line-height-rule: exactly"
+                        >
+                            <table
+                                    cellpadding="0"
+                                    cellspacing="0"
+                                    role="presentation"
+                                    style="width: 100%"
+                            >
+                                <tr>
+                                    <td
+                                            id="main-bg"
+                                            class="sm-px-2"
+                                            style="
+                          font-size: 17px;
+                          text-align: left;
+                          line-height: 24px;
+                          color: #0e0c0c !important;
+                          mso-line-height-rule: exactly;
+                          background-color: #e2e5e7;
+                        "
+                                    >
+                                        <div style="display: flex">
+                                            <!-- src="cid:logo" -->
+                                            <img
+                                                    draggable="false"
+                                                    class="p-left"
+                                                    src="cid:logo"
+                                                    style="
+                              width: 90px;
+                              height: 26px;
+                              margin-top: 50px !important;
+                            "
+                                            />
+                                            <div style="width: 100%; text-align: right">
+                                                <img
+                                                        draggable="false"
+                                                        style="max-width: 180px"
+                                                        src="cid:mail-top_welcome"
+                                                />
+                                            </div>
+                                        </div>
+                                        <p
+                                                class="sm-leading-32 px-dynamic"
+                                                style="
+                            color: #202f4d !important;
+                            line-height: 1.5;
+                            mso-line-height-rule: exactly;
+                            margin-top: 100px;
+                            margin-bottom: 15px;
+                            font-size: 16px;
+                            font-weight: 400;
+                          "
+                                        >
+                                            Ciao [name],
+                                        </p>
+                                        <p
+                                                class="sm-leading-32 px-dynamic"
+                                                style="
+                            color: #202f4d !important;
+                            line-height: 1.5;
+                            mso-line-height-rule: exactly;
+                            margin-top: 25px;
+                            margin-bottom: 15px;
+                            font-size: 16px;
+                            font-weight: 400;
+                          "
+                                        >
+                                            Evviva!
+                                        </p>
+                                        <p
+                                                class="sm-leading-32 px-dynamic"
+                                                style="
+                            color: #202f4d !important;
+                            line-height: 1.5;
+                            mso-line-height-rule: exactly;
+                            margin-top: 25px;
+                            margin-bottom: 15px;
+                            font-size: 16px;
+                            font-weight: 400;
+                          "
+                                        >
+                                            Sei su <b>Veesy</b>, la
+                                            community-piattaforma-ecosistema dove la creatività
+                                            incontra (finalmente) l'efficienza.
+                                        </p>
+                                        <p
+                                                class="sm-leading-32 px-dynamic"
+                                                style="
+                            color: #202f4d !important;
+                            line-height: 1.5;
+                            mso-line-height-rule: exactly;
+                            margin-top: 25px;
+                            margin-bottom: 15px;
+                            font-size: 16px;
+                            font-weight: 400;
+                          "
+                                        >
+                                            Imposta il tuo profilo e mettiti all'opera!
+                                        </p>
+                                        <div
+                                                class="px-dynamic"
+                                                style="margin-top: 25px; margin-bottom: 25px"
+                                        >
+                                            <!-- IMMAGINE GIF -->
+                                            <img
+                                                    draggable="false"
+                                                    src="cid:welcome_welcome"
+                                                    style="
+                              display: block;
+                              max-width: 100%;
+                              border-radius: 8px;
+                            "
+                                            />
+                                        </div>
+                                        <p
+                                                class="sm-leading-32"
+                                                style="
+                            color: #202f4d !important;
+                            line-height: 1.5;
+                            mso-line-height-rule: exactly;
+                            margin-top: 50px;
+                            margin-left: auto;
+                            margin-right: auto;
+                            margin-bottom: 25px;
+                            font-size: 15px;
+                            font-weight: 400;
+                            text-align: center;
+                          "
+                                        >
+                                            <b>Come si fa?</b>
+                                        </p>
+                                        <div
+                                                id="rounded-list"
+                                                style="
+                            height: auto;
+                            background-color: #202f4d !important;
+                          "
+                                        >
+                                            <table
+                                                    role="presentation"
+                                                    style="margin-top: 70px; border-collapse: collapse"
+                                            >
+                                                <tr>
+                                                    <td
+                                                            style="
+                                  width: 50px;
+                                  height: 50px;
+                                  overflow: hidden;
+                                "
+                                                    >
+                                                        <div
+                                                                style="
+                                    width: 50px;
+                                    height: 50px;
+                                    border-radius: 50%;
+                                    background-color: #1d4053;
+                                  "
+                                                        ></div>
+                                                    </td>
+                                                    <td>
+                                                        <a
+                                                                href="https://discord.gg/chSWGEMfrU"
+                                                                target="_blank"
+                                                                style="
+                                    color: #01d78c;
+                                    font-size: 24px;
+                                    text-decoration: none;
+                                  "
+                                                        >
+                                                            <b style="margin-left: -25px"
+                                                            >01. Entra nel nostro server Discord</b
+                                                            >
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <p
+                                                    class="sm-leading-32"
+                                                    style="
+                              color: white;
+                              line-height: 1.5;
+                              mso-line-height-rule: exactly;
+                              margin-top: 25px;
+                              margin-bottom: 15px;
+                              font-size: 16px;
+                              font-weight: 400;
+                            "
+                                            >
+                                                Il server ufficiale Discord è il cuore della
+                                                community Veesy. Qui, tutto è organizzato per
+                                                incontrare altrə creator, trovare opportunità,
+                                                accedere a mentorship e risorse speciali. Dopo
+                                                essere entratə su Discord, trovi il canale
+                                                <span style="color: #01d78c !important"
+                                                >#welcome</span
+                                                >
+                                                dove il nostro team ti accoglierà e spiegherà tutto
+                                                quello che c’è da sapere! No community, no party.
+                                            </p>
+                                            <a
+                                                    href="https://discord.gg/chSWGEMfrU"
+                                                    target="_blank"
+                                            >
+                                                <p
+                                                        class="sm-leading-32"
+                                                        style="
+                                color: #01d78c !important;
+                                text-decoration: underline;
+                                color: white;
+                                line-height: 1.5;
+                                mso-line-height-rule: exactly;
+                                margin-top: 25px;
+                                margin-bottom: 15px;
+                                font-size: 16px;
+                                font-weight: 400;
+                              "
+                                                >
+                                                    Entra su Discord
+                                                </p>
+                                            </a>
+                                            <table
+                                                    role="presentation"
+                                                    style="
+                              width: 100%;
+                              max-width: 600px;
+                              margin-top: 50px;
+                              border-collapse: collapse;
+                            "
+                                            >
+                                                <tr>
+                                                    <td
+                                                            style="
+                                  width: 50px;
+                                  height: 50px;
+                                  overflow: hidden;
+                                "
+                                                    >
+                                                        <div
+                                                                style="
+                                    width: 50px;
+                                    height: 50px;
+                                    border-radius: 50%;
+                                    background-color: #293f5b;
+                                  "
+                                                        ></div>
+                                                    </td>
+                                                    <td>
+                                                        <a
+                                                                href="https://veesy.it/desk"
+                                                                target="_blank"
+                                                                style="
+                                    color: #75ccdb;
+                                    font-size: 24px;
+                                    text-decoration: none;
+                                  "
+                                                        >
+                                                            <b style="margin-left: -25px"
+                                                            >02. Esplora Veesy Desk</b
+                                                            >
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <p
+                                                    class="sm-leading-32"
+                                                    style="
+                              color: white;
+                              line-height: 1.5;
+                              mso-line-height-rule: exactly;
+                              margin-top: 25px;
+                              margin-bottom: 15px;
+                              font-size: 16px;
+                              font-weight: 400;
+                            "
+                                            >
+                                                Entra nella tua nuova dashboard super funzionale,
+                                                organizza e gestisci i tuoi media, crea e modifica
+                                                in tempo reale tutti i portfolio che vuoi e
+                                                condividili tramite link con chi vuoi.
+                                            </p>
+                                            <a href="https://veesy.it/desk">
+                                                <p
+                                                        class="sm-leading-32"
+                                                        style="
+                                color: #75ccdb !important;
+                                text-decoration: underline;
+                                line-height: 1.5;
+                                mso-line-height-rule: exactly;
+                                margin-top: 25px;
+                                margin-bottom: 15px;
+                                font-size: 16px;
+                                font-weight: 400;
+                              "
+                                                >
+                                                    Vai al Desk
+                                                </p>
+                                            </a>
+                                            <table
+                                                    role="presentation"
+                                                    style="
+                              width: 100%;
+                              margin-top: 50px;
+                              border-collapse: collapse;
+                              max-width: 600px;
+                            "
+                                            >
+                                                <tr>
+                                                    <td
+                                                            style="
+                                  width: 50px;
+                                  height: 50px;
+                                  overflow: hidden;
+                                "
+                                                    >
+                                                        <div
+                                                                style="
+                                    width: 50px;
+                                    height: 50px;
+                                    border-radius: 50%;
+                                    background-color: #373458;
+                                  "
+                                                        ></div>
+                                                    </td>
 
+                                                    <td>
+                                                        <a
+                                                                href="https://veesy.it/profile"
+                                                                target="_blank"
+                                                                style="
+                                    color: #e05aac;
+                                    font-size: 24px;
+                                    text-decoration: none;
+                                  "
+                                                        >
+                                                            <b style="margin-left: -25px"
+                                                            >03. Crea il tuo profilo</b
+                                                            >
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <p
+                                                    class="sm-leading-32"
+                                                    style="
+                              color: white;
+                              line-height: 1.5;
+                              mso-line-height-rule: exactly;
+                              margin-top: 25px;
+                              margin-bottom: 15px;
+                              font-size: 16px;
+                              font-weight: 400;
+                            "
+                                            >
+                                                Inserisci le tue info più interessanti, la tua
+                                                immagine preferita e tienile aggiornate! Saranno il
+                                                tuo biglietto da visita per presentarti e migliorare
+                                                la tua visibilità. Questo ci aiuterà a trovare i
+                                                match perfetti per te.
+                                            </p>
+                                            <a href="https://veesy.it/profile">
+                                                <p
+                                                        class="sm-leading-32"
+                                                        style="
+                                color: #e05aac !important;
+                                text-decoration: underline;
+                                color: white;
+                                line-height: 1.5;
+                                mso-line-height-rule: exactly;
+                                margin-top: 25px;
+                                margin-bottom: 70px;
+                                font-size: 16px;
+                                font-weight: 400;
+                              "
+                                                >
+                                                    Crea profilo
+                                                </p>
+                                            </a>
+                                        </div>
+                                        <p
+                                                class="sm-leading-32 px-dynamic"
+                                                style="
+                            color: #202f4d !important;
+                            line-height: 1.5;
+                            mso-line-height-rule: exactly;
+                            margin-top: 50px;
+                            margin-bottom: 16px;
+                            font-size: 16px;
+                            font-weight: 400;
+                            text-align: center;
+                          "
+                                        >
+                                            Et Voilà! ✨
+                                            <span style="margin-left: 10px"
+                                            >Benvenutə nella rivoluzione del freelancing!</span
+                                            >
+                                        </p>
+                                        <p
+                                                class="sm-leading-32 px-dynamic"
+                                                style="
+                            color: #202f4d !important;
+                            line-height: 1.5;
+                            mso-line-height-rule: exactly;
+                            margin-top: 50px;
+                            margin-bottom: 16px;
+                            font-size: 16px;
+                            font-weight: 400;
+                          "
+                                        >
+                                            <strong>Ti serve una mano?</strong> Siamo qui per
+                                            aiutarti a navigare la piattaforma e sfruttarne al
+                                            massimo le potenzialità. Se hai domande o hai bisogno
+                                            di aiuto, contattaci: ti accompagneremo passo passo
+                                            lungo il tuo nuovo viaggio creativo.
+                                        </p>
+                                        <p
+                                                class="sm-leading-32 px-dynamic"
+                                                style="
+                            color: #202f4d !important;
+                            line-height: 1.5;
+                            mso-line-height-rule: exactly;
+                            margin-top: 50px;
+                            margin-bottom: 16px;
+                            font-size: 18px;
+                            font-weight: 400;
+                          "
+                                        >
+                                            Ci vediamo a bordo,<br /><b>Il Team Veesy</b>
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td
+                                            class="spacer-bg"
+                                            style="
+                          height: 20px;
+                          background-color: #e2e5e7;
+                          mso-line-height-rule: exactly;
+                        "
+                                    ></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="footer-l">
+                                            <div class="container-l">
+                                                <div class="footer-content-l">
+                                                    <p style="color: rgb(32, 47, 77) !important">
+                                                        <strong>Veesy s.r.l.</strong><br />
+                                                        Via Giacomo matteotti 43<br />
+                                                        20832, Desio&nbsp;(MB)<br />
+                                                        VAT 13005470961<br />
+                                                        annual social capital € 10.000
+                                                    </p>
+                                                </div>
+                                                <div
+                                                        id="mobile-l"
+                                                        class="footer-content-l veesy-text-color"
+                                                        style="
+                                margin-top: 2%;
+                                margin-left: 10%;
+                                padding-bottom: 5%;
+                              "
+                                                >
+                                                    <div style="color: rgb(32, 47, 77) !important">
+                                                        <a
+                                                                href="mailto:support@veesy.it"
+                                                                style="
+                                    text-decoration: underline;
+                                    color: rgb(32, 47, 77) !important;
+                                  "
+                                                        >contact us</a
+                                                        >
+                                                        if you want to unsubscribe<br />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr
+                                        style="
+                        color: #202f4d !important;
+                        mso-line-height-rule: exactly;
+                        background-color: #e2e5e7;
+                      "
+                                >
+                                    <td class="px-dynamic container-l">
+                                        <div
+                                                style="
+                            display: flex;
+                            margin-top: 20px;
+                            align-items: center;
+                          "
+                                        >
+                                            <a
+                                                    target="_blank"
+                                                    style="text-decoration: none"
+                                                    href="https://facebook.com/people/Veesy/61557228052314/"
+                                            >
+                                                <img
+                                                        draggable="false"
+                                                        alt="Link Facebook"
+                                                        style="max-width: 100%"
+                                                        src="cid:social-facebook_welcome"
+                                                />
+                                            </a>
+                                            <a
+                                                    target="_blank"
+                                                    style="text-decoration: none; margin-left: 15px"
+                                                    href="https://instagram.com/veesy.it"
+                                            >
+                                                <img
+                                                        draggable="false"
+                                                        alt="Link Instagram"
+                                                        style="max-width: 100%"
+                                                        src="cid:social-instagram_welcome"
+                                                />
+                                            </a>
+                                            <a
+                                                    target="_blank"
+                                                    style="text-decoration: none; margin-left: 15px"
+                                                    href="https://linkedin.com/company/veesy/"
+                                            >
+                                                <img
+                                                        draggable="false"
+                                                        alt="Link Linkedin"
+                                                        style="max-width: 100%"
+                                                        src="cid:social-linkedin_welcome"
+                                                />
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr
+                                        style="
+                        font-size: 16px;
+                        line-height: 1.5;
+                        font-weight: 400;
+                        text-align: right;
+                        color: #202f4d !important;
+                        mso-line-height-rule: exactly;
+                        background-color: #e2e5e7;
+                      "
+                                >
+                                    <td style="right: 0; bottom: 0; line-height: 0">
+                                        <!-- src="cid:Mailimage2" -->
+                                        <img
+                                                draggable="false"
+                                                style="max-width: 220px"
+                                                src="cid:mail-bottom_welcome"
+                                        />
+                                    </td>
+                                </tr>
+                            </table>
                         </td>
-                      </tr>
-                  </table>
-                </td>
-              </tr>
-          </table>
-        </td>
-      </tr>
+                    </tr>
+                </table>
+            </td>
+        </tr>
     </table>
-  </div>
-
+</center>
 </body>
 </html>
-
