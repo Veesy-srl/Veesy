@@ -197,11 +197,14 @@ public class AuthController : Controller
         }
     }
     
-    [HttpGet]
+    [HttpGet] 
     public async Task<IActionResult> ConfirmEmailVerification(string token, string email)
     {
         try
         {
+            if(email == "info@veesy.eu")
+                return RedirectToAction("SignUp", "Auth");
+            
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
             {
