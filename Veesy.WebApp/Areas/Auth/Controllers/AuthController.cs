@@ -202,6 +202,9 @@ public class AuthController : Controller
     {
         try
         {
+            if(email == "info@veesy.it")
+                return RedirectToAction("SignUp", "Auth");
+            
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
             {
