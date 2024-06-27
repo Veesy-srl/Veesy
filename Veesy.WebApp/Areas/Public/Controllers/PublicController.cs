@@ -33,7 +33,7 @@ public class PublicController : VeesyController
     [HttpGet("contact")]
     public IActionResult Contact()
     {
-        try
+        try 
         {
             return View();
         }
