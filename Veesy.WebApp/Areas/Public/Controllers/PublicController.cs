@@ -37,7 +37,7 @@ public class PublicController : VeesyController
         {
             return View();
         }
-        catch (Exception e)
+        catch (Exception e) 
         {
             Logger.Error(e, e.Message);
             return RedirectToAction("Error400");
