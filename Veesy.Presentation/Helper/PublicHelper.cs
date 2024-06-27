@@ -127,7 +127,7 @@ public class PublicHelper
 
         var vm = new SplashViewModel()
         {
-            MediaDtos = MapCloudDtos.MapMediaList(_mediaService.GetRandomPhotos(0)),
+            MediaDtos = MapCloudDtos.MapMediaList(_mediaService.GetRandomPhotos(18)),
             BasePathImages = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/",
             BasePathAzure = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"
         };
