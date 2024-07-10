@@ -56,7 +56,7 @@ public class PublicController : VeesyController
             Logger.Error(e, e.Message);
             return RedirectToAction("Error400");
         }
-    } 
+    }
     
     [HttpGet("privacy-policy")]
     public IActionResult PrivacyPolicy()
