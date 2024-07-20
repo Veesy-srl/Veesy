@@ -19,6 +19,7 @@ public class SubscriptionPlan : TrackableEntity
     public string Description { get; set; }
     public decimal Price { get; set; }
     public int AllowedMegaByte { get; set; }
+    public int AllowedPortfolio { get; set; }
     public bool IsMediaFormatsInclude { get; set; } 
     public int AllowedMediaNumber { get; set; } 
     public virtual List<MyUserSubscriptionPlan> MyUserSubscriptionPlans { get; set; }

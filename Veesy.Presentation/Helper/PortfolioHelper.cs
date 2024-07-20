@@ -41,6 +41,11 @@ public class PortfolioHelper
 
     public async Task<(ResultDto result, Guid code)> CreateNewPortfolio(NewPortfolioDto newPortfolioDto, MyUser userInfo)
     {
+        var numberPortfolio = _portfolioService.GetPortfoliosNumberByUser(userInfo);
+        var subscriptionPlan = _accountService.GetUserSubscriptionPlan(userInfo.Id);
+        if(numberPortfolio > subscriptionPlan.AllowedPortfolio && subscriptionPlan.Name == VeesyConstants.SubscriptionPlan.Free)
+        return (new ResultDto(false,
+            $"{subscriptionPlan.Name} plan is limited to {subscriptionPlan.AllowedPortfolio} portfolio. Please remove 1 portofolios and retry."), Guid.Empty);
         
         if(string.IsNullOrEmpty(newPortfolioDto.Name))
             return (new ResultDto(false, "Please insert portfolio's name."), Guid.Empty);
@@ -50,9 +55,6 @@ public class PortfolioHelper
             return (new ResultDto(false, "Select at least one image."), Guid.Empty);
         var allPortfolioName = _portfolioService.GetAllPortfolioNameDifferentByOne(Guid.Empty, userInfo);
         
-        var subscription = _subscriptionPlanService.GetSubscriptionByUserId(userInfo.Id);
-        if(subscription.Name == VeesyConstants.SubscriptionPlan.Free && allPortfolioName.Count >= 1)
-            return (new ResultDto(false, "Limit portfolio reached."), Guid.Empty);
         
         if (allPortfolioName.Contains(newPortfolioDto.Name.ToUpper()))
             return (new ResultDto(false, "Name already used."), Guid.Empty);

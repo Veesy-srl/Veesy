@@ -14,7 +14,7 @@ public class MediaOverviewDto
 public class ChangeSubscriptionDto
 {
     public string SubscriptionName { get; set; }
-    public string MyUserId { get; set; }
+    public string? MyUserId { get; set; }
 }
 
 public class CreatorOverviewDto

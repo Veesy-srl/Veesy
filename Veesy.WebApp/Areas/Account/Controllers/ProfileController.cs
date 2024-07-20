@@ -106,7 +106,7 @@ public class ProfileController : VeesyController
     {
         try
         {
-            var result = await _profileHelper.ChangeSubscriptionPlan(changeSubscriptionDto);
+            var result = await _profileHelper.ChangeSubscriptionPlan(changeSubscriptionDto, UserInfo);
             if(!result.Success)
                 _notyfService.Custom(result.Message, 10, "#ca0a0a");
             else 
