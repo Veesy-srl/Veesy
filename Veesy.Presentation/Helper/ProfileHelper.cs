@@ -388,23 +388,22 @@ public class ProfileHelper
         return await _accountService.UpdateMyUserRolesWork(rolesToDelete, rolesToAdd, userInfo);
     }
 
-    public async Task<ResultDto> ChangeSubscriptionPlan(ChangeSubscriptionDto changeSubscriptionDto)
+    public async Task<ResultDto> ChangeSubscriptionPlan(ChangeSubscriptionDto changeSubscriptionDto, MyUser user)
     {
         var subscriptionPlan = _accountService.GetSubscriptionPlanByName(changeSubscriptionDto.SubscriptionName);
-        var userInfo = await _userManager.FindByIdAsync(changeSubscriptionDto.MyUserId);
-        var numberMedia = _mediaService.GetMediaNumberByUser(userInfo);
-        var numberPortfolio = _portfolioService.GetPortfoliosNumberByUser(userInfo);
-        var mediaSize = _mediaService.GetSizeMediaStorageByUserId(userInfo.Id);
-        if(numberPortfolio > 1 && subscriptionPlan.Name == VeesyConstants.SubscriptionPlan.Free)
+        var numberMedia = _mediaService.GetMediaNumberByUser(user);
+        var numberPortfolio = _portfolioService.GetPortfoliosNumberByUser(user);
+        var mediaSize = _mediaService.GetSizeMediaStorageByUserId(user.Id);
+        if(numberPortfolio > subscriptionPlan.AllowedPortfolio && subscriptionPlan.Name == VeesyConstants.SubscriptionPlan.Free)
             return new ResultDto(false,
-                $"{subscriptionPlan.Name} plan is limited to 1 portfolio. Please remove {numberPortfolio - 1} portofolios and retry.");
+                $"{subscriptionPlan.Name} plan is limited to {subscriptionPlan.AllowedPortfolio} portfolio. Please remove {numberPortfolio - subscriptionPlan.AllowedPortfolio} portofolios and retry.");
         if (numberMedia > subscriptionPlan.AllowedMediaNumber)
             return new ResultDto(false,
                 $"{subscriptionPlan.Name} plan is limited to {subscriptionPlan.AllowedMediaNumber} medias. Please remove {numberMedia - subscriptionPlan.AllowedMediaNumber} medias and retry.");
         if (mediaSize > subscriptionPlan.AllowedMegaByte * 1024 * 1024)
             return new ResultDto(false,
                 $"{subscriptionPlan.Name} plan is limited to {subscriptionPlan.AllowedMegaByte}Mb. Please remove {(mediaSize - subscriptionPlan.AllowedMegaByte * 1024 * 1024) / (1024 * 1024)}Mb and retry.");
-        await _accountService.AddNewUserSubscription(userInfo.Id, subscriptionPlan.Id);
+        await _accountService.AddNewUserSubscription(user.Id, subscriptionPlan.Id);
         return new ResultDto(true, $"{subscriptionPlan.Name} now is active.");
     }
 

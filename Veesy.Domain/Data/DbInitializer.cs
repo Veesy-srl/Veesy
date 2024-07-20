@@ -68,10 +68,10 @@ public class DbInitializer
         //
         // var subscriptionPlans = new List<SubscriptionPlan>()
         // {
-        //     new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Beta", Description = "Beta", Price = 0.0m, AllowedMediaNumber = 10, AllowedMegaByte = 250, IsMediaFormatsInclude = false},
-        //     new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Free", Description = "Free", Price = 0.0m, AllowedMediaNumber = 10, AllowedMegaByte = 250, IsMediaFormatsInclude = false},
-        //     new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Pro", Description = "Pro", Price = 10.0m, AllowedMediaNumber = 100, AllowedMegaByte = 1000, IsMediaFormatsInclude = false},
-        //     new (){LastEditUserId = "Init", CreateUserId = "init", Name = "Plus", Description = "Plus", Price = 20.0m, AllowedMediaNumber = -1, AllowedMegaByte = 10000, IsMediaFormatsInclude = false},
+        //     new (){LastEditUserId = "Init", CreateUserId = "init", AllowedPortfolio = 3, Name = "Beta", Description = "Beta", Price = 0.0m, AllowedMediaNumber = 10, AllowedMegaByte = 250, IsMediaFormatsInclude = false},
+        //     new (){LastEditUserId = "Init", CreateUserId = "init", AllowedPortfolio = 3, Name = "Free", Description = "Free", Price = 0.0m, AllowedMediaNumber = 10, AllowedMegaByte = 250, IsMediaFormatsInclude = false},
+        //     new (){LastEditUserId = "Init", CreateUserId = "init", AllowedPortfolio = 30, Name = "Pro", Description = "Pro", Price = 10.0m, AllowedMediaNumber = 100, AllowedMegaByte = 1000, IsMediaFormatsInclude = false},
+        //     new (){LastEditUserId = "Init", CreateUserId = "init", AllowedPortfolio = 30, Name = "Plus", Description = "Plus", Price = 20.0m, AllowedMediaNumber = -1, AllowedMegaByte = 10000, IsMediaFormatsInclude = false},
         // };
         // var dbSubscriptions = dbContext.SubscriptionPlans.ToList();
         // foreach (var item in subscriptionPlans)

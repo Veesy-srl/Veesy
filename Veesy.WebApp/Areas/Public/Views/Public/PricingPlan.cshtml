@@ -71,7 +71,7 @@
                             </div>
                         </div>
                         <div class="collapse" id="Collapse0">
-                            <p class="text-color-price p-variant-price">Store up to 10 medias in your personal cloud.</p>
+                            <p class="text-color-price p-variant-price">Store up to 25 medias in your personal cloud.</p>
                         </div>
                     </div>
                     <hr style="width: 95%; border: 1px solid grey; margin: 0 auto;">
@@ -83,7 +83,7 @@
                             </div>
                         </div>
                         <div class="collapse" id="Collapse1">
-                            <p class="text-color-price p-variant-price">Create one portfolio to showcase your initial works.</p>
+                            <p class="text-color-price p-variant-price">Create 3 portfolio to showcase your initial works.</p>
                         </div>
                     </div>
                     <hr style="width: 95%; border: 1px solid grey; margin: 0 auto;">
@@ -141,7 +141,7 @@
                 <div class="card-body veesy-card-bottom" style="border:none !important;">
                     <div class="d-flex justify-content-between mt-3">
                         <h2 style=" color: #ffffff; font-size: 1.7rem;"><b>Pro Plan</b></h2>
-                        <h6 style="color: #ffffff; margin-top: 0.4rem;"><b>€ 10/month</b></h6>
+                        <h6 style="color: #ffffff; margin-top: 0.4rem;"><b>€ 120 / year</b></h6>
                     </div>
                     <h6 class="text-color-price p-1 ps-2 pe-2 card-price" style="font-size: 14px !important;"><img class="me-1" src="/imgs/PricingPlan/main_checked.png"/><b>Most Popular</b></h6>
                     <div class="row pt-2">
@@ -257,7 +257,7 @@
             <div class="card-body bg-white-about veesy-card-bottom" style="border:none !important;">
                 <div class="d-flex justify-content-between mt-3">
                     <h2 class="text-color-price" style="font-size: 1.7rem;"><b>Plus plan</b></h2>
-                    <h6 class="text-color-price" style="margin-top: 0.4rem;"><b>Coming Soon</b></h6>
+                    <h6 class="text-color-price" style="margin-top: 0.4rem;"><b>€ 290 / year</b></h6>
                 </div>
                 <h6 class="text-color-price p-1 card-price" style="visibility: hidden;"><b>Starter's Choice</b></h6>
                 <div class="row pt-2">
@@ -341,11 +341,15 @@
     
         function UpdateSubscription(){
             $('#load-spinner').css("display", "block");
+            
+            var data = {
+                SubscriptionName : subscriptionName
+            }
         
             $.ajax({
                 type: 'POST',
-                url: '@Url.Action("ChangeSubscriptionPlan", "Profile", new {area = "Account"})',
-                data: JSON.stringify(subscriptionName),
+                url: '@Url.Action("ChangeSubscriptionPlan", "Profile", new { area = "Account" })',
+                data: JSON.stringify(data),
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
                 success: function (response) {

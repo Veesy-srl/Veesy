@@ -84,7 +84,7 @@
                     <div>
                         @if (@Model.Subscription.Price > 0)
                         {
-                            <h3 class="mb-0 text-white">@Model.Subscription.Price.ToString("00")€ /month</h3>
+                            <h3 class="mb-0 text-white">@((Model.Subscription.Price * 12).ToString("0.00"))€ / year</h3>
                         }
                         else
                         {
