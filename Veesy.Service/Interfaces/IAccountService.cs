@@ -49,6 +49,6 @@ public interface IAccountService
     List<MyUser> GetLastFourCreatedUser(int number);
     SubscriptionPlan GetUserSubscriptionPlan(string userId);
     SubscriptionPlan GetSubscriptionPlanById(Guid id);
-    Task AddNewUserSubscription(string userId, Guid id);
+    Task AddNewUserSubscription(string userId, Guid id, MyUser user);
     Task DeleteUserById(string id);
 }

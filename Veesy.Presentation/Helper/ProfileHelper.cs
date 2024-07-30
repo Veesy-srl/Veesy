@@ -391,9 +391,10 @@ public class ProfileHelper
     public async Task<ResultDto> ChangeSubscriptionPlan(ChangeSubscriptionDto changeSubscriptionDto, MyUser user)
     {
         var subscriptionPlan = _accountService.GetSubscriptionPlanByName(changeSubscriptionDto.SubscriptionName);
-        var numberMedia = _mediaService.GetMediaNumberByUser(user);
-        var numberPortfolio = _portfolioService.GetPortfoliosNumberByUser(user);
-        var mediaSize = _mediaService.GetSizeMediaStorageByUserId(user.Id);
+        var userClient = _accountService.GetUserById(changeSubscriptionDto.MyUserId);
+        var numberMedia = _mediaService.GetMediaNumberByUser(userClient);
+        var numberPortfolio = _portfolioService.GetPortfoliosNumberByUser(userClient);
+        var mediaSize = _mediaService.GetSizeMediaStorageByUserId(userClient.Id);
         if(numberPortfolio > subscriptionPlan.AllowedPortfolio && subscriptionPlan.Name == VeesyConstants.SubscriptionPlan.Free)
             return new ResultDto(false,
                 $"{subscriptionPlan.Name} plan is limited to {subscriptionPlan.AllowedPortfolio} portfolio. Please remove {numberPortfolio - subscriptionPlan.AllowedPortfolio} portofolios and retry.");
@@ -403,7 +404,7 @@ public class ProfileHelper
         if (mediaSize > subscriptionPlan.AllowedMegaByte * 1024 * 1024)
             return new ResultDto(false,
                 $"{subscriptionPlan.Name} plan is limited to {subscriptionPlan.AllowedMegaByte}Mb. Please remove {(mediaSize - subscriptionPlan.AllowedMegaByte * 1024 * 1024) / (1024 * 1024)}Mb and retry.");
-        await _accountService.AddNewUserSubscription(user.Id, subscriptionPlan.Id);
+        await _accountService.AddNewUserSubscription(userClient.Id, subscriptionPlan.Id, user);
         return new ResultDto(true, $"{subscriptionPlan.Name} now is active.");
     }
 
