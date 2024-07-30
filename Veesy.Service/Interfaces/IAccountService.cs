@@ -20,7 +20,7 @@ public interface IAccountService
     List<InfoToShow> GetInfosToShow();
     List<CategoryWork> GetCategoriesWorkWithUser(string userId);
     List<RoleWork> GetRolesWorkWithUser(string userId);
-    List<Sector> GetSectorsWithUser(string userId);
+    List<Sector> GetSectorsWithUser(string userId); 
     List<MyUserCategoryWork> GetCategoriesWorkByUser(MyUser userInfo);
     List<MyUserRoleWork> GetRolesWorkByUser(MyUser userInfo);
     List<MyUserSector> GetSectorsByUser(MyUser userInfo);
