@@ -406,7 +406,7 @@ public class ProfileHelper
                 $"{subscriptionPlan.Name} plan is limited to {subscriptionPlan.AllowedMegaByte}Mb. Please remove {(mediaSize - subscriptionPlan.AllowedMegaByte * 1024 * 1024) / (1024 * 1024)}Mb and retry.");
         await _accountService.AddNewUserSubscription(userClient.Id, subscriptionPlan.Id, user);
         return new ResultDto(true, $"{subscriptionPlan.Name} now is active.");
-    }
+    } 
 
     public async Task<ResultDto> DeleteAccount(string id)
     {
