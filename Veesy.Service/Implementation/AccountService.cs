@@ -426,14 +426,14 @@ public class AccountService : IAccountService
         return _uoW.DbContext.SubscriptionPlans.SingleOrDefault(s => s.Id == id);
     }
 
-    public async Task AddNewUserSubscription(string userId, Guid id)
+    public async Task AddNewUserSubscription(string userId, Guid id, MyUser user)
     {
         await _uoW.DbContext.MyUserSubscriptionPlans.AddAsync(new MyUserSubscriptionPlan()
         {
             MyUserId = userId,
             SubscriptionPlanId = id
         });
-        await _uoW.CommitAsync(userId);
+        await _uoW.CommitAsync(user.Id);
     }
 
     public async Task DeleteUserById(string id)
