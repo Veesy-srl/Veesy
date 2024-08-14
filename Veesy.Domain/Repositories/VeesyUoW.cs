@@ -41,8 +41,10 @@ public class VeesyUoW : IVeesyUoW
     public IUsedSoftwareRepository UsedSoftwareRepository => _usedSoftwareRepository ??= new UsedSoftwareRepository(_dbContext);
     
     private ISkillRepository _skillRepository;
-    
     public ISkillRepository SkillRepository => _skillRepository ??= new SkillRepository(_dbContext);
+    
+    private IAnalyticRepository _analyticRepository;
+    public IAnalyticRepository AnalyticRepository => _analyticRepository ??= new AnalyticRepository(_dbContext);
     
     public void Dispose()
     {

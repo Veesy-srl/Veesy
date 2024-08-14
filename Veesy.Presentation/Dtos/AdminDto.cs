@@ -17,6 +17,12 @@ public class ChangeSubscriptionDto
     public string? MyUserId { get; set; }
 }
 
+public class ReferralLinkDto
+{
+    public string Endpoint { get; set; }
+    public string? RedirectUrl { get; set; }
+}
+
 public class CreatorOverviewDto
 {
     public int NumberCreator { get; set; }

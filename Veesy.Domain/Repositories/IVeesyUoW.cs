@@ -17,4 +17,5 @@ public interface IVeesyUoW
     ISkillRepository SkillRepository { get; }
     IMediaRepository MediaRepository { get; }
     IPortfolioRepository PortfolioRepository { get; }
+    IAnalyticRepository AnalyticRepository { get; }
 }

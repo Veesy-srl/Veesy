@@ -18,6 +18,23 @@ public static class VeesyConstants
 
         };
     }
+    
+    public enum DeviceType
+    {
+        Mobile = 0,
+        Tablet,
+        Desktop,
+        Uknown = 9
+    }
+    
+    public static Dictionary<DeviceType, string> DeviceTypeText = new Dictionary<DeviceType, string>
+    {
+        { DeviceType.Mobile, "Mobile" },
+        { DeviceType.Tablet, "Tablet" },
+        { DeviceType.Desktop, "Desktop" },
+        { DeviceType.Uknown,  "Sconosciuto"},
+    };
+    
     public static class InfoToShow
     {
         public const string Software = "Software";
