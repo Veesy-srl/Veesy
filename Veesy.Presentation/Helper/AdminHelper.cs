@@ -244,6 +244,9 @@ public class AdminHelper
         if (string.IsNullOrEmpty(referralLinkDto.Endpoint))
             return "Inserire endpoint";
         
+        if (referralLinkDto.Endpoint.Contains("/") || referralLinkDto.Endpoint.Contains("&") || referralLinkDto.Endpoint.Contains("?"))
+            return "Caratteri non ammessi: /, &, ?";
+        
         if (string.IsNullOrEmpty(referralLinkDto.RedirectUrl))
             return "Selezionare redirect url";
 
