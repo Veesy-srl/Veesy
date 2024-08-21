@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Veesy.Domain.Models;
 using Veesy.Domain.Repositories;
@@ -40,6 +43,7 @@ public class AnalyticService : IAnalyticService
     public List<ReferralLinkTracking> GetReferralLinkTrackings()
     {
         return _uoW.DbContext.ReferralLinkTrackings
+            .Where(s => s.ReferralLinkId != null)
             .Include(s => s.ReferralLink)
             .OrderByDescending(s => s.LastAccess)
             .ToList();

@@ -27,11 +27,11 @@
                 <tr>
                     <th class="th-sm">Endpoint
                     </th>
-                    <th class="th-sm">Redirect 
+                    <th class="th-sm">Redirect
+                    </th>
+                    <th class="th-sm">Numero Click
                     </th>
                     <th class="th-sm">Abilitato
-                    </th>
-                    <th class="th-sm">Numero
                     </th>
                     <th class="th-sm">Action
                     </th>
@@ -43,6 +43,7 @@
                     <tr id="referral-@item.Id">
                         <td><a onclick="">@Model.ApplicationUrl@item.Endpoint</a></td>
                         <td>@item.RedirectUrl</td>
+                        <td>@Model.ReferralLinkTrackings.Count(s => s.ReferralLinkId == item.Id)</td>
                         @{
                             var fields = "NO";
                             var btnClass = "btn-danger";
@@ -53,7 +54,6 @@
                             }
                         }
                         <td id="button-@item.Id"><button type="button" onclick="ToogleLink('@item.Id')" class="btn @btnClass m-1">@fields</button></td>
-                        <td>@Model.ReferralLinkTrackings.Count(s => s.ReferralLinkId == item.Id)</td>
                         <td>
                             <div class="d-flex">
                                 <a style="cursor: pointer" onclick="openModal('#modalConfirmDeleteReferral'), setReferralIdToDelete('@item.Id')" class="bg-danger rounded-circle p-2 text-white d-inline-flex "><i class="ti ti-trash fs-4"></i></a>
@@ -132,8 +132,13 @@
             </div>
             <div class="modal-body">
                 <div>
-                    <label><strong>Enpoint</strong></label>
-                    <input type="text" class="form-control" id="endpoint"/>
+                    <label><strong>Endpoint</strong></label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon3">@Model.ApplicationUrl</span>
+                        </div>
+                        <input type="text" class="form-control" id="endpoint"/>
+                    </div>
                 </div>
                 <div class="mt-2">
                     <label><strong>Redirect url</strong></label>
