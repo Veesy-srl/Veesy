@@ -1,3 +1,4 @@
+using System.Linq;
 using Veesy.Domain.Constants;
 using Veesy.Domain.Exceptions;
 

@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using Veesy.Domain.Repositories;
 using Veesy.Domain.Repositories.Impl;
 using Veesy.Email;

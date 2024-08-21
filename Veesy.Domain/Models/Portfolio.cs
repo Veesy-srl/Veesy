@@ -1,4 +1,6 @@
-﻿using Veesy.Domain.Constants;
+﻿using System;
+using System.Collections.Generic;
+using Veesy.Domain.Constants;
 
 namespace Veesy.Domain.Models;
 

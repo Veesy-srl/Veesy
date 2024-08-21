@@ -1,4 +1,6 @@
-﻿namespace Veesy.Domain.Models;
+﻿using System;
+
+namespace Veesy.Domain.Models;
 
 public class PortfolioMedia : TrackableEntity
 {

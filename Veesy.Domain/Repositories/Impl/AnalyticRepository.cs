@@ -1,3 +1,4 @@
+using System;
 using Veesy.Domain.Data;
 using Veesy.Domain.Models;
 using Veesy.Domain.Repositories.Base;

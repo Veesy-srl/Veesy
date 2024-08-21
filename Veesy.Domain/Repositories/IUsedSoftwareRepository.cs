@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Veesy.Domain.Models;
 using Veesy.Domain.Repositories.Base;
 

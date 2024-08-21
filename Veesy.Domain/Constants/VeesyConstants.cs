@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace Veesy.Domain.Constants;
 
 public static class VeesyConstants

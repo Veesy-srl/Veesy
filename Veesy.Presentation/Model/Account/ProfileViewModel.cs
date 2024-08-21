@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Veesy.Domain.Models;
 using Veesy.Service.Dtos;
 

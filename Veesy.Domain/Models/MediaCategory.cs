@@ -1,3 +1,5 @@
+using System;
+
 namespace Veesy.Domain.Models;
 
 public class MediaCategory : TrackableEntity
