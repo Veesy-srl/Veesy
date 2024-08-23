@@ -1,3 +1,5 @@
+using System;
+
 namespace Veesy.Domain.Models;
 
 public class MyUserRoleWork : TrackableEntity

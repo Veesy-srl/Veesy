@@ -1,4 +1,7 @@
-﻿namespace Veesy.Domain.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace Veesy.Domain.Models;
 
 public class Skill : TrackableEntity
 {

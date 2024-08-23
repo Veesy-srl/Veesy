@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
 using Veesy.Service.Implementation;
@@ -51,4 +54,6 @@ public interface IAccountService
     SubscriptionPlan GetSubscriptionPlanById(Guid id);
     Task AddNewUserSubscription(string userId, Guid id, MyUser user);
     Task DeleteUserById(string id);
+    List<MyUser> GetUserEmailNotConfirmed(int days);
+    Task DeleteUsers(List<MyUser> users);
 }

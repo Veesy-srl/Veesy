@@ -1,0 +1,271 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Veesy.Domain.Constants
+@model Veesy.Presentation.Model.Admin.AnalyticViewModel
+@{
+    ViewData["Title"] = "Analytic";
+    Layout = "_Layout";
+}
+
+@section Style
+{
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+}
+
+
+<div class="row">
+    <div class="card">
+        <div class="bg-white card-header">
+            <div class="float-start">
+                <h3>Link affiliazione</h3>
+            </div>
+            <div class="float-end">
+                <a class="btn btn-primary" onclick="openModal('#modalAddReferral')">Aggiungi</a>
+            </div>
+        </div>
+        <div class="card-body">
+            <table id="dtBasicExample2" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th class="th-sm">Endpoint
+                    </th>
+                    <th class="th-sm">Redirect
+                    </th>
+                    <th class="th-sm">Numero Click
+                    </th>
+                    <th class="th-sm">Abilitato
+                    </th>
+                    <th class="th-sm">Action
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model.ReferralLinks)
+                {
+                    <tr id="referral-@item.Id">
+                        <td><a onclick="">@Model.ApplicationUrl@item.Endpoint</a></td>
+                        <td>@item.RedirectUrl</td>
+                        <td>@Model.ReferralLinkTrackings.Count(s => s.ReferralLinkId == item.Id)</td>
+                        @{
+                            var fields = "NO";
+                            var btnClass = "btn-danger";
+                            if (item.Enable)
+                            {
+                                fields = "SI";
+                                btnClass = "btn-success";
+                            }
+                        }
+                        <td id="button-@item.Id"><button type="button" onclick="ToogleLink('@item.Id')" class="btn @btnClass m-1">@fields</button></td>
+                        <td>
+                            <div class="d-flex">
+                                <a style="cursor: pointer" onclick="openModal('#modalConfirmDeleteReferral'), setReferralIdToDelete('@item.Id')" class="bg-danger rounded-circle p-2 text-white d-inline-flex "><i class="ti ti-trash fs-4"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="card">
+        <div class="bg-white card-header">
+            <div class="float-start">
+                <h3>Tracking link</h3>
+            </div>
+        </div>
+        <div class="card-body">
+            <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th class="th-sm">Link
+                    </th>
+                    <th class="th-sm">Ip 
+                    </th>
+                    <th class="th-sm">Referer
+                    </th>
+                    <th class="th-sm">Data
+                    </th>
+                    <th class="th-sm">Browser
+                    </th>
+                    <th class="th-sm">Device
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model.ReferralLinkTrackings)
+                {
+                    <tr>
+                        @if (item.ReferralLink != null)
+                        {
+                            <td>@Model.ApplicationUrl@item.ReferralLink.Endpoint</td>
+                        }
+                        else
+                        {
+                            
+                            <td>Page 404</td>
+                        }
+                        <td>@item.Ip</td>
+                        <td>@item.Referer</td>
+                        <td>@item.LastAccess.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>@item.Browser</td>
+                        <td>
+                            @VeesyConstants.DeviceTypeText[@item.DeviceType]
+                        </td>
+                    </tr>
+
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="modalAddReferral" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Aggiungi link</strong></h3>
+                <a onclick="closeModal('#modalAddReferral')"><i class="fa-solid fa-grey fa-circle-xmark"></i></a>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <label><strong>Endpoint</strong></label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon3">@Model.ApplicationUrl</span>
+                        </div>
+                        <input type="text" class="form-control" id="endpoint"/>
+                    </div>
+                </div>
+                <div class="mt-2">
+                    <label><strong>Redirect url</strong></label>
+                    <select class="form-select" id="redirect-url">
+                        @foreach (var item in @Model.RedirectUrls)
+                        {
+                            <option value="@item">@item</option>
+                        }
+                    </select>
+                </div>
+                <div class="float-end">
+                    <button onclick="AddReferralLink()" class="mt-2 rounded-pill btn btn-padding btn-primary a-font-p" type="submit">add</button>
+                </div>
+            </div>
+            <div class="empty-veesy"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalConfirmDeleteReferral" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color"><strong>Remove referral link</strong></h3>
+                <a onclick="closeModal('#modalConfirmDeleteReferral')"><i class="fa-solid fa-grey fa-circle-xmark"></i></a>
+            </div>
+            <div class="empty-veesy"></div>
+            <div class="modal-body text-center">
+                <h5 id="confirm-delete-body">
+                    Are you sure to delete this referral link? You will lose also all the stored data about this link.
+                </h5>
+                <div class="empty-veesy"></div>
+                <button onclick="RemoveLink()" class="mt-2 rounded-pill btn btn-padding btn-danger a-font-p" type="submit">yes, remove</button>
+            </div>
+            <div class="empty-veesy"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+    <script>
+        function ToogleLink(id){
+            $('#load-spinner').css("display", "block");
+
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("ToggleReferralLink", "Admin", new { area = "Admin" })' + "?id=" + id,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (response) {
+                    if(response.result){
+                        if (response.enable){
+                            document.getElementById("button-" + id).innerHTML = '<button type="button" onclick="ToogleLink(\'' + id + '\')" class="btn btn-success m-1">SI</button>'
+                        }
+                        else{
+                            document.getElementById("button-" + id).innerHTML = '<button type="button" onclick="ToogleLink(\'' + id + '\')" class="btn btn-danger m-1">NO</button>'
+                        }
+                    }
+                    $('#load-spinner').css("display", "none");
+                },
+                error: function (response) {
+                    $('#load-spinner').css("display", "none");
+                }
+            })
+        }
+
+        let referralId = ''
+        
+        function setReferralIdToDelete(id) {
+            referralId = id
+        }
+        
+        function RemoveLink(){
+            $('#load-spinner').css("display", "block");
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("RemoveReferralLink", "Admin", new { area = "Admin" })' + "?id=" + referralId,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (response) {
+                    if(response.result){
+                        document.getElementById("referral-" + referralId).remove()
+                        closeModal('#modalConfirmDeleteReferral')
+                    }
+                    $('#load-spinner').css("display", "none");
+                },
+                error: function (response) {
+                    $('#load-spinner').css("display", "none");
+                }
+            })
+        }
+
+        function AddReferralLink(){
+            $('#load-spinner').css("display", "block");
+
+            var endpoint = document.getElementById("endpoint").value
+            var redirectUrl = document.getElementById("redirect-url").value
+
+            var referralLinkDto = {endpoint, redirectUrl}
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("AddReferralLink", "Admin", new { area = "Admin" })',
+                data: JSON.stringify(referralLinkDto),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (response) {
+                    if(response.result){
+                        location.reload()
+                    }
+                    toastNotifyCustom(response.message, 10000, "#ca0a0a", "")
+                    $('#load-spinner').css("display", "none");
+                },
+                error: function (response) {
+                    toastr.error(response.message)
+                    $('#load-spinner').css("display", "none");
+                }
+            })
+        }
+        
+        $(document).ready(function () {
+            $('#dtBasicExample').DataTable();
+            $('#dtBasicExample2').DataTable();
+            $('.dataTables_length').addClass('bs-select');
+        });
+    </script>
+}

@@ -1,3 +1,6 @@
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Veesy.Domain.Models;
@@ -33,6 +36,8 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<LanguageSpoken> LanguagesSpoken { get; set; }
     public DbSet<InfoToShow> InfosToShow { get; set; }
     public DbSet<MyUserSubscriptionPlan> MyUserSubscriptionPlans { get; set; }
+    public DbSet<ReferralLink> ReferralLinks { get; set; }
+    public DbSet<ReferralLinkTracking> ReferralLinkTrackings { get; set; }
 
     #region OnModelCreating
     protected override void OnModelCreating(ModelBuilder modelBuilder)

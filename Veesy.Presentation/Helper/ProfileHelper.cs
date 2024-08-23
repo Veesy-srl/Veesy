@@ -1,3 +1,8 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Veesy.Domain.Constants;
@@ -412,5 +417,11 @@ public class ProfileHelper
     {
         await _accountService.DeleteUserById(id);
         return new ResultDto(true, "User delete correctly.");
+    }
+
+    public async Task RemoveOldUser()
+    {
+        var users = _accountService.GetUserEmailNotConfirmed(30);
+        await _accountService.DeleteUsers(users);
     }
 }

@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Veesy.Domain.Models;
@@ -16,9 +20,9 @@ public class AdminHelper
     private readonly IPortfolioService _portfolioService;
     private readonly UserManager<MyUser> _userManager;
     private readonly IConfiguration _config;
+    private readonly IAnalyticService _analyticService;
 
-
-    public AdminHelper(IAccountService accountService, IMediaService mediaService, IPortfolioService portfolioService, UserManager<MyUser> userManager, IConfiguration config, ISubscriptionPlanService subscriptionPlanService)
+    public AdminHelper(IAccountService accountService, IMediaService mediaService, IPortfolioService portfolioService, UserManager<MyUser> userManager, IConfiguration config, ISubscriptionPlanService subscriptionPlanService, IAnalyticService analyticService)
     {
         _accountService = accountService;
         _mediaService = mediaService;
@@ -26,6 +30,7 @@ public class AdminHelper
         _userManager = userManager;
         _config = config;
         _subscriptionPlanService = subscriptionPlanService;
+        _analyticService = analyticService;
     }
 
     public CreatorsListViewModel GetCreatorsListViewModel()
@@ -208,5 +213,59 @@ public class AdminHelper
         }
 
         return creatorOverview;
+    }
+
+    public AnalyticViewModel GetAnalyticViewModel(List<string> routes)
+    {
+        var vm = new AnalyticViewModel()
+        {
+            ReferralLinks = _analyticService.GetReferralLinks(),
+            ReferralLinkTrackings = _analyticService.GetReferralLinkTrackings(),
+            ApplicationUrl = _config["ApplicationUrl"] + "/referer/",
+            RedirectUrls = routes
+        };
+
+        return vm;
+    }
+
+    public async Task<bool> ToogleReferralLink(Guid id)
+    {
+        var referralLink = _analyticService.GetReferralById(id);
+        referralLink.Enable = !referralLink.Enable;
+        await _analyticService.UpdateReferralLink(referralLink);
+        return referralLink.Enable;
+    }
+
+    public async Task<bool> DeleteReferralLink(Guid id)
+    {
+        var referralLink = _analyticService.GetReferralById(id);
+        await _analyticService.RemoveReferralLink(referralLink);
+        return true;
+    }
+
+    public async Task<string?> AddReferralLink(ReferralLinkDto referralLinkDto)
+    {
+        if (string.IsNullOrEmpty(referralLinkDto.Endpoint))
+            return "Inserire endpoint";
+        
+        if (referralLinkDto.Endpoint.Contains("/") || referralLinkDto.Endpoint.Contains("&") || referralLinkDto.Endpoint.Contains("?"))
+            return "Caratteri non ammessi: /, &, ?";
+        
+        if (string.IsNullOrEmpty(referralLinkDto.RedirectUrl))
+            return "Selezionare redirect url";
+
+        var res = _analyticService.GetReferralByStartEndpoint(referralLinkDto.Endpoint);
+        
+        if (res != null)
+            return "Endpoint già utilizzato";
+
+        await _analyticService.AddReferralLink(new ReferralLink
+        {
+            Endpoint = referralLinkDto.Endpoint,
+            RedirectUrl = referralLinkDto.RedirectUrl,
+            Enable = true,
+        });
+
+        return "";
     }
 }

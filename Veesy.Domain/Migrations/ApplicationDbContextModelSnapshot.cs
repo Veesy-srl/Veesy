@@ -881,6 +881,68 @@ namespace Veesy.Domain.Migrations
                     b.ToTable("PortfolioSectors");
                 });
 
+            modelBuilder.Entity("Veesy.Domain.Models.ReferralLink", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Enable")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Endpoint")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RedirectUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ReferralLinks");
+                });
+
+            modelBuilder.Entity("Veesy.Domain.Models.ReferralLinkTracking", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Browser")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DeviceType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Ip")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("LastAccess")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Latitude")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Longitude")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Referer")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("ReferralLinkId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserAgent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReferralLinkId");
+
+                    b.ToTable("ReferralLinkTrackings");
+                });
+
             modelBuilder.Entity("Veesy.Domain.Models.RoleWork", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1416,6 +1478,15 @@ namespace Veesy.Domain.Migrations
                     b.Navigation("Sector");
                 });
 
+            modelBuilder.Entity("Veesy.Domain.Models.ReferralLinkTracking", b =>
+                {
+                    b.HasOne("Veesy.Domain.Models.ReferralLink", "ReferralLink")
+                        .WithMany("ReferralLinkTrackings")
+                        .HasForeignKey("ReferralLinkId");
+
+                    b.Navigation("ReferralLink");
+                });
+
             modelBuilder.Entity("Veesy.Domain.Models.Category", b =>
                 {
                     b.Navigation("MediaCategories");
@@ -1450,6 +1521,11 @@ namespace Veesy.Domain.Migrations
                     b.Navigation("PortfolioMedias");
 
                     b.Navigation("PortfolioSectors");
+                });
+
+            modelBuilder.Entity("Veesy.Domain.Models.ReferralLink", b =>
+                {
+                    b.Navigation("ReferralLinkTrackings");
                 });
 
             modelBuilder.Entity("Veesy.Domain.Models.RoleWork", b =>

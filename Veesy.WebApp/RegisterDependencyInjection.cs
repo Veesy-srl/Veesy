@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using Veesy.Domain.Repositories;
 using Veesy.Domain.Repositories.Impl;
 using Veesy.Email;
@@ -26,6 +27,7 @@ public static class RegisterDependencyInjection
         serviceCollection.AddTransient<IMediaService, MediaService>();
         serviceCollection.AddTransient<ISubscriptionPlanService, SubscriptionPlanService>();
         serviceCollection.AddTransient<IPortfolioService, PortfolioService>();
+        serviceCollection.AddTransient<IAnalyticService, AnalyticService>();
 
         /*Utils Dependency Injection*/
         serviceCollection.AddScoped<IEmailSender, EmailSender>();
@@ -35,6 +37,7 @@ public static class RegisterDependencyInjection
         serviceCollection.AddTransient<MediaValidators>();
     
         /*Helper Dependency Injection*/
+        serviceCollection.AddTransient<AnalyticHelper>();
         serviceCollection.AddTransient<AuthHelper>();
         serviceCollection.AddTransient<AdminHelper>();
         serviceCollection.AddTransient<MediaHelper>();

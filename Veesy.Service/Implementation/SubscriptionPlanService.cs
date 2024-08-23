@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Veesy.Domain.Models;
 using Veesy.Domain.Repositories;

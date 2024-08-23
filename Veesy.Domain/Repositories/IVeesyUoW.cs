@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Veesy.Domain.Data;
 using Veesy.Domain.Models;
 
@@ -17,4 +18,5 @@ public interface IVeesyUoW
     ISkillRepository SkillRepository { get; }
     IMediaRepository MediaRepository { get; }
     IPortfolioRepository PortfolioRepository { get; }
+    IAnalyticRepository AnalyticRepository { get; }
 }

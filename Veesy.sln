@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Veesy.Email", "Veesy.Email\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Veesy.Validators", "Veesy.Validators\Veesy.Validators.csproj", "{52C956DB-A67F-4CDD-B513-0C6A625B082F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Veesy.WorkerService", "Veesy.WorkerService\Veesy.WorkerService.csproj", "{AE02E8DB-BB0F-4882-B754-60ADF9FCE003}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{52C956DB-A67F-4CDD-B513-0C6A625B082F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52C956DB-A67F-4CDD-B513-0C6A625B082F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52C956DB-A67F-4CDD-B513-0C6A625B082F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE02E8DB-BB0F-4882-B754-60ADF9FCE003}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE02E8DB-BB0F-4882-B754-60ADF9FCE003}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE02E8DB-BB0F-4882-B754-60ADF9FCE003}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE02E8DB-BB0F-4882-B754-60ADF9FCE003}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Veesy.Domain.Constants;
 using Veesy.Domain.Exceptions;
@@ -441,6 +445,17 @@ public class AccountService : IAccountService
         var user = await _uoW.MyUserRepository.FindByCondition(s => s.Id == id).SingleOrDefaultAsync();
         _uoW.MyUserRepository.Delete(user);
         await _uoW.CommitAsync(id);
+    }
+
+    public List<MyUser> GetUserEmailNotConfirmed(int days)
+    {
+        return _uoW.MyUserRepository.FindByCondition(s => !s.EmailConfirmed && s.CreateDate.AddDays(days) < DateTime.Now).ToList();
+    }
+
+    public async Task DeleteUsers(List<MyUser> users)
+    {
+        _uoW.MyUserRepository.DeleteRange(users);
+        await _uoW.CommitAsync(new MyUser());
     }
 
     public class CreatorOverviewDto

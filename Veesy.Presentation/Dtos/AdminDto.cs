@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Veesy.Domain.Models;
 
 namespace Veesy.Service.Dtos;
@@ -15,6 +18,12 @@ public class ChangeSubscriptionDto
 {
     public string SubscriptionName { get; set; }
     public string? MyUserId { get; set; }
+}
+
+public class ReferralLinkDto
+{
+    public string Endpoint { get; set; }
+    public string? RedirectUrl { get; set; }
 }
 
 public class CreatorOverviewDto
