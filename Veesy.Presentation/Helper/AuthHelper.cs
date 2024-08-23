@@ -90,6 +90,10 @@ public class AuthHelper
     {
         if(model.Password == null || model.ConfirmPassword == null)
             return new ResultDto(false, "Please insert password.");
+        if(model.Email == null || model.ConfirmEmail == null)
+            return new ResultDto(false, "Please insert email.");
+        if (model.Email != model.ConfirmEmail) 
+            return new ResultDto(false, "Entered emails do not match.");
         if (model.Password != model.ConfirmPassword) 
             return new ResultDto(false, "Entered passwords do not match.");
         if(model.SelectedCategoriesWork == null || model.SelectedCategoriesWork.Count < 1 || model.SelectedCategoriesWork.Count > 3)

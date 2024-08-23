@@ -458,6 +458,21 @@ public class AccountService : IAccountService
         await _uoW.CommitAsync(new MyUser());
     }
 
+    public List<MyUser> GetUserToSendEmailPro()
+    {
+        return _uoW.MyUserRepository
+            .FindByCondition(s => s.CreateDate.Date.AddDays(7) <= DateTime.Now.Date && !s.EmailUpdateProSended && s.EmailConfirmed)
+            .Include(s => s.MyUserSubscriptionPlans)
+            .ThenInclude(s => s.SubscriptionPlan)
+            .ToList();
+    }
+
+    public async Task UpdateMyUsers(List<MyUser> usersToUpdate)
+    {
+        _uoW.MyUserRepository.UpdateRange(usersToUpdate);
+        await _uoW.CommitAsync(new MyUser());
+    }
+
     public class CreatorOverviewDto
     {
         public int NumberCreator { get; set; }

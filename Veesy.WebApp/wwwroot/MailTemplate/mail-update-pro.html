@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:v="urn:schemas-microsoft-com:vml"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:cid="http://www.w3.org/1999/xhtml"
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="x-apple-disable-message-reformatting" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="supported-color-schemes" content="light dark" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="format-detection"
+      content="telephone=no, date=no, address=no, email=no"
+    />
+    <!--[if mso]>
+      <xml
+        ><o:officedocumentsettings
+          ><o:pixelsperinch>96</o:pixelsperinch></o:officedocumentsettings
+        ></xml
+      >
+    <![endif]-->
+    <style>
+      :root {
+        color-scheme: light dark;
+        supported-color-schemes: light dark;
+      }
+
+      /* Modalita Scura (dark) colori */
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #e2e5e7 !important;
+        }
+        .wrapper {
+          background-color: #ffffff !important;
+        }
+        .footer-l {
+          background-color: #e2e5e7 !important;
+        }
+        #main-bg {
+          background-color: #e2e5e7 !important;
+        }
+        .spacer-bg {
+          background-color: #e2e5e7 !important;
+        }
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        word-break: break-word;
+        background-color: #e2e5e7;
+        -webkit-font-smoothing: antialiased;
+      }
+      td {
+        padding: 0;
+      }
+      img {
+        border: 0;
+      }
+
+      #main-bg {
+        background-color: #e2e5e7;
+      }
+      .spacer-bg {
+        background-color: #e2e5e7;
+      }
+
+      .p-left {
+        padding-left: 40px;
+      }
+      .px-dynamic {
+        padding: 0 40px;
+      }
+      .py-dynamic {
+        padding: 40px 0;
+      }
+
+      .wrapper {
+        width: 100%;
+        table-layout: fixed;
+        background-color: #ffffff;
+        mso-line-height-rule: exactly;
+        font-family: Helvetica, sans-serif;
+      }
+
+      .main {
+        width: 100%;
+        max-width: 800px;
+      }
+
+      .table-container {
+        display: flex;
+        flex-wrap: wrap;
+        row-gap: 50px;
+        column-gap: 30px;
+      }
+      .table-item {
+        flex: 1 1 45%; /* Adjust percentage to fit 2 items per row */
+        padding: 10px;
+        box-sizing: border-box;
+      }
+      @media (max-width: 600px) {
+        .table-container {
+          justify-content: center;
+        }
+        .table-item {
+          flex: 1 1 100%; /* Full width for smaller devices */
+        }
+      }
+
+      .hover-underline:hover {
+        text-decoration: underline !important;
+      }
+
+      #rounded-list {
+        padding: 60px 40px;
+        border-radius: 100% / 10%;
+      }
+
+      .footer-l {
+        background-color: #e2e5e7;
+        padding: 0 40px;
+      }
+
+      .container-l {
+        max-width: 800px;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+
+      .footer-content-l {
+        flex: 1;
+      }
+
+      .veesy-text-color-l {
+        color: #333333;
+      }
+
+      @media (max-width: 600px) {
+        .p-left {
+          padding-left: 20px;
+        }
+        .px-dynamic {
+          padding: 0 20px;
+        }
+        .py-dynamic {
+          padding: 20px 0;
+        }
+        .sm-w-full {
+          width: 100% !important;
+        }
+        .sm-leading-32 {
+          line-height: 32px !important;
+        }
+        #rounded-list {
+          padding: 70px 20px;
+          border-radius: 200% / 10%;
+        }
+      }
+
+      @media screen and (max-width: 768px) {
+        .container-l {
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <center
+      lang="en"
+      aria-label=""
+      role="article"
+      class="wrapper"
+      aria-roledescription="email"
+      style="background-color: #fff"
+    >
+      <table class="main" cellpadding="0" cellspacing="0" role="presentation">
+        <tr>
+          <td
+            align="center"
+            style="mso-line-height-rule: exactly; background-color: #ffffff"
+          >
+            <table
+              cellpadding="0"
+              cellspacing="0"
+              class="sm-w-full"
+              role="presentation"
+              style="max-width: 800px"
+            >
+              <tr>
+                <td
+                  align="center"
+                  class="sm-px-2"
+                  style="mso-line-height-rule: exactly"
+                >
+                  <table
+                    cellpadding="0"
+                    cellspacing="0"
+                    role="presentation"
+                    style="width: 100%"
+                  >
+                    <tr>
+                      <td
+                        id="main-bg"
+                        class="sm-px-2"
+                        style="
+                          font-size: 17px;
+                          text-align: left;
+                          line-height: 24px;
+                          color: #0e0c0c !important;
+                          mso-line-height-rule: exactly;
+                          background-color: #e2e5e7;
+                        "
+                      >
+                        <div style="display: flex">
+                          <!-- IMMAGINE GIF -->
+                          <img
+                            draggable="false"
+                            class="p-left"
+                            src="https://cdn.bemiux.dev/assets/veesy/welcome/logo.png"
+                            style="
+                              width: 90px;
+                              height: 26px;
+                              margin-top: 50px !important;
+                            "
+                          />
+                          <div style="width: 100%; text-align: right">
+                            <img
+                              draggable="false"
+                              style="max-width: 140px"
+                              src="https://cdn.bemiux.dev/assets/veesy/plan-pro/mail-top.png"
+                            />
+                          </div>
+                        </div>
+                        <p
+                          class="sm-leading-32 px-dynamic"
+                          style="
+                            color: #202f4d !important;
+                            line-height: 1.5;
+                            mso-line-height-rule: exactly;
+                            margin-top: 100px;
+                            margin-bottom: 15px;
+                            font-size: 16px;
+                            font-weight: 400;
+                          "
+                        >
+                          Ciao [name],
+                        </p>
+                        <p
+                          class="sm-leading-32 px-dynamic"
+                          style="
+                            color: #202f4d !important;
+                            line-height: 1.5;
+                            mso-line-height-rule: exactly;
+                            margin-top: 25px;
+                            margin-bottom: 15px;
+                            font-size: 16px;
+                            font-weight: 400;
+                          "
+                        >
+                          Come va su Veesy?
+                        </p>
+                        <p
+                          class="sm-leading-32 px-dynamic"
+                          style="
+                            color: #202f4d !important;
+                            line-height: 1.5;
+                            mso-line-height-rule: exactly;
+                            margin-top: 25px;
+                            margin-bottom: 15px;
+                            font-size: 16px;
+                            font-weight: 400;
+                          "
+                        >
+                          Speriamo che già dai primi giorni stia scoprendo
+                          quanto può fare questo nuovo ecosistema digitale per
+                          il tuo lavoro freelance.
+                        </p>
+                        <p
+                          class="sm-leading-32 px-dynamic"
+                          style="
+                            color: #202f4d !important;
+                            line-height: 1.5;
+                            mso-line-height-rule: exactly;
+                            margin-top: 25px;
+                            margin-bottom: 15px;
+                            font-size: 16px;
+                            font-weight: 400;
+                          "
+                        >
+                          Forse sai che le esigenze di unə liberə professionistə
+                          - e quindi le tue - sono ormai comparabili a quelle di
+                          una piccola azienda. Ciò significa che, al momento,
+                          fino al
+                          <b style="color: #ff61bb !important">70%</b> del tuo
+                          tempo potrebbe essere dedicato a cercare clienti o
+                          tutor, ad autopromuoversi, a smaltire task tu task -
+                          insomma, tutte cose distanti dalla
+                          <b>creatività vera</b> e dalla tua vita personale.
+                        </p>
+                        <div
+                          class="px-dynamic"
+                          style="margin-top: 50px; margin-bottom: 25px"
+                        >
+                          <img
+                            draggable="false"
+                            src="https://cdn.bemiux.dev/assets/veesy/plan-pro/video.gif"
+                            style="
+                              display: block;
+                              max-width: 100%;
+                              border-radius: 8px;
+                            "
+                          />
+                        </div>
+                        <p
+                          class="sm-leading-32 px-dynamic"
+                          style="
+                            color: #202f4d !important;
+                            line-height: 1.5;
+                            mso-line-height-rule: exactly;
+                            margin-top: 50px;
+                            margin-bottom: 15px;
+                            font-size: 16px;
+                            font-weight: 400;
+                          "
+                        >
+                          Senti che in quel rimanente
+                          <b style="color: #ff61bb !important">30%</b> ti sta
+                          stretto? Che la solitudine è faticosa?
+                        </p>
+                        <p
+                          class="sm-leading-32 px-dynamic"
+                          style="
+                            color: #202f4d !important;
+                            line-height: 1.5;
+                            mso-line-height-rule: exactly;
+                            margin-top: 50px;
+                            margin-bottom: 40px;
+                            font-size: 30px;
+                          "
+                        >
+                          <b>Diventa 🦹‍♀️ Creator Pro 🦹‍♀️ !</b>
+                        </p>
+                        <p class="px-dynamic" style="font-size: 18px">
+                          <b>È gratis per 30 giorni.</b>
+                        </p>
+                        <p class="px-dynamic" style="font-size: 16px">
+                          Avrai a disposizione una suite di strumenti integrati
+                          per gestire meglio il tuo lavoro, sempre in
+                          connessione con una rete molto attiva di freelancer e
+                          consulenti con cui condividere idee, visioni,
+                          chiacchiere e traguardi.
+                        </p>
+                        <p
+                          class="sm-leading-32 px-dynamic"
+                          style="
+                            color: #202f4d !important;
+                            line-height: 1.5;
+                            mso-line-height-rule: exactly;
+                            margin-top: 50px;
+                            margin-bottom: 45px;
+                            font-size: 16px;
+                            font-weight: 400;
+                          "
+                        >
+                          <b>La membership ti dà…</b>
+                        </p>
+
+                        <!-- LISTA -->
+                        <div
+                          id="rounded-list"
+                          class="table-container"
+                          style="
+                            height: auto;
+                            background-color: #202f4d !important;
+                          "
+                        >
+                          <!-- VEESY MATCH -->
+                          <div
+                            class="table-item"
+                            style="max-width: 345px; border-collapse: collapse"
+                          >
+                            <div>
+                              <a
+                                style="
+                                  color: white;
+                                  font-size: 28px;
+                                  text-decoration: none;
+                                "
+                              >
+                                <b>veesy</b>
+                                <span style="color: #01d78c !important"
+                                  >Match</span
+                                >
+                              </a>
+                              <hr style="width: 100%" />
+                            </div>
+                            <div>
+                              <p
+                                class="sm-leading-32"
+                                style="
+                                  color: white;
+                                  line-height: 1.5;
+                                  mso-line-height-rule: exactly;
+                                  font-size: 16px;
+                                  font-weight: 400;
+                                "
+                              >
+                                un modo diretto e stimolante per trovare nuovi e
+                                migliori clienti, collaboratori di fiducia,
+                                partner certificati, o professionistə con cui
+                                gestire quei progetti più grandi e che
+                                richiedono competenze diverse dalle tue.
+                              </p>
+                            </div>
+                          </div>
+                          <!-- VEESY BOOST -->
+                          <div
+                            class="table-item"
+                            style="
+                              width: 100%;
+                              max-width: 345px;
+                              border-collapse: collapse;
+                            "
+                          >
+                            <div>
+                              <a
+                                style="
+                                  color: white;
+                                  font-size: 28px;
+                                  text-decoration: none;
+                                "
+                              >
+                                <b>veesy</b>
+                                <span style="color: #ff61bb !important"
+                                  >Boost</span
+                                >
+                              </a>
+                              <hr style="width: 100%" />
+                            </div>
+                            <div>
+                              <p
+                                class="sm-leading-32"
+                                style="
+                                  color: white;
+                                  line-height: 1.5;
+                                  mso-line-height-rule: exactly;
+                                  font-size: 16px;
+                                  font-weight: 400;
+                                "
+                              >
+                                integra nella tua routine momenti di consulenza
+                                dedicata: che tu sia all’inizio o nel pieno
+                                della tua carriera, puoi avere supporto fiscale,
+                                legale, artistico o di project management
+                                calibrato secondo le tue esigenze e obiettivi.
+                              </p>
+                            </div>
+                          </div>
+                          <!-- VEESY LEARN -->
+                          <div
+                            class="table-item"
+                            style="
+                              width: 100%;
+                              max-width: 345px;
+                              border-collapse: collapse;
+                            "
+                          >
+                            <div>
+                              <a
+                                style="
+                                  color: white;
+                                  font-size: 28px;
+                                  text-decoration: none;
+                                "
+                              >
+                                <b>veesy</b>
+                                <span style="color: #ff9f48 !important"
+                                  >Learn</span
+                                >
+                              </a>
+                              <hr style="width: 100%" />
+                            </div>
+                            <div>
+                              <p
+                                class="sm-leading-32"
+                                style="
+                                  color: white;
+                                  line-height: 1.5;
+                                  mso-line-height-rule: exactly;
+                                  font-size: 16px;
+                                  font-weight: 400;
+                                "
+                              >
+                                Formazione continua e reciproca. Se sei stanco
+                                dell’operatività e metterti in gioco su altri
+                                fronti… Accedi a corsi e percorsi diventa tu
+                                stessə mentor o insegnante. Accedi a corsi e
+                                percorsi diventa tu stessə mentor o insegnante.
+                              </p>
+                            </div>
+                          </div>
+                          <!-- VEESY DESK -->
+                          <div
+                            class="table-item"
+                            style="
+                              width: 100%;
+                              max-width: 345px;
+                              border-collapse: collapse;
+                            "
+                          >
+                            <div>
+                              <a
+                                style="
+                                  color: white;
+                                  font-size: 28px;
+                                  text-decoration: none;
+                                "
+                              >
+                                <b>veesy</b>
+                                <span style="color: #75ccdb !important"
+                                  >Desk</span
+                                >
+                              </a>
+                              <hr style="width: 100%" />
+                            </div>
+                            <div>
+                              <p
+                                class="sm-leading-32"
+                                style="
+                                  color: white;
+                                  line-height: 1.5;
+                                  mso-line-height-rule: exactly;
+                                  font-size: 16px;
+                                "
+                              >
+                                Con il Pro hai più spazio per i tuoi media: dal
+                                tuo Desk puoi gestire i tuoi file e creare
+                                tantiiiiisssimi portfolio da condividere via
+                                link dal treno, da casa, dal bar.
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <p
+                          class="sm-leading-32 px-dynamic"
+                          style="
+                            color: #202f4d !important;
+                            line-height: 1.5;
+                            mso-line-height-rule: exactly;
+                            margin-top: 80px;
+                            margin-bottom: 16px;
+                            font-size: 18px;
+                            font-weight: 400;
+                          "
+                        >
+                          Prima che una piattaforma, prima che una suite, Veesy
+                          è una community con cui fare ottimo network. Ottieni
+                          pieno accesso alla condivisione creativa e allontana
+                          il peso crescente della solitudine professionale.
+                        </p>
+                        <p
+                          class="sm-leading-32 px-dynamic"
+                          style="
+                            color: #202f4d !important;
+                            line-height: 1.5;
+                            mso-line-height-rule: exactly;
+                            margin-top: 25px;
+                            margin-bottom: 16px;
+                            font-size: 18px;
+                            font-weight: 400;
+                          "
+                        >
+                          Come diciamo noi,
+                          <i>freelancing is an art. Not a task.</i>
+                        </p>
+                        <p
+                          class="sm-leading-32 px-dynamic"
+                          style="
+                            color: #202f4d !important;
+                            line-height: 1.5;
+                            mso-line-height-rule: exactly;
+                            margin-top: 25px;
+                            margin-bottom: 16px;
+                            font-size: 18px;
+                            font-weight: 400;
+                          "
+                        >
+                          <strong>Passa al PRO.</strong><br />
+                          Se hai dubbi o vuoi più info, siamo qui per darti una
+                        </p>
+                        <p
+                          class="sm-leading-32 px-dynamic"
+                          style="
+                            color: #202f4d !important;
+                            line-height: 1.5;
+                            mso-line-height-rule: exactly;
+                            margin-top: 25px;
+                            margin-bottom: 16px;
+                            font-size: 18px;
+                            font-weight: 400;
+                          "
+                        >
+                          Grazie per essere dei nostrə!
+                        </p>
+                        <p
+                          class="sm-leading-32 px-dynamic"
+                          style="
+                            color: #202f4d !important;
+                            line-height: 1.5;
+                            mso-line-height-rule: exactly;
+                            margin-top: 50px;
+                            margin-bottom: 16px;
+                            font-size: 18px;
+                            font-weight: 400;
+                          "
+                        >
+                          A presto,<br /><b>Il Team Veesy</b>
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        class="spacer-bg"
+                        style="
+                          height: 20px;
+                          background-color: #e2e5e7;
+                          mso-line-height-rule: exactly;
+                        "
+                      ></td>
+                    </tr>
+                    <tr>
+                      <td
+                        class="px-dynamic"
+                        style="
+                          height: 20px;
+                          padding-top: 30px;
+                          padding-bottom: 90px;
+                          background-color: #e2e5e7;
+                          mso-line-height-rule: exactly;
+                        "
+                      >
+                        <a
+                          target="_blank"
+                          href="https://veesy.notion.site/Passa-al-Pro-5e48bf6748974067a3fee2f2bceef876?pvs=4"
+                          style="
+                            width: 189px;
+                            padding: 9px 32px;
+                            text-align: center;
+                            border-radius: 20px;
+                            text-decoration: none;
+                            color: white !important;
+                            background-color: #202f4d !important;
+                          "
+                        >
+                          <span style="font-size: 14px">
+                            passa a veesy pro
+                          </span>
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="footer-l">
+                          <div class="container-l">
+                            <div class="footer-content-l">
+                              <p style="color: rgb(32, 47, 77) !important">
+                                <strong>Veesy s.r.l.</strong><br />
+                                Via Giacomo matteotti 43<br />
+                                20832, Desio&nbsp;(MB)<br />
+                                VAT 13005470961<br />
+                                annual social capital € 10.000
+                              </p>
+                            </div>
+                            <div
+                              id="mobile-l"
+                              class="footer-content-l veesy-text-color"
+                              style="
+                                margin-top: 2%;
+                                margin-left: 10%;
+                                padding-bottom: 5%;
+                              "
+                            >
+                              <div style="color: rgb(32, 47, 77) !important">
+                                <a
+                                  href="mailto:support@veesy.it"
+                                  style="
+                                    text-decoration: underline;
+                                    color: rgb(32, 47, 77) !important;
+                                  "
+                                  >contact us</a
+                                >
+                                if you want to unsubscribe<br />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr
+                      style="
+                        color: #202f4d !important;
+                        mso-line-height-rule: exactly;
+                        background-color: #e2e5e7;
+                      "
+                    >
+                      <td class="px-dynamic container-l">
+                        <div
+                          style="
+                            display: flex;
+                            margin-top: 20px;
+                            align-items: center;
+                          "
+                        >
+                          <a
+                            target="_blank"
+                            style="text-decoration: none"
+                            href="https://facebook.com/people/Veesy/61557228052314/"
+                          >
+                            <img
+                              draggable="false"
+                              alt="Link Facebook"
+                              style="max-width: 100%"
+                              src="https://cdn.bemiux.dev/assets/veesy/welcome/social-facebook.png"
+                            />
+                          </a>
+                          <a
+                            target="_blank"
+                            style="text-decoration: none; margin-left: 15px"
+                            href="https://instagram.com/veesy.it"
+                          >
+                            <img
+                              draggable="false"
+                              alt="Link Instagram"
+                              style="max-width: 100%"
+                              src="https://cdn.bemiux.dev/assets/veesy/welcome/social-instagram.png"
+                            />
+                          </a>
+                          <a
+                            target="_blank"
+                            style="text-decoration: none; margin-left: 15px"
+                            href="https://linkedin.com/company/veesy/"
+                          >
+                            <img
+                              draggable="false"
+                              alt="Link Linkedin"
+                              style="max-width: 100%"
+                              src="https://cdn.bemiux.dev/assets/veesy/welcome/social-linkedin.png"
+                            />
+                          </a>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr
+                      style="
+                        font-size: 16px;
+                        line-height: 1.5;
+                        font-weight: 400;
+                        text-align: right;
+                        color: #202f4d !important;
+                        mso-line-height-rule: exactly;
+                        background-color: #e2e5e7;
+                      "
+                    >
+                      <td style="right: 0; bottom: 0; line-height: 0">
+                        <!-- src="cid:Mailimage2" -->
+                        <img
+                          draggable="false"
+                          style="max-width: 220px"
+                          src="https://cdn.bemiux.dev/assets/veesy/welcome/mail-bottom.png"
+                        />
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </center>
+  </body>
+</html>
