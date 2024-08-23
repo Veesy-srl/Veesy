@@ -53,7 +53,7 @@ public class CloudHelper
         {
             Portfolios = portfolios,
             Media = MapCloudDtos.MapMedia(mediaSelected),
-            PreviousMedia =MapCloudDtos.MapMedia(previousMedia),
+            PreviousMedia = MapCloudDtos.MapMedia(previousMedia),
             NextMedia = MapCloudDtos.MapMedia(nextMedia),
             Username = userInfo.UserName,
             BasePath = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/",

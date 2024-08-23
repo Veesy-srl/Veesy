@@ -152,11 +152,16 @@ public class PortfolioHelper
     /// <exception cref="NotImplementedException"></exception>
     public async Task<ResultDto> UpdateMediaLinkedPortfolio(UpdateMediaNestedPortfolioDto portfolioDto, MyUser userInfo)
     {
+        if (string.IsNullOrEmpty(portfolioDto.NestedUrl) && portfolioDto.PortfolioSelected == Guid.Empty)
+            return new ResultDto(false, "Please insert url or select portfolio");
+        
+        if (!string.IsNullOrEmpty(portfolioDto.NestedUrl) && portfolioDto.PortfolioSelected != Guid.Empty)
+            return new ResultDto(false, "Please choose only one option between portfolio and url");
+        
         var media = _mediaService.GetMediaById(portfolioDto.MediaCode);
-        if (portfolioDto.PortfolioSelected == Guid.Empty)
-            media.NestedPortfolioLinks = null;
-        else
-            media.NestedPortfolioLinks = portfolioDto.PortfolioSelected;
+        media.NestedPortfolioLinks = portfolioDto.PortfolioSelected == Guid.Empty ? null : portfolioDto.PortfolioSelected;
+        media.NestedPortfolioUrl = portfolioDto.NestedUrl;
+        
         
         var resultDto = await _mediaService.UpdateMedia(media, userInfo);
 

@@ -448,7 +448,7 @@ public class ProfileHelper
             try
             {
                 var email = "lore98.vettori@gmail.com";
-                var message = new Message(new (string, string)[] { ("Noreply | Veesy", email) }, "Update your plan!", link);
+                var message = new Message(new (string, string)[] { ("Noreply | Veesy", email) }, "What’s next? La Veesy PRO membership.", link);
                 List<(string, string)> replacer = new List<(string, string)> { ("[name]", user.Fullname) };
                 await _emailSender.SendEmailAsync(message, currentPath + "/wwwroot/MailTemplate/mail-update-pro.html", replacer);
                 user.EmailUpdateProSended = true;

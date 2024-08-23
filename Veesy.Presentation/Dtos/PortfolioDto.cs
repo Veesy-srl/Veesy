@@ -82,7 +82,8 @@ public class UpdatePortfolioDto
 
 public class UpdateMediaNestedPortfolioDto
 {
-    public Guid PortfolioSelected { get; set; }
+    public Guid? PortfolioSelected { get; set; }
+    public string? NestedUrl { get; set; }
     public Guid MediaCode { get; set; }
 }
 

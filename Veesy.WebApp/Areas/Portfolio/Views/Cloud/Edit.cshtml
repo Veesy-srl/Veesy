@@ -100,14 +100,19 @@
                         <p class="mb-0 text-white"><strong>Link this image to a portfolio</strong></p>
                         @{
                             var portfoliosLinkText = "";
-                            if (Model.Media.NestedPortfolioLinks == null)
-                            {
-                                portfoliosLinkText = "Currently linked to Veesy Lightbox (default)";
-                            }
-                            else
+                            if (Model.Media.NestedPortfolioLinks != null)
                             {
                                 var portf = Model.Portfolios.SingleOrDefault(s => s.Id == Model.Media.NestedPortfolioLinks).Name;
                                 portfoliosLinkText = "Currently linked to " + portf;
+                            }
+                            else if (!string.IsNullOrEmpty(Model.Media.NestedPortfolioUrl))
+                            {
+                                
+                                portfoliosLinkText = "Currently linked to " + Model.Media.NestedPortfolioUrl;
+                            }
+                            else
+                            {
+                                portfoliosLinkText = "Currently linked to Veesy Lightbox (default)";
                             }
                         }
                         <p id="number-portfolio-link" class="mb-0 text-grey">@portfoliosLinkText</p>
@@ -278,9 +283,11 @@
                 <a onclick="closeModal('#modalLinkedPortfolio')"><i class="fa-solid fa-circle-xmark"></i></a>
             </div>
             <div class="modal-body">
-                <p>Select one of your portfolio.</p>
+                <p>Select one of your portfolio or insert link.</p>
+                <p class="mb-1"><strong>Url</strong></p>
+                <input type="text" id="nested-url" rows="4" class="w-100 input-modal text-profile"/>
+                <p class="mt-3 mb-1"><strong>Portfolio</strong></p>
                 <div class="overflow-auto p-3 border-div-grey" style=" max-height: 400px;">
-                    
                     @if (Model.Portfolios.Count == 0)
                     {
                         <p class="mb-0 fw-normal size-custom" style="font-size: 14px !important; line-height: 23px !important;"><strong>No portfolio yet</strong></p>
@@ -361,11 +368,13 @@
     
         function ChangeMediaNestedLink() {
             $('#load-spinner').css("display", "block");            
-            var PortfolioSelected = selectedNestedPortfolio;
+            var PortfolioSelected = selectedNestedPortfolio == "" ? '@Guid.Empty' : selectedNestedPortfolio;
             
             var MediaCode = '@Model.Media.Code';
             
-            var UpdateMediaNestedPortfolioDto = {PortfolioSelected, MediaCode}
+            var NestedUrl = document.getElementById("nested-url").value
+            
+            var UpdateMediaNestedPortfolioDto = {PortfolioSelected, MediaCode, NestedUrl}
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("ChangeMediaNestedLink", "Portfolio")',

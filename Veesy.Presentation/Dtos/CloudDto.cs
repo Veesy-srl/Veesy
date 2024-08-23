@@ -12,6 +12,7 @@ public class MediaDto
     public string OriginalFileName { get; set; }
     public string FileName { get; set; }
     public Guid? NestedPortfolioLinks { get; set; }
+    public string? NestedPortfolioUrl { get; set; }
     public long Size { get; set; }
     public string Type { get; set; }
     public string UploadDate { get; set; }
@@ -88,6 +89,7 @@ public static class MapCloudDtos
             OriginalFileName = x.OriginalFileName,
             FileName = x.FileName,
             NestedPortfolioLinks = x.NestedPortfolioLinks,
+            NestedPortfolioUrl = x.NestedPortfolioUrl,
             Size = x.Size,
             Type = x.Type,
             Credits = x.Credits,
@@ -104,6 +106,7 @@ public static class MapCloudDtos
             OriginalFileName = x.OriginalFileName,
             FileName = x.FileName,
             NestedPortfolioLinks = x.NestedPortfolioLinks,
+            NestedPortfolioUrl = x.NestedPortfolioUrl,
             Size = x.Size,
             Type = x.Type,
             Credits = x.Credits,
@@ -124,6 +127,7 @@ public static class MapCloudDtos
             OriginalFileName = media.OriginalFileName,
             FileName = media.FileName,
             NestedPortfolioLinks = media.NestedPortfolioLinks,
+            NestedPortfolioUrl = media.NestedPortfolioUrl,
             Size = media.Size,
             Type = media.Type,
             Credits = media.Credits,
