@@ -16,7 +16,7 @@ public class VeesyAuthorizeAttribute : ActionFilterAttribute
             return;
         }
         var appSettings = context.HttpContext.RequestServices.GetService<IConfiguration>();
-        var apiKey = appSettings["WorkerApiKey"];
+        var apiKey = appSettings["ApiKey"];
         if (!apiKey.Equals(extractedApiKey)) {
             context.HttpContext.Response.StatusCode = 401;
             await context.HttpContext.Response.WriteAsync("Unauthorized client");
