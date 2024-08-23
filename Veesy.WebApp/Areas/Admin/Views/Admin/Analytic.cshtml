@@ -42,7 +42,7 @@
                 @foreach (var item in Model.ReferralLinks)
                 {
                     <tr id="referral-@item.Id">
-                        <td><a onclick="">@Model.ApplicationUrl@item.Endpoint</a></td>
+                        <td><a onclick="CopyLink('@Model.ApplicationUrl@item.Endpoint')" style="cursor: pointer;">@Model.ApplicationUrl@item.Endpoint</a></td>
                         <td>@item.RedirectUrl</td>
                         <td>@Model.ReferralLinkTrackings.Count(s => s.ReferralLinkId == item.Id)</td>
                         @{
@@ -183,6 +183,12 @@
 {
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
     <script>
+        
+        function CopyLink(link) {
+            navigator.clipboard.writeText(link);
+            toastNotifyCustom("Link copiato correttamente.", 10000, "#75ccdd", "")
+        }
+
         function ToogleLink(id){
             $('#load-spinner').css("display", "block");
 
@@ -256,7 +262,7 @@
                     $('#load-spinner').css("display", "none");
                 },
                 error: function (response) {
-                    toastr.error(response.message)
+                    toastNotifyCustom(response.message, 10000, "#ca0a0a", "")
                     $('#load-spinner').css("display", "none");
                 }
             })
@@ -267,5 +273,6 @@
             $('#dtBasicExample2').DataTable();
             $('.dataTables_length').addClass('bs-select');
         });
+    
     </script>
 }
