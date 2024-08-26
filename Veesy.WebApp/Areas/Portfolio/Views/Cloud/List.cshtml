@@ -291,13 +291,11 @@
     }
     
     function CountPortfolioAndAddMedia(){
-        if (@Model.Portfolios.Count > 1){
-            openModal('#modalAddMediaToPortfolio')
-            resetModalAdd()
-        }
-        else{
-            portfolioCodeSelected = '@Model.Portfolios.FirstOrDefault().Code'
-            AddToPortfolio()
+        
+        openModal('#modalAddMediaToPortfolio')
+        resetModalAdd()
+        if (@Model.Portfolios.Count == 1){
+            SelectPortfolio('@Model.Portfolios.FirstOrDefault().Code')
         }
     }
     
