@@ -314,6 +314,7 @@ public class AccountService : IAccountService
     public List<MyUser> GetCreators()
     {
         return _uoW.MyUserRepository.FindAll()
+            .Include(s => s.Medias)
             .Include(s => s.MyUserSubscriptionPlans.OrderBy(s => s.CreateRecordDate))
                 .ThenInclude(s => s.SubscriptionPlan)
             .Include(s => s.MyUserUsedSoftwares)
@@ -384,6 +385,7 @@ public class AccountService : IAccountService
     public List<MyUser> GetCreatorsPlus()
     {
         return _uoW.MyUserRepository.FindAll()
+            .Include(s => s.Medias)
             .Include(s => s.MyUserSubscriptionPlans)
                 .ThenInclude(s => s.SubscriptionPlan)
             .Include(s => s.MyUserUsedSoftwares)
