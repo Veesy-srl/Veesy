@@ -45,6 +45,8 @@ public class LastMediaUpload
 public class FrelancerDto
 {
     public string Fullname => FirstName +  " " + LastName;
+    public string FullnameForUrl => (FirstName + "-" + LastName).ToLower().Replace(" ", "-");
+    public string PortfolionameForUrl => PortfolioName.ToLower().Replace(" ", "-");
     public string CreateDate { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
@@ -53,6 +55,7 @@ public class FrelancerDto
     public string SubscriptionPlan { get; set; }
     public string Code { get; set; }
     public Guid MainPortfolioCode { get; set; }
+    public string PortfolioName { get; set; }
     public List<string> Software { get; set; }
     public string Category { get; set; }
     public List<string> SoftSkill { get; set; }
@@ -84,6 +87,7 @@ public static class MapAdminDto{
             LastName = user.Surname,
             Email = user.Email,
             PhoneNumber = user.PhoneNumber,
+            PortfolioName = user.Portfolios == null || user.Portfolios.Count == 0 ? "" : user.Portfolios[0].Name,
             SubscriptionPlan = user.MyUserSubscriptionPlans.LastOrDefault().SubscriptionPlan.Name,
             Category = user.Category,
             Fields = user.MyUserSectors.Select(s => s.Sector.Name).ToList(),

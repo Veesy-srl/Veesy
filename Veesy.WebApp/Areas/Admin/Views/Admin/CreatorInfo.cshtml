@@ -155,7 +155,11 @@
                                 </span>
                             }
                         </td>
-                        <td><a style="cursor: pointer" asp-area="Public" asp-controller="Public" asp-action="Portfolio" asp-route-id="@item.Id">View portfolio</a></td>
+                        @{
+                            var userForUrl = (item.MyUser.Name + "-" + item.MyUser.Surname).ToLower().Replace(" ", "-");
+                            var portfolioNameForUrl = (item.Name).ToLower().Replace(" ", "-");
+                        }
+                        <td><a style="cursor: pointer" asp-area="Public" asp-controller="Public" asp-action="Portfolio" asp-route-user="@userForUrl" asp-route-portfolioname="@portfolioNameForUrl">View portfolio</a></td>
                         <td>@item.PortfolioMedias.Count</td>
                         <td>@item.CreateRecordDate.ToString("dd/MM/yyyy HH:mm")</td>
                         <td>@item.LastEditRecordDate.ToString("dd/MM/yyyy HH:mm")</td>

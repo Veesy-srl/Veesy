@@ -37,6 +37,19 @@ public class PortfolioHelper
         var vm = new PortfolioSettingsViewModel();
         var portfolio = _portfolioService.GetPortfolioById(id, userInfo.Id);
         vm.Portfolio = MapPortfolioDtos.MapPortfolio(portfolio);
+        if (vm.Portfolio.DefaultMedia != null && vm.Portfolio.DefaultMedia.NestedPortfolioLinks != null && vm.Portfolio.DefaultMedia.NestedPortfolioLinks != Guid.Empty)
+        {
+            vm.Portfolio.DefaultMedia.NestedPortfolioNameForUrl = _portfolioService.GetPortfolioById(vm.Portfolio.DefaultMedia.NestedPortfolioLinks.Value, vm.Portfolio.DefaultMedia.UserId).Name.ToLower().Replace(" ", "-");
+        }
+
+        foreach (var portfolioMedia in vm.Portfolio.PortfolioMedias)
+        {
+            if (portfolioMedia != null && portfolioMedia.Media != null && portfolioMedia.Media.NestedPortfolioLinks != null && portfolioMedia.Media.NestedPortfolioLinks != Guid.Empty)
+            {
+                portfolioMedia.Media.NestedPortfolioNameForUrl = _portfolioService.GetPortfolioById(portfolioMedia.Media.NestedPortfolioLinks.Value, portfolioMedia.Media.UserId).Name.ToLower().Replace(" ", "-");
+            }
+        }
+        
         vm.ApplicationUrl = _config["ApplicationUrl"];
         vm.BasePathImages = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/";
 
@@ -113,7 +126,7 @@ public class PortfolioHelper
         var allPortfolioName = _portfolioService.GetAllPortfolioNameDifferentByOne(portfolioDto.Id, userInfo);
         if (allPortfolioName.Contains(portfolioDto.Name.ToUpper()))
             return new ResultDto(false, "Name already used.");
-        var portfolio = _portfolioService.GetPortfolioById(portfolioDto.Id, userInfo.Id);
+        var portfolio = _portfolioService.GetPortfolioByIdToUpdate(portfolioDto.Id, userInfo.Id);
         portfolio.Name = portfolioDto.Name;
         await _portfolioService.UpdatePortfolio(portfolio, userInfo);
         return new ResultDto(true, "");
@@ -123,7 +136,7 @@ public class PortfolioHelper
     {
         if (editPortfolioDto.Code == Guid.Empty)
             return new ResultDto(false, "Select one portfolio.");
-        var portfolio = _portfolioService.GetPortfolioById(editPortfolioDto.Code, user.Id);
+        var portfolio = _portfolioService.GetPortfolioByIdToUpdate(editPortfolioDto.Code, user.Id);
         foreach (var item in editPortfolioDto.CodeImagesToAdd)
         {
             if(!portfolio.PortfolioMedias.Select(s => s.MediaId).Contains(item))
@@ -158,7 +171,7 @@ public class PortfolioHelper
         if (!string.IsNullOrEmpty(portfolioDto.NestedUrl) && portfolioDto.PortfolioSelected != Guid.Empty)
             return new ResultDto(false, "Please choose only one option between portfolio and url");
         
-        var media = _mediaService.GetMediaById(portfolioDto.MediaCode);
+        var media = _mediaService.GetMediaByIdForUpdate(portfolioDto.MediaCode);
         media.NestedPortfolioLinks = portfolioDto.PortfolioSelected == Guid.Empty ? null : portfolioDto.PortfolioSelected;
         media.NestedPortfolioUrl = portfolioDto.NestedUrl;
         
@@ -219,7 +232,7 @@ public class PortfolioHelper
 
     public async Task<ResultDto> UpdateLayout(UpdatePortfolioDto portfolioDto, MyUser userInfo)
     {
-        var portfolio = _portfolioService.GetPortfolioById(portfolioDto.Id, userInfo.Id);
+        var portfolio = _portfolioService.GetPortfolioByIdToUpdate(portfolioDto.Id, userInfo.Id);
         if (portfolio == null)
             return new ResultDto(false, "Portfolio not found.");
         portfolio.Layout = (VeesyConstants.PortfolioLayout)portfolioDto.LayoutGrid;
@@ -230,7 +243,7 @@ public class PortfolioHelper
 
     public async Task UpdateSortOrder(UpdateMediaSortOrderDto dto, MyUser userInfo)
     {
-        var portfolio = _portfolioService.GetPortfolioById(dto.PortfolioId, userInfo.Id);
+        var portfolio = _portfolioService.GetPortfolioByIdToUpdate(dto.PortfolioId, userInfo.Id);
         dto.NewMediasSortOrder.ToList().ForEach(fe =>
         {
             var mediaToUpd = portfolio.PortfolioMedias.SingleOrDefault(sd => sd.MediaId == fe.MediaId);
@@ -257,10 +270,19 @@ public class PortfolioHelper
         if (portfolio == null)
             return (null, new ResultDto(false, "Portfolio not found"));
 
+        var portfolioDto = MapPortfolioDtos.MapPreviewPortfolioDto(portfolio, languageSpoken, sector, usedSoftware, softSkill, infoToShow);
+        foreach (var portfolioMedia in portfolioDto.PortfolioMedias)
+        {
+            if (portfolioMedia != null && portfolioMedia.Media != null && portfolioMedia.Media.NestedPortfolioLinks != null && portfolioMedia.Media.NestedPortfolioLinks != Guid.Empty)
+            {
+                portfolioMedia.Media.NestedPortfolioNameForUrl = _portfolioService.GetPortfolioById(portfolioMedia.Media.NestedPortfolioLinks.Value, portfolioMedia.Media.UserId).Name.ToLower().Replace(" ", "-");
+            }
+        }
+        
         return (new PortfolioViewModel
         {
             OpenPopup = open, 
-            PortfolioDto = MapPortfolioDtos.MapPreviewPortfolioDto(portfolio, languageSpoken, sector, usedSoftware, softSkill, infoToShow),
+            PortfolioDto = portfolioDto,
             BasePathImages = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/",
             BasePathAzure = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/",
             ApplicationUrl = _config["ApplicationUrl"]
@@ -286,7 +308,7 @@ public class PortfolioHelper
 
     public async Task<ResultDto> PublishPortfolio(Guid portfolioId, MyUser userInfo)
     {
-        var portfolio = _portfolioService.GetPortfolioById(portfolioId, userInfo.Id);
+        var portfolio = _portfolioService.GetPortfolioByIdToUpdate(portfolioId, userInfo.Id);
         if (portfolio == null)
             return new ResultDto(false, "Portfolio not found.");
         portfolio.Status = PortfolioContants.STATUS_PUBLIC;
@@ -294,9 +316,9 @@ public class PortfolioHelper
         return new ResultDto(true, "");
     }
 
-    public (PortfolioViewModel model, ResultDto resultDto) GetPortfolioViewModel(Guid id)
+    public (PortfolioViewModel model, ResultDto resultDto) GetPortfolioViewModel(string user, string portfolioname)
     {
-        var portfolio = _portfolioService.GetPortfolioByIdForPreview(id);
+        var portfolio = _portfolioService.GetPortfolioByUserAndName(user, portfolioname);
         if (portfolio == null)
             return (null, new ResultDto(false, "Portfolio not found"));
         
@@ -305,14 +327,22 @@ public class PortfolioHelper
         var sector = infoToShow.SingleOrDefault(s => s.InfoToShow.Info == VeesyConstants.InfoToShow.Fields) != null ? _accountService.GetUserSector(portfolio.MyUserId) : new List<string>();
         var usedSoftware = infoToShow.SingleOrDefault(s => s.InfoToShow.Info == VeesyConstants.InfoToShow.Software) != null ? _accountService.GetUserUsedSoftware(portfolio.MyUserId) : new List<string>();
         var softSkill = infoToShow.SingleOrDefault(s => s.InfoToShow.Info == VeesyConstants.InfoToShow.SoftSkill) != null ? _accountService.GetUserSoftSkill(portfolio.MyUserId) : new List<string>();
-        
+        var portfolioDto = MapPortfolioDtos.MapPreviewPortfolioDto(portfolio, languageSpoken, sector, usedSoftware, softSkill, infoToShow);
+        foreach (var portfolioMedia in portfolioDto.PortfolioMedias)
+        {
+            if (portfolioMedia != null && portfolioMedia.Media != null && portfolioMedia.Media.NestedPortfolioLinks != null && portfolioMedia.Media.NestedPortfolioLinks != Guid.Empty)
+            {
+                portfolioMedia.Media.NestedPortfolioNameForUrl = _portfolioService.GetPortfolioById(portfolioMedia.Media.NestedPortfolioLinks.Value, portfolioMedia.Media.UserId).Name.ToLower().Replace(" ", "-");
+            }
+        }
         return (new PortfolioViewModel
         {
             Unlocked = false,
-            PortfolioDto = MapPortfolioDtos.MapPreviewPortfolioDto(portfolio, languageSpoken, sector, usedSoftware, softSkill, infoToShow),
+            PortfolioDto = portfolioDto,
             IsPublish = portfolio.Status == PortfolioContants.STATUS_PUBLIC,
             BasePathImages = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/",
-            BasePathAzure = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"
+            BasePathAzure = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/",
+            ApplicationUrl = _config["ApplicationUrl"]
         }, new ResultDto(true, ""));
     }
 
@@ -329,10 +359,20 @@ public class PortfolioHelper
         var softSkill = infoToShow.SingleOrDefault(s => s.InfoToShow.Info == VeesyConstants.InfoToShow.SoftSkill) != null ? _accountService.GetUserSoftSkill(portfolio.MyUserId) : new List<string>();
 
         var unlocked = model.ControlPassword == 1 && model.Password == portfolio.Password;
+
+        var portfolioDto = MapPortfolioDtos.MapPreviewPortfolioDto(portfolio, languageSpoken, sector, usedSoftware, softSkill, infoToShow);
+        foreach (var portfolioMedia in portfolioDto.PortfolioMedias)
+        {
+            if (portfolioMedia != null && portfolioMedia.Media != null && portfolioMedia.Media.NestedPortfolioLinks != null && portfolioMedia.Media.NestedPortfolioLinks != Guid.Empty)
+            {
+                portfolioMedia.Media.NestedPortfolioNameForUrl = _portfolioService.GetPortfolioById(portfolioMedia.Media.NestedPortfolioLinks.Value, portfolioMedia.Media.UserId).Name.ToLower().Replace(" ", "-");
+            }
+        }
+        
         return (new PortfolioViewModel
         {
             Unlocked = unlocked,
-            PortfolioDto = MapPortfolioDtos.MapPreviewPortfolioDto(portfolio, languageSpoken, sector, usedSoftware, softSkill, infoToShow),
+            PortfolioDto = portfolioDto,
             IsPublish = portfolio.Status == PortfolioContants.STATUS_PUBLIC,
             BasePathImages = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/",
             BasePathAzure = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"

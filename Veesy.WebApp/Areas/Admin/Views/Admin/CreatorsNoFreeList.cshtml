@@ -55,14 +55,14 @@
                             }
                             else
                             {
-                                <a href="@Url.Action("Portfolio", "Public", new { area = "Public", id = @user.MainPortfolioCode })">View link</a>
+                                <a href="@Url.Action("Portfolio", "Public", new { area = "Public", user = @user.FullnameForUrl, portfolioname = user.PortfolionameForUrl })">View link</a>
                             }
                         </td>
                         <td><a href="mailto:@user.Email">@user.Email</a></td>
                         <td><a href="mailto:@user.PhoneNumber">@user.PhoneNumber</a></td>
                         <td>
                             <a style="cursor: pointer" asp-action="CreatorInfo" asp-controller="Admin" asp-route-id="@user.Code" class="bg-primary rounded-circle p-2 text-white d-inline-flex "><i class="ti ti-eye fs-4"></i></a>
-                            <a style="cursor: pointer" onclick="CopyLink(' @user.Fullname \n @Model.ApplicationUrl@Url.Action("Portfolio", "Public", new { area = "Public", id = @user.MainPortfolioCode }) \n @user.Email \n @user.PhoneNumber')" class="bg-primary rounded-circle p-2 text-white d-inline-flex "><i class="ti ti-copy fs-4"></i></a>
+                            <a style="cursor: pointer" onclick="CopyLink(' @user.Fullname \n @Model.ApplicationUrl@Url.Action("Portfolio", "Public", new { area = "Public", user = @user.FullnameForUrl, portfolioname = user.PortfolionameForUrl }) \n @user.Email \n @user.PhoneNumber')" class="bg-primary rounded-circle p-2 text-white d-inline-flex "><i class="ti ti-copy fs-4"></i></a>
                         </td>
                     </tr>
 

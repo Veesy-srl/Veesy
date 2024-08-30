@@ -63,7 +63,7 @@
                         <a target="_blank" asp-action="PortfolioPreview" asp-controller="Portfolio" asp-area="Portfolio" asp-route-id="@item.Code" asp-route-open="@false" class="grey-link">Preview<i class="fa-solid fa-arrow-up-right-from-square ms-2"></i></a>
                     </div>
                     <div class="col-4 text-end vertical-space">
-                        <a onclick="CopyLink('@Model.ApplicationUrl@Url.Action("Portfolio", "Public", new {area = "Public", id = @item.Code})')" class="grey-link ms-2"><i class="fa-regular fa-clone pe-1"></i><strong>Copy link</strong></a>
+                        <a onclick="CopyLink('@Model.ApplicationUrl@Url.Action("Portfolio", "Public", new {area = "Public", user = @item.FullnameForUrl, portfolioname = @item.PortfolionameForUrl})')" class="grey-link ms-2"><i class="fa-regular fa-clone pe-1"></i><strong>Copy link</strong></a>
                         <div style="margin-top: 5.3rem; align-items: flex-end" class="d-flex justify-content-between">
                             @{
                                 var visibility = @item.IsMain ? "hidden" : "visible";

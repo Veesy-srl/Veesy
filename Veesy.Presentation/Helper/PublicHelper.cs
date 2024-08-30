@@ -19,12 +19,14 @@ public class PublicHelper
     private readonly IMediaService _mediaService;
     private readonly IAccountService _accountService;
     private readonly IConfiguration _config;
+    private readonly IPortfolioService _portfolioService;
 
-    public PublicHelper(IMediaService mediaService, IAccountService accountService, IConfiguration config)
+    public PublicHelper(IMediaService mediaService, IAccountService accountService, IConfiguration config, IPortfolioService portfolioService)
     {
         _mediaService = mediaService;
         _accountService = accountService;
         _config = config;
+        _portfolioService = portfolioService;
     }
 
     public async Task<AboutMediaViewModel> GetAboutInfo()
@@ -86,7 +88,8 @@ public class PublicHelper
         {
             User = userInfo,
             ApplicationUrl = _config["ApplicationUrl"],
-            PortfolioId =userInfo.Select(p => p.Portfolios[0].Id).ToList(),
+            PortfolioId = userInfo.Select(p => p.Portfolios[0].Id).ToList(),
+            Portfolios = userInfo.Select(p => p.Portfolios[0]).ToList(),
             CategoryWorks = categoryWorks.DistinctBy(s => s.CategoryWork.Name).Select(category => category.CategoryWork.Name).ToList(),
             BasePathImages = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"
         };
@@ -129,9 +132,20 @@ public class PublicHelper
     public SplashViewModel GetSplashViewModel()
     {
 
+        var mediasDto = MapCloudDtos.MapMediaList(_mediaService.GetRandomPhotos(18));
+        
+        foreach (var media in mediasDto)
+        {
+            if (media.NestedPortfolioLinks != null && media.NestedPortfolioLinks != Guid.Empty)
+            {
+                media.NestedPortfolioNameForUrl = _portfolioService
+                    .GetPortfolioById(media.NestedPortfolioLinks.Value, media.UserId).Name.ToLower().Replace(" ", "-");
+            }
+        }
+        
         var vm = new SplashViewModel()
         {
-            MediaDtos = MapCloudDtos.MapMediaList(_mediaService.GetRandomPhotos(18)),
+            MediaDtos = mediasDto,
             BasePathImages = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/",
             BasePathAzure = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"
         };

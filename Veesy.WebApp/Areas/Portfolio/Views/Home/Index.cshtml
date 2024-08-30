@@ -140,7 +140,7 @@
                         </div>
                     </div>
                     <div class="col-8 vertical-space">
-                        <h5><a class="blue-link-option" onclick="CopyLink('@Model.ApplicationUrl@Url.Action("Portfolio", "Public", new {area = "Public", id = @Model.PortfolioThumbnailDto.Code})')"><i class="fa-regular fa-clone me-2"></i></a><strong class="text-color">@Model.PortfolioThumbnailDto.Name</strong></h5>
+                        <h5><a class="blue-link-option" onclick="CopyLink('@Model.ApplicationUrl@Url.Action("Portfolio", "Public", new {area = "Public", user = @Model.PortfolioThumbnailDto.FullnameForUrl, portfolioname = Model.PortfolioThumbnailDto.PortfolionameForUrl})')"><i class="fa-regular fa-clone me-2"></i></a><strong class="text-color">@Model.PortfolioThumbnailDto.Name</strong></h5>
                         <p class="veesy-grey-p mb-0" style="margin-bottom: 2rem">Updated on @Model.PortfolioThumbnailDto.LastUpdate<br/>@Model.PortfolioThumbnailDto.NumberMedia media uploaded</p>
                     </div>
                 }

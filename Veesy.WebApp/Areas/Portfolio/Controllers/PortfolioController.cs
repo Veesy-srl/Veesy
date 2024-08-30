@@ -316,7 +316,7 @@ public class PortfolioController : VeesyController
         }
     }
     
-    [HttpPost]
+    [HttpPost("portfolio/publish/{portfolioId}")]
     public async Task<JsonResult> Publish([FromBody] Guid portfolioId)
     {
         try

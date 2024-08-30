@@ -235,9 +235,9 @@
         
         function OpenCreditsOrNestedLink() {
             if(nowNestedPortfolioId != null && nowNestedPortfolioId != "")
-                location.href = '@Model.ApplicationUrl' + "/portfolio/preview/" + nowNestedPortfolioId + "/false"
+                window.open('@Model.ApplicationUrl' + "/portfolio/preview/" + nowNestedPortfolioId + "/false", '_blank');
             else if (nowNestedUrl != null && nowNestedUrl != "")
-                location.href = nowNestedUrl
+                window.open(nowNestedUrl, '_blank');
             else if (nowHasCredits)
                 ShowOverlay(true)
         }

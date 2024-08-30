@@ -28,6 +28,14 @@ public class CloudHelper
     {
         var medias = _mediaService.GetAllByUserId(user);
         var mediasDto = MapCloudDtos.MapMediaList(medias);
+        foreach (var media in mediasDto)
+        {
+            if (media.NestedPortfolioLinks != null && media.NestedPortfolioLinks != Guid.Empty)
+            {
+                media.NestedPortfolioNameForUrl = _portfolioService
+                    .GetPortfolioById(media.NestedPortfolioLinks.Value, media.UserId).Name.ToLower().Replace(" ", "-");
+            }
+        }
         return new CloudViewModel()
         {
             ApplicationUrl = _config["ApplicationUrl"],
@@ -48,13 +56,34 @@ public class CloudHelper
         var nextMedia = _mediaService.GetNextMediaByDate(mediaSelected.CreateRecordDate, userInfo);
 
         var portfolios = _portfolioService.GetPortfoliosByUser(userInfo).ToList();
+
+        var mediaDto = MapCloudDtos.MapMedia(mediaSelected);
+        if (mediaDto.NestedPortfolioLinks != null && mediaDto.NestedPortfolioLinks != Guid.Empty)
+        {
+            mediaDto.NestedPortfolioNameForUrl = _portfolioService
+                .GetPortfolioById(mediaDto.NestedPortfolioLinks.Value, mediaDto.UserId).Name.ToLower().Replace(" ", "-");
+        }
+        
+        var previousMediaDto = MapCloudDtos.MapMedia(previousMedia);
+        if (previousMediaDto != null && previousMediaDto.NestedPortfolioLinks != null && previousMediaDto.NestedPortfolioLinks != Guid.Empty)
+        {
+            previousMediaDto.NestedPortfolioNameForUrl = _portfolioService
+                .GetPortfolioById(previousMediaDto.NestedPortfolioLinks.Value, previousMediaDto.UserId).Name.ToLower().Replace(" ", "-");
+        }
+        
+        var nextMediaDto = MapCloudDtos.MapMedia(nextMedia);
+        if (nextMediaDto != null && nextMediaDto.NestedPortfolioLinks != null && nextMediaDto.NestedPortfolioLinks != Guid.Empty)
+        {
+            nextMediaDto.NestedPortfolioNameForUrl = _portfolioService
+                .GetPortfolioById(nextMediaDto.NestedPortfolioLinks.Value, nextMediaDto.UserId).Name.ToLower().Replace(" ", "-");
+        }
         
         var vm = new EditViewModel()
         {
             Portfolios = portfolios,
-            Media = MapCloudDtos.MapMedia(mediaSelected),
-            PreviousMedia = MapCloudDtos.MapMedia(previousMedia),
-            NextMedia = MapCloudDtos.MapMedia(nextMedia),
+            Media = mediaDto,
+            PreviousMedia = previousMediaDto,
+            NextMedia = nextMediaDto,
             Username = userInfo.UserName,
             BasePath = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/",
             BasePathAzure = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/",
@@ -65,7 +94,7 @@ public class CloudHelper
 
     public async Task<ResultDto> UpdateFileName(MediaDto mediaDto, MyUser userInfo)
     {
-        var media = _mediaService.GetMediaById(mediaDto.Code);
+        var media = _mediaService.GetMediaByIdForUpdate(mediaDto.Code);
         if (media.MyUserId != userInfo.Id)
             return new ResultDto(false, "Transaction not allowed.");
         if(string.IsNullOrEmpty(mediaDto.OriginalFileName))
@@ -81,7 +110,7 @@ public class CloudHelper
 
     public async Task<ResultDto> UpdateFileUpdateCredits(MediaDto mediaDto, MyUser userInfo)
     {
-        var media = _mediaService.GetMediaById(mediaDto.Code);
+        var media = _mediaService.GetMediaByIdForUpdate(mediaDto.Code);
         if (media.MyUserId != userInfo.Id)
             return new ResultDto(false, "Transaction not allowed.");
         media.Credits = mediaDto.Credits;
@@ -93,9 +122,17 @@ public class CloudHelper
         var mediaSelected = _mediaService.GetMediaById(id);
         if (mediaSelected == null)
             return (new ResultDto(false, "Media selected not found."), null);
+        
+        var mediaDto = MapCloudDtos.MapMedia(mediaSelected);
+        if (mediaDto.NestedPortfolioLinks != null && mediaDto.NestedPortfolioLinks != Guid.Empty)
+        {
+            mediaDto.NestedPortfolioNameForUrl = _portfolioService
+                .GetPortfolioById(mediaDto.NestedPortfolioLinks.Value, mediaDto.UserId).Name.ToLower().Replace(" ", "-");
+        }
+        
         var vm = new SingleMediaViewModel()
         {
-            Media = MapCloudDtos.MapMedia(mediaSelected),
+            Media = mediaDto,
             BasePath = $"{_config["ApplicationUrl"]}{_config["ImagesEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/"
         };
         return (new ResultDto(true, ""), vm);

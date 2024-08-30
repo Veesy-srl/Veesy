@@ -62,7 +62,7 @@
         <div class="col-sm-12 col-md-6">
             <div class="d-flex">
                 <h2 class="text-color"><strong id="portfolio-name-title">@Model.Portfolio.Name</strong></h2>
-                <a onclick="CopyLink('@Model.ApplicationUrl@Url.Action("Portfolio", "Public", new {area = "Public", id = @Model.Portfolio.Id})')" class="blue-link ms-2 mt-1"><i class="fa-regular fa-l fa-clone pe-1"></i><strong></strong></a>
+                <a onclick="CopyLink('@Model.ApplicationUrl@Url.Action("Portfolio", "Public", new {area = "Public", user = @Model.Portfolio.FullnameForUrl, portfolioname = @Model.Portfolio.PortfolionameForUrl})')" class="blue-link ms-2 mt-1"><i class="fa-regular fa-l fa-clone pe-1"></i><strong></strong></a>
             </div>
             <p>Dynamically rearrange and personalize your portfolio's layout. Easily drag and move images to create your ideal showcase, tailoring each element to reflect your unique style and professional vision. Remember to publish to apply changes. <a class="grey-link ms-2"><strong>learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a></p>
             <div class="empty-veesy"></div>
@@ -392,12 +392,12 @@
         })
     }
     
-    function PublishPortfolio(layout) {
+    function PublishPortfolio() {
 
         var portfolioId = '@Model.Portfolio.Id'
         $.ajax({
             type: 'POST',
-            url: '@Url.Action("Publish", "Portfolio")',
+            url: '@Url.Action("Publish", "Portfolio", new {area = "Portfolio", portfolioId = Model.Portfolio.Id})',
             data: JSON.stringify(portfolioId),
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',

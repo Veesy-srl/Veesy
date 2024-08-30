@@ -29,6 +29,8 @@ public class PreviewPortfolioDto
     public List<string> SoftSkill { get; set; }
     public List<string> Sector { get; set; }
     public List<string> LanguageSpoken { get; set; }
+    public string FullnameForUrl => UserFullName.ToLower().Replace(" ", "-");
+    public string PortfolionameForUrl => Name.ToLower().Replace(" ", "-");
 }
 
 public class PortfolioDto
@@ -36,6 +38,7 @@ public class PortfolioDto
     public Guid Id { get; set; }
     public string MyUserId { get; set; } 
     public string Name { get; set; }
+    public string UserFullName { get; set; }
     public string Description { get; set; }
     public string Note { get; set; }
     public bool IsPublic { get; set; }
@@ -46,6 +49,8 @@ public class PortfolioDto
     public bool IsMain { get; set; }
     public int NumberImage { get; set; }
     public int NumberVideo { get; set; }
+    public string FullnameForUrl => UserFullName.ToLower().Replace(" ", "-");
+    public string PortfolionameForUrl => Name.ToLower().Replace(" ", "-");
     public MediaDto DefaultMedia { get; set; }
     public int NumberMedia => NumberImage + NumberVideo;
     public VeesyConstants.PortfolioLayout Layout { get; set; }
@@ -110,6 +115,9 @@ public class PortfolioThumbnailDto
     public Guid Code { get; set; }
     public string Name { get; set; }
     public int NumberMedia { get; set; }
+    public string FullnameForUrl => UserFullName.ToLower().Replace(" ", "-");
+    public string PortfolionameForUrl => Name.ToLower().Replace(" ", "-");
+    public string UserFullName { get; set; }
     public string LastUpdate { get; set; }
     public string? DefaultImageName { get; set; }
     public string? DefaultImageOriginalName { get; set; }
@@ -140,6 +148,7 @@ public static class MapPortfolioDtos
             IsMain = portfolio.IsMain,
             NumberMedia = portfolio.PortfolioMedias.Count,
             Name = portfolio.Name,
+            UserFullName = portfolio.MyUser.Fullname,
             IsVideo = MediaCostants.VideoExtensions.Contains(portfolio.PortfolioMedias
                 .SingleOrDefault(s => s.SortOrder == 0)
                 ?.Media.Type.ToUpper()),
@@ -166,6 +175,7 @@ public static class MapPortfolioDtos
             IsMain = portfolio.IsMain,
             NumberMedia = portfolio.PortfolioMedias.Count,
             Name = portfolio.Name,
+            UserFullName = portfolio.MyUser.Fullname,
             IsVideo = portfolio.PortfolioMedias.Count != 0 && MediaCostants.VideoExtensions.Contains(portfolio.PortfolioMedias
                 .SingleOrDefault(s => s.SortOrder == 0)
                 ?.Media.Type.ToUpper()),
@@ -184,11 +194,12 @@ public static class MapPortfolioDtos
     {
         if (portfolio == null)
             return null;
-
+        
         return new PortfolioDto()
         {
             Id = portfolio.Id,
             MyUserId = portfolio.MyUserId,
+            UserFullName = portfolio.MyUser.Fullname,
             Name = portfolio.Name,
             Description = portfolio.Description,
             Note = portfolio.Note,
@@ -256,6 +267,7 @@ public static class MapPortfolioDtos
         if (portfolio == null)
             return null;
 
+        
         return new PreviewPortfolioDto()
         {  
             Code = portfolio.Id,

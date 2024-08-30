@@ -219,12 +219,12 @@ public class PublicController : VeesyController
         }
     }
 
-    [HttpGet("portfolio/{id}")]
-    public IActionResult Portfolio(Guid id)
+    [HttpGet("portfolios/{user}/{portfolioname}")]
+    public IActionResult Portfolio(string user, string portfolioname)
     {
         try
         {
-            var res = _portfolioHelper.GetPortfolioViewModel(id);
+            var res = _portfolioHelper.GetPortfolioViewModel(user, portfolioname);
             if (!res.resultDto.Success)
             {
                 _notyfService.Custom(res.resultDto.Message, 10, "#ca0a0a");
@@ -240,7 +240,7 @@ public class PublicController : VeesyController
         }
     }
     
-    [HttpPost("portfolio/{id}")]
+    [HttpPost("portfolios/{user}/{portfolioname}")]
     public IActionResult Portfolio(PortfolioViewModel model)
     {
         try

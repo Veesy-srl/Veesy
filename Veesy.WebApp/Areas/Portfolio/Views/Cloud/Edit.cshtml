@@ -99,9 +99,14 @@
                     <div class="col-9 ps-0">
                         <p class="mb-0 text-white"><strong>Link this image to a portfolio</strong></p>
                         @{
+                            
+                            
                             if (Model.Media.NestedPortfolioLinks != null)
                             {
-                                <p id="number-portfolio-link" class="mb-0 text-grey">Currently linked to </p><a id="nested-value" asp-controller="Public" asp-action="Portfolio" asp-area="Public" asp-route-id="@Model.Portfolios.SingleOrDefault(s => s.Id == Model.Media.NestedPortfolioLinks).Id" target="_blank">@Model.Portfolios.SingleOrDefault(s => s.Id == Model.Media.NestedPortfolioLinks).Name</a>
+                                var portfolio = @Model.Portfolios.SingleOrDefault(s => s.Id == Model.Media.NestedPortfolioLinks);
+                                var userForUrl = (portfolio.MyUser.Name + "-" + portfolio.MyUser.Surname).ToLower().Replace(" ", "-");
+                                var portfolioNameForUrl = (portfolio.Name).ToLower().Replace(" ", "-");
+                                <p id="number-portfolio-link" class="mb-0 text-grey">Currently linked to </p><a id="nested-value" asp-controller="Public" asp-action="Portfolio" asp-area="Public" asp-route-user="@userForUrl" asp-route-portfolioname="@portfolioNameForUrl" target="_blank">@portfolio.Name</a>
                             }
                             else if (!string.IsNullOrEmpty(Model.Media.NestedPortfolioUrl))
                             {
