@@ -235,8 +235,8 @@
             <div id="input-portfolio">
                 <div class="modal-body">
                     <p class="mb-0 text-color">name your Portfolio</p>
-                    <input type="text" id="portfolio-name-edit" rows="4" class="w-100 input-modal text-profile"/>
-                    <p class="mb-0 text-color"><strong>max. 50 characters</strong></p>
+                    <input oninput="CountCharacter(50, 'portfolio-name-counter', 'portfolio-name-edit')" type="text" id="portfolio-name-edit" rows="4" class="w-100 input-modal text-profile"/>
+                    <p class="mb-0 text-color"><strong id="portfolio-name-counter">50 / 50</strong></p>
                 </div>
                 <div class="modal-footer">                
                     <button onclick="CreateNewPortfolio()" class="mt-2 rounded-pill btn btn-primary btn-padding a-font-p" type="submit">save</button>

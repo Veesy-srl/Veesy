@@ -99,7 +99,7 @@
                         
                         var role = Model.Role != null && Model.Role.Contains("'") ? Model.Role.Replace("'", "&#x27;") : Model.Role;
 
-                        <div class="col-3 text-end"><a onclick="openModal('#modalWorkRole'); setTextAreaValue('category-edit', '@role');" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
+                        <div class="col-3 text-end"><a onclick="openModal('#modalWorkRole'); setTextAreaValue('category-edit', '@role'), CountCharacter(50, 'category-counter', 'category-edit')" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a></div>
                     }
                 </div>
                 <hr class="hr color-hr"/>
@@ -203,7 +203,7 @@
                                                                                                     
                 var portfolioIntro = Model.PortfolioIntro != null && Model.PortfolioIntro.Contains("'") ? Model.PortfolioIntro.Replace("'", "&#x27;") : Model.PortfolioIntro;
 
-                <a onclick="openModal('#modalPortfolioIntro'), setTextAreaValue('portfolio-intro-text-edit', '@portfolioIntro')" class="grey-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
+                <a onclick="openModal('#modalPortfolioIntro'), setTextAreaValue('portfolio-intro-text-edit', '@portfolioIntro'), CountCharacter(100, 'portfolio-intro-text-counter', 'portfolio-intro-text-edit')" class="grey-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
 
             }
         </div>
@@ -222,7 +222,7 @@
                                    
                 var biography = Model.Biography != null && Model.Biography.Contains("'") ? Model.Biography.Replace("'", "&#x27;") : Model.Biography;
 
-                <a onclick="openModal('#modalBiography'), setTextAreaValue('biography-text-edit', '@biography')" class="grey-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
+                <a onclick="openModal('#modalBiography'), setTextAreaValue('biography-text-edit', '@biography'), CountCharacter(500, 'biography-text-counter', 'biography-text-edit')" class="grey-link a-font-p"><i class="fa-regular fa-pen-to-square pe-1"></i><strong>edit</strong></a>
 
             }
         </div>
@@ -401,8 +401,8 @@
             </div>
             <div class="modal-body">
                 <p class="text-color">Write a bio about yourself, try to make it synthetic and professional</p>
-                <textarea id="biography-text-edit" rows="4" class="w-100 text-profile"></textarea>
-                <p class="mb-0 text-color"><strong>max. 500 characters</strong></p>  
+                <textarea oninput="CountCharacter(500, 'biography-text-counter', 'biography-text-edit')" id="biography-text-edit" rows="4" class="w-100 text-profile"></textarea>
+                <p class="mb-0 text-color"><strong id="biography-text-counter">500 / 500</strong></p>  
             </div>
             <div class="modal-footer">                
                 <button onclick="UpdateBiography()" class="rounded-pill btn btn-primary btn-padding a-font-p" type="submit">save</button>
@@ -438,8 +438,8 @@
             </div>
             <div class="modal-body">
                 <p class="text-color">Write a short info about yourself, try to make it brief and catchy</p>
-                <textarea id="portfolio-intro-text-edit" rows="4" class="w-100 text-profile"></textarea>
-                <p class="mb-0 text-color"><strong>max. 100 characters</strong></p>  
+                <textarea oninput="CountCharacter(100, 'portfolio-intro-text-counter', 'portfolio-intro-text-edit')" id="portfolio-intro-text-edit" rows="4" class="w-100 text-profile"></textarea>
+                <p class="mb-0 text-color"><strong id="portfolio-intro-text-counter">100 / 100</strong></p>  
             </div>
             <div class="modal-footer">                
                 <button onclick="UpdatePortfolioIntro()" class="rounded-pill btn btn-primary btn-padding a-font-p" type="submit">save</button>
@@ -457,8 +457,8 @@
             </div>
             <div class="modal-body">
                 <p class="text-color">Write about your role.</p>
-                <textarea id="category-edit" rows="4" class="w-100 text-profile"></textarea>
-                <p class="mb-0 text-color"><strong>max. 50 characters</strong></p>  
+                <textarea oninput="CountCharacter(50, 'category-counter', 'category-edit')" id="category-edit" rows="4" class="w-100 text-profile"></textarea>
+                <p class="mb-0 text-color"><strong id="category-counter">50 / 50</strong></p>  
             </div>
             <div class="modal-footer">                
                 <button onclick="UpdateCategory()" class="rounded-pill btn btn-primary btn-padding a-font-p" type="submit">save</button>
@@ -661,7 +661,8 @@
 {
 
     <script>
-    function OpenUrlNewTab(url) {
+
+        function OpenUrlNewTab(url) {
         window.open(url, '_blank');
     }
 
@@ -966,7 +967,8 @@ function UpdateCategory() {
     })
 }
          
-  </script>
+  
+    </script>
 }
 
 <style>

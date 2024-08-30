@@ -460,5 +460,16 @@
             navigator.clipboard.writeText(content);
             toastNotifyCustom("Link copied!", 3000, "#75ccdd", "")
         }
+
+        function CountCharacter(limiteCaratteri, textCounter, text) {
+            var inputText = document.getElementById(text).value;
+            var numberOfCharacters = inputText.length;
+            if (numberOfCharacters >= limiteCaratteri){
+                document.getElementById(text).value = inputText.substring(0, limiteCaratteri);
+                numberOfCharacters = limiteCaratteri
+            }
+            var rimanenza = limiteCaratteri - numberOfCharacters;
+            document.getElementById(textCounter).textContent = rimanenza + " / " + limiteCaratteri;
+        }
          
   </script>
