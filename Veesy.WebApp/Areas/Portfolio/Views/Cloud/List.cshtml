@@ -124,36 +124,41 @@
             <div id="input-portfolio-edit">
                 <div class="modal-body">
                     <div class="row select-portfolio-modal">
-                        @foreach (var item in @Model.Portfolios)
-                        {
-                            <div class="col-sm-12 col-md-6 mb-4">
-                                <div id="div-select-portfolio-@item.Code" class="d-flex p-2 select-portfolio" onclick="SelectPortfolio('@item.Code')">
-                                    <div class="w-50">
-                                        @if (!item.IsVideo)
-                                        {
-                                            if (item.DefaultImageName != "")
-                                            {
-                                                <img src="@Model.BasePath@item.DefaultImageName?tr=w-400" class="img-thumbnail-custom-portfolio w-100" title="@item.DefaultImageOriginalName">
-                                            }
-                                            else
-                                            {
-                                                <img src="~/imgs/noimage.png" class="img-thumbnail-custom-portfolio w-100" title="@item.DefaultImageOriginalName">
-                                            }
-                                        }
-                                        else
-                                        {
-                                            <video autoplay="autoplay" muted loop class="img-thumbnail-custom-portfolio w-100" title="@item.DefaultImageOriginalName">
-                                                <source src="@Model.BasePath@item.DefaultImageName?tr=w-400" type="video/mp4">
-                                            </video>
-                                        }
+                        @{
+                            if (Model.Portfolios != null)
+                            {
+                                foreach (var item in @Model.Portfolios)
+                                {
+                                    <div class="col-sm-12 col-md-6 mb-4">
+                                        <div id="div-select-portfolio-@item.Code" class="d-flex p-2 select-portfolio" onclick="SelectPortfolio('@item.Code')">
+                                            <div class="w-50">
+                                                @if (!item.IsVideo)
+                                                {
+                                                    if (item.DefaultImageName != "")
+                                                    {
+                                                        <img src="@Model.BasePath@item.DefaultImageName?tr=w-400" class="img-thumbnail-custom-portfolio w-100" title="@item.DefaultImageOriginalName">
+                                                    }
+                                                    else
+                                                    {
+                                                        <img src="~/imgs/noimage.png" class="img-thumbnail-custom-portfolio w-100" title="@item.DefaultImageOriginalName">
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <video autoplay="autoplay" muted loop class="img-thumbnail-custom-portfolio w-100" title="@item.DefaultImageOriginalName">
+                                                        <source src="@Model.BasePath@item.DefaultImageName?tr=w-400" type="video/mp4">
+                                                    </video>
+                                                }
+                                            </div>
+                                            <div class="w-50 ps-2">
+                                                <p class="mb-0 text-color"><strong>@item.Name</strong></p>
+                                                <p class="mb-0 text-grey">Updated on <br/>@item.LastUpdate</p>
+                                                <p class="mb-0 text-grey">@item.NumberMedia medias</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="w-50 ps-2">
-                                        <p class="mb-0 text-color"><strong>@item.Name</strong></p>
-                                        <p class="mb-0 text-grey">Updated on <br/>@item.LastUpdate</p>
-                                        <p class="mb-0 text-grey">@item.NumberMedia medias</p>
-                                    </div>
-                                </div>
-                            </div>
+                                }
+                            }
                         }
                     </div>                
                 </div>

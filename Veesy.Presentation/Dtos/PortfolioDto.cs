@@ -164,7 +164,7 @@ public static class MapPortfolioDtos
 
     public static List<PortfolioThumbnailDto> MapListPortfolioThumbnailDto(List<Portfolio>? portfolios)
     {
-        if (portfolios == null)
+        if (portfolios == null || portfolios.Count == 0)
             return null;
 
         var portfoliosDto = new List<PortfolioThumbnailDto>();
