@@ -125,8 +125,7 @@
                 <div class="modal-body">
                     <div class="row select-portfolio-modal">
                         @{
-                            if (Model.Portfolios != null)
-                            {
+                            if (@Model.Portfolios != null)
                                 foreach (var item in @Model.Portfolios)
                                 {
                                     <div class="col-sm-12 col-md-6 mb-4">
@@ -294,13 +293,22 @@
         document.getElementById("input-portfolio-edit").style.display = "block";
         document.getElementById("success-portfolio-edit").style.display = "none";
     }
+    @{
+        var portfolioCode = "";
+        var portfoliosNumber = 0;
+        if (Model.Portfolios != null && Model.Portfolios.FirstOrDefault() != null)
+        {
+            portfoliosNumber = @Model.Portfolios.Count;
+            portfolioCode = Model.Portfolios.FirstOrDefault().Code.ToString();
+        }
+    }
     
     function CountPortfolioAndAddMedia(){
         
         openModal('#modalAddMediaToPortfolio')
         resetModalAdd()
-        if (@Model.Portfolios.Count == 1){
-            SelectPortfolio('@Model.Portfolios.FirstOrDefault().Code')
+        if (@portfoliosNumber == 1){
+            SelectPortfolio('@portfolioCode')
         }
     }
     

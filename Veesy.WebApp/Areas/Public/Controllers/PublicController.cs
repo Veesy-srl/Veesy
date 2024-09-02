@@ -219,7 +219,7 @@ public class PublicController : VeesyController
         }
     }
 
-    [HttpGet("portfolios/{user}/{portfolioname}")]
+    [HttpGet("folio/{user}/{portfolioname}")]
     public IActionResult Portfolio(string user, string portfolioname)
     {
         try

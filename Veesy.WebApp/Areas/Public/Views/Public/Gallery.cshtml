@@ -166,7 +166,7 @@
         
         function OpenCreditsOrNestedLink() {
             if(nowNestedPortfolioId != null && nowNestedPortfolioId != "")
-                window.open('@Model.BasePathCode' + "/portfolios/" + nowNestedPortfolioUser + "/" + nowNestedPortfolioName, '_blank')
+                window.open('@Model.BasePathCode' + "/folio/" + nowNestedPortfolioUser + "/" + nowNestedPortfolioName, '_blank')
             else if (nowNestedUrl != null && nowNestedUrl != "")
                 window.open(nowNestedUrl, '_blank')
             else if (nowHasCredits)
