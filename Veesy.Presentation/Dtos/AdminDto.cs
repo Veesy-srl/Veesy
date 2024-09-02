@@ -57,6 +57,7 @@ public class FrelancerDto
     public Guid MainPortfolioCode { get; set; }
     public string PortfolioName { get; set; }
     public int PortfoliosCount { get; set; }
+    public int PublicPortfoliosCount { get; set; }
     public int MediasCount { get; set; }
     public List<string> Software { get; set; }
     public string Category { get; set; }
@@ -90,6 +91,7 @@ public static class MapAdminDto{
             Email = user.Email,
             PhoneNumber = user.PhoneNumber,
             PortfoliosCount = user.Portfolios != null ? user.Portfolios.Count : 0,
+            PublicPortfoliosCount = user.Portfolios != null ? user.Portfolios.Count(s => s.Status == 1) : 0,
             MediasCount = user.Medias != null ? user.Medias.Count : 0,
             PortfolioName = user.Portfolios == null || user.Portfolios.Count == 0 ? "" : user.Portfolios[0].Name,
             SubscriptionPlan = user.MyUserSubscriptionPlans.LastOrDefault().SubscriptionPlan.Name,

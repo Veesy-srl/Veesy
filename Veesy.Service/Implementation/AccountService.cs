@@ -323,6 +323,7 @@ public class AccountService : IAccountService
                 .ThenInclude(s => s.Sector)
             .Include(s => s.MyUserSkills.Where(s => s.Type == SkillConstants.SoftSkill))
                 .ThenInclude(s => s.Skill)
+            .Include(s => s.Portfolios)
             .Where(s => s.MyUserSubscriptionPlans.Count != 0)
             .ToList();
     }

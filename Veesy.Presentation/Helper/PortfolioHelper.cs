@@ -187,7 +187,7 @@ public class PortfolioHelper
             return new ResultDto(false, "Please insert password.");
         if (portfolioDto.Password.Length < 6)
             return new ResultDto(false, "Min characters are 6.");
-        var portfolio = _portfolioService.GetPortfolioById(portfolioDto.Id, userInfo.Id);
+        var portfolio = _portfolioService.GetPortfolioByIdToUpdate(portfolioDto.Id, userInfo.Id);
         portfolio.Password = portfolioDto.Password;
         portfolio.IsPublic = false;
         await _portfolioService.UpdatePortfolio(portfolio, userInfo);
@@ -316,9 +316,9 @@ public class PortfolioHelper
         return new ResultDto(true, "");
     }
 
-    public (PortfolioViewModel model, ResultDto resultDto) GetPortfolioViewModel(string user, string portfolioname)
+    public (PortfolioViewModel model, ResultDto resultDto) GetPortfolioViewModel(Guid id, string user, string portfolioname)
     {
-        var portfolio = _portfolioService.GetPortfolioByUserAndName(user, portfolioname);
+        var portfolio = id == Guid.Empty ? _portfolioService.GetPortfolioByUserAndName(user, portfolioname) : _portfolioService.GetPortfolioByIdForPreview(id);
         if (portfolio == null)
             return (null, new ResultDto(false, "Portfolio not found"));
         
