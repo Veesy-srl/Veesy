@@ -148,9 +148,9 @@ public class MediaService : IMediaService
         return _uoW.MediaRepository.FindByCondition(s => imgToDelete.Contains(s.Id)).Include(s => s.PortfolioMedias).ToList();
     }
 
-    public int GetMediaNumberByUser(MyUser user)
+    public int GetMediaNumberByUser(string userId)
     {
-        return _uoW.MediaRepository.FindByCondition(s => s.MyUserId == user.Id).ToList().Count;
+        return _uoW.MediaRepository.FindByCondition(s => s.MyUserId == userId).ToList().Count;
     }
 
     public int GetMediaNumber()

@@ -46,7 +46,7 @@ public class FrelancerDto
 {
     public string Fullname => FirstName +  " " + LastName;
     public string FullnameForUrl => (FirstName + "-" + LastName).ToLower().Replace(" ", "-");
-    public string PortfolionameForUrl => PortfolioName.ToLower().Replace(" ", "-");
+    public string PortfolionameForUrl => PortfolioName == null ? "" : PortfolioName.ToLower().Replace(" ", "-");
     public string CreateDate { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
@@ -82,25 +82,24 @@ public static class MapAdminDto{
     public static List<FrelancerDto> MapCreatorDtos(List<MyUser> users)
     {
         var frelancerDtos = new List<FrelancerDto>();
-        users.ForEach(user => frelancerDtos.Add(new FrelancerDto()
+        var us = users.ToArray();
+        foreach (var user in us)
         {
-            MainPortfolioCode = user.Portfolios == null || user.Portfolios.Count == 0 ? Guid.Empty : user.Portfolios[0].Id,
-            Code = user.Id,
-            FirstName = user.Name,
-            LastName = user.Surname,
-            Email = user.Email,
-            PhoneNumber = user.PhoneNumber,
-            PortfoliosCount = user.Portfolios != null ? user.Portfolios.Count : 0,
-            PublicPortfoliosCount = user.Portfolios != null ? user.Portfolios.Count(s => s.Status == 1) : 0,
-            MediasCount = user.Medias != null ? user.Medias.Count : 0,
-            PortfolioName = user.Portfolios == null || user.Portfolios.Count == 0 ? "" : user.Portfolios[0].Name,
-            SubscriptionPlan = user.MyUserSubscriptionPlans.LastOrDefault().SubscriptionPlan.Name,
-            Category = user.Category,
-            Fields = user.MyUserSectors.Select(s => s.Sector.Name).ToList(),
-            Software = user.MyUserUsedSoftwares.Select(s => s.UsedSoftware.Name).ToList(),
-            SoftSkill = user.MyUserSkills.Select(s => s.Skill.Name).ToList(),
-            CreateDate = user.CreateDate.ToString("dd/MM/yy hh:mm")
-        }));
+            frelancerDtos.Add(new FrelancerDto()
+            {
+                Code = user.Id,
+                FirstName = user.Name,
+                LastName = user.Surname,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                SubscriptionPlan = user.MyUserSubscriptionPlans.Count == 0 ? "Free" : user.MyUserSubscriptionPlans.LastOrDefault().SubscriptionPlan.Name,
+                Category = user.Category,
+                Fields = user.MyUserSectors == null ? null : user.MyUserSectors.Select(s => s.Sector.Name).ToList(),
+                Software = user.MyUserUsedSoftwares == null ? null : user.MyUserUsedSoftwares.Select(s => s.UsedSoftware.Name).ToList(),
+                SoftSkill = user.MyUserSkills == null ? null : user.MyUserSkills.Select(s => s.Skill.Name).ToList(),
+                CreateDate = user.CreateDate.ToString("dd/MM/yy hh:mm")
+            });
+        }
         return frelancerDtos;
     }
     

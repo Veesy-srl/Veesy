@@ -58,7 +58,7 @@ public class PortfolioHelper
 
     public async Task<(ResultDto result, Guid code)> CreateNewPortfolio(NewPortfolioDto newPortfolioDto, MyUser userInfo)
     {
-        var numberPortfolio = _portfolioService.GetPortfoliosNumberByUser(userInfo);
+        var numberPortfolio = _portfolioService.GetPortfoliosNumberByUser(userInfo.Id);
         var subscriptionPlan = _accountService.GetUserSubscriptionPlan(userInfo.Id);
         if(numberPortfolio > subscriptionPlan.AllowedPortfolio && subscriptionPlan.Name == VeesyConstants.SubscriptionPlan.Free)
         return (new ResultDto(false,
