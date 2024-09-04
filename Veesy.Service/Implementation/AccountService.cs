@@ -334,7 +334,7 @@ public class AccountService : IAccountService
                     .FirstOrDefault() ?? "Free",
                 CreateDate = user.CreateDate.ToString("dd/MM/yy hh:mm"),
                 PortfoliosCount = user.Portfolios.Count,
-                PublicPortfoliosCount = user.Portfolios.Count(s => s.IsPublic),
+                PublicPortfoliosCount = user.Portfolios.Count(s => s.Status == PortfolioContants.STATUS_PUBLISHED),
                 PortfolioName = user.Portfolios.Where(s => s.IsMain)
                     .Select(s => s.Name)
                     .FirstOrDefault(),

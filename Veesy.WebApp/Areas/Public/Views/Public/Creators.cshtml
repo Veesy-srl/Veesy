@@ -22,7 +22,7 @@
 			<div class="col-md-4 col-lg-3 col-sm-6 mt-2 mb-2" id="@Model.User[u].Id">
 				@{
 					var userForUrl = (Model.User[u].Name + "-" + Model.User[u].Surname).ToLower().Replace(" ", "-");
-					var portfolioNameForUrl = (Model.Portfolios[u].Name).ToLower().Replace(" ", "-");
+					var portfolioNameForUrl = (Model.Portfolios[u].Name).ToLower().Replace(" ", "-").Replace("/", "-");
 				}
 				<a method="get" asp-area="Public" asp-controller="Public" asp-action="Portfolio" asp-route-user="@userForUrl" asp-route-portfolioname="@portfolioNameForUrl">
 					<div class="card-white-veesy-creators p-3 mb-3 d-flex flex-column position-relative" onmouseover="highlightCard(this)" onmouseout="resetCard(this)">
