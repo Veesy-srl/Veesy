@@ -411,9 +411,9 @@ public class ProfileHelper
         if (numberMedia > subscriptionPlan.AllowedMediaNumber)
             return new ResultDto(false,
                 $"{subscriptionPlan.Name} plan is limited to {subscriptionPlan.AllowedMediaNumber} medias. Please remove {numberMedia - subscriptionPlan.AllowedMediaNumber} medias and retry.");
-        if (mediaSize > subscriptionPlan.AllowedMegaByte * 1024 * 1024)
+        if (mediaSize > ((long)subscriptionPlan.AllowedMegaByte * 1024 * 1024))
             return new ResultDto(false,
-                $"{subscriptionPlan.Name} plan is limited to {subscriptionPlan.AllowedMegaByte}Mb. Please remove {(mediaSize - subscriptionPlan.AllowedMegaByte * 1024 * 1024) / (1024 * 1024)}Mb and retry.");
+                $"{subscriptionPlan.Name} plan is limited to {subscriptionPlan.AllowedMegaByte}Mb. Please remove {(mediaSize - ((long)subscriptionPlan.AllowedMegaByte * 1024 * 1024)) / (1024 * 1024)}Mb and retry.");
         await _accountService.AddNewUserSubscription(userClient.Id, subscriptionPlan.Id, user);
         return new ResultDto(true, $"{subscriptionPlan.Name} now is active.");
     } 

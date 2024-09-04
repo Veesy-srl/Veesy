@@ -33,7 +33,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> Login(string username, string password)
+    public async Task<IActionResult> SignIn(string username, string password)
     {
         try
         {
@@ -51,6 +51,11 @@ public class AuthController : ControllerBase
                 {
                     return StatusCode(401, new LoginResponse(-1, "Username or password are invalid"));
                 }
+            }
+
+            if (!(await _userManager.GetRolesAsync(user)).Contains(Roles.Developer))
+            {
+                return StatusCode(401, new LoginResponse(-1, "User are not authorized to use API."));
             }
 
             var result = await _signInManager.PasswordSignInAsync(user,password, false, lockoutOnFailure: false);
