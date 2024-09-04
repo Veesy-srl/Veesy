@@ -17,7 +17,7 @@ namespace Veesy.Domain.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.9")
+                .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -88,7 +88,8 @@ namespace Veesy.Domain.Migrations
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(13)
+                        .HasColumnType("nvarchar(13)");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -142,7 +143,7 @@ namespace Veesy.Domain.Migrations
 
                     b.ToTable("AspNetUsers", (string)null);
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
+                    b.HasDiscriminator().HasValue("IdentityUser");
 
                     b.UseTphMappingStrategy();
                 });
@@ -385,6 +386,9 @@ namespace Veesy.Domain.Migrations
 
                     b.Property<Guid?>("NestedPortfolioLinks")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("NestedPortfolioUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OriginalFileName")
                         .IsRequired()
@@ -1133,6 +1137,9 @@ namespace Veesy.Domain.Migrations
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("EmailUpdateProSended")
+                        .HasColumnType("bit");
 
                     b.Property<string>("ExternalLink")
                         .IsRequired()

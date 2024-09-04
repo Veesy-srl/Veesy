@@ -105,7 +105,7 @@
             <div class="d-flex align-items-center">
                 @if (Model.Portfolios != null && Model.Portfolios.Count > 0)
                 {
-                    <a onclick="openModal('#modalAddMediaToPortfolio'), resetModalAdd()" class="me-4 fw-bolder a-font-p" style="font-size: 14px; margin-top: 2px;">+ add to portfolio</a>
+                    <a onclick="CountPortfolioAndAddMedia()" class="me-4 fw-bolder a-font-p" style="font-size: 14px; margin-top: 2px;">+ add to portfolio</a>
                 }
                 <button onclick="openModal('#modalCreatePortfolio'), ResetInput()" class="rounded-pill btn-primary btn-variant" style="padding-left: 35px !important; padding-right:  35px !important; font-size:  15px;" type="submit">create portfolio</button>
                 <a class="ms-4 me-2 mt-1" type="button" onclick="CloseAlert()"><i class="fa-solid fa-grey fa-circle-xmark a-font-p"></i></a>
@@ -124,36 +124,40 @@
             <div id="input-portfolio-edit">
                 <div class="modal-body">
                     <div class="row select-portfolio-modal">
-                        @foreach (var item in @Model.Portfolios)
-                        {
-                            <div class="col-sm-12 col-md-6 mb-4">
-                                <div id="div-select-portfolio-@item.Code" class="d-flex p-2 select-portfolio" onclick="SelectPortfolio('@item.Code')">
-                                    <div class="w-50">
-                                        @if (!item.IsVideo)
-                                        {
-                                            if (item.DefaultImageName != "")
-                                            {
-                                                <img src="@Model.BasePath@item.DefaultImageName?tr=w-400" class="img-thumbnail-custom-portfolio w-100" title="@item.DefaultImageOriginalName">
-                                            }
-                                            else
-                                            {
-                                                <img src="~/imgs/noimage.png" class="img-thumbnail-custom-portfolio w-100" title="@item.DefaultImageOriginalName">
-                                            }
-                                        }
-                                        else
-                                        {
-                                            <video autoplay="autoplay" muted loop class="img-thumbnail-custom-portfolio w-100" title="@item.DefaultImageOriginalName">
-                                                <source src="@Model.BasePath@item.DefaultImageName?tr=w-400" type="video/mp4">
-                                            </video>
-                                        }
+                        @{
+                            if (@Model.Portfolios != null)
+                                foreach (var item in @Model.Portfolios)
+                                {
+                                    <div class="col-sm-12 col-md-6 mb-4">
+                                        <div id="div-select-portfolio-@item.Code" class="d-flex p-2 select-portfolio" onclick="SelectPortfolio('@item.Code')">
+                                            <div class="w-50">
+                                                @if (!item.IsVideo)
+                                                {
+                                                    if (item.DefaultImageName != "")
+                                                    {
+                                                        <img src="@Model.BasePath@item.DefaultImageName?tr=w-400" class="img-thumbnail-custom-portfolio w-100" title="@item.DefaultImageOriginalName">
+                                                    }
+                                                    else
+                                                    {
+                                                        <img src="~/imgs/noimage.png" class="img-thumbnail-custom-portfolio w-100" title="@item.DefaultImageOriginalName">
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <video autoplay="autoplay" muted loop class="img-thumbnail-custom-portfolio w-100" title="@item.DefaultImageOriginalName">
+                                                        <source src="@Model.BasePath@item.DefaultImageName?tr=w-400" type="video/mp4">
+                                                    </video>
+                                                }
+                                            </div>
+                                            <div class="w-50 ps-2">
+                                                <p class="mb-0 text-color"><strong>@item.Name</strong></p>
+                                                <p class="mb-0 text-grey">Updated on <br/>@item.LastUpdate</p>
+                                                <p class="mb-0 text-grey">@item.NumberMedia medias</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="w-50 ps-2">
-                                        <p class="mb-0 text-color"><strong>@item.Name</strong></p>
-                                        <p class="mb-0 text-grey">Updated on <br/>@item.LastUpdate</p>
-                                        <p class="mb-0 text-grey">@item.NumberMedia medias</p>
-                                    </div>
-                                </div>
-                            </div>
+                                }
+                            }
                         }
                     </div>                
                 </div>
@@ -235,8 +239,8 @@
             <div id="input-portfolio">
                 <div class="modal-body">
                     <p class="mb-0 text-color">name your Portfolio</p>
-                    <input type="text" id="portfolio-name-edit" rows="4" class="w-100 input-modal text-profile"/>
-                    <p class="mb-0 text-color"><strong>max. 50 characters</strong></p>
+                    <input oninput="CountCharacter(50, 'portfolio-name-counter', 'portfolio-name-edit')" type="text" id="portfolio-name-edit" rows="4" class="w-100 input-modal text-profile"/>
+                    <p class="mb-0 text-color"><strong id="portfolio-name-counter">50 / 50</strong></p>
                 </div>
                 <div class="modal-footer">                
                     <button onclick="CreateNewPortfolio()" class="mt-2 rounded-pill btn btn-primary btn-padding a-font-p" type="submit">save</button>
@@ -289,7 +293,24 @@
         document.getElementById("input-portfolio-edit").style.display = "block";
         document.getElementById("success-portfolio-edit").style.display = "none";
     }
+    @{
+        var portfolioCode = "";
+        var portfoliosNumber = 0;
+        if (Model.Portfolios != null && Model.Portfolios.FirstOrDefault() != null)
+        {
+            portfoliosNumber = @Model.Portfolios.Count;
+            portfolioCode = Model.Portfolios.FirstOrDefault().Code.ToString();
+        }
+    }
     
+    function CountPortfolioAndAddMedia(){
+        
+        openModal('#modalAddMediaToPortfolio')
+        resetModalAdd()
+        if (@portfoliosNumber == 1){
+            SelectPortfolio('@portfolioCode')
+        }
+    }
     
     function AddToPortfolio() {
         $('#load-spinner').css("display", "block");

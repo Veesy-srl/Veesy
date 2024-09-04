@@ -5,9 +5,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using NLog;
 using Veesy.Domain.Constants;
 using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
+using Veesy.Email;
 using Veesy.Presentation.Model.Account;
 using Veesy.Service.Dtos;
 using Veesy.Service.Interfaces;
@@ -17,6 +19,7 @@ namespace Veesy.Presentation.Helper;
 
 public class ProfileHelper
 {
+    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     private readonly IAccountService _accountService;
     private readonly IPortfolioService _portfolioService;
     private readonly MyUserValidator _myUserValidator;
@@ -24,8 +27,9 @@ public class ProfileHelper
     private readonly MediaHelper _mediaHelper;
     private readonly IConfiguration _config;
     private IMediaService _mediaService;
+    private readonly IEmailSender _emailSender;
 
-    public ProfileHelper(IAccountService accountService, IPortfolioService portfolioService, MyUserValidator myUserValidator, UserManager<MyUser> userManager, MediaHelper mediaHelper, IConfiguration config, IMediaService mediaService)
+    public ProfileHelper(IAccountService accountService, IPortfolioService portfolioService, MyUserValidator myUserValidator, UserManager<MyUser> userManager, MediaHelper mediaHelper, IConfiguration config, IMediaService mediaService, IEmailSender emailSender)
     {
         _accountService = accountService;
         _myUserValidator = myUserValidator;
@@ -33,6 +37,7 @@ public class ProfileHelper
         _mediaHelper = mediaHelper;
         _config = config;
         _mediaService = mediaService;
+        _emailSender = emailSender;
         _portfolioService = portfolioService; }
 
     public async Task<ResultDto> UpdateMyUserBio(string biography, MyUser user)
@@ -396,6 +401,7 @@ public class ProfileHelper
     public async Task<ResultDto> ChangeSubscriptionPlan(ChangeSubscriptionDto changeSubscriptionDto, MyUser user)
     {
         var subscriptionPlan = _accountService.GetSubscriptionPlanByName(changeSubscriptionDto.SubscriptionName);
+        changeSubscriptionDto.MyUserId ??= user.Id;
         var userClient = _accountService.GetUserById(changeSubscriptionDto.MyUserId);
         var numberMedia = _mediaService.GetMediaNumberByUser(userClient);
         var numberPortfolio = _portfolioService.GetPortfoliosNumberByUser(userClient);
@@ -406,9 +412,9 @@ public class ProfileHelper
         if (numberMedia > subscriptionPlan.AllowedMediaNumber)
             return new ResultDto(false,
                 $"{subscriptionPlan.Name} plan is limited to {subscriptionPlan.AllowedMediaNumber} medias. Please remove {numberMedia - subscriptionPlan.AllowedMediaNumber} medias and retry.");
-        if (mediaSize > subscriptionPlan.AllowedMegaByte * 1024 * 1024)
+        if (mediaSize > ((long)subscriptionPlan.AllowedMegaByte * 1024 * 1024))
             return new ResultDto(false,
-                $"{subscriptionPlan.Name} plan is limited to {subscriptionPlan.AllowedMegaByte}Mb. Please remove {(mediaSize - subscriptionPlan.AllowedMegaByte * 1024 * 1024) / (1024 * 1024)}Mb and retry.");
+                $"{subscriptionPlan.Name} plan is limited to {subscriptionPlan.AllowedMegaByte}Mb. Please remove {(mediaSize - ((long)subscriptionPlan.AllowedMegaByte * 1024 * 1024)) / (1024 * 1024)}Mb and retry.");
         await _accountService.AddNewUserSubscription(userClient.Id, subscriptionPlan.Id, user);
         return new ResultDto(true, $"{subscriptionPlan.Name} now is active.");
     } 
@@ -423,5 +429,39 @@ public class ProfileHelper
     {
         var users = _accountService.GetUserEmailNotConfirmed(30);
         await _accountService.DeleteUsers(users);
+    }
+
+    public async Task SendEmailProPlan()
+    {
+        var users = _accountService.GetUserToSendEmailPro();
+        users = users.Where(s =>
+                s.MyUserSubscriptionPlans.Count == 1 &&
+                s.MyUserSubscriptionPlans.FirstOrDefault().SubscriptionPlan.Name ==
+                VeesyConstants.SubscriptionPlan.Free)
+            .ToList();
+        
+        var link = "";
+        var currentPath = Directory.GetCurrentDirectory();
+        var usersToUpdate = new List<MyUser>();
+        
+        foreach (var user in users)
+        {
+            try
+            {
+                var message = new Message(new (string, string)[] { ("Noreply | Veesy", user.Email) }, "What’s next? La Veesy PRO membership.", link);
+                List<(string, string)> replacer = new List<(string, string)> { ("[name]", user.Fullname) };
+                await _emailSender.SendEmailAsync(message, currentPath + "/wwwroot/MailTemplate/mail-update-pro.html", replacer);
+                user.EmailUpdateProSended = true;
+                usersToUpdate.Add(user);
+                
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex, ex.Message);
+                continue;
+            }
+        }
+
+        await _accountService.UpdateMyUsers(usersToUpdate);
     }
 }

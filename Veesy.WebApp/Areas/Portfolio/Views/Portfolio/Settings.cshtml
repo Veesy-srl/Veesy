@@ -62,7 +62,7 @@
         <div class="col-sm-12 col-md-6">
             <div class="d-flex">
                 <h2 class="text-color"><strong id="portfolio-name-title">@Model.Portfolio.Name</strong></h2>
-                <a onclick="CopyLink('@Model.ApplicationUrl@Url.Action("Portfolio", "Public", new {area = "Public", id = @Model.Portfolio.Id})')" class="blue-link ms-2 mt-1"><i class="fa-regular fa-l fa-clone pe-1"></i><strong></strong></a>
+                <a onclick="CopyLink('@Model.ApplicationUrl@Url.Action("Portfolio", "Public", new {area = "Public", user = @Model.Portfolio.FullnameForUrl, portfolioname = @Model.Portfolio.PortfolionameForUrl})')" class="blue-link ms-2 mt-1"><i class="fa-regular fa-l fa-clone pe-1"></i><strong></strong></a>
             </div>
             <p>Dynamically rearrange and personalize your portfolio's layout. Easily drag and move images to create your ideal showcase, tailoring each element to reflect your unique style and professional vision. Remember to publish to apply changes. <a class="grey-link ms-2"><strong>learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a></p>
             <div class="empty-veesy"></div>
@@ -338,18 +338,18 @@
     }
 }
 
-<div id="alert-portfolio" class="@css custom-alert-cloud shadow alert alert-dismissible fade mobile-option-cloud alert-veesy-cloud" role="alert">
+<div style="background-color: rgba(220,53,69,0.8) !important" id="alert-portfolio" class="@css custom-alert-cloud shadow alert alert-dismissible fade mobile-option-cloud alert-veesy-cloud" role="alert">
     <div class="w-100">
         <div class="float-start">
             <div class="d-flex mt-2">
-                <p id="number_files" class="fw-bolder text-color" style="margin-top: -2px;">Some changes are unpublished</p>
+                <p id="number_files" class="fw-bolder text-white" style="margin-top: -2px;">Some changes are unpublished</p>
             </div>
         </div>
         <div class="float-end">
             <div class="d-flex align-items-center">
-                <a onclick="CloseAlert()" class="blue-link me-4 fw-bolder text-color a-font-p" style="font-size: 14px; margin-top: 2px;">ignore</a>
-                <button onclick="PublishPortfolio()" class="rounded-pill btn btn-primary btn-padding a-font-p" style="padding-left: 35px !important; padding-right:  35px !important; font-size:  15px;" type="submit">publish portfolio</button>
-                <a class="ms-4 me-2 mt-1" type="button" onclick="CloseAlert()"><i class="fa-solid fa-grey fa-circle-xmark"></i></a>
+                <a onclick="CloseAlert()" class="white-link me-4 fw-bolder text-white a-font-p" style="font-size: 14px; margin-top: 2px;">ignore</a>
+                <button onclick="PublishPortfolio()" class="rounded-pill btn btn-white btn-padding a-font-p" style="padding-left: 35px !important; padding-right:  35px !important; font-size:  15px;" type="submit">publish portfolio</button>
+                <a class="ms-4 me-2 mt-1" type="button" onclick="CloseAlert()"><i style="color:white" class="fa-solid fa-grey fa-circle-xmark"></i></a>
             </div>
         </div>
     </div>
@@ -392,12 +392,12 @@
         })
     }
     
-    function PublishPortfolio(layout) {
+    function PublishPortfolio() {
 
         var portfolioId = '@Model.Portfolio.Id'
         $.ajax({
             type: 'POST',
-            url: '@Url.Action("Publish", "Portfolio")',
+            url: '@Url.Action("Publish", "Portfolio", new {area = "Portfolio", portfolioId = Model.Portfolio.Id})',
             data: JSON.stringify(portfolioId),
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',

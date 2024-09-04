@@ -35,4 +35,21 @@ public class ProfileController : ControllerBase
             return BadRequest();
         }
     }
+    
+    [HttpGet]
+    public async Task<IActionResult> SendEmailProPlan()
+    {
+        try
+        {
+            Logger.Info("SendEmailProPlan function started...");
+            await _profileHelper.SendEmailProPlan();
+            Logger.Info("SendEmailProPlan function done.");
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, "Error executing function SendEmailProPlan.");
+            return BadRequest();
+        }
+    }
 }

@@ -9,6 +9,7 @@ namespace Veesy.Service.Interfaces;
 public interface IPortfolioService
 {
     Portfolio GetPortfolioById(Guid portfolioId, string userId);
+    Portfolio GetPortfolioByIdToUpdate(Guid portfolioId, string userId);
     Task<Portfolio> AddPortfolio(Portfolio portfolio, MyUser user);
     Task<Portfolio> UpdatePortfolio(Portfolio portfolio, MyUser user);
     IEnumerable<Portfolio> GetPortfoliosByUser(MyUser user);
@@ -30,4 +31,5 @@ public interface IPortfolioService
     int GetPortfoliosNumberByUser(MyUser user);
     Task SetPortfoliosToDraftByIds(List<Guid> portfolioDtoPortfolioSelected, MyUser user);
     List<string> GetAllPortfolioNameDifferentByOne(Guid id, MyUser user);
+    Portfolio? GetPortfolioByUserAndName(string user, string portfolioname);
 }

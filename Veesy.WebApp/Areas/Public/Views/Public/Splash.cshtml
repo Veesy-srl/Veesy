@@ -1,231 +1,231 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @{
-    ViewData["Title"] = "Splash";
+	ViewData["Title"] = "Splash";
 }
 
 <div class="container-fluid container-splash">
-  <div class="row row-splash">
-    <div class="col-md-2 mac-variant">
-      <div class="box-splash">
-        @if (Model.MediaDtos.Count > 0)
-        {
-          <img class="img-splash img-variant-1" src="@Model.BasePathImages@Model.MediaDtos[0].FileName" id="Immagine1"/>
-        }
-        else
-        {
-          <img class="img-splash img-variant-1" src="/imgs/Splash/Render_2-downscale-art-width-1500px-1024x1024.jpg" id="Immagine1">
-        }
-      </div>
-    </div>
-    <div class="col-md-2 mac-variant d-none d-sm-block">
-      <div class="box-splash">
-        @if (Model.MediaDtos.Count > 1)
-        {
-          <img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[1].FileName" id="Immagine2"/>
-        }
-        else
-        {
-          <img class="img-splash img-variant" src="/imgs/Splash/The-Unfolding-Home-06-1024x1024.png" id="Immagine2">
-        }
-      </div>
-    </div>
-    <div class="col-md-2 mac-variant d-none d-sm-block">
-      <div class="box-splash">
-        @if (Model.MediaDtos.Count > 2)
-        {
-          <img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[2].FileName" id="Immagine3"/>
-        }
-        else
-        {
-          <img class="img-splash img-variant" src="/imgs/Splash/SQUARE_Pizza-3-1024x1024.jpg" id="Immagine3">
-        }
-      </div>
-    </div>
-    <div class="col-md-2 mac-variant d-none d-sm-block">
-      <div class="box-splash">
-        @if (Model.MediaDtos.Count > 3)
-        {
-          <img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[3].FileName" id="Immagine4"/>
-        }
-        else
-        {
-          <img class="img-splash img-variant" src="/imgs/Splash/Ducati_caferacer_1500-1024x968.jpg" id="Immagine4">
-        }
-      </div>
-    </div>
-    <div class="col-md-2 mac-variant d-none d-sm-block">
-      <div class="box-splash">
-        @if (Model.MediaDtos.Count > 4)
-        {
-          <img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[4].FileName" id="Immagine5"/>
-        }
-        else
-        {
-          <img class="img-splash img-variant" src="/imgs/Splash/chevy2_1500-1024x920.jpg" id="Immagine5">
-        }
-      </div>
-    </div>
-    <div class="col-md-2 mac-variant d-none d-sm-block">
-      <div class="box-splash">
-        @if (Model.MediaDtos.Count > 5)
-        {
-          <img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[5].FileName" id="Immagine6"/>
-        }
-        else
-        {
-          <img class="img-splash img-variant" src="/imgs/Splash/Black_Museum_01-1024x1024.png" id="Immagine6">
-        }
-      </div>
-    </div>
-  </div>
-  <div class="row row-splash">
-    <div class="col-md-2 mac-variant d-none d-sm-block">
-      <div class="box-splash">
-        @if (Model.MediaDtos.Count > 6)
-        {
-          <img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[6].FileName" id="Immagine7"/>
-        }
-        else
-        {
-          <img class="img-splash img-variant" src="/imgs/Splash/Winter-day_03-gigapixel-art-width-1500px-1024x1024.jpg" id="Immagine7">
-        }
-      </div>
-    </div>
-    <div class="col-md-2 mac-variant d-none d-sm-block">
-      <div class="box-splash">
-        @if (Model.MediaDtos.Count > 7)
-        {
-          <img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[7].FileName" id="Immagine8"/>
-        }
-        else
-        {
-          <img class="img-splash img-variant-8" src="/imgs/Splash/Tank-Girl-Redux_02-1024x1024.png" id="Immagine8">
-        }
-      </div>
-    </div>
-    <div class="col-md-2 mac-variant d-none d-sm-block">
-      <div class="box-splash">
-        @if (Model.MediaDtos.Count > 8)
-        {
-          <img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[8].FileName" id="Immagine9"/>
-        }
-        else
-        {
-          <img class="img-splash img-variant" src="/imgs/Splash/Residence-WULF-02-1024x1024.png" id="Immagine9">
-        }
-      </div>
-    </div>
-    <div class="col-md-2 mac-variant d-none d-sm-block">
-      <div class="box-splash">
-        @if (Model.MediaDtos.Count > 9)
-        {
-          <img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[9].FileName" id="Immagine10"/>
-        }
-        else
-        {
-          <img class="img-splash img-variant" src="/imgs/Splash/Night2-1024x1024.jpg" id="Immagine10">
-        }
-      </div>
-    </div>
-    <div class="col-md-2 mac-variant d-none d-sm-block">
-      <div class="box-splash">
-        @if (Model.MediaDtos.Count > 10)
-        {
-          <img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[10].FileName" id="Immagine11"/>
-        }
-        else
-        {
-          <img class="img-splash img-variant" src="/imgs/Splash/Night-Walk-1024x1024.jpg" id="Immagine11">
-        }
-      </div>
-    </div>
-    <div class="col-md-2 mac-variant d-none d-sm-block">
-      <div class="box-splash">
-        @if (Model.MediaDtos.Count > 11)
-        {
-          <img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[11].FileName" id="Immagine12"/>
-        }
-        else
-        {
-          <img class="img-splash img-variant" src="/imgs/Splash/61dc6ed5ee986024c79e0b73_alcea_02.jpg" id="Immagine12">
-        }
-      </div>
-    </div>
-  </div>
-  <div class="row row-splash">
-    <div class="col-md-2 mac-variant">
-      <div class="box-splash">
-        @if (Model.MediaDtos.Count > 12)
-        {
-          <img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[12].FileName" id="Immagine13"/>
-        }
-        else
-        {
-          <img class="img-splash img-variant-13" src="/imgs/Splash/The-Unfolding-Home-06-1024x1024.png" id="Immagine13">
-        }
-      </div>
-    </div>
-    <div class="col-md-2 mac-variant d-none d-sm-block">
-      <div class="box-splash">
-        @if (Model.MediaDtos.Count > 13)
-        {
-          <img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[13].FileName" id="Immagine14"/>
-        }
-        else
-        {
-          <img class="img-splash img-variant" src="/imgs/Splash/lamp2-copia-downscale-art-width-1500px-1024x1024.jpg" id="Immagine14">
-        }
-      </div>
-    </div>
-    <div class="col-md-2 mac-variant d-none d-sm-block">
-      <div class="box-splash">
-        @if (Model.MediaDtos.Count > 14)
-        {
-          <img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[14].FileName" id="Immagine15"/>
-        }
-        else
-        {
-          <img class="img-splash img-variant-15" src="/imgs/Splash/furyroad2-2-gigapixel-art-height-1500px-1024x1024 (1).jpg" id="Immagine15">
-        }
-      </div>
-    </div>
-    <div class="col-md-2 mac-variant d-none d-sm-block">
-      <div class="box-splash">
-        @if (Model.MediaDtos.Count > 15)
-        {
-          <img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[15].FileName" id="Immagine16"/>
-        }
-        else
-        {
-          <img class="img-splash img-variant-16" src="/imgs/Splash/Curiosity-gigapixel-standard-width-1500px-1024x1024.jpeg" id="Immagine16">
-        }
-      </div>
-    </div>
-    <div class="col-md-2 mac-variant d-none d-sm-block">
-      <div class="box-splash">
-        @if (Model.MediaDtos.Count > 16)
-        {
-          <img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[16].FileName" id="Immagine17"/>
-        }
-        else
-        {
-          <img class="img-splash img-variant" src="/imgs/Splash/11-Vd-gigapixel-art-width-1500px-1024x1024.jpeg" id="Immagine17">
-        }
-      </div>
-    </div>
-    <div class="col-md-2 mac-variant d-none d-sm-block">
-      <div class="box-splash">
-        @if (Model.MediaDtos.Count > 17)
-        {
-          <img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[17].FileName" id="Immagine18"/>
-        }
-        else
-        {
-          <img class="img-splash img-variant" src="/imgs/Splash/7-1024x1024.jpg" id="Immagine18">
-        }
-      </div>
-    </div>
-  </div>
+	<div class="row row-splash">
+		<div class="col-md-2 mac-variant">
+			<div class="box-splash">
+				@if (Model.MediaDtos.Count > 0)
+				{
+					<img class="img-splash img-variant-1" src="@Model.BasePathImages@Model.MediaDtos[0].FileName" id="Immagine1" />
+				}
+				else
+				{
+					<img class="img-splash img-variant-1" src="/imgs/Splash/Render_2-downscale-art-width-1500px-1024x1024.jpg" id="Immagine1">
+				}
+			</div>
+		</div>
+		<div class="col-md-2 mac-variant d-none d-sm-block">
+			<div class="box-splash">
+				@if (Model.MediaDtos.Count > 1)
+				{
+					<img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[1].FileName" id="Immagine2" />
+				}
+				else
+				{
+					<img class="img-splash img-variant" src="/imgs/Splash/The-Unfolding-Home-06-1024x1024.png" id="Immagine2">
+				}
+			</div>
+		</div>
+		<div class="col-md-2 mac-variant d-none d-sm-block">
+			<div class="box-splash">
+				@if (Model.MediaDtos.Count > 2)
+				{
+					<img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[2].FileName" id="Immagine3" />
+				}
+				else
+				{
+					<img class="img-splash img-variant" src="/imgs/Splash/SQUARE_Pizza-3-1024x1024.jpg" id="Immagine3">
+				}
+			</div>
+		</div>
+		<div class="col-md-2 mac-variant d-none d-sm-block">
+			<div class="box-splash">
+				@if (Model.MediaDtos.Count > 3)
+				{
+					<img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[3].FileName" id="Immagine4" />
+				}
+				else
+				{
+					<img class="img-splash img-variant" src="/imgs/Splash/Ducati_caferacer_1500-1024x968.jpg" id="Immagine4">
+				}
+			</div>
+		</div>
+		<div class="col-md-2 mac-variant d-none d-sm-block">
+			<div class="box-splash">
+				@if (Model.MediaDtos.Count > 4)
+				{
+					<img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[4].FileName" id="Immagine5" />
+				}
+				else
+				{
+					<img class="img-splash img-variant" src="/imgs/Splash/chevy2_1500-1024x920.jpg" id="Immagine5">
+				}
+			</div>
+		</div>
+		<div class="col-md-2 mac-variant d-none d-sm-block">
+			<div class="box-splash">
+				@if (Model.MediaDtos.Count > 5)
+				{
+					<img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[5].FileName" id="Immagine6" />
+				}
+				else
+				{
+					<img class="img-splash img-variant" src="/imgs/Splash/Black_Museum_01-1024x1024.png" id="Immagine6">
+				}
+			</div>
+		</div>
+	</div>
+	<div class="row row-splash">
+		<div class="col-md-2 mac-variant d-none d-sm-block">
+			<div class="box-splash">
+				@if (Model.MediaDtos.Count > 6)
+				{
+					<img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[6].FileName" id="Immagine7" />
+				}
+				else
+				{
+					<img class="img-splash img-variant" src="/imgs/Splash/Winter-day_03-gigapixel-art-width-1500px-1024x1024.jpg" id="Immagine7">
+				}
+			</div>
+		</div>
+		<div class="col-md-2 mac-variant d-none d-sm-block">
+			<div class="box-splash">
+				@if (Model.MediaDtos.Count > 7)
+				{
+					<img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[7].FileName" id="Immagine8" />
+				}
+				else
+				{
+					<img class="img-splash img-variant-8" src="/imgs/Splash/Tank-Girl-Redux_02-1024x1024.png" id="Immagine8">
+				}
+			</div>
+		</div>
+		<div class="col-md-2 mac-variant d-none d-sm-block">
+			<div class="box-splash">
+				@if (Model.MediaDtos.Count > 8)
+				{
+					<img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[8].FileName" id="Immagine9" />
+				}
+				else
+				{
+					<img class="img-splash img-variant" src="/imgs/Splash/Residence-WULF-02-1024x1024.png" id="Immagine9">
+				}
+			</div>
+		</div>
+		<div class="col-md-2 mac-variant d-none d-sm-block">
+			<div class="box-splash">
+				@if (Model.MediaDtos.Count > 9)
+				{
+					<img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[9].FileName" id="Immagine10" />
+				}
+				else
+				{
+					<img class="img-splash img-variant" src="/imgs/Splash/Night2-1024x1024.jpg" id="Immagine10">
+				}
+			</div>
+		</div>
+		<div class="col-md-2 mac-variant d-none d-sm-block">
+			<div class="box-splash">
+				@if (Model.MediaDtos.Count > 10)
+				{
+					<img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[10].FileName" id="Immagine11" />
+				}
+				else
+				{
+					<img class="img-splash img-variant" src="/imgs/Splash/Night-Walk-1024x1024.jpg" id="Immagine11">
+				}
+			</div>
+		</div>
+		<div class="col-md-2 mac-variant d-none d-sm-block">
+			<div class="box-splash">
+				@if (Model.MediaDtos.Count > 11)
+				{
+					<img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[11].FileName" id="Immagine12" />
+				}
+				else
+				{
+					<img class="img-splash img-variant" src="/imgs/Splash/61dc6ed5ee986024c79e0b73_alcea_02.jpg" id="Immagine12">
+				}
+			</div>
+		</div>
+	</div>
+	<div class="row row-splash">
+		<div class="col-md-2 mac-variant">
+			<div class="box-splash">
+				@if (Model.MediaDtos.Count > 12)
+				{
+					<img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[12].FileName" id="Immagine13" />
+				}
+				else
+				{
+					<img class="img-splash img-variant-13" src="/imgs/Splash/The-Unfolding-Home-06-1024x1024.png" id="Immagine13">
+				}
+			</div>
+		</div>
+		<div class="col-md-2 mac-variant d-none d-sm-block">
+			<div class="box-splash">
+				@if (Model.MediaDtos.Count > 13)
+				{
+					<img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[13].FileName" id="Immagine14" />
+				}
+				else
+				{
+					<img class="img-splash img-variant" src="/imgs/Splash/lamp2-copia-downscale-art-width-1500px-1024x1024.jpg" id="Immagine14">
+				}
+			</div>
+		</div>
+		<div class="col-md-2 mac-variant d-none d-sm-block">
+			<div class="box-splash">
+				@if (Model.MediaDtos.Count > 14)
+				{
+					<img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[14].FileName" id="Immagine15" />
+				}
+				else
+				{
+					<img class="img-splash img-variant-15" src="/imgs/Splash/furyroad2-2-gigapixel-art-height-1500px-1024x1024 (1).jpg" id="Immagine15">
+				}
+			</div>
+		</div>
+		<div class="col-md-2 mac-variant d-none d-sm-block">
+			<div class="box-splash">
+				@if (Model.MediaDtos.Count > 15)
+				{
+					<img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[15].FileName" id="Immagine16" />
+				}
+				else
+				{
+					<img class="img-splash img-variant-16" src="/imgs/Splash/Curiosity-gigapixel-standard-width-1500px-1024x1024.jpeg" id="Immagine16">
+				}
+			</div>
+		</div>
+		<div class="col-md-2 mac-variant d-none d-sm-block">
+			<div class="box-splash">
+				@if (Model.MediaDtos.Count > 16)
+				{
+					<img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[16].FileName" id="Immagine17" />
+				}
+				else
+				{
+					<img class="img-splash img-variant" src="/imgs/Splash/11-Vd-gigapixel-art-width-1500px-1024x1024.jpeg" id="Immagine17">
+				}
+			</div>
+		</div>
+		<div class="col-md-2 mac-variant d-none d-sm-block">
+			<div class="box-splash">
+				@if (Model.MediaDtos.Count > 17)
+				{
+					<img class="img-splash img-variant" src="@Model.BasePathImages@Model.MediaDtos[17].FileName" id="Immagine18" />
+				}
+				else
+				{
+					<img class="img-splash img-variant" src="/imgs/Splash/7-1024x1024.jpg" id="Immagine18">
+				}
+			</div>
+		</div>
+	</div>
 </div>
 
 @*<div class="centered-text" id="VisualMade">
@@ -239,819 +239,822 @@
 </div>*@
 
 <div class="centered-text-var" id="placeholder-1">
-  <h1 class="color-about" style="font-size: 40px !important; line-height: 45px !important;"><b>Freelancing is an <i>art.</i><br/>Not a <i>task.</i></b></h1>
+	<h1 class="color-about" style="font-size: 40px !important; line-height: 45px !important;"><b>Freelancing is an <i>art.</i><br />Not a <i>task.</i></b></h1>
 </div>
 <div class="centered-text-var mt-3" id="placeholder-2">
-  <div class="col-md-12 mb-4 veesy-text-color" style="margin-top: 100px;">
-    <form method="get" asp-area="Auth" asp-controller="Auth" asp-action="SignUp" class="flex-grow-1">
-      <button class="rounded-pill btn-primary-about-variant btn-variant" id="button1" style="width: 180px; height: 40px;" type="submit">join veesy</button>
-    </form>
-  </div>
-  <div class="container-fluid">
-    <div class="row" style="position: relative; top:  100px;">
-      <div class="col-md-8 offset-md-2 mt-2 px-5">
-        <div class="row justify-content-center">
-          <div class="col-md-2 col-4 d-none text-end color-about" id="discover" style="right: -20px; position: relative;">
-            <b>discover</b>
-          </div>
-          <a class="col-md-1 col-3 text-center justify-content-center color-about" id="qui" style="cursor: pointer; display: flex; align-items: center; justify-content: center;" href="#down" onclick="startPage()" onmouseover="showText()" onmouseout="hideText()">
-            <img class="image-about-go-down" width="20px" style="position: relative; top: -3px;"/>
-          </a>
-          <div class="col-md-2 col-4 d-none text-start color-about" id="more" style="left: -20px; position: relative;">
-            <b>more</b>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+	<div class="col-md-12 mb-4 veesy-text-color" style="margin-top: 100px;">
+		<form method="get" asp-area="Auth" asp-controller="Auth" asp-action="SignUp" class="flex-grow-1">
+			<button class="rounded-pill btn-primary-about-variant btn-variant" id="button1" style="width: 180px; height: 40px;" type="submit">join veesy</button>
+		</form>
+	</div>
+	<div class="container-fluid">
+		<div class="row" style="position: relative; top:  100px;">
+			<div class="col-md-8 offset-md-2 mt-2 px-5">
+				<div class="row justify-content-center">
+					<div class="col-md-2 col-4 d-none text-end color-about" id="discover" style="right: -20px; position: relative;">
+						<b>discover</b>
+					</div>
+					<a class="col-md-1 col-3 text-center justify-content-center color-about" id="qui" style="cursor: pointer; display: flex; align-items: center; justify-content: center;" href="#down" onclick="startPage()" onmouseover="showText()" onmouseout="hideText()">
+						<img class="image-about-go-down" width="20px" style="position: relative; top: -3px;" />
+					</a>
+					<div class="col-md-2 col-4 d-none text-start color-about" id="more" style="left: -20px; position: relative;">
+						<b>more</b>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
-<div class="container-fluid"> 
-  <div class="row mt-5" id="down">
-    <div class="col-md-8 mt-5 offset-md-2 mt-2 px-md-5">
-      <div class="text-left mt-5 pt-5">
-        <h1 class="color-about">Ciao, <b>creator: </b>siamo qui per te.</h1>
-      </div>
-      <div class="text-left mt-4 pt-4">
-        <h1 class="color-about">Siamo <img class="header-logo-about" style="position: relative; top: 2px;" width="85px"><b>:</b> un ecosistema creato <b><i>da freelancer per freelancer,</i></b> fondato sul supporto costruttivo di una <b>community attiva</b> e sempre in espansione.</h1>
-      </div>
-      <div class="text-left mt-5">
-        <h1 class="color-about">Con noi trovi posto in un network professionale in cui riscoprire la magia della <b>creatività visual.</b> <u>La tua.</u> Non pensare alla solita piattaforma digitale: qui, trovare contatti è solo <b>l'inizio della</b> <b>rivoluzione.</b></h1>
-      </div>
-      <div class="col-md-6 mt-5 mb-5 veesy-text-color d-flex align-items-center">
-        <a class="me-md-4 me-2" href="#down1">
-          <button class="rounded-pill btn-primary-about1 btn-variant" style="width: 160px; height:  38px;"  type="submit">dimmi di più</button>
-        </a>
-        <form method="get" asp-area="Auth" asp-controller="Auth" asp-action="SignUp" class="flex-grow-1">
-          <button class="rounded-pill btn-primary-about-variant btn-variant" style="width: 185px; height: 38px;"  type="submit">entra (è gratis)</button>
-        </form>
-      </div>
-    </div>
-  </div>
-  <div class="row mt-5">
-    <div class="col-md-8 offset-md-2 px-md-5 px-0">
-      <div class="text-center mt-4 mb-4" id="imageContainer">
-        <video id="mainImage" controls style="border-radius: 15px; width: 100%;" poster="imgs/img_vid_veesy.png">
-          <source src="imgs/About/veesy_video.mp4" type="video/mp4">
-        </video>
-      </div>
-    </div>
-  </div>
+<div class="container-fluid">
+	<div class="row mt-5" id="down">
+		<div class="col-md-8 mt-5 offset-md-2 mt-2 px-md-5">
+			<div class="text-left mt-5 pt-5">
+				<h1 class="color-about">Ciao, <b>creator: </b>siamo qui per te.</h1>
+			</div>
+			<div class="text-left mt-4 pt-4">
+				<h1 class="color-about">Siamo <img class="header-logo-about" style="position: relative; top: 2px;" width="85px"><b>:</b> un ecosistema creato <b><i>da freelancer per freelancer,</i></b> fondato sul supporto costruttivo di una <b>community attiva</b> e sempre in espansione.</h1>
+			</div>
+			<div class="text-left mt-5">
+				<h1 class="color-about">Con noi trovi posto in un network professionale in cui riscoprire la magia della <b>creatività visual.</b> <u>La tua.</u> Non pensare alla solita piattaforma digitale: qui, trovare contatti è solo <b>l'inizio della</b> <b>rivoluzione.</b></h1>
+			</div>
+			<div class="col-md-6 mt-5 mb-5 veesy-text-color d-flex align-items-center">
+				<a class="me-md-4 me-2" href="#down1">
+					<button class="rounded-pill btn-primary-about1 btn-variant" style="width: 160px; height:  38px;" type="submit">dimmi di più</button>
+				</a>
+				<form method="get" asp-area="Auth" asp-controller="Auth" asp-action="SignUp" class="flex-grow-1">
+					<button class="rounded-pill btn-primary-about-variant btn-variant" style="width: 185px; height: 38px;" type="submit">entra (è gratis)</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="row mt-5">
+		<div class="col-md-8 offset-md-2 px-md-5 px-0">
+			<div class="text-center mt-4 mb-4" id="imageContainer">
+				<video id="mainImage" controls style="border-radius: 15px; width: 100%;" poster="imgs/img_vid_veesy.png">
+					<source src="imgs/About/veesy_video.mp4" type="video/mp4">
+				</video>
+			</div>
+		</div>
+	</div>
 
-  <div class="row mt-5" id="down1">
-    <div class="col-md-8 offset-md-2 px-md-5">
-      <div class="text-center mt-5 mb-4">
-        <h1 class="color-about" style="font-size: 72px !important;"><b>Dal <i>to do</i></b></h1>
-        <h1 class="mt-5 color-about option-height" style="font-size: 72px !important;"><b>al <i>to dream</i></b>
-          <img class="img-fluid" src="imgs/Group%207695_g.png" style="margin-top: -6%;" alt="Immagine 1">
-        </h1>
-      </div>
-      <div class="text-center mt-5 pt-5 mb-4">
-        <h3 class="color-about"><span style="color: #00DC8E; font-size: 30px;">*</span><b>e viceversa.</b></h3>
-      </div>
-    </div>
-  </div>
+	<div class="row mt-5" id="down1">
+		<div class="col-md-8 offset-md-2 px-md-5">
+			<div class="text-center mt-5 mb-4">
+				<h1 class="color-about" style="font-size: 72px !important;"><b>Dal <i>to do</i></b></h1>
+				<h1 class="mt-5 color-about option-height" style="font-size: 72px !important;">
+					<b>al <i>to dream</i></b>
+					<img class="img-fluid" src="imgs/Group%207695_g.png" style="margin-top: -6%;" alt="Immagine 1">
+				</h1>
+			</div>
+			<div class="text-center mt-5 pt-5 mb-4">
+				<h3 class="color-about"><span style="color: #00DC8E; font-size: 30px;">*</span><b>e viceversa.</b></h3>
+			</div>
+		</div>
+	</div>
 
-  <div class="row">
-    <div class="col-md-8 offset-md-2 mt-5 px-md-5">
-      <div class="text-left mt-4 pt-4">
-        <h1 class="color-about">Lo sappiamo: trovare un buon equilibrio tra l'ennesima opportunità e il bisogno di una pausa sembra un'arte misteriosa.</h1>
-        <h1 class="color-about">Forse è per questo che sulla libera professione girano certe voci...</h1>
-      </div>
-    </div>
-    <div class="col-md-8 offset-md-2 mt-5 px-md-5">
-      <div class="row mt-5">
-        <div class="col-md-6">
-          <div class="text-left">
-            <div class="row justify-content-end">
-              <div class="col-2">
-                <div class="circle1">
-                  <h1 class="text-about-circle1 color-about"><b>01.</b></h1>
-                </div>
-              </div>
-              <div class="col-10 ps-md-4" style="z-index: 9 !important;">
-                <h3 class="text-right color-about">che ti fa <i>realizzare i tuoi sogni,</i> ma</h3>
-                <h3 class="text-right color-about fw-bold" style="margin-top: -5px;">passi la notte sulle modifiche</h3>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="text-left">
-            <div class="row option-circle-2 mt-5 mt-md-0">
-              <div class="col-md-2 col-2">
-                <div class="circle2">
-                  <h1 class="text-about-circle2 color-about"><b>02.</b></h1>
-                </div>
-              </div>
-              <div class="col-md-10 col-10 option-circle-text-2">
-                <h3 class="text-right color-about font-option-circle-2">che puoi <i>prenderti il tuo tempo,</i> ma sei in</h3>
-                <h3 class="text-right color-about fw-bold font-option-circle-2" style="margin-top: -5px;">eterno multitasking</h3>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-8 offset-md-2 mt-md-5 d-flex justify-content-center px-md-5">
-      <div class="mt-4 pt-4">
-        <div class="row justify-content-center">
-          <div class="col-md-4 col-2">
-            <div class="circle3">
-              <h1 class="text-about-circle3 color-about"><b>03.</b></h1>
-            </div>
-          </div>
-          <div class="col-md-8 col-10 option-circle-text-3">
-            <h3 class="text-right color-about font-option-circle-2">che puoi <i>lavorare ovunque,</i> ma</h3>
-            <h3 class="text-right color-about fw-bold font-option-circle-2" style="margin-top: -5px;">senza nessuna certezza</h3>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+	<div class="row">
+		<div class="col-md-8 offset-md-2 mt-5 px-md-5">
+			<div class="text-left mt-4 pt-4">
+				<h1 class="color-about">Lo sappiamo: trovare un buon equilibrio tra l'ennesima opportunità e il bisogno di una pausa sembra un'arte misteriosa.</h1>
+				<h1 class="color-about">Forse è per questo che sulla libera professione girano certe voci...</h1>
+			</div>
+		</div>
+		<div class="col-md-8 offset-md-2 mt-5 px-md-5">
+			<div class="row mt-5">
+				<div class="col-md-6">
+					<div class="text-left">
+						<div class="row justify-content-end">
+							<div class="col-2">
+								<div class="circle1">
+									<h1 class="text-about-circle1 color-about"><b>01.</b></h1>
+								</div>
+							</div>
+							<div class="col-10 ps-md-4" style="z-index: 9 !important;">
+								<h3 class="text-right color-about">che ti fa <i>realizzare i tuoi sogni,</i> ma</h3>
+								<h3 class="text-right color-about fw-bold" style="margin-top: -5px;">passi la notte sulle modifiche</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="text-left">
+						<div class="row option-circle-2 mt-5 mt-md-0">
+							<div class="col-md-2 col-2">
+								<div class="circle2">
+									<h1 class="text-about-circle2 color-about"><b>02.</b></h1>
+								</div>
+							</div>
+							<div class="col-md-10 col-10 option-circle-text-2">
+								<h3 class="text-right color-about font-option-circle-2">che puoi <i>prenderti il tuo tempo,</i> ma sei in</h3>
+								<h3 class="text-right color-about fw-bold font-option-circle-2" style="margin-top: -5px;">eterno multitasking</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-8 offset-md-2 mt-md-5 d-flex justify-content-center px-md-5">
+			<div class="mt-4 pt-4">
+				<div class="row justify-content-center">
+					<div class="col-md-4 col-2">
+						<div class="circle3">
+							<h1 class="text-about-circle3 color-about"><b>03.</b></h1>
+						</div>
+					</div>
+					<div class="col-md-8 col-10 option-circle-text-3">
+						<h3 class="text-right color-about font-option-circle-2">che puoi <i>lavorare ovunque,</i> ma</h3>
+						<h3 class="text-right color-about fw-bold font-option-circle-2" style="margin-top: -5px;">senza nessuna certezza</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-  <div class="row mt-5">
-    <div class="col-md-8 offset-md-2 px-md-5 px-0">
-      <div class="position-relative">
-        <img src="imgs/About/Gif-2.gif" style="border-radius: 15px;" alt="Immagine" class="img-fluid">
-      </div>
-    </div>
-    <div class="col-md-8 offset-md-2">
-      <div class="text-center mt-5 pt-5">
-        <h1 class="color-about"><b>Da oggi, tutte leggende metropolitane.</b></h1>
-      </div>
-    </div>
-  </div>
+	<div class="row mt-5">
+		<div class="col-md-8 offset-md-2 px-md-5 px-0">
+			<div class="position-relative">
+				<img src="imgs/About/Gif-2.gif" style="border-radius: 15px;" alt="Immagine" class="img-fluid">
+			</div>
+		</div>
+		<div class="col-md-8 offset-md-2">
+			<div class="text-center mt-5 pt-5">
+				<h1 class="color-about"><b>Da oggi, tutte leggende metropolitane.</b></h1>
+			</div>
+		</div>
+	</div>
 
-  <div class="container-fluid mt-5 pt-5">
-    <div class="row margin-about">
-      <div class="col-md-4 col-12">
-        <div class="card mb-3 main-card" style="background-image: url('imgs/About/Frame.jpg'); background-size: cover; background-position: center center;">
-          <div class="card-body d-flex flex-column justify-content-center align-items-center text-center" style="height: 100%;">
-            <h1 class="card-title" style="color: white;"><b>Network</b></h1>
-            <h3 class="card-text mt-3" id="option-mobile-card" style="padding-left: 10%; padding-right: 10%; color: white;">Un ecosistema digitale progettato, creato e popolato da freelancer per rivoluzionare la vita da freelancer.</h3>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-8 col-12 ps-md-4">
-        <div class="scrollable-row" id="scrollable-row">
-          <div class="card" draggable="true" style="background-color: #75CCDD;">
-            <div class="card-body d-flex flex-column justify-content-center align-items-center text-center" style="height: 100%; color: #202F4D;">
-              <h1 class="card-title" style="color: #202F4D;"><b>Desk</b></h1>
-              <h3 class="card-text mt-3 tab-mobile-option">Tutti i tuoi media in tasca<br/> pronti da gestire, con cui<br/> creare tantissimi portfolio<br/> da condividere via link,<br/> ovunque ti trovi.</h3>
-            </div>
-          </div>
-          <div class="card" draggable="true" style="background-color: #00DC8D;">
-            <div class="card-body d-flex flex-column justify-content-center align-items-center text-center" style="height: 100%; color: #202F4D;">
-              <h1 class="card-title" style="color: #202F4D;"><b>Match</b></h1>
-              <h3 class="card-text mt-3 tab-mobile-option">Un modo rapido e stimolante<br/> per trovare clienti migliori,<br/> collaboratori di fiducia e<br/> partner certificati con cui<br/> gestire progetti più grandi.</h3>
-            </div>
-          </div>
-          <div class="card" draggable="true" style="background-color: #FF61BB;">
-            <div class="card-body d-flex flex-column justify-content-center align-items-center text-center" style="height: 100%; color: white;">
-              <h1 class="card-title"><b>Boost</b></h1>
-              <h3 class="card-text mt-3 tab-mobile-option">Consulenza fiscale, legale,<br/> artistica o di project<br/> management a tua<br/>disposizione, che tu sia all'inizio<br/> o nel pieno della tua carriera.</h3>
-            </div>
-          </div>
-          <div class="card" draggable="true" style="background-color: #F2A259;">
-            <div class="card-body d-flex flex-column justify-content-center align-items-center text-center" style="height: 100%; color: white;">
-              <h1 class="card-title"><b>Learn</b></h1>
-              <h3 class="card-text mt-3 tab-mobile-option">Opportunità di formazione<br/> continua e reciproca. Accedi<br/> a corsi e percorsi e diventa a<br/> tua volta mentore o<br/> insegnante.</h3>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+	<div class="container-fluid mt-5 pt-5">
+		<div class="row margin-about">
+			<div class="col-md-4 col-12">
+				<div class="card mb-3 main-card" style="background-image: url('imgs/About/Frame.jpg'); background-size: cover; background-position: center center;">
+					<div class="card-body d-flex flex-column justify-content-center align-items-center text-center" style="height: 100%;">
+						<h1 class="card-title" style="color: white;"><b>Network</b></h1>
+						<h3 class="card-text mt-3" id="option-mobile-card" style="padding-left: 10%; padding-right: 10%; color: white;">Un ecosistema digitale progettato, creato e popolato da freelancer per rivoluzionare la vita da freelancer.</h3>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-8 col-12 ps-md-4">
+				<div class="scrollable-row" id="scrollable-row">
+					<div class="card" draggable="true" style="background-color: #75CCDD;">
+						<div class="card-body d-flex flex-column justify-content-center align-items-center text-center" style="height: 100%; color: #202F4D;">
+							<h1 class="card-title" style="color: #202F4D;"><b>Desk</b></h1>
+							<h3 class="card-text mt-3 tab-mobile-option">Tutti i tuoi media in tasca<br /> pronti da gestire, con cui<br /> creare tantissimi portfolio<br /> da condividere via link,<br /> ovunque ti trovi.</h3>
+						</div>
+					</div>
+					<div class="card" draggable="true" style="background-color: #00DC8D;">
+						<div class="card-body d-flex flex-column justify-content-center align-items-center text-center" style="height: 100%; color: #202F4D;">
+							<h1 class="card-title" style="color: #202F4D;"><b>Match</b></h1>
+							<h3 class="card-text mt-3 tab-mobile-option">Un modo rapido e stimolante<br /> per trovare clienti migliori,<br /> collaboratori di fiducia e<br /> partner certificati con cui<br /> gestire progetti più grandi.</h3>
+						</div>
+					</div>
+					<div class="card" draggable="true" style="background-color: #FF61BB;">
+						<div class="card-body d-flex flex-column justify-content-center align-items-center text-center" style="height: 100%; color: white;">
+							<h1 class="card-title"><b>Boost</b></h1>
+							<h3 class="card-text mt-3 tab-mobile-option">Consulenza fiscale, legale,<br /> artistica o di project<br /> management a tua<br />disposizione, che tu sia all'inizio<br /> o nel pieno della tua carriera.</h3>
+						</div>
+					</div>
+					<div class="card" draggable="true" style="background-color: #F2A259;">
+						<div class="card-body d-flex flex-column justify-content-center align-items-center text-center" style="height: 100%; color: white;">
+							<h1 class="card-title"><b>Learn</b></h1>
+							<h3 class="card-text mt-3 tab-mobile-option">Opportunità di formazione<br /> continua e reciproca. Accedi<br /> a corsi e percorsi e diventa a<br /> tua volta mentore o<br /> insegnante.</h3>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-  <div class="row mt-5 pb-5">
-    <div class="col-md-8 offset-md-2 px-2 px-md-5">
-      <div class="text-left mt-5">
-        <h1 class="color-about">Con <b>Veesy, </b>da un "<span style="color: #FF61BB;">ciao</span>" arrivi a formare un nuovo <b>team creativo</b> e iniziare a scegliere i tuoi clienti, proprio come si fa con unə partner.</h1>
-      </div>
-      <div class="text-left mt-4 pt-4">
-        <h1 class="color-about">Con la giusta combinazione tra <b>strumenti smart, progetti stimolanti e connessioni di valore,</b> crei la carriera che hai in mente. Con la tua autonomia, ma mai da solə.</h1>
-      </div>
-      <div class="col-md-6 mt-5 mb-5 veesy-text-color d-flex align-items-center">
-        <form method="get" asp-area="Auth" asp-controller="Auth" asp-action="SignUp" class="flex-grow-1">
-          <button class="rounded-pill btn-primary-about-variant btn-variant-1" id="button2"  style="width: 200px; height:  40px;" type="submit">entra (è gratis) </button>
-        </form>
-      </div>
-    </div>
-  </div>
+	<div class="row mt-5 pb-5">
+		<div class="col-md-8 offset-md-2 px-2 px-md-5">
+			<div class="text-left mt-5">
+				<h1 class="color-about">Con <b>Veesy, </b>da un "<span style="color: #FF61BB;">ciao</span>" arrivi a formare un nuovo <b>team creativo</b> e iniziare a scegliere i tuoi clienti, proprio come si fa con unə partner.</h1>
+			</div>
+			<div class="text-left mt-4 pt-4">
+				<h1 class="color-about">Con la giusta combinazione tra <b>strumenti smart, progetti stimolanti e connessioni di valore,</b> crei la carriera che hai in mente. Con la tua autonomia, ma mai da solə.</h1>
+			</div>
+			<div class="col-md-6 mt-5 mb-5 veesy-text-color d-flex align-items-center">
+				<form method="get" asp-area="Auth" asp-controller="Auth" asp-action="SignUp" class="flex-grow-1">
+					<button class="rounded-pill btn-primary-about-variant btn-variant-1" id="button2" style="width: 200px; height:  40px;" type="submit">entra (è gratis) </button>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
 
 <div class="creator-popup-splash" id="creator-popup-splash-id" onclick="OpenCreatorPopup()">
-  <div class="d-flex">
-    <div class="col-11">
-      <p class="text-white ms-2 mb-1" style="margin-top:  2.5% !important;">LOOKING FOR A FREELANCER?</p>
-    </div>
-    <div class="col-1"><div class="text-end pt-1"><i class="fa-solid fa-circle fa-xs me-2" style="color: white;"></i></div></div>
-  </div>
+	<div class="d-flex">
+		<div class="col-11">
+			<p class="text-white ms-2 mb-1" style="margin-top:  2.5% !important;">LOOKING FOR A FREELANCER?</p>
+		</div>
+		<div class="col-1"><div class="text-end pt-1"><i class="fa-solid fa-circle fa-xs me-2" style="color: white;"></i></div></div>
+	</div>
 </div>
 
 <div class="creator-popup-full-splash me-1 mb-2" id="popup-creator">
-  <div class="d-flex" style="cursor: pointer" onclick="CloseCreatorPopup()">
-    <div class="col-11">
-      <p class="text-white ms-2 mb-1 mt-2">LOOKING FOR A FREELANCER?</p>
-    </div>
-    <div class="col-1 pe-2"><div class="text-end pt-1"><i class="fa-solid fa-circle-xmark mt-1" style="color: white"></i></div></div>
-  </div>
-  <hr class="portfolio-hr"/> 
-  <div class="row creator-popup-body overflow-auto ms-0">
-    <div class="row p-4 pb-2">
-      <h5 class="text-white box-splash-2">
-      Tell us what you need. Our simple form will guide you through providing the details of your project to help us connect you with the right creative talent in our network.</h5>
-    </div>
-    <div class="row text-end justify-content-end">
-      <a target="_blank" href="https://noteforms.com/forms/database-test-owzf1l">
-        <button class="rounded-pill btn div-white-rounded-veesy btn-variant" style="width: 200px;">find talent</button>
-      </a>
-    </div>
-  </div>
+	<div class="d-flex" style="cursor: pointer" onclick="CloseCreatorPopup()">
+		<div class="col-11">
+			<p class="text-white ms-2 mb-1 mt-2">LOOKING FOR A FREELANCER?</p>
+		</div>
+		<div class="col-1 pe-2"><div class="text-end pt-1"><i class="fa-solid fa-circle-xmark mt-1" style="color: white"></i></div></div>
+	</div>
+	<hr class="portfolio-hr" />
+	<div class="row creator-popup-body overflow-auto ms-0">
+		<div class="row p-4 pb-2">
+			<h5 class="text-white box-splash-2">
+				Tell us what you need. Our simple form will guide you through providing the details of your project to help us connect you with the right creative talent in our network.
+			</h5>
+		</div>
+		<div class="row text-end justify-content-end">
+			<a target="_blank" href="https://noteforms.com/forms/database-test-owzf1l">
+				<button class="rounded-pill btn div-white-rounded-veesy btn-variant" style="width: 200px;">find talent</button>
+			</a>
+		</div>
+	</div>
 </div>
 
 <div class="modal" id="fullScreenModal" style="z-index: 9999; display: none;" tabindex="-1" aria-labelledby="fullScreenModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-fullscreen">
-        <div class="modal-content" style="background-color: #040915;">
-            <div class="modal-body">
-                <div id="message-container">
-                  <img class="message" style="width: 150px;" src="/imgs/mp4/logo-veesy.gif"/>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="modal-dialog modal-fullscreen">
+		<div class="modal-content" style="background-color: #040915;">
+			<div class="modal-body">
+				<div id="message-container">
+					<img class="message" style="width: 150px;" src="/imgs/mp4/logo-veesy.gif" />
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <style>
-    .box-splash {
-      text-align: center;
-      padding: 7px;
-    }
-    .row-splash{
-         margin-right: 0 !important;
-         --bs-gutter-x: 0rem;
-         margin-left: 0 !important;
-    }
-    .img-splash {
-      max-width: 80%;
-      height: auto;
-      border-radius: 15px;
-    }
-    
-    .container-splash{
-      padding-left: 0px !important;
-      padding-right: 0px !important;
-    }
-    
-    .bg-grey-veesy{
-      padding-left: 0px !important;
-      padding-right: 0px !important;     
-    }
-    
-    .img-variant{
-      transition: all 0.9s;
-    }
-    
-    .img-variant-1{
-     transition: all 0.9s;
-     transform-origin: left top;
-    }
-    
-    .img-variant-8{
-     transition: all 0.9s;
-     transform-origin: right bottom;
-    }
-    
-    .img-variant-13{
-     transition: all 0.9s;
-     transform-origin: right top;
-    }
-        
-    .img-variant-15{
-     transition: all 0.9s;
-     transform-origin: left bottom;
-    }
-    
-    .img-variant-16{
-       transition: all 0.9s; 
-       transform-origin: right bottom;
-      }
-      
-      .centered-text {
-        position: fixed;
-        top: 48%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
-      }
+	.box-splash {
+		text-align: center;
+		padding: 7px;
+	}
 
-      .centered-text-var {
-        position: absolute;
-        top: 38vh;
-        text-align: center;
-        width: 100%;
-      }
-      
-      .container-splash{
-        opacity: 0.2;
-      }
-      
-      body {
-        overflow-y: hidden;
-      }
-    
-    .message {
-        text-align: center;
-        transition: 1s;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
-    
-    .message-variant{
-      text-align: center;
-      transition: 3s;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-    
-    h1{
-      color:  white;
-    }
-    
-    .mac-variant{
-      margin: 0.8% 0px;
-    }
+	.row-splash {
+		margin-right: 0 !important;
+		--bs-gutter-x: 0rem;
+		margin-left: 0 !important;
+	}
 
-    .scrollable-row {
-      overflow-x: hidden;
-      white-space: nowrap;
-      cursor: grab;
-    }
+	.img-splash {
+		max-width: 80%;
+		height: auto;
+		border-radius: 15px;
+	}
 
-    .main-card {
-      width: 100% !Important;
-    }
+	.container-splash {
+		padding-left: 0px !important;
+		padding-right: 0px !important;
+	}
 
-    .card {
-      display: inline-block;
-      width: 33%;
-      margin-right: 25px;
-      cursor: grab;
-      height: 450px;
-      border-radius: 10px;
-      border: 0px;
-    }
+	.bg-grey-veesy {
+		padding-left: 0px !important;
+		padding-right: 0px !important;
+	}
 
-    .background-image-about{
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-attachment: fixed;
-      border-radius: 15px !important;
-      height: 85vh;
-    }
+	.img-variant {
+		transition: all 0.9s;
+	}
 
-    .option-height{
-      line-height: 0.4 !important;
-    }
+	.img-variant-1 {
+		transition: all 0.9s;
+		transform-origin: left top;
+	}
 
-    .btn-primary-about1 {
-      background-color: #E2E5E7 !important;
-      border: #202F4D !important;
-      color: #202F4D !important;
-      border: 2px solid !important;
-    }
+	.img-variant-8 {
+		transition: all 0.9s;
+		transform-origin: right bottom;
+	}
 
-    .btn-primary-about1:hover {
-      background-color: #75CCDD !important;
-      border: #202F4D !important;
-      color: #202F4D !important;
-    }
+	.img-variant-13 {
+		transition: all 0.9s;
+		transform-origin: right top;
+	}
 
-    .margin-about{
-      margin-left: 50px;
-      margin-right: 50px;
-    }
+	.img-variant-15 {
+		transition: all 0.9s;
+		transform-origin: left bottom;
+	}
 
-    .circle1 {
-      width: 50px;
-      height: 50px;
-      background-color: #f97cc4;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      position: relative;
-      left: 30px;
-    }
+	.img-variant-16 {
+		transition: all 0.9s;
+		transform-origin: right bottom;
+	}
 
-    .text-about-circle1{
-      position:  relative;
-      top: 8px;
-      left: -12px;
-    }
+	.centered-text {
+		position: fixed;
+		top: 48%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		text-align: center;
+	}
 
-    .circle2 {
-      width: 100px;
-      height: 100px;
-      background-color: #8BD1DF;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      position: relative;
-      top: -25px;
-      left: 0px;
-      z-index: 8;
-    }
+	.centered-text-var {
+		position: absolute;
+		top: 38vh;
+		text-align: center;
+		width: 100%;
+	}
 
-    .text-about-circle2{
-      position:  relative;
-      top: 9px;
-      left: -18px;
-    }
+	.container-splash {
+		opacity: 0.2;
+	}
 
-    .circle3 {
-      width: 150px;
-      height: 150px;
-      background-color: #2DDEA0;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      position: relative;
-      top: -47px;
-      left: 25px;
-    }
+	body {
+		overflow-y: hidden;
+	}
 
-    .text-about-circle3{
-      position: relative;
-      top: 6px;
-      left: -15px;
-    }
+	.message {
+		text-align: center;
+		transition: 1s;
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
 
-    .overlay-text {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
+	.message-variant {
+		text-align: center;
+		transition: 3s;
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
 
-    .custom-cursor {
-      width: 100px;
-      height: 100px; 
-      background-color: #FF61BB;
-      border-radius: 50%;
-      color: white;
-      font-size: 18px;
-      display: none;
-      position: fixed;
-      pointer-events: none;
-      z-index: 9999;
-      top: 0;
-      left: 0;
-      text-align: center;
-      line-height: 100px;
-    }
+	h1 {
+		color: white;
+	}
 
-    .option-circle-2{
-      justify-content: flex-end !important;
-    }
+	.mac-variant {
+		margin: 0.8% 0px;
+	}
 
-    .option-circle-text-2{
-      z-index: 9 !important;
-    }
+	.scrollable-row {
+		overflow-x: hidden;
+		white-space: nowrap;
+		cursor: grab;
+	}
 
-    .option-circle-text-3{
-      z-index: 9 !important;
-    }
+	.main-card {
+		width: 100% !Important;
+	}
 
-    @@media screen and (max-width: 600px) {
-      .circle1 {
-        left:  5px;
-      }
+	.card {
+		display: inline-block;
+		width: 33%;
+		margin-right: 25px;
+		cursor: grab;
+		height: 450px;
+		border-radius: 10px;
+		border: 0px;
+	}
 
-      .circle2{
-        left:  -5px; 
-        top: 0px;
-      }
+	.background-image-about {
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: center;
+		background-attachment: fixed;
+		border-radius: 15px !important;
+		height: 85vh;
+	}
 
-      .option-circle-2{
-        justify-content: flex-start !important;
-      }
+	.option-height {
+		line-height: 0.4 !important;
+	}
 
-      .option-circle-text-2{
-        margin-left: 0px;
-        z-index: 9 !important;
-        top: 26px;
-        position: relative;
-      }
+	.btn-primary-about1 {
+		background-color: #E2E5E7 !important;
+		border: #202F4D !important;
+		color: #202F4D !important;
+		border: 2px solid !important;
+	}
 
-      .text-about-circle1{
-        top: 6px;
-      }
+		.btn-primary-about1:hover {
+			background-color: #75CCDD !important;
+			border: #202F4D !important;
+			color: #202F4D !important;
+		}
 
-      .font-option-circle-2{
-        font-size:  15px !important;
-      }
+	.margin-about {
+		margin-left: 50px;
+		margin-right: 50px;
+	}
 
-      .circle3{
-        left:  -15px;
-        top:  0px;
-      }
+	.circle1 {
+		width: 50px;
+		height: 50px;
+		background-color: #f97cc4;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: white;
+		position: relative;
+		left: 30px;
+	}
 
-      .margin-about{
-        margin-left: 0px;
-        margin-right: 0px;
-      }
+	.text-about-circle1 {
+		position: relative;
+		top: 8px;
+		left: -12px;
+	}
 
-      .option-circle-text-3{
-        left: 15px;
-        z-index: 9 !important;
-        top: 48px;
-        position: relative;
-      }
+	.circle2 {
+		width: 100px;
+		height: 100px;
+		background-color: #8BD1DF;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: white;
+		position: relative;
+		top: -25px;
+		left: 0px;
+		z-index: 8;
+	}
 
-      .text-option-mobile{
-        font-size: 20px !important;
-      }
+	.text-about-circle2 {
+		position: relative;
+		top: 9px;
+		left: -18px;
+	}
 
-      .option-height{
-        line-height: 1.4 !important;
-      }
+	.circle3 {
+		width: 150px;
+		height: 150px;
+		background-color: #2DDEA0;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: white;
+		position: relative;
+		top: -47px;
+		left: 25px;
+	}
 
-      .card {
-        display: inline-block;
-        width: 50%;
-        margin-right: 0px;
-        height: 200px;
-      }
-      
-      .tab-mobile-option{
-        font-size: 11px !important;
-        line-height: 16px !important;
-      }
-    }
-   
-  </style>
+	.text-about-circle3 {
+		position: relative;
+		top: 6px;
+		left: -15px;
+	}
+
+	.overlay-text {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+
+	.custom-cursor {
+		width: 100px;
+		height: 100px;
+		background-color: #FF61BB;
+		border-radius: 50%;
+		color: white;
+		font-size: 18px;
+		display: none;
+		position: fixed;
+		pointer-events: none;
+		z-index: 9999;
+		top: 0;
+		left: 0;
+		text-align: center;
+		line-height: 100px;
+	}
+
+	.option-circle-2 {
+		justify-content: flex-end !important;
+	}
+
+	.option-circle-text-2 {
+		z-index: 9 !important;
+	}
+
+	.option-circle-text-3 {
+		z-index: 9 !important;
+	}
+
+	@@media screen and (max-width: 600px) {
+		.circle1 {
+			left: 5px;
+		}
+
+		.circle2 {
+			left: -5px;
+			top: 0px;
+		}
+
+		.option-circle-2 {
+			justify-content: flex-start !important;
+		}
+
+		.option-circle-text-2 {
+			margin-left: 0px;
+			z-index: 9 !important;
+			top: 26px;
+			position: relative;
+		}
+
+		.text-about-circle1 {
+			top: 6px;
+		}
+
+		.font-option-circle-2 {
+			font-size: 15px !important;
+		}
+
+		.circle3 {
+			left: -15px;
+			top: 0px;
+		}
+
+		.margin-about {
+			margin-left: 0px;
+			margin-right: 0px;
+		}
+
+		.option-circle-text-3 {
+			left: 15px;
+			z-index: 9 !important;
+			top: 48px;
+			position: relative;
+		}
+
+		.text-option-mobile {
+			font-size: 20px !important;
+		}
+
+		.option-height {
+			line-height: 1.4 !important;
+		}
+
+		.card {
+			display: inline-block;
+			width: 50%;
+			margin-right: 0px;
+			height: 200px;
+		}
+
+		.tab-mobile-option {
+			font-size: 11px !important;
+			line-height: 16px !important;
+		}
+	}
+</style>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Importa jQuery se necessario -->
 
 <script>
-    function setImg() {
-      document.getElementById("Immagine1").style.transform = "scale(0.5)";
-      document.getElementById("Immagine2").style.transform = "scale(0.0)";
-      document.getElementById("Immagine4").style.transform = "scale(0.0)";
-      document.getElementById("Immagine5").style.transform = "scale(0.0)";
-      document.getElementById("Immagine7").style.transform = "scale(0.0)";
-      document.getElementById("Immagine8").style.transform = "scale(0.8)";
-      document.getElementById("Immagine9").style.transform = "scale(0.0)";
-      document.getElementById("Immagine11").style.transform = "scale(0.0)";
-      document.getElementById("Immagine12").style.transform = "scale(0.0)";
-      document.getElementById("Immagine13").style.transform = "scale(0.4)";
-      document.getElementById("Immagine15").style.transform = "scale(0.5)";
-      document.getElementById("Immagine16").style.transform = "scale(0.7)";
-      document.getElementById("Immagine17").style.transform = "scale(0.0)";
-    }
+			function setImg() {
+				document.getElementById("Immagine1").style.transform = "scale(0.5)";
+				document.getElementById("Immagine2").style.transform = "scale(0.0)";
+				document.getElementById("Immagine4").style.transform = "scale(0.0)";
+				document.getElementById("Immagine5").style.transform = "scale(0.0)";
+				document.getElementById("Immagine7").style.transform = "scale(0.0)";
+				document.getElementById("Immagine8").style.transform = "scale(0.8)";
+				document.getElementById("Immagine9").style.transform = "scale(0.0)";
+				document.getElementById("Immagine11").style.transform = "scale(0.0)";
+				document.getElementById("Immagine12").style.transform = "scale(0.0)";
+				document.getElementById("Immagine13").style.transform = "scale(0.4)";
+				document.getElementById("Immagine15").style.transform = "scale(0.5)";
+				document.getElementById("Immagine16").style.transform = "scale(0.7)";
+				document.getElementById("Immagine17").style.transform = "scale(0.0)";
+			}
 
-    window.addEventListener("load", function() {
-        setTimeout(setImg, 6000);
+			window.addEventListener("load", function() {
+					setTimeout(setImg, 6000);
 
-        if (window.location.hash === '#down') {
-          document.querySelector('body').style.overflowY = 'scroll';
-        }
-    });
-        
-    function OpenCreatorPopup(){
-        document.getElementById("popup-creator").classList.add("creator-popup-full-open");
-        document.getElementById("popup-creator").classList.remove("creator-popup-full-close");
-        document.getElementById("creator-popup-splash-id").style.display = "none";
-    }
-    function CloseCreatorPopup() {
-        document.getElementById("popup-creator").classList.remove("creator-popup-full-open")
-        document.getElementById("popup-creator").classList.add("creator-popup-full-close")
-        document.getElementById("creator-popup-splash-id").style.display = "block";
-    }
-    
-     @*document.addEventListener("DOMContentLoaded", function() {
-       var fullScreenModal = new bootstrap.Modal(document.getElementById('fullScreenModal'));
-     
-       // Visualizza il modal
-       fullScreenModal.show();
-     
-       setTimeout(function() {
-         var opacity = 1;
-         var interval = 50; // L'intervallo di tempo tra le riduzioni di opacità in millisecondi
-         var colorTint = { r: 0, g: 0, b: 85 }; // Colore iniziale (blu)
-         var targetColor = { r: 32, g: 47, b: 77 }; // Colore di destinazione (202F4D)
-     
-         if (!isDarkThemeActive()) {
-             var newMessage = document.getElementById("newMessage");
-             cambiaColoreGradualmente(newMessage, "202F4D");
-         }
+					if (window.location.hash === '#down') {
+						document.querySelector('body').style.overflowY = 'scroll';
+					}
+			});
 
-         var fadeOutInterval = setInterval(function() {
-           if (opacity <= 0) {
-             // Quando l'opacità raggiunge 0, nascondi il modal
-             clearInterval(fadeOutInterval);
-             fullScreenModal.hide();
-           } else {
-             // Riduci l'opacità gradualmente
-             opacity -= 0.05; // Puoi regolare il valore in base a quanto velocemente vuoi che scompaia
-             colorTint.r = Math.round(colorTint.r + (targetColor.r - colorTint.r) * 0.05);
-             colorTint.g = Math.round(colorTint.g + (targetColor.g - colorTint.g) * 0.05);
-             colorTint.b = Math.round(colorTint.b + (targetColor.b - colorTint.b) * 0.05);
-     
-             fullScreenModal._dialog.style.opacity = opacity;
-             fullScreenModal._dialog.style.backgroundColor = `rgb(${colorTint.r}, ${colorTint.g}, ${colorTint.b})`;
-     
-           }
-         }, interval);
-       }, 5000);
-     });
-    
-    document.addEventListener("DOMContentLoaded", function () {
-      const messageContainer = document.getElementById("VisualMade");
-      const message = document.querySelector(".message");
-      
-      setTimeout(function () {
-        message.style.top = "38%"; 
-      }, 1800);
-              
-      setTimeout(function () {
-        const newMessage = document.createElement("div");
-        newMessage.classList.add("message-variant");
-        newMessage.style.opacity = 0;
-        newMessage.innerHTML = '<h1 id="newMessage" style="font-size: 40px !important; line-height: 40px !important;"><b>Freelancing is an art.<br/>Not a Task.</b></h1>';
-        messageContainer.style.zIndex = "99999";
-        messageContainer.style.color = "white";
-        newMessage.setAttribute("style", "width: 400px;");
-        messageContainer.appendChild(newMessage);
-    
-        setTimeout(function () {
-          newMessage.style.opacity = 1; 
-        }, 50); 
-      }, 2000); 
-    });*@
-    
-document.addEventListener('DOMContentLoaded', function () {
-  setTimeout(OpenCreatorPopup, 13000); 
-});
- 
- function cambiaColoreGradualmente(elemento, coloreDesiderato) {
-     var coloreAttuale = [255, 255, 255];
-     var coloreObiettivo = hexToRgb(coloreDesiderato);
-     var passo = 10; 
- 
-     var intervallo = setInterval(function() {
-         if (coloreAttuale[0] === coloreObiettivo[0] && coloreAttuale[1] === coloreObiettivo[1] && coloreAttuale[2] === coloreObiettivo[2]) {
-             clearInterval(intervallo);
-             document.getElementById("VisualMade").style.zIndex = "999";
-         } else {
-             for (var i = 0; i < 3; i++) {
-                 if (coloreAttuale[i] < coloreObiettivo[i]) {
-                     coloreAttuale[i] = Math.min(coloreAttuale[i] + passo, coloreObiettivo[i]);
-                 } else if (coloreAttuale[i] > coloreObiettivo[i]) {
-                     coloreAttuale[i] = Math.max(coloreAttuale[i] - passo, coloreObiettivo[i]);
-                 }
-             }
-             elemento.style.color = 'rgb(' + coloreAttuale.join(',') + ')';
-         }
-     }, 50); 
- }
- 
- function hexToRgb(hex) {
-     var r = parseInt(hex.substring(0, 2), 16);
-     var g = parseInt(hex.substring(2, 4), 16);
-     var b = parseInt(hex.substring(4, 6), 16);
-     return [r, g, b];
- }
- 
-function isDarkThemeActive() {
-    const body = document.body;
-    const themeElement = body.hasAttribute('data-bs-theme') ? body : document.querySelector('[data-bs-theme="dark"]');
-    return themeElement && themeElement.getAttribute('data-bs-theme') === 'dark';
-}
+			function OpenCreatorPopup(){
+					document.getElementById("popup-creator").classList.add("creator-popup-full-open");
+					document.getElementById("popup-creator").classList.remove("creator-popup-full-close");
+					document.getElementById("creator-popup-splash-id").style.display = "none";
+			}
+			function CloseCreatorPopup() {
+					document.getElementById("popup-creator").classList.remove("creator-popup-full-open")
+					document.getElementById("popup-creator").classList.add("creator-popup-full-close")
+					document.getElementById("creator-popup-splash-id").style.display = "block";
+			}
 
-    document.addEventListener("DOMContentLoaded", function() {
-      var button = document.querySelector("#button1");
+	@*document.addEventListener("DOMContentLoaded", function() {
+				 var fullScreenModal = new bootstrap.Modal(document.getElementById('fullScreenModal'));
 
-      button.addEventListener("mouseover", function() {
-        button.textContent = "for free";
-      });
+				 // Visualizza il modal
+				 fullScreenModal.show();
 
-      button.addEventListener("mouseout", function() {
-        button.textContent = "join veesy";
-      });
+				 setTimeout(function() {
+					 var opacity = 1;
+					 var interval = 50; // L'intervallo di tempo tra le riduzioni di opacità in millisecondi
+					 var colorTint = { r: 0, g: 0, b: 85 }; // Colore iniziale (blu)
+					 var targetColor = { r: 32, g: 47, b: 77 }; // Colore di destinazione (202F4D)
 
-      var button1 = document.querySelector("#button2");
+					 if (!isDarkThemeActive()) {
+							 var newMessage = document.getElementById("newMessage");
+							 cambiaColoreGradualmente(newMessage, "202F4D");
+					 }
 
-      button1.addEventListener("mouseover", function() {
-        button1.textContent = "è gratis!";
-      });
+					 var fadeOutInterval = setInterval(function() {
+						 if (opacity <= 0) {
+							 // Quando l'opacità raggiunge 0, nascondi il modal
+							 clearInterval(fadeOutInterval);
+							 fullScreenModal.hide();
+						 } else {
+							 // Riduci l'opacità gradualmente
+							 opacity -= 0.05; // Puoi regolare il valore in base a quanto velocemente vuoi che scompaia
+							 colorTint.r = Math.round(colorTint.r + (targetColor.r - colorTint.r) * 0.05);
+							 colorTint.g = Math.round(colorTint.g + (targetColor.g - colorTint.g) * 0.05);
+							 colorTint.b = Math.round(colorTint.b + (targetColor.b - colorTint.b) * 0.05);
 
-      button1.addEventListener("mouseout", function() {
-        button1.textContent = "entra (è gratis)";
-      });
-    });
+							 fullScreenModal._dialog.style.opacity = opacity;
+							 fullScreenModal._dialog.style.backgroundColor = `rgb(${colorTint.r}, ${colorTint.g}, ${colorTint.b})`;
 
-    let isDown = false;
-    let startX;
-    let scrollLeft;
+						 }
+					 }, interval);
+				 }, 5000);
+			 });
 
-    const scrollableRow = document.getElementById('scrollable-row');
+			document.addEventListener("DOMContentLoaded", function () {
+				const messageContainer = document.getElementById("VisualMade");
+				const message = document.querySelector(".message");
 
-    scrollableRow.addEventListener('mousedown', (e) => {
-      isDown = true;
-      startX = e.pageX - scrollableRow.offsetLeft;
-      scrollLeft = scrollableRow.scrollLeft;
-    });
+				setTimeout(function () {
+					message.style.top = "38%";
+				}, 1800);
 
-    scrollableRow.addEventListener('mouseleave', () => {
-      isDown = false;
-    });
+				setTimeout(function () {
+					const newMessage = document.createElement("div");
+					newMessage.classList.add("message-variant");
+					newMessage.style.opacity = 0;
+					newMessage.innerHTML = '<h1 id="newMessage" style="font-size: 40px !important; line-height: 40px !important;"><b>Freelancing is an art.<br/>Not a Task.</b></h1>';
+					messageContainer.style.zIndex = "99999";
+					messageContainer.style.color = "white";
+					newMessage.setAttribute("style", "width: 400px;");
+					messageContainer.appendChild(newMessage);
 
-    scrollableRow.addEventListener('mouseup', () => {
-      isDown = false;
-    });
+					setTimeout(function () {
+						newMessage.style.opacity = 1;
+					}, 50);
+				}, 2000);
+			});*@
 
-    scrollableRow.addEventListener('mousemove', (e) => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - scrollableRow.offsetLeft;
-      const walk = (x - startX) * 1.5;
-      scrollableRow.scrollLeft = scrollLeft - walk;
-    });
+	document.addEventListener('DOMContentLoaded', function () {
+		setTimeout(OpenCreatorPopup, 13000);
+	});
 
-    function showText() {
-      document.getElementById("discover").classList.remove("d-none");
-      document.getElementById("more").classList.remove("d-none");
-    }
-    
-    function startPage(){
-      var modalBody = document.querySelector('body');
-      if (modalBody) {
-        modalBody.style.overflowY = 'scroll';
-      }
-    }
+	 function cambiaColoreGradualmente(elemento, coloreDesiderato) {
+			 var coloreAttuale = [255, 255, 255];
+			 var coloreObiettivo = hexToRgb(coloreDesiderato);
+			 var passo = 10;
 
-    function hideText() {
-      document.getElementById("discover").classList.add("d-none");
-      document.getElementById("more").classList.add("d-none");
-    }
+			 var intervallo = setInterval(function() {
+					 if (coloreAttuale[0] === coloreObiettivo[0] && coloreAttuale[1] === coloreObiettivo[1] && coloreAttuale[2] === coloreObiettivo[2]) {
+							 clearInterval(intervallo);
+							 document.getElementById("VisualMade").style.zIndex = "999";
+					 } else {
+							 for (var i = 0; i < 3; i++) {
+									 if (coloreAttuale[i] < coloreObiettivo[i]) {
+											 coloreAttuale[i] = Math.min(coloreAttuale[i] + passo, coloreObiettivo[i]);
+									 } else if (coloreAttuale[i] > coloreObiettivo[i]) {
+											 coloreAttuale[i] = Math.max(coloreAttuale[i] - passo, coloreObiettivo[i]);
+									 }
+							 }
+							 elemento.style.color = 'rgb(' + coloreAttuale.join(',') + ')';
+					 }
+			 }, 50);
+	 }
 
-    var customCursor = document.createElement("div");
-    customCursor.className = "custom-cursor";
-    customCursor.innerText = "play";
+	 function hexToRgb(hex) {
+			 var r = parseInt(hex.substring(0, 2), 16);
+			 var g = parseInt(hex.substring(2, 4), 16);
+			 var b = parseInt(hex.substring(4, 6), 16);
+			 return [r, g, b];
+	 }
 
-    document.body.appendChild(customCursor);
+	function isDarkThemeActive() {
+			const body = document.body;
+			const themeElement = body.hasAttribute('data-bs-theme') ? body : document.querySelector('[data-bs-theme="dark"]');
+			return themeElement && themeElement.getAttribute('data-bs-theme') === 'dark';
+	}
 
-    document.addEventListener("mousemove", function(event) {
-      customCursor.style.top = (event.clientY - 50) + "px";
-      customCursor.style.left = (event.clientX - 50) + "px";
-    });
+			document.addEventListener("DOMContentLoaded", function() {
+				var button = document.querySelector("#button1");
 
-    document.getElementById("imageContainer").addEventListener("mouseout", function() {
-      customCursor.style.display = "none";
-    });
+				button.addEventListener("mouseover", function() {
+					button.textContent = "for free";
+				});
 
-    document.getElementById("imageContainer").addEventListener("mouseover", function() {
-      customCursor.style.display = "block";
-    });
+				button.addEventListener("mouseout", function() {
+					button.textContent = "join veesy";
+				});
 
-    document.addEventListener("mousemove", function(event) {
-      var isInsideImage = event.target === mainImage || event.target.closest("#imageContainer") !== null;
-      var mouseY = event.clientY;
-      var imageRect = mainImage.getBoundingClientRect();
-      var bottomThreshold = imageRect.bottom - 75; // 50 pixels dalla parte inferiore dell'immagine
+				var button1 = document.querySelector("#button2");
 
-      if (isInsideImage) {
-        if (mouseY < bottomThreshold) {
-          document.body.style.cursor = "none";
-          customCursor.style.display = "block";
-          customCursor.style.top = (event.clientY - 50) + "px";
-          customCursor.style.left = (event.clientX - 50) + "px";
-        } else {
-          document.body.style.cursor = "default";
-          customCursor.style.display = "none";
-        }
-      } else {
-        document.body.style.cursor = "default";
-        customCursor.style.display = "none";
-      }
-    });
+				button1.addEventListener("mouseover", function() {
+					button1.textContent = "è gratis!";
+				});
 
-    scrollableRow.addEventListener('wheel', (e) => {
-      e.preventDefault();
-      const delta = -1 * Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
-      scrollableRow.scrollLeft += delta * 40;
-    });
+				button1.addEventListener("mouseout", function() {
+					button1.textContent = "entra (è gratis)";
+				});
+			});
+
+			let isDown = false;
+			let startX;
+			let scrollLeft;
+
+			const scrollableRow = document.getElementById('scrollable-row');
+
+			scrollableRow.addEventListener('mousedown', (e) => {
+				isDown = true;
+				startX = e.pageX - scrollableRow.offsetLeft;
+				scrollLeft = scrollableRow.scrollLeft;
+			});
+
+			scrollableRow.addEventListener('mouseleave', () => {
+				isDown = false;
+			});
+
+			scrollableRow.addEventListener('mouseup', () => {
+				isDown = false;
+			});
+
+			scrollableRow.addEventListener('mousemove', (e) => {
+				if (!isDown) return;
+				e.preventDefault();
+				const x = e.pageX - scrollableRow.offsetLeft;
+				const walk = (x - startX) * 1.5;
+				scrollableRow.scrollLeft = scrollLeft - walk;
+			});
+
+			function showText() {
+				document.getElementById("discover").classList.remove("d-none");
+				document.getElementById("more").classList.remove("d-none");
+			}
+
+			function startPage(){
+				var modalBody = document.querySelector('body');
+				if (modalBody) {
+					modalBody.style.overflowY = 'scroll';
+				}
+			}
+
+			function hideText() {
+				document.getElementById("discover").classList.add("d-none");
+				document.getElementById("more").classList.add("d-none");
+			}
+
+			var customCursor = document.createElement("div");
+			customCursor.className = "custom-cursor";
+			customCursor.innerText = "play";
+
+			document.body.appendChild(customCursor);
+
+			document.addEventListener("mousemove", function(event) {
+				customCursor.style.top = (event.clientY - 50) + "px";
+				customCursor.style.left = (event.clientX - 50) + "px";
+			});
+
+			document.getElementById("imageContainer").addEventListener("mouseout", function() {
+				customCursor.style.display = "none";
+			});
+
+			document.getElementById("imageContainer").addEventListener("mouseover", function() {
+				customCursor.style.display = "block";
+			});
+
+			document.addEventListener("mousemove", function(event) {
+				var isInsideImage = event.target === mainImage || event.target.closest("#imageContainer") !== null;
+				var mouseY = event.clientY;
+				var imageRect = mainImage.getBoundingClientRect();
+				var bottomThreshold = imageRect.bottom - 75; // 50 pixels dalla parte inferiore dell'immagine
+
+				if (isInsideImage) {
+					if (mouseY < bottomThreshold) {
+						document.body.style.cursor = "none";
+						customCursor.style.display = "block";
+						customCursor.style.top = (event.clientY - 50) + "px";
+						customCursor.style.left = (event.clientX - 50) + "px";
+					} else {
+						document.body.style.cursor = "default";
+						customCursor.style.display = "none";
+					}
+				} else {
+					document.body.style.cursor = "default";
+					customCursor.style.display = "none";
+				}
+			});
+
+			scrollableRow.addEventListener('wheel', (e) => {
+				e.preventDefault();
+				const delta = -1 * Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
+				scrollableRow.scrollLeft += delta * 40;
+			});
 </script>

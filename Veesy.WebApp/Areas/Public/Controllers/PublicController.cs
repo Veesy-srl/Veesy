@@ -218,13 +218,35 @@ public class PublicController : VeesyController
             return RedirectToAction("Error400");
         }
     }
-
+    
+    
     [HttpGet("portfolio/{id}")]
     public IActionResult Portfolio(Guid id)
     {
         try
         {
-            var res = _portfolioHelper.GetPortfolioViewModel(id);
+            var res = _portfolioHelper.GetPortfolioViewModel(id, null, null);
+            if (!res.resultDto.Success)
+            {
+                _notyfService.Custom(res.resultDto.Message, 10, "#ca0a0a");
+                return RedirectToAction("Error400");
+            }
+
+            return View(res.model);
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            return RedirectToAction("Error400");
+        }
+    }
+
+    [HttpGet("folio/{user}/{portfolioname}")]
+    public IActionResult Portfolio(string user, string portfolioname)
+    {
+        try
+        {
+            var res = _portfolioHelper.GetPortfolioViewModel(Guid.Empty, user, portfolioname);
             if (!res.resultDto.Success)
             {
                 _notyfService.Custom(res.resultDto.Message, 10, "#ca0a0a");
@@ -240,7 +262,7 @@ public class PublicController : VeesyController
         }
     }
     
-    [HttpPost("portfolio/{id}")]
+    [HttpPost("portfolios/{user}/{portfolioname}")]
     public IActionResult Portfolio(PortfolioViewModel model)
     {
         try

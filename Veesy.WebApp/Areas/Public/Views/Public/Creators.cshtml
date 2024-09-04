@@ -1,180 +1,182 @@
 @using System.Reflection.Metadata
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @{
-    ViewData["Title"] = "Creators";
+	ViewData["Title"] = "Creators";
 }
 <div class="padding-lg pt-7rem">
-    <div class="row p-4-lg">
-        <div class="col-sm-12 col-md-7 mt-3">
-            <h1 class="text-color">Explore featured portfolios, find inspiration in every click, and connect with fellow visual artists.</h1>
-        </div>
-    </div>
-    <div class="row pt-4 p-4-lg">
-        <div class="d-flex mb-4" style="max-width: 100%; flex-wrap: wrap;">
-            <h5 class="pe-2 text-color mt-1"><b>Filter by category</b></h5>
-            @foreach (var category in Model.CategoryWorks)
-            {
-                <div class="div-white-rounded-blue-veesy-creators d-flex" style="top: -5px; position:  relative;" id="category-@category.ToString()" onclick="FilterCategory('@category.ToString()')"><a><b>@category.ToString()</b></a></div>
-            }
-        </div>
-        @for(var u=0; u<Model.User.Count; u++)
-        {
-            <div class="col-md-4 col-lg-3 col-sm-6 mt-2 mb-2" id="@Model.User[u].Id">
-                <a method="get" asp-area="Public" asp-controller="Public" asp-action="Portfolio" asp-route-id="@Model.PortfolioId[u]">
-                    <div class="card-white-veesy-creators p-3 mb-3 d-flex position-relative" onmouseover="highlightCard(this)" onmouseout="resetCard(this)">
-                        <div class="col-3">
-                            <div class="text-center">
+	<div class="row p-4-lg">
+		<div class="col-sm-12 col-md-7 mt-3">
+			<h1 class="text-color">Explore featured portfolios, find inspiration in every click, and connect with fellow visual artists.</h1>
+		</div>
+	</div>
+	<div class="row pt-4 p-4-lg">
+		<div class="d-flex mb-4" style="max-width: 100%; flex-wrap: wrap;">
+			<h5 class="pe-2 text-color mt-1"><b>Filter by category</b></h5>
+			@foreach (var category in Model.CategoryWorks)
+			{
+				<div class="div-white-rounded-blue-veesy-creators d-flex" style="top: -5px; position:  relative;" id="category-@category.ToString()" onclick="FilterCategory('@category.ToString()')"><a><b>@category.ToString()</b></a></div>
+			}
+		</div>
+		@for (var u = 0; u < Model.User.Count; u++)
+		{
+			<div class="col-md-4 col-lg-3 col-sm-6 mt-2 mb-2" id="@Model.User[u].Id">
+				@{
+					var userForUrl = (Model.User[u].Name + "-" + Model.User[u].Surname).ToLower().Replace(" ", "-");
+					var portfolioNameForUrl = (Model.Portfolios[u].Name).ToLower().Replace(" ", "-");
+				}
+				<a method="get" asp-area="Public" asp-controller="Public" asp-action="Portfolio" asp-route-user="@userForUrl" asp-route-portfolioname="@portfolioNameForUrl">
+					<div class="card-white-veesy-creators p-3 mb-3 d-flex flex-column position-relative" onmouseover="highlightCard(this)" onmouseout="resetCard(this)">
+						<div class=" d-flex flex-row">
+							<div class="text-center">
 
-                                @if (@Model.User[u].ProfileImageFileName != null)
-                                {
-                                    <img src="@Model.BasePathImages@Model.User[u].ProfileImageFileName?tr=w-400" class="img-thumbnail-custom-dashboard rounded-circle" alt="user-image">
-                                }
-                                else
-                                {
-                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" class="img-thumbnail-custom rounded-circle" alt="user-image">
-                                }
-                            </div>
-                            <button class="rounded-pill btn btn-white color-text-creator" style="background-color: white; width:  180px; margin-top:  20px;" type="submit">meet the creator</button>
-                        </div>
-                        <div class="m-4 col-7" style="max-height: 100px; overflow: hidden;">
-                            <div class="row white-cursor-creators" style="font-size: 20px; line-height: 30px; margin-bottom: 5px;">
-                                <strong>@Model.User[u].Name @Model.User[u].Surname</strong>
-                            </div>
-                            <div class="row white-cursor-creators">
-                                @if (@Model.User[u].Category != null)
-                                {
-                                    <div style="font-size: 15px;">
-                                        @Model.User[u].Category
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                        <div style="position: absolute; top: 10px; right: 10px;">
-                            <i class="fa-solid fa-circle fa-xs color-dot-creators"></i>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            
-            
-        }
-    </div>
+								@if (@Model.User[u].ProfileImageFileName != null)
+								{
+									<img src="@Model.BasePathImages@Model.User[u].ProfileImageFileName?tr=w-400" class="img-thumbnail-custom-dashboard rounded-circle" alt="user-image">
+								}
+								else
+								{
+									<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" class="img-thumbnail-custom rounded-circle" alt="user-image">
+								}
+							</div>
+							<div class="m-4 col-7">
+								<div class="row white-cursor-creators" style="font-size: 20px; line-height: 30px; margin-bottom: 5px;">
+									<strong>@Model.User[u].Name @Model.User[u].Surname</strong>
+								</div>
+								<div class="row white-cursor-creators">
+									@if (@Model.User[u].Category != null)
+									{
+										<div style="font-size: 15px;">
+											@Model.User[u].Category
+										</div>
+									}
+								</div>
+							</div>
+						</div>
+						<button class="rounded-pill btn btn-white color-text-creator" style="background-color: white; width: 180px; margin-top: 20px;" type="submit">meet the creator</button>
+						<div style="position: absolute; top: 10px; right: 10px;">
+							<i class="fa-solid fa-circle fa-xs color-dot-creators"></i>
+						</div>
+					</div>
+				</a>
+			</div>
+
+
+		}
+	</div>
 </div>
 <div class="empty-veesy"></div>
 <div class="empty-veesy"></div>
 
 <script>
 
-    var ButtonFilter = [];
-    var CardFilter = [];
-    
-    function highlightCard(card) {
-        card.style.backgroundColor = "#536B7E";
-        var whiteCreators = card.querySelectorAll(".white-cursor-creators");
-        for (var t = 0; t < whiteCreators.length; t++) {
-            whiteCreators[t].style.color = "white";
-        }
-        card.querySelector(".fa-circle").style.color = "white";
-        card.style.cursor = "pointer";
-    }
-    
-    function resetCard(card) {
-        card.style.backgroundColor = "";
-        var whiteCreators = card.querySelectorAll(".white-cursor-creators");
-        for (var t = 0; t < whiteCreators.length; t++) {
-            whiteCreators[t].style.color = "";
-        }
-        card.querySelector(".fa-circle").style.color = "";
-        card.style.cursor = "";
-    }
+	var ButtonFilter = [];
+	var CardFilter = [];
 
-    function FilterCategory(category) {
-        if (document.getElementById('category-'+category).classList.contains('creators-selected-button')) {
-            if (ButtonFilter.length == 1){
-                ResetFilter();
-            }else{
-                ButtonFilter = ButtonFilter.filter(function(item) {
-                    return item !== category;
-                });
-                CallFilterAction();
-            }
-        }else{
-            ButtonFilter.push(category);
-            CallFilterAction();
-        }
-    }
-    
-    function UpdateUsers(users) {
-        CardFilter = [];
-        for(var i = 0; i < users.length; i++){
-           CardFilter.push(users[i]);
-        }
-    }
-    
-    function CallFilterAction() {
-        $('#load-spinner').css("display", "block");
-        var Category = ButtonFilter;
-        var CategoryDto = {Category};
-        $.ajax({
-            type: 'Post',
-            url: '@Url.Action("FilterCreators", "Public")',
-            data: JSON.stringify(CategoryDto), 
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            success: function (response) {
-                UpdateUsers(response.result);       
-                ActionFilter();
-                $('#load-spinner').css("display", "none");
-            },
-            error: function (response) {
-                $('#load-spinner').css("display", "none");
-            }
-        });
-    }
-    
-    function ActionFilter() {
-        @foreach (var category in Model.CategoryWorks)
-         {
-             <text>
-                document.getElementById('category-@category').classList.remove("creators-selected-button");
-             </text>
-         }
-         
-         for (var i=0; i<ButtonFilter.length; i++)
-           {
-               document.getElementById('category-'+ButtonFilter[i]).classList.add("creators-selected-button");
-           }
-                          
-        @foreach (var user in Model.User)
-         {
-             <text>
-                document.getElementById('@user.Id').style.setProperty('display', 'none', 'important');
-             </text>
-         }
-         
-         for (var i=0; i<CardFilter.length; i++)
-        {
-             document.getElementById(CardFilter[i]).style.setProperty('display', 'block', 'important');
-        }
-    }
-    
-    function ResetFilter() {
-            ButtonFilter = [];
-            CardFilter = [];
-                        
-            @foreach (var category in Model.CategoryWorks)
-             {
-                 <text>
-                    document.getElementById('category-@category').classList.remove("creators-selected-button");
-                 </text>
-             }
-                        
-            @foreach (var user in Model.User)
-             {
-                 <text>
-                    document.getElementById('@user.Id').style.setProperty('display', 'block', 'important');
-                 </text>
-             }
-        }
+	function highlightCard(card) {
+		card.style.backgroundColor = "#536B7E";
+		var whiteCreators = card.querySelectorAll(".white-cursor-creators");
+		for (var t = 0; t < whiteCreators.length; t++) {
+			whiteCreators[t].style.color = "white";
+		}
+		card.querySelector(".fa-circle").style.color = "white";
+		card.style.cursor = "pointer";
+	}
+
+	function resetCard(card) {
+		card.style.backgroundColor = "";
+		var whiteCreators = card.querySelectorAll(".white-cursor-creators");
+		for (var t = 0; t < whiteCreators.length; t++) {
+			whiteCreators[t].style.color = "";
+		}
+		card.querySelector(".fa-circle").style.color = "";
+		card.style.cursor = "";
+	}
+
+	function FilterCategory(category) {
+		if (document.getElementById('category-' + category).classList.contains('creators-selected-button')) {
+			if (ButtonFilter.length == 1) {
+				ResetFilter();
+			} else {
+				ButtonFilter = ButtonFilter.filter(function (item) {
+					return item !== category;
+				});
+				CallFilterAction();
+			}
+		} else {
+			ButtonFilter.push(category);
+			CallFilterAction();
+		}
+	}
+
+	function UpdateUsers(users) {
+		CardFilter = [];
+		for (var i = 0; i < users.length; i++) {
+			CardFilter.push(users[i]);
+		}
+	}
+
+	function CallFilterAction() {
+		$('#load-spinner').css("display", "block");
+		var Category = ButtonFilter;
+		var CategoryDto = { Category };
+		$.ajax({
+			type: 'Post',
+			url: '@Url.Action("FilterCreators", "Public")',
+			data: JSON.stringify(CategoryDto),
+			contentType: 'application/json; charset=utf-8',
+			dataType: 'json',
+			success: function (response) {
+				UpdateUsers(response.result);
+				ActionFilter();
+				$('#load-spinner').css("display", "none");
+			},
+			error: function (response) {
+				$('#load-spinner').css("display", "none");
+			}
+		});
+	}
+
+	function ActionFilter() {
+	@foreach (var category in Model.CategoryWorks)
+	{
+		<text>
+					document.getElementById('category-@category').classList.remove("creators-selected-button");
+		</text>
+	}
+
+							 for (var i = 0; i < ButtonFilter.length; i++) {
+			document.getElementById('category-' + ButtonFilter[i]).classList.add("creators-selected-button");
+		}
+
+	@foreach (var user in Model.User)
+	{
+		<text>
+					document.getElementById('@user.Id').style.setProperty('display', 'none', 'important');
+		</text>
+	}
+
+							 for (var i = 0; i < CardFilter.length; i++) {
+			document.getElementById(CardFilter[i]).style.setProperty('display', 'block', 'important');
+		}
+	}
+
+	function ResetFilter() {
+		ButtonFilter = [];
+		CardFilter = [];
+
+	@foreach (var category in Model.CategoryWorks)
+	{
+		<text>
+					document.getElementById('category-@category').classList.remove("creators-selected-button");
+		</text>
+	}
+
+	@foreach (var user in Model.User)
+	{
+		<text>
+					document.getElementById('@user.Id').style.setProperty('display', 'block', 'important');
+		</text>
+	}
+							}
 
 </script>

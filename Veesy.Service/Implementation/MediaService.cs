@@ -26,7 +26,9 @@ public class MediaService : IMediaService
 
     public List<Media> GetAllByUserId(MyUser user)
     {
-        return _uoW.MediaRepository.FindByCondition(s => s.MyUserId == user.Id).OrderBy(s => s.CreateRecordDate).ToList();
+        return _uoW.MediaRepository.FindByCondition(s => s.MyUserId == user.Id)
+            .Include(s => s.MyUser)
+            .OrderBy(s => s.CreateRecordDate).ToList();
     }
 
     public async Task<Media> AddMedia(Media media, MyUser user)
@@ -38,13 +40,20 @@ public class MediaService : IMediaService
 
     public Media? GetMediaById(Guid id)
     {
+        return _uoW.MediaRepository.FindByCondition(s => s.Id == id).Include(s => s.MyUser).SingleOrDefault();
+    }
+    
+    public Media? GetMediaByIdForUpdate(Guid id)
+    {
         return _uoW.MediaRepository.FindByCondition(s => s.Id == id).SingleOrDefault();
     }
+    
     public Media? GetPreviousMediaByDate(DateTime mediaSelectedCreateRecordDate, MyUser user)
     {
         return _uoW.MediaRepository
             .FindByCondition(s => s.MyUserId == user.Id && s.CreateRecordDate < mediaSelectedCreateRecordDate)
             .OrderByDescending(s => s.CreateRecordDate)
+            .Include(s => s.MyUser)
             .FirstOrDefault();
     }
 
@@ -53,6 +62,7 @@ public class MediaService : IMediaService
         return _uoW.MediaRepository
             .FindByCondition(s => s.MyUserId == user.Id && s.CreateRecordDate > mediaSelectedCreateRecordDate)
             .OrderBy(s => s.CreateRecordDate)
+            .Include(s => s.MyUser)
             .FirstOrDefault();
     }
 

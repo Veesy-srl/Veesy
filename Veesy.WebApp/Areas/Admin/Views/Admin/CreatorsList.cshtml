@@ -31,6 +31,7 @@
                 <h3>Creators list</h3>
             </div>
             <div class="float-end">
+                <a class="btn btn-primary me-2" onclick="ExportData()">Export excel</a>
                 <a class="btn btn-primary" onclick="ToggleTable()">Change view</a>
             </div>
         </div>
@@ -42,9 +43,9 @@
                     </th>
                     <th class="th-sm">Email
                     </th>
-                    <th class="th-sm">Phone
+                    <th class="th-sm">N° portfolio
                     </th>
-                    <th class="th-sm">Ruolo
+                    <th class="th-sm">N° media
                     </th>
                     <th class="th-sm">Subscription Date
                     </th>
@@ -60,8 +61,8 @@
                     <tr>
                         <td>@user.Fullname</td>
                         <td><a href="mailto:@user.Email">@user.Email</a></td>
-                        <td><a href="tel:@user.PhoneNumber">@user.PhoneNumber</a></td>
-                        <td>@user.Category</td>
+                        <td>@user.PublicPortfoliosCount / @user.PortfoliosCount</td>
+                        <td>@user.MediasCount</td>
 
                         @{
                             DateTime createDate;
@@ -267,5 +268,10 @@
           $('.dataTables_length').addClass('bs-select');
           document.getElementById("dtBasicExample2_wrapper").style.display = "none"
         });
+
+        function ExportData() {
+            var actionUrl = '@Url.Action("ExportExcelCreator", "File")'
+            window.location.href = actionUrl;
+        }
     </script>
 }

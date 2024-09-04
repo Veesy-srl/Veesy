@@ -314,6 +314,7 @@ public class AccountService : IAccountService
     public List<MyUser> GetCreators()
     {
         return _uoW.MyUserRepository.FindAll()
+            .Include(s => s.Medias)
             .Include(s => s.MyUserSubscriptionPlans.OrderBy(s => s.CreateRecordDate))
                 .ThenInclude(s => s.SubscriptionPlan)
             .Include(s => s.MyUserUsedSoftwares)
@@ -322,6 +323,7 @@ public class AccountService : IAccountService
                 .ThenInclude(s => s.Sector)
             .Include(s => s.MyUserSkills.Where(s => s.Type == SkillConstants.SoftSkill))
                 .ThenInclude(s => s.Skill)
+            .Include(s => s.Portfolios)
             .Where(s => s.MyUserSubscriptionPlans.Count != 0)
             .ToList();
     }
@@ -384,6 +386,7 @@ public class AccountService : IAccountService
     public List<MyUser> GetCreatorsPlus()
     {
         return _uoW.MyUserRepository.FindAll()
+            .Include(s => s.Medias)
             .Include(s => s.MyUserSubscriptionPlans)
                 .ThenInclude(s => s.SubscriptionPlan)
             .Include(s => s.MyUserUsedSoftwares)
@@ -455,6 +458,21 @@ public class AccountService : IAccountService
     public async Task DeleteUsers(List<MyUser> users)
     {
         _uoW.MyUserRepository.DeleteRange(users);
+        await _uoW.CommitAsync(new MyUser());
+    }
+
+    public List<MyUser> GetUserToSendEmailPro()
+    {
+        return _uoW.MyUserRepository
+            .FindByCondition(s => s.CreateDate.Date.AddDays(7) <= DateTime.Now.Date && !s.EmailUpdateProSended && s.EmailConfirmed)
+            .Include(s => s.MyUserSubscriptionPlans)
+            .ThenInclude(s => s.SubscriptionPlan)
+            .ToList();
+    }
+
+    public async Task UpdateMyUsers(List<MyUser> usersToUpdate)
+    {
+        _uoW.MyUserRepository.UpdateRange(usersToUpdate);
         await _uoW.CommitAsync(new MyUser());
     }
 

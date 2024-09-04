@@ -26,6 +26,20 @@ public class PortfolioService : IPortfolioService
             .FindByCondition(w => w.MyUserId == userId && w.Id == portfolioId)
             .Include(s => s.PortfolioMedias.OrderBy(ob=>ob.SortOrder))
             .ThenInclude(s => s.Media)
+            .ThenInclude(s => s.MyUser)
+            .Include(s => s.MyUser)
+            .SingleOrDefault();
+        if (portfolio == null)
+            throw new Exception($"Portfolio not found with id {portfolioId}.");
+        return portfolio;
+    }
+    
+    public Portfolio GetPortfolioByIdToUpdate(Guid portfolioId, string userId)
+    {
+        var portfolio = _uoW.PortfolioRepository
+            .FindByCondition(w => w.MyUserId == userId && w.Id == portfolioId)
+            .Include(s => s.PortfolioMedias.OrderBy(ob=>ob.SortOrder))
+            .ThenInclude(s => s.Media)
             .SingleOrDefault();
         if (portfolio == null)
             throw new Exception($"Portfolio not found with id {portfolioId}.");
@@ -48,12 +62,14 @@ public class PortfolioService : IPortfolioService
 
     public IEnumerable<Portfolio> GetPortfoliosByUser(MyUser user)
     {
-        return _uoW.PortfolioRepository.FindByCondition(s => s.MyUserId == user.Id);
+        return _uoW.PortfolioRepository.FindByCondition(s => s.MyUserId == user.Id)
+            .Include(s => s.MyUser);
     }
 
     public IEnumerable<Portfolio> GetPortfoliosByUserWithMedia(MyUser user)
     {
         return _uoW.PortfolioRepository.FindByCondition(s => s.MyUserId == user.Id)
+            .Include(s => s.MyUser)
             .Include(s => s.PortfolioMedias)
             .ThenInclude(s => s.Media)
             .OrderByDescending(s => s.IsMain);
@@ -97,7 +113,8 @@ public class PortfolioService : IPortfolioService
 
     public Portfolio? GetMainPortfolioByUser(MyUser user)
     {
-        return _uoW.PortfolioRepository.FindByCondition(s => s.IsMain && s.MyUserId == user.Id).SingleOrDefault();
+        return _uoW.PortfolioRepository.FindByCondition(s => s.IsMain && s.MyUserId == user.Id)
+            .Include(s => s.MyUser).SingleOrDefault();
     }
     public Portfolio? GetMainPortfolioByUserWithMedias(MyUser user)
     {
@@ -105,6 +122,7 @@ public class PortfolioService : IPortfolioService
             .FindByCondition(s => s.IsMain && s.MyUserId == user.Id)
             .Include(s => s.PortfolioMedias)
             .ThenInclude(s => s.Media)
+            .Include(s => s.MyUser)
             .SingleOrDefault();
     }
 
@@ -160,6 +178,7 @@ public class PortfolioService : IPortfolioService
     {
         var portfolio = _uoW.PortfolioRepository.FindByCondition(w => w.MyUserId == userId && w.Id == portfolioId)
             .Include(s => s.PortfolioMedias)
+            .Include(s => s.MyUser)
             .SingleOrDefault();
         if (portfolio == null)
             throw new Exception($"Portfolio not found with id {portfolioId}.");
@@ -170,6 +189,7 @@ public class PortfolioService : IPortfolioService
     {
         var portfolio = _uoW.PortfolioRepository.FindByCondition(w => w.Id == portfolioId)
             .Include(s => s.PortfolioMedias)
+            .Include(s => s.MyUser)
             .SingleOrDefault();
         if (portfolio == null)
             throw new Exception($"Portfolio not found with id {portfolioId}.");
@@ -179,6 +199,7 @@ public class PortfolioService : IPortfolioService
     public IEnumerable<Portfolio> GetPortfoliosByMedia(Guid imgToDelete)
     {
         return _uoW.PortfolioRepository.FindByCondition(s => s.PortfolioMedias.Select(s => s.MediaId).Contains(imgToDelete))
+            .Include(s => s.MyUser)
             .Include(s => s.PortfolioMedias);
     }
 
@@ -191,6 +212,7 @@ public class PortfolioService : IPortfolioService
                     .Select(s=>s.MediaId)
                     .Any(w => imgToDelete.Contains(w))
             )
+            .Include(s => s.MyUser)
             .Include(s => s.PortfolioMedias);
         
         return portfolios;
@@ -201,6 +223,7 @@ public class PortfolioService : IPortfolioService
         return _uoW.PortfolioRepository.FindByCondition(s => s.Id == id)
             .Include(s => s.PortfolioMedias.OrderBy(s => s.SortOrder))
             .ThenInclude(s => s.Media)
+            .ThenInclude(s => s.MyUser)
             .Include(s => s.MyUser)
             .SingleOrDefault();
     }
@@ -221,5 +244,16 @@ public class PortfolioService : IPortfolioService
     public List<string> GetAllPortfolioNameDifferentByOne(Guid id, MyUser user)
     {
         return _uoW.PortfolioRepository.FindByCondition(s => s.Id != id && s.MyUserId == user.Id).Select(s => s.Name.ToUpper()).ToList();
+    }
+
+    public Portfolio? GetPortfolioByUserAndName(string user, string portfolioname)
+    {
+        return _uoW.PortfolioRepository.FindByCondition(s => s.Name.ToUpper().Replace("-", "").Replace(" ", "") == portfolioname.ToUpper().Replace("-", "")
+                && (s.MyUser.Name + s.MyUser.Surname).ToUpper().Replace(" ", "").Replace("-", "") == user.ToUpper().Replace("-", ""))
+            .Include(s => s.PortfolioMedias.OrderBy(ob=>ob.SortOrder))
+                .ThenInclude(s => s.Media)
+                    .ThenInclude(s => s.MyUser)
+            .Include(s => s.MyUser)
+            .FirstOrDefault();
     }
 }

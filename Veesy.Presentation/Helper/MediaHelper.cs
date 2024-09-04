@@ -113,7 +113,7 @@ public class MediaHelper
                     await fileSection.FileStream.CopyToAsync(stream);
                     var size = stream.Length;
                     var tmpSize = _mediaService.GetSizeMediaStorageByUserId(user.Id) + size; //Value in byte
-                    var validateSize = _mediaValidators.ValidateSizeUpload(size, tmpSize, subscription.AllowedMegaByte * 1024 * 1024, extension);
+                    var validateSize = _mediaValidators.ValidateSizeUpload(size, tmpSize, ((long)subscription.AllowedMegaByte * 1024 * 1024), extension);
                     if (!validateSize.Success)
                     {
                         filesUploadedStatus.Add(new(false, null, fileSection.FileName, validateSize.Message));
@@ -193,7 +193,7 @@ public class MediaHelper
                     await fileSection.FileStream.CopyToAsync(stream);
                     var size = stream.Length;
                     var tmpSize = _mediaService.GetSizeMediaStorageByUserId(user.Id) + size; //Value in byte
-                    var validateSize = _mediaValidators.ValidateSizeUpload(size, tmpSize, subscription.AllowedMegaByte * 1024 * 1024, extension);
+                    var validateSize = _mediaValidators.ValidateSizeUpload(size, tmpSize, ((long)subscription.AllowedMegaByte * 1024 * 1024), extension);
                     if (!validateSize.Success)
                     {
                         filesUploadedStatus.Add(new(false, null, fileSection.FileName, validateSize.Message));

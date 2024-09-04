@@ -46,6 +46,7 @@ public static class RegisterDependencyInjection
         serviceCollection.AddTransient<PortfolioHelper>();
         serviceCollection.AddTransient<PublicHelper>();
         serviceCollection.AddTransient<HomeHelper>();
+        serviceCollection.AddTransient<FileHelper>();
         
         return serviceCollection;
     }

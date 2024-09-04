@@ -9,9 +9,13 @@ namespace Veesy.Service.Dtos;
 public class MediaDto
 {
     public Guid Code { get; set; }
+    public string UserId { get; set; }
     public string OriginalFileName { get; set; }
     public string FileName { get; set; }
     public Guid? NestedPortfolioLinks { get; set; }
+    public string? NestedPortfolioUrl { get; set; }
+    public string? NestedPortfolioUserForUrl { get; set; }
+    public string? NestedPortfolioNameForUrl { get; set; }
     public long Size { get; set; }
     public string Type { get; set; }
     public string UploadDate { get; set; }
@@ -85,9 +89,12 @@ public static class MapCloudDtos
         return media.Select(x => new MediaDto()
         {
             Code = x.Id,
+            UserId = x.MyUserId,
             OriginalFileName = x.OriginalFileName,
             FileName = x.FileName,
             NestedPortfolioLinks = x.NestedPortfolioLinks,
+            NestedPortfolioUrl = x.NestedPortfolioUrl,
+            NestedPortfolioUserForUrl = x.MyUser.Fullname.ToLower().Replace(" ", "-"), 
             Size = x.Size,
             Type = x.Type,
             Credits = x.Credits,
@@ -104,6 +111,7 @@ public static class MapCloudDtos
             OriginalFileName = x.OriginalFileName,
             FileName = x.FileName,
             NestedPortfolioLinks = x.NestedPortfolioLinks,
+            NestedPortfolioUrl = x.NestedPortfolioUrl,
             Size = x.Size,
             Type = x.Type,
             Credits = x.Credits,
@@ -123,7 +131,10 @@ public static class MapCloudDtos
             Code = media.Id,
             OriginalFileName = media.OriginalFileName,
             FileName = media.FileName,
+            UserId = media.MyUserId,
             NestedPortfolioLinks = media.NestedPortfolioLinks,
+            NestedPortfolioUrl = media.NestedPortfolioUrl,
+            NestedPortfolioUserForUrl = media.MyUser.Fullname.ToLower().Replace(" ", "-"),
             Size = media.Size,
             Type = media.Type,
             Credits = media.Credits,

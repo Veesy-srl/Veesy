@@ -38,13 +38,13 @@
                     }
                     @if (MediaCostants.ImageExtensions.Contains(image.Media.Type.ToUpper()))
                     {
-                        <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.MediaId', false, '@image.Media.NestedPortfolioLinks', '@hasCredits')" class="draggable" name="image-gallery" mediaid="@image.MediaId">
+                        <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.MediaId', false, '@image.Media.NestedPortfolioLinks','@image.Media.NestedPortfolioNameForUrl','@image.Media.NestedPortfolioUserForUrl', '@image.Media.NestedPortfolioUrl', '@hasCredits')" class="draggable" name="image-gallery" mediaid="@image.MediaId">
                             <img title="@image.Media.OriginalFileName" class="img-fluid lazy rounded-05 w-100 mt-3" data-src="@Model.BasePathImages@image.Media.FileName?tr=w-1080" />
                         </div>
                     }
                     else
                     {
-                        <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.MediaId', true, '@image.Media.NestedPortfolioLinks', '@hasCredits')" class="draggable" name="image-gallery">
+                        <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.MediaId', true, '@image.Media.NestedPortfolioLinks','@image.Media.NestedPortfolioNameForUrl','@image.Media.NestedPortfolioUserForUrl', '@image.Media.NestedPortfolioUrl', '@hasCredits')" class="draggable" name="image-gallery">
                             <video autoplay="autoplay" muted loop class="w-100 shadow-1-strong rounded-05 mt-3" title="@image.Media.OriginalFileName">
                               <data-src src="@Model.BasePathImages@image.Media.FileName?tr=w-1080" type="video/mp4"></data-src>
                             </video>
@@ -239,7 +239,9 @@
         
             function OpenCreditsOrNestedLink() {
                 if(nowNestedPortfolioId != null && nowNestedPortfolioId != "")
-                    location.href = '@Model.ApplicationUrl' + "/portfolio/" + nowNestedPortfolioId 
+                    window.open('@Model.ApplicationUrl' + "/folio/" + nowNestedPortfolioUser + "/" + nowNestedPortfolioName, '_blank')
+                else if (nowNestedUrl != null && nowNestedUrl != "")
+                    window.open(nowNestedUrl, '_blank');
                 else if (nowHasCredits)
                     ShowOverlay(true)
             }
@@ -281,10 +283,16 @@
             }
             
             let nowNestedPortfolioId = ""
+            let nowNestedUrl = ""
+            let nowNestedPortfolioName = ""
+            let nowNestedPortfolioUser = ""
             let nowHasCredits = false;
             
-            function OpenMediaPopup(mediaId, IsVideo, NestedPortfolioId, HasCredits) {
+            function OpenMediaPopup(mediaId, IsVideo, NestedPortfolioId, NestedPortfolioName, NestedPortfolioUser, NestedUrl, HasCredits) {
                 nowNestedPortfolioId = NestedPortfolioId;
+                nowNestedUrl = NestedUrl;
+                nowNestedPortfolioName = NestedPortfolioName
+                nowNestedPortfolioUser = NestedPortfolioUser
                 nowHasCredits = HasCredits == 'True' ? true : false;
                 document.getElementById("open-credits").onclick = function (){ShowOverlay(true)}
                 document.getElementById("text-overlay").classList.remove("text-overlay-selected")
@@ -431,7 +439,7 @@ else if(!Model.IsPublish)
 }
 else if (!Model.PortfolioDto.IsPublic)
 {
-    <form method="post" asp-action="Portfolio" asp-controller="Public" asp-area="Public">
+    <form method="post" asp-action="Portfolio" asp-controller="Public" asp-area="Public" asp-route-portfolioname="@Model.PortfolioDto.PortfolionameForUrl" asp-route-user="@Model.PortfolioDto.FullnameForUrl">
         @Html.HiddenFor(s => s.PortfolioDto.Code)
         <input data-val="true" data-val-required="The ControlPassword field is required." id="ControlPassword" name="ControlPassword" type="hidden" value="1">
         <div class="align-items-center justify-content-center vh-100 pt-7rem">

@@ -169,7 +169,7 @@ try
         var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
         
         context.Database.Migrate();
-        //DbInitializer.SeedUsersAndRoles(userManager, roleManager, context, Configuration);
+        DbInitializer.SeedUsersAndRoles(userManager, roleManager, context, Configuration);
     }
     logger.Debug("Program Initialized, Running App...");
     app.Run();

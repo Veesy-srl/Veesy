@@ -1,6 +1,6 @@
-using System;
-using System.Collections.Generic;
 using Veesy.Domain.Models;
+
+namespace Veesy.Presentation.Model.Public;
 
 public class CreatorsViewModel
 {
@@ -11,4 +11,5 @@ public class CreatorsViewModel
     public string ApplicationUrl { get; set; }
     
     public List<Guid> PortfolioId { get; set; }
+    public List<Domain.Models.Portfolio> Portfolios { get; set; }
 }

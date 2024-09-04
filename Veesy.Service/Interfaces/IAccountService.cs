@@ -56,4 +56,6 @@ public interface IAccountService
     Task DeleteUserById(string id);
     List<MyUser> GetUserEmailNotConfirmed(int days);
     Task DeleteUsers(List<MyUser> users);
+    List<MyUser> GetUserToSendEmailPro();
+    Task UpdateMyUsers(List<MyUser> usersToUpdate);
 }
