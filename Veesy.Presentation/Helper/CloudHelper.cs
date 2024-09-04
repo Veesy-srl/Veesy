@@ -33,7 +33,7 @@ public class CloudHelper
             if (media.NestedPortfolioLinks != null && media.NestedPortfolioLinks != Guid.Empty)
             {
                 media.NestedPortfolioNameForUrl = _portfolioService
-                    .GetPortfolioById(media.NestedPortfolioLinks.Value, media.UserId).Name.ToLower().Replace(" ", "-");
+                    .GetPortfolioById(media.NestedPortfolioLinks.Value, media.UserId).Name.ToLower().Replace(" ", "-").Replace("/", "-");
             }
         }
         return new CloudViewModel()
@@ -61,21 +61,21 @@ public class CloudHelper
         if (mediaDto.NestedPortfolioLinks != null && mediaDto.NestedPortfolioLinks != Guid.Empty)
         {
             mediaDto.NestedPortfolioNameForUrl = _portfolioService
-                .GetPortfolioById(mediaDto.NestedPortfolioLinks.Value, mediaDto.UserId).Name.ToLower().Replace(" ", "-");
+                .GetPortfolioById(mediaDto.NestedPortfolioLinks.Value, mediaDto.UserId).Name.ToLower().Replace(" ", "-").Replace("/", "-");
         }
         
         var previousMediaDto = MapCloudDtos.MapMedia(previousMedia);
         if (previousMediaDto != null && previousMediaDto.NestedPortfolioLinks != null && previousMediaDto.NestedPortfolioLinks != Guid.Empty)
         {
             previousMediaDto.NestedPortfolioNameForUrl = _portfolioService
-                .GetPortfolioById(previousMediaDto.NestedPortfolioLinks.Value, previousMediaDto.UserId).Name.ToLower().Replace(" ", "-");
+                .GetPortfolioById(previousMediaDto.NestedPortfolioLinks.Value, previousMediaDto.UserId).Name.ToLower().Replace(" ", "-").Replace("/", "-");
         }
         
         var nextMediaDto = MapCloudDtos.MapMedia(nextMedia);
         if (nextMediaDto != null && nextMediaDto.NestedPortfolioLinks != null && nextMediaDto.NestedPortfolioLinks != Guid.Empty)
         {
             nextMediaDto.NestedPortfolioNameForUrl = _portfolioService
-                .GetPortfolioById(nextMediaDto.NestedPortfolioLinks.Value, nextMediaDto.UserId).Name.ToLower().Replace(" ", "-");
+                .GetPortfolioById(nextMediaDto.NestedPortfolioLinks.Value, nextMediaDto.UserId).Name.ToLower().Replace(" ", "-").Replace("/", "-");
         }
         
         var vm = new EditViewModel()
@@ -127,7 +127,7 @@ public class CloudHelper
         if (mediaDto.NestedPortfolioLinks != null && mediaDto.NestedPortfolioLinks != Guid.Empty)
         {
             mediaDto.NestedPortfolioNameForUrl = _portfolioService
-                .GetPortfolioById(mediaDto.NestedPortfolioLinks.Value, mediaDto.UserId).Name.ToLower().Replace(" ", "-");
+                .GetPortfolioById(mediaDto.NestedPortfolioLinks.Value, mediaDto.UserId).Name.ToLower().Replace("/", "-").Replace(" ", "-");
         }
         
         var vm = new SingleMediaViewModel()

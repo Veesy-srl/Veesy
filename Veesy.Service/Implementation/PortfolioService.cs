@@ -267,7 +267,7 @@ public class PortfolioService : IPortfolioService
 
     public Portfolio? GetPortfolioByUserAndName(string user, string portfolioname)
     {
-        return _uoW.PortfolioRepository.FindByCondition(s => s.Name.ToUpper().Replace("-", "").Replace(" ", "") == portfolioname.ToUpper().Replace("-", "")
+        return _uoW.PortfolioRepository.FindByCondition(s => s.Name.ToUpper().Replace("-", "").Replace("/", "").Replace(" ", "") == portfolioname.ToUpper().Replace("-", "")
                 && (s.MyUser.Name + s.MyUser.Surname).ToUpper().Replace(" ", "").Replace("-", "") == user.ToUpper().Replace("-", ""))
             .Include(s => s.PortfolioMedias.OrderBy(ob=>ob.SortOrder))
                 .ThenInclude(s => s.Media)
