@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using Veesy.Domain.Models;
 
 namespace Veesy.Service.Dtos;
@@ -63,6 +64,18 @@ public class SectorDto
 
 }
 
+public class UserInfoDto
+{
+    [JsonPropertyName("id")]
+    public string Id { get; set; }
+    [JsonPropertyName("first_name")]
+    public string FirstName { get; set; }
+    [JsonPropertyName("last_name")]
+    public string LastName { get; set; }
+    [JsonPropertyName("email")]
+    public string Email { get; set; }
+}
+
 public class LanguageSpokenDto
 {
     public Guid Code { get; set; }
@@ -102,6 +115,17 @@ public static class MapProfileDtos
         {
             Code = usedSoftware.Id,
             Name = usedSoftware.Name
+        };
+    }
+    
+    public static UserInfoDto MapUserDetailDto(MyUser user)
+    {
+        return new UserInfoDto
+        {
+            Id = user.Id,
+            FirstName = user.Name,
+            LastName = user.Surname,
+            Email = user.Email
         };
     }
     
