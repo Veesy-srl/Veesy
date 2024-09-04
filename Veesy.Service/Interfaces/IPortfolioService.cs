@@ -19,6 +19,7 @@ public interface IPortfolioService
     IEnumerable<PortfolioMedia> GetPortfoliosMediaByPortfoliosId(List<Guid> portfoliosId);
     Task<ResultDto> UpdatePortfolioMedias(List<PortfolioMedia> portfoliosMediaToDelete, List<PortfolioMedia> portfoliosMediaToAdd, List<PortfolioMedia> portfoliosMediaToUpdate, MyUser userInfo);
     Portfolio? GetMainPortfolioByUser(MyUser user);
+    (string, Guid) GetMainPortfolioNameByUserId(string userId);
     Portfolio? GetMainPortfolioByUserWithMedias(MyUser user);
     Task UpdatePortfolios(List<Portfolio> portfoliosToUpdate, MyUser user);
     Task DeletePortfolio(Portfolio portfolio, MyUser userInfo);
@@ -28,7 +29,8 @@ public interface IPortfolioService
     IEnumerable<Portfolio> GetPortfoliosByMedia(Guid imgToDelete);
     IEnumerable<Portfolio> GetPortfoliosByMedias(List<Guid> imgToDelete);
     Portfolio? GetPortfolioByIdForPreview(Guid id);
-    int GetPortfoliosNumberByUser(MyUser user);
+    int GetPortfoliosNumberByUser(string userId);
+    int GetPublicPortfoliosNumberByUser(string userId);
     Task SetPortfoliosToDraftByIds(List<Guid> portfolioDtoPortfolioSelected, MyUser user);
     List<string> GetAllPortfolioNameDifferentByOne(Guid id, MyUser user);
     Portfolio? GetPortfolioByUserAndName(string user, string portfolioname);

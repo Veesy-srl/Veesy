@@ -403,8 +403,8 @@ public class ProfileHelper
         var subscriptionPlan = _accountService.GetSubscriptionPlanByName(changeSubscriptionDto.SubscriptionName);
         changeSubscriptionDto.MyUserId ??= user.Id;
         var userClient = _accountService.GetUserById(changeSubscriptionDto.MyUserId);
-        var numberMedia = _mediaService.GetMediaNumberByUser(userClient);
-        var numberPortfolio = _portfolioService.GetPortfoliosNumberByUser(userClient);
+        var numberMedia = _mediaService.GetMediaNumberByUser(userClient.Id);
+        var numberPortfolio = _portfolioService.GetPortfoliosNumberByUser(userClient.Id);
         var mediaSize = _mediaService.GetSizeMediaStorageByUserId(userClient.Id);
         if(numberPortfolio > subscriptionPlan.AllowedPortfolio && subscriptionPlan.Name == VeesyConstants.SubscriptionPlan.Free)
             return new ResultDto(false,

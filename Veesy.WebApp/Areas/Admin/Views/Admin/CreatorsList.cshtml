@@ -76,7 +76,7 @@
                             }
                         }
                         @{
-                            var subsc = VeesyConstants.SubscriptionPlan.Pro == @user.SubscriptionPlan ? VeesyConstants.SubscriptionPlan.Free : VeesyConstants.SubscriptionPlan.Pro; 
+                            var subsc = VeesyConstants.SubscriptionPlan.Pro == @user.SubscriptionPlan ? VeesyConstants.SubscriptionPlan.Free : VeesyConstants.SubscriptionPlan.Pro;
                         }
                         <td><button type="button" onclick="openModal('#modalChangeSubscription'), SetSubscription('@subsc', '@user.Code')" class="btn @VeesyConstants.SubscriptionPlan.SubscriptionSpan[@user.SubscriptionPlan] m-1">@user.SubscriptionPlan</button></td>
                         <td>

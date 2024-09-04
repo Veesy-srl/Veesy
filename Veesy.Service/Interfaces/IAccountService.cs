@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
+using Veesy.Service.Dtos;
 using Veesy.Service.Implementation;
 
 namespace Veesy.Service.Interfaces;
@@ -39,7 +40,8 @@ public interface IAccountService
     List<MyUser> GetAllCreators();
     public List<MyUser> GetFilteredCreators();
     int NumberRecordCompiled(MyUser userInfo);
-    List<MyUser> GetCreators();
+    List<FrelancerDto> GetCreators();
+    int GetCreatorsCount();
     MyUser GetUserById(string id);
     List<string> GetUserSector(string userId);
     List<string> GetUserUsedSoftware(string userId);

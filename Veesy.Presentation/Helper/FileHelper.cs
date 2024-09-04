@@ -19,8 +19,7 @@ public class FileHelper
 
     public (Stream file, string contentType, string name) GetCreatorsReport()
     {
-        var users = _accountService.GetCreators();
-        var creators = MapAdminDto.MapCreatorDtos(users);
+        var creators = _accountService.GetCreators();
         IWorkbook workbook = new XSSFWorkbook();
 
         ISheet sheet = workbook.CreateSheet($"Creators");
