@@ -401,6 +401,7 @@ public class ProfileHelper
     public async Task<ResultDto> ChangeSubscriptionPlan(ChangeSubscriptionDto changeSubscriptionDto, MyUser user)
     {
         var subscriptionPlan = _accountService.GetSubscriptionPlanByName(changeSubscriptionDto.SubscriptionName);
+        changeSubscriptionDto.MyUserId ??= user.Id;
         var userClient = _accountService.GetUserById(changeSubscriptionDto.MyUserId);
         var numberMedia = _mediaService.GetMediaNumberByUser(userClient);
         var numberPortfolio = _portfolioService.GetPortfoliosNumberByUser(userClient);
