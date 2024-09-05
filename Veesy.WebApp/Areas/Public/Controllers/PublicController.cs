@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NLog;
+using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
 using Veesy.Presentation.Helper;
 using Veesy.Presentation.Model.Portfolio;
@@ -225,14 +226,14 @@ public class PublicController : VeesyController
     {
         try
         {
-            var res = _portfolioHelper.GetPortfolioViewModel(id, null, null);
+            var res = _portfolioHelper.GetPortfolioById(id, null, null);
             if (!res.resultDto.Success)
             {
                 _notyfService.Custom(res.resultDto.Message, 10, "#ca0a0a");
                 return RedirectToAction("Error400");
             }
 
-            return View(res.model);
+            return RedirectToAction("Portfolio", new {user = res.userFullname, portfolioname = res.portfolioName});
         }
         catch (Exception ex)
         {
@@ -262,7 +263,7 @@ public class PublicController : VeesyController
         }
     }
     
-    [HttpPost("portfolios/{user}/{portfolioname}")]
+    [HttpPost("folio/{user}/{portfolioname}")]
     public IActionResult Portfolio(PortfolioViewModel model)
     {
         try

@@ -196,7 +196,7 @@ public class PortfolioHelper
 
     public async Task<ResultDto> UpdateSecurity(UpdatePortfolioDto portfolioDto, MyUser userInfo)
     {
-        var portfolio = _portfolioService.GetPortfolioById(portfolioDto.Id, userInfo.Id);
+        var portfolio = _portfolioService.GetPortfolioByIdToUpdate(portfolioDto.Id, userInfo.Id);
         portfolio.IsPublic = !portfolioDto.IsPublic;
         await _portfolioService.UpdatePortfolio(portfolio, userInfo);
         return new ResultDto(true, "");
@@ -207,7 +207,7 @@ public class PortfolioHelper
         var mainPortfolio = _portfolioService.GetMainPortfolioByUser(user);
         if (mainPortfolio != null)
             mainPortfolio.IsMain = false;
-        var portfolio = _portfolioService.GetPortfolioById(portfolioDto.Id, user.Id);
+        var portfolio = _portfolioService.GetPortfolioByIdToUpdate(portfolioDto.Id, user.Id);
         if(portfolio.Id == mainPortfolio.Id)
             return new ResultDto(false, "This portfolio is already set as your main");
         portfolio.IsMain = true;
@@ -344,6 +344,16 @@ public class PortfolioHelper
             BasePathAzure = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/",
             ApplicationUrl = _config["ApplicationUrl"]
         }, new ResultDto(true, ""));
+    }
+
+    public (string userFullname, string portfolioName, ResultDto resultDto) GetPortfolioById(Guid id, string user, string portfolioname)
+    {
+        var portfolio = id == Guid.Empty ? _portfolioService.GetPortfolioByUserAndName(user, portfolioname) : _portfolioService.GetPortfolioByIdForPreview(id);
+        if (portfolio == null)
+            return ("", "", new ResultDto(false, "Portfolio not found"));
+
+        return (portfolio.MyUser.Fullname.Replace(" ", "-"), portfolio.Name.Replace(" ", "-").Replace("/", "-"),
+            new ResultDto(true, ""));
     }
 
     public (PortfolioViewModel model, ResultDto resultDto) GetPostPortfolioViewModel(PortfolioViewModel model)
