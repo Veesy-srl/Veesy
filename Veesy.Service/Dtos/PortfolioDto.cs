@@ -29,8 +29,8 @@ public class PreviewPortfolioDto
     public List<string> SoftSkill { get; set; }
     public List<string> Sector { get; set; }
     public List<string> LanguageSpoken { get; set; }
-    public string FullnameForUrl => UserFullName.ToLower().Replace(" ", "-");
-    public string PortfolionameForUrl => Name.ToLower().Replace(" ", "-");
+    public string FullnameForUrl => UserFullName == null ? "" : UserFullName.ToLower().Replace(" ", "-");
+    public string PortfolionameForUrl =>Name == null ? "" : Name.ToLower().Replace(" ", "-");
 }
 
 public class PortfolioDto
