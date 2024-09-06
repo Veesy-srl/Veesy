@@ -111,10 +111,9 @@ public class PortfolioService : IPortfolioService
         }
     }
 
-    public Portfolio? GetMainPortfolioByUser(MyUser user)
+    public Portfolio? GetMainPortfolioByUser(string userId)
     {
-        return _uoW.PortfolioRepository.FindByCondition(s => s.IsMain && s.MyUserId == user.Id)
-            .Include(s => s.MyUser).SingleOrDefault();
+        return _uoW.PortfolioRepository.FindByCondition(s => s.IsMain && s.MyUserId == userId).SingleOrDefault();
     }
 
     (string, Guid) IPortfolioService.GetMainPortfolioNameByUserId(string userId)
@@ -203,7 +202,6 @@ public class PortfolioService : IPortfolioService
     {
         var portfolio = _uoW.PortfolioRepository.FindByCondition(w => w.Id == portfolioId)
             .Include(s => s.PortfolioMedias)
-            .Include(s => s.MyUser)
             .SingleOrDefault();
         if (portfolio == null)
             throw new Exception($"Portfolio not found with id {portfolioId}.");
