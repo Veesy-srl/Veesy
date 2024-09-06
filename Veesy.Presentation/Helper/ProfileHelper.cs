@@ -406,13 +406,13 @@ public class ProfileHelper
         var numberMedia = _mediaService.GetMediaNumberByUser(userClient.Id);
         var numberPortfolio = _portfolioService.GetPortfoliosNumberByUser(userClient.Id);
         var mediaSize = _mediaService.GetSizeMediaStorageByUserId(userClient.Id);
-        if(numberPortfolio > subscriptionPlan.AllowedPortfolio && subscriptionPlan.Name == VeesyConstants.SubscriptionPlan.Free)
+        if(numberPortfolio > subscriptionPlan.AllowedPortfolio && subscriptionPlan.AllowedPortfolio != -1)
             return new ResultDto(false,
                 $"{subscriptionPlan.Name} plan is limited to {subscriptionPlan.AllowedPortfolio} portfolio. Please remove {numberPortfolio - subscriptionPlan.AllowedPortfolio} portofolios and retry.");
-        if (numberMedia > subscriptionPlan.AllowedMediaNumber)
+        if (numberMedia > subscriptionPlan.AllowedMediaNumber && subscriptionPlan.AllowedMediaNumber != -1)
             return new ResultDto(false,
                 $"{subscriptionPlan.Name} plan is limited to {subscriptionPlan.AllowedMediaNumber} medias. Please remove {numberMedia - subscriptionPlan.AllowedMediaNumber} medias and retry.");
-        if (mediaSize > ((long)subscriptionPlan.AllowedMegaByte * 1024 * 1024))
+        if (mediaSize > ((long)subscriptionPlan.AllowedMegaByte * 1024 * 1024) && subscriptionPlan.AllowedMegaByte != -1)
             return new ResultDto(false,
                 $"{subscriptionPlan.Name} plan is limited to {subscriptionPlan.AllowedMegaByte}Mb. Please remove {(mediaSize - ((long)subscriptionPlan.AllowedMegaByte * 1024 * 1024)) / (1024 * 1024)}Mb and retry.");
         await _accountService.AddNewUserSubscription(userClient.Id, subscriptionPlan.Id, user);

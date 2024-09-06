@@ -4,13 +4,13 @@
 @{
     ViewData["Title"] = "Dashboard";
 }
- 
+
 <h1 class="h3 fw-normal">
     <div class="navbar-brand d-inline-flex text-black" style="margin-top: 0.7rem!important;" asp-area="" asp-controller="Home" asp-action="Index"></div>
-</h1> 
+</h1>
 
 
-<div class="padding-lg">  
+<div class="padding-lg">
 <div class="row pt-4 p-4-lg">
     <div class="empty-veesy nodisplay-sm"></div>
     <div class="empty-veesy nodisplay-sm"></div>
@@ -21,7 +21,9 @@
         <div class="empty-veesy"></div>
         <div class="empty-veesy"></div>
         <div class="col-12">
-            <a class="mb-0"><strong>Do you need some help?</strong></a>
+            <a class="mb-0">
+                <strong>Do you need some help?</strong>
+            </a>
         </div>
         <a href="mailto:info@veesy.it" class="grey-link-underline mb-4">Contact us</a>
         <div class="empty-veesy"></div>
@@ -54,8 +56,17 @@
                 <div class="ps-3 col-sm-12 col-lg-3 card-body-background vertical-space pt-2 pb-0">
                     <div class="mt-4 pt-1">
                         <div class="d-flex align-items-end mb-2">
-                            <h1 style="font-size: 65px !important; line-height: 65px !important;" class="text-color"><strong>@Model.MediaNumber</strong></h1>
+                            <h1 style="font-size: 65px !important; line-height: 65px !important;" class="text-color">
+                                <strong>@Model.MediaNumber</strong>
+                            </h1>
+                            @if (Model.Subscription.AllowedMediaNumber == -1)
+                            {
+                                <h3 style="font-size: 40px !important; line-height: 40px; color: #D2D5DB !important;" class="mb-4">/∞</h3>
+                            }
+                            else
+                            {
                             <h3 style="font-size: 40px !important; line-height: 40px; color: #D2D5DB !important;" class="mb-4">/@Model.Subscription.AllowedMediaNumber</h3>
+                            }
                         </div>
                         <div style="height: 5px;" class="progress" id="progress-media">
                             <div class="progress-bar" role="progressbar" aria-valuenow="@Model.MediaPercent" aria-valuemin="0" aria-valuemax="100"></div>
@@ -63,24 +74,32 @@
                     </div>
                     <div class="mt-4">
                         <h3 class="text-color"><strong>Files uploaded</strong> on <br/> cloud.</h3>
-                        <div class="mb-3 mt-3"><a asp-action="List" asp-controller="Cloud" asp-area="Portfolio" class="grey-link">your cloud <i class="fa-solid fa-arrow-up-right-from-square"></i></a></div>
+                        <div class="mb-3 mt-3">
+                            <a asp-action="List" asp-controller="Cloud" asp-area="Portfolio" class="grey-link">your cloud <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                        </div>
                         <hr class="nodisplay-lg"/>
                     </div>
                 </div>
                 <div class="ps-3 col-sm-12 col-lg-3 card-body-background vertical-space pt-2 pb-0">
                     <div class="mt-4 pt-1">
-                        <h1 style="font-size: 65px !important; line-height: 65px !important;" class="text-color"><strong>@Model.PortfolioNumber.ToString("00")</strong></h1>
+                        <h1 style="font-size: 65px !important; line-height: 65px !important;" class="text-color">
+                            <strong>@Model.PortfolioNumber.ToString("00")</strong>
+                        </h1>
                     </div>
                     <div class="mt-4 pt-2">
                         <h3 class="text-color"><strong>Portfolios </strong>created from <br/> your media.</h3>
-                        <div class="mb-3 mt-3"><a asp-action="List" asp-controller="Portfolio" asp-area="Portfolio" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i>edit portfolios</a></div>
+                        <div class="mb-3 mt-3">
+                            <a asp-action="List" asp-controller="Portfolio" asp-area="Portfolio" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i>edit portfolios</a>
+                        </div>
                         <hr class="nodisplay-lg"/>
                     </div>
                 </div>
                 <div class="ps-3 col-sm-12 col-lg-3 pt-1 border-card-subscription vertical-space bg-gradient-2 pb-0">
                     <div class="mt-4 pt-1">
                         <h3 class="mb-0">Your plan:</h3>
-                        <h2 class="text-white"><strong>@Model.Subscription.Name</strong></h2>
+                        <h2 class="text-white">
+                            <strong>@Model.Subscription.NameToShow</strong>
+                        </h2>
                     </div>
                     <div>
                         @if (@Model.Subscription.Price > 0)
@@ -91,8 +110,17 @@
                         {
                             <h3 class="mb-0 text-white">free forever</h3>
                         }
-                        <h3 class="text-white">max. @Model.Subscription.AllowedMediaNumber media</h3>
-                        <div class="ms-2 mb-3 mt-3"><a asp-action="PricingPlan" asp-controller="Public" asp-area="Public" class="a-font-p grey-link-underline" type="submit">view plans</a></div>
+                        @if (Model.Subscription.AllowedMediaNumber == -1)
+                        {
+                            <h3 class="text-white">unlimited media</h3>
+                        }
+                        else
+                        {
+                            <h3 class="text-white">max. @Model.Subscription.AllowedMediaNumber media</h3>
+                        }
+                        <div class="ms-2 mb-3 mt-3">
+                            <a asp-action="PricingPlan" asp-controller="Public" asp-area="Public" class="a-font-p grey-link-underline" type="submit">view plans</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -105,7 +133,9 @@
     <div class="mb-4 ps-3 pe-3 h-100 col-sm-12 col-md-4 rounded-05">
         <div class="pb-1 pt-0 bg-white card-header d-flex rounded-05-header alternative-bottom-border-dash">
             <div class="col-11">
-                <p class="mt-2 mb-0" style="font-size: 14px !important; line-height: 22px !important;"><strong>PORTFOLIO</strong></p>
+                <p class="mt-2 mb-0" style="font-size: 14px !important; line-height: 22px !important;">
+                    <strong>PORTFOLIO</strong>
+                </p>
             </div>
             <div class="col-1 text-end">
                 <i class="fa-solid fa-circle fa-2xs circle-color-dash mt-3"></i>
@@ -140,7 +170,11 @@
                         </div>
                     </div>
                     <div class="col-8 vertical-space">
-                        <h5><a class="blue-link-option" onclick="CopyLink('@Model.ApplicationUrl@Url.Action("Portfolio", "Public", new {area = "Public", user = @Model.PortfolioThumbnailDto.FullnameForUrl, portfolioname = Model.PortfolioThumbnailDto.PortfolionameForUrl})')"><i class="fa-regular fa-clone me-2"></i></a><strong class="text-color">@Model.PortfolioThumbnailDto.Name</strong></h5>
+                        <h5>
+                            <a class="blue-link-option" onclick="CopyLink('@Model.ApplicationUrl@Url.Action("Portfolio", "Public", new { area = "Public", user = @Model.PortfolioThumbnailDto.FullnameForUrl, portfolioname = Model.PortfolioThumbnailDto.PortfolionameForUrl })')">
+                                <i class="fa-regular fa-clone me-2"></i>
+                            </a><strong class="text-color">@Model.PortfolioThumbnailDto.Name</strong>
+                        </h5>
                         <p class="veesy-grey-p mb-0" style="margin-bottom: 2rem">Updated on @Model.PortfolioThumbnailDto.LastUpdate<br/>@Model.PortfolioThumbnailDto.NumberMedia media uploaded</p>
                     </div>
                 }
@@ -152,21 +186,25 @@
                 }
             </div>
             <div class="row pt-2">
-                <hr class="hr-color-dash" />
+                <hr class="hr-color-dash"/>
                 <div class="col-6 pt-2">
                     @if (Model.PortfolioThumbnailDto != null)
                     {
                         <a asp-controller="Portfolio" asp-action="Settings" asp-route-id="@Model.PortfolioThumbnailDto.Code" asp-area="Portfolio" class="grey-link ms-2"><i class="fa-regular fa-pen-to-square pe-1"></i>edit main portfolio</a>
                     }
                 </div>
-                <div class="col-6 text-end"><a asp-controller="Portfolio" asp-action="List" asp-area="Portfolio" class="w-100 rounded-pill btn btn-primary a-font-p" type="submit">your portfolios</a></div>
+                <div class="col-6 text-end">
+                    <a asp-controller="Portfolio" asp-action="List" asp-area="Portfolio" class="w-100 rounded-pill btn btn-primary a-font-p" type="submit">your portfolios</a>
+                </div>
             </div>
         </div>
     </div>
     <div class="mb-4 ps-3 pe-3 col-sm-12 col-md-4 rounded-05 h-100">
         <div style="border-bottom: 1px solid rgba(255,255,255, 0.125)" class="pb-1 pt-0 bg-grey-dash card-header d-flex rounded-05-header">
             <div class="col-11">
-                <p class="text-white mt-2 mb-0" style="font-size: 14px !important; line-height: 22px !important;"><strong>CLOUD</strong></p>
+                <p class="text-white mt-2 mb-0" style="font-size: 14px !important; line-height: 22px !important;">
+                    <strong>CLOUD</strong>
+                </p>
             </div>
             <div class="col-1 text-end">
                 <i class="fa-solid fa-circle fa-2xs mt-3" style="color: #ffffff;"></i>
@@ -201,15 +239,20 @@
                 </div>
             </div>
             <div class="row pt-4">
-                <div class="col-6 pt-2"><a class="grey-link ms-2">how it works<i class="fa-solid fa-arrow-up-right-from-square ms-2"></i></a></div>
-                <div class="col-6 text-end"><a asp-area="Portfolio" asp-controller="Cloud" asp-action="List" class="a-font-p w-100 rounded-pill btn btn-white" type="submit">go to cloud</a></div>
+                <div class="col-6 pt-2">
+                    <a class="grey-link ms-2">how it works<i class="fa-solid fa-arrow-up-right-from-square ms-2"></i></a>
+                </div>
+                <div class="col-6 text-end">
+                    <a asp-area="Portfolio" asp-controller="Cloud" asp-action="List" class="a-font-p w-100 rounded-pill btn btn-white" type="submit">go to cloud</a>
+                </div>
             </div>
         </div>
     </div>
     <div class="mb-4 ps-3 pe-3 col-sm-12 col-md-4 rounded-05 h-100">
         <div style="border-bottom: 1px solid rgba(255,255,255, 0.125);" class="pb-1 pt-0 bg-blue card-header d-flex  rounded-05-header">
             <div class="col-11">
-                <p class="text-white mt-2 mb-0" style="font-size: 14px !important; line-height: 22px !important;"><strong>PROFILE</strong>
+                <p class="text-white mt-2 mb-0" style="font-size: 14px !important; line-height: 22px !important;">
+                    <strong>PROFILE</strong>
                 </p>
             </div>
             <div class="col-1 text-end">
@@ -220,7 +263,7 @@
             <div class="row mt-4">
                 <div class="col-9">
                     <h3 style="font-size: 27px !important; line-height: 30px !important;" class="text-white">@Model.Name @Model.Surname</h3>
-                    <h5 class="text-white">- @Model.UserCategory</h5>  
+                    <h5 class="text-white">- @Model.UserCategory</h5>
                     <div class="empty-veesy"></div>
                     <p class="text-white">@Model.UserDescription</p>
                 </div>
@@ -241,13 +284,17 @@
                 <hr style="color: #D7DADF"/>
                 @if (Model.PortfolioThumbnailDto != null)
                 {
-                    <div class="col-6 pt-2"><a asp-controller="Portfolio" asp-area="Portfolio" asp-action="PortfolioPreview" asp-route-id="@Model.PortfolioThumbnailDto.Code" asp-route-open="@true" class="grey-link ms-2">view main portfolio <i class="fa-solid fa-arrow-up-right-from-square"></i></a></div>
+                    <div class="col-6 pt-2">
+                        <a asp-controller="Portfolio" asp-area="Portfolio" asp-action="PortfolioPreview" asp-route-id="@Model.PortfolioThumbnailDto.Code" asp-route-open="@true" class="grey-link ms-2">view main portfolio <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                    </div>
                 }
                 else
                 {
                     <div class="col-6"></div>
                 }
-                <div class="col-6 text-end"><a asp-controller="Profile" asp-area="Account" asp-action="Profile" class="a-font-p w-100 rounded-pill btn btn-white" type="submit"><i class="fa-regular fa-pen-to-square pe-1"></i>update profile</a></div>
+                <div class="col-6 text-end">
+                    <a asp-controller="Profile" asp-area="Account" asp-action="Profile" class="a-font-p w-100 rounded-pill btn btn-white" type="submit"><i class="fa-regular fa-pen-to-square pe-1"></i>update profile</a>
+                </div>
             </div>
         </div>
     </div>
