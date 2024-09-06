@@ -105,6 +105,21 @@ public class AdminController : VeesyController
             throw;
         }
     }
+    
+    [HttpGet("edit-subscription/{id}")]
+    public IActionResult EditSubscription()
+    {
+        try
+        {
+            var vm = _adminHelper.GetSusbscriptionsOverviewViewModel();
+            return View(vm);
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            throw;
+        }
+    }
 
     [HttpGet("match")]
     public IActionResult Match()

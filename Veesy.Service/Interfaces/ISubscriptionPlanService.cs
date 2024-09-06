@@ -9,4 +9,5 @@ public interface ISubscriptionPlanService
     SubscriptionPlan GetSubscriptionByUserId(string userId);
     decimal GetEarningsByMonth(int month);
     List<IGrouping<string,MyUserSubscriptionPlan>> GetMyUserSubscriptionPlanGoupByUserId();
+    public List<SubscriptionPlan> GetAllSubscriptionPlans();
 }

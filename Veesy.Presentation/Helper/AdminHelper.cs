@@ -126,7 +126,8 @@ public class AdminHelper
             EarningsThisMonth = _subscriptionPlanService.GetEarningsByMonth(DateTime.Now.Month),
             EarningsThisYear = res.Item1,
             EarningGraph = res.Item2,
-            NumberPayingUsers = _accountService.GetNumberPayingUsers() 
+            NumberPayingUsers = _accountService.GetNumberPayingUsers() ,
+            SubscriptionPlans = _subscriptionPlanService.GetAllSubscriptionPlans()
         };
         return vm;
     }

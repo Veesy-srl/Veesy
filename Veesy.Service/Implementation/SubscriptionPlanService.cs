@@ -41,4 +41,9 @@ public class SubscriptionPlanService : ISubscriptionPlanService
             .GroupBy(s => s.MyUserId).ToList();
     }
 
+    public List<SubscriptionPlan> GetAllSubscriptionPlans()
+    {
+        return _uoW.DbContext.SubscriptionPlans.ToList();
+    }
+
 }
