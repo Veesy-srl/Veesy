@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
 using Veesy.Domain.Repositories;
 using Veesy.Service.Interfaces;
@@ -44,6 +45,18 @@ public class SubscriptionPlanService : ISubscriptionPlanService
     public List<SubscriptionPlan> GetAllSubscriptionPlans()
     {
         return _uoW.DbContext.SubscriptionPlans.ToList();
+    }
+
+    public SubscriptionPlan GetSubscriptionPlanById(Guid id)
+    {
+        return _uoW.DbContext.SubscriptionPlans.FirstOrDefault(x => x.Id == id)!;
+    }
+
+    public async Task<ResultDto> EditSubscription(SubscriptionPlan subscription, MyUser user)
+    {
+        _uoW.DbContext.SubscriptionPlans.Update(subscription);
+        await _uoW.CommitAsync(user);
+        return new ResultDto(true, "");
     }
 
 }

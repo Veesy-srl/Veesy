@@ -126,7 +126,7 @@
           <td>@subscription.AllowedMegaByte</td>
           <td>@subscription.AllowedMediaNumber</td>
           <td>@count</td>
-          <td><button type="button" class="btn btn-primary m-1">Edit</button></td>
+          <td><a type="button" class="btn btn-primary m-1" asp-action="SubscriptionEdit" asp-controller="Admin" asp-area="Admin" asp-route-id="@subscription.Id">Edit</a></td>
           
         </tr>
         }

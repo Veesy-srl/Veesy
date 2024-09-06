@@ -1,0 +1,47 @@
+@model Veesy.Presentation.Model.Admin.SubscriptionEditViewModel
+
+@{
+    ViewData["Title"] = "Edit Subscription";
+    Layout = "_Layout";
+}
+
+<div class="row">
+    <div class="card">
+        <div class="bg-white card-header">
+            <div class="float-start">
+                <h3>Modifica Subscription "@Model.Subscription.Name"</h3>
+            </div>
+        </div>
+        <div class="card-body">
+            <form method="post" asp-controller="Admin" asp-action="EditSubscription">
+                @Html.HiddenFor(x => x.Subscription.Id)
+                @Html.HiddenFor(x => x.Subscription.Price)
+                @Html.HiddenFor(x => x.Subscription.CreateRecordDate)
+                @Html.HiddenFor(x => x.Subscription.IsMediaFormatsInclude)
+                <div class="row mb-3">
+                    <label>Name</label>
+                    <input type="text" class="form-control" asp-for="Subscription.Name">
+                </div>
+                <div class="row mb-3">
+                    <label>Description</label>
+                    <input type="text" class="form-control" asp-for="Subscription.Description">
+                </div>
+                <div class="row mb-3">
+                    <label>Portfolio Limit</label>
+                    <input type="text" class="form-control" asp-for="Subscription.AllowedPortfolio">
+                </div>
+                <div class="row mb-3">
+                    <label>Media Limit</label>
+                    <input type="text" class="form-control" asp-for="Subscription.AllowedMediaNumber">
+                </div>
+                <div class="row mb-3">
+                    <label>MegaByte Limit</label>
+                    <input type="text" class="form-control" asp-for="Subscription.AllowedMegaByte">
+                </div>
+                <div class="float-end">
+                    <button class="btn btn-primary me-2" type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

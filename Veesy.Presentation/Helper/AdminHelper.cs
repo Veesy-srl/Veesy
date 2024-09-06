@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
 using Veesy.Presentation.Model.Admin;
 using Veesy.Service.Dtos;
@@ -131,6 +132,25 @@ public class AdminHelper
             SubscriptionPlans = _subscriptionPlanService.GetAllSubscriptionPlans()
         };
         return vm;
+    }
+
+    public SubscriptionEditViewModel GetSubscriptionEditViewModel(Guid id)
+    {
+        return new SubscriptionEditViewModel()
+        {
+            Subscription = _subscriptionPlanService.GetSubscriptionPlanById(id)
+        };
+    }
+
+    public async Task<ResultDto> EditSubscription(SubscriptionPlan subscription, MyUser user)
+    {
+        var oldSubscription = _subscriptionPlanService.GetSubscriptionPlanById(subscription.Id);
+        oldSubscription.Name = subscription.Name;
+        oldSubscription.Description = subscription.Description;
+        oldSubscription.AllowedPortfolio = subscription.AllowedPortfolio;
+        oldSubscription.AllowedMediaNumber = subscription.AllowedMediaNumber;
+        oldSubscription.AllowedMegaByte = subscription.AllowedMegaByte;
+        return await _subscriptionPlanService.EditSubscription(oldSubscription, user);
     }
     
     private (decimal, List<EarningYearGroupedByMonthDto>) GetEarningsThisYear(List<IGrouping<string, MyUserSubscriptionPlan>> myUserSubscriptionPlan)
