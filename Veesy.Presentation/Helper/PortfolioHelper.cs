@@ -204,7 +204,7 @@ public class PortfolioHelper
 
     public async Task<ResultDto> SetMainPortfolio(UpdatePortfolioDto portfolioDto, MyUser user)
     {
-        var mainPortfolio = _portfolioService.GetMainPortfolioByUser(user);
+        var mainPortfolio = _portfolioService.GetMainPortfolioByUser(user.Id);
         if (mainPortfolio != null)
             mainPortfolio.IsMain = false;
         var portfolio = _portfolioService.GetPortfolioByIdToUpdate(portfolioDto.Id, user.Id);

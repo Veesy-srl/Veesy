@@ -18,7 +18,7 @@ public interface IPortfolioService
     List<PortfolioMedia> GetPortfoliosMediaByPortfolioIdToReorder(Guid portfolioId, int index);
     IEnumerable<PortfolioMedia> GetPortfoliosMediaByPortfoliosId(List<Guid> portfoliosId);
     Task<ResultDto> UpdatePortfolioMedias(List<PortfolioMedia> portfoliosMediaToDelete, List<PortfolioMedia> portfoliosMediaToAdd, List<PortfolioMedia> portfoliosMediaToUpdate, MyUser userInfo);
-    Portfolio? GetMainPortfolioByUser(MyUser user);
+    Portfolio? GetMainPortfolioByUser(string userId);
     (string, Guid) GetMainPortfolioNameByUserId(string userId);
     Portfolio? GetMainPortfolioByUserWithMedias(MyUser user);
     Task UpdatePortfolios(List<Portfolio> portfoliosToUpdate, MyUser user);
