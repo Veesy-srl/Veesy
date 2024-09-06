@@ -39,14 +39,14 @@ public class PortfolioHelper
         vm.Portfolio = MapPortfolioDtos.MapPortfolio(portfolio);
         if (vm.Portfolio.DefaultMedia != null && vm.Portfolio.DefaultMedia.NestedPortfolioLinks != null && vm.Portfolio.DefaultMedia.NestedPortfolioLinks != Guid.Empty)
         {
-            vm.Portfolio.DefaultMedia.NestedPortfolioNameForUrl = _portfolioService.GetPortfolioById(vm.Portfolio.DefaultMedia.NestedPortfolioLinks.Value, vm.Portfolio.DefaultMedia.UserId).Name.ToLower().Replace(" ", "-");
+            vm.Portfolio.DefaultMedia.NestedPortfolioNameForUrl = _portfolioService.GetPortfolioById(vm.Portfolio.DefaultMedia.NestedPortfolioLinks.Value, vm.Portfolio.DefaultMedia.UserId).Name.ToLower().Replace(" ", "-").Replace("/", "-");
         }
 
         foreach (var portfolioMedia in vm.Portfolio.PortfolioMedias)
         {
             if (portfolioMedia != null && portfolioMedia.Media != null && portfolioMedia.Media.NestedPortfolioLinks != null && portfolioMedia.Media.NestedPortfolioLinks != Guid.Empty)
             {
-                portfolioMedia.Media.NestedPortfolioNameForUrl = _portfolioService.GetPortfolioById(portfolioMedia.Media.NestedPortfolioLinks.Value, portfolioMedia.Media.UserId).Name.ToLower().Replace(" ", "-");
+                portfolioMedia.Media.NestedPortfolioNameForUrl = _portfolioService.GetPortfolioById(portfolioMedia.Media.NestedPortfolioLinks.Value, portfolioMedia.Media.UserId).Name.ToLower().Replace(" ", "-").Replace("/", "-");
             }
         }
         
@@ -58,7 +58,7 @@ public class PortfolioHelper
 
     public async Task<(ResultDto result, Guid code)> CreateNewPortfolio(NewPortfolioDto newPortfolioDto, MyUser userInfo)
     {
-        var numberPortfolio = _portfolioService.GetPortfoliosNumberByUser(userInfo);
+        var numberPortfolio = _portfolioService.GetPortfoliosNumberByUser(userInfo.Id);
         var subscriptionPlan = _accountService.GetUserSubscriptionPlan(userInfo.Id);
         if(numberPortfolio > subscriptionPlan.AllowedPortfolio && subscriptionPlan.Name == VeesyConstants.SubscriptionPlan.Free)
         return (new ResultDto(false,
@@ -187,7 +187,7 @@ public class PortfolioHelper
             return new ResultDto(false, "Please insert password.");
         if (portfolioDto.Password.Length < 6)
             return new ResultDto(false, "Min characters are 6.");
-        var portfolio = _portfolioService.GetPortfolioById(portfolioDto.Id, userInfo.Id);
+        var portfolio = _portfolioService.GetPortfolioByIdToUpdate(portfolioDto.Id, userInfo.Id);
         portfolio.Password = portfolioDto.Password;
         portfolio.IsPublic = false;
         await _portfolioService.UpdatePortfolio(portfolio, userInfo);
@@ -196,7 +196,7 @@ public class PortfolioHelper
 
     public async Task<ResultDto> UpdateSecurity(UpdatePortfolioDto portfolioDto, MyUser userInfo)
     {
-        var portfolio = _portfolioService.GetPortfolioById(portfolioDto.Id, userInfo.Id);
+        var portfolio = _portfolioService.GetPortfolioByIdToUpdate(portfolioDto.Id, userInfo.Id);
         portfolio.IsPublic = !portfolioDto.IsPublic;
         await _portfolioService.UpdatePortfolio(portfolio, userInfo);
         return new ResultDto(true, "");
@@ -207,7 +207,7 @@ public class PortfolioHelper
         var mainPortfolio = _portfolioService.GetMainPortfolioByUser(user);
         if (mainPortfolio != null)
             mainPortfolio.IsMain = false;
-        var portfolio = _portfolioService.GetPortfolioById(portfolioDto.Id, user.Id);
+        var portfolio = _portfolioService.GetPortfolioByIdToUpdate(portfolioDto.Id, user.Id);
         if(portfolio.Id == mainPortfolio.Id)
             return new ResultDto(false, "This portfolio is already set as your main");
         portfolio.IsMain = true;
@@ -275,7 +275,7 @@ public class PortfolioHelper
         {
             if (portfolioMedia != null && portfolioMedia.Media != null && portfolioMedia.Media.NestedPortfolioLinks != null && portfolioMedia.Media.NestedPortfolioLinks != Guid.Empty)
             {
-                portfolioMedia.Media.NestedPortfolioNameForUrl = _portfolioService.GetPortfolioById(portfolioMedia.Media.NestedPortfolioLinks.Value, portfolioMedia.Media.UserId).Name.ToLower().Replace(" ", "-");
+                portfolioMedia.Media.NestedPortfolioNameForUrl = _portfolioService.GetPortfolioById(portfolioMedia.Media.NestedPortfolioLinks.Value, portfolioMedia.Media.UserId).Name.ToLower().Replace(" ", "-").Replace("/", "-");
             }
         }
         
@@ -311,14 +311,14 @@ public class PortfolioHelper
         var portfolio = _portfolioService.GetPortfolioByIdToUpdate(portfolioId, userInfo.Id);
         if (portfolio == null)
             return new ResultDto(false, "Portfolio not found.");
-        portfolio.Status = PortfolioContants.STATUS_PUBLIC;
+        portfolio.Status = PortfolioContants.STATUS_PUBLISHED;
         await _portfolioService.UpdatePortfolio(portfolio, userInfo);
         return new ResultDto(true, "");
     }
 
-    public (PortfolioViewModel model, ResultDto resultDto) GetPortfolioViewModel(string user, string portfolioname)
+    public (PortfolioViewModel model, ResultDto resultDto) GetPortfolioViewModel(Guid id, string user, string portfolioname)
     {
-        var portfolio = _portfolioService.GetPortfolioByUserAndName(user, portfolioname);
+        var portfolio = id == Guid.Empty ? _portfolioService.GetPortfolioByUserAndName(user, portfolioname) : _portfolioService.GetPortfolioByIdForPreview(id);
         if (portfolio == null)
             return (null, new ResultDto(false, "Portfolio not found"));
         
@@ -332,18 +332,28 @@ public class PortfolioHelper
         {
             if (portfolioMedia != null && portfolioMedia.Media != null && portfolioMedia.Media.NestedPortfolioLinks != null && portfolioMedia.Media.NestedPortfolioLinks != Guid.Empty)
             {
-                portfolioMedia.Media.NestedPortfolioNameForUrl = _portfolioService.GetPortfolioById(portfolioMedia.Media.NestedPortfolioLinks.Value, portfolioMedia.Media.UserId).Name.ToLower().Replace(" ", "-");
+                portfolioMedia.Media.NestedPortfolioNameForUrl = _portfolioService.GetPortfolioById(portfolioMedia.Media.NestedPortfolioLinks.Value, portfolioMedia.Media.UserId).Name.ToLower().Replace(" ", "-").Replace("/", "-");
             }
         }
         return (new PortfolioViewModel
         {
             Unlocked = false,
             PortfolioDto = portfolioDto,
-            IsPublish = portfolio.Status == PortfolioContants.STATUS_PUBLIC,
+            IsPublish = portfolio.Status == PortfolioContants.STATUS_PUBLISHED,
             BasePathImages = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/",
             BasePathAzure = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/",
             ApplicationUrl = _config["ApplicationUrl"]
         }, new ResultDto(true, ""));
+    }
+
+    public (string userFullname, string portfolioName, ResultDto resultDto) GetPortfolioById(Guid id, string user, string portfolioname)
+    {
+        var portfolio = id == Guid.Empty ? _portfolioService.GetPortfolioByUserAndName(user, portfolioname) : _portfolioService.GetPortfolioByIdForPreview(id);
+        if (portfolio == null)
+            return ("", "", new ResultDto(false, "Portfolio not found"));
+
+        return (portfolio.MyUser.Fullname.Replace(" ", "-"), portfolio.Name.Replace(" ", "-").Replace("/", "-"),
+            new ResultDto(true, ""));
     }
 
     public (PortfolioViewModel model, ResultDto resultDto) GetPostPortfolioViewModel(PortfolioViewModel model)
@@ -365,7 +375,7 @@ public class PortfolioHelper
         {
             if (portfolioMedia != null && portfolioMedia.Media != null && portfolioMedia.Media.NestedPortfolioLinks != null && portfolioMedia.Media.NestedPortfolioLinks != Guid.Empty)
             {
-                portfolioMedia.Media.NestedPortfolioNameForUrl = _portfolioService.GetPortfolioById(portfolioMedia.Media.NestedPortfolioLinks.Value, portfolioMedia.Media.UserId).Name.ToLower().Replace(" ", "-");
+                portfolioMedia.Media.NestedPortfolioNameForUrl = _portfolioService.GetPortfolioById(portfolioMedia.Media.NestedPortfolioLinks.Value, portfolioMedia.Media.UserId).Name.ToLower().Replace(" ", "-").Replace("/", "-");
             }
         }
         
@@ -373,7 +383,7 @@ public class PortfolioHelper
         {
             Unlocked = unlocked,
             PortfolioDto = portfolioDto,
-            IsPublish = portfolio.Status == PortfolioContants.STATUS_PUBLIC,
+            IsPublish = portfolio.Status == PortfolioContants.STATUS_PUBLISHED,
             BasePathImages = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.OriginalMedia}/",
             BasePathAzure = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"
         }, new ResultDto(true, ""));

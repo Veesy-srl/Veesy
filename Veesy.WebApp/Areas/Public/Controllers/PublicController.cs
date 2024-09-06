@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NLog;
+using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
 using Veesy.Presentation.Helper;
 using Veesy.Presentation.Model.Portfolio;
@@ -218,13 +219,35 @@ public class PublicController : VeesyController
             return RedirectToAction("Error400");
         }
     }
+    
+    
+    [HttpGet("portfolio/{id}")]
+    public IActionResult Portfolio(Guid id)
+    {
+        try
+        {
+            var res = _portfolioHelper.GetPortfolioById(id, null, null);
+            if (!res.resultDto.Success)
+            {
+                _notyfService.Custom(res.resultDto.Message, 10, "#ca0a0a");
+                return RedirectToAction("Error400");
+            }
+
+            return RedirectToAction("Portfolio", new {user = res.userFullname, portfolioname = res.portfolioName});
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            return RedirectToAction("Error400");
+        }
+    }
 
     [HttpGet("folio/{user}/{portfolioname}")]
     public IActionResult Portfolio(string user, string portfolioname)
     {
         try
         {
-            var res = _portfolioHelper.GetPortfolioViewModel(user, portfolioname);
+            var res = _portfolioHelper.GetPortfolioViewModel(Guid.Empty, user, portfolioname);
             if (!res.resultDto.Success)
             {
                 _notyfService.Custom(res.resultDto.Message, 10, "#ca0a0a");
@@ -240,7 +263,7 @@ public class PublicController : VeesyController
         }
     }
     
-    [HttpPost("portfolios/{user}/{portfolioname}")]
+    [HttpPost("folio/{user}/{portfolioname}")]
     public IActionResult Portfolio(PortfolioViewModel model)
     {
         try

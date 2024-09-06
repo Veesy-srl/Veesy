@@ -7,6 +7,7 @@ using Veesy.Domain.Constants;
 using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
 using Veesy.Domain.Repositories;
+using Veesy.Service.Dtos;
 using Veesy.Service.Interfaces;
 
 namespace Veesy.Service.Implementation;
@@ -311,20 +312,43 @@ public class AccountService : IAccountService
             .LastOrDefault().SubscriptionPlan;
     }
 
-    public List<MyUser> GetCreators()
+    public List<FrelancerDto> GetCreators()
     {
-        return _uoW.MyUserRepository.FindAll()
-            .Include(s => s.Medias)
-            .Include(s => s.MyUserSubscriptionPlans.OrderBy(s => s.CreateRecordDate))
-                .ThenInclude(s => s.SubscriptionPlan)
-            .Include(s => s.MyUserUsedSoftwares)
-                .ThenInclude(s => s.UsedSoftware)
-            .Include(s => s.MyUserSectors)
-                .ThenInclude(s => s.Sector)
-            .Include(s => s.MyUserSkills.Where(s => s.Type == SkillConstants.SoftSkill))
-                .ThenInclude(s => s.Skill)
-            .Where(s => s.MyUserSubscriptionPlans.Count != 0)
+         return _uoW.MyUserRepository.FindAll()
+            .Select(user => new FrelancerDto
+            {
+                Code = user.Id,
+                FirstName = user.Name,
+                LastName = user.Surname,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                Category = user.Category,
+                Fields = user.MyUserSectors.Select(us => us.Sector.Name).ToList(),
+                Software = user.MyUserUsedSoftwares.Select(us => us.UsedSoftware.Name).ToList(),
+                SoftSkill = user.MyUserSkills
+                    .Where(us => us.Type == SkillConstants.SoftSkill)
+                    .Select(us => us.Skill.Name).ToList(),
+                SubscriptionPlan = user.MyUserSubscriptionPlans
+                    .OrderByDescending(sp => sp.CreateRecordDate)
+                    .Select(sp => sp.SubscriptionPlan.Name)
+                    .FirstOrDefault() ?? "Free",
+                CreateDate = user.CreateDate.ToString("dd/MM/yy hh:mm"),
+                PortfoliosCount = user.Portfolios.Count,
+                PublicPortfoliosCount = user.Portfolios.Count(s => s.Status == PortfolioContants.STATUS_PUBLISHED),
+                PortfolioName = user.Portfolios.Where(s => s.IsMain)
+                    .Select(s => s.Name)
+                    .FirstOrDefault(),
+                MainPortfolioCode = user.Portfolios.Where(s => s.IsMain)
+                    .Select(s => s.Id)
+                    .FirstOrDefault(),
+                MediasCount = user.Medias.Count
+            })
             .ToList();
+    }
+
+    public int GetCreatorsCount()
+    {
+        return _uoW.MyUserRepository.FindAll().ToList().Count;
     }
 
     public MyUser GetUserById(string id)
@@ -385,18 +409,13 @@ public class AccountService : IAccountService
     public List<MyUser> GetCreatorsPlus()
     {
         return _uoW.MyUserRepository.FindAll()
-            .Include(s => s.Medias)
             .Include(s => s.MyUserSubscriptionPlans)
-                .ThenInclude(s => s.SubscriptionPlan)
-            .Include(s => s.MyUserUsedSoftwares)
-                .ThenInclude(s => s.UsedSoftware)
-            .Include(s => s.MyUserSectors)
-                .ThenInclude(s => s.Sector)
-            .Include(s => s.MyUserSkills.Where(s => s.Type == SkillConstants.SoftSkill))
-                .ThenInclude(s => s.Skill)
+            .ThenInclude(s => s.SubscriptionPlan)
             .Include(s => s.Portfolios.Where(s => s.IsMain))
-            .Where(s => s.MyUserSubscriptionPlans.OrderBy(s => s.CreateRecordDate).LastOrDefault().SubscriptionPlan != null && s.MyUserSubscriptionPlans.OrderBy(s => s.CreateRecordDate).LastOrDefault().SubscriptionPlan.Name != VeesyConstants.SubscriptionPlan.Free)
-            .ToList();
+            .Where(s =>
+                s.MyUserSubscriptionPlans.OrderBy(s => s.CreateRecordDate).LastOrDefault().SubscriptionPlan != null &&
+                s.MyUserSubscriptionPlans.OrderBy(s => s.CreateRecordDate).LastOrDefault().SubscriptionPlan.Name !=
+                VeesyConstants.SubscriptionPlan.Free).ToList();
     }
 
     public int GetNumberPayingUsers()

@@ -3,7 +3,7 @@ BRANCH=$(git symbolic-ref --short HEAD)
 # Verifica se il branch è 'master'
 if [ "$BRANCH" == "master" ]; then
 
-    git merge --squash develop
+    git merge --squash test
     
     # Estrae il numero di versione dal file .csproj
     VERSION=$(grep -oP '<AssemblyVersion>[^<]*' Veesy.WebApp/Veesy.WebApp.csproj | sed 's/<\/\?AssemblyVersion>//g')

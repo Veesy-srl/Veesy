@@ -36,10 +36,11 @@ public class AdminHelper
     public CreatorsListViewModel GetCreatorsListViewModel()
     {
         
-        var users = _accountService.GetCreators();
+        var usersDto = _accountService.GetCreators();
+        
         var vm = new CreatorsListViewModel()
         {
-            FreelancerDtos = MapAdminDto.MapCreatorDtos(users),
+            FreelancerDtos = usersDto
         };
         return vm;
     }
@@ -82,7 +83,7 @@ public class AdminHelper
         var numberPayingUsers = _accountService.GetNumberPayingUsers(); 
         var mediaOverview = new List<MediaOverviewDto>();
         var creatorOverview = new List<CreatorOverviewDto>();
-        var creators = _accountService.GetCreators();
+        var creatorsCount = _accountService.GetCreatorsCount();
         foreach (var item in res)
         {
             mediaOverview.Add(new MediaOverviewDto()
@@ -107,7 +108,7 @@ public class AdminHelper
         var vm = new DashboardViewModel()
         {
             MediaNumber = _mediaService.GetMediaNumber(),
-            CreatorNumber = creators.Count,
+            CreatorNumber = creatorsCount,
             MediaOverviewDtos = mediaOverview,
             LastUsersCreated = lastUserCreated,
             CreatorOverviewDtos = creatorOverview,

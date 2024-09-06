@@ -156,8 +156,8 @@
                             }
                         </td>
                         @{
-                            var userForUrl = (item.MyUser.Name + "-" + item.MyUser.Surname).ToLower().Replace(" ", "-");
-                            var portfolioNameForUrl = (item.Name).ToLower().Replace(" ", "-");
+                            var userForUrl = (item.MyUser.Name + "-" + item.MyUser.Surname).ToLower().Replace(" ", "-").Replace("/", "-");
+                            var portfolioNameForUrl = (item.Name).ToLower().Replace(" ", "-").Replace("/", "-");
                         }
                         <td><a style="cursor: pointer" asp-area="Public" asp-controller="Public" asp-action="Portfolio" asp-route-user="@userForUrl" asp-route-portfolioname="@portfolioNameForUrl">View portfolio</a></td>
                         <td>@item.PortfolioMedias.Count</td>

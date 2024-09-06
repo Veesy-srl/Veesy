@@ -116,6 +116,20 @@ public class PortfolioService : IPortfolioService
         return _uoW.PortfolioRepository.FindByCondition(s => s.IsMain && s.MyUserId == user.Id)
             .Include(s => s.MyUser).SingleOrDefault();
     }
+
+    (string, Guid) IPortfolioService.GetMainPortfolioNameByUserId(string userId)
+    {
+        var mainPortfolio = _uoW.PortfolioRepository.FindByCondition(s => s.IsMain && s.MyUserId == userId)
+            .SingleOrDefault();
+        return mainPortfolio == null ? ("", Guid.Empty) : (mainPortfolio.Name, mainPortfolio.Id);
+    }
+
+    public string GetMainPortfolioNameByUserId(string userId)
+    {
+        return _uoW.PortfolioRepository.FindByCondition(s => s.IsMain && s.MyUserId == userId)
+            .SingleOrDefault().Name;
+    }
+    
     public Portfolio? GetMainPortfolioByUserWithMedias(MyUser user)
     {
         return _uoW.PortfolioRepository
@@ -228,9 +242,14 @@ public class PortfolioService : IPortfolioService
             .SingleOrDefault();
     }
 
-    public int GetPortfoliosNumberByUser(MyUser user)
+    public int GetPortfoliosNumberByUser(string userId)
     {
-        return _uoW.PortfolioRepository.FindByCondition(s => s.MyUserId == user.Id).ToList().Count;
+        return _uoW.PortfolioRepository.FindByCondition(s => s.MyUserId == userId).ToList().Count;
+    }
+
+    public int GetPublicPortfoliosNumberByUser(string userId)
+    {
+        return _uoW.PortfolioRepository.FindByCondition(s => s.MyUserId == userId && s.Status == 1).ToList().Count;
     }
 
     public async Task SetPortfoliosToDraftByIds(List<Guid> portfolioDtoPortfolioSelected, MyUser user)
@@ -248,7 +267,7 @@ public class PortfolioService : IPortfolioService
 
     public Portfolio? GetPortfolioByUserAndName(string user, string portfolioname)
     {
-        return _uoW.PortfolioRepository.FindByCondition(s => s.Name.ToUpper().Replace("-", "").Replace(" ", "") == portfolioname.ToUpper().Replace("-", "")
+        return _uoW.PortfolioRepository.FindByCondition(s => s.Name.ToUpper().Replace("-", "").Replace("/", "").Replace(" ", "") == portfolioname.ToUpper().Replace("-", "")
                 && (s.MyUser.Name + s.MyUser.Surname).ToUpper().Replace(" ", "").Replace("-", "") == user.ToUpper().Replace("-", ""))
             .Include(s => s.PortfolioMedias.OrderBy(ob=>ob.SortOrder))
                 .ThenInclude(s => s.Media)

@@ -139,7 +139,7 @@ public class PublicHelper
             if (media.NestedPortfolioLinks != null && media.NestedPortfolioLinks != Guid.Empty)
             {
                 media.NestedPortfolioNameForUrl = _portfolioService
-                    .GetPortfolioById(media.NestedPortfolioLinks.Value, media.UserId).Name.ToLower().Replace(" ", "-");
+                    .GetPortfolioById(media.NestedPortfolioLinks.Value, media.UserId).Name.ToLower().Replace(" ", "-").Replace("/", "-");
             }
         }
         

@@ -28,8 +28,8 @@ public class HomeHelper
     public DashboardViewModel GetDashboardViewModel(MyUser user)
     {
         var portfolio = _portfolioService.GetMainPortfolioByUserWithMedias(user);
-        var portfolioNumber = _portfolioService.GetPortfoliosNumberByUser(user);
-        var numberMedia = _mediaService.GetMediaNumberByUser(user);
+        var portfolioNumber = _portfolioService.GetPortfoliosNumberByUser(user.Id);
+        var numberMedia = _mediaService.GetMediaNumberByUser(user.Id);
         var percent = (_accountService.NumberRecordCompiled(user) * 100 / 26);
         var subscription = _subscriptionPlanService.GetSubscriptionByUserId(user.Id);
         return new DashboardViewModel()
