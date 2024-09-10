@@ -471,7 +471,7 @@ public class ProfileHelper
             try
             {
                 var message = new Message(new (string, string)[] { ("Noreply | Veesy", user.Email) }, "What’s next? La Veesy PRO membership.", link);
-                List<(string, string)> replacer = new List<(string, string)> { ("[name]", user.Fullname) };
+                List<(string, string)> replacer = new List<(string, string)> { ("[name]", user.Name) };
                 await _emailSender.SendEmailAsync(message, currentPath + "/wwwroot/MailTemplate/mail-update-pro.html", replacer);
                 user.EmailUpdateProSended = true;
                 usersToUpdate.Add(user);
@@ -485,5 +485,33 @@ public class ProfileHelper
         }
 
         await _accountService.UpdateMyUsers(usersToUpdate);
+    }
+
+    public async Task<ResultDto> SendEmailProPlan(string email)
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+        if (user == null)
+        {
+            user = await _userManager.FindByNameAsync(email);
+            if (user == null)
+                return new ResultDto(false, "User not found");
+        }
+        
+        var link = "";
+        var currentPath = Directory.GetCurrentDirectory();
+        
+        try
+        {
+            var message = new Message(new (string, string)[] { ("Noreply | Veesy", user.Email) }, "What’s next? La Veesy PRO membership.", link);
+            List<(string, string)> replacer = new List<(string, string)> { ("[name]", user.Name) };
+            await _emailSender.SendEmailAsync(message, currentPath + "/wwwroot/MailTemplate/mail-update-pro.html", replacer);
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            return new ResultDto(false, "Error sending email");
+        }
+
+        return new ResultDto(true, "");
     }
 }

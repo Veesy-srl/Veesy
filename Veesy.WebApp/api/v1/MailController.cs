@@ -11,38 +11,53 @@ namespace Veesy.WebApp.Api.v1;
 public class MailController : ControllerBase
 {
     private readonly AuthHelper _authHelper;
+    private readonly ProfileHelper _profileHelper;
 
-    public MailController(AuthHelper authHelper)
+    public MailController(AuthHelper authHelper, ProfileHelper profileHelper)
     {
         _authHelper = authHelper;
+        _profileHelper = profileHelper;
     }
     
     [HttpGet]
-    public async Task<IActionResult> SendEmail(string emailAddress, string emailType)
+    public async Task<IActionResult> SendEmail(string address, string name)
     {
         try
         {
-            if (emailType == "welcome-email")
+            name = name.ToLower();
+            if (name == "welcome-email")
             {
-                var result = await _authHelper.SendEmailWelcome(emailAddress);
+                var result = await _authHelper.SendEmailWelcome(address);
                 if (result.Success)
                 {
                     return StatusCode(200, new MailResponse(new MailDto()
                     {
-                        MailAddress = emailAddress
+                        MailAddress = address
                     })); 
                 }
             }
-            if (emailType == "mail-verify-email")
+            else if (name == "mail-verify-email")
             {
-                var result = await _authHelper.SendEmailConfirmation(emailAddress);
+                var result = await _authHelper.SendEmailConfirmation(address);
                 if (result.Success)
                 {
                     return StatusCode(200, new MailResponse(new MailDto()
                     {
-                        MailAddress = emailAddress
+                        MailAddress = address
                     })); 
                 }
+            }
+            else if (name == "mail-update-pro")
+            {
+                var result = await _profileHelper.SendEmailProPlan(address);
+                if (result.Success)
+                {
+                    return StatusCode(200, new MailResponse(new MailDto()
+                    {
+                        MailAddress = address
+                    })); 
+                }
+                return StatusCode(401, new MailResponse(-1, result.Message));
             }
             return StatusCode(401, new MailResponse(-1, "Wrong mail type"));
         }

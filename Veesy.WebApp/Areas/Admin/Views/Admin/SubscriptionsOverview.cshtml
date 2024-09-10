@@ -101,6 +101,8 @@
         <tr>
           <th class="th-sm">Name
           </th>
+          <th class="th-sm">Name to show
+          </th>
           <th class="th-sm">Description
           </th>
           <th class="th-sm">Portfolio Limit
@@ -110,6 +112,8 @@
           <th class="th-sm">Media Limit
           </th>
           <th class="th-sm">N° Users
+          </th>
+          <th class="th-sm">Price
           </th>
           <th class="th-sm">Action
           </th>
@@ -121,11 +125,13 @@
           var count = subscription.MyUserSubscriptionPlans.IsNullOrEmpty() ? 0 : subscription.MyUserSubscriptionPlans.Count;
         <tr id="subscription-@subscription.Id">
           <td>@subscription.Name</td>
+          <td>@subscription.NameToShow</td>
           <td>@subscription.Description</td>
           <td>@subscription.AllowedPortfolio</td>
           <td>@subscription.AllowedMegaByte</td>
           <td>@subscription.AllowedMediaNumber</td>
           <td>@count</td>
+          <td>@subscription.Price.ToString("0.00") € / month</td>
           <td><a type="button" class="btn btn-primary m-1" asp-action="SubscriptionEdit" asp-controller="Admin" asp-area="Admin" asp-route-id="@subscription.Id">Edit</a></td>
           
         </tr>

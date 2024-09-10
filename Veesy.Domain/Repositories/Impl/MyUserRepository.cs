@@ -28,7 +28,7 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
 
     public SubscriptionPlan GetSubscriptionPlanByName(string name)
     {
-        return _applicationDbContext.SubscriptionPlans.SingleOrDefault(s => s.Name == name);
+        return _applicationDbContext.SubscriptionPlans.SingleOrDefault(s => s.Name.ToUpper() == name.ToUpper());
     }
 
     public List<InfoToShow> GetInfosToShow()

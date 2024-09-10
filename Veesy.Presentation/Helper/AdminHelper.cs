@@ -147,6 +147,7 @@ public class AdminHelper
         var oldSubscription = _subscriptionPlanService.GetSubscriptionPlanById(subscription.Id);
         oldSubscription.Name = subscription.Name;
         oldSubscription.Description = subscription.Description;
+        oldSubscription.NameToShow = subscription.NameToShow;
         oldSubscription.AllowedPortfolio = subscription.AllowedPortfolio;
         oldSubscription.AllowedMediaNumber = subscription.AllowedMediaNumber;
         oldSubscription.AllowedMegaByte = subscription.AllowedMegaByte;

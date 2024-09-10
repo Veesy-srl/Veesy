@@ -191,7 +191,6 @@ public class PortfolioService : IPortfolioService
     {
         var portfolio = _uoW.PortfolioRepository.FindByCondition(w => w.MyUserId == userId && w.Id == portfolioId)
             .Include(s => s.PortfolioMedias)
-            .Include(s => s.MyUser)
             .SingleOrDefault();
         if (portfolio == null)
             throw new Exception($"Portfolio not found with id {portfolioId}.");

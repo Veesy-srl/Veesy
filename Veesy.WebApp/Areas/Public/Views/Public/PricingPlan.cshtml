@@ -129,7 +129,7 @@
             <div class="card-header d-flex veesy-card-top" style="border:none !important; background-color: transparent;">
                 <div class="col-11">
                     <p class="mb-0 mt-1">
-                        @if (Model.Subscription != null && (Model.Subscription.Name == VeesyConstants.SubscriptionPlan.Pro))
+                        @if (Model.Subscription != null && (Model.Subscription.Name == VeesyConstants.SubscriptionPlan.Pro || Model.Subscription.Name == VeesyConstants.SubscriptionPlan.Fou))
                         {
                             <strong class="text-color-price-white" style="font-size: 14px;">YOUR PLAN</strong>
                         }

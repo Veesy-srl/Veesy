@@ -32,13 +32,12 @@ public class SubscriptionController : ControllerBase
     {
         try
         {
-            Logger.Info("ChangeUserSubscriptionPlan function started...");
             var result = await _profileHelper.ChangeSubscriptionPlanApi(new ChangeSubscriptionDto
             {
                 SubscriptionName = subscription,
                 MyUserId = userId
             });
-            Logger.Info("ChangeUserSubscriptionPlan function done.");
+            
             if (result.Success)
             {
                 return StatusCode(200, new SubscriptionResponse(new SubscriptionDto

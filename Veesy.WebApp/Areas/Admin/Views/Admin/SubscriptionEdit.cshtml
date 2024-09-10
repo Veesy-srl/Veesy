@@ -16,11 +16,16 @@
             <form method="post" asp-controller="Admin" asp-action="EditSubscription">
                 @Html.HiddenFor(x => x.Subscription.Id)
                 @Html.HiddenFor(x => x.Subscription.Price)
+                @Html.HiddenFor(x => x.Subscription.Name)
                 @Html.HiddenFor(x => x.Subscription.CreateRecordDate)
                 @Html.HiddenFor(x => x.Subscription.IsMediaFormatsInclude)
                 <div class="row mb-3">
                     <label>Name</label>
-                    <input type="text" class="form-control" asp-for="Subscription.Name">
+                    <input disabled="disabled" type="text" class="form-control" asp-for="Subscription.Name">
+                </div>
+                <div class="row mb-3">
+                    <label>Name to show</label>
+                    <input type="text" class="form-control" asp-for="Subscription.NameToShow">
                 </div>
                 <div class="row mb-3">
                     <label>Description</label>

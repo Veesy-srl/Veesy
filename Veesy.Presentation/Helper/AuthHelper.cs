@@ -67,10 +67,9 @@ public class AuthHelper
             if (user == null)
                 return new ResultDto(false, "User not found");
         }
-        var name = user.Fullname;
-        var recipients = new (string, string)[] { ("Noreply | Veesy", email) };
+        var name = user.Name;
         var link = "";
-        var message = new Message(new (string, string)[] { ("Noreply | Veesy", email) }, "Welcome to Veesy", link);
+        var message = new Message(new (string, string)[] { ("Noreply | Veesy", user.Email) }, "Welcome to Veesy", link);
         List<(string, string)> replacer = new List<(string, string)> { ("[name]", name) };
 
         var imageFiles = new List<string> { 
