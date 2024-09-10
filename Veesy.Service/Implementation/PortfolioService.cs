@@ -223,7 +223,6 @@ public class PortfolioService : IPortfolioService
                     .Select(s=>s.MediaId)
                     .Any(w => imgToDelete.Contains(w))
             )
-            .Include(s => s.MyUser)
             .Include(s => s.PortfolioMedias);
         
         return portfolios;

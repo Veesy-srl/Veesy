@@ -28,10 +28,15 @@ public class SubscriptionPlanService : ISubscriptionPlanService
 
     public decimal GetEarningsByMonth(int month)
     {
-        return _uoW.DbContext.MyUserSubscriptionPlans
+        var res = _uoW.DbContext.MyUserSubscriptionPlans
+            .Where(s => s.CreateRecordDate.Month <= month)
             .Include(s => s.SubscriptionPlan)
-            .Where(s => s.SubscriptionPlan.Price >= 0)
-            .Sum(s => s.SubscriptionPlan.Price);
+            .GroupBy(s => s.MyUserId).ToList();
+
+        var myUserSubscriptionPlans =
+            res.Select(s => s.OrderByDescending(s => s.CreateRecordDate).FirstOrDefault()).ToList();
+
+        return myUserSubscriptionPlans.Sum(s => s.SubscriptionPlan.Price);
     }
 
     public List<IGrouping<string,MyUserSubscriptionPlan>> GetMyUserSubscriptionPlanGoupByUserId()
