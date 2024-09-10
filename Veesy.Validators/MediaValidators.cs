@@ -18,7 +18,7 @@ public class MediaValidators
         var limit = MediaCostants.MaxSizeSingleMedia[MediaCostants.GetType(extension)];
         if(size > limit)
             return new ResultDto(false, $"Limit size: {(limit / (1024*1024)).ToString("0.")}Mb");
-        if (sizeTotal > maxSizePlan)
+        if (sizeTotal > maxSizePlan && maxSizePlan != -1)
             return new ResultDto(false, "Reached maximum subscription size");
         return new ResultDto(true, "");
     }

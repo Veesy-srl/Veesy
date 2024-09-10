@@ -76,7 +76,7 @@
                             }
                         }
                         @{
-                            var subsc = VeesyConstants.SubscriptionPlan.Pro == @user.SubscriptionPlan ? VeesyConstants.SubscriptionPlan.Free : VeesyConstants.SubscriptionPlan.Pro;
+                            var subsc = @user.SubscriptionPlan ;
                         }
                         <td><button type="button" onclick="openModal('#modalChangeSubscription'), SetSubscription('@subsc', '@user.Code')" class="btn @VeesyConstants.SubscriptionPlan.SubscriptionSpan[@user.SubscriptionPlan] m-1">@user.SubscriptionPlan</button></td>
                         <td>
@@ -169,11 +169,9 @@
             </div>
             <div class="empty-veesy"></div>
             <div class="modal-body text-center">
-                <h5 id="confirm-change-plan">
-                    Are you sure to change your plan?
-                </h5>
-                <div class="empty-veesy"></div>
-                <button onclick="UpdateSubscription()" class="mt-2 rounded-pill btn btn-padding btn-primary a-font-p" type="submit">yes</button>
+                <div id="confirm-change-plan">
+                    
+                </div>
             </div>
             <div class="empty-veesy"></div>
         </div>
@@ -188,18 +186,38 @@
     
         let userId = ''
         let subscriptionName = '';
+        let Pro = 'Pro';
+        let Plus = 'Plus';
+        let Free = 'Free';
+        let Fou = 'Fou';
+        
         
         function SetSubscription(name, user) {
             subscriptionName = name;       
             userId = user;
-            document.getElementById("confirm-change-plan").innerHTML = "Are you sure you want to change plan in <strong>" + subscriptionName + "</strong>?"
+            if (subscriptionName === "Free")
+            {
+                document.getElementById("confirm-change-plan").innerHTML = '<h5>Select the plan</h5> <div class="empty-veesy"></div><button onclick="UpdateSubscription(Pro)" class="mt-2 rounded-pill btn btn-padding btn-primary a-font-p" type="submit">Pro</button><button onclick="UpdateSubscription(Plus)" class="mt-2 rounded-pill btn btn-padding btn-primary a-font-p" type="submit">Plus</button> <button onclick="UpdateSubscription(Fou)" class="mt-2 rounded-pill btn btn-padding btn-primary a-font-p" type="submit">Fou</button>';
+            }
+            if (subscriptionName === "Pro")
+            {
+                document.getElementById("confirm-change-plan").innerHTML = '<h5>Select the plan</h5> <div class="empty-veesy"></div><button onclick="UpdateSubscription(Plus)" class="mt-2 rounded-pill btn btn-padding btn-primary a-font-p" type="submit">Plus</button><button onclick="UpdateSubscription(Free)" class="mt-2 rounded-pill btn btn-padding btn-primary a-font-p" type="submit">Free</button><button onclick="UpdateSubscription(Fou)" class="mt-2 rounded-pill btn btn-padding btn-primary a-font-p" type="submit">Fou</button>';
+            }
+            if (subscriptionName === "Plus")
+            {
+                document.getElementById("confirm-change-plan").innerHTML = '<h5>Select the plan</h5> <div class="empty-veesy"></div><button onclick="UpdateSubscription(Pro)" class="mt-2 rounded-pill btn btn-padding btn-primary a-font-p" type="submit">Pro</button><button onclick="UpdateSubscription(Free)" class="mt-2 rounded-pill btn btn-padding btn-primary a-font-p" type="submit">Free</button><button onclick="UpdateSubscription(Fou)" class="mt-2 rounded-pill btn btn-padding btn-primary a-font-p" type="submit">Fou</button>';
+            }
+            if (subscriptionName === "Fou")
+            {
+                document.getElementById("confirm-change-plan").innerHTML = '<h5>Select the plan</h5> <div class="empty-veesy"></div><button onclick="UpdateSubscription(Pro)" class="mt-2 rounded-pill btn btn-padding btn-primary a-font-p" type="submit">Pro</button><button onclick="UpdateSubscription(Free)" class="mt-2 rounded-pill btn btn-padding btn-primary a-font-p" type="submit">Free</button><button onclick="UpdateSubscription(Plus)" class="mt-2 rounded-pill btn btn-padding btn-primary a-font-p" type="submit">Plus</button>';
+            }
+            
         }
         
     
-        function UpdateSubscription(){
+        function UpdateSubscription(SubscriptionName){
             $('#load-spinner').css("display", "block");
             
-            var SubscriptionName = subscriptionName;
             var MyUserId = userId
             
             var ChangeSubscriptionDto = {SubscriptionName, MyUserId}

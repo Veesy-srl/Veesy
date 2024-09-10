@@ -19,6 +19,7 @@ public class SubscriptionPlan : TrackableEntity
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
+    public string? NameToShow { get; set; }
     public string Description { get; set; }
     public decimal Price { get; set; }
     public int AllowedMegaByte { get; set; }

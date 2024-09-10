@@ -12,6 +12,7 @@ using NLog;
 using Veesy.Domain.Constants;
 using Veesy.Domain.Models;
 using Veesy.Presentation.Helper;
+using Veesy.Presentation.Model.Admin;
 using Veesy.Service.Dtos;
 
 namespace Veesy.WebApp.Areas.Admin.Controllers;
@@ -98,6 +99,40 @@ public class AdminController : VeesyController
         {
             var vm = _adminHelper.GetSusbscriptionsOverviewViewModel();
             return View(vm);
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            throw;
+        }
+    }
+    
+    [HttpGet("edit-subscription/{id}")]
+    public IActionResult SubscriptionEdit(Guid id)
+    {
+        try
+        {
+            var vm = _adminHelper.GetSubscriptionEditViewModel(id);
+            return View(vm);
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            throw;
+        }
+    }
+    
+    [HttpPost]
+    public async Task<IActionResult> EditSubscription(SubscriptionEditViewModel model)
+    {
+        try
+        {
+            
+            var result = await _adminHelper.EditSubscription(model.Subscription, UserInfo);
+            if (!result.Success)
+                throw new Exception("Failed to update subscription");
+            else
+                return RedirectToAction("SubscriptionsOverview");
         }
         catch (Exception ex)
         {

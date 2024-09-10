@@ -97,7 +97,7 @@ public class MediaHelper
                 }
                 
                 //Number media validation
-                if (numberMediaOnCloud >= subscription.AllowedMediaNumber)
+                if (numberMediaOnCloud >= subscription.AllowedMediaNumber && subscription.AllowedMediaNumber != -1)
                 {
                     filesUploadedStatus.Add(new(false, null, fileSection.FileName,
                         "Reached maximum subscription number media."));
@@ -181,7 +181,7 @@ public class MediaHelper
                 }
                 
                 //Number media validation
-                if (numberMediaOnCloud >= subscription.AllowedMediaNumber)
+                if (numberMediaOnCloud >= subscription.AllowedMediaNumber && subscription.AllowedMediaNumber != -1)
                     filesUploadedStatus.Add(new(false, null, fileSection.FileName,
                         "Reached maximum subscription number media."));
                 else
