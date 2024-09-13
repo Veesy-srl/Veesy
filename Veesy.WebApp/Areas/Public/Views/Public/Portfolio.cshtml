@@ -6,6 +6,36 @@
 @{
     ViewData["Title"] = "Portfolio";
 }
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    
+    function SendMessage() {
+        $('#load-spinner').css("display", "block");
+        var sender = document.getElementById("message-sender").value;
+        var message = document.getElementById("message-text").value;
+        var recipient = '@Model.PortfolioDto.MyUserId'; // Assicurati che sia una stringa
+        var form = { sender, message, recipient }; // Aggiungi recipient all'oggetto
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("SendEmailToCreator", "Public")',
+            data: JSON.stringify(form), // Usa 'form' qui
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (response) {
+                if (response.result) {
+                    closeModal('#modalMessageCreator');
+                }
+                $('#load-spinner').css("display", "none");
+            },
+            error: function (response) {
+                $('#load-spinner').css("display", "none");
+                console.error("Errore:", response); // Aggiungi il log dell'errore per il debug
+            }
+        });
+    }
+</script>
+
 
 @if (Model.IsPublish && (Model.PortfolioDto.IsPublic || Model.Unlocked))
 {
@@ -246,8 +276,8 @@
                     <p class="text-color">Message</p>
                     <textarea id="message-text" rows="4" class="text-profile"></textarea>
                 </div>
-                <div class="modal-footer">                
-                    <a onclick="OpenCreditsOrNestedLink()" id="send-button" class="rounded-pill btn btn-primary btn-padding a-font-p">send</a>
+                <div class="modal-footer">
+                    <a onclick="SendMessage()" id="send-button" class="rounded-pill btn btn-primary btn-padding a-font-p">send</a>
                 </div>
             </div>
         </div>
@@ -504,30 +534,6 @@ else if (!Model.PortfolioDto.IsPublic)
             document.getElementById("password").type = "password";
             document.getElementById("password-eye").src = "/imgs/Auth/password-hidden_light-mode.png";
         }
-    }
-
-    function SendMessage(){
-        $('#load-spinner').css("display", "block");
-        var sender = document.getElementById("message-sender").value
-        var message = document.getElementById("message-text").value
-        var recipient = @Model.PortfolioDto.MyUserId
-        var form = {sender,  message};
-        $.ajax({
-            type: 'POST',
-            url: '@Url.Action("SendEmailToCreator", "Public")',
-            data: JSON.stringify(media),
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            success: function (response) {
-                if(response.result){
-                    closeModal('#modalMessageCreator');
-                }
-                $('#load-spinner').css("display", "none");
-            },
-            error: function (response) {
-                $('#load-spinner').css("display", "none");
-            }
-        })
     }
 </script>
 
