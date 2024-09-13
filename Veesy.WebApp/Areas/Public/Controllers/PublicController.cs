@@ -289,13 +289,14 @@ public class PublicController : VeesyController
         }
     }
 
-    public IActionResult SendEmailToCreator(string emailAddress, string emailMessage)
+    public IActionResult SendEmailToCreator([FromBody] CreatorFormDto form)
     {
         try
         {
-            if (emailMessage != null && emailMessage.Any())
+            var result = _publicHelper.SendCreatorForm(form, new MyUser
             {
-            }
+                Id = Guid.Empty.ToString()
+            });
 
             return RedirectToAction("Portfolio");
         }

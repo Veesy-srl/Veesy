@@ -6,7 +6,9 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Veesy.Domain.Constants;
+using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
+using Veesy.Email;
 using Veesy.Presentation.Model.Cloud;
 using Veesy.Presentation.Model.Public;
 using Veesy.Service.Dtos;
@@ -20,13 +22,17 @@ public class PublicHelper
     private readonly IAccountService _accountService;
     private readonly IConfiguration _config;
     private readonly IPortfolioService _portfolioService;
+    private readonly IEmailSender _emailSender;
+    private readonly IAnalyticService _analyticService;
 
-    public PublicHelper(IMediaService mediaService, IAccountService accountService, IConfiguration config, IPortfolioService portfolioService)
+    public PublicHelper(IMediaService mediaService, IAccountService accountService, IConfiguration config, IPortfolioService portfolioService, IEmailSender emailSender, IAnalyticService analyticService)
     {
         _mediaService = mediaService;
         _accountService = accountService;
         _config = config;
         _portfolioService = portfolioService;
+        _emailSender = emailSender;
+        _analyticService = analyticService;
     }
 
     public async Task<AboutMediaViewModel> GetAboutInfo()
@@ -150,5 +156,24 @@ public class PublicHelper
             BasePathAzure = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"
         };
         return vm;
+    }
+
+    public async Task<ResultDto> SendCreatorForm(CreatorFormDto dto, MyUser userInfo)
+    {
+        var recipient = _accountService.GetUserById(dto.Recipient);
+        var link = "";
+        var message = new Message(new (string, string)[] { ("Noreply | Veesy", recipient.Email) }, "New Message", link);
+        List<(string, string)> replacer = new List<(string, string)> { ("[sender]", dto.Sender),("[message]", dto.Message) };
+
+        var currentPath = Directory.GetCurrentDirectory();
+        await _emailSender.SendEmailAsync(message, currentPath + "/wwwroot/MailTemplate/mail-creator-form.html", replacer);
+        await _analyticService.AddForm(new TrackingForm
+        {
+            EmailSender = dto.Sender,
+            RecipientId = recipient.Id,
+            FormType = VeesyConstants.FormType.CreatorType
+        }, userInfo);
+        
+        return new ResultDto(true, "");
     }
 }

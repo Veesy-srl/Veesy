@@ -67,4 +67,10 @@ public class AnalyticService : IAnalyticService
         _uoW.AnalyticRepository.Delete(referralLink);
         await _uoW.CommitAsync(new MyUser());
     }
+
+    public async Task AddForm(TrackingForm trackingForm, MyUser user)
+    {
+        _uoW.DbContext.TrackingForms.Add(trackingForm);
+        await _uoW.CommitAsync(user);
+    }
 }

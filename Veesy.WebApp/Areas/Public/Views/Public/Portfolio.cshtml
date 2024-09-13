@@ -21,7 +21,7 @@
         <div class="col-sm-12 col-md-4 mb-3 nodisplay-sm">
             <div class="text-end">
                 <h3 class="text-color" style="font-size: 20px !important; line-height: 27px !important;"><strong>Interested in my work?</strong></h3>
-                <button onclick="location.href='mailto:@Model.PortfolioDto.UserEmail';" class="rounded-pill btn-primary btn-variant mt-2" style="font-size: 15px !important; line-height:  22px !important;">contact me</button>
+                <button onclick="openModal('#modalMessageCreator')" class="rounded-pill btn-primary btn-variant mt-2" style="font-size: 15px !important; line-height:  22px !important;">contact me</button>
             </div>
         </div>
     </div>
@@ -60,7 +60,7 @@
     <div class="empty-veesy"></div>
     <div class="text-center">
         <h3 class="text-color" style="font-size: 20px !important; line-height: 27px !important;"><strong>Interested in my work?</strong></h3>
-        <button onclick="location.href='mailto:@Model.PortfolioDto.UserEmail';" class="rounded-pill btn-primary btn-padding btn-variant my-4" style="font-size: 15px !important; line-height:  22px !important;">contact me</button>
+        <button onclick="openModal('#modalMessageCreator')" class="rounded-pill btn-primary btn-padding btn-variant my-4" style="font-size: 15px !important; line-height:  22px !important;">contact me</button>
     </div>
     <div class="empty-veesy"></div>
     <div class="empty-veesy"></div>
@@ -226,7 +226,7 @@
             </div>
             <div class="row text-end justify-content-end">
                 <h3 class="text-white" style="font-size: 20px !important; line-height:  27px!important;"><strong>Interested in my work?</strong></h3>
-                <button onclick="location.href='mailto:@Model.PortfolioDto.UserEmail';" class="rounded-pill w-25 div-white-rounded-veesy-portfolio btn-variant mt-2" style="font-size: 15px !important; line-height:  22px !important;">contact me</button>
+                <button onclick="openModal('#modalMessageCreator')" class="rounded-pill w-25 div-white-rounded-veesy-portfolio btn-variant mt-2" style="font-size: 15px !important; line-height:  22px !important;">contact me</button>
             </div>
             <div class="empty-veesy"></div>
         </div>
@@ -238,14 +238,16 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title text-color" style="font-size: 25px !important; line-height: 30px !important;" id="exampleModalLongTitle"><strong>Message to @Model.PortfolioDto.Name</strong></h3>
-                    <a onclick="closeModal('#modalPortfolioIntro')"><i class="fa-solid fa-circle-xmark"></i></a>
+                    <a onclick="closeModal('#modalMessageCreator')"><i class="fa-solid fa-circle-xmark"></i></a>
                 </div>
                 <div class="modal-body">
-                    <p class="text-color"></p>
-                    <textarea id="portfolio-intro-text-edit" rows="4" class="text-profile"></textarea>
+                    <p class="text-color">Sender Email Address</p>
+                    <input type="text" id="message-sender" rows="4" class="w-100 input-modal text-profile"/>
+                    <p class="text-color">Message</p>
+                    <textarea id="message-text" rows="4" class="text-profile"></textarea>
                 </div>
                 <div class="modal-footer">                
-                    <button onclick="UpdatePortfolioIntro()" class="rounded-pill btn btn-primary btn-padding a-font-p" type="submit">send</button>
+                    <a onclick="OpenCreditsOrNestedLink()" id="send-button" class="rounded-pill btn btn-primary btn-padding a-font-p">send</a>
                 </div>
             </div>
         </div>
@@ -502,6 +504,30 @@ else if (!Model.PortfolioDto.IsPublic)
             document.getElementById("password").type = "password";
             document.getElementById("password-eye").src = "/imgs/Auth/password-hidden_light-mode.png";
         }
+    }
+
+    function SendMessage(){
+        $('#load-spinner').css("display", "block");
+        var sender = document.getElementById("message-sender").value
+        var message = document.getElementById("message-text").value
+        var recipient = @Model.PortfolioDto.MyUserId
+        var form = {sender,  message};
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("SendEmailToCreator", "Public")',
+            data: JSON.stringify(media),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (response) {
+                if(response.result){
+                    closeModal('#modalMessageCreator');
+                }
+                $('#load-spinner').css("display", "none");
+            },
+            error: function (response) {
+                $('#load-spinner').css("display", "none");
+            }
+        })
     }
 </script>
 
