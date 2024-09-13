@@ -139,7 +139,7 @@ public class Worker : BackgroundService
                 }
             }
             
-            if (now.Hour == 3 && (now.Minute == 0 || now.Minute == 1) && actionsEveryDay != null)
+            if (now.Hour == 3 && now.Minute == 0 && actionsEveryDay != null)
             {
                 Console.WriteLine($"Eseguo funzioni 1 day.");
                 foreach (var action in actionsEveryDay)
