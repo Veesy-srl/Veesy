@@ -413,18 +413,16 @@ public class AccountService : IAccountService
             .ThenInclude(s => s.SubscriptionPlan)
             .Include(s => s.Portfolios.Where(s => s.IsMain))
             .Where(s =>
-                s.MyUserSubscriptionPlans.OrderBy(s => s.CreateRecordDate).LastOrDefault().SubscriptionPlan != null &&
-                s.MyUserSubscriptionPlans.OrderBy(s => s.CreateRecordDate).LastOrDefault().SubscriptionPlan.Name !=
-                VeesyConstants.SubscriptionPlan.Free).ToList();
+                s.MyUserSubscriptionPlans.OrderBy(s => s.CreateRecordDate).LastOrDefault().SubscriptionPlan.Price > 0).ToList();
     }
 
     public int GetNumberPayingUsers()
     {
-        return _uoW.MyUserRepository.FindAll()
+        var users = _uoW.MyUserRepository.FindAll()
             .Include(s => s.MyUserSubscriptionPlans)
                 .ThenInclude(s => s.SubscriptionPlan)
-            .Where(s => s.MyUserSubscriptionPlans.OrderBy(s => s.CreateRecordDate).LastOrDefault().SubscriptionPlan.Name != VeesyConstants.SubscriptionPlan.Free )
-            .Count();
+            .Where(s => s.MyUserSubscriptionPlans.OrderBy(s => s.CreateRecordDate).LastOrDefault().SubscriptionPlan.Price > 0 );
+        return users.Count();
     }
 
     public List<MyUser> GetLastFourLoginAttempt(int number)

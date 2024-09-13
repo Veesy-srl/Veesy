@@ -406,16 +406,38 @@ public class ProfileHelper
         var numberMedia = _mediaService.GetMediaNumberByUser(userClient.Id);
         var numberPortfolio = _portfolioService.GetPortfoliosNumberByUser(userClient.Id);
         var mediaSize = _mediaService.GetSizeMediaStorageByUserId(userClient.Id);
-        if(numberPortfolio > subscriptionPlan.AllowedPortfolio && subscriptionPlan.Name == VeesyConstants.SubscriptionPlan.Free)
+        if(numberPortfolio > subscriptionPlan.AllowedPortfolio && subscriptionPlan.AllowedPortfolio != -1)
             return new ResultDto(false,
                 $"{subscriptionPlan.Name} plan is limited to {subscriptionPlan.AllowedPortfolio} portfolio. Please remove {numberPortfolio - subscriptionPlan.AllowedPortfolio} portofolios and retry.");
-        if (numberMedia > subscriptionPlan.AllowedMediaNumber)
+        if (numberMedia > subscriptionPlan.AllowedMediaNumber && subscriptionPlan.AllowedMediaNumber != -1)
             return new ResultDto(false,
                 $"{subscriptionPlan.Name} plan is limited to {subscriptionPlan.AllowedMediaNumber} medias. Please remove {numberMedia - subscriptionPlan.AllowedMediaNumber} medias and retry.");
-        if (mediaSize > ((long)subscriptionPlan.AllowedMegaByte * 1024 * 1024))
+        if (mediaSize > ((long)subscriptionPlan.AllowedMegaByte * 1024 * 1024) && subscriptionPlan.AllowedMegaByte != -1)
             return new ResultDto(false,
                 $"{subscriptionPlan.Name} plan is limited to {subscriptionPlan.AllowedMegaByte}Mb. Please remove {(mediaSize - ((long)subscriptionPlan.AllowedMegaByte * 1024 * 1024)) / (1024 * 1024)}Mb and retry.");
         await _accountService.AddNewUserSubscription(userClient.Id, subscriptionPlan.Id, user);
+        return new ResultDto(true, $"{subscriptionPlan.Name} now is active.");
+    } 
+    
+    public async Task<ResultDto> ChangeSubscriptionPlanApi(ChangeSubscriptionDto changeSubscriptionDto)
+    {
+        var subscriptionPlan = _accountService.GetSubscriptionPlanByName(changeSubscriptionDto.SubscriptionName);
+        if(changeSubscriptionDto.MyUserId == null)
+            return new ResultDto(false, $"Invalid User");
+        var userClient = _accountService.GetUserById(changeSubscriptionDto.MyUserId);
+        var numberMedia = _mediaService.GetMediaNumberByUser(userClient.Id);
+        var numberPortfolio = _portfolioService.GetPortfoliosNumberByUser(userClient.Id);
+        var mediaSize = _mediaService.GetSizeMediaStorageByUserId(userClient.Id);
+        if(numberPortfolio > subscriptionPlan.AllowedPortfolio && subscriptionPlan.AllowedPortfolio != -1)
+            return new ResultDto(false,
+                $"{subscriptionPlan.Name} plan is limited to {subscriptionPlan.AllowedPortfolio} portfolio. Please remove {numberPortfolio - subscriptionPlan.AllowedPortfolio} portofolios and retry.");
+        if (numberMedia > subscriptionPlan.AllowedMediaNumber && subscriptionPlan.AllowedMediaNumber != -1)
+            return new ResultDto(false,
+                $"{subscriptionPlan.Name} plan is limited to {subscriptionPlan.AllowedMediaNumber} medias. Please remove {numberMedia - subscriptionPlan.AllowedMediaNumber} medias and retry.");
+        if (mediaSize > ((long)subscriptionPlan.AllowedMegaByte * 1024 * 1024) && subscriptionPlan.AllowedMegaByte != -1)
+            return new ResultDto(false,
+                $"{subscriptionPlan.Name} plan is limited to {subscriptionPlan.AllowedMegaByte}Mb. Please remove {(mediaSize - ((long)subscriptionPlan.AllowedMegaByte * 1024 * 1024)) / (1024 * 1024)}Mb and retry.");
+        await _accountService.AddNewUserSubscription(userClient.Id, subscriptionPlan.Id, userClient);
         return new ResultDto(true, $"{subscriptionPlan.Name} now is active.");
     } 
 
@@ -449,7 +471,7 @@ public class ProfileHelper
             try
             {
                 var message = new Message(new (string, string)[] { ("Noreply | Veesy", user.Email) }, "What’s next? La Veesy PRO membership.", link);
-                List<(string, string)> replacer = new List<(string, string)> { ("[name]", user.Fullname) };
+                List<(string, string)> replacer = new List<(string, string)> { ("[name]", user.Name) };
                 await _emailSender.SendEmailAsync(message, currentPath + "/wwwroot/MailTemplate/mail-update-pro.html", replacer);
                 user.EmailUpdateProSended = true;
                 usersToUpdate.Add(user);
@@ -463,5 +485,33 @@ public class ProfileHelper
         }
 
         await _accountService.UpdateMyUsers(usersToUpdate);
+    }
+
+    public async Task<ResultDto> SendEmailProPlan(string email)
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+        if (user == null)
+        {
+            user = await _userManager.FindByNameAsync(email);
+            if (user == null)
+                return new ResultDto(false, "User not found");
+        }
+        
+        var link = "";
+        var currentPath = Directory.GetCurrentDirectory();
+        
+        try
+        {
+            var message = new Message(new (string, string)[] { ("Noreply | Veesy", user.Email) }, "What’s next? La Veesy PRO membership.", link);
+            List<(string, string)> replacer = new List<(string, string)> { ("[name]", user.Name) };
+            await _emailSender.SendEmailAsync(message, currentPath + "/wwwroot/MailTemplate/mail-update-pro.html", replacer);
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            return new ResultDto(false, "Error sending email");
+        }
+
+        return new ResultDto(true, "");
     }
 }

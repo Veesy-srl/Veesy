@@ -12,11 +12,13 @@ public static class VeesyConstants
         public const string Pro = "Pro";
         public const string Plus = "Plus";
         public const string Beta = "Beta";
+        public const string Fou = "Fou";
 
         public static Dictionary<string, string> SubscriptionSpan = new Dictionary<string, string>
         {
             { "Free", "btn-light" },
             { "Pro", "btn-success" },
+            { "Fou", "btn-success" },
             { "Plus", "btn-primary" },
             { "Beta", "btn-danger" },
 

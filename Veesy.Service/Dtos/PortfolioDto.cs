@@ -49,8 +49,8 @@ public class PortfolioDto
     public bool IsMain { get; set; }
     public int NumberImage { get; set; }
     public int NumberVideo { get; set; }
-    public string FullnameForUrl => UserFullName.ToLower().Replace(" ", "-");
-    public string PortfolionameForUrl => Name.ToLower().Replace(" ", "-");
+    public string FullnameForUrl => string.IsNullOrEmpty(UserFullName) ? "" : UserFullName.ToLower().Replace(" ", "-");
+    public string PortfolionameForUrl => string.IsNullOrEmpty(Name) ? "" : Name.ToLower().Replace(" ", "-");
     public MediaDto DefaultMedia { get; set; }
     public int NumberMedia => NumberImage + NumberVideo;
     public VeesyConstants.PortfolioLayout Layout { get; set; }

@@ -1,7 +1,14 @@
+@using Microsoft.IdentityModel.Tokens
+@using Veesy.Domain.Constants
 @model Veesy.Presentation.Model.Admin.SubscriptionOverviewViewModel
 @{
     ViewData["Title"] = "Subscriptions Overview";
     Layout = "_Layout";
+}
+
+@section Style
+{
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
 }
 
 <div class="row">
@@ -81,8 +88,63 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="card">
+    <div class="bg-white card-header">
+      <div class="float-start">
+        <h3>Subscriptions</h3>
+      </div>
+    </div>
+    <div class="card-body">
+      <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+          <th class="th-sm">Name
+          </th>
+          <th class="th-sm">Name to show
+          </th>
+          <th class="th-sm">Description
+          </th>
+          <th class="th-sm">Portfolio Limit
+          </th>
+          <th class="th-sm">Mb Limit
+          </th>
+          <th class="th-sm">Media Limit
+          </th>
+          <th class="th-sm">N° Users
+          </th>
+          <th class="th-sm">Price
+          </th>
+          <th class="th-sm">Action
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var subscription in Model.SubscriptionPlans)
+        {
+          var count = subscription.MyUserSubscriptionPlans.IsNullOrEmpty() ? 0 : subscription.MyUserSubscriptionPlans.Count;
+        <tr id="subscription-@subscription.Id">
+          <td>@subscription.Name</td>
+          <td>@subscription.NameToShow</td>
+          <td>@subscription.Description</td>
+          <td>@subscription.AllowedPortfolio</td>
+          <td>@subscription.AllowedMegaByte</td>
+          <td>@subscription.AllowedMediaNumber</td>
+          <td>@count</td>
+          <td>@subscription.Price.ToString("0.00") € / month</td>
+          <td><a type="button" class="btn btn-primary m-1" asp-action="SubscriptionEdit" asp-controller="Admin" asp-area="Admin" asp-route-id="@subscription.Id">Edit</a></td>
+          
+        </tr>
+        }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
 @section Scripts
 {
+  <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
   <script>
   var chart = {
         series: [
@@ -182,5 +244,10 @@
     
      var chart = new ApexCharts(document.querySelector("#chart"), chart);
      chart.render();
+
+  $(document).ready(function () {
+    $('#dtBasicExample').DataTable();
+    $('.dataTables_length').addClass('bs-select');
+  });
   </script>
 }
