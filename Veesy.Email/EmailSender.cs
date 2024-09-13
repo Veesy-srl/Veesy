@@ -130,4 +130,13 @@ public class EmailSender : IEmailSender
             }
         }
     }
+
+    public async Task BuildEmail(string emailAddress, string emailMessage)
+    {
+        
+        var message = new Message(new (string, string)[] { ("Noreply | Veesy", emailAddress) }, "Message from user", emailMessage);
+        List<(string, string)> replacer = new List<(string, string)> { ("[LinkVerifyMail]", message.Content) };
+        var currentPath = Directory.GetCurrentDirectory();
+        await SendEmailAsync(message, currentPath + "/wwwroot/MailTemplate/mail-verify-email.html", replacer);
+    }
 }

@@ -38,6 +38,7 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<MyUserSubscriptionPlan> MyUserSubscriptionPlans { get; set; }
     public DbSet<ReferralLink> ReferralLinks { get; set; }
     public DbSet<ReferralLinkTracking> ReferralLinkTrackings { get; set; }
+    public DbSet<TrackingForm> TrackingForms { get; set; }
 
     #region OnModelCreating
     protected override void OnModelCreating(ModelBuilder modelBuilder)

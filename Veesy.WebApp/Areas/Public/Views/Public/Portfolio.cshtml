@@ -232,6 +232,24 @@
         </div>
     </div>
     <div id="blurred-background" class="blur-background" style="display: none"></div>
+    
+    <div class="modal fade" id="modalMessageCreator" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title text-color" style="font-size: 25px !important; line-height: 30px !important;" id="exampleModalLongTitle"><strong>Message to @Model.PortfolioDto.Name</strong></h3>
+                    <a onclick="closeModal('#modalPortfolioIntro')"><i class="fa-solid fa-circle-xmark"></i></a>
+                </div>
+                <div class="modal-body">
+                    <p class="text-color"></p>
+                    <textarea id="portfolio-intro-text-edit" rows="4" class="text-profile"></textarea>
+                </div>
+                <div class="modal-footer">                
+                    <button onclick="UpdatePortfolioIntro()" class="rounded-pill btn btn-primary btn-padding a-font-p" type="submit">send</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     @section Scripts
     {

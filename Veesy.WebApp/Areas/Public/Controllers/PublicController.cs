@@ -288,6 +288,25 @@ public class PublicController : VeesyController
             return RedirectToAction("Error400");
         }
     }
+
+    public IActionResult SendEmailToCreator(string emailAddress, string emailMessage)
+    {
+        try
+        {
+            if (emailMessage != null && emailMessage.Any())
+            {
+            }
+
+            return RedirectToAction("Portfolio");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+    
+    
     
     [HttpGet("400")]
     public IActionResult Error400()

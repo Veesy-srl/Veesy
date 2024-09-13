@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Veesy.Email;
 using Veesy.Presentation.Helper;
 using Veesy.Presentation.Response.Mail;
 using Veesy.WebApp.CustomDataAttribute;
@@ -11,11 +12,13 @@ namespace Veesy.WebApp.Api.v1;
 public class MailController : ControllerBase
 {
     private readonly AuthHelper _authHelper;
+    private readonly IEmailSender _emailSender;
     private readonly ProfileHelper _profileHelper;
 
-    public MailController(AuthHelper authHelper, ProfileHelper profileHelper)
+    public MailController(AuthHelper authHelper, IEmailSender emailSender, ProfileHelper profileHelper)
     {
         _authHelper = authHelper;
+        _emailSender = emailSender;
         _profileHelper = profileHelper;
     }
     
@@ -60,6 +63,32 @@ public class MailController : ControllerBase
                 return StatusCode(401, new MailResponse(-1, result.Message));
             }
             return StatusCode(401, new MailResponse(-1, "Wrong mail type"));
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+    
+    
+    [HttpGet]
+    public async Task<IActionResult> EmailCreator(string emailAddress, string emailMessage)
+    {
+        try
+        {
+            if (emailMessage != null)
+            {
+                var result = await _authHelper.SendEmailWelcome(emailAddress);
+                if (result.Success)
+                {
+                    return StatusCode(200, new MailResponse(new MailDto()
+                    {
+                        MailAddress = emailAddress
+                    })); 
+                }
+            }
+            return StatusCode(401, new MailResponse(-1, "Insert message"));
         }
         catch (Exception e)
         {
