@@ -15,7 +15,6 @@
         <div class="card-body">
             <form method="post" asp-controller="Admin" asp-action="EditSubscription">
                 @Html.HiddenFor(x => x.Subscription.Id)
-                @Html.HiddenFor(x => x.Subscription.Price)
                 @Html.HiddenFor(x => x.Subscription.Name)
                 @Html.HiddenFor(x => x.Subscription.CreateRecordDate)
                 @Html.HiddenFor(x => x.Subscription.IsMediaFormatsInclude)
@@ -42,6 +41,10 @@
                 <div class="row mb-3">
                     <label>MegaByte Limit</label>
                     <input type="text" class="form-control" asp-for="Subscription.AllowedMegaByte">
+                </div>
+                <div class="row mb-3">
+                    <label>Price</label>
+                    <input type="number" min="0" step="0.01" class="form-control" asp-for="Subscription.Price">
                 </div>
                 <div class="float-end">
                     <button class="btn btn-primary me-2" type="submit">Submit</button>
