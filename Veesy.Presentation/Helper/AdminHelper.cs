@@ -163,6 +163,7 @@ public class AdminHelper
         oldSubscription.AllowedPortfolio = subscription.AllowedPortfolio;
         oldSubscription.AllowedMediaNumber = subscription.AllowedMediaNumber;
         oldSubscription.AllowedMegaByte = subscription.AllowedMegaByte;
+        oldSubscription.Price = subscription.Price;
         return await _subscriptionPlanService.EditSubscription(oldSubscription, user);
     }
     
