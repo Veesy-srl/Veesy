@@ -32,110 +32,116 @@
             </div>
             <div class="float-end">
                 <a class="btn btn-primary me-2" onclick="ExportData()">Export excel</a>
-                <a class="btn btn-primary" onclick="ToggleTable()">Change view</a>
+                <a class="btn btn-primary" asp-action="CreatorsList" asp-route-page="@Model.NewPage">Change view</a>
             </div>
         </div>
         <div class="card-body">
-            <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
-                <thead>
-                <tr>
-                    <th class="th-sm">Name
-                    </th>
-                    <th class="th-sm">Email
-                    </th>
-                    <th class="th-sm">N° portfolio
-                    </th>
-                    <th class="th-sm">N° media
-                    </th>
-                    <th class="th-sm">Subscription Date
-                    </th>
-                    <th class="th-sm">Subscription
-                    </th>
-                    <th class="th-sm">Action
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach (var user in Model.FreelancerDtos)
-                {
+            @if (Model.NewPage == 1)
+            {
+                <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+                    <thead>
                     <tr>
-                        <td>@user.Fullname</td>
-                        <td><a href="mailto:@user.Email">@user.Email</a></td>
-                        <td>@user.PublicPortfoliosCount / @user.PortfoliosCount</td>
-                        <td>@user.MediasCount</td>
-
-                        @{
-                            DateTime createDate;
-                            if (DateTime.TryParseExact(user.CreateDate, "dd/MM/yy HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out createDate))
-                            {
-                                <td data-sort="@createDate.ToString("yyyy-MM-ddTHH:mm:ss")">@createDate.ToString("dd/MM/yyyy HH:mm")</td>
-                            }
-                            else
-                            {
-                                <td>Data non valida</td>
-                            }
-                        }
-                        @{
-                            var subsc = @user.SubscriptionPlan ;
-                        }
-                        <td><button type="button" onclick="openModal('#modalChangeSubscription'), SetSubscription('@subsc', '@user.Code')" class="btn @VeesyConstants.SubscriptionPlan.SubscriptionSpan[@user.SubscriptionPlan] m-1">@user.SubscriptionPlan</button></td>
-                        <td>
-                            <a style="cursor: pointer" asp-action="CreatorInfo" asp-controller="Admin" asp-route-id="@user.Code" class="bg-primary me-2 rounded-circle p-2 text-white d-inline-flex "><i class="ti ti-eye fs-4"></i></a>
-                            <a style="cursor: pointer" onclick="openModal('#modalConfirmDeleteUser'), setUserIdToDelete('@user.Code')" class="bg-danger rounded-circle p-2 text-white d-inline-flex "><i class="ti ti-trash fs-4"></i></a>
-                        </td>
+                        <th class="th-sm">Name
+                        </th>
+                        <th class="th-sm">Email
+                        </th>
+                        <th class="th-sm">N° portfolio
+                        </th>
+                        <th class="th-sm">N° media
+                        </th>
+                        <th class="th-sm">Subscription Date
+                        </th>
+                        <th class="th-sm">Subscription
+                        </th>
+                        <th class="th-sm">Action
+                        </th>
                     </tr>
-                }
-                </tbody>
-            </table>
-            <table id="dtBasicExample2" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
-                <thead>
-                <tr>
-                    <th class="th-sm">Name
-                    </th>
-                    <th class="th-sm">Fields
-                    </th>
-                    <th class="th-sm">Software
-                    </th>
-                    <th class="th-sm">Soft skill
-                    </th>
-                    <th class="th-sm">Action
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach (var user in Model.FreelancerDtos)
-                {
-                    <tr>
-                        <td>@user.Fullname</td>
-                        @{
-                            var fields = "";
-                            if (user.Fields.Count != 0)
-                                fields = user.Fields.Aggregate((x, y) => x + ", " + y);
-                        }
-                        <td>@fields</td>
-                        @{
-                            var software = "";
-                            if (user.Software.Count != 0)
-                                software = user.Software.Aggregate((x, y) => x + ", " + y);
-                        }
-                        <td>@software</td>
-                        @{
-                            var softSkill = "";
-                            if (user.SoftSkill.Count != 0)
-                                softSkill = user.SoftSkill.Aggregate((x, y) => x + ", " + y);
-                        }
-                        <td>@softSkill</td>
-                        <td>
-                            <div class="d-flex">
-                                <a style="cursor: pointer" asp-action="CreatorInfo" asp-controller="Admin" asp-route-id="@user.Code" class="bg-primary rounded-circle p-2 me-2 text-white d-inline-flex "><i class="ti ti-eye fs-4"></i></a>
+                    </thead>
+                    <tbody>
+                    @foreach (var user in Model.FreelancerDtos)
+                    {
+                        <tr>
+                            <td>@user.Fullname</td>
+                            <td><a href="mailto:@user.Email">@user.Email</a></td>
+                            <td>@user.PublicPortfoliosCount / @user.PortfoliosCount</td>
+                            <td>@user.MediasCount</td>
+
+                            @{
+                                DateTime createDate;
+                                if (DateTime.TryParseExact(user.CreateDate, "dd/MM/yy HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out createDate))
+                                {
+                                    <td data-sort="@createDate.ToString("yyyy-MM-ddTHH:mm:ss")">@createDate.ToString("dd/MM/yyyy HH:mm")</td>
+                                }
+                                else
+                                {
+                                    <td>Data non valida</td>
+                                }
+                            }
+                            @{
+                                var subsc = @user.SubscriptionPlan;
+                            }
+                            <td><button type="button" onclick="openModal('#modalChangeSubscription'), SetSubscription('@subsc', '@user.Code')" class="btn @VeesyConstants.SubscriptionPlan.SubscriptionSpan[@user.SubscriptionPlan] m-1">@user.SubscriptionPlan</button></td>
+                            <td>
+                                <a style="cursor: pointer" asp-action="CreatorInfo" asp-controller="Admin" asp-route-id="@user.Code" class="bg-primary me-2 rounded-circle p-2 text-white d-inline-flex "><i class="ti ti-eye fs-4"></i></a>
                                 <a style="cursor: pointer" onclick="openModal('#modalConfirmDeleteUser'), setUserIdToDelete('@user.Code')" class="bg-danger rounded-circle p-2 text-white d-inline-flex "><i class="ti ti-trash fs-4"></i></a>
-                            </div>
-                        </td>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <table id="dtBasicExample2" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+                    <thead>
+                    <tr>
+                        <th class="th-sm">Name
+                        </th>
+                        <th class="th-sm">Fields
+                        </th>
+                        <th class="th-sm">Software
+                        </th>
+                        <th class="th-sm">Soft skill
+                        </th>
+                        <th class="th-sm">Action
+                        </th>
                     </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var user in Model.FreelancerDtos)
+                    {
+                        <tr>
+                            <td>@user.Fullname</td>
+                            @{
+                                var fields = "";
+                                if (user.Fields.Count != 0)
+                                    fields = user.Fields.Aggregate((x, y) => x + ", " + y);
+                            }
+                            <td>@fields</td>
+                            @{
+                                var software = "";
+                                if (user.Software.Count != 0)
+                                    software = user.Software.Aggregate((x, y) => x + ", " + y);
+                            }
+                            <td>@software</td>
+                            @{
+                                var softSkill = "";
+                                if (user.SoftSkill.Count != 0)
+                                    softSkill = user.SoftSkill.Aggregate((x, y) => x + ", " + y);
+                            }
+                            <td>@softSkill</td>
+                            <td>
+                                <div class="d-flex">
+                                    <a style="cursor: pointer" asp-action="CreatorInfo" asp-controller="Admin" asp-route-id="@user.Code" class="bg-primary rounded-circle p-2 me-2 text-white d-inline-flex "><i class="ti ti-eye fs-4"></i></a>
+                                    <a style="cursor: pointer" onclick="openModal('#modalConfirmDeleteUser'), setUserIdToDelete('@user.Code')" class="bg-danger rounded-circle p-2 text-white d-inline-flex "><i class="ti ti-trash fs-4"></i></a>
+                                </div>
+                            </td>
+                        </tr>
 
-                }
-                </tbody>
-            </table>
+                    }
+                    </tbody>
+                </table>
+            }
         </div>
     </div>
 </div>

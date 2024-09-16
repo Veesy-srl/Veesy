@@ -34,14 +34,26 @@ public class AdminHelper
         _analyticService = analyticService;
     }
 
-    public CreatorsListViewModel GetCreatorsListViewModel()
+    public CreatorsListViewModel GetCreatorsListViewModel(int page)
     {
-        
+        var newPage = page;
+        switch (page)
+        {
+            default:
+                _accountService.GetCreatorsFirstPage();
+                newPage = 1;
+                break;
+            case 1:
+                _accountService.GetCreatorsSecondPage();
+                newPage = 0;
+                break;
+        }
         var usersDto = _accountService.GetCreators();
         
         var vm = new CreatorsListViewModel()
         {
-            FreelancerDtos = usersDto
+            FreelancerDtos = usersDto,
+            NewPage = newPage
         };
         return vm;
     }
