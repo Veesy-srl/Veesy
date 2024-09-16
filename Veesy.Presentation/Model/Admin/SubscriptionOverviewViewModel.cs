@@ -11,4 +11,5 @@ public class SubscriptionOverviewViewModel
     public int NumberPayingUsers { get; set; }
     public List<AdminHelper.EarningYearGroupedByMonthDto> EarningGraph { get; set; }
     public List<SubscriptionPlan> SubscriptionPlans { get; set; }
+    public List<MyUserSubscriptionPlan?> ActiveSubscription { get; set; }
 }

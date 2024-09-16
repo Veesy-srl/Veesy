@@ -122,19 +122,19 @@
         <tbody>
         @foreach (var subscription in Model.SubscriptionPlans)
         {
-          var count = subscription.MyUserSubscriptionPlans.IsNullOrEmpty() ? 0 : subscription.MyUserSubscriptionPlans.Count;
-        <tr id="subscription-@subscription.Id">
-          <td>@subscription.Name</td>
-          <td>@subscription.NameToShow</td>
-          <td>@subscription.Description</td>
-          <td>@subscription.AllowedPortfolio</td>
-          <td>@subscription.AllowedMegaByte</td>
-          <td>@subscription.AllowedMediaNumber</td>
-          <td>@count</td>
-          <td>@subscription.Price.ToString("0.00") € / month</td>
-          <td><a type="button" class="btn btn-primary m-1" asp-action="SubscriptionEdit" asp-controller="Admin" asp-area="Admin" asp-route-id="@subscription.Id">Edit</a></td>
-          
-        </tr>
+          var count = Model.ActiveSubscription.Count(s => s.SubscriptionPlanId == subscription.Id);
+          <tr id="subscription-@subscription.Id">
+            <td>@subscription.Name</td>
+            <td>@subscription.NameToShow</td>
+            <td>@subscription.Description</td>
+            <td>@subscription.AllowedPortfolio</td>
+            <td>@subscription.AllowedMegaByte</td>
+            <td>@subscription.AllowedMediaNumber</td>
+            <td>@count</td>
+            <td>@subscription.Price.ToString("0.00") € / month</td>
+            <td><a type="button" class="btn btn-primary m-1" asp-action="SubscriptionEdit" asp-controller="Admin" asp-area="Admin" asp-route-id="@subscription.Id">Edit</a></td>
+
+          </tr>
         }
         </tbody>
       </table>

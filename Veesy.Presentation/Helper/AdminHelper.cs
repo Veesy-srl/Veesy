@@ -37,19 +37,18 @@ public class AdminHelper
     public CreatorsListViewModel GetCreatorsListViewModel(int page)
     {
         var newPage = page;
+        var usersDto = new List<FrelancerDto>();
         switch (page)
         {
             default:
-                _accountService.GetCreatorsFirstPage();
+                usersDto = _accountService.GetCreatorsFirstPage();
                 newPage = 1;
                 break;
             case 1:
-                _accountService.GetCreatorsSecondPage();
+                usersDto = _accountService.GetCreatorsSecondPage();
                 newPage = 0;
                 break;
         }
-        var usersDto = _accountService.GetCreators();
-        
         var vm = new CreatorsListViewModel()
         {
             FreelancerDtos = usersDto,
@@ -141,7 +140,8 @@ public class AdminHelper
             EarningsThisYear = res.Item1,
             EarningGraph = res.Item2,
             NumberPayingUsers = _accountService.GetNumberPayingUsers() ,
-            SubscriptionPlans = _subscriptionPlanService.GetAllSubscriptionPlans()
+            SubscriptionPlans = _subscriptionPlanService.GetAllSubscriptionPlans(),
+            ActiveSubscription = _subscriptionPlanService.GetActiveMyUserSubscription()
         };
         return vm;
     }
