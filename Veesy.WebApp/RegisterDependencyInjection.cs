@@ -18,6 +18,7 @@ public static class RegisterDependencyInjection
         serviceCollection.AddScoped<IUsedSoftwareRepository, UsedSoftwareRepository>();
         serviceCollection.AddScoped<IMediaRepository, MediaRepository>();
         serviceCollection.AddScoped<IPortfolioRepository, PortfolioRepository>();
+        serviceCollection.AddScoped<ITrackingFormRepository, TrackingFormRepository>();
         
 
         serviceCollection.AddScoped<IVeesyUoW, VeesyUoW>();

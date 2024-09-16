@@ -77,6 +77,15 @@ public class FrelancerInfoDto
     public string Image { get; set; }
 }
 
+public class CreatorTrackingFormDto
+{
+    public string SenderName { get; set; }
+    public string SenderEmail { get; set; }
+    public string RecipientName { get; set; }
+    public string RecipientId { get; set; }
+    public DateTime DateTime { get; set; }
+}
+
 public static class MapAdminDto{
     
     public static List<FrelancerDto> MapCreatorDtos(List<MyUser> users)
@@ -114,5 +123,19 @@ public static class MapAdminDto{
             Username = media.MyUser.UserName
         }));
         return mediasUploaded;
+    }
+
+    public static List<CreatorTrackingFormDto> MapCreatorTrackingFormDtos(List<TrackingForm> trackingForms, List<FrelancerDto> users)
+    {
+        var creatorTrackingForms = new List<CreatorTrackingFormDto>();
+        trackingForms.ForEach(form => creatorTrackingForms.Add(new CreatorTrackingFormDto
+        {
+            SenderName = form.NameSender,
+            SenderEmail = form.EmailSender,
+            RecipientName = users.FirstOrDefault(x => x.Code == form.RecipientId).Fullname,
+            RecipientId = form.RecipientId,
+            DateTime = form.CreateRecordDate
+        }));
+        return creatorTrackingForms;
     }
 }

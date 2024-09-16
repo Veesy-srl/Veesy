@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using Veesy.Domain.Constants;
 using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
@@ -160,20 +161,29 @@ public class PublicHelper
 
     public async Task<ResultDto> SendCreatorForm(CreatorFormDto dto, MyUser userInfo)
     {
+        if (dto.SenderEmail.IsNullOrEmpty())
+            return new ResultDto(false, "Insert email");
+        if (dto.SenderName.IsNullOrEmpty())
+            return new ResultDto(false, "Insert name");
+        if (dto.Message.IsNullOrEmpty())
+            return new ResultDto(false, "Insert message");
+        
         var recipient = _accountService.GetUserById(dto.Recipient);
         var link = "";
-        var message = new Message(new (string, string)[] { ("Noreply | Veesy", recipient.Email) }, "New Message", link);
-        List<(string, string)> replacer = new List<(string, string)> { ("[sender]", dto.Sender),("[message]", dto.Message) };
+        var message = new Message(new (string, string)[] { ("Noreply | Veesy", "fabrizio@veesy.eu") }, "New Message", link);
+        List<(string, string)> replacer = new List<(string, string)> { ("[sender]", dto.SenderEmail),("[message]", dto.Message),("[sender-name]", dto.SenderName) };
 
         var currentPath = Directory.GetCurrentDirectory();
         await _emailSender.SendEmailAsync(message, currentPath + "/wwwroot/MailTemplate/mail-creator-form.html", replacer);
-        await _analyticService.AddForm(new TrackingForm
+        var form = new TrackingForm
         {
-            EmailSender = dto.Sender,
+            EmailSender = dto.SenderEmail,
+            NameSender = dto.SenderName,
             RecipientId = recipient.Id,
             FormType = VeesyConstants.FormType.CreatorType
-        }, userInfo);
+        };
+        await _analyticService.AddForm(form, userInfo);
         
-        return new ResultDto(true, "");
+        return new ResultDto(true, "Message sent correctly");
     }
 }

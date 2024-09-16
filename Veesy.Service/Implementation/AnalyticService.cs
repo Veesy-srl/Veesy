@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Veesy.Domain.Constants;
 using Veesy.Domain.Models;
 using Veesy.Domain.Repositories;
 using Veesy.Service.Interfaces;
@@ -70,7 +67,13 @@ public class AnalyticService : IAnalyticService
 
     public async Task AddForm(TrackingForm trackingForm, MyUser user)
     {
-        _uoW.DbContext.TrackingForms.Add(trackingForm);
+        await _uoW.TrackingFormRepository.Create(trackingForm);
         await _uoW.CommitAsync(user);
+    }
+
+    public List<TrackingForm> GetCreatorsForms()
+    {
+        return _uoW.TrackingFormRepository.FindByCondition(x => x.FormType == VeesyConstants.FormType.CreatorType)
+            .ToList();
     }
 }

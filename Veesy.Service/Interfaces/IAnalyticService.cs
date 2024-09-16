@@ -16,4 +16,5 @@ public interface IAnalyticService
     Task AddReferralLink(ReferralLink referralLink);
     Task RemoveReferralLink(ReferralLink? referralLink);
     public Task AddForm(TrackingForm trackingForm, MyUser user);
+    public List<TrackingForm> GetCreatorsForms();
 }

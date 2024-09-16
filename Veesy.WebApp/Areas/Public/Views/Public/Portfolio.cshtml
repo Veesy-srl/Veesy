@@ -11,15 +11,16 @@
     
     function SendMessage() {
         $('#load-spinner').css("display", "block");
-        var sender = document.getElementById("message-sender").value;
+        var senderEmail = document.getElementById("message-sender-email").value;
+        var senderName = document.getElementById("message-sender-name").value;
         var message = document.getElementById("message-text").value;
-        var recipient = '@Model.PortfolioDto.MyUserId'; // Assicurati che sia una stringa
-        var form = { sender, message, recipient }; // Aggiungi recipient all'oggetto
+        var recipient = '@Model.PortfolioDto.MyUserId';
+        var form = { senderEmail, senderName, message, recipient };
 
         $.ajax({
             type: 'POST',
             url: '@Url.Action("SendEmailToCreator", "Public")',
-            data: JSON.stringify(form), // Usa 'form' qui
+            data: JSON.stringify(form),
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             success: function (response) {
@@ -30,7 +31,7 @@
             },
             error: function (response) {
                 $('#load-spinner').css("display", "none");
-                console.error("Errore:", response); // Aggiungi il log dell'errore per il debug
+                console.error("Errore:", response);
             }
         });
     }
@@ -88,6 +89,11 @@
     
     <div class="empty-veesy"></div>
     <div class="empty-veesy"></div>
+    
+    <div class="card">
+        
+    </div>
+    
     <div class="text-center">
         <h3 class="text-color" style="font-size: 20px !important; line-height: 27px !important;"><strong>Interested in my work?</strong></h3>
         <button onclick="openModal('#modalMessageCreator')" class="rounded-pill btn-primary btn-padding btn-variant my-4" style="font-size: 15px !important; line-height:  22px !important;">contact me</button>
@@ -271,8 +277,14 @@
                     <a onclick="closeModal('#modalMessageCreator')"><i class="fa-solid fa-circle-xmark"></i></a>
                 </div>
                 <div class="modal-body">
-                    <p class="text-color">Sender Email Address</p>
-                    <input type="text" id="message-sender" rows="4" class="w-100 input-modal text-profile"/>
+                    <div>
+                        <p class="text-color">Sender Email Address</p>
+                        <input type="text" id="message-sender-email" rows="4" class="w-100 input-modal text-profile"/>
+                    </div>
+                    <div>
+                        <p class="text-color">Sender Name</p>
+                        <input type="text" id="message-sender-name" rows="4" class="w-100 input-modal text-profile"/>
+                    </div>
                     <p class="text-color">Message</p>
                     <textarea id="message-text" rows="4" class="text-profile"></textarea>
                 </div>
