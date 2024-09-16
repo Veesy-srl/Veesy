@@ -483,7 +483,8 @@ public class ProfileHelper
                 continue;
             }
         }
-
+        
+        usersToUpdate.ForEach(s => s.MyUserSubscriptionPlans = null);
         await _accountService.UpdateMyUsers(usersToUpdate);
     }
 

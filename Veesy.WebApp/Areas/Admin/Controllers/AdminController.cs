@@ -62,12 +62,12 @@ public class AdminController : VeesyController
         }
     }
     
-    [HttpGet("creators-list")]
-    public IActionResult CreatorsList()
+    [HttpGet("creators-list/{page}")]
+    public IActionResult CreatorsList(int page)
     {
         try
         {
-            var vm = _adminHelper.GetCreatorsListViewModel();
+            var vm = _adminHelper.GetCreatorsListViewModel(page);
             return View(vm);
         }
         catch (Exception e)

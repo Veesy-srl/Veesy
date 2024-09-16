@@ -34,14 +34,25 @@ public class AdminHelper
         _analyticService = analyticService;
     }
 
-    public CreatorsListViewModel GetCreatorsListViewModel()
+    public CreatorsListViewModel GetCreatorsListViewModel(int page)
     {
-        
-        var usersDto = _accountService.GetCreators();
-        
+        var newPage = page;
+        var usersDto = new List<FrelancerDto>();
+        switch (page)
+        {
+            default:
+                usersDto = _accountService.GetCreatorsFirstPage();
+                newPage = 1;
+                break;
+            case 1:
+                usersDto = _accountService.GetCreatorsSecondPage();
+                newPage = 0;
+                break;
+        }
         var vm = new CreatorsListViewModel()
         {
-            FreelancerDtos = usersDto
+            FreelancerDtos = usersDto,
+            NewPage = newPage
         };
         return vm;
     }
@@ -129,7 +140,8 @@ public class AdminHelper
             EarningsThisYear = res.Item1,
             EarningGraph = res.Item2,
             NumberPayingUsers = _accountService.GetNumberPayingUsers() ,
-            SubscriptionPlans = _subscriptionPlanService.GetAllSubscriptionPlans()
+            SubscriptionPlans = _subscriptionPlanService.GetAllSubscriptionPlans(),
+            ActiveSubscription = _subscriptionPlanService.GetActiveMyUserSubscription()
         };
         return vm;
     }
@@ -151,6 +163,7 @@ public class AdminHelper
         oldSubscription.AllowedPortfolio = subscription.AllowedPortfolio;
         oldSubscription.AllowedMediaNumber = subscription.AllowedMediaNumber;
         oldSubscription.AllowedMegaByte = subscription.AllowedMegaByte;
+        oldSubscription.Price = subscription.Price;
         return await _subscriptionPlanService.EditSubscription(oldSubscription, user);
     }
     

@@ -41,6 +41,8 @@ public interface IAccountService
     public List<MyUser> GetFilteredCreators();
     int NumberRecordCompiled(MyUser userInfo);
     List<FrelancerDto> GetCreators();
+    List<FrelancerDto> GetCreatorsFirstPage();
+    List<FrelancerDto> GetCreatorsSecondPage();
     int GetCreatorsCount();
     MyUser GetUserById(string id);
     List<string> GetUserSector(string userId);
