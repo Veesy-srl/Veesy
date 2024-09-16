@@ -346,6 +346,44 @@ public class AccountService : IAccountService
             .ToList();
     }
 
+    public List<FrelancerDto> GetCreatorsSecondPage()
+    {
+         return _uoW.MyUserRepository.FindAll()
+            .Select(user => new FrelancerDto
+            {
+                Code = user.Id,
+                FirstName = user.Name,
+                LastName = user.Surname,
+                Fields = user.MyUserSectors.Select(us => us.Sector.Name).ToList(),
+                Software = user.MyUserUsedSoftwares.Select(us => us.UsedSoftware.Name).ToList(),
+                SoftSkill = user.MyUserSkills
+                    .Where(us => us.Type == SkillConstants.SoftSkill)
+                    .Select(us => us.Skill.Name).ToList(),
+            })
+            .ToList();
+    }
+
+    public List<FrelancerDto> GetCreatorsFirstPage()
+    {
+         return _uoW.MyUserRepository.FindAll()
+            .Select(user => new FrelancerDto
+            {
+                Code = user.Id,
+                FirstName = user.Name,
+                LastName = user.Surname,
+                Email = user.Email,
+                SubscriptionPlan = user.MyUserSubscriptionPlans
+                    .OrderByDescending(sp => sp.CreateRecordDate)
+                    .Select(sp => sp.SubscriptionPlan.Name)
+                    .FirstOrDefault() ?? "Free",
+                CreateDate = user.CreateDate.ToString("dd/MM/yy hh:mm"),
+                PortfoliosCount = user.Portfolios.Count,
+                PublicPortfoliosCount = user.Portfolios.Count(s => s.Status == PortfolioContants.STATUS_PUBLISHED),
+                MediasCount = user.Medias.Count
+            })
+            .ToList();
+    }
+
     public int GetCreatorsCount()
     {
         return _uoW.MyUserRepository.FindAll().ToList().Count;

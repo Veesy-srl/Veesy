@@ -7,4 +7,5 @@ public class CreatorsListViewModel
 {
     public List<FrelancerDto> FreelancerDtos { get; set; }
     public string ApplicationUrl { get; set; }
+    public int NewPage { get; set; }
 }

@@ -47,6 +47,18 @@ public class SubscriptionPlanService : ISubscriptionPlanService
             .GroupBy(s => s.MyUserId).ToList();
     }
 
+    public List<MyUserSubscriptionPlan?> GetActiveMyUserSubscription()
+    {
+        return _uoW.DbContext.MyUsers
+            .Include(u => u.MyUserSubscriptionPlans)
+            .Select(user => user.MyUserSubscriptionPlans
+                    .OrderByDescending(usp => usp.CreateRecordDate) // Ordiniamo per la data di sottoscrizione
+                    .FirstOrDefault() // Prendiamo solo la sottoscrizione più recente
+            )
+            .Where(x => x != null) // Escludiamo gli utenti senza sottoscrizione
+            .ToList();
+    }
+
     public List<SubscriptionPlan> GetAllSubscriptionPlans()
     {
         return _uoW.DbContext.SubscriptionPlans.ToList();
