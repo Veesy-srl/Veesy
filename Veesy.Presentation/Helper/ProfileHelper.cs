@@ -470,11 +470,7 @@ public class ProfileHelper
         {
             try
             {
-                var message = new Message(new (string, string)[] { ("Noreply | Veesy", user.Email) }, "What’s next? La Veesy PRO membership.", link);
-                List<(string, string)> replacer = new List<(string, string)> { ("[name]", user.Name) };
-                await _emailSender.SendEmailAsync(message, currentPath + "/wwwroot/MailTemplate/mail-update-pro.html", replacer);
-                user.EmailUpdateProSended = true;
-                usersToUpdate.Add(user);
+                Logger.Info($"Email {user.Email}");
                 
             }
             catch (Exception ex)
@@ -484,8 +480,6 @@ public class ProfileHelper
             }
         }
         
-        usersToUpdate.ForEach(s => s.MyUserSubscriptionPlans = null);
-        await _accountService.UpdateMyUsers(usersToUpdate);
     }
 
     public async Task<ResultDto> SendEmailProPlan(string email)

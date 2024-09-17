@@ -518,7 +518,7 @@ public class AccountService : IAccountService
     public List<MyUser> GetUserToSendEmailPro()
     {
         return _uoW.MyUserRepository
-            .FindByCondition(s => s.CreateDate.Date.AddDays(7) <= DateTime.Now.Date && !s.EmailUpdateProSended && s.EmailConfirmed)
+            .FindByCondition(s => s.CreateDate.Date.AddDays(7) <= DateTime.Now.Date && s.EmailConfirmed)
             .Include(s => s.MyUserSubscriptionPlans)
             .ThenInclude(s => s.SubscriptionPlan)
             .ToList();
