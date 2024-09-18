@@ -205,7 +205,7 @@ public class PublicHelper
         {
             EmailSender = dto.SenderEmail,
             NameSender = dto.SenderName,
-            RecipientId = recipient.Id,
+            MyUserId = recipient.Id,
             FormType = VeesyConstants.FormType.CreatorType
         };
         await _analyticService.AddForm(form, userInfo);

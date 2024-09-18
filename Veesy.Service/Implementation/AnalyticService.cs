@@ -74,6 +74,7 @@ public class AnalyticService : IAnalyticService
     public List<TrackingForm> GetCreatorsForms()
     {
         return _uoW.TrackingFormRepository.FindByCondition(x => x.FormType == VeesyConstants.FormType.CreatorType)
+            .Include(s => s.MyUser)
             .ToList();
     }
 }

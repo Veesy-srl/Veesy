@@ -125,17 +125,20 @@ public static class MapAdminDto{
         return mediasUploaded;
     }
 
-    public static List<CreatorTrackingFormDto> MapCreatorTrackingFormDtos(List<TrackingForm> trackingForms, List<FrelancerDto> users)
+    public static List<CreatorTrackingFormDto> MapCreatorTrackingFormDtos(List<TrackingForm> trackingForms)
     {
         var creatorTrackingForms = new List<CreatorTrackingFormDto>();
-        trackingForms.ForEach(form => creatorTrackingForms.Add(new CreatorTrackingFormDto
+        foreach (var form in trackingForms)
         {
-            SenderName = form.NameSender,
-            SenderEmail = form.EmailSender,
-            RecipientName = users.FirstOrDefault(x => x.Code == form.RecipientId).Fullname,
-            RecipientId = form.RecipientId,
-            DateTime = form.CreateRecordDate
-        }));
+            creatorTrackingForms.Add(new CreatorTrackingFormDto
+            {
+                SenderName = form.NameSender,
+                SenderEmail = form.EmailSender,
+                RecipientName = form.MyUser.Fullname,
+                RecipientId = form.MyUserId,
+                DateTime = form.CreateRecordDate
+            });
+        }
         return creatorTrackingForms;
     }
 }

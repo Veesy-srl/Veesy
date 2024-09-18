@@ -34,4 +34,5 @@ public class MyUser : IdentityUser
     public virtual List<MyUserLanguageSpoken> MyUserLanguagesSpoken { get; set; }
     public virtual List<MyUserInfoToShow> MyUserInfosToShow { get; set; }
     public virtual List<MyUserSubscriptionPlan> MyUserSubscriptionPlans { get; set; }
+    public virtual List<TrackingForm> TrackingForm { get; set; }
 }

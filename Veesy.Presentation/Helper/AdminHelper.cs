@@ -307,21 +307,15 @@ public class AdminHelper
 
     public MatchViewModel GetMatchViewModel()
     {
-        var creators = _accountService.GetCreators();
         var creatorForms = _analyticService.GetCreatorsForms();
-        var formCount = creators
-            .Select(creator => (
-                CreatorName: creator.Fullname, 
-                Count: creatorForms.Count(form => form.RecipientId == creator.Code)
-            ))
-            .Where(tuple => tuple.Count > 0)
-            .ToList();
 
         return new MatchViewModel
         {
-            FreelancerDtos = creators,
-            TrackingFormDtos = MapAdminDto.MapCreatorTrackingFormDtos(creatorForms, creators),
-            FormCount = formCount
+            TrackingFormDtos = MapAdminDto.MapCreatorTrackingFormDtos(creatorForms),
+            FormCount = creatorForms
+                .GroupBy(tf => tf.MyUser.Fullname)
+                .Select(g => (CreatorName: g.Key, FormCount: g.Count()))
+                .ToList()
         };
     }
 }
