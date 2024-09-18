@@ -290,7 +290,7 @@ public class PublicController : VeesyController
     }
 
     [HttpPost]
-    public async Task<IActionResult> SendEmailToCreator([FromBody] CreatorFormDto form)
+    public async Task<JsonResult> SendEmailToCreator([FromBody] CreatorFormDto form)
     {
         try
         {
@@ -298,18 +298,13 @@ public class PublicController : VeesyController
             {
                 Id = Guid.Empty.ToString()
             });
-            
-            if(!result.Success)
-                _notyfService.Custom(result.Message, 10, "#ca0a0a");
-            else 
-                _notyfService.Custom(result.Message, 10, "#75CCDD");
 
-            return RedirectToAction("Portfolio");
+            return Json(new { Result = result});
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
-            throw;
+            Logger.Error(e, e.Message);
+            return Json(new { Result = new ResultDto(false, "Error during send email.")});
         }
     }
     
