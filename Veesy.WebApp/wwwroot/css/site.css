@@ -6,6 +6,11 @@
   float: right !important;
 }
 
+.px-22 {
+  padding-left: 22px;
+  padding-right: 22px;
+}
+
 .dz-success-mark svg g path{
   fill: #75CCDD !important;
 }
