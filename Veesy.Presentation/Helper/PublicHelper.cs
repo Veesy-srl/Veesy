@@ -162,11 +162,13 @@ public class PublicHelper
     public async Task<ResultDto> SendCreatorForm(CreatorFormDto dto, MyUser userInfo)
     {
         if (dto.SenderEmail.IsNullOrEmpty())
-            return new ResultDto(false, "Insert email");
+            return new ResultDto(false, "Please insert email");
         if (dto.SenderName.IsNullOrEmpty())
-            return new ResultDto(false, "Insert name");
+            return new ResultDto(false, "Please insert name");
         if (dto.Message.IsNullOrEmpty())
-            return new ResultDto(false, "Insert message");
+            return new ResultDto(false, "Please insert message");
+        if (!dto.Policy)
+            return new ResultDto(false, "Please accept the Privacy Policy");
         
         var recipient = _accountService.GetUserById(dto.Recipient);
         var link = "";

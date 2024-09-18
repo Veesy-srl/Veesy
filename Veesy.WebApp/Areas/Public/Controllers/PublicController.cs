@@ -299,12 +299,17 @@ public class PublicController : VeesyController
                 Id = Guid.Empty.ToString()
             });
 
-            return Json(new { Result = result});
+            if (!result.Success)
+                _notyfService.Custom(result.Message, 10, "#ca0a0a");
+            else
+                _notyfService.Custom("Email send correctly.", 10, "#75CCDD");
+            return Json(new { Result = result.Success, Message = result.Message });
         }
         catch (Exception e)
         {
             Logger.Error(e, e.Message);
-            return Json(new { Result = new ResultDto(false, "Error during send email.")});
+            _notyfService.Custom(e.Message, 10, "#ca0a0a");
+            return Json(new { Result = false, Message = "Error during send mail." });
         }
     }
     
