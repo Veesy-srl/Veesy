@@ -499,6 +499,24 @@
         cursor: pointer !important;
         text-decoration: none !important;
     }
+
+    .modal-content-folio{
+        background-color: #060B19;
+    }
+    
+    .input-modal-folio, .textarea-folio {
+        background-color: #1E232F !important;
+    }
+
+    .privacy-link-folio,
+    .privacy-link-folio:hover {
+        text-decoration: underline !important;
+        color: #707a8d !important;
+    }
+
+    .button-folio:hover{
+        color: #202F4D !important;
+    }
 }
 
 [data-bs-theme="dark"] a {

@@ -29,9 +29,8 @@
                 }
                 $('#load-spinner').css("display", "none");
             },
-            error: function (response) {
+            error: function () {
                 $('#load-spinner').css("display", "none");
-                console.error("Errore:", response);
             }
         });
     }
@@ -94,7 +93,7 @@
         
     </div>
     
-    <div class="text-center">
+    <div class="text-center mt-4">
         <h3 class="text-color" style="font-size: 20px !important; line-height: 27px !important;"><strong>Interested in my work?</strong></h3>
         <button onclick="openModal('#modalMessageCreator')" class="rounded-pill btn-primary btn-padding btn-variant my-4" style="font-size: 15px !important; line-height:  22px !important;">contact me</button>
     </div>
@@ -271,25 +270,49 @@
     
     <div class="modal fade" id="modalMessageCreator" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title text-color" style="font-size: 25px !important; line-height: 30px !important;" id="exampleModalLongTitle"><strong>Message to @Model.PortfolioDto.Name</strong></h3>
-                    <a onclick="closeModal('#modalMessageCreator')"><i class="fa-solid fa-circle-xmark"></i></a>
+            <div class="modal-content modal-content-folio">
+                <div class="modal-header d-flex justify-content-end">
+                    <a class="close-button-folio" onclick="closeModal('#modalMessageCreator')">
+                        <span class="folio-x">X</span>
+                    </a>                
                 </div>
-                <div class="modal-body">
-                    <div>
-                        <p class="text-color">Sender Email Address</p>
-                        <input type="text" id="message-sender-email" rows="4" class="w-100 input-modal text-profile"/>
+                <div class="modal-body pt-4 pb-3 ps-md-5 pe-md-5">
+                    <h3 class="modal-title modal-title-folio text-color-folio" style="font-size: 25px !important; line-height: 30px !important;" id="exampleModalLongTitle">Send message to <b style="top: -0.3px; position: relative;">@Model.PortfolioDto.UserName</b></h3>
+                    <div class="row mt-5">
+                        <div class="col-1"></div>
+                        <div class="col-5">
+                            <span class="text-color-folio">Your Email*</span>
+                            <input type="text" id="message-sender-email" rows="4" class="w-100 input-modal-folio text-profile"/>
+                        </div>
+                        <div class="col-5">
+                            <span class="text-color-folio">Name / Company*</span>
+                            <input type="text" id="message-sender-name" rows="4" class="w-100 input-modal-folio text-profile"/>
+                        </div>
+                        <div class="col-1"></div>
                     </div>
-                    <div>
-                        <p class="text-color">Sender Name</p>
-                        <input type="text" id="message-sender-name" rows="4" class="w-100 input-modal text-profile"/>
+                    <div class="row mt-4">
+                        <div class="col-1"></div>
+                        <div class="col-10">
+                            <span class="text-color-folio">Your message*</span>
+                            <textarea id="message-text" rows="4" class="text-profile textarea-folio"></textarea>
+                        </div>
+                        <div class="col-1"></div>
                     </div>
-                    <p class="text-color">Message</p>
-                    <textarea id="message-text" rows="4" class="text-profile"></textarea>
-                </div>
-                <div class="modal-footer">
-                    <a onclick="SendMessage()" id="send-button" class="rounded-pill btn btn-primary btn-padding a-font-p">send</a>
+                    <div class="row mt-2">
+                        <div class="col-1"></div>
+                        <div class="col-10 d-flex align-items-center privacy-policy-folio">
+                            <input type="checkbox" id="privacy-policy" name="privacy-policy" class="custom-checkbox-folio" required>
+                            <span for="privacy-policy" class="ms-3 mt-1">I have read and accept the <a href="/privacy-policy" target="_blank" class="privacy-link-folio">Privacy Policy</a></span>
+                        </div>
+                        <div class="col-1"></div>
+                    </div>
+                    <div class="row mt-4 pb-5">
+                        <div class="col-1"></div>
+                        <div class="col-10 d-flex align-items-center">
+                            <a onclick="SendMessage()" id="send-button" class="rounded-pill btn btn-primary btn-padding a-font-p button-folio w-100">send message</a>
+                        </div>
+                        <div class="col-1"></div>
+                    </div>
                 </div>
             </div>
         </div>

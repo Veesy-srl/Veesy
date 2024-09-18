@@ -170,8 +170,8 @@ public class PublicHelper
         
         var recipient = _accountService.GetUserById(dto.Recipient);
         var link = "";
-        var message = new Message(new (string, string)[] { ("Noreply | Veesy", "fabrizio@veesy.eu") }, "New Message", link);
-        List<(string, string)> replacer = new List<(string, string)> { ("[sender]", dto.SenderEmail),("[message]", dto.Message),("[sender-name]", dto.SenderName) };
+        var message = new Message(new (string, string)[] { ("Noreply | Veesy", recipient.Email) }, "You receive new message from: " + dto.SenderName, link);
+        List<(string, string)> replacer = new List<(string, string)> { ("[sender-email]", dto.SenderEmail),("[message]", dto.Message),("[sender-name]", dto.SenderName) };
 
         var currentPath = Directory.GetCurrentDirectory();
         await _emailSender.SendEmailAsync(message, currentPath + "/wwwroot/MailTemplate/mail-creator-form.html", replacer);

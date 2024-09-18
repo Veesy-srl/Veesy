@@ -14,6 +14,7 @@ public class PreviewPortfolioDto
     public string Description { get; set; }
     public string UserDescription { get; set; }
     public string UserFullName { get; set; }
+    public string UserName { get; set; }
     public string UserCategory { get; set; }
     public string PortfolioIntro { get; set; }
     public VeesyConstants.PortfolioLayout Layout { get; set; }
@@ -278,6 +279,7 @@ public static class MapPortfolioDtos
             UserFullName = portfolio.MyUser.Fullname,
             MyUserId = portfolio.MyUserId,
             Name = portfolio.Name,
+            UserName = portfolio.MyUser.Name,
             UserCategory = portfolio.MyUser.Category,
             PortfolioIntro = portfolio.MyUser.PortfolioIntro,
             UserEmail = portfolio.MyUser.Email,
