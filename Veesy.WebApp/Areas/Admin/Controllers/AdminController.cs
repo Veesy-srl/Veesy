@@ -146,7 +146,7 @@ public class AdminController : VeesyController
     {
         try
         {
-            return View();
+            return View(_adminHelper.GetMatchViewModel());
         }
         catch (Exception ex)
         {

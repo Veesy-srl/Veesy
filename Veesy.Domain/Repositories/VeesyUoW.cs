@@ -47,7 +47,10 @@ public class VeesyUoW : IVeesyUoW
     
     private IAnalyticRepository _analyticRepository;
     public IAnalyticRepository AnalyticRepository => _analyticRepository ??= new AnalyticRepository(_dbContext);
-    
+
+    private ITrackingFormRepository _trackingFormRepository;
+    public ITrackingFormRepository TrackingFormRepository =>
+        _trackingFormRepository ??= new TrackingFormRepository(_dbContext);
     public void Dispose()
     {
         GC.SuppressFinalize(this);

@@ -241,6 +241,9 @@
     <Content Update="wwwroot\MailTemplate\mail-update-pro.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Update="wwwroot\MailTemplate\mail-creator-form.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

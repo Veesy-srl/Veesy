@@ -288,6 +288,32 @@ public class PublicController : VeesyController
             return RedirectToAction("Error400");
         }
     }
+
+    [HttpPost]
+    public async Task<IActionResult> SendEmailToCreator([FromBody] CreatorFormDto form)
+    {
+        try
+        {
+            var result = await _publicHelper.SendCreatorForm(form, new MyUser
+            {
+                Id = Guid.Empty.ToString()
+            });
+            
+            if(!result.Success)
+                _notyfService.Custom(result.Message, 10, "#ca0a0a");
+            else 
+                _notyfService.Custom(result.Message, 10, "#75CCDD");
+
+            return RedirectToAction("Portfolio");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+    
+    
     
     [HttpGet("400")]
     public IActionResult Error400()

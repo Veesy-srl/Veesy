@@ -5,8 +5,11 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using Veesy.Domain.Constants;
+using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
+using Veesy.Email;
 using Veesy.Presentation.Model.Cloud;
 using Veesy.Presentation.Model.Public;
 using Veesy.Service.Dtos;
@@ -20,13 +23,17 @@ public class PublicHelper
     private readonly IAccountService _accountService;
     private readonly IConfiguration _config;
     private readonly IPortfolioService _portfolioService;
+    private readonly IEmailSender _emailSender;
+    private readonly IAnalyticService _analyticService;
 
-    public PublicHelper(IMediaService mediaService, IAccountService accountService, IConfiguration config, IPortfolioService portfolioService)
+    public PublicHelper(IMediaService mediaService, IAccountService accountService, IConfiguration config, IPortfolioService portfolioService, IEmailSender emailSender, IAnalyticService analyticService)
     {
         _mediaService = mediaService;
         _accountService = accountService;
         _config = config;
         _portfolioService = portfolioService;
+        _emailSender = emailSender;
+        _analyticService = analyticService;
     }
 
     public async Task<AboutMediaViewModel> GetAboutInfo()
@@ -150,5 +157,33 @@ public class PublicHelper
             BasePathAzure = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"
         };
         return vm;
+    }
+
+    public async Task<ResultDto> SendCreatorForm(CreatorFormDto dto, MyUser userInfo)
+    {
+        if (dto.SenderEmail.IsNullOrEmpty())
+            return new ResultDto(false, "Insert email");
+        if (dto.SenderName.IsNullOrEmpty())
+            return new ResultDto(false, "Insert name");
+        if (dto.Message.IsNullOrEmpty())
+            return new ResultDto(false, "Insert message");
+        
+        var recipient = _accountService.GetUserById(dto.Recipient);
+        var link = "";
+        var message = new Message(new (string, string)[] { ("Noreply | Veesy", "fabrizio@veesy.eu") }, "New Message", link);
+        List<(string, string)> replacer = new List<(string, string)> { ("[sender]", dto.SenderEmail),("[message]", dto.Message),("[sender-name]", dto.SenderName) };
+
+        var currentPath = Directory.GetCurrentDirectory();
+        await _emailSender.SendEmailAsync(message, currentPath + "/wwwroot/MailTemplate/mail-creator-form.html", replacer);
+        var form = new TrackingForm
+        {
+            EmailSender = dto.SenderEmail,
+            NameSender = dto.SenderName,
+            RecipientId = recipient.Id,
+            FormType = VeesyConstants.FormType.CreatorType
+        };
+        await _analyticService.AddForm(form, userInfo);
+        
+        return new ResultDto(true, "Message sent correctly");
     }
 }

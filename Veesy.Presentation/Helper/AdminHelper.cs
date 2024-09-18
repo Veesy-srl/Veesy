@@ -304,4 +304,24 @@ public class AdminHelper
 
         return "";
     }
+
+    public MatchViewModel GetMatchViewModel()
+    {
+        var creators = _accountService.GetCreators();
+        var creatorForms = _analyticService.GetCreatorsForms();
+        var formCount = creators
+            .Select(creator => (
+                CreatorName: creator.Fullname, 
+                Count: creatorForms.Count(form => form.RecipientId == creator.Code)
+            ))
+            .Where(tuple => tuple.Count > 0)
+            .ToList();
+
+        return new MatchViewModel
+        {
+            FreelancerDtos = creators,
+            TrackingFormDtos = MapAdminDto.MapCreatorTrackingFormDtos(creatorForms, creators),
+            FormCount = formCount
+        };
+    }
 }

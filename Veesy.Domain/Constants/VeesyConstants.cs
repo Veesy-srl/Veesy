@@ -58,6 +58,10 @@ public static class VeesyConstants
         ThreeColumns = 3,
         FourColumns = 4
     }
+    public enum FormType
+    {
+        CreatorType = 0
+    }
 
     public static List<PortfolioLayout> GetAvailableLayouts(bool excludeDefault = true)
     {
