@@ -57,6 +57,25 @@ public class AuthHelper
         await _emailSender.SendEmailAsync(message, currentPath + "/wwwroot/MailTemplate/mail-verify-email.html", replacer);
         return new ResultDto(true, "");
     }
+
+    public async Task<ResultDto> SendEmailResetPassword(string email)
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+        if (user == null)
+        {
+            user = await _userManager.FindByNameAsync(email);
+            if (user == null)
+                return new ResultDto(false, "User not found.");
+        }
+        var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+        token = HttpUtility.UrlEncode(token);
+        var resetLink = $"{_config["ApplicationUrl"]}/Auth/Auth/ResetPassword?token={token}&email={email}";
+        var message = new Message(new (string, string)[] { ("Noreply | Veesy", user.Email) }, "Reset your password", resetLink);
+        List<(string, string)> replacer = new List<(string, string)> { ("[LinkResetPassword]", resetLink) };
+        var currentPath = Directory.GetCurrentDirectory();
+        await _emailSender.SendEmailAsync(message, currentPath + "/wwwroot/MailTemplate/mail-reset-password.html", replacer);
+        return new ResultDto(true, "");
+    }
     
     public async Task<ResultDto> SendEmailWelcome(string email)
     {

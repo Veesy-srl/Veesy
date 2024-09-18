@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Veesy.Domain.Constants;
@@ -25,8 +26,9 @@ public class PublicHelper
     private readonly IPortfolioService _portfolioService;
     private readonly IEmailSender _emailSender;
     private readonly IAnalyticService _analyticService;
+    private readonly UserManager<MyUser> _userManager;
 
-    public PublicHelper(IMediaService mediaService, IAccountService accountService, IConfiguration config, IPortfolioService portfolioService, IEmailSender emailSender, IAnalyticService analyticService)
+    public PublicHelper(IMediaService mediaService, IAccountService accountService, IConfiguration config, IPortfolioService portfolioService, IEmailSender emailSender, IAnalyticService analyticService, UserManager<MyUser> userManager)
     {
         _mediaService = mediaService;
         _accountService = accountService;
@@ -34,6 +36,7 @@ public class PublicHelper
         _portfolioService = portfolioService;
         _emailSender = emailSender;
         _analyticService = analyticService;
+        _userManager = userManager;
     }
 
     public async Task<AboutMediaViewModel> GetAboutInfo()
@@ -159,7 +162,7 @@ public class PublicHelper
         return vm;
     }
 
-    public async Task<ResultDto> SendCreatorForm(CreatorFormDto dto, MyUser userInfo)
+    public async Task<ResultDto> SendCreatorForm(CreatorFormDto dto, MyUser userInfo, string? testEmail)
     {
         if (dto.SenderEmail.IsNullOrEmpty())
             return new ResultDto(false, "Please insert email");
@@ -170,9 +173,30 @@ public class PublicHelper
         if (!dto.Policy)
             return new ResultDto(false, "Please accept the Privacy Policy");
         
-        var recipient = _accountService.GetUserById(dto.Recipient);
+        var emailToSend = "";
+        var recipient = new MyUser();
+        if (string.IsNullOrEmpty(testEmail))
+        {
+            recipient = _accountService.GetUserById(dto.Recipient);
+            if(recipient == null)
+                return new ResultDto(false, "User not found");
+            emailToSend = recipient.Email;
+        }
+        else
+        {
+            recipient = await _userManager.FindByEmailAsync(testEmail);
+            if (recipient == null)
+            {
+                recipient = await _userManager.FindByNameAsync(testEmail);
+                if (recipient == null)
+                    return new ResultDto(false, "User not found");
+            }
+            if(recipient == null)
+                return new ResultDto(false, "User not found");
+        }
+        
         var link = "";
-        var message = new Message(new (string, string)[] { ("Noreply | Veesy", recipient.Email) }, "You receive new message from: " + dto.SenderName, link);
+        var message = new Message(new (string, string)[] { ("Noreply | Veesy", emailToSend) }, "You receive new message from: " + dto.SenderName, link);
         List<(string, string)> replacer = new List<(string, string)> { ("[sender-email]", dto.SenderEmail),("[message]", dto.Message),("[sender-name]", dto.SenderName) };
 
         var currentPath = Directory.GetCurrentDirectory();

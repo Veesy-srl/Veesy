@@ -128,20 +128,7 @@ public class AuthController : Controller
     {
         try
         {
-            var user = await _userManager.FindByEmailAsync(model.Email);
-            if (user == null)
-            {
-                user = await _userManager.FindByNameAsync(model.Email);
-                if (user == null)
-                    return RedirectToAction("ForgotPasswordComplete", "Auth");
-            }
-            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-            token = HttpUtility.UrlEncode(token);
-            var resetLink = $"{_config["ApplicationUrl"]}/Auth/Auth/ResetPassword?token={token}&email={model.Email}";
-            var message = new Message(new (string, string)[] { ("Noreply | Veesy", user.Email) }, "Reset your password", resetLink);
-            List<(string, string)> replacer = new List<(string, string)> { ("[LinkResetPassword]", resetLink) };
-            var currentPath = Directory.GetCurrentDirectory();
-            await _emailSender.SendEmailAsync(message, currentPath + "/wwwroot/MailTemplate/mail-reset-password.html", replacer);
+            await _authHelper.SendEmailResetPassword(model.Email);
             return RedirectToAction("ForgotPasswordComplete", "Auth");
         }
         catch (Exception e)
@@ -257,7 +244,7 @@ public class AuthController : Controller
     {
         try
         {
-            await _authHelper.SendEmailConfirmation(email);
+            var result = await _authHelper.SendEmailResetPassword(email);
             return RedirectToAction("VerifyEmail", new { email = email });
         }
         catch (Exception e)

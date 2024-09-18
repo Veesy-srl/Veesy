@@ -297,7 +297,7 @@ public class PublicController : VeesyController
             var result = await _publicHelper.SendCreatorForm(form, new MyUser
             {
                 Id = Guid.Empty.ToString()
-            });
+            }, null);
 
             if (!result.Success)
                 _notyfService.Custom(result.Message, 10, "#ca0a0a");
