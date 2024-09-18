@@ -14,8 +14,9 @@
         var senderEmail = document.getElementById("message-sender-email").value;
         var senderName = document.getElementById("message-sender-name").value;
         var message = document.getElementById("message-text").value;
+        var policy = document.getElementById("privacy-policy").checked;
         var recipient = '@Model.PortfolioDto.MyUserId';
-        var form = { senderEmail, senderName, message, recipient };
+        var form = { senderEmail, senderName, message, recipient, policy };
 
         $.ajax({
             type: 'POST',
