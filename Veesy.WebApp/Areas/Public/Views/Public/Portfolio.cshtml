@@ -262,7 +262,7 @@
             </div>
             <div class="row text-end justify-content-end">
                 <h3 class="text-white" style="font-size: 20px !important; line-height:  27px!important;"><strong>Interested in my work?</strong></h3>
-                <button onclick="openModal('#modalMessageCreator')" class="rounded-pill w-25 div-white-rounded-veesy-portfolio btn-variant mt-2" style="font-size: 15px !important; line-height:  22px !important;">contact me</button>
+                <button onclick="openModal('#modalMessageCreator'); CloseCreatorPopup();" class="rounded-pill w-25 div-white-rounded-veesy-portfolio btn-variant mt-2" style="font-size: 15px !important; line-height:  22px !important;">contact me</button>
             </div>
             <div class="empty-veesy"></div>
         </div>
@@ -310,7 +310,7 @@
                     <div class="row mt-4 pb-5">
                         <div class="col-1"></div>
                         <div class="col-10 d-flex align-items-center">
-                            <a onclick="SendMessage()" id="send-button" class="rounded-pill btn btn-primary btn-padding a-font-p button-folio w-100">send message</a>
+                            <a onclick="SendMessage();" id="send-button" class="rounded-pill btn btn-primary btn-padding a-font-p button-folio w-100">send message</a>
                         </div>
                         <div class="col-1"></div>
                     </div>
