@@ -20,6 +20,12 @@ public class ChangeSubscriptionDto
     public string? MyUserId { get; set; }
 }
 
+public class UpdateUserVisibilityDto
+{
+    public bool Visibility { get; set; }
+    public string? MyUserId { get; set; }
+}
+
 public class ReferralLinkDto
 {
     public string Endpoint { get; set; }
@@ -63,6 +69,7 @@ public class FrelancerDto
     public string Category { get; set; }
     public List<string> SoftSkill { get; set; }
     public List<string> Fields { get; set; }
+    public bool VisibleCreatorPage { get; set; }
 }
 
 public class FrelancerInfoDto
@@ -103,6 +110,7 @@ public static class MapAdminDto{
                 PhoneNumber = user.PhoneNumber,
                 SubscriptionPlan = user.MyUserSubscriptionPlans.Count == 0 ? "Free" : user.MyUserSubscriptionPlans.LastOrDefault().SubscriptionPlan.Name,
                 Category = user.Category,
+                VisibleCreatorPage = user.VisibleInCreatorPage,
                 Fields = user.MyUserSectors == null ? null : user.MyUserSectors.Select(s => s.Sector.Name).ToList(),
                 Software = user.MyUserUsedSoftwares == null ? null : user.MyUserUsedSoftwares.Select(s => s.UsedSoftware.Name).ToList(),
                 SoftSkill = user.MyUserSkills == null ? null : user.MyUserSkills.Select(s => s.Skill.Name).ToList(),

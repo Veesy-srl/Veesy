@@ -49,7 +49,9 @@
                         </th>
                         <th class="th-sm">N° media
                         </th>
-                        <th class="th-sm">Subscription Date
+                        <th class="th-sm">Signup Date
+                        </th>
+                        <th class="th-sm">Visible
                         </th>
                         <th class="th-sm">Subscription
                         </th>
@@ -65,17 +67,24 @@
                             <td><a href="mailto:@user.Email">@user.Email</a></td>
                             <td>@user.PublicPortfoliosCount / @user.PortfoliosCount</td>
                             <td>@user.MediasCount</td>
-
                             @{
                                 DateTime createDate;
                                 if (DateTime.TryParseExact(user.CreateDate, "dd/MM/yy HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out createDate))
                                 {
-                                    <td data-sort="@createDate.ToString("yyyy-MM-ddTHH:mm:ss")">@createDate.ToString("dd/MM/yyyy HH:mm")</td>
+                                    <td data-sort="@createDate.ToString("yyyy-MM-ddTHH:mm:ss")">@createDate.ToString("dd/MM/yyyy")</td>
                                 }
                                 else
                                 {
                                     <td>Data non valida</td>
                                 }
+                            }
+                            
+                            @if (user.VisibleCreatorPage)
+                            {
+                            <td id="visibility-@user.Code"><button type="button" onclick="SetVisible('@user.Code', false)" class="btn btn-success m-1">visible</button></td>
+                            }
+                            else {
+                            <td id="visibility-@user.Code"><button type="button" onclick="SetVisible('@user.Code', true)" class="btn btn-danger m-1">hidden</button></td>
                             }
                             @{
                                 var subsc = @user.SubscriptionPlan;
@@ -242,6 +251,38 @@
                 },
                 error: function (response) {
                     $('#load-spinner').css("display", "none");
+                }
+            })
+        }
+        
+        function SetVisible(myUserId, visibility){
+            $('#load-spinner').css("display", "block");
+            
+            var UpdateUserVisibilityDto = {myUserId, visibility}
+            
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("UpdateUserVisibility", "Profile", new { area = "Account" })',
+                data: JSON.stringify(UpdateUserVisibilityDto),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (response) {
+                    if(response.result){
+                        if (visibility)
+                            document.getElementById("visibility-" + myUserId).innerHTML = '<button type="button" onclick="SetVisible(\'' + myUserId + '\', false)" class="btn btn-success m-1">visible</button>'
+                        else
+                            document.getElementById("visibility-" + myUserId).innerHTML = '<button type="button" onclick="SetVisible(\'' + myUserId + '\', true)" class="btn btn-danger m-1">hidden</button>'
+                        toastNotifyCustom("Visibility updated correctly.", 10000, "#75CCDD", "")
+                    }
+                    else
+                    {
+                        toastNotifyCustom(response.message, 10000, "#ca0a0a", "")
+                    }
+                    $('#load-spinner').css("display", "none");    
+                },
+                error: function (response) {
+                    $('#load-spinner').css("display", "none");
+                    toastNotifyCustom(response.message, 10000, "#ca0a0a", "")
                 }
             })
         }

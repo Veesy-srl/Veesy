@@ -86,7 +86,7 @@ public class PublicHelper
     
     public CreatorsViewModel GetCreatorsViewModel()
     {
-        List<MyUser> userInfo = _accountService.GetAllCreators().ToList();
+        List<MyUser> userInfo = _accountService.GetAllVisibleCreators().ToList();
         List<MyUserCategoryWork> categoryWorks = new List<MyUserCategoryWork>();
 
         foreach (var user in userInfo)
@@ -108,13 +108,8 @@ public class PublicHelper
     public List<string> GetCreatorsFiltered(List<string> category)
     {
 
-        var initialResults = _accountService.GetFilteredCreators();
-
-        var usersWithAllCategories = initialResults
-            .Where(u => category.All(category => u.MyUserCategoriesWork.Any(cw => cw.CategoryWork.Name == category)))
-            .ToList();
-        
-        return usersWithAllCategories.Select(info => info.Id).ToList();
+        var initialResults = _accountService.GetFilteredCreatorsToShow(category);
+        return initialResults.Select(info => info.Id).ToList();
     }
 
     public SubscritionPlanViewModel GetSubscritionPlanViewModel(MyUser userInfo)

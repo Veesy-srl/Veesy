@@ -263,14 +263,18 @@ public class AccountService : IAccountService
         return _uoW.MyUserRepository.GetInfoToShowByUserId(userInfo.Id);
     }
 
-    public List<MyUser> GetAllCreators()
+    public IEnumerable<MyUser> GetAllVisibleCreators()
     {
-        return _uoW.MyUserRepository.GetAllUsersWithMainPortfolio().ToList();
+        return _uoW.DbContext.MyUsers
+            .Where(u => u.VisibleInCreatorPage && u.Portfolios.Any(p => p.IsMain && p.IsPublic && p.Status == 1))
+            .Include(u => u.Portfolios.OrderByDescending(p => p.IsMain && p.IsPublic && p.Status == 1))
+            .Include(t => t.MyUserCategoriesWork)
+            .ThenInclude(g => g.CategoryWork);
     }
-    
-    public List<MyUser> GetFilteredCreators()
+
+    public List<MyUser> GetFilteredCreatorsToShow(List<string> category)
     {
-        return _uoW.MyUserRepository.GetAllUsersWithMainPortfolio().ToList();
+        return GetAllVisibleCreators().Where(u => category.All(category => u.MyUserCategoriesWork.Any(cw => cw.CategoryWork.Name == category))).ToList();
     }
 
     public int NumberRecordCompiled(MyUser userInfo)
@@ -323,6 +327,7 @@ public class AccountService : IAccountService
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
                 Category = user.Category,
+                VisibleCreatorPage = user.VisibleInCreatorPage,
                 Fields = user.MyUserSectors.Select(us => us.Sector.Name).ToList(),
                 Software = user.MyUserUsedSoftwares.Select(us => us.UsedSoftware.Name).ToList(),
                 SoftSkill = user.MyUserSkills
@@ -379,7 +384,8 @@ public class AccountService : IAccountService
                 CreateDate = user.CreateDate.ToString("dd/MM/yy hh:mm"),
                 PortfoliosCount = user.Portfolios.Count,
                 PublicPortfoliosCount = user.Portfolios.Count(s => s.Status == PortfolioContants.STATUS_PUBLISHED),
-                MediasCount = user.Medias.Count
+                MediasCount = user.Medias.Count,
+                VisibleCreatorPage = user.VisibleInCreatorPage
             })
             .ToList();
     }

@@ -23,6 +23,7 @@ public class MyUser : IdentityUser
     public string ProfileImageFileName { get; set; }
     public string PhoneNumberPrefix { get; set; }
     public bool EmailUpdateProSended { get; set; }
+    public bool VisibleInCreatorPage { get; set; }
     public DateTime? LastLoginTime { get; set; }
     public virtual List<MyUserSector> MyUserSectors { get; set; }
     public virtual List<MyUserUsedSoftware> MyUserUsedSoftwares { get; set; }

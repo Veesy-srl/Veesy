@@ -37,8 +37,8 @@ public interface IAccountService
     Task<ResultDto> UpdateMyUserLanguageSpoken(List<MyUserLanguageSpoken> languageSpokenToDelete, List<MyUserLanguageSpoken> languageSpokenToAdd, MyUser user);
     List<LanguageSpoken> GetLanguagesSpokenWithUser(MyUser userInfo);
     List<InfoToShow> GetInfosToShowWithUser(MyUser userInfo);
-    List<MyUser> GetAllCreators();
-    public List<MyUser> GetFilteredCreators();
+    IEnumerable<MyUser> GetAllVisibleCreators();
+    public List<MyUser> GetFilteredCreatorsToShow(List<string> category);
     int NumberRecordCompiled(MyUser userInfo);
     List<FrelancerDto> GetCreators();
     List<FrelancerDto> GetCreatorsFirstPage();

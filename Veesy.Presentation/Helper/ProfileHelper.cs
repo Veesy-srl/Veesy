@@ -418,6 +418,13 @@ public class ProfileHelper
         await _accountService.AddNewUserSubscription(userClient.Id, subscriptionPlan.Id, user);
         return new ResultDto(true, $"{subscriptionPlan.Name} now is active.");
     } 
+
+    public async Task<ResultDto> UpdateUserVisibility(UpdateUserVisibilityDto updateUserVisibility, MyUser user)
+    {
+        var userToUpdate = await _userManager.FindByIdAsync(updateUserVisibility.MyUserId);
+        userToUpdate.VisibleInCreatorPage = updateUserVisibility.Visibility;
+        return await _accountService.UpdateUserProfile(userToUpdate);
+    } 
     
     public async Task<ResultDto> ChangeSubscriptionPlanApi(ChangeSubscriptionDto changeSubscriptionDto)
     {

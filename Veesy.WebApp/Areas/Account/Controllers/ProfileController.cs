@@ -126,6 +126,21 @@ public class ProfileController : VeesyController
     }
     
     [HttpPost]
+    public async Task<JsonResult> UpdateUserVisibility([FromBody] UpdateUserVisibilityDto updateUserVisibility)
+    {
+        try
+        {
+            var result = await _profileHelper.UpdateUserVisibility(updateUserVisibility, UserInfo);
+            return Json(new { Result = result.Success, Message = result.Message});
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            return Json(new { Result = false, Message = "Error updating user visibility. Please retry." });
+        }
+    }
+    
+    [HttpPost]
     public async Task<JsonResult> UpdatePortfolioIntro([FromBody] string introPortfolio)
     {
         try
