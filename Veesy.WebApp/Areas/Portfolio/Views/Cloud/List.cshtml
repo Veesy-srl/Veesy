@@ -279,14 +279,21 @@
 			}
 		}
 
-		if (screen.width < 600) {
-			document.getElementById("images-container").style.columnCount = 2;
-		}
-		else {
-			document.getElementById("images-container").style.columnCount = 8;
-		}
-
 		let mediacount = @Model.Medias.Count;
+
+		function setColumnCount() {
+			if (window.innerWidth < 400) {
+				document.getElementById("images-container").style.columnCount = 2;
+			} else if (window.innerWidth < 800) {
+					document.getElementById("images-container").style.columnCount = 3;
+			} else {
+					document.getElementById("images-container").style.columnCount = 6;
+			}
+		};
+
+		document.addEventListener("DOMContentLoaded", setColumnCount);
+		window.addEventListener("resize", setColumnCount)
+
 
 		function resetModalAdd() {
 			document.getElementById("input-portfolio-edit").style.display = "block";
