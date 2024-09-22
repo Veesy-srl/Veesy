@@ -292,6 +292,19 @@
 		};
 
 		document.addEventListener("DOMContentLoaded", setColumnCount);
+		window.addEventListener("resize", setColumnCount);
+
+		function setColumnCount() {
+			if (window.innerWidth < 400) {
+				document.getElementById("images-container").style.columnCount = 2;
+			} else if (window.innerWidth < 800) {
+					document.getElementById("images-container").style.columnCount = 3;
+			} else {
+					document.getElementById("images-container").style.columnCount = 6;
+			}
+		};
+
+		document.addEventListener("DOMContentLoaded", setColumnCount);
 		window.addEventListener("resize", setColumnCount)
 
 
