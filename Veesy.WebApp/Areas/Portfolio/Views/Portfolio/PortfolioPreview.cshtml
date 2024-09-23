@@ -283,62 +283,78 @@
         let nowNestedUrl = ""
         let nowHasCredits = false;
         
-        function OpenMediaPopup(mediaId, IsVideo, NestedPortfolioId, NestedUrl, HasCredits) {
-            nowNestedPortfolioId = NestedPortfolioId;
-            nowNestedUrl = NestedUrl;
-            nowHasCredits = HasCredits == 'True' ? true : false;
-            document.getElementById("open-credits").onclick = function (){ShowOverlay(true)}
-            document.getElementById("text-overlay").classList.remove("text-overlay-selected")
-            document.body.style.overflowY = "hidden"; 
-            document.getElementById("media-popup").style.display = "block";
-            document.getElementById("image-popup").style.display = "none";
-            document.getElementById("video-popup").style.display = "none";
-            document.getElementById("video-popup").muted = "true";
-            let obj = media.find((o, i) => {
-                if (o.mediaId === mediaId) {
-                    let src = media[i].media.fileName
-                    if(media[i].media.credits == null || media[i].media.credits.toString() == ""){
-                        document.getElementById("open-credits").style.display = "none"
-                        document.getElementById("credit-text").textContent = ""
-                    }
-                    else{
-                        document.getElementById("open-credits").style.display = "block"
-                        document.getElementById("credit-text").textContent = media[i].media.credits
-                    }
-                        
-                    if(IsVideo){
-                        document.getElementById("video-popup").src = '@Model.BasePathImages' + src;  
-                        document.getElementById("video-popup").style.display = "block";
-                        getContainedSize(document.getElementById("video-popup"))
-                    }
-                    else{
-                        document.getElementById("image-popup").src = '@Model.BasePathImages' + src;  
-                        document.getElementById("image-popup").style.display = "block";
-                        getContainedSize(document.getElementById("image-popup"))
-                    }
-                    document.getElementById("number-media").textContent = (i+1) + " / " + media.length
-                    if (i + 1 == media.length){
-                        var nextHasCredits = media[0].media.credits == null? 'False' : 'True'
-                        var prevHasCredits = media[i-1].media.credits == null ? 'False' : 'True'
-                        document.getElementById("next-media").onclick = function() {OpenMediaPopup(media[0].media.code, media[0].media.isVideo, media[0].media.nestedPortfolioLinks, nextHasCredits)};
-                        document.getElementById("previous-media").onclick = function() {OpenMediaPopup(media[i-1].media.code, media[i-1].media.isVideo, media[-1].media.nestedPortfolioLinks, prevHasCredits)};
-                    }
-                    else if (i == 0){
-                        var nextHasCredits = media[i+1].media.credits == null? 'False' : 'True'
-                        var prevHasCredits = media[media.length-1].media.credits == null? 'False' : 'True'
-                        document.getElementById("next-media").onclick = function() {OpenMediaPopup(media[i+1].media.code, media[i+1].media.isVideo, media[i+1].media.nestedPortfolioLinks, nextHasCredits)};
-                        document.getElementById("previous-media").onclick = function() {OpenMediaPopup(media[media.length - 1].media.code, media[media.length - 1].media.isVideo, media[media.length - 1].media.nestedPortfolioLinks, prevHasCredits)};
-                    }
-                    else{
-                        var nextHasCredits = media[i+1].media.credits == null ? 'False' : 'True'
-                        var prevHasCredits = media[i-1].media.credits == null? 'False' : 'True'
-                        document.getElementById("next-media").onclick = function() {OpenMediaPopup(media[i+1].media.code, media[i+1].media.isVideo, media[i+1].media.nestedPortfolioLinks, nextHasCredits)};
-                        document.getElementById("previous-media").onclick = function() {OpenMediaPopup(media[i-1].media.code, media[i-1].media.isVideo, media[i - 1].media.nestedPortfolioLinks, prevHasCredits)};
-                    }
-                    return true; // stop searching
-                }
-            });
-        }
+		    function OpenMediaPopup(mediaId, IsVideo, NestedPortfolioId, NestedPortfolioName, NestedPortfolioUser, NestedUrl, HasCredits) {
+			    nowNestedPortfolioId = NestedPortfolioId;
+			    nowNestedUrl = NestedUrl;
+			    nowNestedPortfolioName = NestedPortfolioName;
+			    nowNestedPortfolioUser = NestedPortfolioUser;
+			    nowHasCredits = HasCredits === 'True';
+
+			    document.getElementById("open-credits").onclick = function () { ShowOverlay(true); };
+			    document.getElementById("text-overlay").classList.remove("text-overlay-selected");
+			    document.body.style.overflowY = "hidden";
+			    document.getElementById("media-popup").style.display = "block";
+			    document.getElementById("image-popup").style.display = "none";
+			    document.getElementById("video-popup").style.display = "none";
+
+			    let mediaIndex = media.findIndex(o => o.mediaId === mediaId);
+			    if (mediaIndex === -1) return;
+
+			    let src = media[mediaIndex].media.fileName;
+
+			    let creditsElement = document.getElementById("credit-text");
+			    if (!media[mediaIndex].media.credits) {
+				    document.getElementById("open-credits").style.display = "none";
+				    creditsElement.textContent = "";
+			    } else {
+				    document.getElementById("open-credits").style.display = "block";
+				    creditsElement.textContent = media[mediaIndex].media.credits;
+			    }
+
+			    if (IsVideo) {
+				    document.getElementById("video-popup").src = '@Model.BasePathImages' + src;
+				    document.getElementById("video-popup").style.display = "block";
+				    getContainedSize(document.getElementById("video-popup"));
+			    } else {
+				    document.getElementById("image-popup").src = '@Model.BasePathImages' + src;
+				    document.getElementById("image-popup").style.display = "block";
+				    getContainedSize(document.getElementById("image-popup"));
+			    }
+
+			    // aggiorna numero index foto
+			    document.getElementById("number-media").textContent = (mediaIndex + 1) + " / " + media.length;
+
+			    setupNavigation(mediaIndex, media);
+		    }
+
+		    function setupNavigation(i, media) {
+			    var nextIndex = (i + 1) % media.length;
+			    var prevIndex = (i - 1 + media.length) % media.length;
+
+			    var nextHasCredits = media[nextIndex].media.credits == null ? 'False' : 'True';
+			    var prevHasCredits = media[prevIndex].media.credits == null ? 'False' : 'True';
+
+			    document.getElementById("next-media").onclick = function () {
+				    OpenMediaPopup(media[nextIndex].media.code, media[nextIndex].media.isVideo, media[nextIndex].media.nestedPortfolioLinks, nextHasCredits);
+			    };
+
+			    document.getElementById("previous-media").onclick = function () {
+				    OpenMediaPopup(media[prevIndex].media.code, media[prevIndex].media.isVideo, media[prevIndex].media.nestedPortfolioLinks, prevHasCredits);
+			    };
+
+			    document.removeEventListener('keydown', handleKeydown);
+			    document.addEventListener('keydown', handleKeydown);
+		    }
+
+		    function handleKeydown(event) {
+          if (event.key === 'Escape') CloseMediaPopup();
+
+			    if (event.key === 'ArrowRight') { // freccia destra
+				    document.getElementById("next-media").click();
+			    } else if (event.key === 'ArrowLeft') { // freccia sinistra
+				    document.getElementById("previous-media").click();
+			    }
+		    }
         
         function CloseMediaPopup() {
             document.body.style.overflowY = "auto"; 
