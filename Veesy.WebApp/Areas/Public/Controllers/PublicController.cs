@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NLog;
+using Veesy.Discord;
 using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
 using Veesy.Presentation.Helper;
@@ -312,8 +313,6 @@ public class PublicController : VeesyController
             return Json(new { Result = false, Message = "Error during send mail." });
         }
     }
-    
-    
     
     [HttpGet("400")]
     public IActionResult Error400()

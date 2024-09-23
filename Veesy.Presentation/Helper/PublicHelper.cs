@@ -2,13 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Veesy.Domain.Constants;
 using Veesy.Domain.Exceptions;
+using Veesy.Domain.Migrations;
 using Veesy.Domain.Models;
 using Veesy.Email;
 using Veesy.Presentation.Model.Cloud;
@@ -27,6 +28,7 @@ public class PublicHelper
     private readonly IEmailSender _emailSender;
     private readonly IAnalyticService _analyticService;
     private readonly UserManager<MyUser> _userManager;
+    
 
     public PublicHelper(IMediaService mediaService, IAccountService accountService, IConfiguration config, IPortfolioService portfolioService, IEmailSender emailSender, IAnalyticService analyticService, UserManager<MyUser> userManager)
     {
@@ -207,4 +209,6 @@ public class PublicHelper
         
         return new ResultDto(true, "Message sent correctly");
     }
+
+    
 }

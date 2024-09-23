@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using NLog;
+using Veesy.Discord;
 using Veesy.Domain.Constants;
 using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
@@ -28,8 +29,9 @@ public class ProfileHelper
     private readonly IConfiguration _config;
     private IMediaService _mediaService;
     private readonly IEmailSender _emailSender;
+    private readonly IDiscordService _discordService;
 
-    public ProfileHelper(IAccountService accountService, IPortfolioService portfolioService, MyUserValidator myUserValidator, UserManager<MyUser> userManager, MediaHelper mediaHelper, IConfiguration config, IMediaService mediaService, IEmailSender emailSender)
+    public ProfileHelper(IAccountService accountService, IPortfolioService portfolioService, MyUserValidator myUserValidator, UserManager<MyUser> userManager, MediaHelper mediaHelper, IConfiguration config, IMediaService mediaService, IEmailSender emailSender, IDiscordService discordService)
     {
         _accountService = accountService;
         _myUserValidator = myUserValidator;
@@ -38,6 +40,7 @@ public class ProfileHelper
         _config = config;
         _mediaService = mediaService;
         _emailSender = emailSender;
+        _discordService = discordService;
         _portfolioService = portfolioService; }
 
     public async Task<ResultDto> UpdateMyUserBio(string biography, MyUser user)
@@ -515,5 +518,22 @@ public class ProfileHelper
         }
 
         return new ResultDto(true, "");
+    }
+
+    public async Task<ResultDto> ConnectDiscord(string code, MyUser user)
+    {
+        var discordUser = await _discordService.GetDiscordUser(code);
+        user.DiscordId = discordUser.Id;
+        user.DiscordUsername = discordUser.Username;
+        user.DiscordDiscriminator = discordUser.Discriminator;
+        var result = await _accountService.UpdateUserProfile(user);
+        if (result.Success)
+        {
+            return result;
+        }
+        else
+        {
+            throw new Exception(result.Message);
+        }
     }
 }

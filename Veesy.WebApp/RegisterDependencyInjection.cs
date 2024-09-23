@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Veesy.Discord;
 using Veesy.Domain.Repositories;
 using Veesy.Domain.Repositories.Impl;
 using Veesy.Email;
@@ -32,6 +33,7 @@ public static class RegisterDependencyInjection
 
         /*Utils Dependency Injection*/
         serviceCollection.AddScoped<IEmailSender, EmailSender>();
+        serviceCollection.AddTransient<IDiscordService, DiscordService>();
     
         /*Validator Dependency Injection*/
         serviceCollection.AddTransient<MyUserValidator>();

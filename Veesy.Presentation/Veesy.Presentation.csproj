@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Veesy.Discord\Veesy.Discord.csproj" />
       <ProjectReference Include="..\Veesy.Domain\Veesy.Domain.csproj" />
       <ProjectReference Include="..\Veesy.Email\Veesy.Email.csproj" />
       <ProjectReference Include="..\Veesy.Service\Veesy.Service.csproj" />

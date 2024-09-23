@@ -497,6 +497,22 @@ public class ProfileController : VeesyController
         }
     }
     
+    
+    [HttpGet("callbackdiscord")]
+    public async Task<IActionResult> CallbackDiscord(string code)
+    {
+        try
+        {
+            await _profileHelper.ConnectDiscord(code, UserInfo);
+            return RedirectToAction("Profile");
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            return RedirectToAction("Error400");
+        }
+    }
+    
     #endregion
 
 }
