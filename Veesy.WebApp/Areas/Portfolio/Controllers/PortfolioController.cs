@@ -105,6 +105,12 @@ public class PortfolioController : VeesyController
         }
     }
 
+    public JsonResult FakeMailSentForPortfolioPreview()
+    {
+        _notyfService.Custom("Email sent correctly.", 10, "#75CCDD");
+        return Json(new { Result = true});
+    }
+
     #region API
 
     [HttpPost]
