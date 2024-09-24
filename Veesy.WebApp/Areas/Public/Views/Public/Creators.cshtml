@@ -19,7 +19,7 @@
 		</div>
 		@for (var u = 0; u < Model.User.Count; u++)
 		{
-			<div class="col-md-4 col-lg-3 col-sm-6 mt-2 mb-2" id="@Model.User[u].Id">
+			<div class="col-md-5 col-lg-3 col-sm-6 mt-2 mb-2" id="@Model.User[u].Id">
 				@{
 					var userForUrl = (Model.User[u].Name + "-" + Model.User[u].Surname).ToLower().Replace(" ", "-");
 					var portfolioNameForUrl = (Model.Portfolios[u].Name).ToLower().Replace(" ", "-").Replace("/", "-");
