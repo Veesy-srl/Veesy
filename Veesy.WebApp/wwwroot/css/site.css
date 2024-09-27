@@ -291,6 +291,19 @@ body{
   font-display:auto;font-style:normal;font-weight:400;font-stretch:normal;
 }
 
+/*::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #E2E5E7;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: darkcyan;
+  border-radius: 999px;
+}*/
+
 .nodisplay-sm{
   @media only screen and (max-width: 600px) {
     display: none !important;
@@ -1382,6 +1395,21 @@ hr {
   margin-bottom: 10px;
 }
 
+.contact-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px
+}
+
+.contact-button {
+  width: auto;
+
+  @media only screen and (max-width: 500px) {
+    width: 100% !important;
+  }
+}
+
 .dropdown:hover .dropdown-menu {
   display: block;
   margin-top: 0px; /* remove the gap so it doesn't close */
@@ -1429,10 +1457,10 @@ hr {
   object-fit: cover;
   border-radius: 50px !important;
 
-  @media only screen and (max-width: 1427px) {
+/*  @media only screen and (max-width: 1427px) {
     width: 45px !important;
     height: 60px !important;
-  }
+  }*/
 }
 
 .select-portfolio{
