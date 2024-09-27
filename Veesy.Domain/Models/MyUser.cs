@@ -28,6 +28,7 @@ public class MyUser : IdentityUser
     public string? DiscordUsername { get; set; }
     public string? DiscordDiscriminator { get; set; }
     public DateTime? LastLoginTime { get; set; }
+    public bool Unsubscribe { get; set; } = false;
     public virtual List<MyUserSector> MyUserSectors { get; set; }
     public virtual List<MyUserUsedSoftware> MyUserUsedSoftwares { get; set; }
     public virtual List<MyUserSkill> MyUserSkills { get; set; }

@@ -88,7 +88,8 @@ public class ProfileHelper
             InfoToShow = MapProfileDtos.MapInfoToShowList(_accountService.GetInfosToShowWithUser(userInfo)),
             SoftSkills = MapProfileDtos.MapSkillsList(softskills.ToList()),
             Sectors = MapProfileDtos.MapSectorList(_accountService.GetSectorsWithUser(userInfo.Id)),
-            PortfolioThumbnailDtos = MapPortfolioDtos.MapListPortfolioThumbnailDto(portfolios)
+            PortfolioThumbnailDtos = MapPortfolioDtos.MapListPortfolioThumbnailDto(portfolios),
+            UserId = userInfo.Id
         };
     }
 
@@ -501,6 +502,8 @@ public class ProfileHelper
             if (user == null)
                 return new ResultDto(false, "User not found");
         }
+        if (user.Unsubscribe)
+            return new ResultDto(false, "User unsubscribed from mails");
         
         var link = "";
         var currentPath = Directory.GetCurrentDirectory();
@@ -527,6 +530,21 @@ public class ProfileHelper
         user.DiscordUsername = discordUser.Username;
         user.DiscordDiscriminator = discordUser.Discriminator;
         var result = await _accountService.UpdateUserProfile(user);
+        if (result.Success)
+        {
+            return result;
+        }
+        else
+        {
+            throw new Exception(result.Message);
+        }
+    }
+
+    public async Task<ResultDto> UnsubscribeMail(MyUser user)
+    {
+        user.Unsubscribe = true;
+        var result = await _accountService.UpdateUserProfile(user);
+        
         if (result.Success)
         {
             return result;

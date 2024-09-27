@@ -5,6 +5,30 @@
     ViewData["Title"] = "Profile";
 }
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+    function DeleteProfile() {
+        $('#load-spinner').css("display", "block");
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("DeleteAccount", "Profile")',
+            data: JSON.stringify("@Model.UserId"),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (response) {
+                if(response.result){
+                    closeModal('#modalDeleteProfile');
+                }
+                $('#load-spinner').css("display", "none");
+            },
+            error: function (response) {
+                $('#load-spinner').css("display", "none");
+            }
+        })
+    }
+</script>
+
 <div class="padding-lg pt-7rem">
 <div class="row pt-4 p-4-lg">
     <div class="col-sm-12 col-lg-3 mb-3">
@@ -371,6 +395,11 @@
                 <div class="empty-veesy my-4"></div>
             }
         </div>
+        <div class="pt-4 mt-4">
+            <h3 class="text-color option-font-20"><strong>Delete Profile</strong></h3>
+            <p class="text-color">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum</p>
+            <button onclick="openModal('#modalDeleteProfile')" class="mt-2 rounded-pill btn btn-delete" >delete profile</button>
+        </div>
         <div class="empty-veesy"></div>
         <div class="empty-veesy"></div>
     </div>
@@ -657,14 +686,41 @@
     </div>
 </div>
 
+<div class="modal fade" id="modalDeleteProfile" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Delete Profile</strong></h3>
+                <a onclick="closeModal('#modalDeleteProfile')"><i class="fa-solid fa-grey fa-circle-xmark"></i></a>
+            </div>
+            <div class="empty-veesy"></div>
+            <div class="modal-body text-center">
+                <h5 id="confirm-delete-body text-color">The profile will be deleted permanently. Are you sure?</h5>
+            </div>
+            <div class="empty-veesy"></div>
+            <div class="row">
+                <div class="col-4">
+                    <p class="ps-3 text-muted">
+                        <a style="text-decoration: underline !important; position: relative; top: 20px;" class="grey-link mt-3" onclick="closeModal('#modalDeleteProfile')">back to profile</a>
+                    </p>
+                </div>
+                <div class="col-4 justify-content-center" style="display: flex">
+                    <button class="mt-2 rounded-pill btn btn-delete" onclick="DeleteProfile()" type="submit">yes, delete</button>
+                </div>
+                <div class="col-4"></div>
+            </div>
+            <div class="empty-veesy"></div>
+        </div>
+    </div>
+</div>
+
 @section Scripts
 {
 
     <script>
-
         function OpenUrlNewTab(url) {
         window.open(url, '_blank');
-    }
+        }
 
 function UpdateInfoToShow() {
     $('#load-spinner').css("display", "block");
@@ -966,8 +1022,10 @@ function UpdateCategory() {
         }
     })
 }
+
          
   
+    
     </script>
 }
 

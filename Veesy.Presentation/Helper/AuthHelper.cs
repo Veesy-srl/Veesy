@@ -86,6 +86,9 @@ public class AuthHelper
             if (user == null)
                 return new ResultDto(false, "User not found");
         }
+        if (user.Unsubscribe)
+            return new ResultDto(false, "User unsubscribed from mails");
+        
         var name = user.Name;
         var link = "";
         var message = new Message(new (string, string)[] { ("Noreply | Veesy", user.Email) }, "Welcome to Veesy", link);

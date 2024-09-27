@@ -125,7 +125,8 @@ public class AdminHelper
             LastUsersCreated = lastUserCreated,
             CreatorOverviewDtos = creatorOverview,
             NumberPayingUsers = numberPayingUsers,
-            LastMediaUploadDtos = MapAdminDto.MapLastMediaUploadDtos(lastMediaUploaded)
+            LastMediaUploadDtos = MapAdminDto.MapLastMediaUploadDtos(lastMediaUploaded),
+            PortfoliosCount = _portfolioService.GetDraftAndPublishedPortfoliosCount()
         };
         return vm;
     }

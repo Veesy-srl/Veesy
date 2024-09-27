@@ -150,29 +150,29 @@
 </div>
 <div class="row">
   <div class="col-lg-4 d-flex align-items-stretch">
-      <div class="card w-100">
-        <div class="card-body p-4">
-          <div class="mb-4">
-            <h5 class="card-title fw-semibold mb-0">Last 5 user registered</h5>
-          </div>
-            <ul class="timeline-widget mb-0 position-relative mb-n5">
-            @foreach (var item in Model.LastUsersCreated)
-            {
-              <li class="timeline-item d-flex position-relative overflow-hidden">
-                <div class="timeline-time text-dark flex-shrink-0 text-end">@item.CreateDate.ToString("dd/MM HH:mm")</div>
-                <div class="timeline-badge-wrap d-flex flex-column align-items-center">
-                  <span class="timeline-badge border-2 border border-success flex-shrink-0 my-8"></span>
-                  <span class="timeline-badge-border d-block flex-shrink-0"></span>
-                </div>
-                <div class="w-100">
-                  <div class="w-100 timeline-desc fs-3 text-dark mt-n1"><i>@item.Fullname</i></div>
-                </div>
-              </li>
-            }
-          </ul>
+    <div class="card w-100">
+      <div class="card-body p-4">
+        <div class="mb-4">
+          <h5 class="card-title fw-semibold mb-0">Last 5 user registered</h5>
         </div>
+        <ul class="timeline-widget mb-0 position-relative mb-n5">
+          @foreach (var item in Model.LastUsersCreated)
+          {
+            <li class="timeline-item d-flex position-relative overflow-hidden">
+              <div class="timeline-time text-dark flex-shrink-0 text-end">@item.CreateDate.ToString("dd/MM HH:mm")</div>
+              <div class="timeline-badge-wrap d-flex flex-column align-items-center">
+                <span class="timeline-badge border-2 border border-success flex-shrink-0 my-8"></span>
+                <span class="timeline-badge-border d-block flex-shrink-0"></span>
+              </div>
+              <div class="w-100">
+                <div class="w-100 timeline-desc fs-3 text-dark mt-n1"><i>@item.Fullname</i></div>
+              </div>
+            </li>
+          }
+        </ul>
       </div>
     </div>
+  </div>
   <div class="col-lg-8 d-flex align-items-strech">
     <div class="card w-100">
       <div class="card-body">
@@ -205,6 +205,48 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12 col-md-3">
+    <div class="card">
+      <div class="card-body">
+        <div class="row alig n-items-start">
+          <div class="col-8">
+            <h5 class="card-title mb-9 fw-semibold">Published Portfolios</h5>
+            <h4 class="fw-semibold mb-3">@Model.PortfoliosCount.PublishedPortfolios</h4>
+          </div>
+          <div class="col-4">
+            <div class="d-flex justify-content-end">
+              <div class="text-white bg-secondary rounded-circle p-6 d-flex align-items-center justify-content-center">
+                <i class="ti ti-photo fs-6"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12 col-md-3">
+    <div class="card">
+      <div class="card-body">
+        <div class="row alig n-items-start">
+          <div class="col-8">
+            <h5 class="card-title mb-9 fw-semibold">Draft Portfolios</h5>
+            <h4 class="fw-semibold mb-3">@Model.PortfoliosCount.DraftPortfolios</h4>
+          </div>
+          <div class="col-4">
+            <div class="d-flex justify-content-end">
+              <div class="text-white bg-secondary rounded-circle p-6 d-flex align-items-center justify-content-center">
+                <i class="ti ti-photo fs-6"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
 </div>
 
 @section Scripts

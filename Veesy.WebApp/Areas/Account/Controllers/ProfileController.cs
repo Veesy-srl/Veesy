@@ -513,6 +513,26 @@ public class ProfileController : VeesyController
         }
     }
     
+    [HttpGet]
+    public async Task<IActionResult> UnsubscribeMail()
+    {
+        try
+        {
+            await _profileHelper.UnsubscribeMail(UserInfo);
+            return RedirectToAction("Unsubscribed");
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            return RedirectToAction("Error400");
+        }
+    }
+
+    public IActionResult Unsubscribed()
+    {
+        return View();
+    }
+    
     #endregion
 
 }
