@@ -193,7 +193,7 @@ public class PublicHelper
         }
         
         var link = "";
-        var message = new Message(new (string, string)[] { ("Noreply | Veesy", emailToSend) }, "You receive new message from: " + dto.SenderName, link);
+        var message = new Message(new (string, string)[] { ("Noreply | Veesy", emailToSend) }, "You have a new message from: " + dto.SenderName, link);
         List<(string, string)> replacer = new List<(string, string)> { ("[sender-email]", dto.SenderEmail),("[message]", dto.Message),("[sender-name]", dto.SenderName) };
 
         var currentPath = Directory.GetCurrentDirectory();
