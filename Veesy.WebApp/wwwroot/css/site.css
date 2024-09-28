@@ -6,6 +6,11 @@
   float: right !important;
 }
 
+img, button {
+  -moz-user-select: none;
+  user-select: none
+}
+
 .join-veesy-btn {
   margin-top: 0px;
 
@@ -1204,6 +1209,21 @@ a{
   display: none;
 }
 
+.discord-popup-splash {
+  width: 250px;
+  cursor: pointer;
+  position: fixed;
+
+  padding-left: 5px;
+  background: #536B7E;
+  border-radius: 5px 5px 0px 0px;
+  bottom: 0px;
+  left: 15px;
+  float: left;
+  z-index: 9999;
+  display: none;
+}
+
 .creator-popup-gallery{
   cursor: pointer;
   position: fixed;
@@ -1273,6 +1293,62 @@ a{
   left: 15px;
   right: 15px;
   float: left;
+  z-index: 9999;
+}
+
+.discord-popup-full-splash {
+  position: fixed;
+
+  @media only screen and (min-width: 500px) {
+    width: 60%;
+  }
+
+  @media only screen and (min-width: 800px) {
+    width: 40%;
+  }
+
+  @media only screen and (min-width: 1500px) {
+    width: 25%;
+  }
+
+  height: auto;
+  background: #536B7E;
+  border-radius: 10px;
+  padding-bottom: 10px;
+  bottom: -100%;
+  left: 15px;
+  right: 15px;
+  float: left;
+  z-index: 9999;
+}
+
+.discord-popup-full-open {
+  bottom: 0 !important;
+  transition-duration: 0.8s;
+}
+
+.discord-popup-full-close {
+  bottom: -100% !important;
+  transition-duration: 0.8s;
+}
+
+.discord-popup-body {
+  border-top: 1px white;
+}
+
+.discord-popup-full {
+  position: fixed;
+
+  @media (min-width: 700px) {
+    width: 50%;
+  }
+
+  max-height: 95vh;
+  background: #536B7E;
+  border-radius: 5px 5px 0px 0px;
+  bottom: -100%;
+  right: 1px;
+  float: right;
   z-index: 9999;
 }
 
