@@ -6,6 +6,14 @@
   float: right !important;
 }
 
+.join-veesy-btn {
+  margin-top: 0px;
+
+  @media only screen and (max-width: 600px) {
+    margin-top: 30px;
+  }
+}
+
 .px-22 {
   padding-left: 22px;
   padding-right: 22px;
