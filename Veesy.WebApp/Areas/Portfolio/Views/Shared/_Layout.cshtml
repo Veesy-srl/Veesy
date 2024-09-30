@@ -3,477 +3,500 @@
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="light">
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Veesy | @ViewData["Title"]</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/site-dark.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Veesy.WebApp.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/css/bootstrap-select.min.css" asp-append-version="true" />
-    @await RenderSectionAsync("Style", required: false)
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Veesy | @ViewData["Title"]</title>
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/site-dark.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/Veesy.WebApp.styles.css" asp-append-version="true" />
+	<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/css/bootstrap-select.min.css" asp-append-version="true" />
+	@await RenderSectionAsync("Style", required: false)
 
-    @if (Context.Request.Host.Value == "veesy.it" && !Context.Request.Host.Value.StartsWith("beta.") && !Context.Request.Path.Value.Contains("profile/basic-info"))
-    {
-        @Html.Partial("~/Areas/Auth/Views/Shared/cookie.cshtml")
-    }
-    
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QY19KDP1PK"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
+	@if (Context.Request.Host.Value == "veesy.it" && !Context.Request.Host.Value.StartsWith("beta.") && !Context.Request.Path.Value.Contains("profile/basic-info"))
+	{
+		@Html.Partial("~/Areas/Auth/Views/Shared/cookie.cshtml")
+	}
 
-        gtag('config', 'G-QY19KDP1PK');
-    </script>
-    <script>
-        !function(f,b,e,v,n,t,s)
-        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-            n.queue=[];t=b.createElement(e);t.async=!0;
-            t.src=v;s=b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t,s)}(window, document,'script',
-            'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', '441008971743968');
-        fbq('track', 'PageView');
-    </script>
-    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=441008971743968&ev=PageView&noscript=1"/>
-    </noscript>
-    
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-QY19KDP1PK"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-QY19KDP1PK');
+	</script>
+	<script>
+		!function (f, b, e, v, n, t, s) {
+			if (f.fbq) return; n = f.fbq = function () {
+				n.callMethod ?
+				n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+			};
+			if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+			n.queue = []; t = b.createElement(e); t.async = !0;
+			t.src = v; s = b.getElementsByTagName(e)[0];
+			s.parentNode.insertBefore(t, s)
+		}(window, document, 'script',
+			'https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '441008971743968');
+		fbq('track', 'PageView');
+	</script>
+	<noscript>
+		<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=441008971743968&ev=PageView&noscript=1" />
+	</noscript>
+
 </head>
 <body>
-<header>
-@{
-    var background = ViewContext.RouteData.Values["Controller"].ToString() == "Cloud" ? "bg-grey" : "bg-grey-veesy";
-}
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm mb-3 fixed-top" style="position: absolute; ">
-        <div class="container-fluid" style="margin-right: 20px; padding-right: 0px;">
-                
-            <h1 class="h3 mb-2 fw-normal ms-3">
-                @if(ViewContext.RouteData.Values["Controller"].ToString() == "Cloud")
-                {
-                    <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="breadcrumb-a-white text-white navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
-                        <img class="header-logo-v mr-2">cloud
-                    </a>
-                }
-                else if(ViewContext.RouteData.Values["Action"].ToString() == "Contact"){
-                    <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
-                        <img class="header-logo mr-2">contact
-                    </a>
-                }
-                else if(ViewContext.RouteData.Values["Action"].ToString() == "CookiesPolicy"){
-                    <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
-                        <img class="header-logo mr-2">cookies
-                    </a>
-                }
-                else if(ViewContext.RouteData.Values["Action"].ToString() == "PrivacyPolicy"){
-                    <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
-                        <img class="header-logo mr-2">
-                    </a>
-                }
-                else if(ViewContext.RouteData.Values["Action"].ToString() == "TermsAndConditions"){
-                    <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
-                        <img class="header-logo mr-2">
-                    </a>
-                }
-                else if(ViewContext.RouteData.Values["Action"].ToString() == "Gallery"){
-                    <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
-                        <img class="header-logo mr-2">gallery
-                    </a>
-                }
-                else if (ViewContext.RouteData.Values["Action"].ToString() == "Splash")
-                {
-                    <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
-                        <img class="header-logo mr-2">
-                    </a>
-                }
-                else if (ViewContext.RouteData.Values["Action"].ToString() == "Error404")
-                {
-                    <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
-                        <img class="header-logo mr-2">
-                    </a>
-                }
-                else if (ViewContext.RouteData.Values["Action"].ToString() == "Error400")
-                {
-                    <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
-                        <img class="header-logo mr-2">
-                    </a>
-                }
-                else if(ViewContext.RouteData.Values["Action"].ToString() == "About"){
-                    <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand"  asp-area="Portfolio" asp-controller="Home" asp-action="Index">
-                        <img class="header-logo mr-2">about
-                    </a>
-                }
-                else if(ViewContext.RouteData.Values["Action"].ToString() == "Creators"){
-                    <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand"  asp-area="Portfolio" asp-controller="Home" asp-action="Index">
-                        <img class="header-logo mr-2">creators
-                    </a>
-                }else if (ViewContext.RouteData.Values["Controller"].ToString() == "Portfolio")
-                {
-                    <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
-                        <img class="header-logo mr-2">portfolio
-                    </a>
-                }else if (ViewContext.RouteData.Values["Action"].ToString() == "Portfolio")
-                {
-                    <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
-                        <img class="header-logo mr-2">portfolio
-                    </a>
-                }else if (ViewContext.RouteData.Values["Action"].ToString() == "Landing")
-                {
-                    <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
-                        <img class="header-logo mr-2">
-                    </a>
-                }
-                else
-                {
-                    <a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
-                        <img class="header-logo mr-2">desk
-                    </a>
-                }
-            </h1> 
-            <div class="float-end mb-2">
-                <div class="d-flex">
-                    
-                    <div class="nodisplay-sm dropdown show me-2">
-                        @{
-                            var imageSrc = ViewBag.BaseDirectory + ViewBag.ProfileImage + "?tr=w-400";
-                            
-                            string username = User.Identity.Name;
-                            
-                            if (string.IsNullOrEmpty(ViewBag.ProfileImage))
-                            {
-                                imageSrc = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU";
-                            }
-                        }
-                        @if (username != null)
-                        {
-                            <div style="padding-bottom: 4px">
-                                <a class="dropdown-toggle btn btn-light btn-layout border fw-bolder shadow-none">
-                                    <img src='@imageSrc' style="width: 25px !important; height: 25px !important; max-width: none!important; " class="img-thumbnail-custom rounded-circle" alt="user-image">
-                                    <span id="color-text-layout" style="margin-left: 5px;">@username</span>
-                                    <i class="fa-solid fa-chevron-down"></i>
-                                </a>
-                            </div>
+	<header>
+		@{
+			var background = ViewContext.RouteData.Values["Controller"].ToString() == "Cloud" ? "bg-grey" : "bg-grey-veesy";
+		}
+		<nav class="navbar navbar-expand-sm navbar-toggleable-sm mb-3 fixed-top" style="position: absolute; ">
+			<div class="container-fluid" style="margin-right: 20px; padding-right: 0px;">
 
-                            <div class="dropdown-menu bg-grey-veesy" style="padding: 0 0;" aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Controller"].ToString() == "Portfolio" ? "a-ciano-header" : "menu-element")" asp-action="List" asp-controller="Portfolio" asp-area="Portfolio">Portfolio</a>
-                                <a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Controller"].ToString() == "Cloud" ? "a-ciano-header" : "menu-element")" asp-action="List" asp-controller="Cloud" asp-area="Portfolio">Cloud</a>
-                                <a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Action"].ToString() == "Yourplan" ? "a-ciano-header" : "menu-element")" asp-action="PricingPlan" asp-controller="Public" asp-area="Public">Your Plan</a>
-                                <a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Controller"].ToString() == "Profile" ? "a-ciano-header" : "menu-element")" asp-action="Profile" asp-controller="Profile" asp-area="Account">Profile</a>
-                                @if (User.IsInRole(Roles.Admin))
-                                {
-                                    <a class="dropdown-item dropdown-item-layout menu-element" asp-action="Dashboard" asp-controller="Admin" asp-area="Admin">Admin dashboard</a>
-                                }
-                                <a class="dropdown-item dropdown-item-layout menu-element" asp-action="Logout" asp-controller="Auth" asp-area="Auth">Log out</a>
-                            </div>
-                        }
-                        else
-                        {
-                            <a asp-action="Login" asp-controller="Auth" asp-area="Auth" class="ms-2 btn btn-light border btn-layout fw-bolder shadow-none">
-                                <i class="fas fa-user fa-2xs text-primary" id="icon-color"></i>
-                                <span id="color-text-variant">login</span>
-                            </a>
-                        }
+				<h1 class="h3 mb-2 fw-normal ms-3">
+					@if (ViewContext.RouteData.Values["Controller"].ToString() == "Cloud")
+					{
+						<a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="breadcrumb-a-white text-white navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
+							<img class="header-logo-v mr-2">cloud
+						</a>
+					}
+					else if (ViewContext.RouteData.Values["Action"].ToString() == "Contact")
+					{
+						<a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
+							<img class="header-logo mr-2">contact
+						</a>
+					}
+					else if (ViewContext.RouteData.Values["Action"].ToString() == "CookiesPolicy")
+					{
+						<a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
+							<img class="header-logo mr-2">cookies
+						</a>
+					}
+					else if (ViewContext.RouteData.Values["Action"].ToString() == "PrivacyPolicy")
+					{
+						<a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
+							<img class="header-logo mr-2">
+						</a>
+					}
+					else if (ViewContext.RouteData.Values["Action"].ToString() == "TermsAndConditions")
+					{
+						<a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
+							<img class="header-logo mr-2">
+						</a>
+					}
+					else if (ViewContext.RouteData.Values["Action"].ToString() == "Gallery")
+					{
+						<a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
+							<img class="header-logo mr-2">gallery
+						</a>
+					}
+					else if (ViewContext.RouteData.Values["Action"].ToString() == "Splash")
+					{
+						<a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
+							<img class="header-logo mr-2">
+						</a>
+					}
+					else if (ViewContext.RouteData.Values["Action"].ToString() == "Error404")
+					{
+						<a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
+							<img class="header-logo mr-2">
+						</a>
+					}
+					else if (ViewContext.RouteData.Values["Action"].ToString() == "Error400")
+					{
+						<a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
+							<img class="header-logo mr-2">
+						</a>
+					}
+					else if (ViewContext.RouteData.Values["Action"].ToString() == "About")
+					{
+						<a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
+							<img class="header-logo mr-2">about
+						</a>
+					}
+					else if (ViewContext.RouteData.Values["Action"].ToString() == "Creators")
+					{
+						<a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
+							<img class="header-logo mr-2">creators
+						</a>
+					}
+					else if (ViewContext.RouteData.Values["Controller"].ToString() == "Portfolio")
+					{
+						<a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
+							<img class="header-logo mr-2">portfolio
+						</a>
+					}
+					else if (ViewContext.RouteData.Values["Action"].ToString() == "Portfolio")
+					{
+						<a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
+							<img class="header-logo mr-2">portfolio
+						</a>
+					}
+					else if (ViewContext.RouteData.Values["Action"].ToString() == "Landing")
+					{
+						<a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
+							<img class="header-logo mr-2">
+						</a>
+					}
+					else
+					{
+						<a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
+							<img class="header-logo mr-2">desk
+						</a>
+					}
+				</h1>
+				<div class="float-end mb-2">
+					<div class="d-flex">
 
-                    </div>
-                    <div style="padding-bottom: 2px">
-                        @{
-                            string conditionalClass = ViewContext.RouteData.Values["Action"].ToString() == "Splash" ? "" : "custom-padding";
-                        }
-                        <button class="ms-2 btn btn-light border fw-bolder btn-layout shadow-none @conditionalClass" id="menuButton">
-                            <i class="fas fa-circle fa-2xs text-primary mr-2" style="font-size: 5px;" id="icon-color"></i>
-                            @if (ViewContext.RouteData.Values["Controller"].ToString() == "Public")
-                            {
-                                <span id="color-text-variant">menu</span>
-                            }
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="menu-popup" id="menuPopup">
-                <div class="float-end d-flex">
-                    @if(username != null){
-                        <div class="dropdown show" id="none-popup">
-                            <div style="padding-bottom: 4px">
-                                <a style="margin-top: 0px !important;" class="dropdown-toggle btn btn-light btn-layout border fw-bolder shadow-none me-2">
-                                    <img src='@imageSrc' style=" width: 25px !important; height: 25px !important; max-width: none!important;" class="img-thumbnail-custom rounded-circle" alt="user-image">
-                                    <span id="color-text-variant">@username</span>
-                                </a>
-                            </div>
-                            <div class="dropdown-menu bg-grey-veesy" style="padding: 0 0;" aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Controller"].ToString() == "Portfolio" ? "a-ciano-header" : "menu-element")" asp-action="List" asp-controller="Portfolio" asp-area="Portfolio">Portfolio</a>
-                                <a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Controller"].ToString() == "Cloud" ? "a-ciano-header" : "menu-element")" asp-area="Portfolio" asp-controller="Cloud" asp-action="List">Cloud</a>
-                                <a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Action"].ToString() == "Yourplan" ? "a-ciano-header" : "menu-element")" asp-action="PricingPlan" asp-controller="Public" asp-area="Public">Your Plan</a>
-                                <a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Controller"].ToString() == "Profile" ? "a-ciano-header" : "menu-element")" asp-action="Profile" asp-controller="Profile" asp-area="Account">Profile</a>
-                                @if (User.IsInRole(Roles.Admin))
-                                {
-                                    <a class="dropdown-item dropdown-item-layout menu-element" asp-action="Dashboard" asp-controller="Admin" asp-area="Admin">Admin dashboard</a>
-                                }
-                                <a class="dropdown-item dropdown-item-layout menu-element" asp-action="Logout" asp-controller="Auth" asp-area="Auth">Log out</a>
-                            </div>
-                        </div>
-                    }
-                    <div style="padding-bottom: 2px">
-                        <button style="margin-top: 0px !important;" class="ms-2 btn btn-light border btn-layout fw-bolder shadow-none custom-padding-variant" id="closeButton">
-                            <i class="fas fa-times-circle fa-2xs text-primary" id="icon-color"></i>
-                            <span id="color-text-variant">close</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="container center-content-menu">
-                    <div class="menu-list">
-                        <ul class="list-unstyled">
-                            <li><a asp-area="Public" asp-controller="Public" asp-action="Gallery" class="float-end fw-bolder my-1 p-2 menu-element font-weight-normal" style="font-size: 25px !important; line-height: 30px !important;" id="color-text" data-target="#description1">Gallery</a></li>
-                            <li><a asp-action="Creators" asp-controller="Public" asp-area="Public" class="float-end my-1 fw-bolder p-2 menu-element font-weight-normal" style="font-size: 25px !important; line-height: 30px !important;" id="color-text" data-target="#description2">Creators</a></li>
-                            <li><a asp-action="About" asp-controller="Public" asp-area="Public" class="float-end my-1 fw-bolder p-2 menu-element font-weight-normal" style="font-size: 25px !important; line-height: 30px !important;" id="color-text" data-target="#description3">About</a></li>
-                            <li><a target="_blank" href="https://noteforms.com/forms/database-test-owzf1l" class="float-end fw-bolder my-1 p-2 menu-element font-weight-normal" style="font-size: 25px !important; line-height: 30px !important;" id="color-text" data-target="#description4">Match</a></li>
-                            <li><a asp-action="Contact" asp-controller="Public" asp-area="Public" class="float-end my-1 fw-bolder p-2 menu-element font-weight-normal" style="font-size: 25px !important; line-height: 30px !important;" id="color-text" data-target="#description6">Contact</a></li>
-                        </ul>
-                    </div>
-                    <div class="d-flex" style="height: 260px;">
-                        <div class="vr custom-vr"></div>
-                    </div>
-                    <div class="description-container" style="margin-left: 20px;">
-                        <div id="description1" class="description-content text-color"><p><b>Not just a collection, but a celebration of diverse artistic expressions brought together from our Creators.</b></p></div>                                         
-                        <div id="description2" class="description-content text-color"><p><b>Explore Creators featured works, understand their diverse skill sets, and connect with them.</b></p></div>                                         
-                        <div id="description3" class="description-content text-color"><p><b>Discover our vision and the steps we're taking to redefine freelancing.</b></p></div>                                         
-                        <div id="description4" class="description-content text-color"><p><b>Connect you with the right creative talent in our network.</b></p></div>                                         
-                        <div id="description6" class="description-content text-color"><p><b>Say Hello: We Promise We're Friendly. Our inbox is always open for a bit of fun and collaboration.</b></p></div> 
-                    </div>
-                </div>
+						<div class="nodisplay-sm dropdown show me-2">
+							@{
+								var imageSrc = ViewBag.BaseDirectory + ViewBag.ProfileImage + "?tr=w-400";
+
+								string username = User.Identity.Name;
+
+								if (string.IsNullOrEmpty(ViewBag.ProfileImage))
+								{
+									imageSrc = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU";
+								}
+							}
+							@if (username != null)
+							{
+								<div style="padding-bottom: 4px">
+									<a class="dropdown-toggle btn btn-light btn-layout border fw-bolder shadow-none">
+										<img src='@imageSrc' style="width: 25px !important; height: 25px !important; max-width: none!important; " class="img-thumbnail-custom rounded-circle" alt="user-image">
+										<span id="color-text-layout" style="margin-left: 5px;">@username</span>
+										<i class="fa-solid fa-chevron-down"></i>
+									</a>
+								</div>
+
+								<div class="dropdown-menu bg-grey-veesy" style="padding: 0 0;" aria-labelledby="dropdownMenuLink">
+									<a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Controller"].ToString() == "Portfolio" ? "a-ciano-header" : "menu-element")" asp-action="List" asp-controller="Portfolio" asp-area="Portfolio">Portfolio</a>
+									<a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Controller"].ToString() == "Cloud" ? "a-ciano-header" : "menu-element")" asp-action="List" asp-controller="Cloud" asp-area="Portfolio">Cloud</a>
+									<a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Action"].ToString() == "Yourplan" ? "a-ciano-header" : "menu-element")" asp-action="PricingPlan" asp-controller="Public" asp-area="Public">Your Plan</a>
+									<a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Controller"].ToString() == "Profile" ? "a-ciano-header" : "menu-element")" asp-action="Profile" asp-controller="Profile" asp-area="Account">Profile</a>
+									@if (User.IsInRole(Roles.Admin))
+									{
+										<a class="dropdown-item dropdown-item-layout menu-element" asp-action="Dashboard" asp-controller="Admin" asp-area="Admin">Admin dashboard</a>
+									}
+									<a class="dropdown-item dropdown-item-layout menu-element" asp-action="Logout" asp-controller="Auth" asp-area="Auth">Log out</a>
+								</div>
+							}
+							else
+							{
+								<a asp-action="Login" asp-controller="Auth" asp-area="Auth" class="ms-2 btn btn-light border btn-layout fw-bolder shadow-none">
+									<i class="fas fa-user fa-2xs text-primary" id="icon-color"></i>
+									<span id="color-text-variant">login</span>
+								</a>
+							}
+
+						</div>
+						<div style="padding-bottom: 2px">
+							@{
+								string conditionalClass = ViewContext.RouteData.Values["Action"].ToString() == "Splash" ? "" : "custom-padding";
+							}
+							<button class="ms-2 btn btn-light border fw-bolder btn-layout shadow-none @conditionalClass" id="menuButton">
+								<i class="fas fa-circle fa-2xs text-primary mr-2" style="font-size: 5px;" id="icon-color"></i>
+								@if (ViewContext.RouteData.Values["Controller"].ToString() == "Public")
+								{
+									<span id="color-text-variant">menu</span>
+								}
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="menu-popup" id="menuPopup">
+					<div class="float-end d-flex">
+						@if (username != null)
+						{
+							<div class="dropdown show" id="none-popup">
+								<div style="padding-bottom: 4px">
+									<a style="margin-top: 0px !important;" class="dropdown-toggle btn btn-light btn-layout border fw-bolder shadow-none me-2">
+										<img src='@imageSrc' style=" width: 25px !important; height: 25px !important; max-width: none!important;" class="img-thumbnail-custom rounded-circle" alt="user-image">
+										<span id="color-text-variant">@username</span>
+									</a>
+								</div>
+								<div class="dropdown-menu bg-grey-veesy" style="padding: 0 0;" aria-labelledby="dropdownMenuLink">
+									<a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Controller"].ToString() == "Portfolio" ? "a-ciano-header" : "menu-element")" asp-action="List" asp-controller="Portfolio" asp-area="Portfolio">Portfolio</a>
+									<a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Controller"].ToString() == "Cloud" ? "a-ciano-header" : "menu-element")" asp-area="Portfolio" asp-controller="Cloud" asp-action="List">Cloud</a>
+									<a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Action"].ToString() == "Yourplan" ? "a-ciano-header" : "menu-element")" asp-action="PricingPlan" asp-controller="Public" asp-area="Public">Your Plan</a>
+									<a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Controller"].ToString() == "Profile" ? "a-ciano-header" : "menu-element")" asp-action="Profile" asp-controller="Profile" asp-area="Account">Profile</a>
+									@if (User.IsInRole(Roles.Admin))
+									{
+										<a class="dropdown-item dropdown-item-layout menu-element" asp-action="Dashboard" asp-controller="Admin" asp-area="Admin">Admin dashboard</a>
+									}
+									<a class="dropdown-item dropdown-item-layout menu-element" asp-action="Logout" asp-controller="Auth" asp-area="Auth">Log out</a>
+								</div>
+							</div>
+						}
+						<div style="padding-bottom: 2px">
+							<button style="margin-top: 0px !important;" class="ms-2 btn btn-light border btn-layout fw-bolder shadow-none custom-padding-variant" id="closeButton">
+								<i class="fas fa-times-circle fa-2xs text-primary" id="icon-color"></i>
+								<span id="color-text-variant">close</span>
+							</button>
+						</div>
+					</div>
+					<div class="container center-content-menu">
+						<div class="menu-list">
+							<ul class="list-unstyled">
+								<li><a asp-area="Public" asp-controller="Public" asp-action="Gallery" class="float-end fw-bolder my-1 p-2 menu-element font-weight-normal" style="font-size: 25px !important; line-height: 30px !important;" id="color-text" data-target="#description1">Gallery</a></li>
+								<li><a asp-action="Creators" asp-controller="Public" asp-area="Public" class="float-end my-1 fw-bolder p-2 menu-element font-weight-normal" style="font-size: 25px !important; line-height: 30px !important;" id="color-text" data-target="#description2">Creators</a></li>
+								<li><a asp-action="About" asp-controller="Public" asp-area="Public" class="float-end my-1 fw-bolder p-2 menu-element font-weight-normal" style="font-size: 25px !important; line-height: 30px !important;" id="color-text" data-target="#description3">About</a></li>
+								<li><a target="_blank" href="https://noteforms.com/forms/database-test-owzf1l" class="float-end fw-bolder my-1 p-2 menu-element font-weight-normal" style="font-size: 25px !important; line-height: 30px !important;" id="color-text" data-target="#description4">Match</a></li>
+								<li><a asp-action="Contact" asp-controller="Public" asp-area="Public" class="float-end my-1 fw-bolder p-2 menu-element font-weight-normal" style="font-size: 25px !important; line-height: 30px !important;" id="color-text" data-target="#description6">Contact</a></li>
+							</ul>
+						</div>
+						<div class="d-flex" style="height: 260px;">
+							<div class="vr custom-vr"></div>
+						</div>
+						<div class="description-container" style="margin-left: 20px;">
+							<div id="description1" class="description-content text-color"><p><b>Not just a collection, but a celebration of diverse artistic expressions brought together from our Creators.</b></p></div>
+							<div id="description2" class="description-content text-color"><p><b>Explore Creators featured works, understand their diverse skill sets, and connect with them.</b></p></div>
+							<div id="description3" class="description-content text-color"><p><b>Discover our vision and the steps we're taking to redefine freelancing.</b></p></div>
+							<div id="description4" class="description-content text-color"><p><b>Connect you with the right creative talent in our network.</b></p></div>
+							<div id="description6" class="description-content text-color"><p><b>Say Hello: We Promise We're Friendly. Our inbox is always open for a bit of fun and collaboration.</b></p></div>
+						</div>
+					</div>
 
 
-                   <div class="menu-footer">
-                       <a target="_blank" asp-action="PrivacyPolicy" asp-controller="Public" asp-area="Public" id="color-text-v"><b>privacy policy</b></a>
-                       <a target="_blank" asp-action="CookiesPolicy" asp-controller="Public" asp-area="Public" class="cookie" id="color-text-v"><b>cookie policy</b></a><br/>
-                       <p style="font-size: 14px !important;" href="#" class="copyright option-font-14" id="color-text-footer">Veesy S.R.L. © @DateTime.Now.Year All rights reserved - Vat.: 13005470961 - made with love by <a target="_blank" href="https://www.derein.net/" style="color: #202F4D">derein</a> & <a target="_blank" href="https://www.enigma-tech.it/" style="color: #202F4D">enigma</a></p>
-                   </div>
-               </div>
+					<div class="menu-footer">
+						<a target="_blank" asp-action="PrivacyPolicy" asp-controller="Public" asp-area="Public" id="color-text-v"><b>privacy policy</b></a>
+						<a target="_blank" asp-action="CookiesPolicy" asp-controller="Public" asp-area="Public" class="cookie" id="color-text-v"><b>cookie policy</b></a><br />
+						<p style="font-size: 14px !important;" href="#" class="copyright option-font-14" id="color-text-footer">Veesy S.R.L. © @DateTime.Now.Year All rights reserved - Vat.: 13005470961 - made with love by <a target="_blank" href="https://www.derein.net/" style="color: #202F4D">derein</a> & <a target="_blank" href="https://www.enigma-tech.it/" style="color: #202F4D">enigma</a></p>
+					</div>
+				</div>
 
-           </div>
-           <div class="switch-container dark-light" id="canvaId">
-              <input type="checkbox" id="switchInp">
-              <label for="switchInp" class="pull-string">
-                  @if(ViewContext.RouteData.Values["Controller"].ToString() == "Cloud" &&
-                      (ViewContext.RouteData.Values["Action"].ToString() == "List" ))
-                  {
-                      <img style="content: url('../imgs/Layout/switch_dark mode.svg');" class="dark-light-img molla-img" id="molla-img">
-                  }
-                  else if (ViewContext.RouteData.Values["Controller"].ToString() == "Cloud" && ViewContext.RouteData.Values["Action"].ToString() == "Edit")
-                  {
-                      <img style="content: url('../../imgs/Layout/switch_dark mode.svg');" class="dark-light-img molla-img" id="molla-img">
-                  }
-                  else
-                  {
-                      <img class="dark-light-img molla-img" id="molla-img">
-                  }
-              </label>
-          </div>
-       </nav>
-    
-</header>
-<div id="load-spinner" style="top:0px; display: none; position: fixed; z-index: 9999; padding-top: 500px !important; height: 100%; width: 100%; background-color: rgba(0, 0, 0, 0.5);" class="text-center background-color">
-    <div class="spinner-border" role="status">
-        <span class="sr-only">Loading...</span>
-    </div>
-</div>
-<div class="@background container-fluid" style="padding-left: 22px; padding-right: 22px; min-height: 102.5vh;">
-    @RenderBody()
-</div>
-<footer class="footer" style="margin-top: -2.5%;">
-    <div class="container">
-        <div class="row mb-3">
-            <div class="col-md-3 mt-5 veesy-text-color" >
-                <h2 class="h2 mt-3 fw-normal">
-                    <div class=" mb-5 d-inline-flex" asp-area="" asp-controller="Home" asp-action="Index"><img class="logo-footer"></div> 
-                </h2>
-                <p class="text-color">Veesy S.R.L.<br/>
-                    Via Giacomo Matteotti 43<br/>
-                    20832, Desio (MB)</p>
-                <div class="row mt-4 social-icons-row">
-                    <div class="col">
-                        <a target="_blank" href="https://www.facebook.com/profile.php?id=61557228052314" class="social-icon"><i class="fa-brands fa-facebook icon-color-veesy"></i></a>
-                        <a target="_blank" href="https://www.instagram.com/veesy.it/" class="social-icon"><i class="fa-brands fa-instagram icon-color-veesy"></i></a>
-                        <a target="_blank" href="https://www.linkedin.com/company/veesy" class="social-icon"><i class="fa-brands fa-linkedin icon-color-veesy"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2 mt-3 mt-md-5 veesy-text-color" >
-                <h4 class="h6 mt-5 fw-normal">
-                    <div class="mb-4 d-inline-flex"><b>INFO</b></div> 
-                </h4>
-                <div class="text-color">
-                    <a asp-action="About" asp-controller="Public" asp-area="Public">About</a><br/>
-                    <a asp-action="PricingPlan" asp-controller="Public" asp-area="Public">Plans & Pricing</a><br/>
-                    <a asp-action="Error404" asp-controller="Public" asp-area="Public">FAQ</a><br/>
-                </div>
-            </div>
-            <div class="col-md-3 mt-3 mt-md-5 veesy-text-color" >
-                <h4 class="h6 mt-5 fw-normal">
-                    <div class=" mb-4 d-inline-flex"><b>LEGAL</b></div> 
-                </h4>
-                <div class="text-color">
-                    <a target="_blank" asp-action="PrivacyPolicy" asp-controller="Public" asp-area="Public">Privacy Policy</a><br/>
-                    <a target="_blank" asp-action="CookiesPolicy" asp-controller="Public" asp-area="Public">Cookies Policy</a><br/>
-                    <a asp-action="Error404" asp-controller="Public" asp-area="Public">Community Rules</a>
-                </div>
-            </div>
-            <div class="col-md-3 mt-3 mt-md-5 mb-4 veesy-text-color" >
-                <h4 class="h6 mt-5 fw-normal">
-                    <div class=" mb-3 d-inline-flex"><b>Do you need some help or want to share some ideas with us?</b></div> 
-                </h4>
-                <button onclick="location.href='mailto:info@veesy.it';" class="contact-veesy rounded-pill btn-primary btn-variant" type="submit">get in touch</button>
-            </div>
-        </div>
-        <div class="row">
-            <div class="mb-3 veesy-text-color d-flex justify-content-between">
-                <p style="font-size: 14px !important;" class="d-none d-lg-block text-color">Veesy S.R.L. © @DateTime.Now.Year All rights reserved - Vat.: 13005470961 - annual social capital € 10.000</p>
-                <p style="font-size: 14px !important;" class="text-end me-4 d-none d-lg-block text-color">made with love by <a target=”_blank” href="https://www.derein.net/">derein</a> & <a target=”_blank” href="https://www.enigma-tech.it/">enigma</a></p>
-                <p style="font-size: 14px !important;" class="d-block d-lg-none d-inline text-color">Veesy S.R.L. © @DateTime.Now.Year All rights reserved - Vat.: 13005470961 - annual social capital € 10.000 - made with love by <a target=”_blank” href="https://www.derein.net/">derein</a> & <a target=”_blank” href="https://www.enigma-tech.it/">enigma</a></p>
-            </div>
-        </div>
-    </div>
-</footer>
+			</div>
+			<div class="switch-container dark-light" id="canvaId">
+				<input type="checkbox" id="switchInp">
+				<label for="switchInp" class="pull-string">
+					@if (ViewContext.RouteData.Values["Controller"].ToString() == "Cloud" &&
+							(ViewContext.RouteData.Values["Action"].ToString() == "List"))
+					{
+						<img style="content: url('../imgs/Layout/switch_dark mode.svg');" class="dark-light-img molla-img" id="molla-img">
+					}
+					else if (ViewContext.RouteData.Values["Controller"].ToString() == "Cloud" && ViewContext.RouteData.Values["Action"].ToString() == "Edit")
+					{
+						<img style="content: url('../../imgs/Layout/switch_dark mode.svg');" class="dark-light-img molla-img" id="molla-img">
+					}
+					else
+					{
+						<img class="dark-light-img molla-img" id="molla-img">
+					}
+				</label>
+			</div>
+		</nav>
 
-    @* <footer class="border-top footer text-muted"> *@
-    @*     <div class="container"> *@
-    @*         &copy; 2023 - Veesy.WebApp - <a>Privacy</a> *@
-    @*     </div> *@
-    @* </footer> *@
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://kit.fontawesome.com/e08a602379.js" crossorigin="anonymous"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.plugins.min.js"></script>
-    @await Component.InvokeAsync("Notyf")
-    @await RenderSectionAsync("Scripts", required: false)
+	</header>
+	<div id="load-spinner" style="top:0px; display: none; position: fixed; z-index: 9999; padding-top: 500px !important; height: 100%; width: 100%; background-color: rgba(0, 0, 0, 0.5);" class="text-center background-color">
+		<div class="spinner-border" role="status">
+			<span class="sr-only">Loading...</span>
+		</div>
+	</div>
+	<div class="@background container-fluid" style="padding-left: 22px; padding-right: 22px; min-height: 102.5vh;">
+		@RenderBody()
+	</div>
+
+	<footer class="footer" style="margin-top: -5%;">
+		<div class="@background container-fluid" style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; padding-top: 30px; padding-bottom: 34px">
+			<div class="mb-4 d-inline-flex"><b>PARTNERS</b></div>
+			<img src="imgs/Partners/ms-startups.webp" style="-moz-user-select: none; user-select: none;" width="180px">
+		</div>
+		<div class="container">
+			<div class="row mb-3">
+				<div class="col-md-3 mt-5 veesy-text-color">
+					<h2 class="h2 mt-3 fw-normal">
+						<div class=" mb-5 d-inline-flex" asp-area="" asp-controller="Home" asp-action="Index"><img class="logo-footer"></div>
+					</h2>
+					<p class="text-color">
+						Veesy S.R.L.<br />
+						Via Giacomo Matteotti 43<br />
+						20832, Desio (MB)
+					</p>
+					<div class="row mt-4 social-icons-row">
+						<div class="col">
+							<a target="_blank" href="https://www.facebook.com/profile.php?id=61557228052314" class="social-icon"><i class="fa-brands fa-facebook icon-color-veesy"></i></a>
+							<a target="_blank" href="https://www.instagram.com/veesy.it/" class="social-icon"><i class="fa-brands fa-instagram icon-color-veesy"></i></a>
+							<a target="_blank" href="https://www.linkedin.com/company/veesy" class="social-icon"><i class="fa-brands fa-linkedin icon-color-veesy"></i></a>
+							<a target="_blank" href="https://open.spotify.com/show/4roHmmrq6ogk1n2GBl4uoQ?si=d8a588d626bc4a38" class="social-icon"><i class="fa-brands fa-spotify icon-color-veesy"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2 mt-3 mt-md-5 veesy-text-color">
+					<h4 class="h6 mt-5 fw-normal">
+						<div class="mb-4 d-inline-flex"><b>INFO</b></div>
+					</h4>
+					<div class="text-color">
+						<a asp-action="About" asp-controller="Public" asp-area="Public">About</a><br />
+						<a asp-action="PricingPlan" asp-controller="Public" asp-area="Public">Plans & Pricing</a><br />
+						<a asp-action="Error404" asp-controller="Public" asp-area="Public">FAQ</a><br />
+					</div>
+				</div>
+				<div class="col-md-3 mt-3 mt-md-5 veesy-text-color">
+					<h4 class="h6 mt-5 fw-normal">
+						<div class=" mb-4 d-inline-flex"><b>LEGAL</b></div>
+					</h4>
+					<div class="text-color">
+						<a target="_blank" asp-action="PrivacyPolicy" asp-controller="Public" asp-area="Public">Privacy Policy</a><br />
+						<a target="_blank" asp-action="CookiesPolicy" asp-controller="Public" asp-area="Public">Cookies Policy</a><br />
+						<a asp-action="Error404" asp-controller="Public" asp-area="Public">Community Rules</a>
+					</div>
+				</div>
+				<div class="col-md-3 mt-3 mt-md-5 mb-4 veesy-text-color">
+					<h4 class="h6 mt-5 fw-normal">
+						<div class=" mb-3 d-inline-flex"><b>Do you need some help or want to share some ideas with us?</b></div>
+					</h4>
+					<button onclick="location.href='mailto:info@veesy.it';" class="contact-veesy rounded-pill btn-primary btn-variant" type="submit">get in touch</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="mb-3 veesy-text-color d-flex justify-content-between">
+					<p style="font-size: 14px !important;" class="d-none d-lg-block text-color">Veesy S.R.L. © @DateTime.Now.Year All rights reserved - Vat.: 13005470961 - annual social capital € 10.000</p>
+					<p style="font-size: 14px !important;" class="text-end me-4 d-none d-lg-block text-color">made with love by <a target=”_blank” href="https://www.derein.net/">derein</a> & <a target=”_blank” href="https://www.enigma-tech.it/">enigma</a></p>
+					<p style="font-size: 14px !important;" class="d-block d-lg-none d-inline text-color">Veesy S.R.L. © @DateTime.Now.Year All rights reserved - Vat.: 13005470961 - annual social capital € 10.000 - made with love by <a target=”_blank” href="https://www.derein.net/">derein</a> & <a target=”_blank” href="https://www.enigma-tech.it/">enigma</a></p>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	@* <footer class="border-top footer text-muted"> *@
+	@*     <div class="container"> *@
+	@*         &copy; 2023 - Veesy.WebApp - <a>Privacy</a> *@
+	@*     </div> *@
+	@* </footer> *@
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://kit.fontawesome.com/e08a602379.js" crossorigin="anonymous"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.min.js"></script>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.plugins.min.js"></script>
+	@await Component.InvokeAsync("Notyf")
+	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
 
 <script>
-    const menuButton = document.getElementById('menuButton');
-    const menuPopup = document.getElementById('menuPopup');
-    const closeButton = document.getElementById('closeButton');
+	const menuButton = document.getElementById('menuButton');
+	const menuPopup = document.getElementById('menuPopup');
+	const closeButton = document.getElementById('closeButton');
 
-    window.onload = (event) => {
-      var popupNone = document.getElementById('none-popup');
-      if (popupNone != null){
-          popupNone.style.display = "none";
-      }
-    };
-    
-    
-    //Start Dark Mode
-    // Verifica se esiste una preferenza del tema nel localStorage
-    const savedTheme = localStorage.getItem("theme");
-    
-    // Ottieni l'elemento della checkbox e l'elemento root del documento
-    const checkbox = document.getElementById("switchInp");
-    const rootElement = document.documentElement;
-    
-    // Funzione per impostare il tema e lo stato "checked" della checkbox
-    function setTheme(theme) {
-      rootElement.setAttribute("data-bs-theme", theme);
-      localStorage.setItem("theme", theme);
-    }
-    
-    // Inizializza il tema in base alla preferenza salvata o al tema predefinito
-    if (savedTheme) {
-      setTheme(savedTheme);
-    } else {
-      setTheme("light"); // Imposta il tema predefinito
-    }
-    
-    // Imposta lo stato "checked" della checkbox iniziale all'avvio
-    checkbox.checked = rootElement.getAttribute("data-bs-theme") === "dark";
-    
-    // Aggiungi un listener per la checkbox
-    checkbox.addEventListener("click", () => {
-      if (checkbox.checked) {
-        setTheme("dark");
-      } else {
-        setTheme("light");
-      }
-    });
+	window.onload = (event) => {
+		var popupNone = document.getElementById('none-popup');
+		if (popupNone != null) {
+			popupNone.style.display = "none";
+		}
+	};
 
-    //End Dark Mode
-    var gallery = document.querySelector("#galleryselector")
 
-    menuButton.addEventListener('click', () => {
-        menuPopup.classList.toggle('active');
-        document.getElementById('canvaId').style.display="none";
-        document.body.classList.toggle('no-scroll');
-        var popupNone = document.getElementById('none-popup');
-        if (popupNone != null){
-            popupNone.style.display = "block";
-        }
-          
-        if (gallery != null){
-            gallery.style.visibility = "hidden";
-        }
-    });
+	//Start Dark Mode
+	// Verifica se esiste una preferenza del tema nel localStorage
+	const savedTheme = localStorage.getItem("theme");
 
-    closeButton.addEventListener('click', () => {
-      menuPopup.classList.remove('active');
-      document.getElementById('canvaId').style.display="block";
-      document.body.classList.remove('no-scroll'); 
-      var popupNone = document.getElementById('none-popup');
-      if (popupNone != null){
-          popupNone.style.display = "none";
-      }
-      if (gallery != null){
-          gallery.style.visibility = "";
-      }
-    });
-    
-      // Chiudi il popup quando si clicca fuori da esso
-      $(document).on('click', (e) => {
-        if (!menuPopup.contains(e.target) && !menuButton.contains(e.target)) {
-          document.getElementById('canvaId').style.display="block";
-          menuPopup.classList.remove('active');
-          document.body.classList.remove('no-scroll'); 
-        }
-      });
-      
-        $(document).ready(function() {
-           $(".menu-list a").mouseenter(function() {
-               var target = $(this).data('target');
-               $(".description-content").hide();
-               $(target).show();
-           });
-       });
-        
-        function openModal(id){
-            $(id).modal('show');
-        }
-        function closeModal(id){
-            $(id).modal('hide');
-        }
-        
-        function setTextAreaValue(textAreaId, valueToSet){
-            valueToSet = valueToSet.replaceAll("&#x27;", "'");
-            document.getElementById(textAreaId).value = valueToSet; 
-        }
-        
-        function CopyLink(content) {
-            navigator.clipboard.writeText(content);
-            toastNotifyCustom("Link copied!", 3000, "#75ccdd", "")
-        }
+	// Ottieni l'elemento della checkbox e l'elemento root del documento
+	const checkbox = document.getElementById("switchInp");
+	const rootElement = document.documentElement;
 
-        function CountCharacter(limiteCaratteri, textCounter, text) {
-            var inputText = document.getElementById(text).value;
-            var numberOfCharacters = inputText.length;
-            if (numberOfCharacters >= limiteCaratteri){
-                document.getElementById(text).value = inputText.substring(0, limiteCaratteri);
-                numberOfCharacters = limiteCaratteri
-            }
-            var rimanenza = limiteCaratteri - numberOfCharacters;
-            document.getElementById(textCounter).textContent = rimanenza + " / " + limiteCaratteri;
-        }
-         
-  </script>
+	// Funzione per impostare il tema e lo stato "checked" della checkbox
+	function setTheme(theme) {
+		rootElement.setAttribute("data-bs-theme", theme);
+		localStorage.setItem("theme", theme);
+	}
+
+	// Inizializza il tema in base alla preferenza salvata o al tema predefinito
+	if (savedTheme) {
+		setTheme(savedTheme);
+	} else {
+		setTheme("light"); // Imposta il tema predefinito
+	}
+
+	// Imposta lo stato "checked" della checkbox iniziale all'avvio
+	checkbox.checked = rootElement.getAttribute("data-bs-theme") === "dark";
+
+	// Aggiungi un listener per la checkbox
+	checkbox.addEventListener("click", () => {
+		if (checkbox.checked) {
+			setTheme("dark");
+		} else {
+			setTheme("light");
+		}
+	});
+
+	//End Dark Mode
+	var gallery = document.querySelector("#galleryselector")
+
+	menuButton.addEventListener('click', () => {
+		menuPopup.classList.toggle('active');
+		document.getElementById('canvaId').style.display = "none";
+		document.body.classList.toggle('no-scroll');
+		var popupNone = document.getElementById('none-popup');
+		if (popupNone != null) {
+			popupNone.style.display = "block";
+		}
+
+		if (gallery != null) {
+			gallery.style.visibility = "hidden";
+		}
+	});
+
+	closeButton.addEventListener('click', () => {
+		menuPopup.classList.remove('active');
+		document.getElementById('canvaId').style.display = "block";
+		document.body.classList.remove('no-scroll');
+		var popupNone = document.getElementById('none-popup');
+		if (popupNone != null) {
+			popupNone.style.display = "none";
+		}
+		if (gallery != null) {
+			gallery.style.visibility = "";
+		}
+	});
+
+	// Chiudi il popup quando si clicca fuori da esso
+	$(document).on('click', (e) => {
+		if (!menuPopup.contains(e.target) && !menuButton.contains(e.target)) {
+			document.getElementById('canvaId').style.display = "block";
+			menuPopup.classList.remove('active');
+			document.body.classList.remove('no-scroll');
+		}
+	});
+
+	$(document).ready(function () {
+		$(".menu-list a").mouseenter(function () {
+			var target = $(this).data('target');
+			$(".description-content").hide();
+			$(target).show();
+		});
+	});
+
+	function openModal(id) {
+		$(id).modal('show');
+	}
+	function closeModal(id) {
+		$(id).modal('hide');
+	}
+
+	function setTextAreaValue(textAreaId, valueToSet) {
+		valueToSet = valueToSet.replaceAll("&#x27;", "'");
+		document.getElementById(textAreaId).value = valueToSet;
+	}
+
+	function CopyLink(content) {
+		navigator.clipboard.writeText(content);
+		toastNotifyCustom("Link copied!", 3000, "#75ccdd", "")
+	}
+
+	function CountCharacter(limiteCaratteri, textCounter, text) {
+		var inputText = document.getElementById(text).value;
+		var numberOfCharacters = inputText.length;
+		if (numberOfCharacters >= limiteCaratteri) {
+			document.getElementById(text).value = inputText.substring(0, limiteCaratteri);
+			numberOfCharacters = limiteCaratteri
+		}
+		var rimanenza = limiteCaratteri - numberOfCharacters;
+		document.getElementById(textCounter).textContent = rimanenza + " / " + limiteCaratteri;
+	}
+
+</script>
