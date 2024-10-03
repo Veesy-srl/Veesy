@@ -43,16 +43,25 @@
                 </div>
             </div>
             <div class="card-body card-body-dashboard row p-0 m-0">
+                
                 <div class="ps-3 col-sm-12 col-lg-3 card-body-background-radius card-body-background vertical-space pb-0">
-                    <div style="position: relative; left: -30%;" id="chart"></div>
+                    <i class="fa-brands fa-discord fa-7x m-2 mt-4"></i>
                     <div>
-                        <h3 class="text-color">Your Profile is <strong>@Model.Percent%</strong><br/> complete.</h3>
+                        <h3 class="text-color">Lorem ipsum Lorem ipsum Lorem ipsum</h3>
                         <div class="mb-3 mt-3">
-                            <a asp-controller="Profile" asp-area="Account" asp-action="Profile" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i>edit profile</a>
+                            @if (Model.DiscordConnected)
+                            {
+                                <a href="https://discord.gg/VAVfu9TQEp" class="grey-link">our discord server <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                            }
+                            else
+                            {
+                                <a href="https://discord.com/oauth2/authorize?client_id=1290325889011290123&response_type=code&redirect_uri=https%3A%2F%2Flocalhost%3A7218%2Fcallbackdiscord&scope=identify" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i>connect discord</a>
+                            }
                         </div>
                         <hr class="nodisplay-lg"/>
                     </div>
                 </div>
+
                 <div class="ps-3 col-sm-12 col-lg-3 card-body-background vertical-space pt-2 pb-0">
                     <div class="mt-4 pt-1">
                         <div class="d-flex align-items-end mb-2">
@@ -65,7 +74,7 @@
                             }
                             else
                             {
-                            <h3 style="font-size: 40px !important; line-height: 40px; color: #D2D5DB !important;" class="mb-4">/@Model.Subscription.AllowedMediaNumber</h3>
+                                <h3 style="font-size: 40px !important; line-height: 40px; color: #D2D5DB !important;" class="mb-4">/@Model.Subscription.AllowedMediaNumber</h3>
                             }
                         </div>
                         <div style="height: 5px;" class="progress" id="progress-media">
@@ -299,12 +308,7 @@
         </div>
     </div>
 </div>
-    @* <div class="flex items-center justify-center h-screen bg-discord-gray text-white" > *@
-    @*     <a id="login" href="https://discord.com/oauth2/authorize?client_id=1281638221138362378&response_type=code&redirect_uri=https%3A%2F%2Flocalhost%3A7218%2Fcallbackdiscord&scope=identify" class="bg-discord-blue  text-xl px-5 py-3 rounded-md font-bold flex items-center space-x-4 hover:bg-gray-600 transition duration-75"> *@
-    @*         <i class="fa-brands fa-discord text-2xl"></i> *@
-    @*         <span>Connect Discord</span> *@
-    @*     </a> *@
-    @* </div> *@
+     
 </div>
 <div class="empty-veesy"></div>
 

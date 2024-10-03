@@ -472,6 +472,18 @@
         <member name="M:Veesy.Domain.Migrations.AddedDiscordDiscriminator.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:Veesy.Domain.Migrations.UnsuscribeMail">
+            <inheritdoc />
+        </member>
+        <member name="M:Veesy.Domain.Migrations.UnsuscribeMail.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Veesy.Domain.Migrations.UnsuscribeMail.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Veesy.Domain.Migrations.UnsuscribeMail.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
         <member name="T:Veesy.Domain.Models.Media">
             <summary>
             Tabella per il salvataggio dei media originali caricati dall'utente.

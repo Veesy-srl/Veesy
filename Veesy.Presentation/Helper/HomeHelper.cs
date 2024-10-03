@@ -47,7 +47,8 @@ public class HomeHelper
             MediaNumber = numberMedia,
             MediaPercent = (numberMedia * 100) / subscription.AllowedMediaNumber,
             Subscription = subscription,
-            BaseProfileImage = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/"
+            BaseProfileImage = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/",
+            DiscordConnected = user.DiscordId != null ? true : false
         };
     }
 }
