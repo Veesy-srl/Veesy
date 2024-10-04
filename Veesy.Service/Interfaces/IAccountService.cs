@@ -62,4 +62,5 @@ public interface IAccountService
     Task DeleteUsers(List<MyUser> users);
     List<MyUser> GetUserToSendEmailPro();
     Task UpdateMyUsers(List<MyUser> usersToUpdate);
+    public MyUser? GetUserByDiscordId(string discordId);
 }

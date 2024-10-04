@@ -513,12 +513,12 @@ public class ProfileController : VeesyController
         }
     }
     
-    [HttpGet]
-    public async Task<IActionResult> UnsubscribeMail()
+    [HttpGet("profile/unsubscribe/{userId}")]
+    public async Task<IActionResult> UnsubscribeMail(string userId)
     {
         try
         {
-            await _profileHelper.UnsubscribeMail(UserInfo);
+            await _profileHelper.UnsubscribeMail(userId);
             return RedirectToAction("Unsubscribed");
         }
         catch (Exception ex)

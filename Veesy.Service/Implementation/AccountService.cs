@@ -536,6 +536,11 @@ public class AccountService : IAccountService
         await _uoW.CommitAsync(new MyUser());
     }
 
+    public MyUser? GetUserByDiscordId(string discordId)
+    {
+        return _uoW.MyUserRepository.FindByCondition(x => x.DiscordId == discordId).FirstOrDefault();
+    }
+
     public class CreatorOverviewDto
     {
         public int NumberCreator { get; set; }

@@ -507,11 +507,12 @@ public class ProfileHelper
         
         var link = "";
         var currentPath = Directory.GetCurrentDirectory();
+        var unsubscribeLink = currentPath + "profile/unsubscribe/" + user.Id;
         
         try
         {
             var message = new Message(new (string, string)[] { ("Noreply | Veesy", user.Email) }, "What’s next? La Veesy PRO membership.", link);
-            List<(string, string)> replacer = new List<(string, string)> { ("[name]", user.Name) };
+            List<(string, string)> replacer = new List<(string, string)> { ("[name]", user.Name),("[unsubscribeLink]", unsubscribeLink) };
             await _emailSender.SendEmailAsync(message, currentPath + "/wwwroot/MailTemplate/mail-update-pro.html", replacer);
         }
         catch (Exception ex)
@@ -540,10 +541,11 @@ public class ProfileHelper
         }
     }
 
-    public async Task<ResultDto> UnsubscribeMail(MyUser user)
+    public async Task<ResultDto> UnsubscribeMail(string userId)
     {
-        user.Unsubscribe = true;
-        var result = await _accountService.UpdateUserProfile(user);
+        var userToUpdate = await _userManager.FindByIdAsync(userId);
+        userToUpdate.Unsubscribe = true;
+        var result = await _accountService.UpdateUserProfile(userToUpdate);
         
         if (result.Success)
         {
@@ -553,5 +555,15 @@ public class ProfileHelper
         {
             throw new Exception(result.Message);
         }
+    }
+
+    public string GetUserIdByDiscordId(string discordId)
+    {
+        var user = _accountService.GetUserByDiscordId(discordId);
+        if (user != null)
+            return user.Id;
+        
+        else
+            throw new Exception("Unable to find discord id");
     }
 }
