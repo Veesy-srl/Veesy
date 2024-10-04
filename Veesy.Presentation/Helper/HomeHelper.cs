@@ -44,6 +44,7 @@ public class HomeHelper
             UserCategory = user.Category,
             DiscordConnected = !string.IsNullOrEmpty(user.DiscordId),
             DiscordUsername = user.DiscordUsername,
+            DiscordLink = $"https://discord.com/oauth2/authorize?client_id={_config["Discord:ClientId"]}&response_type=code&redirect_uri={_config["ApplicationUrl"]}/callbackdiscord&scope=identify",
             FileName = user.ProfileImageFileName,
             Percent = percent,
             MediaNumber = numberMedia,
