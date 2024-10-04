@@ -371,54 +371,7 @@
 }
 
 @section Scripts {
-	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 	<script>
-
-				/*APEX CHART JS - RADIAL */
-				var options = {
-					chart: {
-						height: 150,
-						type: "radialBar",
-					},
-					series: [@Model.Percent],
-					colors: ["#27415E"],
-					plotOptions: {
-						radialBar: {
-							dataLabels: {
-								total: {
-									show: false,
-								},
-								value:{
-									show: false
-								}
-							},
-							startAngle: -180,
-							endAngle: 180,
-							hollow: {
-								margin: 0,
-								size: "35%",
-								background: "#ffffff"
-							}
-						}
-					},
-					fill: {
-						type: "gradient",
-						gradient: {
-							shade: "dark",
-							type: "linear",
-							gradientToColors: ["#75CCDD"],
-							stops: [0, 100]
-						}
-					},
-					stroke: {
-						lineCap: "round"
-					},
-					labels: [""]
-				};
-
-				var chart = new ApexCharts(document.querySelector("#chart"), options);
-
-				chart.render();
 
 		var div_uploader = document.getElementById("div-uploader");
 		/*Dropzone configuration*/
