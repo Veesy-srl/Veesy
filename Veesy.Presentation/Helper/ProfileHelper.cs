@@ -454,8 +454,9 @@ public class ProfileHelper
 
     public async Task<ResultDto> DeleteAccount(string id)
     {
-        await _accountService.DeleteUserById(id);
-        return new ResultDto(true, "User delete correctly.");
+        var user = await _userManager.FindByIdAsync(id);
+        await _accountService.DeleteUser(user);
+        return new ResultDto(true, "User deleted correctly.");
     }
 
     public async Task RemoveOldUser()

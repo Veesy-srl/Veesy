@@ -503,9 +503,9 @@ public class AccountService : IAccountService
         await _uoW.CommitAsync(user.Id);
     }
 
-    public async Task DeleteUserById(string id)
+    public async Task DeleteUser(MyUser user)
     {
-        var user = await _uoW.MyUserRepository.FindByCondition(s => s.Id == id).SingleOrDefaultAsync();
+        var id = user.Id;
         _uoW.MyUserRepository.Delete(user);
         await _uoW.CommitAsync(id);
     }

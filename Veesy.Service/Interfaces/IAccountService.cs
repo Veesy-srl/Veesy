@@ -57,7 +57,7 @@ public interface IAccountService
     SubscriptionPlan GetUserSubscriptionPlan(string userId);
     SubscriptionPlan GetSubscriptionPlanById(Guid id);
     Task AddNewUserSubscription(string userId, Guid id, MyUser user);
-    Task DeleteUserById(string id);
+    Task DeleteUser(MyUser user);
     List<MyUser> GetUserEmailNotConfirmed(int days);
     Task DeleteUsers(List<MyUser> users);
     List<MyUser> GetUserToSendEmailPro();
