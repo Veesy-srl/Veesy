@@ -20,4 +20,5 @@ public class DashboardViewModel
     public int PortfolioNumber { get; set; }
     public string UserDescription { get; set; }
     public bool DiscordConnected { get; set; }
+    public string? DiscordUsername { get; set; }
 }

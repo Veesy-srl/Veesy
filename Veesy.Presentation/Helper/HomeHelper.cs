@@ -43,6 +43,7 @@ public class HomeHelper
             Surname = user.Surname,
             UserCategory = user.Category,
             DiscordConnected = !string.IsNullOrEmpty(user.DiscordId),
+            DiscordUsername = user.DiscordUsername,
             FileName = user.ProfileImageFileName,
             Percent = percent,
             MediaNumber = numberMedia,

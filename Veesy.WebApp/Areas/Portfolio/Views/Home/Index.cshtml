@@ -44,20 +44,30 @@
 	            </div>
 	            <div class="card-body card-body-dashboard row p-0 m-0">
 	                
-	                <div class="ps-3 col-sm-12 col-lg-3 card-body-background-radius card-body-background vertical-space pb-0">
-	                    <i class="fa-brands fa-discord fa-7x m-2 mt-4"></i>
-	                    <div>
-	                        <h3 class="text-color">Lorem ipsum Lorem ipsum Lorem ipsum</h3>
-	                        <div class="mb-3 mt-3">
-	                            @if (Model.DiscordConnected)
-	                            {
-	                                <a href="https://discord.gg/VAVfu9TQEp" class="grey-link">our discord server <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-	                            }
-	                            else
-	                            {
-	                                <a href="https://discord.com/oauth2/authorize?client_id=1290325889011290123&response_type=code&redirect_uri=https%3A%2F%2Flocalhost%3A7218%2Fcallbackdiscord&scope=identify" class="red-link font-a-as-p"><i class="fa-brands fa-discord text-2xl me-1"></i>connect discord</a>
-	                            }
-	                        </div>
+	                <div class="ps-3 col-sm-12 col-lg-3 card-body-background-radius card-body-background vertical-space pb-0 pt-2">
+		                @if (Model.DiscordConnected)
+		                {
+			                <i style="color: #75CCDD" class="fa-brands fa-discord fa-4x m-2 mt-4"></i>
+		                }
+		                else
+		                {
+			                <i style="color: #AAB0BB" class="fa-brands fa-discord fa-4x m-2 mt-4"></i>
+		                }
+		                <div>
+                            @if (Model.DiscordConnected)
+                            {
+	                            <h3 class="text-color"><strong>Connected</strong> to <br/> @Model.DiscordUsername</h3>
+	                            <div class="mb-3 mt-3">
+		                            <a href="https://discord.gg/VAVfu9TQEp" class="grey-link">your community <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+	                            </div>
+                            }
+                            else
+                            {
+	                            <h3 class="text-color"><strong>Connect</strong> your Discord <br/> account</h3>
+	                            <div class="mb-3 mt-3">
+		                            <a href="https://discord.com/oauth2/authorize?client_id=1290325889011290123&response_type=code&redirect_uri=https%3A%2F%2Flocalhost%3A7218%2Fcallbackdiscord&scope=identify" class="red-link font-a-as-p"><i class="fa-brands fa-discord text-2xl me-1"></i>connect discord</a>
+	                            </div>
+                            }
 	                        <hr class="nodisplay-lg"/>
 	                    </div>
 	                </div>

@@ -15,7 +15,6 @@ using Veesy.Service.Dtos;
 
 namespace Veesy.WebApp.Areas.Account.Controllers;
 
-[Authorize]
 [Area("Account")]
 public class ProfileController : VeesyController
 {
@@ -32,6 +31,7 @@ public class ProfileController : VeesyController
         _configuration = configuration;
     }
 
+    [Authorize]
     [HttpGet("profile")]
     public IActionResult Profile()
     {
@@ -47,6 +47,7 @@ public class ProfileController : VeesyController
         }
     }
     
+    [Authorize]
     [HttpGet("profile/basic-info")]
     public IActionResult BasicInfo()
     {
@@ -64,6 +65,7 @@ public class ProfileController : VeesyController
 
     #region API
     
+    [Authorize]
     [HttpPost]
     public async Task<JsonResult> UpdateBiography([FromBody] string biography)
     {
@@ -85,6 +87,7 @@ public class ProfileController : VeesyController
         }
     }
     
+    [Authorize]
     [HttpPost]
     public async Task<JsonResult> DeleteAccount([FromBody] string id)
     {
@@ -105,6 +108,7 @@ public class ProfileController : VeesyController
         }
     }
     
+    [Authorize]
     [HttpPost]
     public async Task<JsonResult> ChangeSubscriptionPlan([FromBody] ChangeSubscriptionDto changeSubscriptionDto)
     {
@@ -125,6 +129,7 @@ public class ProfileController : VeesyController
         }
     }
     
+    [Authorize]
     [HttpPost]
     public async Task<JsonResult> UpdateUserVisibility([FromBody] UpdateUserVisibilityDto updateUserVisibility)
     {
@@ -140,6 +145,7 @@ public class ProfileController : VeesyController
         }
     }
     
+    [Authorize]
     [HttpPost]
     public async Task<JsonResult> UpdatePortfolioIntro([FromBody] string introPortfolio)
     {
@@ -161,6 +167,7 @@ public class ProfileController : VeesyController
         }
     }
     
+    [Authorize]
     [HttpPost]
     public async Task<JsonResult> UpdateExternalLink([FromBody] string externalLink)
     {
@@ -182,6 +189,7 @@ public class ProfileController : VeesyController
         }
     }
     
+    [Authorize]
     [HttpPost]
     public async Task<JsonResult> UpdateUsedSoftware([FromBody] List<Guid> usedSoftwareCodes)
     {
@@ -203,6 +211,7 @@ public class ProfileController : VeesyController
         }
     }
     
+    [Authorize]
     [HttpPost]
     public async Task<JsonResult> UpdateHardSkills([FromBody] List<Guid> hardSkillsCodes)
     {
@@ -224,6 +233,7 @@ public class ProfileController : VeesyController
         }
     }
     
+    [Authorize]
     [HttpPost]
     public async Task<JsonResult> UpdateSoftSkills([FromBody] List<Guid> softSkillsCodes)
     {
@@ -245,6 +255,7 @@ public class ProfileController : VeesyController
         }
     }
     
+    [Authorize]
     [HttpPost]
     public async Task<JsonResult> UpdateCategoriesWork([FromBody] List<Guid> categoriesWorkCodes)
     {
@@ -266,6 +277,7 @@ public class ProfileController : VeesyController
         }
     }
     
+    [Authorize]
     [HttpPost]
     public async Task<JsonResult> UpdateLanguageSpoken([FromBody] List<Guid> languagesSpokenCodes)
     {
@@ -287,6 +299,7 @@ public class ProfileController : VeesyController
         }
     }
     
+    [Authorize]
     [HttpPost]
     public async Task<JsonResult> UpdateInfoToShow([FromBody] List<Guid> infoToShowCodes)
     {
@@ -307,6 +320,7 @@ public class ProfileController : VeesyController
         }
     }
     
+    [Authorize]
     [HttpPost]
     public async Task<JsonResult> UpdateNameAndSurname([FromBody] FullNameDto fullName)
     {
@@ -328,6 +342,7 @@ public class ProfileController : VeesyController
         }
     }
     
+    [Authorize]
     [HttpPost]
     public async Task<JsonResult> UpdateEmail([FromBody] string email)
     {
@@ -349,6 +364,7 @@ public class ProfileController : VeesyController
         }
     }
     
+    [Authorize]
     [HttpPost]
     public async Task<JsonResult> UpdateUsername([FromBody] string username)
     {
@@ -370,6 +386,7 @@ public class ProfileController : VeesyController
         }
     }
     
+    [Authorize]
     [HttpPost]
     public async Task<JsonResult> UpdatePassword([FromBody] ResetPasswordDto resetPasswordDto)
     {
@@ -391,6 +408,7 @@ public class ProfileController : VeesyController
         }
     }
     
+    [Authorize]
     [HttpPost]
     public async Task<JsonResult> UpdatePhoneNumber([FromBody] PhoneNumberDto phoneNumberDto)
     {
@@ -412,6 +430,7 @@ public class ProfileController : VeesyController
         }
     }
     
+    [Authorize]
     [HttpPost]
     public async Task<JsonResult> UpdateVATNumber([FromBody] string vatNumber)
     {
@@ -433,6 +452,7 @@ public class ProfileController : VeesyController
         }
     }
     
+    [Authorize]
     [HttpPost]
     public async Task<JsonResult> UpdateCategory([FromBody] string category)
     {
@@ -455,6 +475,7 @@ public class ProfileController : VeesyController
     }
     
     
+    [Authorize]
     [HttpPost]
     public async Task<JsonResult> UpdateSectors([FromBody] List<Guid> sectorCodes)
     {
@@ -476,6 +497,7 @@ public class ProfileController : VeesyController
         }
     }
     
+    [Authorize]
     [HttpPost]
     public async Task<JsonResult> UpdateRolesWork([FromBody] List<Guid> roleCodes)
     {
@@ -498,6 +520,7 @@ public class ProfileController : VeesyController
     }
     
     
+    [Authorize]
     [HttpGet("callbackdiscord")]
     public async Task<IActionResult> CallbackDiscord(string code)
     {
@@ -509,7 +532,7 @@ public class ProfileController : VeesyController
         catch (Exception ex)
         {
             Logger.Error(ex, ex.Message);
-            return RedirectToAction("Error400");
+            return RedirectToAction("Error400", "Public", new {area = "Public"});
         }
     }
     
@@ -524,7 +547,7 @@ public class ProfileController : VeesyController
         catch (Exception ex)
         {
             Logger.Error(ex, ex.Message);
-            return RedirectToAction("Error400");
+            return RedirectToAction("Error400", "Public", new {area = "Public"});
         }
     }
 
