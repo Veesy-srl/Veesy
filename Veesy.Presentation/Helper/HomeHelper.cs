@@ -42,13 +42,13 @@ public class HomeHelper
             PortfolioNumber = portfolioNumber,
             Surname = user.Surname,
             UserCategory = user.Category,
+            DiscordConnected = !string.IsNullOrEmpty(user.DiscordId),
             FileName = user.ProfileImageFileName,
             Percent = percent,
             MediaNumber = numberMedia,
             MediaPercent = (numberMedia * 100) / subscription.AllowedMediaNumber,
             Subscription = subscription,
             BaseProfileImage = $"{_config["ImagesKitIoEndpoint"]}{MediaCostants.BlobMediaSections.ProfileMedia}/",
-            DiscordConnected = user.DiscordId != null ? true : false
         };
     }
 }

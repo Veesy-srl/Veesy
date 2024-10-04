@@ -504,7 +504,7 @@ public class ProfileController : VeesyController
         try
         {
             await _profileHelper.ConnectDiscord(code, UserInfo);
-            return RedirectToAction("Profile");
+            return RedirectToAction("Index", "Home", new {area = "Portfolio"});
         }
         catch (Exception ex)
         {

@@ -55,7 +55,7 @@
 	                            }
 	                            else
 	                            {
-	                                <a href="https://discord.com/oauth2/authorize?client_id=1290325889011290123&response_type=code&redirect_uri=https%3A%2F%2Flocalhost%3A7218%2Fcallbackdiscord&scope=identify" class="red-link"><i class="fa-regular fa-pen-to-square pe-1"></i>connect discord</a>
+	                                <a href="https://discord.com/oauth2/authorize?client_id=1290325889011290123&response_type=code&redirect_uri=https%3A%2F%2Flocalhost%3A7218%2Fcallbackdiscord&scope=identify" class="red-link font-a-as-p"><i class="fa-brands fa-discord text-2xl me-1"></i>connect discord</a>
 	                            }
 	                        </div>
 	                        <hr class="nodisplay-lg"/>
@@ -311,36 +311,40 @@
 </div>
 <div class="empty-veesy"></div>
 
-<div class="discord-popup-splash" id="discord-popup-splash-id" onclick="OpenDiscordPopup()">
-	<div class="d-flex">
-		<div class="col-11">
-			<p class="text-white ms-2 mb-1" style="margin-top: 2.5% !important;">JOIN OUR COMMUNITY!</p>
-		</div>
-		<div class="col-1"><div class="text-end pt-1"><i class="fa-solid fa-circle fa-xs me-2" style="color: white;"></i></div></div>
-	</div>
-</div>
 
-<div class="discord-popup-full-splash me-1 mb-2" id="popup-discord">
-	<div class="d-flex" style="cursor: pointer" onclick="CloseDiscordPopup()">
-		<div class="col-11">
-			<p class="text-white ms-2 mb-1 mt-2">JOIN OUR COMMUNITY!</p>
-		</div>
-		<div class="col-1 pe-2"><div class="text-end pt-1"><i class="fa-solid fa-circle-xmark mt-1" style="color: white"></i></div></div>
-	</div>
-	<hr class="portfolio-hr" />
-	<div class="row discord-popup-body overflow-auto ms-0">
-		<div class="row p-4 pb-2">
-			<h5 class="text-white box-splash-2">
-				Click here to join our Discord Community!
-			</h5>
-		</div>
-		<div class="row text-end justify-content-end">
-			<a target="_blank" href="https://discord.gg/chSWGEMfrU">
-				<button class="rounded-pill btn div-white-rounded-veesy btn-variant" style="width: 200px;">join now</button>
-			</a>
+@if (!Model.DiscordConnected)
+{
+	<div class="discord-popup-splash" id="discord-popup-splash-id" onclick="OpenDiscordPopup()">
+		<div class="d-flex">
+			<div class="col-11">
+				<p class="text-white ms-2 mb-1" style="margin-top: 2.5% !important;">JOIN OUR COMMUNITY!</p>
+			</div>
+			<div class="col-1"><div class="text-end pt-1"><i class="fa-solid fa-circle fa-xs me-2" style="color: white;"></i></div></div>
 		</div>
 	</div>
-</div>
+	<div class="discord-popup-full-splash me-1 mb-2" id="popup-discord">
+		<div class="d-flex" style="cursor: pointer" onclick="CloseDiscordPopup()">
+			<div class="col-11">
+				<p class="text-white ms-2 mb-1 mt-2">JOIN OUR COMMUNITY!</p>
+			</div>
+			<div class="col-1 pe-2">
+				<div class="text-end pt-1"><i class="fa-solid fa-circle-xmark mt-1" style="color: white"></i></div></div>
+		</div>
+		<hr class="portfolio-hr"/>
+		<div class="row discord-popup-body overflow-auto ms-0">
+			<div class="row p-4 pb-2">
+				<h5 class="text-white box-splash-2">
+					Click here to join our Discord Community!
+				</h5>
+			</div>
+			<div class="row text-end justify-content-end">
+				<a target="_blank" href="https://discord.gg/chSWGEMfrU">
+					<button class="rounded-pill btn div-white-rounded-veesy btn-variant" style="width: 200px;">join now</button>
+				</a>
+			</div>
+		</div>
+	</div>
+}
 
 @section Style
 {
@@ -546,7 +550,7 @@
 						// Controlla se il popup deve essere nascosto
 						const isHidden = window.localStorage.getItem('popup-discord-desk-hide') === 'true';
 
-						if (!isHidden) {
+						if (!isHidden && '@Model.DiscordConnected' === 'false') {
 								setTimeout(OpenDiscordPopup, 1000); // Apri il popup dopo 1 secondo
 						} else {
 								document.getElementById("discord-popup-splash-id").style.display = "block";
