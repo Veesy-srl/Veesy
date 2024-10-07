@@ -2,11 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using Veesy.Domain.Constants;
+using Veesy.Domain.Exceptions;
+using Veesy.Domain.Migrations;
 using Veesy.Domain.Models;
+using Veesy.Email;
 using Veesy.Presentation.Model.Cloud;
 using Veesy.Presentation.Model.Public;
 using Veesy.Service.Dtos;
@@ -20,13 +25,20 @@ public class PublicHelper
     private readonly IAccountService _accountService;
     private readonly IConfiguration _config;
     private readonly IPortfolioService _portfolioService;
+    private readonly IEmailSender _emailSender;
+    private readonly IAnalyticService _analyticService;
+    private readonly UserManager<MyUser> _userManager;
+    
 
-    public PublicHelper(IMediaService mediaService, IAccountService accountService, IConfiguration config, IPortfolioService portfolioService)
+    public PublicHelper(IMediaService mediaService, IAccountService accountService, IConfiguration config, IPortfolioService portfolioService, IEmailSender emailSender, IAnalyticService analyticService, UserManager<MyUser> userManager)
     {
         _mediaService = mediaService;
         _accountService = accountService;
         _config = config;
         _portfolioService = portfolioService;
+        _emailSender = emailSender;
+        _analyticService = analyticService;
+        _userManager = userManager;
     }
 
     public async Task<AboutMediaViewModel> GetAboutInfo()
@@ -76,7 +88,7 @@ public class PublicHelper
     
     public CreatorsViewModel GetCreatorsViewModel()
     {
-        List<MyUser> userInfo = _accountService.GetAllCreators().ToList();
+        List<MyUser> userInfo = _accountService.GetAllVisibleCreators().ToList();
         List<MyUserCategoryWork> categoryWorks = new List<MyUserCategoryWork>();
 
         foreach (var user in userInfo)
@@ -98,13 +110,8 @@ public class PublicHelper
     public List<string> GetCreatorsFiltered(List<string> category)
     {
 
-        var initialResults = _accountService.GetFilteredCreators();
-
-        var usersWithAllCategories = initialResults
-            .Where(u => category.All(category => u.MyUserCategoriesWork.Any(cw => cw.CategoryWork.Name == category)))
-            .ToList();
-        
-        return usersWithAllCategories.Select(info => info.Id).ToList();
+        var initialResults = _accountService.GetFilteredCreatorsToShow(category);
+        return initialResults.Select(info => info.Id).ToList();
     }
 
     public SubscritionPlanViewModel GetSubscritionPlanViewModel(MyUser userInfo)
@@ -151,4 +158,57 @@ public class PublicHelper
         };
         return vm;
     }
+
+    public async Task<ResultDto> SendCreatorForm(CreatorFormDto dto, MyUser userInfo, string? testEmail)
+    {
+        if (dto.SenderEmail.IsNullOrEmpty())
+            return new ResultDto(false, "Please insert email");
+        if (dto.SenderName.IsNullOrEmpty())
+            return new ResultDto(false, "Please insert name");
+        if (dto.Message.IsNullOrEmpty())
+            return new ResultDto(false, "Please insert message");
+        if (!dto.Policy)
+            return new ResultDto(false, "Please accept the Privacy Policy");
+        
+        var emailToSend = "";
+        var recipient = new MyUser();
+        if (string.IsNullOrEmpty(testEmail))
+        {
+            recipient = _accountService.GetUserById(dto.Recipient);
+            if(recipient == null)
+                return new ResultDto(false, "User not found");
+            emailToSend = recipient.Email;
+        }
+        else
+        {
+            recipient = await _userManager.FindByEmailAsync(testEmail);
+            if (recipient == null)
+            {
+                recipient = await _userManager.FindByNameAsync(testEmail);
+                if (recipient == null)
+                    return new ResultDto(false, "User not found");
+            }
+            if(recipient == null)
+                return new ResultDto(false, "User not found");
+        }
+        
+        var link = "";
+        var message = new Message(new (string, string)[] { ("Noreply | Veesy", emailToSend) }, "You have a new message from: " + dto.SenderName, link);
+        List<(string, string)> replacer = new List<(string, string)> { ("[sender-email]", dto.SenderEmail),("[message]", dto.Message),("[sender-name]", dto.SenderName) };
+
+        var currentPath = Directory.GetCurrentDirectory();
+        await _emailSender.SendEmailAsync(message, currentPath + "/wwwroot/MailTemplate/mail-creator-form.html", replacer);
+        var form = new TrackingForm
+        {
+            EmailSender = dto.SenderEmail,
+            NameSender = dto.SenderName,
+            MyUserId = recipient.Id,
+            FormType = VeesyConstants.FormType.CreatorType
+        };
+        await _analyticService.AddForm(form, userInfo);
+        
+        return new ResultDto(true, "Message sent correctly");
+    }
+
+    
 }

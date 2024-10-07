@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using NLog;
+using Veesy.Discord;
 using Veesy.Domain.Constants;
 using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
@@ -28,8 +29,9 @@ public class ProfileHelper
     private readonly IConfiguration _config;
     private IMediaService _mediaService;
     private readonly IEmailSender _emailSender;
+    private readonly IDiscordService _discordService;
 
-    public ProfileHelper(IAccountService accountService, IPortfolioService portfolioService, MyUserValidator myUserValidator, UserManager<MyUser> userManager, MediaHelper mediaHelper, IConfiguration config, IMediaService mediaService, IEmailSender emailSender)
+    public ProfileHelper(IAccountService accountService, IPortfolioService portfolioService, MyUserValidator myUserValidator, UserManager<MyUser> userManager, MediaHelper mediaHelper, IConfiguration config, IMediaService mediaService, IEmailSender emailSender, IDiscordService discordService)
     {
         _accountService = accountService;
         _myUserValidator = myUserValidator;
@@ -38,6 +40,7 @@ public class ProfileHelper
         _config = config;
         _mediaService = mediaService;
         _emailSender = emailSender;
+        _discordService = discordService;
         _portfolioService = portfolioService; }
 
     public async Task<ResultDto> UpdateMyUserBio(string biography, MyUser user)
@@ -85,7 +88,8 @@ public class ProfileHelper
             InfoToShow = MapProfileDtos.MapInfoToShowList(_accountService.GetInfosToShowWithUser(userInfo)),
             SoftSkills = MapProfileDtos.MapSkillsList(softskills.ToList()),
             Sectors = MapProfileDtos.MapSectorList(_accountService.GetSectorsWithUser(userInfo.Id)),
-            PortfolioThumbnailDtos = MapPortfolioDtos.MapListPortfolioThumbnailDto(portfolios)
+            PortfolioThumbnailDtos = MapPortfolioDtos.MapListPortfolioThumbnailDto(portfolios),
+            UserId = userInfo.Id
         };
     }
 
@@ -418,6 +422,13 @@ public class ProfileHelper
         await _accountService.AddNewUserSubscription(userClient.Id, subscriptionPlan.Id, user);
         return new ResultDto(true, $"{subscriptionPlan.Name} now is active.");
     } 
+
+    public async Task<ResultDto> UpdateUserVisibility(UpdateUserVisibilityDto updateUserVisibility, MyUser user)
+    {
+        var userToUpdate = await _userManager.FindByIdAsync(updateUserVisibility.MyUserId);
+        userToUpdate.VisibleInCreatorPage = updateUserVisibility.Visibility;
+        return await _accountService.UpdateUserProfile(userToUpdate);
+    } 
     
     public async Task<ResultDto> ChangeSubscriptionPlanApi(ChangeSubscriptionDto changeSubscriptionDto)
     {
@@ -443,8 +454,9 @@ public class ProfileHelper
 
     public async Task<ResultDto> DeleteAccount(string id)
     {
-        await _accountService.DeleteUserById(id);
-        return new ResultDto(true, "User delete correctly.");
+        var user = await _userManager.FindByIdAsync(id);
+        await _accountService.DeleteUser(user);
+        return new ResultDto(true, "User deleted correctly.");
     }
 
     public async Task RemoveOldUser()
@@ -491,14 +503,17 @@ public class ProfileHelper
             if (user == null)
                 return new ResultDto(false, "User not found");
         }
+        if (user.Unsubscribe)
+            return new ResultDto(false, "User unsubscribed from mails");
         
         var link = "";
         var currentPath = Directory.GetCurrentDirectory();
+        var unsubscribeLink = currentPath + "profile/unsubscribe/" + user.Id;
         
         try
         {
             var message = new Message(new (string, string)[] { ("Noreply | Veesy", user.Email) }, "What’s next? La Veesy PRO membership.", link);
-            List<(string, string)> replacer = new List<(string, string)> { ("[name]", user.Name) };
+            List<(string, string)> replacer = new List<(string, string)> { ("[name]", user.Name),("[unsubscribeLink]", unsubscribeLink) };
             await _emailSender.SendEmailAsync(message, currentPath + "/wwwroot/MailTemplate/mail-update-pro.html", replacer);
         }
         catch (Exception ex)
@@ -508,5 +523,48 @@ public class ProfileHelper
         }
 
         return new ResultDto(true, "");
+    }
+
+    public async Task<ResultDto> ConnectDiscord(string code, MyUser user)
+    {
+        var discordUser = await _discordService.GetDiscordUser(code);
+        user.DiscordId = discordUser.Id;
+        user.DiscordUsername = discordUser.Username;
+        user.DiscordDiscriminator = discordUser.Discriminator;
+        var result = await _accountService.UpdateUserProfile(user);
+        if (result.Success)
+        {
+            return result;
+        }
+        else
+        {
+            throw new Exception(result.Message);
+        }
+    }
+
+    public async Task<ResultDto> UnsubscribeMail(string userId)
+    {
+        var userToUpdate = await _userManager.FindByIdAsync(userId);
+        userToUpdate.Unsubscribe = true;
+        var result = await _accountService.UpdateUserProfile(userToUpdate);
+        
+        if (result.Success)
+        {
+            return result;
+        }
+        else
+        {
+            throw new Exception(result.Message);
+        }
+    }
+
+    public string GetUserIdByDiscordId(string discordId)
+    {
+        var user = _accountService.GetUserByDiscordId(discordId);
+        if (user != null)
+            return user.Id;
+        
+        else
+            throw new Exception("Unable to find discord id");
     }
 }

@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Veesy.Discord;
 using Veesy.Domain.Repositories;
 using Veesy.Domain.Repositories.Impl;
 using Veesy.Email;
@@ -18,6 +19,7 @@ public static class RegisterDependencyInjection
         serviceCollection.AddScoped<IUsedSoftwareRepository, UsedSoftwareRepository>();
         serviceCollection.AddScoped<IMediaRepository, MediaRepository>();
         serviceCollection.AddScoped<IPortfolioRepository, PortfolioRepository>();
+        serviceCollection.AddScoped<ITrackingFormRepository, TrackingFormRepository>();
         
 
         serviceCollection.AddScoped<IVeesyUoW, VeesyUoW>();
@@ -31,6 +33,7 @@ public static class RegisterDependencyInjection
 
         /*Utils Dependency Injection*/
         serviceCollection.AddScoped<IEmailSender, EmailSender>();
+        serviceCollection.AddTransient<IDiscordService, DiscordService>();
     
         /*Validator Dependency Injection*/
         serviceCollection.AddTransient<MyUserValidator>();

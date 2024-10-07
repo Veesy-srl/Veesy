@@ -53,4 +53,33 @@ public class SubscriptionController : ControllerBase
             return StatusCode(500, new SubscriptionResponse(-1, ex.Message));
         }
     }
+    
+    
+    [HttpGet]
+    public async Task<IActionResult> ChangeUserSubscriptionPlanByDiscordId(string userDiscordId, string subscription)
+    {
+        try
+        {
+            var userId = _profileHelper.GetUserIdByDiscordId(userDiscordId);
+            var result = await _profileHelper.ChangeSubscriptionPlanApi(new ChangeSubscriptionDto
+            {
+                SubscriptionName = subscription,
+                MyUserId = userId
+            });
+            
+            if (result.Success)
+            {
+                return StatusCode(200, new SubscriptionResponse(new SubscriptionDto
+                {
+                    Subscription = subscription
+                }));
+            }
+            return StatusCode(401, new SubscriptionResponse(-1, "Failed to change Subscription"));
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, "Error executing function ChangeUserSubscriptionPlan.");
+            return StatusCode(500, new SubscriptionResponse(-1, ex.Message));
+        }
+    }
 }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NLog;
+using Veesy.Discord;
 using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
 using Veesy.Presentation.Helper;
@@ -286,6 +287,30 @@ public class PublicController : VeesyController
         {
             Logger.Error(ex, ex.Message);
             return RedirectToAction("Error400");
+        }
+    }
+
+    [HttpPost]
+    public async Task<JsonResult> SendEmailToCreator([FromBody] CreatorFormDto form)
+    {
+        try
+        {
+            var result = await _publicHelper.SendCreatorForm(form, new MyUser
+            {
+                Id = Guid.Empty.ToString()
+            }, null);
+
+            if (!result.Success)
+                _notyfService.Custom(result.Message, 10, "#ca0a0a");
+            else
+                _notyfService.Custom("Email sent correctly.", 10, "#75CCDD");
+            return Json(new { Result = result.Success, Message = result.Message });
+        }
+        catch (Exception e)
+        {
+            Logger.Error(e, e.Message);
+            _notyfService.Custom(e.Message, 10, "#ca0a0a");
+            return Json(new { Result = false, Message = "Error during send mail." });
         }
     }
     

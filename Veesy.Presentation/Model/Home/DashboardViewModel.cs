@@ -19,4 +19,7 @@ public class DashboardViewModel
     public int MediaNumber { get; set; }
     public int PortfolioNumber { get; set; }
     public string UserDescription { get; set; }
+    public bool DiscordConnected { get; set; }
+    public string? DiscordUsername { get; set; }
+    public string DiscordLink { get; set; }
 }

@@ -18,20 +18,23 @@ public class AnalyticHelper
     public async Task<string?> SaveReferral(string startEndpoint, string ip, string referer, string latitudine, string longitudine, string ua)
     {
         var res = _analyticService.GetReferralByStartEndpoint(startEndpoint);
-        
-        await _analyticService.SaveReferralTrackingLink(new ReferralLinkTracking
+        var browser = GetBrowserFromUserAgent(ua);
+        if (browser != VeesyConstants.BrowserUnknown)
         {
-            Ip = ip,
-            ReferralLinkId = res?.Id,
-            Referer = referer,
-            LastAccess = DateTime.Now,
-            Latitude = latitudine,
-            Longitude = longitudine,
-            Browser = GetBrowserFromUserAgent(ua),
-            DeviceType = DetermineDeviceType(ua),
-            UserAgent = ua
-        });
-        
+            await _analyticService.SaveReferralTrackingLink(new ReferralLinkTracking
+            {
+                Ip = ip,
+                ReferralLinkId = res?.Id,
+                Referer = referer,
+                LastAccess = DateTime.Now,
+                Latitude = latitudine,
+                Longitude = longitudine,
+                Browser = browser,
+                DeviceType = DetermineDeviceType(ua),
+                UserAgent = ua
+            });
+        }
+
         if (res == null || !res.Enable)
             return null;
 
@@ -41,29 +44,29 @@ public class AnalyticHelper
     private string GetBrowserFromUserAgent(string userAgent)
     {
         if (string.IsNullOrEmpty(userAgent))
-            return "Unknown";
+            return VeesyConstants.BrowserUnknown;
 
         if (userAgent.Contains("Firefox"))
-            return "Firefox";
+            return VeesyConstants.Firefox;
         if (userAgent.Contains("Edg/") || userAgent.Contains("Edge"))
-            return "Microsoft Edge";
+            return VeesyConstants.MicrosoftEdge;
         if (userAgent.Contains("Chrome"))
         {
             // Alcuni browser usano "Chrome" nel loro UA, quindi dobbiamo escludere alcuni casi.
             if (userAgent.Contains("OPR") || userAgent.Contains("Opera"))
-                return "Opera";
+                return VeesyConstants.Opera;
             if (userAgent.Contains("Chromium"))
-                return "Chromium";
-            return "Chrome";
+                return VeesyConstants.Chromium;
+            return VeesyConstants.Chrome;
         }
         if (userAgent.Contains("Safari") && !userAgent.Contains("Chrome"))
-            return "Safari";
+            return VeesyConstants.Safari;
         if (userAgent.Contains("OPR") || userAgent.Contains("Opera"))
-            return "Opera";
+            return VeesyConstants.Opera;
         if (userAgent.Contains("Trident") || userAgent.Contains("MSIE"))
-            return "Internet Explorer";
+            return VeesyConstants.InternetExplorer;
 
-        return "Unknown";
+        return VeesyConstants.BrowserUnknown;
     }
     
     private VeesyConstants.DeviceType DetermineDeviceType(string userAgent)

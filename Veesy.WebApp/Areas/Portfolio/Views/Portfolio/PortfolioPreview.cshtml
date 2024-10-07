@@ -5,6 +5,29 @@
 @{
     ViewData["Title"] = "Preview";
 }
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+    function SendMessage() {
+        $('#load-spinner').css("display", "block");
+
+        $.ajax({
+            type: 'POST',
+            url: '@Url.Action("FakeMailSentForPortfolioPreview", "Portfolio")',
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function (response) {
+                if (response.result) {
+                    closeModal('#modalMessageCreator');
+                }
+                $('#load-spinner').css("display", "none");
+            },
+            error: function () {
+                $('#load-spinner').css("display", "none");
+            }
+        });
+    }
+</script>
 
 <div class="padding-lg pt-7rem">
     <div class="row pt-4 p-4-lg">
@@ -18,7 +41,7 @@
         <div class="col-sm-12 col-md-4 mb-3 nodisplay-sm">
             <div class="text-end">
                 <h3 class="text-color" style="font-size: 20px !important; line-height:  27px !important;"><strong>Interested in my work?</strong></h3>
-                <button onclick="location.href='mailto:@Model.PortfolioDto.UserEmail';"  class="rounded-pill btn-primary btn-variant mt-2" style="font-size: 15px !important; line-height:  22px !important;">contact me</button>
+                <button onclick="openModal('#modalMessageCreator')"  class="rounded-pill btn-primary btn-variant mt-2" style="font-size: 15px !important; line-height:  22px !important;">contact me</button>
             </div>
         </div>
     </div>
@@ -57,7 +80,7 @@
 <div class="empty-veesy"></div>
 <div class="text-center">
     <h3 class="text-color" style="font-size: 20px !important; line-height: 27px !important;"><strong>Interested in my work?</strong></h3>
-    <button onclick="location.href='mailto:@Model.PortfolioDto.UserEmail';"  class="rounded-pill btn-primary btn-padding btn-variant my-4" style="font-size: 15px !important; line-height:  22px !important;">contact me</button>
+    <button onclick="openModal('#modalMessageCreator')"  class="rounded-pill btn-primary btn-padding btn-variant my-4" style="font-size: 15px !important; line-height:  22px !important;">contact me</button>
 </div>
 <div class="empty-veesy"></div>
 <div class="empty-veesy"></div>
@@ -222,16 +245,86 @@
         </div>
         <div class="row text-end justify-content-end">
             <h3 class="text-white" style="font-size: 20px !important; line-height: 27px !important;"><strong>Interested in my work?</strong></h3>
-            <button onclick="location.href='mailto:@Model.PortfolioDto.UserEmail';"  class="rounded-pill w-25 div-white-rounded-veesy-portfolio btn-variant mt-2" style="font-size: 15px !important; line-height:  22px !important;">contact me</button>
+            <button onclick="openModal('#modalMessageCreator'); CloseCreatorPopup();"  class="rounded-pill w-25 div-white-rounded-veesy-portfolio btn-variant mt-2" style="font-size: 15px !important; line-height:  22px !important;">contact me</button>
         </div>
         <div class="empty-veesy"></div>
     </div>
 </div>
 <div id="blurred-background" class="blur-background" style="display: none"></div>
 
+<div class="modal fade" id="modalMessageCreator" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content modal-content-folio">
+            <div class="modal-header d-flex justify-content-end">
+                <a class="close-button-folio" onclick="closeModal('#modalMessageCreator')">
+                    <span class="folio-x">X</span>
+                </a>
+            </div>
+            <div class="modal-body pt-4 pb-3 ps-md-5 pe-md-5">
+                <h3 class="modal-title modal-title-folio text-color-folio" style="font-size: 25px !important; line-height: 30px !important;" id="exampleModalLongTitle">Send message to <b style="top: -0.3px; position: relative;">@Model.PortfolioDto.UserName</b></h3>
+                <div class="row mt-5">
+                    <div class="col-1"></div>
+                    <div class="col-5">
+                        <span class="text-color-folio">Your Email*</span>
+                        <input type="text" id="message-sender-email" rows="4" class="w-100 input-modal-folio text-profile"/>
+                    </div>
+                    <div class="col-5">
+                        <span class="text-color-folio">Name / Company*</span>
+                        <input type="text" id="message-sender-name" rows="4" class="w-100 input-modal-folio text-profile"/>
+                    </div>
+                    <div class="col-1"></div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-1"></div>
+                    <div class="col-10">
+                        <span class="text-color-folio">Your message*</span>
+                        <textarea id="message-text" rows="4" class="text-profile textarea-folio"></textarea>
+                    </div>
+                    <div class="col-1"></div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-1"></div>
+                    <div class="col-10 d-flex align-items-center privacy-policy-folio">
+                        <input type="checkbox" id="privacy-policy" name="privacy-policy" class="custom-checkbox-folio" required>
+                        <span for="privacy-policy" class="ms-3 mt-1">I have read and accept the <a href="/privacy-policy" target="_blank" class="privacy-link-folio">Privacy Policy</a></span>
+                    </div>
+                    <div class="col-1"></div>
+                </div>
+                <div class="row mt-4 pb-5">
+                    <div class="col-1"></div>
+                    <div class="col-10 d-flex align-items-center">
+                        <a onclick="SendMessage();" id="send-button" class="rounded-pill btn btn-primary btn-padding a-font-p button-folio w-100">send message</a>
+                    </div>
+                    <div class="col-1"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div style="background-color: rgba(220,53,69,0.8) !important" id="alert-preview" class="show custom-alert-cloud shadow alert alert-dismissible fade mobile-option-cloud alert-veesy-cloud" role="alert">
+    <div class="w-100">
+        <div class="float-start">
+            <div class="d-flex mt-2">
+                <p id="number_files" class="fw-bolder text-white" style="margin-top: -2px;">Remember this is a preview. Don’t share this link</p>
+            </div>
+        </div>
+        <div class="float-end">
+            <div class="d-flex align-items-center">
+                <a class="ms-4 me-2 mt-1" type="button" onclick="CloseAlert()"><i style="color:white" class="fa-solid fa-grey fa-circle-xmark"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts
 {
     <script>
+        const alert_preview = document.getElementById("alert-preview");
+        function CloseAlert() {
+            alert_preview.classList.remove("show");
+        }
         
         function OpenCreditsOrNestedLink() {
             if(nowNestedPortfolioId != null && nowNestedPortfolioId != "")
@@ -283,62 +376,78 @@
         let nowNestedUrl = ""
         let nowHasCredits = false;
         
-        function OpenMediaPopup(mediaId, IsVideo, NestedPortfolioId, NestedUrl, HasCredits) {
-            nowNestedPortfolioId = NestedPortfolioId;
-            nowNestedUrl = NestedUrl;
-            nowHasCredits = HasCredits == 'True' ? true : false;
-            document.getElementById("open-credits").onclick = function (){ShowOverlay(true)}
-            document.getElementById("text-overlay").classList.remove("text-overlay-selected")
-            document.body.style.overflowY = "hidden"; 
-            document.getElementById("media-popup").style.display = "block";
-            document.getElementById("image-popup").style.display = "none";
-            document.getElementById("video-popup").style.display = "none";
-            document.getElementById("video-popup").muted = "true";
-            let obj = media.find((o, i) => {
-                if (o.mediaId === mediaId) {
-                    let src = media[i].media.fileName
-                    if(media[i].media.credits == null || media[i].media.credits.toString() == ""){
-                        document.getElementById("open-credits").style.display = "none"
-                        document.getElementById("credit-text").textContent = ""
-                    }
-                    else{
-                        document.getElementById("open-credits").style.display = "block"
-                        document.getElementById("credit-text").textContent = media[i].media.credits
-                    }
-                        
-                    if(IsVideo){
-                        document.getElementById("video-popup").src = '@Model.BasePathImages' + src;  
-                        document.getElementById("video-popup").style.display = "block";
-                        getContainedSize(document.getElementById("video-popup"))
-                    }
-                    else{
-                        document.getElementById("image-popup").src = '@Model.BasePathImages' + src;  
-                        document.getElementById("image-popup").style.display = "block";
-                        getContainedSize(document.getElementById("image-popup"))
-                    }
-                    document.getElementById("number-media").textContent = (i+1) + " / " + media.length
-                    if (i + 1 == media.length){
-                        var nextHasCredits = media[0].media.credits == null? 'False' : 'True'
-                        var prevHasCredits = media[i-1].media.credits == null ? 'False' : 'True'
-                        document.getElementById("next-media").onclick = function() {OpenMediaPopup(media[0].media.code, media[0].media.isVideo, media[0].media.nestedPortfolioLinks, nextHasCredits)};
-                        document.getElementById("previous-media").onclick = function() {OpenMediaPopup(media[i-1].media.code, media[i-1].media.isVideo, media[-1].media.nestedPortfolioLinks, prevHasCredits)};
-                    }
-                    else if (i == 0){
-                        var nextHasCredits = media[i+1].media.credits == null? 'False' : 'True'
-                        var prevHasCredits = media[media.length-1].media.credits == null? 'False' : 'True'
-                        document.getElementById("next-media").onclick = function() {OpenMediaPopup(media[i+1].media.code, media[i+1].media.isVideo, media[i+1].media.nestedPortfolioLinks, nextHasCredits)};
-                        document.getElementById("previous-media").onclick = function() {OpenMediaPopup(media[media.length - 1].media.code, media[media.length - 1].media.isVideo, media[media.length - 1].media.nestedPortfolioLinks, prevHasCredits)};
-                    }
-                    else{
-                        var nextHasCredits = media[i+1].media.credits == null ? 'False' : 'True'
-                        var prevHasCredits = media[i-1].media.credits == null? 'False' : 'True'
-                        document.getElementById("next-media").onclick = function() {OpenMediaPopup(media[i+1].media.code, media[i+1].media.isVideo, media[i+1].media.nestedPortfolioLinks, nextHasCredits)};
-                        document.getElementById("previous-media").onclick = function() {OpenMediaPopup(media[i-1].media.code, media[i-1].media.isVideo, media[i - 1].media.nestedPortfolioLinks, prevHasCredits)};
-                    }
-                    return true; // stop searching
-                }
-            });
-        }
+		    function OpenMediaPopup(mediaId, IsVideo, NestedPortfolioId, NestedPortfolioName, NestedPortfolioUser, NestedUrl, HasCredits) {
+			    nowNestedPortfolioId = NestedPortfolioId;
+			    nowNestedUrl = NestedUrl;
+			    nowNestedPortfolioName = NestedPortfolioName;
+			    nowNestedPortfolioUser = NestedPortfolioUser;
+			    nowHasCredits = HasCredits === 'True';
+
+			    document.getElementById("open-credits").onclick = function () { ShowOverlay(true); };
+			    document.getElementById("text-overlay").classList.remove("text-overlay-selected");
+			    document.body.style.overflowY = "hidden";
+			    document.getElementById("media-popup").style.display = "block";
+			    document.getElementById("image-popup").style.display = "none";
+			    document.getElementById("video-popup").style.display = "none";
+
+			    let mediaIndex = media.findIndex(o => o.mediaId === mediaId);
+			    if (mediaIndex === -1) return;
+
+			    let src = media[mediaIndex].media.fileName;
+
+			    let creditsElement = document.getElementById("credit-text");
+			    if (!media[mediaIndex].media.credits) {
+				    document.getElementById("open-credits").style.display = "none";
+				    creditsElement.textContent = "";
+			    } else {
+				    document.getElementById("open-credits").style.display = "block";
+				    creditsElement.textContent = media[mediaIndex].media.credits;
+			    }
+
+			    if (IsVideo) {
+				    document.getElementById("video-popup").src = '@Model.BasePathImages' + src;
+				    document.getElementById("video-popup").style.display = "block";
+				    getContainedSize(document.getElementById("video-popup"));
+			    } else {
+				    document.getElementById("image-popup").src = '@Model.BasePathImages' + src;
+				    document.getElementById("image-popup").style.display = "block";
+				    getContainedSize(document.getElementById("image-popup"));
+			    }
+
+			    // aggiorna numero index foto
+			    document.getElementById("number-media").textContent = (mediaIndex + 1) + " / " + media.length;
+
+			    setupNavigation(mediaIndex, media);
+		    }
+
+		    function setupNavigation(i, media) {
+			    var nextIndex = (i + 1) % media.length;
+			    var prevIndex = (i - 1 + media.length) % media.length;
+
+			    var nextHasCredits = media[nextIndex].media.credits == null ? 'False' : 'True';
+			    var prevHasCredits = media[prevIndex].media.credits == null ? 'False' : 'True';
+
+			    document.getElementById("next-media").onclick = function () {
+				    OpenMediaPopup(media[nextIndex].media.code, media[nextIndex].media.isVideo, media[nextIndex].media.nestedPortfolioLinks, nextHasCredits);
+			    };
+
+			    document.getElementById("previous-media").onclick = function () {
+				    OpenMediaPopup(media[prevIndex].media.code, media[prevIndex].media.isVideo, media[prevIndex].media.nestedPortfolioLinks, prevHasCredits);
+			    };
+
+			    document.removeEventListener('keydown', handleKeydown);
+			    document.addEventListener('keydown', handleKeydown);
+		    }
+
+		    function handleKeydown(event) {
+          if (event.key === 'Escape') CloseMediaPopup();
+
+			    if (event.key === 'ArrowRight') { // freccia destra
+				    document.getElementById("next-media").click();
+			    } else if (event.key === 'ArrowLeft') { // freccia sinistra
+				    document.getElementById("previous-media").click();
+			    }
+		    }
         
         function CloseMediaPopup() {
             document.body.style.overflowY = "auto"; 
@@ -405,6 +514,7 @@
 
             setInterval(performJumpEffect, 25000); // 20000 millisecondi corrispondono a 20 secondi
         });
+    
     </script>
 }
 
