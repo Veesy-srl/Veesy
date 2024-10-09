@@ -78,6 +78,7 @@
                             }
                         </select>
                     </div>*@
+                    <input type="hidden" asp-for="RecaptchaToken" id="recaptcha-token" />
                     <div class="mt-3 mb-2 text-muted" style="font-size: 12px;">By signing up you accept our 
                         <a class="text-muted text-decoration-underline" asp-action="TermsAndConditions" asp-area="Public" asp-controller="Public">Terms and Conditions</a>
                         and
@@ -93,6 +94,7 @@
                         <a class="a-ciano" asp-action="Login" asp-area="Auth" asp-controller="Auth">Log in</a>
                     </p>
                 </form>
+                <recaptcha action-name="login" execute-method="tokenProvider"/>
             </div>
         </div>
     </div>
@@ -106,6 +108,10 @@
             var key = event.key;
         
             return (/^[a-zA-ZÀ-ÖØ-öø-ÿ\s]$/.test(key) || key == 'Backspace');
+        }
+
+        function tokenProvider(token) {
+            document.getElementById("recaptcha-token").value = token;
         }
         
         var passwordClose = true;

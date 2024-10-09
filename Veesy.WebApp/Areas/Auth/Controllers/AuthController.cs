@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using NLog;
 using NuGet.Protocol;
+using ReCaptcha;
 using Veesy.Domain.Constants;
 using Veesy.Domain.Models;
 using Veesy.Email;
@@ -27,11 +28,12 @@ public class AuthController : Controller
     private readonly UserManager<MyUser> _userManager;
     private readonly IConfiguration _config;
     private readonly IEmailSender _emailSender;
+    private readonly IRecaptchaVerifier _recaptchaVerifier;
     
     
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     
-    public AuthController(AuthHelper authHelper, SignInManager<MyUser> signInManager, UserManager<MyUser> userManager, IConfiguration config, IEmailSender emailSender, INotyfService notyfService)
+    public AuthController(AuthHelper authHelper, SignInManager<MyUser> signInManager, UserManager<MyUser> userManager, IConfiguration config, IEmailSender emailSender, INotyfService notyfService, IRecaptchaVerifier recaptchaVerifier)
     {
         _authHelper = authHelper;
         _signInManager = signInManager;
@@ -39,6 +41,7 @@ public class AuthController : Controller
         _config = config;
         _emailSender = emailSender;
         _notyfService = notyfService;
+        _recaptchaVerifier = recaptchaVerifier;
     }
 
     [HttpGet("auth/login")]
@@ -100,6 +103,11 @@ public class AuthController : Controller
     {
         try
         {
+            var recaptcha = await _recaptchaVerifier.VerifyAsync(model.RecaptchaToken);
+            if (!recaptcha.Success && !(recaptcha.Score >= 0.7))
+            {
+                throw new Exception("reCaptcha Error");
+            }
             var result = await _authHelper.RegisterNewMember(model);
             if (result.Success)
                 return RedirectToAction("SendEmailVerification", new {email = model.Email});

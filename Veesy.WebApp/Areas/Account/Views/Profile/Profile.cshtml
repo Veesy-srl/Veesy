@@ -12,15 +12,13 @@
         $('#load-spinner').css("display", "block");
         $.ajax({
             type: 'POST',
-            url: '@Url.Action("DeleteAccount", "Profile")',
+            url: '@Url.Action("DeleteAccountByUser", "Profile")',
             data: JSON.stringify("@Model.UserId"),
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             success: function (response) {
-                if(response.result){
-                    closeModal('#modalDeleteProfile');
-                }
                 $('#load-spinner').css("display", "none");
+                window.location.href = response.redirectUrl;
             },
             error: function (response) {
                 $('#load-spinner').css("display", "none");

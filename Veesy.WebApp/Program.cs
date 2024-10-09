@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using NLog;
 using NLog.Web;
+using ReCaptcha.Extensions;
 using Veesy.Discord;
 using Veesy.Domain.Data;
 using Veesy.Domain.Models;
@@ -97,6 +98,12 @@ try
         c.SwaggerDoc("v2", new OpenApiInfo { Title = "Veesy Web API", Version = "v1.0.0" });
     });
 #endif
+    
+    builder.Services.AddRecaptcha(recaptchaOptions =>
+    {
+        recaptchaOptions.SecretKey = Configuration.GetValue<string>("Captcha:SecretKey");
+        recaptchaOptions.SiteKey = Configuration.GetValue<string>("Captcha:SiteKey");
+    });
     
     builder.Services.ConfigureApplicationCookie(options =>
     {
