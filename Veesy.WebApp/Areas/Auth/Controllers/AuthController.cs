@@ -244,7 +244,7 @@ public class AuthController : Controller
     {
         try
         {
-            var result = await _authHelper.SendEmailResetPassword(email); //TODO perché?
+            var result = await _authHelper.SendEmailConfirmation(email);
             return RedirectToAction("VerifyEmail", new { email = email });
         }
         catch (Exception e)
