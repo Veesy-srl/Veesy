@@ -271,4 +271,11 @@ public class PortfolioService : IPortfolioService
             .Include(s => s.MyUser)
             .FirstOrDefault();
     }
+
+    public (int DraftPortfolios, int PublishedPortfolios) GetDraftAndPublishedPortfoliosCount()
+    {
+        var drafts = _uoW.PortfolioRepository.FindByCondition(x => x.Status == PortfolioContants.STATUS_DRAFT).Count();
+        var published = _uoW.PortfolioRepository.FindByCondition(x => x.Status == PortfolioContants.STATUS_PUBLISHED).Count();
+        return (drafts, published);
+    }
 }

@@ -58,6 +58,10 @@ public static class VeesyConstants
         ThreeColumns = 3,
         FourColumns = 4
     }
+    public enum FormType
+    {
+        CreatorType = 0
+    }
 
     public static List<PortfolioLayout> GetAvailableLayouts(bool excludeDefault = true)
     {
@@ -66,4 +70,17 @@ public static class VeesyConstants
             return layouts.Where(w=>w!=0).ToList();
         return layouts.ToList();
     }
+
+    #region Browser
+
+    public const string Opera = "Opera";
+    public const string Chrome = "Chrome";
+    public const string Firefox = "Firefox";
+    public const string MicrosoftEdge = "Microsoft Edge";
+    public const string Chromium = "Chromium";
+    public const string Safari = "Safari";
+    public const string InternetExplorer = "Internet Explorer";
+    public const string BrowserUnknown = "Unknown";
+
+    #endregion
 }

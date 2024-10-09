@@ -178,10 +178,10 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
     public List<Media> GetRandomMedia(int count)
     {
         var portfolios =  _applicationDbContext.Portfolios
+            .Where(s => s.MyUser.VisibleInCreatorPage & s.IsMain && s.IsPublic && s.Status == 1)
             .Include(s => s.PortfolioMedias)
             .ThenInclude(s => s.Media)
             .Include(s => s.MyUser)
-            .Where(s => s.IsMain && s.IsPublic && s.Status == 1)
             .OrderBy(s => new Guid())
             .ToList();
         
@@ -209,10 +209,10 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
     public List<Media> GetRandomPhotos(int count)
     {
         var portfolios = _applicationDbContext.Portfolios
+            .Where(s => s.MyUser.VisibleInCreatorPage & s.IsMain && s.IsPublic && s.Status == 1)
             .Include(s => s.PortfolioMedias)
             .ThenInclude(s => s.Media)
             .Include(s => s.MyUser)
-            .Where(s => s.IsMain && s.IsPublic && s.Status == 1)
             .OrderBy(s => new Guid())
             .ToList();
 

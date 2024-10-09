@@ -1,4 +1,111 @@
+@model Veesy.Presentation.Model.Admin.MatchViewModel
 @{
     ViewData["Title"] = "Match";
     Layout = "_Layout";
+}
+
+@section Style{
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+    <style>
+        table.dataTable thead .sorting:after,
+        table.dataTable thead .sorting:before,
+        table.dataTable thead .sorting_asc:after,
+        table.dataTable thead .sorting_asc:before,
+        table.dataTable thead .sorting_desc:after,
+        table.dataTable thead .sorting_desc:before, 
+        table.dataTable thead .sorting_asc_disabled:after,
+        table.dataTable thead .sorting_asc_disabled:before,
+        table.dataTable thead .sorting_asc_disabled:after,
+        table.dataTable thead .sorting_asc_disabled:before{
+          bottom: .5em;
+        }
+    </style>
+}
+
+<div class="row">
+    <div class="card">
+        <div class="bg-white card-header">
+            <div class="float-start">
+                <h3>Creators list</h3>
+            </div>
+            <div class="float-end">
+            </div>
+        </div>
+        <div class="card-body">
+                <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+                    <thead>
+                    <tr>
+                        <th class="th-sm">Name
+                        </th>
+                        <th class="th-sm">N Forms
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var form in Model.FormCount)
+                    {
+                        <tr>
+                            <td>@form.CreatorName</td>
+                            <td>@form.FormCount</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="card">
+        <div class="bg-white card-header">
+            <div class="float-start">
+                <h3>Forms list</h3>
+            </div>
+            <div class="float-end">
+            </div>
+        </div>
+        <div class="card-body">
+                <table id="dtBasicExampleForms" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+                    <thead>
+                    <tr>
+                        <th class="th-sm">Sender Name
+                        </th>
+                        <th class="th-sm">Sender Email
+                        </th>
+                        <th class="th-sm">Recipient
+                        </th>
+                        <th class="th-sm">Time
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var form in Model.TrackingFormDtos)
+                    {
+                        <tr>
+                            <td>@form.SenderName</td>
+                            <td>@form.SenderEmail</td>
+                            <td>@form.RecipientName</td>
+                            <td>@form.DateTime</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            $('#dtBasicExample').DataTable();
+            $('#dtBasicExampleForms').DataTable();
+            $('.dataTables_length').addClass('bs-select');
+        });
+
+
+    </script>
 }

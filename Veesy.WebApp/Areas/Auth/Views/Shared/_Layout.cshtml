@@ -2,301 +2,306 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Veesy | @ViewData["Title"]</title> 
-    
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/site-dark.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Veesy.WebApp.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/css/bootstrap-select.min.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
-    @Html.Partial("~/Areas/Auth/Views/Shared/cookie.cshtml")
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Veesy | @ViewData["Title"]</title>
 
-    @if (Context.Request.Host.Value == "veesy.it" && !Context.Request.Host.Value.StartsWith("beta."))
-    {
-        @Html.Partial("~/Areas/Auth/Views/Shared/cookie.cshtml")
-    }
-    
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QY19KDP1PK"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
+	<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/site-dark.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/Veesy.WebApp.styles.css" asp-append-version="true" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/css/bootstrap-select.min.css" asp-append-version="true" />
+	<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+	@Html.Partial("~/Areas/Auth/Views/Shared/cookie.cshtml")
 
-        gtag('config', 'G-QY19KDP1PK');
-    </script>
-    <script>
-        !function(f,b,e,v,n,t,s)
-        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-            n.queue=[];t=b.createElement(e);t.async=!0;
-            t.src=v;s=b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t,s)}(window, document,'script',
-            'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', '441008971743968');
-        fbq('track', 'PageView');
-    </script>
-    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=441008971743968&ev=PageView&noscript=1"/>
-    </noscript>
-    
-    </head> 
-    <body>
-       <header>
-               <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-transparent mb-3 fixed-top" style="position: absolute; ">
-                   <div class="container-fluid">
-                       
-                       <h1 class="h3 mb-2 fw-normal ms-3">
-                           <div class="navbar-brand d-inline-flex" asp-area="Public" asp-controller="Public" asp-action="Splash">
-                               <a asp-area="Public" asp-controller="Public" asp-action="Splash">
-                                    <img class="header-logo-auth mr-2" style="width: 75px; height: 25px; margin-top:  10px;"/>
-                               </a>
-                               <h5 id="loginLink" style="font-size: 22px !important;" class="text-white fw-normal">&nbsplogin</h5>
-                               <h5 id="signupLink" style="font-size: 22px !important;" class="text-white fw-normal">&nbspsign up</h5>
-                           </div>
-                       </h1>
-                       <div style="margin-right: 5px !important; padding-right: 0px !important;"  class="float-end mb-2">
-                           <!-- 015: On/Off Switch -->
-                           @*<div class="switch-bg" id="switchBg">
-                             <input type="checkbox" id="switchInp" class="d-none">
-                             <label for="switchInp" class="pull-string">
-                               <canvas id="stringCanvas" width="300" height="175" style="position: relative; top: -50px;cursor: pointer;"></canvas>
-                             </label>
-                           </div>*@ 
-                       @*<button class="btn btn-light border fw-bolder shadow-none">
-                           <i class="fas fa-user text-primary mr-2" id="icon-color"></i>
-                           <span id="color-text">account</span>
-                       </button>*@
-                       <button class="btn btn-light border btn-layout fw-bolder shadow-none" id="menuButton">
-                           <i class="fas fa-circle fa-2xs text-primary mr-2" id="icon-color"></i>
-                           <span id="color-text-variant">menu</span>
-                       </button>
-                   </div>
-                   <div class="menu-popup" id="menuPopup">
-                       <div class="float-end">
-                           @*<button class="btn btn-light border fw-bolder shadow-none">
-                               <i class="fas fa-user text-primary mr-2" id="icon-color"></i>
-                               <span id="color-text">account</span>
-                           </button>*@
-                           <button style="margin-top: 0px !important;" class="btn btn-light border btn-layout fw-bolder shadow-none custom-padding-variant" id="closeButton">
-                               <i class="fas fa-times-circle fa-2xs text-primary mr-2" id="icon-color"></i>
-                               <span id="color-text-variant">close</span>
-                           </button>
-                       </div>
-                       <div class="container center-content-menu">
-                           <div class="menu-list">
-                               <ul class="list-unstyled">
-                                   <li><a asp-area="Public" asp-controller="Public" asp-action="Gallery"  class="float-end fw-bolder my-1 p-2 menu-element font-weight-normal" style="font-size: 25px !important; line-height: 30px !important;" id="color-text" data-target="#description1">Gallery</a></li>
-                                   <li><a asp-action="Creators" asp-controller="Public" asp-area="Public" class="float-end my-1 fw-bolder p-2 menu-element font-weight-normal" style="font-size: 25px !important; line-height: 30px !important;" id="color-text" data-target="#description2">Creators</a></li>
-                                   <li><a asp-action="About" asp-controller="Public" asp-area="Public" class="float-end my-1 fw-bolder p-2 menu-element font-weight-normal" style="font-size: 25px !important; line-height: 30px !important;" id="color-text" data-target="#description3">About</a></li>
-                                   <li><a asp-action="Profile" asp-controller="Profile" asp-area="Account" class="float-end my-1 fw-bolder p-2 menu-element font-weight-normal" style="font-size: 25px !important; line-height: 30px !important;" id="color-text" data-target="#description5">Profile</a></li>
-                                   <li><a asp-action="Contact" asp-controller="Public" asp-area="Public" class="float-end my-1 fw-bolder p-2 menu-element font-weight-normal" style="font-size: 25px !important; line-height: 30px !important;" id="color-text" data-target="#description6">Contact</a></li>
-                               </ul>
-                           </div>
-                           <div class="d-flex" style="height: 250px;">
-                               <div class="vr custom-vr"></div>
-                           </div>
-                           <div class="description-container" style="margin-left: 20px;">
-                               <div id="description1" class="description-content"><p><b>Not just a collection, but a celebration of diverse artistic expressions brought together from our Creators.</b></p></div>
-                               <div id="description2" class="description-content"><p><b>Explore Creators featured works, understand their diverse skill sets, and connect with them.</b></p></div>
-                               <div id="description3" class="description-content"><p><b>Discover our vision and the steps we're taking to redefine freelancing.</b></p></div>
-                               <div id="description5" class="description-content"><p><b>Connect you with the right creative talent in our network.</b></p></div>
-                               <div id="description6" class="description-content"><p><b>Say Hello: We Promise We're Friendly. Our inbox is always open for a bit of fun and collaboration.</b></p></div>
-                           </div>
-                       </div>
+	@if (Context.Request.Host.Value == "veesy.it" && !Context.Request.Host.Value.StartsWith("beta."))
+	{
+		@Html.Partial("~/Areas/Auth/Views/Shared/cookie.cshtml")
+	}
+
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-QY19KDP1PK"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-QY19KDP1PK');
+	</script>
+	<script>
+		!function (f, b, e, v, n, t, s) {
+			if (f.fbq) return; n = f.fbq = function () {
+				n.callMethod ?
+				n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+			};
+			if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+			n.queue = []; t = b.createElement(e); t.async = !0;
+			t.src = v; s = b.getElementsByTagName(e)[0];
+			s.parentNode.insertBefore(t, s)
+		}(window, document, 'script',
+			'https://connect.facebook.net/en_US/fbevents.js');
+		fbq('init', '441008971743968');
+		fbq('track', 'PageView');
+	</script>
+	<noscript>
+		<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=441008971743968&ev=PageView&noscript=1" />
+	</noscript>
+
+</head>
+<body>
+	<header>
+		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-transparent mb-3 fixed-top" style="position: absolute; ">
+			<div class="container-fluid">
+
+				<h1 class="h3 mb-2 fw-normal ms-3">
+					<div class="navbar-brand d-inline-flex" asp-area="Public" asp-controller="Public" asp-action="Splash">
+						<a asp-area="Public" asp-controller="Public" asp-action="Splash">
+							<img class="header-logo-auth mr-2" style="width: 75px; height: 25px; margin-top:  10px;" />
+						</a>
+						<h5 id="loginLink" style="font-size: 22px !important;" class="text-white fw-normal">&nbsplogin</h5>
+						<h5 id="signupLink" style="font-size: 22px !important;" class="text-white fw-normal">&nbspsign up</h5>
+					</div>
+				</h1>
+				<div style="margin-right: 5px !important; padding-right: 0px !important;" class="float-end mb-2">
+					<!-- 015: On/Off Switch -->
+					@*<div class="switch-bg" id="switchBg">
+					<input type="checkbox" id="switchInp" class="d-none">
+					<label for="switchInp" class="pull-string">
+					<canvas id="stringCanvas" width="300" height="175" style="position: relative; top: -50px;cursor: pointer;"></canvas>
+					</label>
+					</div>*@
+					@*<button class="btn btn-light border fw-bolder shadow-none">
+					<i class="fas fa-user text-primary mr-2" id="icon-color"></i>
+					<span id="color-text">account</span>
+					</button>*@
+					<button class="btn btn-light border btn-layout fw-bolder shadow-none" id="menuButton">
+						<i class="fas fa-circle fa-2xs text-primary mr-2" id="icon-color"></i>
+						<span id="color-text-variant">menu</span>
+					</button>
+				</div>
+				<div class="menu-popup" id="menuPopup">
+					<div class="float-end">
+						@*<button class="btn btn-light border fw-bolder shadow-none">
+						<i class="fas fa-user text-primary mr-2" id="icon-color"></i>
+						<span id="color-text">account</span>
+						</button>*@
+						<button style="margin-top: 0px !important;" class="btn btn-light border btn-layout fw-bolder shadow-none custom-padding-variant" id="closeButton">
+							<i class="fas fa-times-circle fa-2xs text-primary mr-2" id="icon-color"></i>
+							<span id="color-text-variant">close</span>
+						</button>
+					</div>
+					<div class="container center-content-menu">
+						<div class="menu-list">
+							<ul class="list-unstyled">
+								<li><a asp-area="Public" asp-controller="Public" asp-action="Gallery" class="float-end fw-bolder my-1 p-2 menu-element font-weight-normal" style="font-size: 25px !important; line-height: 30px !important;" id="color-text" data-target="#description1">Gallery</a></li>
+								<li><a asp-action="Creators" asp-controller="Public" asp-area="Public" class="float-end my-1 fw-bolder p-2 menu-element font-weight-normal" style="font-size: 25px !important; line-height: 30px !important;" id="color-text" data-target="#description2">Creators</a></li>
+								<li><a asp-action="About" asp-controller="Public" asp-area="Public" class="float-end my-1 fw-bolder p-2 menu-element font-weight-normal" style="font-size: 25px !important; line-height: 30px !important;" id="color-text" data-target="#description3">About</a></li>
+								<li><a asp-action="Profile" asp-controller="Profile" asp-area="Account" class="float-end my-1 fw-bolder p-2 menu-element font-weight-normal" style="font-size: 25px !important; line-height: 30px !important;" id="color-text" data-target="#description5">Profile</a></li>
+								<li><a asp-action="Contact" asp-controller="Public" asp-area="Public" class="float-end my-1 fw-bolder p-2 menu-element font-weight-normal" style="font-size: 25px !important; line-height: 30px !important;" id="color-text" data-target="#description6">Contact</a></li>
+							</ul>
+						</div>
+						<div class="d-flex" style="height: 250px;">
+							<div class="vr custom-vr"></div>
+						</div>
+						<div class="description-container" style="margin-left: 20px;">
+							<div id="description1" class="description-content"><p><b>Not just a collection, but a celebration of diverse artistic expressions brought together from our Creators.</b></p></div>
+							<div id="description2" class="description-content"><p><b>Explore Creators featured works, understand their diverse skill sets, and connect with them.</b></p></div>
+							<div id="description3" class="description-content"><p><b>Discover our vision and the steps we're taking to redefine freelancing.</b></p></div>
+							<div id="description5" class="description-content"><p><b>Connect you with the right creative talent in our network.</b></p></div>
+							<div id="description6" class="description-content"><p><b>Say Hello: We Promise We're Friendly. Our inbox is always open for a bit of fun and collaboration.</b></p></div>
+						</div>
+					</div>
 
 
-                       <div class="menu-footer">
-                           <a target="_blank" asp-action="PrivacyPolicy" asp-controller="Public" asp-area="Public" id="color-text-v">privacy policy</a>
-                           <a target="_blank" asp-action="CookiesPolicy" asp-controller="Public" asp-area="Public" class="cookie" id="color-text-v" >cookie policy</a><br/>
-                           <p style="font-size: 14px !important;" href="#" class="copyright option-font-14" id="color-text-footer">Veesy S.R.L. © @DateTime.Now.Year All rights reserved - Vat.: 13005470961 - made with love by <a target="_blank" href="https://www.derein.net/" style="color: #202F4D">derein</a> & <a target="_blank" href="https://www.enigma-tech.it/" style="color: #202F4D">enigma</a></p>
-                       </div>
-                   </div>
+					<div class="menu-footer">
+						<a target="_blank" asp-action="PrivacyPolicy" asp-controller="Public" asp-area="Public" id="color-text-v">privacy policy</a>
+						<a target="_blank" asp-action="CookiesPolicy" asp-controller="Public" asp-area="Public" class="cookie" id="color-text-v">cookie policy</a><br />
+						<p style="font-size: 14px !important;" href="#" class="copyright option-font-14" id="color-text-footer">Veesy S.R.L. © @DateTime.Now.Year All rights reserved - Vat.: 13005470961 - made with love by <a target="_blank" href="https://www.derein.net/" style="color: #202F4D">derein</a> & <a target="_blank" href="https://www.enigma-tech.it/" style="color: #202F4D">enigma</a></p>
+					</div>
+				</div>
 
-                   <div class="switch-container dark-light dark-light-auth" id="canvaId">
-                         <input type="checkbox" id="switchInp">
-                         <label for="switchInp" class="pull-string">
-                             <img class="dark-light-img molla-img" id="molla-img">
-                         </label>
-                     </div>
-               </div>
-           </nav>
-       </header>
-<div>
-    <div class="login-container" style="height: 100vh;">
-        @if (ViewContext.RouteData.Values["Action"].ToString() == "SignUp")
-        {
-            <div style="background-image: url('../../imgs/Auth/Immagine per Sign Up.jpg');" class="logo-container vertical-center">
+				<div class="switch-container dark-light dark-light-auth" id="canvaId">
+					<input type="checkbox" id="switchInp">
+					<label for="switchInp" class="pull-string">
+						<img class="dark-light-img molla-img" id="molla-img">
+					</label>
+				</div>
+			</div>
+		</nav>
+	</header>
+	<div>
+		<div class="login-container" style="height: 100vh;">
+			@if (ViewContext.RouteData.Values["Action"].ToString() == "SignUp")
+			{
+				<div style="background-image: url('../../imgs/Auth/Immagine per Sign Up.jpg');" class="logo-container vertical-center">
+				</div>
+			}
+			else
+			{
+				<div style="background-image: url('../../imgs/Auth/Immagine per Log In.jpg');" class="logo-container vertical-center">
+				</div>
+			}
+			@RenderBody()
+		</div>
+	</div>
 
-            </div>
-        }
-        else
-        {
-            <div style="background-image: url('../../imgs/Auth/Immagine per Log In.jpg');" class="logo-container vertical-center">
+	<div class="nodisplay-sm" style="margin-top: -8vh;">
+		<div class="container-fluid">
+		</div>
+	</div>
 
-            </div>
-        }
-        @RenderBody()
-    </div>
-</div>
+	<footer class="footer" style="top: 6vh !important;">
+		<div class="container">
+			<div class="row mb-3">
+				<div class="col-md-3 mt-5 veesy-text-color">
+					<h2 class="h2 mt-3 fw-normal">
+						<div class=" mb-5 d-inline-flex" asp-area="" asp-controller="Home" asp-action="Index"><img class="logo-footer"></div>
+					</h2>
+					<p>
+						Veesy S.R.L.<br />
+						Via Giacomo Matteotti 43<br />
+						20832, Desio (MB)
+					</p>
+					<div class="row mt-4 social-icons-row">
+						<div class="col">
+							<a target="_blank" href="https://www.facebook.com/profile.php?id=61557228052314" class="social-icon"><i class="fa-brands fa-facebook icon-color-veesy"></i></a>
+							<a target="_blank" href="https://www.instagram.com/veesy.it/" class="social-icon"><i class="fa-brands fa-instagram icon-color-veesy"></i></a>
+							<a target="_blank" href="https://www.linkedin.com/company/veesy" class="social-icon"><i class="fa-brands fa-linkedin icon-color-veesy"></i></a>
+							<a target="_blank" href="https://open.spotify.com/show/4roHmmrq6ogk1n2GBl4uoQ?si=d8a588d626bc4a38" class="social-icon"><i class="fa-brands fa-spotify icon-color-veesy"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 mt-2 mt-md-5 veesy-text-color">
+					<h4 class="h6 mt-5 fw-normal">
+						<div class="mb-4 d-inline-flex"><b>INFO</b></div>
+					</h4>
+					<div class="text-color">
+						<a asp-action="About" asp-controller="Public" asp-area="Public">About</a><br />
+						<a asp-action="PricingPlan" asp-controller="Public" asp-area="Public">Plans & Pricing</a><br />
+						<a asp-action="Error404" asp-controller="Public" asp-area="Public">FAQ</a><br />
+						<a asp-action="Login" asp-controller="Auth" asp-area="Auth">Log In</a>
+					</div>
+				</div>
+				<div class="col-md-3 mt-3 mt-md-5 veesy-text-color">
+					<h4 class="h6 mt-5 fw-normal">
+						<div class=" mb-4 d-inline-flex"><b>LEGAL</b></div>
+					</h4>
+					<div class="text-color">
+						<a target="_blank" asp-action="PrivacyPolicy" asp-controller="Public" asp-area="Public">Privacy Policy</a><br />
+						<a target="_blank" asp-action="CookiesPolicy" asp-controller="Public" asp-area="Public">Cookies Policy</a><br />
+						<a asp-action="Error404" asp-controller="Public" asp-area="Public">Community Rules</a>
+					</div>
+				</div>
+				<div class="col-md-3 mt-3 mt-md-5 mb-4 veesy-text-color">
+					<h4 class="h6 mt-5 fw-normal">
+						<div class=" mb-3 d-inline-flex"><b>Do you need some help or want to share some ideas with us?</b></div>
+					</h4>
+					<button onclick="location.href='mailto:info@veesy.it';" class="contact-veesy rounded-pill btn-primary btn-variant" type="submit">get in touch</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="mb-3 veesy-text-color d-flex justify-content-between">
+					<p style="font-size: 14px !important;" class="d-none d-lg-block">Veesy S.R.L. © @DateTime.Now.Year All rights reserved - Vat.: 13005470961 - annual social capital € 10.000</p>
+					<p style="font-size: 14px !important;" class="text-end me-4 d-none d-lg-block">made with love by <a target=”_blank” href="https://www.derein.net/">derein</a> & <a target=”_blank” href="https://www.enigma-tech.it/">enigma</a></p>
+					<p style="font-size: 14px !important;" class="d-block d-lg-none d-inline">Veesy S.R.L. © @DateTime.Now.Year All rights reserved - Vat.: 13005470961 - annual social capital € 10.000 - made with love by <a target=”_blank” href="https://www.derein.net/">derein</a> & <a target=”_blank” href="https://www.enigma-tech.it/">enigma</a></p>
+				</div>
+			</div>
+		</div>
 
-<div class="nodisplay-sm" style="margin-top: -8vh;">
-    <div class="container-fluid">
-    </div>
-</div>
+	</footer>
 
-<footer class="footer" style="top: 6vh !important;">
-    <div class="container">
-        <div class="row mb-3">
-            <div class="col-md-3 mt-5 veesy-text-color" >
-                <h2 class="h2 mt-3 fw-normal">
-                    <div class=" mb-5 d-inline-flex" asp-area="" asp-controller="Home" asp-action="Index"><img class="logo-footer"></div> 
-                </h2>
-                <p>Veesy S.R.L.<br/>
-                    Via Giacomo Matteotti 43<br/>
-                    20832, Desio (MB)</p>
-                <div class="row mt-4 social-icons-row">
-                    <div class="col">
-                        <a target="_blank" href="https://www.facebook.com/profile.php?id=61557228052314" class="social-icon"><i class="fa-brands fa-facebook icon-color-veesy"></i></a>
-                        <a target="_blank" href="https://www.instagram.com/veesy.it/" class="social-icon"><i class="fa-brands fa-instagram icon-color-veesy"></i></a>
-                        <a target="_blank" href="https://www.linkedin.com/company/veesy" class="social-icon"><i class="fa-brands fa-linkedin icon-color-veesy"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 mt-2 mt-md-5 veesy-text-color" >
-                <h4 class="h6 mt-5 fw-normal">
-                    <div class="mb-4 d-inline-flex"><b>INFO</b></div> 
-                </h4>
-                <div class="text-color">
-                    <a asp-action="About" asp-controller="Public" asp-area="Public" >About</a><br/>
-                    <a asp-action="PricingPlan" asp-controller="Public" asp-area="Public">Plans & Pricing</a><br/>
-                    <a asp-action="Error404" asp-controller="Public" asp-area="Public" >FAQ</a><br/>
-                    <a asp-action="Login" asp-controller="Auth" asp-area="Auth">Log In</a>
-                </div>
-            </div>
-            <div class="col-md-3 mt-3 mt-md-5 veesy-text-color" >
-                <h4 class="h6 mt-5 fw-normal">
-                    <div class=" mb-4 d-inline-flex"><b>LEGAL</b></div> 
-                </h4>
-                <div class="text-color">
-                    <a target="_blank" asp-action="PrivacyPolicy" asp-controller="Public" asp-area="Public">Privacy Policy</a><br/>
-                    <a target="_blank" asp-action="CookiesPolicy" asp-controller="Public" asp-area="Public">Cookies Policy</a><br/>
-                    <a asp-action="Error404" asp-controller="Public" asp-area="Public">Community Rules</a>
-                </div>
-            </div>
-            <div class="col-md-3 mt-3 mt-md-5 mb-4 veesy-text-color" >
-                <h4 class="h6 mt-5 fw-normal">
-                    <div class=" mb-3 d-inline-flex"><b>Do you need some help or want to share some ideas with us?</b></div> 
-                </h4>
-                <button onclick="location.href='mailto:info@veesy.it';" class="contact-veesy rounded-pill btn-primary btn-variant" type="submit">get in touch</button>
-            </div>
-        </div>
-        <div class="row">
-            <div class="mb-3 veesy-text-color d-flex justify-content-between">
-                <p style="font-size: 14px !important;" class="d-none d-lg-block">Veesy S.R.L. © @DateTime.Now.Year All rights reserved - Vat.: 13005470961 - annual social capital € 10.000</p>
-                <p style="font-size: 14px !important;" class="text-end me-4 d-none d-lg-block">made with love by <a target=”_blank” href="https://www.derein.net/">derein</a> & <a target=”_blank” href="https://www.enigma-tech.it/">enigma</a></p>
-                <p style="font-size: 14px !important;" class="d-block d-lg-none d-inline">Veesy S.R.L. © @DateTime.Now.Year All rights reserved - Vat.: 13005470961 - annual social capital € 10.000 - made with love by <a target=”_blank” href="https://www.derein.net/">derein</a> & <a target=”_blank” href="https://www.enigma-tech.it/">enigma</a></p>
-            </div>
-        </div>
-    </div>
-    
-</footer>
-
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://kit.fontawesome.com/e08a602379.js" crossorigin="anonymous"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/js/bootstrap-select.min.js" asp-append-version="true"></script>
-<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
-@await Component.InvokeAsync("Notyf")
-@await RenderSectionAsync("Scripts", required: false)
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://kit.fontawesome.com/e08a602379.js" crossorigin="anonymous"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/js/bootstrap-select.min.js" asp-append-version="true"></script>
+	<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+	@await Component.InvokeAsync("Notyf")
+	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
 
 <script>
-    const menuButton = document.getElementById('menuButton');
-    const menuPopup = document.getElementById('menuPopup');
-    const closeButton = document.getElementById('closeButton');
+	const menuButton = document.getElementById('menuButton');
+	const menuPopup = document.getElementById('menuPopup');
+	const closeButton = document.getElementById('closeButton');
 
-    menuButton.addEventListener('click', () => {
-        menuPopup.classList.toggle('active');
-         document.getElementById('canvaId').style.display="none";
-        document.body.classList.toggle('no-scroll'); 
-    });
+	menuButton.addEventListener('click', () => {
+		menuPopup.classList.toggle('active');
+		document.getElementById('canvaId').style.display = "none";
+		document.body.classList.toggle('no-scroll');
+	});
 
-    closeButton.addEventListener('click', () => {
-      menuPopup.classList.remove('active');
-      document.getElementById('canvaId').style.display="block";
-      document.body.classList.remove('no-scroll'); 
-    });
-    
-    //Start Dark Mode
-        // Verifica se esiste una preferenza del tema nel localStorage
-        const savedTheme = localStorage.getItem("theme");
-        
-        // Ottieni l'elemento della checkbox e l'elemento root del documento
-        const checkbox = document.getElementById("switchInp");
-        const rootElement = document.documentElement;
-        
-        // Funzione per impostare il tema e lo stato "checked" della checkbox
-        function setTheme(theme) {
-          rootElement.setAttribute("data-bs-theme", theme);
-          localStorage.setItem("theme", theme);
-        }
-        
-        // Inizializza il tema in base alla preferenza salvata o al tema predefinito
-        if (savedTheme) {
-          setTheme(savedTheme);
-        } else {
-          setTheme("light"); // Imposta il tema predefinito
-        }
-        
-        // Imposta lo stato "checked" della checkbox iniziale all'avvio
-        checkbox.checked = rootElement.getAttribute("data-bs-theme") === "dark";
-        
-        // Aggiungi un listener per la checkbox
-        checkbox.addEventListener("click", () => {
-          if (checkbox.checked) {
-            setTheme("dark");
-          } else {
-            setTheme("light");
-          }
-        });
-    
-        //End Dark Mode
-        
-    
-      // Chiudi il popup quando si clicca fuori da esso
-      $(document).on('click', (e) => {
-        if (!menuPopup.contains(e.target) && !menuButton.contains(e.target)) {
-          menuPopup.classList.remove('active');
-          document.body.classList.remove('no-scroll'); 
-        }
-      });
-      
-        $(document).ready(function() {
-               $(".menu-list a").mouseenter(function() {
-                   var target = $(this).data('target');
-                   $(".description-content").hide();
-                   $(target).show();
-               });
-           });
-        
-        document.addEventListener("DOMContentLoaded", function() {
-            var url = window.location.href;
-            var signupLink = document.getElementById("signupLink");
-            var loginLink = document.getElementById("loginLink");
-        
-            if (url.includes("SignUp") || url.includes("Signup") || url.includes("signUp") || url.includes("signup")) {
-                signupLink.style.display = "block";
-                loginLink.style.display = "none";
-            } else {
-                signupLink.style.display = "none";
-                loginLink.style.display = "block";
-            }
-        });
+	closeButton.addEventListener('click', () => {
+		menuPopup.classList.remove('active');
+		document.getElementById('canvaId').style.display = "block";
+		document.body.classList.remove('no-scroll');
+	});
 
-  </script>
+	//Start Dark Mode
+	// Verifica se esiste una preferenza del tema nel localStorage
+	const savedTheme = localStorage.getItem("theme");
+
+	// Ottieni l'elemento della checkbox e l'elemento root del documento
+	const checkbox = document.getElementById("switchInp");
+	const rootElement = document.documentElement;
+
+	// Funzione per impostare il tema e lo stato "checked" della checkbox
+	function setTheme(theme) {
+		rootElement.setAttribute("data-bs-theme", theme);
+		localStorage.setItem("theme", theme);
+	}
+
+	// Inizializza il tema in base alla preferenza salvata o al tema predefinito
+	if (savedTheme) {
+		setTheme(savedTheme);
+	} else {
+		setTheme("light"); // Imposta il tema predefinito
+	}
+
+	// Imposta lo stato "checked" della checkbox iniziale all'avvio
+	checkbox.checked = rootElement.getAttribute("data-bs-theme") === "dark";
+
+	// Aggiungi un listener per la checkbox
+	checkbox.addEventListener("click", () => {
+		if (checkbox.checked) {
+			setTheme("dark");
+		} else {
+			setTheme("light");
+		}
+	});
+
+	//End Dark Mode
+
+
+	// Chiudi il popup quando si clicca fuori da esso
+	$(document).on('click', (e) => {
+		if (!menuPopup.contains(e.target) && !menuButton.contains(e.target)) {
+			menuPopup.classList.remove('active');
+			document.body.classList.remove('no-scroll');
+		}
+	});
+
+	$(document).ready(function () {
+		$(".menu-list a").mouseenter(function () {
+			var target = $(this).data('target');
+			$(".description-content").hide();
+			$(target).show();
+		});
+	});
+
+	document.addEventListener("DOMContentLoaded", function () {
+		var url = window.location.href;
+		var signupLink = document.getElementById("signupLink");
+		var loginLink = document.getElementById("loginLink");
+
+		if (url.includes("SignUp") || url.includes("Signup") || url.includes("signUp") || url.includes("signup")) {
+			signupLink.style.display = "block";
+			loginLink.style.display = "none";
+		} else {
+			signupLink.style.display = "none";
+			loginLink.style.display = "block";
+		}
+	});
+
+</script>

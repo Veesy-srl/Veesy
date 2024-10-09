@@ -125,7 +125,8 @@ public class AdminHelper
             LastUsersCreated = lastUserCreated,
             CreatorOverviewDtos = creatorOverview,
             NumberPayingUsers = numberPayingUsers,
-            LastMediaUploadDtos = MapAdminDto.MapLastMediaUploadDtos(lastMediaUploaded)
+            LastMediaUploadDtos = MapAdminDto.MapLastMediaUploadDtos(lastMediaUploaded),
+            PortfoliosCount = _portfolioService.GetDraftAndPublishedPortfoliosCount()
         };
         return vm;
     }
@@ -303,5 +304,19 @@ public class AdminHelper
         });
 
         return "";
+    }
+
+    public MatchViewModel GetMatchViewModel()
+    {
+        var creatorForms = _analyticService.GetCreatorsForms();
+
+        return new MatchViewModel
+        {
+            TrackingFormDtos = MapAdminDto.MapCreatorTrackingFormDtos(creatorForms),
+            FormCount = creatorForms
+                .GroupBy(tf => tf.MyUser.Fullname)
+                .Select(g => (CreatorName: g.Key, FormCount: g.Count()))
+                .ToList()
+        };
     }
 }

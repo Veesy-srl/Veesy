@@ -60,9 +60,9 @@ public class PortfolioHelper
     {
         var numberPortfolio = _portfolioService.GetPortfoliosNumberByUser(userInfo.Id);
         var subscriptionPlan = _accountService.GetUserSubscriptionPlan(userInfo.Id);
-        if(numberPortfolio > subscriptionPlan.AllowedPortfolio && subscriptionPlan.AllowedPortfolio != -1)
-        return (new ResultDto(false,
-            $"{subscriptionPlan.Name} plan is limited to {subscriptionPlan.AllowedPortfolio} portfolio. Please remove 1 portofolios and retry."), Guid.Empty);
+        if(numberPortfolio >= subscriptionPlan.AllowedPortfolio && subscriptionPlan.AllowedPortfolio != -1)
+            return (new ResultDto(false,
+                $"{subscriptionPlan.Name} plan is limited to {subscriptionPlan.AllowedPortfolio} portfolio. Please remove 1 portofolios and retry."), Guid.Empty);
         
         if(string.IsNullOrEmpty(newPortfolioDto.Name))
             return (new ResultDto(false, "Please insert portfolio's name."), Guid.Empty);

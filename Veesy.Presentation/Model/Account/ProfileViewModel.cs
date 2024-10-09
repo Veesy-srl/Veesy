@@ -26,4 +26,5 @@ public class ProfileViewModel
     public string BasePath { get; set; }
     public string ApplicationUrl { get; set; }
     public List<SectorDto> Sectors { get; set; }
+    public string UserId { get; set; }
 }

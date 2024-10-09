@@ -15,4 +15,5 @@ public class DashboardViewModel
     public List<MyUser> LastUsersCreated { get; set; }
 
     public List<int> SelectableMonth = new() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
+    public (int DraftPortfolios, int PublishedPortfolios) PortfoliosCount { get; set; }
 }

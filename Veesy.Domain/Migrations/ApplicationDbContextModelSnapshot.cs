@@ -1093,6 +1093,47 @@ namespace Veesy.Domain.Migrations
                     b.ToTable("SubscriptionPlans");
                 });
 
+            modelBuilder.Entity("Veesy.Domain.Models.TrackingForm", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreateRecordDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreateUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmailSender")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("FormType")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("LastEditRecordDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastEditUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MyUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("NameSender")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MyUserId");
+
+                    b.ToTable("TrackingForms");
+                });
+
             modelBuilder.Entity("Veesy.Domain.Models.UsedSoftware", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1141,6 +1182,15 @@ namespace Veesy.Domain.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("DiscordDiscriminator")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DiscordId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DiscordUsername")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("EmailUpdateProSended")
                         .HasColumnType("bit");
 
@@ -1185,11 +1235,17 @@ namespace Veesy.Domain.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("Unsubscribe")
+                        .HasColumnType("bit");
+
                     b.Property<string>("VATNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("VeesyPage")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("VisibleInCreatorPage")
                         .HasColumnType("bit");
 
                     b.HasDiscriminator().HasValue("MyUser");
@@ -1497,6 +1553,15 @@ namespace Veesy.Domain.Migrations
                     b.Navigation("ReferralLink");
                 });
 
+            modelBuilder.Entity("Veesy.Domain.Models.TrackingForm", b =>
+                {
+                    b.HasOne("Veesy.Domain.Models.MyUser", "MyUser")
+                        .WithMany("TrackingForm")
+                        .HasForeignKey("MyUserId");
+
+                    b.Navigation("MyUser");
+                });
+
             modelBuilder.Entity("Veesy.Domain.Models.Category", b =>
                 {
                     b.Navigation("MediaCategories");
@@ -1586,6 +1651,8 @@ namespace Veesy.Domain.Migrations
                     b.Navigation("MyUserUsedSoftwares");
 
                     b.Navigation("Portfolios");
+
+                    b.Navigation("TrackingForm");
                 });
 #pragma warning restore 612, 618
         }

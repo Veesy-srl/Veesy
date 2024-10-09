@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using NLog;
 using NLog.Web;
+using Veesy.Discord;
 using Veesy.Domain.Data;
 using Veesy.Domain.Models;
 using Veesy.Email;
@@ -110,6 +111,8 @@ try
             }
         };
     });
+    
+    builder.Services.AddHttpClient<IDiscordService, DiscordService>();
     
     builder.Services.RegisterVeesyServices();
     

@@ -37,8 +37,8 @@ public interface IAccountService
     Task<ResultDto> UpdateMyUserLanguageSpoken(List<MyUserLanguageSpoken> languageSpokenToDelete, List<MyUserLanguageSpoken> languageSpokenToAdd, MyUser user);
     List<LanguageSpoken> GetLanguagesSpokenWithUser(MyUser userInfo);
     List<InfoToShow> GetInfosToShowWithUser(MyUser userInfo);
-    List<MyUser> GetAllCreators();
-    public List<MyUser> GetFilteredCreators();
+    IEnumerable<MyUser> GetAllVisibleCreators();
+    public List<MyUser> GetFilteredCreatorsToShow(List<string> category);
     int NumberRecordCompiled(MyUser userInfo);
     List<FrelancerDto> GetCreators();
     List<FrelancerDto> GetCreatorsFirstPage();
@@ -57,9 +57,10 @@ public interface IAccountService
     SubscriptionPlan GetUserSubscriptionPlan(string userId);
     SubscriptionPlan GetSubscriptionPlanById(Guid id);
     Task AddNewUserSubscription(string userId, Guid id, MyUser user);
-    Task DeleteUserById(string id);
+    Task DeleteUser(MyUser user);
     List<MyUser> GetUserEmailNotConfirmed(int days);
     Task DeleteUsers(List<MyUser> users);
     List<MyUser> GetUserToSendEmailPro();
     Task UpdateMyUsers(List<MyUser> usersToUpdate);
+    public MyUser? GetUserByDiscordId(string discordId);
 }

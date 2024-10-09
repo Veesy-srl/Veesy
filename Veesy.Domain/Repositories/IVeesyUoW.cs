@@ -19,4 +19,5 @@ public interface IVeesyUoW
     IMediaRepository MediaRepository { get; }
     IPortfolioRepository PortfolioRepository { get; }
     IAnalyticRepository AnalyticRepository { get; }
+    ITrackingFormRepository TrackingFormRepository { get; }
 }

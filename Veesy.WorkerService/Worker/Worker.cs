@@ -151,7 +151,8 @@ public class Worker : BackgroundService
                     catch (Exception ex)
                     {
                         Logger.Error(ex, ex.Message);
-                    }                }
+                    }                
+                }
             }
         }
 

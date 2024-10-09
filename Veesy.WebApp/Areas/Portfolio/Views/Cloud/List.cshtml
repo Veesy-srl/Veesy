@@ -2,670 +2,675 @@
 @using Veesy.Domain.Constants
 @model Veesy.Presentation.Model.Cloud.CloudViewModel
 @{
-    ViewData["Title"] = "Cloud";
+	ViewData["Title"] = "Cloud";
 }
 
 @section Style
 {
-    <link rel="stylesheet" href="~/css/notyf_override.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/notyf_override.css" asp-append-version="true" />
 }
 <div class="padding-lg pt-7rem">
-    <div class="row pt-4 p-4-lg">
-        <div class="col-sm-12 col-md-3 ps-0">
-            <nav class="breadcrumb-container" aria-label="Percorso di navigazione">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><img src="imgs/dashboard_home_dark-mode.png" class="me-2 icon-derein"><a class="a-font-p breadcrumb-a-white me-2 text-white" asp-area="Portfolio" asp-controller="Home" asp-action="Index">desk</a><img src="icon/dashboard_nest_dark mode.svg" class="icon-svg-derein"></li>
-                    <li class="breadcrumb-item"><a class="a-font-p breadcrumb-a-white me-2 text-white" asp-action="List"><strong>cloud</strong></a></li>
-                </ol>
-            </nav>
-        </div>
-        <div class="text-white col-sm-12 col-md-6">
-            <h1><strong>Cloud</strong></h1>Drag and drop here your latest projects and watch your collection grow. Recommended formats are 4:3 horizontal or vertical. File formats accepted: jpeg, png, mov, mp4, gif. <a class="grey-link ms-2"><strong>learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a>
-            <div class="empty-veesy nodisplay-md"></div>
-            @{
-                var nodisplay_md = "mt-4";
-                if (Model.Medias != null && Model.Medias.Count != 0)
-                {
-                    nodisplay_md = "nodisplay-md";
-                }
-            }
-            <div class="@nodisplay_md" id="div-uploader">
-                <form enctype="multipart/form-data" asp-action="UploadMedia" asp-controller="Media" asp-area="Portfolio" class="dropzone card-grey-dashed-veesy mb-4" id="uploader">
-                    <a id="dropzone-close-button" style="padding: 0.7rem 1rem !important; display: none;" onclick="PopUpConfirm()" class="ms-2 btn btn-light border btn-layout fw-bolder shadow-none close-button-dropzone">
-                        <i class="fas fa-times-circle fa-2xs text-primary" id="icon-color" aria-hidden="true"></i>
-                        <span id="color-text-variant">close</span>
-                    </a>
-                    <div class="dz-message needsclick" id="message-uploader">
-                        <div id="div-uploader-icon" class="w-100 mb-1">
-                            <i id="uploader-icon" class="fa-solid fa-circle-plus fa-xl color-plus-cloud"></i>
-                        </div>
-                        <span id="uploader-text" class="text-white a-font-p">
-                            drag & drop here <br/> or <br> <p class="text-white" style="text-decoration: underline">upload from device</p>
-                        </span>
-                        <div class="progress-bar progress-bar-primary" role="progressbar" data-dz-uploadprogress>
-                            <span class="progress-text"></span>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-3 nodisplay-sm pe-0">
-            <div class="empty-veesy"></div>
-            <div class="d-flex mt-20 justify-content-end ps-3">
-                <div class="w-75-veesy card-blue-veesy">
-                    <div class="text-end"><i class="fa-solid fa-circle fa-2xs" style="color: #ffffff;"></i></div>
-                    <p class="mb-0" style="color: white;">Do you need some help?</p>
-                    <a class="a-ciano-underline" href="mailto:support@veesy.it">Contact us</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row mt-20 p-4-lg">
-        <div class="p-0 mb-4 mb-lg-0 card-columns" id="images-container">
-            @foreach (var image in Model.Medias)
-            {
-                <div id="div-for-remove-@image.Code" class="media-container show-edit">
-                    <a asp-action="Edit" asp-route-id="@image.Code" class="edit-button a-font-p">
-                        <strong style="margin-right: 5px; ">edit</strong>
-                        <i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>
-                    </a>
-                    <a onclick="SelectMedia('@image.Code')">
-                        <div class="img-div">
-                            @if (MediaCostants.ImageExtensions.Contains(image.Type.ToUpper()))
-                            {
-                                <img id="img-@image.Code" src="@Model.BasePath@image.FileName?tr=w-400" class="card-body mb-3 rounded-05 img-rounded-trasparent w-100 p-0" title="@image.OriginalFileName"/>
-                            }
-                            else
-                            {
-                                <video id="img-@image.Code" autoplay="autoplay" muted loop class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" title="@image.OriginalFileName">
-                                    <source src="@Model.BasePath@image.FileName?tr=w-400" type="video/mp4">
-                                </video>
-                            }
-                        </div>
-                    </a>
-                </div>
-            }
-        </div>
-    </div>
+	<div class="row pt-4 p-4-lg">
+		<div class="col-sm-12 col-md-3 ps-0">
+			<nav class="breadcrumb-container" aria-label="Percorso di navigazione">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><img src="imgs/dashboard_home_dark-mode.png" class="me-2 icon-derein"><a class="a-font-p breadcrumb-a-white me-2 text-white" asp-area="Portfolio" asp-controller="Home" asp-action="Index">desk</a><img src="icon/dashboard_nest_dark mode.svg" class="icon-svg-derein"></li>
+					<li class="breadcrumb-item"><a class="a-font-p breadcrumb-a-white me-2 text-white" asp-action="List"><strong>cloud</strong></a></li>
+				</ol>
+			</nav>
+		</div>
+		<div class="text-white col-sm-12 col-md-6">
+			<h1><strong>Cloud</strong></h1>Drag and drop here your latest projects and watch your collection grow. Recommended formats are 4:3 horizontal or vertical. File formats accepted: jpeg, png, mov, mp4, gif. <a class="grey-link ms-2"><strong>learn more <i class="fa-solid fa-arrow-up-right-from-square"></i></strong></a>
+			<div class="empty-veesy nodisplay-md"></div>
+			@{
+				var nodisplay_md = "mt-4";
+				if (Model.Medias != null && Model.Medias.Count != 0)
+				{
+					nodisplay_md = "nodisplay-md";
+				}
+			}
+			<div class="@nodisplay_md" id="div-uploader">
+				<form enctype="multipart/form-data" asp-action="UploadMedia" asp-controller="Media" asp-area="Portfolio" class="dropzone card-grey-dashed-veesy mb-4" id="uploader">
+					<a id="dropzone-close-button" style="padding: 0.7rem 1rem !important; display: none;" onclick="PopUpConfirm()" class="ms-2 btn btn-light border btn-layout fw-bolder shadow-none close-button-dropzone">
+						<i class="fas fa-times-circle fa-2xs text-primary" id="icon-color" aria-hidden="true"></i>
+						<span id="color-text-variant">close</span>
+					</a>
+					<div class="dz-message needsclick" id="message-uploader">
+						<div id="div-uploader-icon" class="w-100 mb-1">
+							<i id="uploader-icon" class="fa-solid fa-circle-plus fa-xl color-plus-cloud"></i>
+						</div>
+						<span id="uploader-text" class="text-white a-font-p">
+							drag & drop here <br /> or <br> <p class="text-white" style="text-decoration: underline">upload from device</p>
+						</span>
+						<div class="progress-bar progress-bar-primary" role="progressbar" data-dz-uploadprogress>
+							<span class="progress-text"></span>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="col-sm-12 col-md-3 nodisplay-sm pe-0">
+			<div class="empty-veesy"></div>
+			<div class="d-flex mt-20 justify-content-end ps-3">
+				<div class="w-75-veesy card-blue-veesy">
+					<div class="text-end"><i class="fa-solid fa-circle fa-2xs" style="color: #ffffff;"></i></div>
+					<p class="mb-0" style="color: white;">Do you need some help?</p>
+					<a class="a-ciano-underline" href="mailto:support@veesy.it">Contact us</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row mt-20 p-4-lg">
+		<div class="p-0 mb-4 mb-lg-0 card-columns" id="images-container">
+			@foreach (var image in Model.Medias)
+			{
+				<div id="div-for-remove-@image.Code" class="media-container show-edit">
+					<a asp-action="Edit" asp-route-id="@image.Code" class="edit-button a-font-p">
+						<strong style="margin-right: 5px; ">edit</strong>
+						<i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>
+					</a>
+					<a onclick="SelectMedia('@image.Code')">
+						<div class="img-div">
+							@if (MediaCostants.ImageExtensions.Contains(image.Type.ToUpper()))
+							{
+								<img id="img-@image.Code" src="@Model.BasePath@image.FileName?tr=w-400" class="card-body mb-3 rounded-05 img-rounded-trasparent w-100 p-0" title="@image.OriginalFileName" />
+							}
+							else
+							{
+								<video id="img-@image.Code" autoplay="autoplay" muted loop class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" title="@image.OriginalFileName">
+									<source src="@Model.BasePath@image.FileName?tr=w-400" type="video/mp4">
+								</video>
+							}
+						</div>
+					</a>
+				</div>
+			}
+		</div>
+	</div>
 </div>
 
 <div class="empty-veesy"></div>
 <div class="empty-veesy"></div>
 <div class="empty-veesy"></div>
 
-<div id="alert-portfolio" class="custom-alert-cloud shadow alert alert-veesy-cloud alert-dismissible fade mobile-option-cloud hidden" role="alert" >
-    <div class="w-100">
-        <div class="float-start">
-            <div class="d-flex mt-2">
-                <p id="number_files" class="fw-bolder text-color">1 files selected</p>
-                <a onclick="confirmDelete(), openModal('#modalDeleteMedia')" class="red-link-underline ms-3 a-font-p" style="font-size: 14px;">delete</a>
-            </div>
-        </div>
-        <div class="float-end">
-            <div class="d-flex align-items-center">
-                @if (Model.Portfolios != null && Model.Portfolios.Count > 0)
-                {
-                    <a onclick="CountPortfolioAndAddMedia()" class="me-4 fw-bolder a-font-p" style="font-size: 14px; margin-top: 2px;">+ add to portfolio</a>
-                }
-                <button onclick="openModal('#modalCreatePortfolio'), ResetInput()" class="rounded-pill btn-primary btn-variant" style="padding-left: 35px !important; padding-right:  35px !important; font-size:  15px;" type="submit">create portfolio</button>
-                <a class="ms-4 me-2 mt-1" type="button" onclick="CloseAlert()"><i class="fa-solid fa-grey fa-circle-xmark a-font-p"></i></a>
-            </div>
-        </div>
-    </div>
+<div id="alert-portfolio" class="custom-alert-cloud shadow alert alert-veesy-cloud alert-dismissible fade mobile-option-cloud hidden" role="alert">
+	<div class="w-100">
+		<div class="float-start">
+			<div class="d-flex mt-2">
+				<p id="number_files" class="fw-bolder text-color">1 files selected</p>
+				<a onclick="confirmDelete(), openModal('#modalDeleteMedia')" class="red-link-underline ms-3 a-font-p" style="font-size: 14px;">delete</a>
+			</div>
+		</div>
+		<div class="float-end">
+			<div class="d-flex align-items-center">
+				@if (Model.Portfolios != null && Model.Portfolios.Count > 0)
+				{
+					<a onclick="CountPortfolioAndAddMedia()" class="me-4 fw-bolder a-font-p" style="font-size: 14px; margin-top: 2px;">+ add to portfolio</a>
+				}
+				<button onclick="openModal('#modalCreatePortfolio'), ResetInput()" class="rounded-pill btn-primary btn-variant" style="padding-left: 35px !important; padding-right:  35px !important; font-size:  15px;" type="submit">create portfolio</button>
+				<a class="ms-4 me-2 mt-1" type="button" onclick="CloseAlert()"><i class="fa-solid fa-grey fa-circle-xmark a-font-p"></i></a>
+			</div>
+		</div>
+	</div>
 </div>
 
 <div class="modal fade" id="modalAddMediaToPortfolio" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title text-color"><strong>Add to Portfolio</strong></h3>
-                <a onclick="closeModal('#modalAddMediaToPortfolio')"><i class="fa-solid fa-circle-xmark"></i></a>
-            </div>
-            <div id="input-portfolio-edit">
-                <div class="modal-body">
-                    <div class="row select-portfolio-modal">
-                        @{
-                            if (@Model.Portfolios != null)
-                                foreach (var item in @Model.Portfolios)
-                                {
-                                    <div class="col-sm-12 col-md-6 mb-4">
-                                        <div id="div-select-portfolio-@item.Code" class="d-flex p-2 select-portfolio" onclick="SelectPortfolio('@item.Code')">
-                                            <div class="w-50">
-                                                @if (!item.IsVideo)
-                                                {
-                                                    if (item.DefaultImageName != "")
-                                                    {
-                                                        <img src="@Model.BasePath@item.DefaultImageName?tr=w-400" class="img-thumbnail-custom-portfolio w-100" title="@item.DefaultImageOriginalName">
-                                                    }
-                                                    else
-                                                    {
-                                                        <img src="~/imgs/noimage.png" class="img-thumbnail-custom-portfolio w-100" title="@item.DefaultImageOriginalName">
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    <video autoplay="autoplay" muted loop class="img-thumbnail-custom-portfolio w-100" title="@item.DefaultImageOriginalName">
-                                                        <source src="@Model.BasePath@item.DefaultImageName?tr=w-400" type="video/mp4">
-                                                    </video>
-                                                }
-                                            </div>
-                                            <div class="w-50 ps-2">
-                                                <p class="mb-0 text-color"><strong>@item.Name</strong></p>
-                                                <p class="mb-0 text-grey">Updated on <br/>@item.LastUpdate</p>
-                                                <p class="mb-0 text-grey">@item.NumberMedia medias</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
-                            }
-                        }
-                    </div>                
-                </div>
-                <div class="modal-footer">                
-                    <button onclick="AddToPortfolio()" class="mt-2 rounded-pill btn btn-primary btn-padding a-font-p" type="submit">save</button>
-                </div>
-            </div>
-            <div id="success-portfolio-edit" style="display: none">
-                <div class="modal-body justify-content-center d-flex">
-                    <form id="portfolio-setting-link-edit" style="display: inline-block;">
-                    <button id="portfolio-setting-link-edit" class="mt-2 rounded-pill btn btn-primary" type="submit">view portfolio</button> 
-                    </form>
-                </div>
-                <div class="modal-footer">    
-                    <div class="empty-veesy"></div>
-                    <div class="empty-veesy"></div>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title text-color"><strong>Add to Portfolio</strong></h3>
+				<a onclick="closeModal('#modalAddMediaToPortfolio')"><i class="fa-solid fa-circle-xmark"></i></a>
+			</div>
+			<div id="input-portfolio-edit">
+				<div class="modal-body">
+					<div class="row select-portfolio-modal">
+						@{
+							if (@Model.Portfolios != null)
+								foreach (var item in @Model.Portfolios)
+								{
+									<div class="col-sm-12 col-md-6 mb-4">
+										<div id="div-select-portfolio-@item.Code" class="d-flex p-2 select-portfolio" onclick="SelectPortfolio('@item.Code')">
+											<div class="w-50">
+												@if (!item.IsVideo)
+												{
+													if (item.DefaultImageName != "")
+													{
+														<img src="@Model.BasePath@item.DefaultImageName?tr=w-400" class="img-thumbnail-custom-portfolio w-100" title="@item.DefaultImageOriginalName">
+													}
+													else
+													{
+														<img src="~/imgs/noimage.png" class="img-thumbnail-custom-portfolio w-100" title="@item.DefaultImageOriginalName">
+													}
+												}
+												else
+												{
+													<video autoplay="autoplay" muted loop class="img-thumbnail-custom-portfolio w-100" title="@item.DefaultImageOriginalName">
+														<source src="@Model.BasePath@item.DefaultImageName?tr=w-400" type="video/mp4">
+													</video>
+												}
+											</div>
+											<div class="w-50 ps-2">
+												<p class="mb-0 text-color"><strong>@item.Name</strong></p>
+												<p class="mb-0 text-grey">Updated on <br />@item.LastUpdate</p>
+												<p class="mb-0 text-grey">@item.NumberMedia medias</p>
+											</div>
+										</div>
+									</div>
+								}
+						}
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button onclick="AddToPortfolio()" class="mt-2 rounded-pill btn btn-primary btn-padding a-font-p" type="submit">save</button>
+				</div>
+			</div>
+			<div id="success-portfolio-edit" style="display: none">
+				<div class="modal-body justify-content-center d-flex">
+					<form id="portfolio-setting-link-edit" style="display: inline-block;">
+						<button id="portfolio-setting-link-edit" class="mt-2 rounded-pill btn btn-primary" type="submit">view portfolio</button>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<div class="empty-veesy"></div>
+					<div class="empty-veesy"></div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <div class="modal fade" id="modalDeleteMedia" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Delete Medias</strong></h3>
-                <a onclick="closeModal('#modalDeleteMedia')"><i class="fa-solid fa-grey fa-circle-xmark"></i></a>
-            </div>
-            <div class="empty-veesy"></div>
-            <div class="modal-body text-center text-color">
-                <h5><strong id="confirm-delete-body" style=" white-space: pre">0 Medias will be delete permanently. Are you sure?</strong></h5>
-            </div>
-            <div class="empty-veesy"></div>
-            <div class="row">  
-                <div class="col-4">
-                    <p class="ps-3 text-muted">
-                        <a style="text-decoration: underline !important; position: relative; top: 20px;" class="grey-link mt-3" onclick="closeModal('#modalDeleteMedia')">back to cloud</a>
-                    </p>
-                </div>
-                <div class="col-4 justify-content-center" style="display: flex"><a onclick="deleteMedia()" class="mt-2 rounded-pill btn btn-delete" type="submit">yes, delete</a></div>
-                <div class="col-4"></div>
-            </div>
-            <div class="empty-veesy"></div>
-        </div>
-    </div>
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Delete Medias</strong></h3>
+				<a onclick="closeModal('#modalDeleteMedia')"><i class="fa-solid fa-grey fa-circle-xmark"></i></a>
+			</div>
+			<div class="empty-veesy"></div>
+			<div class="modal-body text-center text-color">
+				<h5><strong id="confirm-delete-body" style=" white-space: pre">0 Medias will be delete permanently. Are you sure?</strong></h5>
+			</div>
+			<div class="empty-veesy"></div>
+			<div class="row">
+				<div class="col-4">
+					<p class="ps-3 text-muted">
+						<a style="text-decoration: underline !important; position: relative; top: 20px;" class="grey-link mt-3" onclick="closeModal('#modalDeleteMedia')">back to cloud</a>
+					</p>
+				</div>
+				<div class="col-4 justify-content-center" style="display: flex"><a onclick="deleteMedia()" class="mt-2 rounded-pill btn btn-delete" type="submit">yes, delete</a></div>
+				<div class="col-4"></div>
+			</div>
+			<div class="empty-veesy"></div>
+		</div>
+	</div>
 </div>
 
 <div style="z-index: 100000 !important;" class="modal fade" id="modalConfirmClose" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Close modal</strong></h3>
-                <a onclick="closeModal('#modalConfirmClose')"><i class="fa-solid fa-grey fa-circle-xmark"></i></a>
-            </div>
-            <div class="empty-veesy"></div>
-            <div class="modal-body text-center text-color">
-                <h5><strong id="confirm-delete-body">If you close this window you will not be able to see the progress of the upload. Are you sure?</strong></h5>
-            </div>
-            <div class="empty-veesy"></div>
-            <div class="row">  
-                <div class="col-4">
-                </div>
-                <div class="col-4 justify-content-center" style="display: flex"><a onclick="hideDropZone()" class="mt-2 rounded-pill btn btn-delete" type="submit">yes, close</a></div>
-                <div class="col-4"></div>
-            </div>
-            <div class="empty-veesy"></div>
-        </div>
-    </div>
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Close modal</strong></h3>
+				<a onclick="closeModal('#modalConfirmClose')"><i class="fa-solid fa-grey fa-circle-xmark"></i></a>
+			</div>
+			<div class="empty-veesy"></div>
+			<div class="modal-body text-center text-color">
+				<h5><strong id="confirm-delete-body">If you close this window you will not be able to see the progress of the upload. Are you sure?</strong></h5>
+			</div>
+			<div class="empty-veesy"></div>
+			<div class="row">
+				<div class="col-4">
+				</div>
+				<div class="col-4 justify-content-center" style="display: flex"><a onclick="hideDropZone()" class="mt-2 rounded-pill btn btn-delete" type="submit">yes, close</a></div>
+				<div class="col-4"></div>
+			</div>
+			<div class="empty-veesy"></div>
+		</div>
+	</div>
 </div>
 
 <div class="modal fade" id="modalCreatePortfolio" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Create Portfolio</strong></h3>
-                <a onclick="closeModal('#modalCreatePortfolio')"><i class="fa-solid fa-grey fa-circle-xmark"></i></a>
-            </div>
-            <div id="input-portfolio">
-                <div class="modal-body">
-                    <p class="mb-0 text-color">name your Portfolio</p>
-                    <input oninput="CountCharacter(50, 'portfolio-name-counter', 'portfolio-name-edit')" type="text" id="portfolio-name-edit" rows="4" class="w-100 input-modal text-profile"/>
-                    <p class="mb-0 text-color"><strong id="portfolio-name-counter">50 / 50</strong></p>
-                </div>
-                <div class="modal-footer">                
-                    <button onclick="CreateNewPortfolio()" class="mt-2 rounded-pill btn btn-primary btn-padding a-font-p" type="submit">save</button>
-                </div>
-            </div>
-            <div id="success-portfolio" style="display: none">
-                <div class="modal-body justify-content-center d-flex">
-                    <form id="portfolio-setting-link" style="display: inline-block;">
-                        <button class="mt-2 rounded-pill btn btn-primary" type="submit">view portfolio</button>
-                    </form>
-                </div>
-                <div class="modal-footer">    
-                    <div class="empty-veesy"></div>
-                    <div class="empty-veesy"></div>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title text-color" id="exampleModalLongTitle"><strong>Create Portfolio</strong></h3>
+				<a onclick="closeModal('#modalCreatePortfolio')"><i class="fa-solid fa-grey fa-circle-xmark"></i></a>
+			</div>
+			<div id="input-portfolio">
+				<div class="modal-body">
+					<p class="mb-0 text-color">name your Portfolio</p>
+					<input oninput="CountCharacter(50, 'portfolio-name-counter', 'portfolio-name-edit')" type="text" id="portfolio-name-edit" rows="4" class="w-100 input-modal text-profile" />
+					<p class="mb-0 text-color"><strong id="portfolio-name-counter">50 / 50</strong></p>
+				</div>
+				<div class="modal-footer">
+					<button onclick="CreateNewPortfolio()" class="mt-2 rounded-pill btn btn-primary btn-padding a-font-p" type="submit">save</button>
+				</div>
+			</div>
+			<div id="success-portfolio" style="display: none">
+				<div class="modal-body justify-content-center d-flex">
+					<form id="portfolio-setting-link" style="display: inline-block;">
+						<button class="mt-2 rounded-pill btn btn-primary" type="submit">view portfolio</button>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<div class="empty-veesy"></div>
+					<div class="empty-veesy"></div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <style>
-    .hidden{
-        display:  none;
-    }
+	.hidden {
+		display: none;
+	}
 </style>
 
 @section Scripts
 {
-    <script>
-    
-    function PopUpConfirm() {
-        if (dropzone_processing){
-            openModal("#modalConfirmClose")
-        }
-        else{
-            hideDropZone()
-        }
-    }
-    
-    if (screen.width < 600){
-        document.getElementById("images-container").style.columnCount = 2;
-    }
-    else{
-        document.getElementById("images-container").style.columnCount = 8;
-    }
-        
-    let mediacount = @Model.Medias.Count;
+	<script>
 
-    function resetModalAdd() {
-        document.getElementById("input-portfolio-edit").style.display = "block";
-        document.getElementById("success-portfolio-edit").style.display = "none";
-    }
-    @{
-        var portfolioCode = "";
-        var portfoliosNumber = 0;
-        if (Model.Portfolios != null && Model.Portfolios.FirstOrDefault() != null)
-        {
-            portfoliosNumber = @Model.Portfolios.Count;
-            portfolioCode = Model.Portfolios.FirstOrDefault().Code.ToString();
-        }
-    }
-    
-    function CountPortfolioAndAddMedia(){
-        
-        openModal('#modalAddMediaToPortfolio')
-        resetModalAdd()
-        if (@portfoliosNumber == 1){
-            SelectPortfolio('@portfolioCode')
-        }
-    }
-    
-    function AddToPortfolio() {
-        $('#load-spinner').css("display", "block");
-        var Code = portfolioCodeSelected;
-        CodeImagesToAdd = []
-        for (const code in img_selected_id) {
-            CodeImagesToAdd.push(img_selected_id[code])
-        }
-        var addPortfolioDto = {CodeImagesToAdd, Code};
-        $.ajax({
-            type: 'POST',
-            url: '@Url.Action("AddMedia", "Portfolio")',
-            data: JSON.stringify(addPortfolioDto),
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            success: function (response) {
-                if(response.result){
-                    document.getElementById("input-portfolio-edit").style.display = "none";
-                    document.getElementById("success-portfolio-edit").style.display = "block";
-                    document.getElementById("portfolio-setting-link-edit").setAttribute('action', "/portfolio/settings/" + response.code);
-                }
-                $('#load-spinner').css("display", "none");
-            },
-            error: function (response) {
-                $('#load-spinner').css("display", "none");
-            }
-        })
-    }
-    
-    let portfolioCodeSelected = "";
-    function SelectPortfolio(portfolioCode) {
-        if (portfolioCodeSelected != ""){
-            document.getElementById("div-select-portfolio-" + portfolioCodeSelected).classList.remove("select-portfolio-selected");
-            document.getElementById("div-select-portfolio-" + portfolioCodeSelected).classList.add("select-portfolio");
-        }
-        portfolioCodeSelected = portfolioCode;
-        document.getElementById("div-select-portfolio-" + portfolioCodeSelected).classList.add("select-portfolio-selected");
-        document.getElementById("div-select-portfolio-" + portfolioCodeSelected).classList.remove("select-portfolio");
-    }
-    
-    
-    function ResetInput() {
-        document.getElementById("input-portfolio").style.display = "block";
-        document.getElementById("success-portfolio").style.display = "none";
-    }
-    
-    
-    function CreateNewPortfolio() {
-        $('#load-spinner').css("display", "block");
-        var Name = document.getElementById("portfolio-name-edit").value
-        CodeImagesToAdd = []
-        for (const code in img_selected_id) {
-            CodeImagesToAdd.push(img_selected_id[code])
-        }
-        var newPortfolioDto = {CodeImagesToAdd,  Name};
-        $.ajax({
-            type: 'POST',
-            url: '@Url.Action("Create", "Portfolio")',
-            data: JSON.stringify(newPortfolioDto),
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            success: function (response) {
-                if(response.result){
-                    document.getElementById("input-portfolio").style.display = "none";
-                    document.getElementById("success-portfolio").style.display = "block";
-                    document.getElementById("portfolio-setting-link").setAttribute('action', "/portfolio/settings/" + response.code);
-                }
-                $('#load-spinner').css("display", "none");
-            },
-            error: function (response) {
-                $('#load-spinner').css("display", "none");
-            }
-        })
-    }
-    
-    let imageNumber = @Model.Medias.Count;
-    function CloseAlert() {
-        alert_portfolio.classList.remove("show");
-        alert_portfolio.classList.add("hidden");
-        var items = document.getElementsByClassName("img-rounded-ciano");
-        while (items.length > 0){
-            items[0].classList.add("img-rounded-trasparent");
-            items[0].classList.remove("img-rounded-ciano");
-        }
-        img_selected_id = []
-    }
-    
-    function confirmDelete(){
-        var newline = "\r\n";
-        document.getElementById("confirm-delete-body").textContent = img_selected_id.length + " Medias will be delete" + newline + "permanently. Are you sure?"
-    }
-    
-    var img_selected_id = [];
-    
-    function deleteMedia() {
-        $('#load-spinner').css("display", "block");
-        var data = [];
-        for (const code in img_selected_id) {
-            data.push(img_selected_id[code])
-        }
-        
-        $.ajax({
-            type: 'POST',
-            url: '@Url.Action("DeleteMediaList", "Media")',
-            data: JSON.stringify(data),
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            success: function (response) {
-                if(response.result){
-                    for (let i = 0; i<response.codeToDelete.length; i++){
-                        document.getElementById("div-for-remove-" + response.codeToDelete[i]).style.display = "none";
-                        removeMediaFromList(response.codeToDelete[i]);
-                        alert_portfolio.classList.remove("show");
-                        alert_portfolio.classList.add("hidden");
-                        mediacount--;
-                    }
-                    
-                    if (mediacount == 0)
-                        div_uploader.classList.remove("nodisplay-md");
-                }
-                else{
-                    toastNotifyCustom(response.message, 10000, "#ca0a0a", "")
-                }
-                closeModal('#modalDeleteMedia');
-                $('#load-spinner').css("display", "none");
-            },
-            error: function (response) {
-                $('#load-spinner').css("display", "none");
-            }
-        })
-    }
-    
-    
-    function EditMedia(s) {
-        document.location.href = '@Model.ApplicationUrl' + '/cloud/edit/' + s;
-    }
-    
-    
-    const alert_portfolio = document.getElementById("alert-portfolio");
-    function SelectMedia(img_id) {
-        var media = document.getElementById('img-'+img_id);
-        //var media = screen.width < 600 ? medias[1] : medias[0];
+		function PopUpConfirm() {
+			if (dropzone_processing) {
+				openModal("#modalConfirmClose")
+			}
+			else {
+				hideDropZone()
+			}
+		}
 
-        if(media.classList.contains("img-rounded-ciano")){
-            media.classList.remove("img-rounded-ciano")
-            media.classList.add("img-rounded-trasparent")
-            removeMediaFromList(img_id);
-        }
-        else{
-            media.classList.remove("img-rounded-trasparent")
-            media.classList.add("img-rounded-ciano")
-            img_selected_id.push(img_id);
-        }
-        if (img_selected_id.length > 0){
-            alert_portfolio.classList.remove("hidden");
-            alert_portfolio.classList.add("show");
-            document.getElementById("number_files").textContent = img_selected_id.length + " files selected"
-        }
-        else{
-            alert_portfolio.classList.remove("show");
-            alert_portfolio.classList.add("hidden");
-        }
-        
-    }
-    
-    function removeMediaFromList(value){
-        const index = img_selected_id.indexOf(value);
-        if (index > -1) { // only splice array when item is found
-          img_selected_id.splice(index, 1); // 2nd parameter means remove one item only
-        }
-    }
-    
-    function submitForm() {
-       document.getElementById("uploader").submit();
-    }
-    var div_uploader = document.getElementById("div-uploader");
-    /*Dropzone configuration*/
-        Dropzone.autoDiscover = false;
-        var uploader = null;
-        var msgUploader = document.getElementById("message-uploader");
-        var divUploader = document.getElementById("div-uploader-icon");
-        var iconUploader = document.getElementById("uploader-icon");
-        var txtUploader = document.getElementById("uploader-text");
-        let dropzone_processing = false;
-    
-        var dropzoneOptions = {
-            dictDefaultMessage: 'Upload or drop files here',
-            paramName: "file",
-            maxFilesize: 10000, // MB
-            addRemoveLinks: true,
-            parallelUploads: 1,
-            uploadMultiple: true,
-            acceptedFiles: "image/jpeg,image/png,image/gif,image/jpg,video/*",
-            addedfiles: function (){
-                dropzone_processing = true;
-            },
-            uploadprogress: function(file, progress, bytesSent) {
-                if (file.previewElement) {
-                    var progressElement = file.previewElement.querySelector("[data-dz-uploadprogress]");
-                    progressElement.style.width = progress + "%";
-                }
-            },
-            success: function (file) {
-               mediacount++;
-               this.removeFile(file);
-            },
-            successmultiple: function (file, response) {
-                const res = JSON.parse(response);
-                // TODO mostrare popup con success/error
-                if (res.NumberSuccessFile > 0){
-                    toastNotifyCustom(res.SuccessFileMessage, 10000, "#75ccdd", "")
-                    for (let i = 0; i < res.MediaDtos.length; i++){
-                        var divider = 8
-                        var mobile= "";
-                        if (screen.width < 600){
-                            divider = 2
-                            mobile = "mobile-"
-                        }
-                        imageNumber++;
-                        var index = imageNumber % divider;
-                        if (!res.MediaDtos[i].IsVideo){
-                            document.getElementById("images-container").innerHTML +=
-                            '<div id="div-for-remove-' + res.MediaDtos[i].Code + '" class="media-container show-edit">'+
-                                            '<a class="edit-button" onclick="EditMedia(\'' + res.MediaDtos[i].Code + '\'); return false;">'+
-                                                '<strong style="margin-right: 5px; font-size: 14px;">edit</strong>'+
-                                                '<i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>'+
-                                            '</a>'+
-                                            '<a onclick="SelectMedia(\'' + res.MediaDtos[i].Code + '\')">'+
-                                                '<div class="img-div">'+
-                                                    '<div class="draggable m-0" name="image-gallery">'+
-                                                        '<img id="img-' + res.MediaDtos[i].Code + '" src="@Model.BasePath' + res.MediaDtos[i].FileName + '?tr=w-400" class="card-body mb-3 rounded-05 img-rounded-trasparent w-100 p-0" title="' + res.MediaDtos[i].OriginalFileName + '"/>'+
-                            '</div></div></a></div>'
-                         }
-                        else{
-                            document.getElementById("images-container").innerHTML +=
-                            '<div id="div-for-remove-' + res.MediaDtos[i].Code + '" class="media-container show-edit">'+
-                                '<a class="edit-button" onclick="EditMedia(\'' + res.MediaDtos[i].Code + '\'); return false;">'+
-                                    '<strong style="margin-right: 5px; font-size: 14px;">edit</strong>'+
-                                    '<i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>'+
-                                '</a>'+
-                                '<a onclick="SelectMedia(\'' + res.MediaDtos[i].Code + '\')">'+
-                                    '<div class="img-div">'+
-                                        '<div class="draggable m-0" name="image-gallery">'+
-                                            '<video id="img-' + res.MediaDtos[i].Code + '" autoplay="autoplay" muted loop class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" title="' + res.MediaDtos[i].OriginalFileName + '">'+
-                                                '<source src="@Model.BasePath' + res.MediaDtos[i].FileName + '?tr=w-400" type="video/mp4">'+
-                                            '</video></div></div></a></div>'
-                        
-                        }
-                    }
-                }    
-                if (res.NumberErrorFile > 0)
-                    toastNotifyCustom(res.ErrorFileMessage, 10000, "#ca0a0a", "")
-             },
-            errormultiple: function (e) {
-                toastNotifyCustom("Error during uploading files. Please retry.", 10000, "#ca0a0a", "")
-             },
-            queuecomplete: function (){
-               hideDropZone()
-               //location.reload() 
-               dropzone_processing = false;
-            }
-        };
-                
-        uploader = document.querySelector('#uploader');
-        var newDropzone = new Dropzone(uploader, dropzoneOptions);
-        
-        // 1
-        window.addEventListener('dragenter', function(e) {
-            showDropZone();
-        });
-        
-        // 2
-        uploader.addEventListener('dragenter', allowDrag);
-        uploader.addEventListener('dragover', allowDrag);
-        
-        // 3
-        uploader.addEventListener('dragleave', function(e) {
-            console.log('dragleave');
-            //hideDropZone();
-        });
-        
-        // 4
-        uploader.addEventListener('drop', handleDrop);
-               
-    
-        function showDropZone() {
-            document.getElementById("dropzone-close-button").style.display = "block";
-            div_uploader.classList.remove("nodisplay-md");
-            uploader.classList.remove("card-grey-dashed-veesy");
-            uploader.classList.add("dropzone-full-page");
-            
-            divUploader.classList.remove("mb-1");
-            msgUploader.classList.add("text-center");
-            msgUploader.classList.add("h-100");
-            msgUploader.style.marginTop = "20%";
-            divUploader.classList.add("mb-4");
-            txtUploader.classList.add("text-white");
-            iconUploader.style.color = "#ffffff"
-            
-            document.body.style.overflow = 'hidden';
-        }
-        
+		let mediacount = @Model.Medias.Count;
 
-        function hideDropZone() {
-            closeModal('#modalConfirmClose')
-            document.getElementById("dropzone-close-button").style.display = "none";
-            if (mediacount != 0){
-                div_uploader.classList.add("nodisplay-md");
-            }
-            uploader.classList.remove("dropzone-full-page");
-            uploader.classList.add("card-grey-dashed-veesy");
-            
-            msgUploader.classList.remove("text-center");
-            msgUploader.classList.remove("h-100");
-            msgUploader.style.marginTop = "2em";
-            divUploader.classList.remove("mb-4");
-            txtUploader.classList.remove("text-white");
-            iconUploader.style.color = "#202F4D"
-            divUploader.classList.add("mb-1");
-            
-            document.body.style.overflow = 'visible';
-        }
-        
-        function allowDrag(e) {
-            if (true) {  // Test that the item being dragged is a valid one
-                e.dataTransfer.dropEffect = 'copy';
-            }
-        }
-        
-        function handleDrop(e) {
-            //hideDropZone();
-        }
-        
-        // window.addEventListener("beforeunload", function (e) {
-        //     if (!dropzone_processing){
-        //         // Cancel the event
-        //         e.preventDefault(); // If you prevent default behavior in Mozilla Firefox prompt will always be shown
-        //         // Chrome requires returnValue to be set
-        //         e.returnValue = "";
-        //     }
-        //   });
-        
-        function showEditButton(container) {
-            const editButton = container.querySelector(".edit-button");
-            if (editButton) {
-                editButton.style.display = "inline-block";
-            }
-        }
-    
-        function hideEditButton(container) {
-            const editButton = container.querySelector(".edit-button");
-            if (editButton) {
-                editButton.style.display = "none";
-            }
-        }
-        
-    </script>
+		function setColumnCount() {
+			if (window.innerWidth < 400) {
+				document.getElementById("images-container").style.columnCount = 2;
+			} else if (window.innerWidth < 800) {
+					document.getElementById("images-container").style.columnCount = 3;
+			} else {
+					document.getElementById("images-container").style.columnCount = 6;
+			}
+		};
+
+		document.addEventListener("DOMContentLoaded", setColumnCount);
+		window.addEventListener("resize", setColumnCount);
+
+		function resetModalAdd() {
+			document.getElementById("input-portfolio-edit").style.display = "block";
+			document.getElementById("success-portfolio-edit").style.display = "none";
+		}
+		@{
+			var portfolioCode = "";
+			var portfoliosNumber = 0;
+			if (Model.Portfolios != null && Model.Portfolios.FirstOrDefault() != null)
+			{
+				portfoliosNumber = @Model.Portfolios.Count;
+				portfolioCode = Model.Portfolios.FirstOrDefault().Code.ToString();
+			}
+		}
+
+			function CountPortfolioAndAddMedia() {
+
+				openModal('#modalAddMediaToPortfolio')
+				resetModalAdd()
+				if (@portfoliosNumber == 1) {
+					SelectPortfolio('@portfolioCode')
+				}
+			}
+
+		function AddToPortfolio() {
+			$('#load-spinner').css("display", "block");
+			var Code = portfolioCodeSelected;
+			CodeImagesToAdd = []
+			for (const code in img_selected_id) {
+				CodeImagesToAdd.push(img_selected_id[code])
+			}
+			var addPortfolioDto = { CodeImagesToAdd, Code };
+			$.ajax({
+				type: 'POST',
+				url: '@Url.Action("AddMedia", "Portfolio")',
+				data: JSON.stringify(addPortfolioDto),
+				contentType: 'application/json; charset=utf-8',
+				dataType: 'json',
+				success: function (response) {
+					if (response.result) {
+						document.getElementById("input-portfolio-edit").style.display = "none";
+						document.getElementById("success-portfolio-edit").style.display = "block";
+						document.getElementById("portfolio-setting-link-edit").setAttribute('action', "/portfolio/settings/" + response.code);
+					}
+					$('#load-spinner').css("display", "none");
+				},
+				error: function (response) {
+					$('#load-spinner').css("display", "none");
+				}
+			})
+		}
+
+		let portfolioCodeSelected = "";
+		function SelectPortfolio(portfolioCode) {
+			if (portfolioCodeSelected != "") {
+				document.getElementById("div-select-portfolio-" + portfolioCodeSelected).classList.remove("select-portfolio-selected");
+				document.getElementById("div-select-portfolio-" + portfolioCodeSelected).classList.add("select-portfolio");
+			}
+			portfolioCodeSelected = portfolioCode;
+			document.getElementById("div-select-portfolio-" + portfolioCodeSelected).classList.add("select-portfolio-selected");
+			document.getElementById("div-select-portfolio-" + portfolioCodeSelected).classList.remove("select-portfolio");
+		}
+
+
+		function ResetInput() {
+			document.getElementById("input-portfolio").style.display = "block";
+			document.getElementById("success-portfolio").style.display = "none";
+		}
+
+
+		function CreateNewPortfolio() {
+			$('#load-spinner').css("display", "block");
+			var Name = document.getElementById("portfolio-name-edit").value
+			CodeImagesToAdd = []
+			for (const code in img_selected_id) {
+				CodeImagesToAdd.push(img_selected_id[code])
+			}
+			var newPortfolioDto = { CodeImagesToAdd, Name };
+			$.ajax({
+				type: 'POST',
+				url: '@Url.Action("Create", "Portfolio")',
+				data: JSON.stringify(newPortfolioDto),
+				contentType: 'application/json; charset=utf-8',
+				dataType: 'json',
+				success: function (response) {
+					if (response.result) {
+						document.getElementById("input-portfolio").style.display = "none";
+						document.getElementById("success-portfolio").style.display = "block";
+						document.getElementById("portfolio-setting-link").setAttribute('action', "/portfolio/settings/" + response.code);
+					}
+					$('#load-spinner').css("display", "none");
+				},
+				error: function (response) {
+					$('#load-spinner').css("display", "none");
+				}
+			})
+		}
+
+		let imageNumber = @Model.Medias.Count;
+		function CloseAlert() {
+			alert_portfolio.classList.remove("show");
+			alert_portfolio.classList.add("hidden");
+			var items = document.getElementsByClassName("img-rounded-ciano");
+			while (items.length > 0) {
+				items[0].classList.add("img-rounded-trasparent");
+				items[0].classList.remove("img-rounded-ciano");
+			}
+			img_selected_id = []
+		}
+
+		function confirmDelete() {
+			var newline = "\r\n";
+			document.getElementById("confirm-delete-body").textContent = img_selected_id.length + " Medias will be delete" + newline + "permanently. Are you sure?"
+		}
+
+		var img_selected_id = [];
+
+		function deleteMedia() {
+			$('#load-spinner').css("display", "block");
+			var data = [];
+			for (const code in img_selected_id) {
+				data.push(img_selected_id[code])
+			}
+
+			$.ajax({
+				type: 'POST',
+				url: '@Url.Action("DeleteMediaList", "Media")',
+				data: JSON.stringify(data),
+				contentType: 'application/json; charset=utf-8',
+				dataType: 'json',
+				success: function (response) {
+					if (response.result) {
+						for (let i = 0; i < response.codeToDelete.length; i++) {
+							document.getElementById("div-for-remove-" + response.codeToDelete[i]).style.display = "none";
+							removeMediaFromList(response.codeToDelete[i]);
+							alert_portfolio.classList.remove("show");
+							alert_portfolio.classList.add("hidden");
+							mediacount--;
+						}
+
+						if (mediacount == 0)
+							div_uploader.classList.remove("nodisplay-md");
+					}
+					else {
+						toastNotifyCustom(response.message, 10000, "#ca0a0a", "")
+					}
+					closeModal('#modalDeleteMedia');
+					$('#load-spinner').css("display", "none");
+				},
+				error: function (response) {
+					$('#load-spinner').css("display", "none");
+				}
+			})
+		}
+
+
+		function EditMedia(s) {
+			document.location.href = '@Model.ApplicationUrl' + '/cloud/edit/' + s;
+		}
+
+
+		const alert_portfolio = document.getElementById("alert-portfolio");
+		function SelectMedia(img_id) {
+			var media = document.getElementById('img-' + img_id);
+			//var media = screen.width < 600 ? medias[1] : medias[0];
+
+			if (media.classList.contains("img-rounded-ciano")) {
+				media.classList.remove("img-rounded-ciano")
+				media.classList.add("img-rounded-trasparent")
+				removeMediaFromList(img_id);
+			}
+			else {
+				media.classList.remove("img-rounded-trasparent")
+				media.classList.add("img-rounded-ciano")
+				img_selected_id.push(img_id);
+			}
+			if (img_selected_id.length > 0) {
+				alert_portfolio.classList.remove("hidden");
+				alert_portfolio.classList.add("show");
+				document.getElementById("number_files").textContent = img_selected_id.length + " files selected"
+			}
+			else {
+				alert_portfolio.classList.remove("show");
+				alert_portfolio.classList.add("hidden");
+			}
+
+		}
+
+		function removeMediaFromList(value) {
+			const index = img_selected_id.indexOf(value);
+			if (index > -1) { // only splice array when item is found
+				img_selected_id.splice(index, 1); // 2nd parameter means remove one item only
+			}
+		}
+
+		function submitForm() {
+			document.getElementById("uploader").submit();
+		}
+		var div_uploader = document.getElementById("div-uploader");
+		/*Dropzone configuration*/
+		Dropzone.autoDiscover = false;
+		var uploader = null;
+		var msgUploader = document.getElementById("message-uploader");
+		var divUploader = document.getElementById("div-uploader-icon");
+		var iconUploader = document.getElementById("uploader-icon");
+		var txtUploader = document.getElementById("uploader-text");
+		let dropzone_processing = false;
+
+		var dropzoneOptions = {
+			dictDefaultMessage: 'Upload or drop files here',
+			paramName: "file",
+			maxFilesize: 10000, // MB
+			addRemoveLinks: true,
+			parallelUploads: 1,
+			uploadMultiple: true,
+			acceptedFiles: "image/jpeg,image/png,image/gif,image/jpg,video/*",
+			addedfiles: function () {
+				dropzone_processing = true;
+			},
+			uploadprogress: function (file, progress, bytesSent) {
+				if (file.previewElement) {
+					var progressElement = file.previewElement.querySelector("[data-dz-uploadprogress]");
+					progressElement.style.width = progress + "%";
+				}
+			},
+			success: function (file) {
+				mediacount++;
+				this.removeFile(file);
+			},
+			successmultiple: function (file, response) {
+				const res = JSON.parse(response);
+				// TODO mostrare popup con success/error
+				if (res.NumberSuccessFile > 0) {
+					toastNotifyCustom(res.SuccessFileMessage, 10000, "#75ccdd", "")
+					for (let i = 0; i < res.MediaDtos.length; i++) {
+						var divider = 8
+						var mobile = "";
+						if (screen.width < 600) {
+							divider = 2
+							mobile = "mobile-"
+						}
+						imageNumber++;
+						var index = imageNumber % divider;
+						if (!res.MediaDtos[i].IsVideo) {
+							document.getElementById("images-container").innerHTML +=
+								'<div id="div-for-remove-' + res.MediaDtos[i].Code + '" class="media-container show-edit">' +
+								'<a class="edit-button" onclick="EditMedia(\'' + res.MediaDtos[i].Code + '\'); return false;">' +
+								'<strong style="margin-right: 5px; font-size: 14px;">edit</strong>' +
+								'<i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>' +
+								'</a>' +
+								'<a onclick="SelectMedia(\'' + res.MediaDtos[i].Code + '\')">' +
+								'<div class="img-div">' +
+								'<div class="draggable m-0" name="image-gallery">' +
+								'<img id="img-' + res.MediaDtos[i].Code + '" src="@Model.BasePath' + res.MediaDtos[i].FileName + '?tr=w-400" class="card-body mb-3 rounded-05 img-rounded-trasparent w-100 p-0" title="' + res.MediaDtos[i].OriginalFileName + '"/>' +
+								'</div></div></a></div>'
+						}
+						else {
+							document.getElementById("images-container").innerHTML +=
+								'<div id="div-for-remove-' + res.MediaDtos[i].Code + '" class="media-container show-edit">' +
+								'<a class="edit-button" onclick="EditMedia(\'' + res.MediaDtos[i].Code + '\'); return false;">' +
+								'<strong style="margin-right: 5px; font-size: 14px;">edit</strong>' +
+								'<i class="fa-regular fa-pen-to-square" style="font-size: 14px;"></i>' +
+								'</a>' +
+								'<a onclick="SelectMedia(\'' + res.MediaDtos[i].Code + '\')">' +
+								'<div class="img-div">' +
+								'<div class="draggable m-0" name="image-gallery">' +
+								'<video id="img-' + res.MediaDtos[i].Code + '" autoplay="autoplay" muted loop class="img-rounded-trasparent w-100 shadow-1-strong rounded-05" title="' + res.MediaDtos[i].OriginalFileName + '">' +
+								'<source src="@Model.BasePath' + res.MediaDtos[i].FileName + '?tr=w-400" type="video/mp4">' +
+								'</video></div></div></a></div>'
+
+						}
+					}
+				}
+				if (res.NumberErrorFile > 0)
+					toastNotifyCustom(res.ErrorFileMessage, 10000, "#ca0a0a", "")
+			},
+			errormultiple: function (e) {
+				toastNotifyCustom("Error during uploading files. Please retry.", 10000, "#ca0a0a", "")
+			},
+			queuecomplete: function () {
+				hideDropZone()
+				//location.reload()
+				dropzone_processing = false;
+			}
+		};
+
+		uploader = document.querySelector('#uploader');
+		var newDropzone = new Dropzone(uploader, dropzoneOptions);
+
+		// 1
+		window.addEventListener('dragenter', function (e) {
+			showDropZone();
+		});
+
+		// 2
+		uploader.addEventListener('dragenter', allowDrag);
+		uploader.addEventListener('dragover', allowDrag);
+
+		// 3
+		uploader.addEventListener('dragleave', function (e) {
+			console.log('dragleave');
+			//hideDropZone();
+		});
+
+		// 4
+		uploader.addEventListener('drop', handleDrop);
+
+
+		function showDropZone() {
+			document.getElementById("dropzone-close-button").style.display = "block";
+			div_uploader.classList.remove("nodisplay-md");
+			uploader.classList.remove("card-grey-dashed-veesy");
+			uploader.classList.add("dropzone-full-page");
+
+			divUploader.classList.remove("mb-1");
+			msgUploader.classList.add("text-center");
+			msgUploader.classList.add("h-100");
+			msgUploader.style.marginTop = "20%";
+			divUploader.classList.add("mb-4");
+			txtUploader.classList.add("text-white");
+			iconUploader.style.color = "#ffffff"
+
+			document.body.style.overflow = 'hidden';
+		}
+
+
+		function hideDropZone() {
+			closeModal('#modalConfirmClose')
+			document.getElementById("dropzone-close-button").style.display = "none";
+			if (mediacount != 0) {
+				div_uploader.classList.add("nodisplay-md");
+			}
+			uploader.classList.remove("dropzone-full-page");
+			uploader.classList.add("card-grey-dashed-veesy");
+
+			msgUploader.classList.remove("text-center");
+			msgUploader.classList.remove("h-100");
+			msgUploader.style.marginTop = "2em";
+			divUploader.classList.remove("mb-4");
+			txtUploader.classList.remove("text-white");
+			iconUploader.style.color = "#202F4D"
+			divUploader.classList.add("mb-1");
+
+			document.body.style.overflow = 'visible';
+		}
+
+		function allowDrag(e) {
+			if (true) {  // Test that the item being dragged is a valid one
+				e.dataTransfer.dropEffect = 'copy';
+			}
+		}
+
+		function handleDrop(e) {
+			//hideDropZone();
+		}
+
+		// window.addEventListener("beforeunload", function (e) {
+		//     if (!dropzone_processing){
+		//         // Cancel the event
+		//         e.preventDefault(); // If you prevent default behavior in Mozilla Firefox prompt will always be shown
+		//         // Chrome requires returnValue to be set
+		//         e.returnValue = "";
+		//     }
+		//   });
+
+		function showEditButton(container) {
+			const editButton = container.querySelector(".edit-button");
+			if (editButton) {
+				editButton.style.display = "inline-block";
+			}
+		}
+
+		function hideEditButton(container) {
+			const editButton = container.querySelector(".edit-button");
+			if (editButton) {
+				editButton.style.display = "none";
+			}
+		}
+
+	</script>
 }

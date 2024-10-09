@@ -57,6 +57,25 @@ public class AuthHelper
         await _emailSender.SendEmailAsync(message, currentPath + "/wwwroot/MailTemplate/mail-verify-email.html", replacer);
         return new ResultDto(true, "");
     }
+
+    public async Task<ResultDto> SendEmailResetPassword(string email)
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+        if (user == null)
+        {
+            user = await _userManager.FindByNameAsync(email);
+            if (user == null)
+                return new ResultDto(false, "User not found.");
+        }
+        var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+        token = HttpUtility.UrlEncode(token);
+        var resetLink = $"{_config["ApplicationUrl"]}/Auth/Auth/ResetPassword?token={token}&email={email}";
+        var message = new Message(new (string, string)[] { ("Noreply | Veesy", user.Email) }, "Reset your password", resetLink);
+        List<(string, string)> replacer = new List<(string, string)> { ("[LinkResetPassword]", resetLink) };
+        var currentPath = Directory.GetCurrentDirectory();
+        await _emailSender.SendEmailAsync(message, currentPath + "/wwwroot/MailTemplate/mail-reset-password.html", replacer);
+        return new ResultDto(true, "");
+    }
     
     public async Task<ResultDto> SendEmailWelcome(string email)
     {
@@ -67,10 +86,14 @@ public class AuthHelper
             if (user == null)
                 return new ResultDto(false, "User not found");
         }
+        if (user.Unsubscribe)
+            return new ResultDto(false, "User unsubscribed from mails");
+        
         var name = user.Name;
+        var unsubscribeLink = _config["ApplicationUrl"] + "/profile/unsubscribe/" + user.Id;
         var link = "";
         var message = new Message(new (string, string)[] { ("Noreply | Veesy", user.Email) }, "Welcome to Veesy", link);
-        List<(string, string)> replacer = new List<(string, string)> { ("[name]", name) };
+        List<(string, string)> replacer = new List<(string, string)> { ("[name]", name),("[unsubscribeLink]", unsubscribeLink) };
 
         var imageFiles = new List<string> { 
             "Welcome/mail-bottom_welcome.png", 
@@ -95,13 +118,13 @@ public class AuthHelper
             return new ResultDto(false, "Entered emails do not match.");
         if (model.Password != model.ConfirmPassword) 
             return new ResultDto(false, "Entered passwords do not match.");
-        if(model.SelectedCategoriesWork == null || model.SelectedCategoriesWork.Count < 1 || model.SelectedCategoriesWork.Count > 3)
-            return new ResultDto(false, "Select at least one category and not more than three.");
+        // if(model.SelectedCategoriesWork == null || model.SelectedCategoriesWork.Count < 1 || model.SelectedCategoriesWork.Count > 3)
+        //     return new ResultDto(false, "Select at least one category and not more than three.");
         var imageDefault = SelectRandomImageName();
         var now = DateTime.Now;
         var categories = new List<MyUserCategoryWork>();
         var userID = Guid.NewGuid().ToString();
-        foreach (var item in model.SelectedCategoriesWork)
+        /*foreach (var item in model.SelectedCategoriesWork)
         {
             categories.Add(new MyUserCategoryWork()
             {
@@ -112,7 +135,7 @@ public class AuthHelper
                 CreateUserId = userID,
                 
             });
-        }
+        }*/
 
         var myUserInfosToShow = new List<MyUserInfoToShow>();
         var infoToShow = _accountService.GetInfosToShow();
@@ -140,6 +163,7 @@ public class AuthHelper
             MyUserCategoriesWork = categories,
             ProfileImageFileName = imageDefault,
             LastLoginTime = DateTime.Now,
+            VisibleInCreatorPage = true,
             MyUserSubscriptionPlans = new List<MyUserSubscriptionPlan>
             {
                 new ()

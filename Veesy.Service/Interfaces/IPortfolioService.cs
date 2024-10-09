@@ -34,4 +34,5 @@ public interface IPortfolioService
     Task SetPortfoliosToDraftByIds(List<Guid> portfolioDtoPortfolioSelected, MyUser user);
     List<string> GetAllPortfolioNameDifferentByOne(Guid id, MyUser user);
     Portfolio? GetPortfolioByUserAndName(string user, string portfolioname);
+    public (int DraftPortfolios, int PublishedPortfolios) GetDraftAndPublishedPortfoliosCount();
 }
