@@ -23,12 +23,14 @@ public class ProfileController : VeesyController
     private readonly ProfileHelper _profileHelper;
     private readonly INotyfService _notyfService;
     private readonly IConfiguration _configuration;
+    private readonly SignInManager<MyUser> _signInManager;
 
-    public ProfileController(ProfileHelper profileHelper, UserManager<MyUser> userManager, INotyfService notyfService, IConfiguration configuration) : base(userManager, configuration)
+    public ProfileController(ProfileHelper profileHelper, UserManager<MyUser> userManager, INotyfService notyfService, IConfiguration configuration, SignInManager<MyUser> signInManager) : base(userManager, configuration)
     {
         _profileHelper = profileHelper;
         _notyfService = notyfService;
         _configuration = configuration;
+        _signInManager = signInManager;
     }
 
     [Authorize]
@@ -99,6 +101,28 @@ public class ProfileController : VeesyController
             else 
                 _notyfService.Custom(result.Message, 10, "#75CCDD");
             return Json(new { Result = result.Success, Message = result.Message});
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+            _notyfService.Custom("Error updating subscription plan. Please retry.", 10 , "#ca0a0a");
+            return Json(new { Result = false, Message = "Error saving subscription plan. Please retry." });
+        }
+    }
+    
+    [Authorize]
+    [HttpPost]
+    public async Task<JsonResult> DeleteAccountByUser([FromBody] string id)
+    {
+        try
+        {
+            var result = await _profileHelper.DeleteAccount(id);
+            if(!result.Success)
+                _notyfService.Custom(result.Message, 10, "#ca0a0a");
+            else 
+                _notyfService.Custom(result.Message, 10, "#75CCDD");
+            await _signInManager.SignOutAsync();
+            return Json(new { Result = true, RedirectUrl = _configuration["ApplicationUrl"] + "/Public/Public/Splash" });
         }
         catch (Exception ex)
         {
