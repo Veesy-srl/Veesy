@@ -1,19 +1,80 @@
 @{
     ViewData["Title"] = "Cookies Policy";
 }
+
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
 <div class="padding-lg pt-7rem">
     <div class="row p-4-lg">
         <div class="col-sm-1 col-md-3"></div>
         <div class="col-sm-10 col-md-6 mt-5">
             <h1 class="color-about">Cookies Policy</h1>
             <div class="empty-veesy"></div>
-            <p>
-                @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+            <p className="mt-5 color-about">Ultimo aggiornamento: 2024-10-09<br/><br/></p>
+            <p className="mt-5 color-about">
+                <b>1. Utilizzo dei Cookie</b>
+                <br/><br/>
+                Utilizziamo cookie e tecnologie simili sul nostro sito web per migliorare l'esperienza degli utenti,
+                analizzare l'utilizzo del sito e fornire pubblicità mirate. I cookie possono essere temporanei
+                (cookie di sessione) o permanenti (cookie persistenti) e possono essere utilizzati per diversi
+                scopi, tra cui:
+                <br/><br/>
+                Assicurare il corretto funzionamento del sito.<br/>
+                Memorizzare le preferenze degli utenti.<br/>
+                Analizzare l'utilizzo del sito per migliorare le funzionalità e le prestazioni.<br/>
+                Fornire contenuti e pubblicità mirati.
+                <br/><br/>
+                <b>2. Come utilizziamo i cookie?</b>
+                <br/><br/>
+                Come la maggior parte dei servizi online, il nostro sito web utilizza cookie di prima parte e di
+                terze parti per diversi scopi. I cookie di prima parte sono per lo più necessari per il corretto
+                funzionamento del sito web e non raccolgono alcun dato personale. I cookie di terze parti utilizzati
+                sul nostro sito web servono principalmente a capire come funziona il sito web, come interagite con
+                il nostro sito web, a mantenere sicuri i nostri servizi, a fornire pubblicità rilevanti per voi e,
+                in definitiva, a fornirvi un'esperienza utente migliore e migliorata e a velocizzare le vostre
+                future interazioni con il nostro sito web.
+                <br/><br/>
 
                 @if (HttpContextAccessor.HttpContext != null && !HttpContextAccessor.HttpContext.Request.Host.Host.ToLower().Contains("localhost"))
                 {
-                    <script id="CookieDeclaration" src="https://consent.cookiebot.com/5e418102-3e4a-4ebb-b99f-c192038a9391/cd.js" type="text/javascript" async></script>
+                    <div className="cky-audit-table-element"></div>
                 }
+
+                <b>3. Gestione dei Cookie</b>
+                <br/><br/>
+                Potete modificare le vostre preferenze sui cookie in qualsiasi momento cliccando sul pulsante qui
+                sopra. In questo modo, è possibile visualizzare il banner di consenso ai cookie e modificare le
+                proprie preferenze o ritirare il proprio consenso immediatamente. Inoltre, i diversi browser offrono
+                metodi diversi per bloccare e cancellare i cookie utilizzati dai siti web. È possibile modificare le
+                impostazioni del browser per bloccare/cancellare i cookie. Di seguito sono elencati i link ai
+                documenti di supporto su come gestire ed eliminare i cookie dai principali browser web.
+                <br/><br/>
+                Chrome: https://support.google.com/accounts/answer/32050
+                <br/><br/>
+                Safari: https://support.apple.com/en-in/guide/safari/sfri11471/mac
+                <br/><br/>
+                Firefox:
+                https://support.mozilla.org/en-US/kb/clear-cookies-and-site-data-firefox?redirectslug=delete-cookies-remove-info-websites-stored&redirectlocale=en-US
+                <br/><br/>
+                Internet Explore:
+                https://support.microsoft.com/en-us/topic/how-to-delete-cookie-files-in-internet-explorer-bca9446f-d873-78de-77ba-d42645fa52fc
+                <br/><br/>
+                <b>4. Consenso</b>
+                <br/><br/>
+                Continuando a utilizzare il nostro sito web, gli utenti acconsentono all'uso dei cookie in
+                conformità con la presente Cookie Policy e la nostra Informativa sulla Privacy.
+                <br/><br/>
+                <b>5. Contatti</b>
+                <br/><br/>
+                Per domande, preoccupazioni o richieste in merito alla cookie policy, gli Utenti possono contattarci ai seguenti recapiti:
+                <br/><br/>
+                Veesy S.R.L.
+                <br/>
+                Vat.: 13005470961
+                <br/>
+                Veesy S.R.L., Via Giacomo Matteotti 43, 20832, Desio (MB)
+                <br/>
+                <a href="mailto:info@veesy.it">info@veesy.it</a><br/>
             </p>
         </div>
         <div class="col-sm-1 col-md-3"></div>
