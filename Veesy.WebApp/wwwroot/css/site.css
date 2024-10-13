@@ -1547,19 +1547,19 @@ hr {
   }*/
 }
 
-.select-portfolio{
+.select-portfolio {
   border-radius: 0.5rem !important;
-  border: 1px solid #AAB0BB !important;
+  border: 1px solid #d5dce8 !important;
   cursor: pointer;
 }
 
-.select-portfolio:hover {
-  background: #F0F2F3;
-  border: 1px solid #383B43 !important;
-}
+  .select-portfolio:hover {
+    background: #ebeced;
+    border: 1px solid #383B43 !important;
+  }
 
-.select-portfolio-selected{
-  background: #F0F2F3;
+.select-portfolio-selected {
+  background: #ebeced;
   border: 1px solid #383B43 !important;
   border-radius: 0.5rem !important;
 }

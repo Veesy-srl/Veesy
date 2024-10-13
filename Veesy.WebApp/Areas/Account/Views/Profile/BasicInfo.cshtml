@@ -164,12 +164,12 @@
         </form>
         <div class="empty-veesy"></div>
     </div>
-    <div class="col-sm-12 col-md-3 pe-0">
+    <div id="doYouNeedSomeHelpPopup" class="col-sm-12 col-md-3 pe-0">
         <div class="empty-veesy"></div>
         <div class="empty-veesy"></div>
         <div class="d-flex justify-content-end ps-3">
             <div class="w-75-veesy card-blue-veesy">
-                <div class="text-end"><i class="fa-solid fa-circle fa-2xs" style="color: #ffffff;"></i></div>
+          <div class="text-end"><i onclick="closeDoYouNeedSomeHelp()" class="fa-solid fa-circle fa-2xs" style="color: #ffffff; cursor: pointer;"></i></div>
                 <p class="mb-0 text-white">Do you need some help?</p>
                 <a class="a-ciano-underline" href="mailto:support@veesy.it">Contact us</a>
             </div>
@@ -379,6 +379,12 @@
 @section Scripts
 {
     <script>
+
+    function closeDoYouNeedSomeHelp() {
+      var popup = document.getElementById('doYouNeedSomeHelpPopup');
+      popup.style.display = 'none';
+    }
+
     function UpdateCategoriesWork() {
         $('#load-spinner').css("display", "block");
         var codes = JSON.parse('@Html.Raw(Json.Serialize(Model.CategoriesWork.Select(s => s.Code.ToString()).ToList()))');
