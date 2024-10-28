@@ -191,8 +191,23 @@ public class PublicController : VeesyController
             return RedirectToAction("Error400");
         }
     }
-    
-    [HttpGet("pricing-plan")]
+
+	  [HttpGet("landing-discord")]
+	  public async Task<IActionResult> LandingDiscord()
+	  {
+		  try
+		  {
+			  var vm = await _publicHelper.GetAboutInfo();
+			  return View(vm);
+		  }
+		  catch (Exception e)
+		  {
+			  Logger.Error(e, e.Message);
+			  return RedirectToAction("Error400");
+		  }
+	  }
+
+	[HttpGet("pricing-plan")]
     public IActionResult PricingPlan()
     {
         try

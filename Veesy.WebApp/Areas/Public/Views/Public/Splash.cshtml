@@ -905,9 +905,17 @@
 				}, 2000);
 			});*@
 
-	document.addEventListener('DOMContentLoaded', function () {
-		setTimeout(OpenCreatorPopup, 13000);
-	});
+		document.addEventListener('DOMContentLoaded', function () {
+			setTimeout(OpenCreatorPopup, 13000);
+
+			if (isMobileDevice()) {
+				document.querySelector('body').style.overflowY = 'scroll';
+			}
+		});
+
+		function isMobileDevice() {
+				return /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) || window.innerWidth < 500;
+		}
 
 	 function cambiaColoreGradualmente(elemento, coloreDesiderato) {
 			 var coloreAttuale = [255, 255, 255];
