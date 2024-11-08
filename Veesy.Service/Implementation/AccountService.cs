@@ -457,7 +457,7 @@ public class AccountService : IAccountService
             .ThenInclude(s => s.SubscriptionPlan)
             .Include(s => s.Portfolios.Where(s => s.IsMain))
             .Where(s =>
-                s.MyUserSubscriptionPlans.OrderBy(s => s.CreateRecordDate).LastOrDefault().SubscriptionPlan.Price > 0).ToList();
+                s.MyUserSubscriptionPlans.OrderBy(s => s.CreateRecordDate).LastOrDefault().SubscriptionPlan.Name != VeesyConstants.SubscriptionPlan.Free).ToList();
     }
 
     public int GetNumberPayingUsers()
