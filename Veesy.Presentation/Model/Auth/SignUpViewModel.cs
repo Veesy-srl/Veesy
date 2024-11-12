@@ -15,4 +15,5 @@ public class SignUpViewModel
     public string ConfirmPassword { get; set; }
     public List<Guid> SelectedCategoriesWork { get; set; }
     public List<CategoryWork> CategoriesWork { get; set; }
+    public string RecaptchaToken { get; set; }
 }
