@@ -17,6 +17,10 @@
 	{
 		@Html.Partial("~/Areas/Auth/Views/Shared/cookie.cshtml")
 	}
+	else if(Context.Request.Host.Value == "veesy.it" && Context.Request.Host.Value.StartsWith("beta."))
+	{
+		@Html.Partial("~/Areas/Auth/Views/Shared/cookie-beta.cshtml")
+	}
 
 	<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-QY19KDP1PK"></script>

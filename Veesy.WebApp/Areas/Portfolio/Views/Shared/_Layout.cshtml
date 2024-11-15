@@ -13,10 +13,14 @@
 	<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/css/bootstrap-select.min.css" asp-append-version="true" />
 	@await RenderSectionAsync("Style", required: false)
-
+	
 	@if (Context.Request.Host.Value == "veesy.it" && !Context.Request.Host.Value.StartsWith("beta.") && !Context.Request.Path.Value.Contains("profile/basic-info"))
 	{
-		@Html.Partial("~/Areas/Auth/Views/Shared/cookie.cshtml")
+	    @Html.Partial("~/Areas/Auth/Views/Shared/cookie.cshtml")
+	}
+	else if(Context.Request.Host.Value == "veesy.it" && Context.Request.Host.Value.StartsWith("beta.") && !Context.Request.Path.Value.Contains("profile/basic-info"))
+	{
+	    @Html.Partial("~/Areas/Auth/Views/Shared/cookie-beta.cshtml")
 	}
 
 	<!-- Google tag (gtag.js) -->
