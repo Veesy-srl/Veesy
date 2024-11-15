@@ -1,546 +1,548 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
 @{
-  ViewData["Title"] = "Landing Discord";
+	ViewData["Title"] = "Landing Discord";
 }
 
 <div style="padding-top: 35px; padding-bottom: 25px;" xmlns="http://www.w3.org/1999/html">
-  <div class="container-fluid p-3 mt-5 pb-5 background-image-about" style="background-image: url('@Model.InitialImageUrl');">
-    <div class="row p-lg-5 mt-5 mt-lg-2">
-      <div class="col-sm-12 col-md-12 text-center" style="position: relative; top:  120px;">
-        <img src="imgs/_Logo Veesy-w.png" width="120px">
-        <div class="empty-veesy"></div>
-        <div class="empty-veesy"></div>
-        <div class="empty-veesy"></div>
-        <h1 style="color: white; font-size: 40px !important; line-height: 40px !important;"><b>Freelancing is an art.</b></h1>
-        <h1 style="color: white; font-size: 40px !important; line-height: 40px !important;"><b>Not a task.</b></h1>
-        <div class="empty-veesy"></div>
-        <div class="empty-veesy"></div>
-        <div class="empty-veesy"></div>
-        <div class="mb-4 veesy-text-color d-flex align-items-center">
-          <a target="_blank" href="https://noteforms.com/forms/discord-landing-uzns6b" class="flex-grow-1">
-            <button class="rounded-pill btn-primary-about-variant btn-variant" id="button1" style="width: 180px; height:  40px;" type="submit">join veesy</button>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="d-md-block d-none" style="position: relative; bottom:  50px; left: 25px;">
-    <h6 style="color: white;">&commat;@Model.InitialAuthor</h6>
-  </div>
+	<div class="container-fluid p-3 mt-5 pb-5 background-image-about" style="background-image: url('@Model.InitialImageUrl');">
+		<div class="row p-lg-5 mt-5 mt-lg-2">
+			<div class="col-sm-12 col-md-12 text-center" style="position: relative; top:  120px;">
+				<img src="imgs/_Logo Veesy-w.png" width="120px">
+				<div class="empty-veesy"></div>
+				<div class="empty-veesy"></div>
+				<div class="empty-veesy"></div>
+				<h1 style="color: white; font-size: 40px !important; line-height: 40px !important;"><b>Freelancing is an art.</b></h1>
+				<h1 style="color: white; font-size: 40px !important; line-height: 40px !important;"><b>Not a task.</b></h1>
+				<div class="empty-veesy"></div>
+				<div class="empty-veesy"></div>
+				<div class="empty-veesy"></div>
+				<div class="mb-4 veesy-text-color d-flex align-items-center">
+					<a href="#formDiscord" class="flex-grow-1">
+						<button class="rounded-pill btn-primary-about-variant btn-variant" id="button1" style="width: 180px; height:  40px;" type="submit">join veesy</button>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="d-md-block d-none" style="position: relative; bottom:  50px; left: 25px;">
+		<h6 style="color: white;">&commat;@Model.InitialAuthor</h6>
+	</div>
 </div>
 <div class="row">
-  <div class="col-md-8 offset-md-2 mt-2 px-5">
-    <div class="row justify-content-center">
-      <div class="col-md-2 col-4 d-none text-end color-about" id="discover" style="right: -20px; position: relative;">
-        <b>discover</b>
-      </div>
-      <a class="col-md-1 col-3 text-center justify-content-center color-about" id="qui" style="cursor: pointer; display: flex; align-items: center; justify-content: center;" href="#down" onmouseover="showText()" onmouseout="hideText()">
-        <img class="image-about-go-down" width="20px" style="position: relative; top: -3px;" />
-      </a>
-      <div class="col-md-2 col-4 d-none text-start color-about" id="more" style="left: -20px; position: relative;">
-        <b>more</b>
-      </div>
-    </div>
-  </div>
+	<div class="col-md-8 offset-md-2 mt-2 px-5">
+		<div class="row justify-content-center">
+			<div class="col-md-2 col-4 d-none text-end color-about" id="discover" style="right: -20px; position: relative;">
+				<b>discover</b>
+			</div>
+			<a class="col-md-1 col-3 text-center justify-content-center color-about" id="qui" style="cursor: pointer; display: flex; align-items: center; justify-content: center;" href="#down" onmouseover="showText()" onmouseout="hideText()">
+				<img class="image-about-go-down" width="20px" style="position: relative; top: -3px;" />
+			</a>
+			<div class="col-md-2 col-4 d-none text-start color-about" id="more" style="left: -20px; position: relative;">
+				<b>more</b>
+			</div>
+		</div>
+	</div>
 </div>
 <div class="row" id="down">
-  <div class="col-md-8 offset-md-2 mt-2 px-md-5">
-    <div class="text-left mt-5 pt-5">
-      <h1 class="color-about">Ciao, <b>creator: </b>siamo qui per te.</h1>
-    </div>
-    <div class="text-left mt-4 pt-4">
-      <h1 class="color-about">Siamo <img class="header-logo-about" style="position: relative; top: 2px;" width="85px"><b>:</b> un ecosistema creato <b><i>da freelancer per freelancer,</i></b> fondato sul supporto costruttivo di una <b>community attiva</b> e sempre in espansione.</h1>
-    </div>
-    <div class="text-left mt-5">
-      <h1 class="color-about">Con noi trovi posto in un network professionale in cui riscoprire la magia della <b>creatività visual.</b> <u>La tua.</u> Non pensare alla solita piattaforma digitale: qui, trovare contatti è solo <b>l'inizio della</b> <b>rivoluzione.</b></h1>
-    </div>
-    <div class="col-md-6 mt-5 mb-5 veesy-text-color d-flex align-items-center">
-      <a class="me-md-4 me-2" href="#down1">
-        <button class="rounded-pill btn-primary-about1 btn-variant" style="width: 160px; height:  38px;" type="submit">dimmi di più</button>
-      </a>
-      <a target="_blank" href="https://noteforms.com/forms/discord-landing-uzns6b" class="flex-grow-1">
-        <button class="rounded-pill btn-primary-about-variant btn-variant" style="width: 185px; height: 38px;" type="submit">entra (è gratis)</button>
-      </a>
-    </div>
-  </div>
+	<div class="col-md-8 offset-md-2 mt-2 px-md-5">
+		<div class="text-left mt-5 pt-5">
+			<h1 class="color-about">Ciao, <b>creator: </b>siamo qui per te.</h1>
+		</div>
+		<div class="text-left mt-4 pt-4">
+			<h1 class="color-about">Siamo <img class="header-logo-about" style="position: relative; top: 2px;" width="85px"><b>:</b> un ecosistema creato <b><i>da freelancer per freelancer,</i></b> fondato sul supporto costruttivo di una <b>community attiva</b> e sempre in espansione.</h1>
+		</div>
+		<div class="text-left mt-5">
+			<h1 class="color-about">Con noi trovi posto in un network professionale in cui riscoprire la magia della <b>creatività visual.</b> <u>La tua.</u> Non pensare alla solita piattaforma digitale: qui, trovare contatti è solo <b>l'inizio della</b> <b>rivoluzione.</b></h1>
+		</div>
+		<div class="col-md-6 mt-5 mb-5 veesy-text-color d-flex align-items-center">
+			<a class="me-md-4 me-2" href="#down1">
+				<button class="rounded-pill btn-primary-about1 btn-variant" style="width: 160px; height:  38px;" type="submit">dimmi di più</button>
+			</a>
+			<a href="#formDiscord" class="flex-grow-1">
+				<button class="rounded-pill btn-primary-about-variant btn-variant" style="width: 185px; height: 38px;" type="submit">entra (è gratis)</button>
+			</a>
+		</div>
+	</div>
 </div>
 <div class="row mt-5">
-  <div class="col-md-8 offset-md-2 px-md-5 px-0">
-    <div class="text-center mt-4 mb-4" id="imageContainer">
-      <video id="mainImage" controls style="border-radius: 15px; width: 100%;" poster="imgs/img_vid_veesy.png">
-        <source src="imgs/About/veesy_video.mp4" type="video/mp4">
-      </video>
-    </div>
-  </div>
+	<div class="col-md-8 offset-md-2 px-md-5 px-0">
+		<div class="text-center mt-4 mb-4" id="imageContainer">
+			<video id="mainImage" controls style="border-radius: 15px; width: 100%;" poster="imgs/img_vid_veesy.png">
+				<source src="imgs/About/veesy_video.mp4" type="video/mp4">
+			</video>
+		</div>
+	</div>
 </div>
 
 <div class="row mt-5" id="down1">
-  <div class="col-md-8 offset-md-2 px-md-5">
-    <div class="text-center mt-5 mb-4">
-      <h1 class="color-about" style="font-size: 72px !important;"><b>Dal <i>to do</i></b></h1>
-      <h1 class="mt-5 color-about option-height" style="font-size: 72px !important;">
-        <b>al <i>to dream</i></b>
-        <img class="img-fluid" src="imgs/Group%207695_g.png" style="margin-top: -6%;" alt="Immagine 1">
-      </h1>
-    </div>
-    <div class="text-center mt-5 pt-5 mb-4">
-      <h3 class="color-about"><span style="color: #00DC8E; font-size: 30px;">*</span><b>e viceversa.</b></h3>
-    </div>
-  </div>
+	<div class="col-md-8 offset-md-2 px-md-5">
+		<div class="text-center mt-5 mb-4">
+			<h1 class="color-about" style="font-size: 72px !important;"><b>Dal <i>to do</i></b></h1>
+			<h1 class="mt-5 color-about option-height" style="font-size: 72px !important;">
+				<b>al <i>to dream</i></b>
+				<img class="img-fluid" src="imgs/Group%207695_g.png" style="margin-top: -6%;" alt="Immagine 1">
+			</h1>
+		</div>
+		<div class="text-center mt-5 pt-5 mb-4">
+			<h3 class="color-about"><span style="color: #00DC8E; font-size: 30px;">*</span><b>e viceversa.</b></h3>
+		</div>
+	</div>
 </div>
 
 <div class="row">
-  <div class="col-md-8 offset-md-2 mt-5 px-md-5">
-    <div class="text-left mt-4 pt-4">
-      <h1 class="color-about">Lo sappiamo: trovare un buon equilibrio tra l'ennesima opportunità e il bisogno di una pausa sembra un'arte misteriosa.</h1>
-      <h1 class="color-about">Forse è per questo che sulla libera professione girano certe voci...</h1>
-    </div>
-  </div>
-  <div class="col-md-8 offset-md-2 mt-5 px-md-5">
-    <div class="row mt-5">
-      <div class="col-md-6">
-        <div class="text-left">
-          <div class="row justify-content-end">
-            <div class="col-2">
-              <div class="circle1">
-                <h1 class="text-about-circle1 color-about"><b>01.</b></h1>
-              </div>
-            </div>
-            <div class="col-10 ps-md-4" style="z-index: 9 !important;">
-              <h3 class="text-right color-about">che ti fa <i>realizzare i tuoi sogni,</i> ma</h3>
-              <h3 class="text-right color-about fw-bold" style="margin-top: -5px;">passi la notte sulle modifiche</h3>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="text-left">
-          <div class="row option-circle-2 mt-5 mt-md-0">
-            <div class="col-md-2 col-2">
-              <div class="circle2">
-                <h1 class="text-about-circle2 color-about"><b>02.</b></h1>
-              </div>
-            </div>
-            <div class="col-md-10 col-10 option-circle-text-2">
-              <h3 class="text-right color-about font-option-circle-2">che puoi <i>prenderti il tuo tempo,</i> ma sei in</h3>
-              <h3 class="text-right color-about fw-bold font-option-circle-2" style="margin-top: -5px;">eterno multitasking</h3>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-8 offset-md-2 mt-md-5 d-flex justify-content-center px-md-5">
-    <div class="mt-4 pt-4">
-      <div class="row justify-content-center">
-        <div class="col-md-4 col-2">
-          <div class="circle3">
-            <h1 class="text-about-circle3 color-about"><b>03.</b></h1>
-          </div>
-        </div>
-        <div class="col-md-8 col-10 option-circle-text-3">
-          <h3 class="text-right color-about font-option-circle-2">che puoi <i>lavorare ovunque,</i> ma</h3>
-          <h3 class="text-right color-about fw-bold font-option-circle-2" style="margin-top: -5px;">senza nessuna certezza</h3>
-        </div>
-      </div>
-    </div>
-  </div>
+	<div class="col-md-8 offset-md-2 mt-5 px-md-5">
+		<div class="text-left mt-4 pt-4">
+			<h1 class="color-about">Lo sappiamo: trovare un buon equilibrio tra l'ennesima opportunità e il bisogno di una pausa sembra un'arte misteriosa.</h1>
+			<h1 class="color-about">Forse è per questo che sulla libera professione girano certe voci...</h1>
+		</div>
+	</div>
+	<div class="col-md-8 offset-md-2 mt-5 px-md-5">
+		<div class="row mt-5">
+			<div class="col-md-6">
+				<div class="text-left">
+					<div class="row justify-content-end">
+						<div class="col-2">
+							<div class="circle1">
+								<h1 class="text-about-circle1 color-about"><b>01.</b></h1>
+							</div>
+						</div>
+						<div class="col-10 ps-md-4" style="z-index: 9 !important;">
+							<h3 class="text-right color-about">che ti fa <i>realizzare i tuoi sogni,</i> ma</h3>
+							<h3 class="text-right color-about fw-bold" style="margin-top: -5px;">passi la notte sulle modifiche</h3>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="text-left">
+					<div class="row option-circle-2 mt-5 mt-md-0">
+						<div class="col-md-2 col-2">
+							<div class="circle2">
+								<h1 class="text-about-circle2 color-about"><b>02.</b></h1>
+							</div>
+						</div>
+						<div class="col-md-10 col-10 option-circle-text-2">
+							<h3 class="text-right color-about font-option-circle-2">che puoi <i>prenderti il tuo tempo,</i> ma sei in</h3>
+							<h3 class="text-right color-about fw-bold font-option-circle-2" style="margin-top: -5px;">eterno multitasking</h3>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-8 offset-md-2 mt-md-5 d-flex justify-content-center px-md-5">
+		<div class="mt-4 pt-4">
+			<div class="row justify-content-center">
+				<div class="col-md-4 col-2">
+					<div class="circle3">
+						<h1 class="text-about-circle3 color-about"><b>03.</b></h1>
+					</div>
+				</div>
+				<div class="col-md-8 col-10 option-circle-text-3">
+					<h3 class="text-right color-about font-option-circle-2">che puoi <i>lavorare ovunque,</i> ma</h3>
+					<h3 class="text-right color-about fw-bold font-option-circle-2" style="margin-top: -5px;">senza nessuna certezza</h3>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <div class="row mt-5">
-  <div class="col-md-8 offset-md-2 px-md-5 px-0">
-    <div class="position-relative">
-      <img src="imgs/About/Gif-2.gif" style="border-radius: 15px;" alt="Immagine" class="img-fluid">
-    </div>
-  </div>
-  <div class="col-md-8 offset-md-2">
-    <div class="text-center mt-5 pt-5">
-      <h1 class="color-about"><b>Da oggi, tutte leggende metropolitane.</b></h1>
-    </div>
-  </div>
+	<div class="col-md-8 offset-md-2 px-md-5 px-0">
+		<div class="position-relative">
+			<img src="imgs/About/Gif-2.gif" style="border-radius: 15px;" alt="Immagine" class="img-fluid">
+		</div>
+	</div>
+	<div class="col-md-8 offset-md-2">
+		<div class="text-center mt-5 pt-5">
+			<h1 class="color-about"><b>Da oggi, tutte leggende metropolitane.</b></h1>
+		</div>
+	</div>
 </div>
 
 <div class="container-fluid mt-5 pt-5">
-  <div class="row margin-about">
-    <div class="col-md-4 col-12">
-      <div class="card mb-3 main-card" style="background-image: url('imgs/About/Frame.jpg'); background-size: cover; background-position: center center;">
-        <div class="card-body d-flex flex-column justify-content-center align-items-center text-center" style="height: 100%;">
-          <h1 class="card-title" style="color: white;"><b>Network</b></h1>
-          <h3 class="card-text mt-3" id="option-mobile-card" style="padding-left: 10%; padding-right: 10%; color: white;">Un ecosistema digitale progettato, creato e popolato da freelancer per rivoluzionare la vita da freelancer.</h3>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-8 col-12 ps-md-4">
-      <div class="scrollable-row" id="scrollable-row">
-        <div class="card" draggable="true" style="background-color: #75CCDD;">
-          <div class="card-body d-flex flex-column justify-content-center align-items-center text-center" style="height: 100%; color: #202F4D;">
-            <h1 class="card-title" style="color: #202F4D;"><b>Desk</b></h1>
-            <h3 class="card-text mt-3 tab-mobile-option">Tutti i tuoi media in tasca<br /> pronti da gestire, con cui<br /> creare tantissimi portfolio<br /> da condividere via link,<br /> ovunque ti trovi.</h3>
-          </div>
-        </div>
-        <div class="card" draggable="true" style="background-color: #00DC8D;">
-          <div class="card-body d-flex flex-column justify-content-center align-items-center text-center" style="height: 100%; color: #202F4D;">
-            <h1 class="card-title" style="color: #202F4D;"><b>Match</b></h1>
-            <h3 class="card-text mt-3 tab-mobile-option">Un modo rapido e stimolante<br /> per trovare clienti migliori,<br /> collaboratori di fiducia e<br /> partner certificati con cui<br /> gestire progetti più grandi.</h3>
-          </div>
-        </div>
-        <div class="card" draggable="true" style="background-color: #FF61BB;">
-          <div class="card-body d-flex flex-column justify-content-center align-items-center text-center" style="height: 100%; color: white;">
-            <h1 class="card-title"><b>Boost</b></h1>
-            <h3 class="card-text mt-3 tab-mobile-option">Consulenza fiscale, legale,<br /> artistica o di project<br /> management a tua<br />disposizione, che tu sia all'inizio<br /> o nel pieno della tua carriera.</h3>
-          </div>
-        </div>
-        <div class="card" draggable="true" style="background-color: #F2A259;">
-          <div class="card-body d-flex flex-column justify-content-center align-items-center text-center" style="height: 100%; color: white;">
-            <h1 class="card-title"><b>Learn</b></h1>
-            <h3 class="card-text mt-3 tab-mobile-option">Opportunità di formazione<br /> continua e reciproca. Accedi<br /> a corsi e percorsi e diventa a<br /> tua volta mentore o<br /> insegnante.</h3>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+	<div class="row margin-about">
+		<div class="col-md-4 col-12">
+			<div class="card mb-3 main-card" style="background-image: url('imgs/About/Frame.jpg'); background-size: cover; background-position: center center;">
+				<div class="card-body d-flex flex-column justify-content-center align-items-center text-center" style="height: 100%;">
+					<h1 class="card-title" style="color: white;"><b>Network</b></h1>
+					<h3 class="card-text mt-3" id="option-mobile-card" style="padding-left: 10%; padding-right: 10%; color: white;">Un ecosistema digitale progettato, creato e popolato da freelancer per rivoluzionare la vita da freelancer.</h3>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-8 col-12 ps-md-4">
+			<div class="scrollable-row" id="scrollable-row">
+				<div class="card" draggable="true" style="background-color: #75CCDD;">
+					<div class="card-body d-flex flex-column justify-content-center align-items-center text-center" style="height: 100%; color: #202F4D;">
+						<h1 class="card-title" style="color: #202F4D;"><b>Desk</b></h1>
+						<h3 class="card-text mt-3 tab-mobile-option">Tutti i tuoi media in tasca<br /> pronti da gestire, con cui<br /> creare tantissimi portfolio<br /> da condividere via link,<br /> ovunque ti trovi.</h3>
+					</div>
+				</div>
+				<div class="card" draggable="true" style="background-color: #00DC8D;">
+					<div class="card-body d-flex flex-column justify-content-center align-items-center text-center" style="height: 100%; color: #202F4D;">
+						<h1 class="card-title" style="color: #202F4D;"><b>Match</b></h1>
+						<h3 class="card-text mt-3 tab-mobile-option">Un modo rapido e stimolante<br /> per trovare clienti migliori,<br /> collaboratori di fiducia e<br /> partner certificati con cui<br /> gestire progetti più grandi.</h3>
+					</div>
+				</div>
+				<div class="card" draggable="true" style="background-color: #FF61BB;">
+					<div class="card-body d-flex flex-column justify-content-center align-items-center text-center" style="height: 100%; color: white;">
+						<h1 class="card-title"><b>Boost</b></h1>
+						<h3 class="card-text mt-3 tab-mobile-option">Consulenza fiscale, legale,<br /> artistica o di project<br /> management a tua<br />disposizione, che tu sia all'inizio<br /> o nel pieno della tua carriera.</h3>
+					</div>
+				</div>
+				<div class="card" draggable="true" style="background-color: #F2A259;">
+					<div class="card-body d-flex flex-column justify-content-center align-items-center text-center" style="height: 100%; color: white;">
+						<h1 class="card-title"><b>Learn</b></h1>
+						<h3 class="card-text mt-3 tab-mobile-option">Opportunità di formazione<br /> continua e reciproca. Accedi<br /> a corsi e percorsi e diventa a<br /> tua volta mentore o<br /> insegnante.</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
-<div class="row mt-5 pb-5">
-  <div class="col-md-8 offset-md-2 px-2 px-md-5">
-    <div class="text-left mt-5">
-      <h1 class="color-about">Con <b>Veesy, </b>da un "<span style="color: #FF61BB;">ciao</span>" arrivi a formare un nuovo <b>team creativo</b> e iniziare a scegliere i tuoi clienti, proprio come si fa con unə partner.</h1>
-    </div>
-    <div class="text-left mt-4 pt-4">
-      <h1 class="color-about">Con la giusta combinazione tra <b>strumenti smart, progetti stimolanti e connessioni di valore,</b> crei la carriera che hai in mente. Con la tua autonomia, ma mai da solə.</h1>
-    </div>
-    <div class="col-md-6 mt-5 mb-5 veesy-text-color d-flex align-items-center">
-      <a target="_blank" href="https://noteforms.com/forms/discord-landing-uzns6b" class="flex-grow-1">
-        <button class="rounded-pill btn-primary-about-variant btn-variant-1" id="button2" style="width: 200px; height:  40px;" type="submit">entra (è gratis)</button>
-      </a>
-    </div>
-  </div>
+<div class="row mt-5">
+	<div class="col-md-8 offset-md-2 px-2 px-md-5">
+		<div class="text-left mt-5">
+			<h1 class="color-about">Con <b>Veesy, </b>da un "<span style="color: #FF61BB;">ciao</span>" arrivi a formare un nuovo <b>team creativo</b> e iniziare a scegliere i tuoi clienti, proprio come si fa con unə partner.</h1>
+		</div>
+		<div class="text-left mt-4 pt-4">
+			<h1 class="color-about">Con la giusta combinazione tra <b>strumenti smart, progetti stimolanti e connessioni di valore,</b> crei la carriera che hai in mente. Con la tua autonomia, ma mai da solə.</h1>
+		</div>
+	</div>
 </div>
+
+<div id="formDiscord" class="row mt-5 pb-5">
+	<div class="col-md-8 offset-md-2 px-2 px-md-5">
+		<iframe style="border:none;width:100%;" id="discord-landing-uzns6b" src="https://noteforms.com/forms/discord-landing-uzns6b"></iframe>
+		<script type="text/javascript" onload="initEmbed('discord-landing-uzns6b')" src="https://noteforms.com/widgets/iframe.min.js"></script>
+	</div>
+</div>
+
 
 <style>
+	.scrollable-row {
+		overflow-x: hidden;
+		white-space: nowrap;
+		cursor: grab;
+	}
 
-  .scrollable-row {
-      overflow-x: hidden;
-      white-space: nowrap;
-      cursor: grab;
-  }
+	.main-card {
+		width: 100% !Important;
+	}
 
-  .main-card {
-      width: 100% !Important;
-  }
+	.card {
+		display: inline-block;
+		width: 33%;
+		margin-right: 25px;
+		cursor: grab;
+		height: 450px;
+		border-radius: 10px;
+		border: 0px;
+	}
 
-  .card {
-      display: inline-block;
-      width: 33%;
-      margin-right: 25px;
-      cursor: grab;
-      height: 450px;
-      border-radius: 10px;
-      border: 0px;
-  }
+	.background-image-about {
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: center;
+		background-attachment: fixed;
+		border-radius: 15px !important;
+		height: 85vh;
+	}
 
-  .background-image-about{
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-attachment: fixed;
-    border-radius: 15px !important;
-    height: 85vh;
-  }
+	.option-height {
+		line-height: 0.4 !important;
+	}
 
-  .option-height{
-      line-height: 0.4 !important;
-  }
+	.btn-primary-about1 {
+		background-color: #E2E5E7 !important;
+		border: #202F4D !important;
+		color: #202F4D !important;
+		border: 2px solid !important;
+	}
 
-  .btn-primary-about1 {
-      background-color: #E2E5E7 !important;
-      border: #202F4D !important;
-      color: #202F4D !important;
-      border: 2px solid !important;
-  }
+		.btn-primary-about1:hover {
+			background-color: #75CCDD !important;
+			border: #202F4D !important;
+			color: #202F4D !important;
+		}
 
-  .btn-primary-about1:hover {
-      background-color: #75CCDD !important;
-      border: #202F4D !important;
-      color: #202F4D !important;
-  }
+	.margin-about {
+		margin-left: 50px;
+		margin-right: 50px;
+	}
 
-  .margin-about{
-      margin-left: 50px;
-      margin-right: 50px;
-  }
+	.circle1 {
+		width: 50px;
+		height: 50px;
+		background-color: #f97cc4;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: white;
+		position: relative;
+		left: 30px;
+	}
 
-  .circle1 {
-    width: 50px;
-    height: 50px;
-    background-color: #f97cc4;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    position: relative;
-    left: 30px;
-  }
+	.text-about-circle1 {
+		position: relative;
+		top: 8px;
+		left: -12px;
+	}
 
-  .text-about-circle1{
-      position:  relative;
-      top: 8px;
-      left: -12px;
-  }
+	.circle2 {
+		width: 100px;
+		height: 100px;
+		background-color: #8BD1DF;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: white;
+		position: relative;
+		top: -25px;
+		left: 0px;
+		z-index: 8;
+	}
 
-  .circle2 {
-    width: 100px;
-    height: 100px;
-    background-color: #8BD1DF;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    position: relative;
-    top: -25px;
-    left: 0px;
-    z-index: 8;
-  }
+	.text-about-circle2 {
+		position: relative;
+		top: 9px;
+		left: -18px;
+	}
 
-  .text-about-circle2{
-      position:  relative;
-      top: 9px;
-      left: -18px;
-  }
+	.circle3 {
+		width: 150px;
+		height: 150px;
+		background-color: #2DDEA0;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: white;
+		position: relative;
+		top: -47px;
+		left: 25px;
+	}
 
-  .circle3 {
-    width: 150px;
-    height: 150px;
-    background-color: #2DDEA0;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    position: relative;
-    top: -47px;
-    left: 25px;
-  }
+	.text-about-circle3 {
+		position: relative;
+		top: 6px;
+		left: -15px;
+	}
 
-  .text-about-circle3{
-      position: relative;
-      top: 6px;
-      left: -15px;
-  }
+	.overlay-text {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
 
-  .overlay-text {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-  }
+	.custom-cursor {
+		width: 100px;
+		height: 100px;
+		background-color: #FF61BB;
+		border-radius: 50%;
+		color: white;
+		font-size: 18px;
+		display: none;
+		position: fixed;
+		pointer-events: none;
+		z-index: 9999;
+		top: 0;
+		left: 0;
+		text-align: center;
+		line-height: 100px;
+	}
 
-  .custom-cursor {
-      width: 100px;
-      height: 100px;
-      background-color: #FF61BB;
-      border-radius: 50%;
-      color: white;
-      font-size: 18px;
-      display: none;
-      position: fixed;
-      pointer-events: none;
-      z-index: 9999;
-      top: 0;
-      left: 0;
-      text-align: center;
-      line-height: 100px;
-  }
+	.option-circle-2 {
+		justify-content: flex-end !important;
+	}
 
-  .option-circle-2{
-      justify-content: flex-end !important;
-  }
+	.option-circle-text-2 {
+		z-index: 9 !important;
+	}
 
-   .option-circle-text-2{
-      z-index: 9 !important;
-   }
+	.option-circle-text-3 {
+		z-index: 9 !important;
+	}
 
-   .option-circle-text-3{
-       z-index: 9 !important;
-   }
+	@@media screen and (max-width: 600px) {
+		.circle1 {
+			left: 5px;
+		}
 
-  @@media screen and (max-width: 600px) {
-      .circle1 {
-          left:  5px;
-      }
+		.circle2 {
+			left: -5px;
+			top: 0px;
+		}
 
-      .circle2{
-          left:  -5px;
-          top: 0px;
-      }
+		.option-circle-2 {
+			justify-content: flex-start !important;
+		}
 
-      .option-circle-2{
-          justify-content: flex-start !important;
-      }
+		.option-circle-text-2 {
+			margin-left: 0px;
+			z-index: 9 !important;
+			top: 26px;
+			position: relative;
+		}
 
-      .option-circle-text-2{
-          margin-left: 0px;
-          z-index: 9 !important;
-          top: 26px;
-          position: relative;
-      }
+		.text-about-circle1 {
+			top: 6px;
+		}
 
-      .text-about-circle1{
-          top: 6px;
-      }
+		.font-option-circle-2 {
+			font-size: 15px !important;
+		}
 
-      .font-option-circle-2{
-          font-size:  15px !important;
-      }
+		.circle3 {
+			left: -15px;
+			top: 0px;
+		}
 
-      .circle3{
-          left:  -15px;
-          top:  0px;
-      }
+		.margin-about {
+			margin-left: 0px;
+			margin-right: 0px;
+		}
 
-      .margin-about{
-          margin-left: 0px;
-          margin-right: 0px;
-      }
+		.option-circle-text-3 {
+			left: 15px;
+			z-index: 9 !important;
+			top: 48px;
+			position: relative;
+		}
 
-      .option-circle-text-3{
-          left: 15px;
-          z-index: 9 !important;
-          top: 48px;
-          position: relative;
-      }
+		.text-option-mobile {
+			font-size: 20px !important;
+		}
 
-      .text-option-mobile{
-          font-size: 20px !important;
-      }
+		.option-height {
+			line-height: 1.4 !important;
+		}
 
-      .option-height{
-          line-height: 1.4 !important;
-      }
+		.card {
+			display: inline-block;
+			width: 50%;
+			margin-right: 0px;
+			height: 200px;
+		}
 
-      .card {
-          display: inline-block;
-          width: 50%;
-          margin-right: 0px;
-          height: 200px;
-      }
-
-      .tab-mobile-option{
-          font-size: 11px !important;
-          line-height: 16px !important;
-      }
-  }
+		.tab-mobile-option {
+			font-size: 11px !important;
+			line-height: 16px !important;
+		}
+	}
 
 </style>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
-      var button = document.querySelector("#button1");
+	document.addEventListener("DOMContentLoaded", function () {
+		var button = document.querySelector("#button1");
 
-      button.addEventListener("mouseover", function() {
-          button.textContent = "for free";
-      });
+		button.addEventListener("mouseover", function () {
+			button.textContent = "for free";
+		});
 
-      button.addEventListener("mouseout", function() {
-          button.textContent = "join veesy";
-      });
+		button.addEventListener("mouseout", function () {
+			button.textContent = "join veesy";
+		});
 
-      var button1 = document.querySelector("#button2");
+		var button1 = document.querySelector("#button2");
 
-      button1.addEventListener("mouseover", function() {
-          button1.textContent = "è gratis!";
-      });
+		button1.addEventListener("mouseover", function () {
+			button1.textContent = "è gratis!";
+		});
 
-      button1.addEventListener("mouseout", function() {
-          button1.textContent = "entra (è gratis)";
-      });
-  });
+		button1.addEventListener("mouseout", function () {
+			button1.textContent = "entra (è gratis)";
+		});
+	});
 
-  let isDown = false;
-  let startX;
-  let scrollLeft;
+	let isDown = false;
+	let startX;
+	let scrollLeft;
 
-  const scrollableRow = document.getElementById('scrollable-row');
+	const scrollableRow = document.getElementById('scrollable-row');
 
-  scrollableRow.addEventListener('mousedown', (e) => {
-      isDown = true;
-      startX = e.pageX - scrollableRow.offsetLeft;
-      scrollLeft = scrollableRow.scrollLeft;
-  });
+	scrollableRow.addEventListener('mousedown', (e) => {
+		isDown = true;
+		startX = e.pageX - scrollableRow.offsetLeft;
+		scrollLeft = scrollableRow.scrollLeft;
+	});
 
-  scrollableRow.addEventListener('mouseleave', () => {
-      isDown = false;
-  });
+	scrollableRow.addEventListener('mouseleave', () => {
+		isDown = false;
+	});
 
-  scrollableRow.addEventListener('mouseup', () => {
-      isDown = false;
-  });
+	scrollableRow.addEventListener('mouseup', () => {
+		isDown = false;
+	});
 
-  scrollableRow.addEventListener('mousemove', (e) => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - scrollableRow.offsetLeft;
-      const walk = (x - startX) * 1.5;
-      scrollableRow.scrollLeft = scrollLeft - walk;
-  });
+	scrollableRow.addEventListener('mousemove', (e) => {
+		if (!isDown) return;
+		e.preventDefault();
+		const x = e.pageX - scrollableRow.offsetLeft;
+		const walk = (x - startX) * 1.5;
+		scrollableRow.scrollLeft = scrollLeft - walk;
+	});
 
-   function showText() {
-       document.getElementById("discover").classList.remove("d-none");
-       document.getElementById("more").classList.remove("d-none");
-   }
+	function showText() {
+		document.getElementById("discover").classList.remove("d-none");
+		document.getElementById("more").classList.remove("d-none");
+	}
 
-   function hideText() {
-       document.getElementById("discover").classList.add("d-none");
-       document.getElementById("more").classList.add("d-none");
-   }
+	function hideText() {
+		document.getElementById("discover").classList.add("d-none");
+		document.getElementById("more").classList.add("d-none");
+	}
 
-  var customCursor = document.createElement("div");
-  customCursor.className = "custom-cursor";
-  customCursor.innerText = "play";
+	var customCursor = document.createElement("div");
+	customCursor.className = "custom-cursor";
+	customCursor.innerText = "play";
 
-  document.body.appendChild(customCursor);
+	document.body.appendChild(customCursor);
 
-  document.addEventListener("mousemove", function(event) {
-      customCursor.style.top = (event.clientY - 50) + "px";
-      customCursor.style.left = (event.clientX - 50) + "px";
-  });
+	document.addEventListener("mousemove", function (event) {
+		customCursor.style.top = (event.clientY - 50) + "px";
+		customCursor.style.left = (event.clientX - 50) + "px";
+	});
 
-  document.getElementById("imageContainer").addEventListener("mouseout", function() {
-      customCursor.style.display = "none";
-  });
+	document.getElementById("imageContainer").addEventListener("mouseout", function () {
+		customCursor.style.display = "none";
+	});
 
-  document.getElementById("imageContainer").addEventListener("mouseover", function() {
-      customCursor.style.display = "block";
-  });
+	document.getElementById("imageContainer").addEventListener("mouseover", function () {
+		customCursor.style.display = "block";
+	});
 
-  document.addEventListener("mousemove", function(event) {
-      var isInsideImage = event.target === mainImage || event.target.closest("#imageContainer") !== null;
-      var mouseY = event.clientY;
-      var imageRect = mainImage.getBoundingClientRect();
-      var bottomThreshold = imageRect.bottom - 75; // 50 pixels dalla parte inferiore dell'immagine
+	document.addEventListener("mousemove", function (event) {
+		var isInsideImage = event.target === mainImage || event.target.closest("#imageContainer") !== null;
+		var mouseY = event.clientY;
+		var imageRect = mainImage.getBoundingClientRect();
+		var bottomThreshold = imageRect.bottom - 75; // 50 pixels dalla parte inferiore dell'immagine
 
-      if (isInsideImage) {
-          if (mouseY < bottomThreshold) {
-              document.body.style.cursor = "none";
-              customCursor.style.display = "block";
-              customCursor.style.top = (event.clientY - 50) + "px";
-              customCursor.style.left = (event.clientX - 50) + "px";
-          } else {
-              document.body.style.cursor = "default";
-              customCursor.style.display = "none";
-          }
-      } else {
-          document.body.style.cursor = "default";
-          customCursor.style.display = "none";
-      }
-  });
+		if (isInsideImage) {
+			if (mouseY < bottomThreshold) {
+				document.body.style.cursor = "none";
+				customCursor.style.display = "block";
+				customCursor.style.top = (event.clientY - 50) + "px";
+				customCursor.style.left = (event.clientX - 50) + "px";
+			} else {
+				document.body.style.cursor = "default";
+				customCursor.style.display = "none";
+			}
+		} else {
+			document.body.style.cursor = "default";
+			customCursor.style.display = "none";
+		}
+	});
 
-  scrollableRow.addEventListener('wheel', (e) => {
-      e.preventDefault();
-      const delta = -1 * Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
-      scrollableRow.scrollLeft += delta * 40; // Incrementa o decrementa la posizione di scorrimento in base alla direzione del movimento
-  });
+	scrollableRow.addEventListener('wheel', (e) => {
+		e.preventDefault();
+		const delta = -1 * Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
+		scrollableRow.scrollLeft += delta * 40; // Incrementa o decrementa la posizione di scorrimento in base alla direzione del movimento
+	});
 
 </script>

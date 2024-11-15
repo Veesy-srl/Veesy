@@ -505,4 +505,17 @@
 		document.getElementById(textCounter).textContent = rimanenza + " / " + limiteCaratteri;
 	}
 
+	// Disable Theme Switch on /landing-discord Page
+	document.addEventListener('DOMContentLoaded', () => checkThemeDiscordPage())
+	document.addEventListener('click', () => checkThemeDiscordPage())
+
+	function checkThemeDiscordPage() {
+		const themeSwitch = document.getElementById('canvaId');
+
+		if (window.location.pathname === '/landing-discord') {
+			themeSwitch.style.display = 'none';
+			setTheme("light");
+		}
+	}
+
 </script>
