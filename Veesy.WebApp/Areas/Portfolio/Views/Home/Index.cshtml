@@ -12,141 +12,144 @@
 
 <div class="padding-lg">
 	<div class="row pt-4 p-4-lg">
-	    <div class="empty-veesy nodisplay-sm"></div>
-	    <div class="empty-veesy nodisplay-sm"></div>
-	    <div class="col-sm-12 ps-3 col-md-4">
-	        <h1 class="text-color mt-2">
-	            Welcome back @Model.Name,<br/> your creative space awaits...
-	        </h1>
-	        <div class="empty-veesy"></div>
-	        <div class="empty-veesy"></div>
-	        <div class="col-12">
-	            <a class="mb-0">
-	                <strong>Do you need some help?</strong>
-	            </a>
-	        </div>
-	        <a href="mailto:info@veesy.it" class="grey-link-underline mb-4">Contact us</a>
-	        <div class="empty-veesy"></div>
-	    </div>
-	    <div class="ps-3 pe-3 col-sm-12 col-md-8">
-	        <div style="border: none" class="card card-dashboard rounded-05 bg-transparent">
-	            <div class="card-header rounded-05-header p-0 bg-white" style="border-bottom: 0px;">
-	                <div class="row m-0 dashboard-header-border">
-	                    <div class="col-9 mt-2 mb-1">
-	                        <p class="mb-0" style="font-size: 14px !important; line-height: 22px !important;">
-	                            <strong>OVERVIEW</strong>
-	                        </p>
-	                    </div>
-	                    <div style="border-radius: 0 0.5rem 0 0;" class="col-3 text-end bg-gradient-1">
-	                        <i class="fa-solid fa-circle fa-2xs color-circle mt-3"></i>
-	                    </div>
-	                </div>
-	            </div>
-	            <div class="card-body card-body-dashboard row p-0 m-0">
-	                
-	                <div class="ps-3 col-sm-12 col-lg-3 card-body-background-radius card-body-background vertical-space pb-0 pt-2">
-		                @if (Model.DiscordConnected)
-		                {
-			                <i style="color: #75CCDD" class="fa-brands fa-discord fa-4x m-2 mt-4"></i>
-		                }
-		                else
-		                {
-			                <i style="color: #AAB0BB" class="fa-brands fa-discord fa-4x m-2 mt-4"></i>
-		                }
-		                <div>
-                            @if (Model.DiscordConnected)
-                            {
-	                            <h3 class="text-color"><strong>Connected</strong> to <br/> @Model.DiscordUsername</h3>
-	                            <div class="mb-3 mt-3">
-		                            <a href="https://discord.gg/VAVfu9TQEp" target="_blank" class="grey-link">your community <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-	                            </div>
-                            }
-                            else
-                            {
-	                            <h3 class="text-color"><strong>Connect</strong> your Discord <br/> account</h3>
-	                            <div class="mb-3 mt-3">
-		                            <a href="@Model.DiscordLink" class="red-link font-a-as-p"><i class="fa-brands fa-discord text-2xl me-1"></i>connect discord</a>
-	                            </div>
-                            }
-	                        <hr class="nodisplay-lg"/>
-	                    </div>
-	                </div>
+		<div class="empty-veesy nodisplay-sm"></div>
+		<div class="empty-veesy nodisplay-sm"></div>
+		<div class="col-sm-12 ps-3 col-md-4">
+			<h1 class="text-color mt-2">
+				Welcome back @Model.Name,<br /> your creative space awaits...
+			</h1>
+			<div class="empty-veesy"></div>
+			<div class="empty-veesy"></div>
+			<div class="col-12">
+				<a class="mb-0">
+					<strong>Do you need some help?</strong>
+				</a>
+			</div>
+			<a href="mailto:info@veesy.it" class="grey-link-underline mb-4">Contact us</a>
+			<div class="empty-veesy"></div>
+		</div>
+		<div class="ps-3 pe-3 col-sm-12 col-md-8">
+			<div style="border: none" class="card card-dashboard rounded-05 bg-transparent">
+				<div class="card-header rounded-05-header p-0 bg-white" style="border-bottom: 0px;">
+					<div class="row m-0 dashboard-header-border">
+						<div class="col-9 mt-2 mb-1">
+							<p class="mb-0" style="font-size: 14px !important; line-height: 22px !important;">
+								<strong>OVERVIEW</strong>
+							</p>
+						</div>
+						<div style="border-radius: 0 0.5rem 0 0;" class="col-3 text-end bg-gradient-1">
+							<i class="fa-solid fa-circle fa-2xs color-circle mt-3"></i>
+						</div>
+					</div>
+				</div>
+				<div class="card-body card-body-dashboard row p-0 m-0">
 
-	                <div class="ps-3 col-sm-12 col-lg-3 card-body-background vertical-space pt-2 pb-0">
-	                    <div class="mt-4 pt-1">
-	                        <div class="d-flex align-items-end mb-2">
-	                            <h1 style="font-size: 65px !important; line-height: 65px !important;" class="text-color">
-	                                <strong>@Model.MediaNumber</strong>
-	                            </h1>
-	                            @if (Model.Subscription.AllowedMediaNumber == -1)
-	                            {
-	                                <h3 style="font-size: 40px !important; line-height: 40px; color: #D2D5DB !important;" class="mb-4">/∞</h3>
-	                            }
-	                            else
-	                            {
-	                                <h3 style="font-size: 40px !important; line-height: 40px; color: #D2D5DB !important;" class="mb-4">/@Model.Subscription.AllowedMediaNumber</h3>
-	                            }
-	                        </div>
-	                        <div style="height: 5px;" class="progress" id="progress-media">
-	                            <div class="progress-bar" role="progressbar" aria-valuenow="@Model.MediaPercent" aria-valuemin="0" aria-valuemax="100"></div>
-	                        </div>
-	                    </div>
-	                    <div class="mt-4">
-	                        <h3 class="text-color"><strong>Files uploaded</strong> on <br/> cloud.</h3>
-	                        <div class="mb-3 mt-3">
-	                            <a asp-action="List" asp-controller="Cloud" asp-area="Portfolio" class="grey-link">your cloud <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-	                        </div>
-	                        <hr class="nodisplay-lg"/>
-	                    </div>
-	                </div>
-	                <div class="ps-3 col-sm-12 col-lg-3 card-body-background vertical-space pt-2 pb-0">
-	                    <div class="mt-4 pt-1">
-	                        <h1 style="font-size: 65px !important; line-height: 65px !important;" class="text-color">
-	                            <strong>@Model.PortfolioNumber.ToString("00")</strong>
-	                        </h1>
-	                    </div>
-	                    <div class="mt-4 pt-2">
-	                        <h3 class="text-color"><strong>Portfolios </strong>created from <br/> your media.</h3>
-	                        <div class="mb-3 mt-3">
-	                            <a asp-action="List" asp-controller="Portfolio" asp-area="Portfolio" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i>edit portfolios</a>
-	                        </div>
-	                        <hr class="nodisplay-lg"/>
-	                    </div>
-	                </div>
-	                <div class="ps-3 col-sm-12 col-lg-3 pt-1 border-card-subscription vertical-space bg-gradient-2 pb-0">
-	                    <div class="mt-4 pt-1">
-	                        <h3 class="mb-0">Your plan:</h3>
-	                        <h2 class="text-white">
-	                            <strong>@Model.Subscription.NameToShow</strong>
-	                        </h2>
-	                    </div>
-	                    <div>
-	                        @if (@Model.Subscription.Price > 0)
-	                        {
-	                            <h3 class="mb-0 text-white">@((Model.Subscription.Price * 12).ToString("00"))€ / year</h3>
-	                        }
-	                        else
-	                        {
-	                            <h3 class="mb-0 text-white">free forever</h3>
-	                        }
-	                        @if (Model.Subscription.AllowedMediaNumber == -1)
-	                        {
-	                            <h3 class="text-white">unlimited media</h3>
-	                        }
-	                        else
-	                        {
-	                            <h3 class="text-white">max. @Model.Subscription.AllowedMediaNumber media</h3>
-	                        }
-	                        <div class="mb-3 mt-3">
-														<a asp-action="PricingPlan" asp-controller="Public" asp-area="Public" class="upgrade-plan-btn" type="submit">
-															<span style="color: white">view plans & upgrade</span>
-														</a>
-	                        </div>
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
-	    </div>
+					<div class="ps-3 col-sm-12 col-lg-3 card-body-background-radius card-body-background vertical-space pb-0 pt-2">
+						@if (Model.DiscordConnected)
+						{
+							<i style="color: #75CCDD" class="fa-brands fa-discord fa-4x m-2 mt-4"></i>
+						}
+						else
+						{
+							<i style="color: #AAB0BB" class="fa-brands fa-discord fa-4x m-2 mt-4"></i>
+						}
+						<div>
+							@if (Model.DiscordConnected)
+							{
+								<h3 class="text-color"><strong>Connected</strong> to <br /> @Model.DiscordUsername</h3>
+								<div class="mb-3 mt-3">
+									<a href="https://discord.gg/VAVfu9TQEp" target="_blank" class="grey-link">your community <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+								</div>
+							}
+							else
+							{
+								<h3 class="text-color"><strong>Connect</strong> your Discord <br /> account</h3>
+								<div class="mb-3 mt-3">
+									<a href="@Model.DiscordLink" class="red-link font-a-as-p"><i class="fa-brands fa-discord text-2xl me-1"></i>connect discord</a>
+								</div>
+							}
+							<hr class="nodisplay-lg" />
+						</div>
+					</div>
+
+					<div class="ps-3 col-sm-12 col-lg-3 card-body-background vertical-space pt-2 pb-0">
+						<div class="mt-4 pt-1">
+							<div class="d-flex align-items-end mb-2">
+								<h1 style="font-size: 65px !important; line-height: 65px !important;" class="text-color">
+									<strong>@Model.MediaNumber</strong>
+								</h1>
+								@if (Model.Subscription.AllowedMediaNumber == -1)
+								{
+									<h3 style="font-size: 40px !important; line-height: 40px; color: #D2D5DB !important;" class="mb-4">/∞</h3>
+								}
+								else
+								{
+									<h3 style="font-size: 40px !important; line-height: 40px; color: #D2D5DB !important;" class="mb-4">/@Model.Subscription.AllowedMediaNumber</h3>
+								}
+							</div>
+							<div style="height: 5px;" class="progress" id="progress-media">
+								<div class="progress-bar" role="progressbar" aria-valuenow="@Model.MediaPercent" aria-valuemin="0" aria-valuemax="100"></div>
+							</div>
+						</div>
+						<div class="mt-4">
+							<h3 class="text-color"><strong>Files uploaded</strong> on <br /> cloud.</h3>
+							<div class="mb-3 mt-3">
+								<a asp-action="List" asp-controller="Cloud" asp-area="Portfolio" class="grey-link">your cloud <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+							</div>
+							<hr class="nodisplay-lg" />
+						</div>
+					</div>
+					<div class="ps-3 col-sm-12 col-lg-3 card-body-background vertical-space pt-2 pb-0">
+						<div class="mt-4 pt-1">
+							<h1 style="font-size: 65px !important; line-height: 65px !important;" class="text-color">
+								<strong>@Model.PortfolioNumber.ToString("00")</strong>
+							</h1>
+						</div>
+						<div class="mt-4 pt-2">
+							<h3 class="text-color"><strong>Portfolios </strong>created from <br /> your media.</h3>
+							<div class="mb-3 mt-3">
+								<a asp-action="List" asp-controller="Portfolio" asp-area="Portfolio" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i>edit portfolios</a>
+							</div>
+							<hr class="nodisplay-lg" />
+						</div>
+					</div>
+					<div class="ps-3 col-sm-12 col-lg-3 pt-1 border-card-subscription vertical-space bg-gradient-2 pb-0">
+						<div class="mt-4 pt-1">
+							<h3 class="mb-0">Your plan:</h3>
+							<div class="row text-white" style="display: flex; align-items: center;">
+								<h2 style="width: max-content; margin-bottom: 0;">
+									<strong>@Model.Subscription.Name</strong>
+								</h2>
+								<span class="tag-beta">BETA</span>
+							</div>
+						</div>
+						<div>
+							@if (@Model.Subscription.Price > 0)
+							{
+								<h3 class="mb-0 text-white">@((Model.Subscription.Price * 12).ToString("00"))€ / year</h3>
+							}
+							else
+							{
+								<h3 class="mb-0 text-white">free forever</h3>
+							}
+							@if (Model.Subscription.AllowedMediaNumber == -1)
+							{
+								<h3 class="text-white">unlimited media</h3>
+							}
+							else
+							{
+								<h3 class="text-white">max. @Model.Subscription.AllowedMediaNumber media</h3>
+							}
+							<div class="mb-3 mt-3">
+								<a asp-action="PricingPlan" asp-controller="Public" asp-area="Public" class="upgrade-plan-btn" type="submit">
+									<span style="color: white">view plans & upgrade</span>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 
 
@@ -340,9 +343,10 @@
 				<p class="text-white ms-2 mb-1 mt-2">JOIN OUR COMMUNITY!</p>
 			</div>
 			<div class="col-1 pe-2">
-				<div class="text-end pt-1"><i class="fa-solid fa-circle-xmark mt-1" style="color: white"></i></div></div>
+				<div class="text-end pt-1"><i class="fa-solid fa-circle-xmark mt-1" style="color: white"></i></div>
+			</div>
 		</div>
-		<hr class="portfolio-hr"/>
+		<hr class="portfolio-hr" />
 		<div class="row discord-popup-body overflow-auto ms-0">
 			<div class="row p-4 pb-2">
 				<h5 class="text-white box-splash-2">
@@ -377,150 +381,150 @@
 
 		var div_uploader = document.getElementById("div-uploader");
 		/*Dropzone configuration*/
-				Dropzone.autoDiscover = false;
-				var uploader = null;
-				var msgUploader = document.getElementById("message-uploader");
-				var divUploader = document.getElementById("div-uploader-icon");
-				var iconUploader = document.getElementById("uploader-icon");
-				var txtUploader = document.getElementById("uploader-text");
-				let dropzone_processing = false;
+		Dropzone.autoDiscover = false;
+		var uploader = null;
+		var msgUploader = document.getElementById("message-uploader");
+		var divUploader = document.getElementById("div-uploader-icon");
+		var iconUploader = document.getElementById("uploader-icon");
+		var txtUploader = document.getElementById("uploader-text");
+		let dropzone_processing = false;
 
-				var dropzoneOptions = {
-						dictDefaultMessage: 'Upload or drop files here',
-						paramName: "file",
-						maxFilesize: 10000, // MB
-						addRemoveLinks: true,
-						parallelUploads: 1,
-						uploadMultiple: true,
-						acceptedFiles: "image/jpeg,image/png,image/gif,image/jpg,video/*",
-						addedfiles: function (){
-								dropzone_processing = true;
-						},
-						uploadprogress: function(file, progress, bytesSent) {
-								if (file.previewElement) {
-										var progressElement = file.previewElement.querySelector("[data-dz-uploadprogress]");
-										progressElement.style.width = progress + "%";
-								}
-						},
-						success: function (file) {
-							 this.removeFile(file);
-						},
-						successmultiple: function (file, response) {
-								const res = JSON.parse(response);
-								// TODO mostrare popup con success/error
-								if (res.NumberSuccessFile > 0){
-										toastNotifyCustom(res.SuccessFileMessage, 10000, "#75ccdd", "")
-								}
-								if (res.NumberErrorFile > 0)
-										toastNotifyCustom(res.ErrorFileMessage, 10000, "#ca0a0a", "")
-						 },
-						errormultiple: function () {
-								toastNotifyCustom("Error during uploading files. Please retry.", 10000, "#ca0a0a", "")
-						 },
-						queuecomplete: function (){
-							 hideDropZone()
-							 dropzone_processing = false;
-						}
-				};
-
-				uploader = document.querySelector('#uploader');
-				var newDropzone = new Dropzone(uploader, dropzoneOptions);
-
-				// 1
-				window.addEventListener('dragenter', function(e) {
-						showDropZone();
-				});
-
-				// 2
-				uploader.addEventListener('dragenter', allowDrag);
-				uploader.addEventListener('dragover', allowDrag);
-
-				// 3
-				uploader.addEventListener('dragleave', function(e) {
-						console.log('dragleave');
-						//hideDropZone();
-				});
-
-				// 4
-				uploader.addEventListener('drop', handleDrop);
-
-
-				function showDropZone() {
-						document.getElementById("dropzone-close-button").style.display = "block";
-						div_uploader.classList.remove("nodisplay-md");
-						uploader.classList.remove("card-grey-dashed-veesy");
-						uploader.classList.add("dropzone-full-page");
-
-						divUploader.classList.remove("mb-1");
-						msgUploader.classList.add("text-center");
-						msgUploader.classList.add("h-100");
-						msgUploader.style.marginTop = "20%";
-						divUploader.classList.add("mb-4");
-						txtUploader.classList.add("text-white");
-						iconUploader.style.color = "#ffffff"
-
-						document.body.style.overflow = 'hidden';
+		var dropzoneOptions = {
+			dictDefaultMessage: 'Upload or drop files here',
+			paramName: "file",
+			maxFilesize: 10000, // MB
+			addRemoveLinks: true,
+			parallelUploads: 1,
+			uploadMultiple: true,
+			acceptedFiles: "image/jpeg,image/png,image/gif,image/jpg,video/*",
+			addedfiles: function () {
+				dropzone_processing = true;
+			},
+			uploadprogress: function (file, progress, bytesSent) {
+				if (file.previewElement) {
+					var progressElement = file.previewElement.querySelector("[data-dz-uploadprogress]");
+					progressElement.style.width = progress + "%";
 				}
-
-
-				function hideDropZone() {
-						document.getElementById("dropzone-close-button").style.display = "none";
-						uploader.classList.remove("dropzone-full-page");
-						uploader.classList.add("card-grey-dashed-veesy");
-
-						msgUploader.classList.remove("text-center");
-						msgUploader.classList.remove("h-100");
-						msgUploader.style.marginTop = "2em";
-						divUploader.classList.remove("mb-4");
-						txtUploader.classList.remove("text-white");
-						iconUploader.style.color = "#202F4D"
-						divUploader.classList.add("mb-1");
-
-						document.body.style.overflow = 'visible';
+			},
+			success: function (file) {
+				this.removeFile(file);
+			},
+			successmultiple: function (file, response) {
+				const res = JSON.parse(response);
+				// TODO mostrare popup con success/error
+				if (res.NumberSuccessFile > 0) {
+					toastNotifyCustom(res.SuccessFileMessage, 10000, "#75ccdd", "")
 				}
+				if (res.NumberErrorFile > 0)
+					toastNotifyCustom(res.ErrorFileMessage, 10000, "#ca0a0a", "")
+			},
+			errormultiple: function () {
+				toastNotifyCustom("Error during uploading files. Please retry.", 10000, "#ca0a0a", "")
+			},
+			queuecomplete: function () {
+				hideDropZone()
+				dropzone_processing = false;
+			}
+		};
 
-				function allowDrag(e) {
-						if (true) {  // Test that the item being dragged is a valid one
-								e.dataTransfer.dropEffect = 'copy';
-						}
-				}
+		uploader = document.querySelector('#uploader');
+		var newDropzone = new Dropzone(uploader, dropzoneOptions);
 
-				function handleDrop(e) {
-						//hideDropZone();
-				}
+		// 1
+		window.addEventListener('dragenter', function (e) {
+			showDropZone();
+		});
 
-				var allwidthprogress = document.getElementById("progress-media").offsetWidth
+		// 2
+		uploader.addEventListener('dragenter', allowDrag);
+		uploader.addEventListener('dragover', allowDrag);
 
-				var percent = (@Model.MediaPercent / 100) * allwidthprogress
-				$(".progress-bar").animate({
-						width: percent
-				}, 2500);
+		// 3
+		uploader.addEventListener('dragleave', function (e) {
+			console.log('dragleave');
+			//hideDropZone();
+		});
+
+		// 4
+		uploader.addEventListener('drop', handleDrop);
 
 
-				function OpenDiscordPopup() {
-						window.localStorage.setItem('popup-discord-desk-hide', false);
-						document.getElementById("popup-discord").classList.add("discord-popup-full-open");
-						document.getElementById("popup-discord").classList.remove("discord-popup-full-close");
-						document.getElementById("discord-popup-splash-id").style.display = "none";
-				}
+		function showDropZone() {
+			document.getElementById("dropzone-close-button").style.display = "block";
+			div_uploader.classList.remove("nodisplay-md");
+			uploader.classList.remove("card-grey-dashed-veesy");
+			uploader.classList.add("dropzone-full-page");
 
-				function CloseDiscordPopup() {
-						window.localStorage.setItem('popup-discord-desk-hide', true);
-						document.getElementById("popup-discord").classList.remove("discord-popup-full-open");
-						document.getElementById("popup-discord").classList.add("discord-popup-full-close");
-						document.getElementById("discord-popup-splash-id").style.display = "block";
-				}
+			divUploader.classList.remove("mb-1");
+			msgUploader.classList.add("text-center");
+			msgUploader.classList.add("h-100");
+			msgUploader.style.marginTop = "20%";
+			divUploader.classList.add("mb-4");
+			txtUploader.classList.add("text-white");
+			iconUploader.style.color = "#ffffff"
 
-				document.addEventListener('DOMContentLoaded', function () {
-						// Controlla se il popup deve essere nascosto
-						const isHidden = window.localStorage.getItem('popup-discord-desk-hide') === 'true';
+			document.body.style.overflow = 'hidden';
+		}
 
-						if (!isHidden && '@Model.DiscordConnected' === 'false') {
-								setTimeout(OpenDiscordPopup, 1000); // Apri il popup dopo 1 secondo
-						} else {
-								document.getElementById("discord-popup-splash-id").style.display = "block";
-						}
-				});
+
+		function hideDropZone() {
+			document.getElementById("dropzone-close-button").style.display = "none";
+			uploader.classList.remove("dropzone-full-page");
+			uploader.classList.add("card-grey-dashed-veesy");
+
+			msgUploader.classList.remove("text-center");
+			msgUploader.classList.remove("h-100");
+			msgUploader.style.marginTop = "2em";
+			divUploader.classList.remove("mb-4");
+			txtUploader.classList.remove("text-white");
+			iconUploader.style.color = "#202F4D"
+			divUploader.classList.add("mb-1");
+
+			document.body.style.overflow = 'visible';
+		}
+
+		function allowDrag(e) {
+			if (true) {  // Test that the item being dragged is a valid one
+				e.dataTransfer.dropEffect = 'copy';
+			}
+		}
+
+		function handleDrop(e) {
+			//hideDropZone();
+		}
+
+		var allwidthprogress = document.getElementById("progress-media").offsetWidth
+
+		var percent = (@Model.MediaPercent / 100) * allwidthprogress
+						$(".progress-bar").animate({
+			width: percent
+		}, 2500);
+
+
+		function OpenDiscordPopup() {
+			window.localStorage.setItem('popup-discord-desk-hide', false);
+			document.getElementById("popup-discord").classList.add("discord-popup-full-open");
+			document.getElementById("popup-discord").classList.remove("discord-popup-full-close");
+			document.getElementById("discord-popup-splash-id").style.display = "none";
+		}
+
+		function CloseDiscordPopup() {
+			window.localStorage.setItem('popup-discord-desk-hide', true);
+			document.getElementById("popup-discord").classList.remove("discord-popup-full-open");
+			document.getElementById("popup-discord").classList.add("discord-popup-full-close");
+			document.getElementById("discord-popup-splash-id").style.display = "block";
+		}
+
+		document.addEventListener('DOMContentLoaded', function () {
+			// Controlla se il popup deve essere nascosto
+			const isHidden = window.localStorage.getItem('popup-discord-desk-hide') === 'true';
+
+			if (!isHidden && '@Model.DiscordConnected' === 'false') {
+				setTimeout(OpenDiscordPopup, 1000); // Apri il popup dopo 1 secondo
+			} else {
+				document.getElementById("discord-popup-splash-id").style.display = "block";
+			}
+		});
 
 	</script>
 }
