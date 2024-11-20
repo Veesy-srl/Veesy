@@ -338,25 +338,6 @@
 	@section Scripts
  {
 	<script>
-		document.addEventListener('DOMContentLoaded', function () {
-			if (window.innerWidth > 600) {
-				document.getElementById("mobile-navs").style.display = "none"
-				document.getElementById("desktop-nav1").style.display = "block"
-				document.getElementById("desktop-nav2").style.display = "block"
-			} else {
-				document.getElementById("mobile-navs").style.display = "block"
-				document.getElementById("desktop-nav1").style.display = "none"
-				document.getElementById("desktop-nav2").style.display = "none"
-			}
-		})
-		window.addEventListener('resize', function () {
-			if (window.innerWidth > 600) {
-				document.getElementById("mobile-navs").style.display = "none"
-			} else {
-				document.getElementById("mobile-navs").style.display = "block"
-			}
-		})
-
 		function OpenCreditsOrNestedLink() {
 			if (nowNestedPortfolioId != null && nowNestedPortfolioId != "")
 				window.open('@Model.ApplicationUrl' + "/folio/" + nowNestedPortfolioUser + "/" + nowNestedPortfolioName, '_blank')
