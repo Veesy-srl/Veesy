@@ -10,7 +10,11 @@
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 	<link rel="stylesheet" href="~/css/site-dark.css" asp-append-version="true" />
 	<link rel="stylesheet" href="~/Veesy.WebApp.styles.css" asp-append-version="true" />
+	<!-- Swiper CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+	<!-- Dropzone CSS -->
 	<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/css/bootstrap-select.min.css" asp-append-version="true" />
 	@await RenderSectionAsync("Style", required: false)
 
@@ -19,6 +23,8 @@
 		@Html.Partial("~/Areas/Auth/Views/Shared/cookie.cshtml")
 	}
 
+	<!-- Swiper JS Script -->
+	<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 	<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-QY19KDP1PK"></script>
 	<script>

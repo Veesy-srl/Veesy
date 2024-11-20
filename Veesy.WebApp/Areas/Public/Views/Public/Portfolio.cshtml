@@ -4,667 +4,742 @@
 @model Veesy.Presentation.Model.Portfolio.PortfolioViewModel
 
 @{
-    ViewData["Title"] = "Portfolio";
+	ViewData["Title"] = "Portfolio";
 }
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    
-    function SendMessage() {
-        $('#load-spinner').css("display", "block");
-        var senderEmail = document.getElementById("message-sender-email").value;
-        var senderName = document.getElementById("message-sender-name").value;
-        var message = document.getElementById("message-text").value;
-        var policy = document.getElementById("privacy-policy").checked;
-        var recipient = '@Model.PortfolioDto.MyUserId';
-        var form = { senderEmail, senderName, message, recipient, policy };
 
-        $.ajax({
-            type: 'POST',
-            url: '@Url.Action("SendEmailToCreator", "Public")',
-            data: JSON.stringify(form),
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            success: function (response) {
-                if (response.result) {
-                    closeModal('#modalMessageCreator');
-                }
-                $('#load-spinner').css("display", "none");
-            },
-            error: function () {
-                $('#load-spinner').css("display", "none");
-            }
-        });
-    }
+	function SendMessage() {
+		$('#load-spinner').css("display", "block");
+		var senderEmail = document.getElementById("message-sender-email").value;
+		var senderName = document.getElementById("message-sender-name").value;
+		var message = document.getElementById("message-text").value;
+		var policy = document.getElementById("privacy-policy").checked;
+		var recipient = '@Model.PortfolioDto.MyUserId';
+		var form = { senderEmail, senderName, message, recipient, policy };
+
+		$.ajax({
+			type: 'POST',
+			url: '@Url.Action("SendEmailToCreator", "Public")',
+			data: JSON.stringify(form),
+			contentType: 'application/json; charset=utf-8',
+			dataType: 'json',
+			success: function (response) {
+				if (response.result) {
+					closeModal('#modalMessageCreator');
+				}
+				$('#load-spinner').css("display", "none");
+			},
+			error: function () {
+				$('#load-spinner').css("display", "none");
+			}
+		});
+	}
 </script>
 
 
 @if (Model.IsPublish && (Model.PortfolioDto.IsPublic || Model.Unlocked))
 {
-    <div class="padding-lg pt-7rem">
-        <div class="row pt-4 p-4-lg">
-        <div class="col-sm-12 col-md-8 mb-3">
-            <h1 class="text-color">@Model.PortfolioDto.PortfolioIntro</h1>
-            <div class="empty-veesy"></div>
-            <div class="empty-veesy"></div>
-            <h1 style="font-size: 20px !important; line-height: 27px !important;"><strong class="text-color">@Model.PortfolioDto.UserFullName</strong></h1>
-            <p class="text-color">@Model.PortfolioDto.UserCategory</p>
-        </div>
-        <div class="col-sm-12 col-md-4 mb-3 nodisplay-sm">
-            <div class="text-end">
-                <h3 class="text-color" style="font-size: 20px !important; line-height: 27px !important;"><strong>Interested in my work?</strong></h3>
-                <button onclick="openModal('#modalMessageCreator')" class="rounded-pill btn-primary btn-variant mt-2" style="font-size: 15px !important; line-height:  22px !important;">contact me</button>
-            </div>
-        </div>
-    </div>
-    
-    
-    <div class="row mx-2">
-        <div class="card-columns draggable-zone" id="images-container">
-            @{
-                foreach (var image in Model.PortfolioDto.PortfolioMedias)
-                {
-                    var hasCredits = false;
-                    {
-                        hasCredits = !string.IsNullOrEmpty(image.Media.Credits);
-                    }
-                    @if (MediaCostants.ImageExtensions.Contains(image.Media.Type.ToUpper()))
-                    {
-                        <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.MediaId', false, '@image.Media.NestedPortfolioLinks','@image.Media.NestedPortfolioNameForUrl','@image.Media.NestedPortfolioUserForUrl', '@image.Media.NestedPortfolioUrl', '@hasCredits')" class="draggable" name="image-gallery" mediaid="@image.MediaId">
-                            <img title="@image.Media.OriginalFileName" class="img-fluid lazy rounded-05 w-100 mt-3" data-src="@Model.BasePathImages@image.Media.FileName?tr=w-1080" />
-                        </div>
-                    }
-                    else
-                    {
-                        <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.MediaId', true, '@image.Media.NestedPortfolioLinks','@image.Media.NestedPortfolioNameForUrl','@image.Media.NestedPortfolioUserForUrl', '@image.Media.NestedPortfolioUrl', '@hasCredits')" class="draggable" name="image-gallery">
-                            <video autoplay="autoplay" muted loop class="w-100 shadow-1-strong rounded-05 mt-3" title="@image.Media.OriginalFileName">
-                              <data-src src="@Model.BasePathImages@image.Media.FileName?tr=w-1080" type="video/mp4"></data-src>
-                            </video>
-                        </div>
-                    }
-                }
-            }
-        </div>
-    </div>
-    </div>
-    
-    <div class="empty-veesy"></div>
-    <div class="empty-veesy"></div>
-    
-    <div class="card">
-        
-    </div>
-    
-    <div class="text-center mt-4">
-        <h3 class="text-color" style="font-size: 20px !important; line-height: 27px !important;"><strong>Interested in my work?</strong></h3>
-        <button onclick="openModal('#modalMessageCreator')" class="rounded-pill btn-primary btn-padding btn-variant my-4" style="font-size: 15px !important; line-height:  22px !important;">contact me</button>
-    </div>
-    <div class="empty-veesy"></div>
-    <div class="empty-veesy"></div>
-    
-    
-    <div class="media-popup" id="media-popup">
-        <nav class="bg-grey-veesy navbar navbar-expand-sm navbar-toggleable-sm mb-3 fixed-top">
-            <div class="container-fluid">
-                    
-                <h1 class="h3 mb-2 fw-normal">
-                    <a role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" onclick="CloseMediaPopup()">
-                        <img class="header-logo">portfolio
-                    </a>
-                </h1> 
-                <div class="float-end mb-2">
-                    <div class="d-flex">
-        
-                        <a onclick="CloseMediaPopup()" class="ms-2 btn btn-light border btn-layout fw-bolder shadow-none" id="menuButton">
-                            <i class="fas fa-times-circle fa-2xs text-primary" id="icon-color"></i>
-                            <span id="color-text-variant">close</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </nav>
-        <div class="bg-grey-veesy row pt-4rem ps-4 pe-4" style="max-height: 100vh">
-            <div class="col-sm-12 col-md-2 center-content nodisplay-sm">
-                <ul class="list-unstyled">
-                    <li class="mb-3 edit-padding-left">
-                        <div class="arrow-portfolio-media rounded-05 center-content"><a id="previous-media"><img class="w-100 icon-left-portfolio"/></a></div>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-sm-12 col-md-8 mb-5">
-                <div id="external-div" class="mx-auto">
-                    <div class="row text-center align-bottom show-edit" style="position:relative; max-height: 100vh; max-width: 100%; --bs-gutter-x: 0;">
-                        <div style="position: relative">
-                            <div style="display: inline-block; position: relative;">
-                                <div id="text-overlay" class="text-overlay text-start p-4 rounded-05 mt-1">
-                                    <div class="row">
-                                        <div class="col-10">
-                                            <p class="text-white"><strong>IMAGE CREDITS</strong></p>
-                                            <p id="credit-text" class="text-white">Lorem ipsum: dolor sit amet. Consectetur: adipiscing elit. Quisque: lobortis efficitur erat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eu mattis lectus. Aenean eget elit ornare, pulvinar nulla et, tempor ligula. 2023© all rights reserved</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a onclick="OpenCreditsOrNestedLink()" style="cursor:pointer;">
-                                    <video id="video-popup" style="display: none" autoplay="autoplay" muted controls="controls" loop class="img-ratio-portfolio rounded-05">
-                                        <source type="video/mp4">
-                                    </video>
-                                    <img style="display: none" id="image-popup" asp-append-version="true" class="img-ratio-portfolio rounded-05 mt-1"/>
-                                </a>
-                                <a onclick="ShowOverlay(true)" id="open-credits" style="position: absolute;" class=" edit-button-portfolio-preview">
-                                    <i class="fa-solid fa-plus mt-1" id="openPlus"></i>
-                                </a>
-                            </div>   
-                        </div>
-                        <div class="empty-veesy"></div>
-                        <p><strong id="number-media"></strong></p>
-                    </div>      
-                </div>
-            </div>
-            <div class="col-sm-12 col-md-2 center-content nodisplay-sm">
-                <ul class="list-unstyled w-100">
-                    <li class="mb-3 edit-padding-right" style="float: right">
-                        <div class="arrow-portfolio-media rounded-05 center-content"><a id="next-media"><img class="w-100 icon-right-portfolio" /></a></div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    
-    <div class="creator-popup" onclick="OpenCreatorPopup()" id="animatedPopup">
-        <div class="d-flex">
-            <div class="col-11">
-                <p class="text-white ms-2 mb-1" style="margin-top:  2.5% !important;">MEET THE CREATOR</p>
-            </div>
-            <div class="col-1"><div class="text-end pt-1"><i class="fa-solid fa-circle fa-xs me-2 mt-1" style="color: white;"></i></div></div>
-        </div>
-    </div>
-    
-    <div class="creator-popup-full" id="popup-creator">
-        <div class="d-flex" style="cursor: pointer" onclick="CloseCreatorPopup()">
-            <div class="col-11">
-                <p class="text-white ms-2 mb-1 mt-2" style="font-size: 14px !important; line-height:  22px !important;">MEET THE CREATOR</p>
-            </div>
-            <div class="col-1 pe-2"><div class="text-end pt-1"><i class="fa-solid fa-circle-xmark mt-1" style="color: white"></i></div></div>
-        </div>
-        <hr class="portfolio-hr"/> 
-        <div class="row creator-popup-body overflow-auto ms-0 w-100" style="max-height: 90vh;">
-            <div class="empty-veesy"></div>
-            <div class="empty-veesy"></div>
-            <div class="col-sm-12 col-md-2 mb-3 text-center">
-                @if (string.IsNullOrEmpty(Model.PortfolioDto.UserImage))
-                {
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" class="img-thumbnail-custom" alt="user-image">
-                }
-                else
-                {
-                    <img src="@Model.BasePathAzure@Model.PortfolioDto.UserImage?tr=w-400" class="img-thumbnail-custom" alt="user-image">
-                }
-            </div>
-            <div class="col-sm-12 col-md-6 mb-3">
-                <h1 class="text-white"><strong>@Model.PortfolioDto.UserFullName</strong></h1>
-                <h3 class="text-white option-font-20">- @Model.PortfolioDto.UserCategory</h3>
-                <div class="empty-veesy"></div>
-                <div><p class="text-white">@Model.PortfolioDto.UserDescription</p></div>
-                @if (Model.PortfolioDto.ShowFields && Model.PortfolioDto.Sector.Count != 0)
-                {
-                    <div class="empty-veesy"></div>
-                    <div>
-                        <p class="text-white"><strong>Fields</strong></p>
-                        <div class="d-flex mb-4 option-portfolio-width" style="flex-wrap: wrap;">
-                            @foreach (var item in Model.PortfolioDto.Sector)
-                            {
-                                <div class="div-white-rounded-blue-veesy-portfolio-preview d-flex option-font-14"><span>@item</span></div>
-                            }
-                        </div>
-                    </div>
-                }
-                @if (Model.PortfolioDto.ShowSoftSkill && Model.PortfolioDto.SoftSkill.Count != 0)
-                {
-                    <div class="empty-veesy"></div>
-                    <div>
-                        <p class="text-white"><strong>Soft skill</strong></p>
-                        <div class="d-flex mb-4 option-portfolio-width" style="flex-wrap: wrap;">
-                            @foreach (var item in Model.PortfolioDto.SoftSkill)
-                            {
-                                <div class="div-white-rounded-blue-veesy-portfolio-preview d-flex option-font-14"><span>@item</span></div>
-                            }
-                        </div>
-                    </div>
-                }
-                @if (Model.PortfolioDto.ShowSoftware && Model.PortfolioDto.UsedSoftwares.Count != 0)
-                {
-                    <div class="empty-veesy"></div>
-                    <div>
-                        <p class="text-white"><strong>Softwares</strong></p>
-                        <div class="d-flex mb-4 option-portfolio-width" style="flex-wrap: wrap;">
-                            @foreach (var item in Model.PortfolioDto.UsedSoftwares)
-                            {
-                                <div class="pe-3 ps-3 div-white-rounded-veesy option-font-14"><span>@item</span></div>
-                            }
-                        </div>
-                    </div>
-                }
-            </div>
-            <div class="col-sm-12 col-md-4 mb-3">
-                <div class="justify-content-center" style="display: grid">
-                    <div>
-                        <p class="text-white mb-0"><strong>Languages Spoken:</strong></p>
-                        @{
-                            var languages = "";
-                            foreach (var language in Model.PortfolioDto.LanguageSpoken)
-                            {
-                                languages += $"{language}, ";
-                            }
-                            languages = languages.Length >= 2 ? languages.Substring(0, (languages.Length - 2)) : "";
-                        }
-                        <p class="text-white">@languages</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row text-end justify-content-end">
-                <h3 class="text-white" style="font-size: 20px !important; line-height:  27px!important;"><strong>Interested in my work?</strong></h3>
-                <button onclick="openModal('#modalMessageCreator'); CloseCreatorPopup();" class="rounded-pill w-25 div-white-rounded-veesy-portfolio btn-variant mt-2" style="font-size: 15px !important; line-height:  22px !important;">contact me</button>
-            </div>
-            <div class="empty-veesy"></div>
-        </div>
-    </div>
-    <div id="blurred-background" class="blur-background" style="display: none"></div>
-    
-    <div class="modal fade" id="modalMessageCreator" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content modal-content-folio">
-                <div class="modal-header d-flex justify-content-end">
-                    <a class="close-button-folio" onclick="closeModal('#modalMessageCreator')">
-                        <span class="folio-x">X</span>
-                    </a>                
-                </div>
-                <div class="modal-body pt-4 pb-3 ps-md-5 pe-md-5">
-                    <h3 class="modal-title modal-title-folio text-color-folio" style="font-size: 25px !important; line-height: 30px !important;" id="exampleModalLongTitle">Send message to <b style="top: -0.3px; position: relative;">@Model.PortfolioDto.UserName</b></h3>
-                    <div class="row mt-5">
-                        <div class="col-1"></div>
-                        <div class="col-5">
-                            <span class="text-color-folio">Your Email*</span>
-                            <input type="text" id="message-sender-email" rows="4" class="w-100 input-modal-folio text-profile"/>
-                        </div>
-                        <div class="col-5">
-                            <span class="text-color-folio">Name / Company*</span>
-                            <input type="text" id="message-sender-name" rows="4" class="w-100 input-modal-folio text-profile"/>
-                        </div>
-                        <div class="col-1"></div>
-                    </div>
-                    <div class="row mt-4">
-                        <div class="col-1"></div>
-                        <div class="col-10">
-                            <span class="text-color-folio">Your message*</span>
-                            <textarea id="message-text" rows="4" class="text-profile textarea-folio"></textarea>
-                        </div>
-                        <div class="col-1"></div>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-1"></div>
-                        <div class="col-10 d-flex align-items-center privacy-policy-folio">
-                            <input type="checkbox" id="privacy-policy" name="privacy-policy" class="custom-checkbox-folio" required>
-                            <span for="privacy-policy" class="ms-3 mt-1">I have read and accept the <a href="/privacy-policy" target="_blank" class="privacy-link-folio">Privacy Policy</a></span>
-                        </div>
-                        <div class="col-1"></div>
-                    </div>
-                    <div class="row mt-4 pb-5">
-                        <div class="col-1"></div>
-                        <div class="col-10 d-flex align-items-center">
-                            <a onclick="SendMessage();" id="send-button" class="rounded-pill btn btn-primary btn-padding a-font-p button-folio w-100">send message</a>
-                        </div>
-                        <div class="col-1"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="padding-lg pt-7rem">
+		<div class="row pt-4 p-4-lg">
+			<div class="col-sm-12 col-md-8 mb-3">
+				<h1 class="text-color">@Model.PortfolioDto.PortfolioIntro</h1>
+				<div class="empty-veesy"></div>
+				<div class="empty-veesy"></div>
+				<h1 style="font-size: 20px !important; line-height: 27px !important;"><strong class="text-color">@Model.PortfolioDto.UserFullName</strong></h1>
+				<p class="text-color">@Model.PortfolioDto.UserCategory</p>
+			</div>
+			<div class="col-sm-12 col-md-4 mb-3 nodisplay-sm">
+				<div class="text-end">
+					<h3 class="text-color" style="font-size: 20px !important; line-height: 27px !important;"><strong>Interested in my work?</strong></h3>
+					<button onclick="openModal('#modalMessageCreator')" class="rounded-pill btn-primary btn-variant mt-2" style="font-size: 15px !important; line-height:  22px !important;">contact me</button>
+				</div>
+			</div>
+		</div>
 
-    @section Scripts
-    {
-        <script>
-        
-            function OpenCreditsOrNestedLink() {
-                if(nowNestedPortfolioId != null && nowNestedPortfolioId != "")
-                    window.open('@Model.ApplicationUrl' + "/folio/" + nowNestedPortfolioUser + "/" + nowNestedPortfolioName, '_blank')
-                else if (nowNestedUrl != null && nowNestedUrl != "")
-                    window.open(nowNestedUrl, '_blank');
-                else if (nowHasCredits)
-                    ShowOverlay(true)
-            }
-            
-            function ShowOverlay(add) {
-                if (add){
-                    document.getElementById("text-overlay").classList.add("text-overlay-selected")
-                    document.getElementById("open-credits").onclick = function (){ShowOverlay(false)}
-                    document.getElementById("openPlus").classList.remove("fa-plus");
-                    document.getElementById("openPlus").classList.add("fa-x");
-                }
-                else{
-                    document.getElementById("text-overlay").classList.remove("text-overlay-selected")
-                    document.getElementById("open-credits").onclick = function (){ShowOverlay(true)}
-                    document.getElementById("openPlus").classList.remove("fa-x");
-                    document.getElementById("openPlus").classList.add("fa-plus");
-                }
-            }
-        
-        
-            var media = @Html.Raw(Json.Serialize(Model.PortfolioDto.PortfolioMedias))
-        
-            function getContainedSize(img) {
-              var ratio = img.naturalWidth/img.naturalHeight
-              var width = img.height*ratio
-              var height = img.height
-              if (width > img.width) {
-                width = img.width
-                height = img.width/ratio
-              }
-              var parentNodeWidth = img.parentNode.parentNode.offsetWidth;
-              var parentNodeHeight = img.parentNode.parentNode.offsetHeight;
-              var percent = (width / parentNodeWidth) * 100 - 2; 
-              var percentHeight = (height / parentNodeHeight) * 100;
-              
-              //document.getElementById("text-overlay").setAttribute("style","width: " + percent + "% !important; height: "+percentHeight+"%;");
-              //document.getElementById("external-div").setAttribute("style","width: " + percent + "% !important");
-              return [width, height]
-            }
-            
-            let nowNestedPortfolioId = ""
-            let nowNestedUrl = ""
-            let nowNestedPortfolioName = ""
-            let nowNestedPortfolioUser = ""
-            let nowHasCredits = false;
+		<!-- Slider main container -->
+@* 		<div class="swiper">
+			<!-- Additional required wrapper -->
+			<div class="swiper-wrapper">
+				<!-- Slides -->
+				<div class="swiper-slide">Slide 1</div>
+				<div class="swiper-slide">Slide 2</div>
+				<div class="swiper-slide">Slide 3</div>
+				...
+			</div>
+			<!-- If we need pagination -->
+			<div class="swiper-pagination"></div>
 
-            function OpenMediaPopup(mediaId, IsVideo, NestedPortfolioId, NestedPortfolioName, NestedPortfolioUser, NestedUrl, HasCredits) {
-              nowNestedPortfolioId = NestedPortfolioId;
-              nowNestedUrl = NestedUrl;
-              nowNestedPortfolioName = NestedPortfolioName;
-              nowNestedPortfolioUser = NestedPortfolioUser;
-              nowHasCredits = HasCredits === 'True';
+			<!-- If we need navigation buttons -->
+			<div class="swiper-button-prev"></div>
+			<div class="swiper-button-next"></div>
 
-              document.getElementById("open-credits").onclick = function () { ShowOverlay(true); };
-              document.getElementById("text-overlay").classList.remove("text-overlay-selected");
-              document.body.style.overflowY = "hidden";
-              document.getElementById("media-popup").style.display = "block";
-              document.getElementById("image-popup").style.display = "none";
-              document.getElementById("video-popup").style.display = "none";
+			<!-- If we need scrollbar -->
+			<div class="swiper-scrollbar"></div>
+		</div> *@
 
-              let mediaIndex = media.findIndex(o => o.mediaId === mediaId);
-              if (mediaIndex === -1) return;
 
-              let src = media[mediaIndex].media.fileName;
+		<div class="row p-0" id="mediaGridMobileMain">
+			<div class="card-columns draggable-zone p-0" id="images-container">
+				@{
+					foreach (var image in Model.PortfolioDto.PortfolioMedias)
+					{
+						var hasCredits = false;
+						{
+							hasCredits = !string.IsNullOrEmpty(image.Media.Credits);
+						}
+						@if (MediaCostants.ImageExtensions.Contains(image.Media.Type.ToUpper()))
+						{
+							<div id="mediaGridMobileOne" style="cursor: pointer;" onclick="OpenMediaPopup('@image.MediaId', false, '@image.Media.NestedPortfolioLinks','@image.Media.NestedPortfolioNameForUrl','@image.Media.NestedPortfolioUserForUrl', '@image.Media.NestedPortfolioUrl', '@hasCredits')" class="draggable" name="image-gallery" mediaid="@image.MediaId">
+								<img title="@image.Media.OriginalFileName" class="img-fluid lazy rounded-05 w-100 mt-3" data-src="@Model.BasePathImages@image.Media.FileName?tr=w-1080" />
+							</div>
+						}
+						else
+						{
+							<div id="mediaGridMobileTwo" style="cursor: pointer;" onclick="OpenMediaPopup('@image.MediaId', true, '@image.Media.NestedPortfolioLinks','@image.Media.NestedPortfolioNameForUrl','@image.Media.NestedPortfolioUserForUrl', '@image.Media.NestedPortfolioUrl', '@hasCredits')" class="draggable" name="image-gallery">
+								<video autoplay="autoplay" muted loop class="w-100 shadow-1-strong rounded-05 mt-3" title="@image.Media.OriginalFileName">
+									<data-src src="@Model.BasePathImages@image.Media.FileName?tr=w-1080" type="video/mp4"></data-src>
+								</video>
+							</div>
+						}
+					}
+				}
+			</div>
+		</div>
+	</div>
 
-              let creditsElement = document.getElementById("credit-text");
-              if (!media[mediaIndex].media.credits) {
-                document.getElementById("open-credits").style.display = "none";
-                creditsElement.textContent = "";
-              } else {
-                document.getElementById("open-credits").style.display = "block";
-                creditsElement.textContent = media[mediaIndex].media.credits;
-              }
+	<div class="empty-veesy"></div>
+	<div class="empty-veesy"></div>
 
-              if (IsVideo) {
-                document.getElementById("video-popup").src = '@Model.BasePathImages' + src;
-                document.getElementById("video-popup").style.display = "block";
-                getContainedSize(document.getElementById("video-popup"));
-              } else {
-                document.getElementById("image-popup").src = '@Model.BasePathImages' + src;
-                document.getElementById("image-popup").style.display = "block";
-                getContainedSize(document.getElementById("image-popup"));
-              }
+	<div class="card">
+	</div>
 
-              // aggiorna numero index foto
-              document.getElementById("number-media").textContent = (mediaIndex + 1) + " / " + media.length;
+	<div class="text-center mt-4">
+		<h3 class="text-color" style="font-size: 20px !important; line-height: 27px !important;"><strong>Interested in my work?</strong></h3>
+		<button onclick="openModal('#modalMessageCreator')" class="rounded-pill btn-primary btn-padding btn-variant my-4" style="font-size: 15px !important; line-height:  22px !important;">contact me</button>
+	</div>
+	<div class="empty-veesy"></div>
+	<div class="empty-veesy"></div>
 
-              setupNavigation(mediaIndex, media);
-            }
 
-            function setupNavigation(i, media) {
-              var nextIndex = (i + 1) % media.length;
-              var prevIndex = (i - 1 + media.length) % media.length;
+	<div class="media-popup" id="media-popup">
+		<nav class="bg-grey-veesy navbar navbar-expand-sm navbar-toggleable-sm mb-3 fixed-top" style="z-index: 99999;">
+			<div class="container-fluid">
+				<h1 class="h3 mb-2 fw-normal">
+					<a role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" onclick="CloseMediaPopup()">
+						<img class="header-logo">portfolio
+					</a>
+				</h1>
+				<p><strong id="number-media"></strong></p>
+				<div class="float-end mb-2">
+					<div class="d-flex">
+						<a onclick="CloseMediaPopup()" class="ms-2 btn btn-light border btn-layout fw-bolder shadow-none" id="menuButton">
+							<i class="fas fa-times-circle fa-2xs text-primary" id="icon-color"></i>
+							<span id="color-text-variant">close</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</nav>
+		<div class="bg-grey-veesy row pt-4rem ps-4 pe-4" style="max-height: 100vh">
+			<div class="col-sm-12 col-md-2 center-content nodisplay-sm" style="z-index: 99999;">
+				<ul class="list-unstyled">
+					<li class="mb-3 edit-padding-left">
+						<div class="arrow-portfolio-media rounded-05 center-content"><a id="previous-media"><img class="w-100 icon-left-portfolio" /></a></div>
+					</li>
+				</ul>
+			</div>
+			<div class="col-sm-12 col-md-8 mb-5">
+				<div id="external-div" class="mx-auto">
+					<div class="row text-center align-bottom show-edit" style="max-height: 100vh; max-width: 100%; --bs-gutter-x: 0;">
+						<div style="">
+							<div style="display: inline-block;" class="fullscreen-modal">
+								<div id="text-overlay" class="text-overlay text-start p-4 rounded-05 mt-1">
+									<div class="row">
+										<div class="col-10">
+											<p class="text-white"><strong>IMAGE CREDITS</strong></p>
+											<p id="credit-text" class="text-white">Lorem ipsum: dolor sit amet. Consectetur: adipiscing elit. Quisque: lobortis efficitur erat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eu mattis lectus. Aenean eget elit ornare, pulvinar nulla et, tempor ligula. 2023© all rights reserved</p>
+										</div>
+									</div>
+								</div>
+								<a onclick="OpenCreditsOrNestedLink()" style="cursor:pointer;">
+									<video id="video-popup" style="display: none" autoplay="autoplay" muted controls="controls" loop class="fullscreen-image rounded-05">
+										<source type="video/mp4">
+									</video>
+									@* <a onclick="ShowOverlay(true)" id="open-credits" style="position: absolute;" class=" edit-button-portfolio-preview">
+								<i class="fa-solid fa-plus mt-1" id="openPlus"></i>
+								</a> *@
+									<img style="display: none;" id="image-popup" asp-append-version="true" class="fullscreen-image rounded-05 mt-1" />
+								</a>
+								<a onclick="ShowOverlay(true)" id="open-credits" style="position: absolute;" class=" edit-button-portfolio-preview">
+									<i class="fa-solid fa-plus mt-1" id="openPlus"></i>
+								</a>
+							</div>
+						</div>
+						<div class="empty-veesy"></div>
+						@* <p><strong id="number-media"></strong></p> *@
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-12 col-md-2 center-content nodisplay-sm" style="z-index: 99999;">
+				<ul class="list-unstyled w-100">
+					<li class="mb-3 edit-padding-right" style="float: right;">
+						<div class="arrow-portfolio-media rounded-05 center-content"><a id="next-media"><img class="w-100 icon-right-portfolio" /></a></div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
 
-              var nextHasCredits = media[nextIndex].media.credits == null ? 'False' : 'True';
-              var prevHasCredits = media[prevIndex].media.credits == null ? 'False' : 'True';
+	<div class="creator-popup" onclick="OpenCreatorPopup()" id="animatedPopup">
+		<div class="d-flex">
+			<div class="col-11">
+				<p class="text-white ms-2 mb-1" style="margin-top:  2.5% !important;">MEET THE CREATOR</p>
+			</div>
+			<div class="col-1"><div class="text-end pt-1"><i class="fa-solid fa-circle fa-xs me-2 mt-1" style="color: white;"></i></div></div>
+		</div>
+	</div>
 
-              document.getElementById("next-media").onclick = function () {
-                OpenMediaPopup(media[nextIndex].media.code, media[nextIndex].media.isVideo, media[nextIndex].media.nestedPortfolioLinks, nextHasCredits);
-              };
+	<div class="creator-popup-full" id="popup-creator">
+		<div class="d-flex" style="cursor: pointer" onclick="CloseCreatorPopup()">
+			<div class="col-11">
+				<p class="text-white ms-2 mb-1 mt-2" style="font-size: 14px !important; line-height:  22px !important;">MEET THE CREATOR</p>
+			</div>
+			<div class="col-1 pe-2"><div class="text-end pt-1"><i class="fa-solid fa-circle-xmark mt-1" style="color: white"></i></div></div>
+		</div>
+		<hr class="portfolio-hr" />
+		<div class="row creator-popup-body overflow-auto ms-0 w-100" style="max-height: 90vh;">
+			<div class="empty-veesy"></div>
+			<div class="empty-veesy"></div>
+			<div class="col-sm-12 col-md-2 mb-3 text-center">
+				@if (string.IsNullOrEmpty(Model.PortfolioDto.UserImage))
+				{
+					<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" class="img-thumbnail-custom" alt="user-image">
+				}
+				else
+				{
+					<img src="@Model.BasePathAzure@Model.PortfolioDto.UserImage?tr=w-400" class="img-thumbnail-custom" alt="user-image">
+				}
+			</div>
+			<div class="col-sm-12 col-md-6 mb-3">
+				<h1 class="text-white"><strong>@Model.PortfolioDto.UserFullName</strong></h1>
+				<h3 class="text-white option-font-20">- @Model.PortfolioDto.UserCategory</h3>
+				<div class="empty-veesy"></div>
+				<div><p class="text-white">@Model.PortfolioDto.UserDescription</p></div>
+				@if (Model.PortfolioDto.ShowFields && Model.PortfolioDto.Sector.Count != 0)
+				{
+					<div class="empty-veesy"></div>
+					<div>
+						<p class="text-white"><strong>Fields</strong></p>
+						<div class="d-flex mb-4 option-portfolio-width" style="flex-wrap: wrap;">
+							@foreach (var item in Model.PortfolioDto.Sector)
+							{
+								<div class="div-white-rounded-blue-veesy-portfolio-preview d-flex option-font-14"><span>@item</span></div>
+							}
+						</div>
+					</div>
+				}
+				@if (Model.PortfolioDto.ShowSoftSkill && Model.PortfolioDto.SoftSkill.Count != 0)
+				{
+					<div class="empty-veesy"></div>
+					<div>
+						<p class="text-white"><strong>Soft skill</strong></p>
+						<div class="d-flex mb-4 option-portfolio-width" style="flex-wrap: wrap;">
+							@foreach (var item in Model.PortfolioDto.SoftSkill)
+							{
+								<div class="div-white-rounded-blue-veesy-portfolio-preview d-flex option-font-14"><span>@item</span></div>
+							}
+						</div>
+					</div>
+				}
+				@if (Model.PortfolioDto.ShowSoftware && Model.PortfolioDto.UsedSoftwares.Count != 0)
+				{
+					<div class="empty-veesy"></div>
+					<div>
+						<p class="text-white"><strong>Softwares</strong></p>
+						<div class="d-flex mb-4 option-portfolio-width" style="flex-wrap: wrap;">
+							@foreach (var item in Model.PortfolioDto.UsedSoftwares)
+							{
+								<div class="pe-3 ps-3 div-white-rounded-veesy option-font-14"><span>@item</span></div>
+							}
+						</div>
+					</div>
+				}
+			</div>
+			<div class="col-sm-12 col-md-4 mb-3">
+				<div class="justify-content-center" style="display: grid">
+					<div>
+						<p class="text-white mb-0"><strong>Languages Spoken:</strong></p>
+						@{
+							var languages = "";
+							foreach (var language in Model.PortfolioDto.LanguageSpoken)
+							{
+								languages += $"{language}, ";
+							}
+							languages = languages.Length >= 2 ? languages.Substring(0, (languages.Length - 2)) : "";
+						}
+						<p class="text-white">@languages</p>
+					</div>
+				</div>
+			</div>
+			<div class="row text-end justify-content-end">
+				<h3 class="text-white" style="font-size: 20px !important; line-height:  27px!important;"><strong>Interested in my work?</strong></h3>
+				<button onclick="openModal('#modalMessageCreator'); CloseCreatorPopup();" class="rounded-pill w-auto div-white-rounded-veesy-portfolio btn-variant mt-2" style="font-size: 15px !important; line-height:  22px !important;">contact me</button>
+			</div>
+			<div class="empty-veesy"></div>
+		</div>
+	</div>
+	<div id="blurred-background" class="blur-background" style="display: none"></div>
 
-              document.getElementById("previous-media").onclick = function () {
-                OpenMediaPopup(media[prevIndex].media.code, media[prevIndex].media.isVideo, media[prevIndex].media.nestedPortfolioLinks, prevHasCredits);
-              };
+	<div class="modal fade" id="modalMessageCreator" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content modal-content-folio">
+				<div class="modal-header d-flex justify-content-end">
+					<a class="close-button-folio" onclick="closeModal('#modalMessageCreator')">
+						<span class="folio-x">X</span>
+					</a>
+				</div>
+				<div class="modal-body pt-4 pb-3 ps-md-5 pe-md-5">
+					<h3 class="modal-title modal-title-folio text-color-folio" style="font-size: 25px !important; line-height: 30px !important;" id="exampleModalLongTitle">Send message to <b style="top: -0.3px; position: relative;">@Model.PortfolioDto.UserName</b></h3>
+					<div class="row mt-5">
+						<div class="col-1"></div>
+						<div class="col-5">
+							<span class="text-color-folio">Your Email*</span>
+							<input type="text" id="message-sender-email" rows="4" class="w-100 input-modal-folio text-profile" />
+						</div>
+						<div class="col-5">
+							<span class="text-color-folio">Name / Company*</span>
+							<input type="text" id="message-sender-name" rows="4" class="w-100 input-modal-folio text-profile" />
+						</div>
+						<div class="col-1"></div>
+					</div>
+					<div class="row mt-4">
+						<div class="col-1"></div>
+						<div class="col-10">
+							<span class="text-color-folio">Your message*</span>
+							<textarea id="message-text" rows="4" class="text-profile textarea-folio"></textarea>
+						</div>
+						<div class="col-1"></div>
+					</div>
+					<div class="row mt-2">
+						<div class="col-1"></div>
+						<div class="col-10 d-flex align-items-center privacy-policy-folio">
+							<input type="checkbox" id="privacy-policy" name="privacy-policy" class="custom-checkbox-folio" required>
+							<span for="privacy-policy" class="ms-3 mt-1">I have read and accept the <a href="/privacy-policy" target="_blank" class="privacy-link-folio">Privacy Policy</a></span>
+						</div>
+						<div class="col-1"></div>
+					</div>
+					<div class="row mt-4 pb-5">
+						<div class="col-1"></div>
+						<div class="col-10 d-flex align-items-center">
+							<a onclick="SendMessage();" id="send-button" class="rounded-pill btn btn-primary btn-padding a-font-p button-folio w-100">send message</a>
+						</div>
+						<div class="col-1"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-              document.removeEventListener('keydown', handleKeydown);
-              document.addEventListener('keydown', handleKeydown);
-            }
+	@section Scripts
+		{
+	<script>
 
-            function handleKeydown(event) {
-              if (event.key === 'Escape') CloseMediaPopup();
+		const swiper = new Swiper('.swiper', {
+			// Optional parameters
+			direction: 'horizontal',
+			loop: true,
 
-              if (event.key === 'ArrowRight') { // freccia destra
-                document.getElementById("next-media").click();
-              } else if (event.key === 'ArrowLeft') { // freccia sinistra
-                document.getElementById("previous-media").click();
-              }
-            }
-            
-            // function OpenMediaPopup(mediaId, IsVideo, NestedPortfolioId, NestedPortfolioName, NestedPortfolioUser, NestedUrl, HasCredits) {
-            //     nowNestedPortfolioId = NestedPortfolioId;
-            //     nowNestedUrl = NestedUrl;
-            //     nowNestedPortfolioName = NestedPortfolioName
-            //     nowNestedPortfolioUser = NestedPortfolioUser
-            //     nowHasCredits = HasCredits == 'True' ? true : false;
-            //     document.getElementById("open-credits").onclick = function (){ShowOverlay(true)}
-            //     document.getElementById("text-overlay").classList.remove("text-overlay-selected")
-            //     document.body.style.overflowY = "hidden"; 
-            //     document.getElementById("media-popup").style.display = "block";
-            //     document.getElementById("image-popup").style.display = "none";
-            //     document.getElementById("video-popup").style.display = "none";
-            //     let obj = media.find((o, i) => {
-            //         if (o.mediaId === mediaId) {
-            //             let src = media[i].media.fileName
-            //             if(media[i].media.credits == null || media[i].media.credits.toString() == ""){
-            //                 document.getElementById("open-credits").style.display = "none"
-            //                 document.getElementById("credit-text").textContent = ""
-            //             }
-            //             else{
-            //                 document.getElementById("open-credits").style.display = "block"
-            //                 document.getElementById("credit-text").textContent = media[i].media.credits
-            //             }
-                            
-            //             if(IsVideo){
-            //                 document.getElementById("video-popup").src = '@Model.BasePathImages' + src;  
-            //                 document.getElementById("video-popup").style.display = "block";
-            //                 getContainedSize(document.getElementById("video-popup"))
-            //             }
-            //             else{
-            //                 document.getElementById("image-popup").src = '@Model.BasePathImages' + src;  
-            //                 document.getElementById("image-popup").style.display = "block";
-            //                 getContainedSize(document.getElementById("image-popup"))
-            //             }
-            //             document.getElementById("number-media").textContent = (i+1) + " / " + media.length
-            //             if (i + 1 == media.length){
-            //                 var nextHasCredits = media[0].media.credits == null? 'False' : 'True'
-            //                 var prevHasCredits = media[i-1].media.credits == null ? 'False' : 'True'
-            //                 document.getElementById("next-media").onclick = function() {OpenMediaPopup(media[0].media.code, media[0].media.isVideo, media[0].media.nestedPortfolioLinks, nextHasCredits)};
-            //                 document.getElementById("previous-media").onclick = function() {OpenMediaPopup(media[i-1].media.code, media[i-1].media.isVideo, media[-1].media.nestedPortfolioLinks, prevHasCredits)};
-            //             }
-            //             else if (i == 0){
-            //                 var nextHasCredits = media[i+1].media.credits == null? 'False' : 'True'
-            //                 var prevHasCredits = media[media.length-1].media.credits == null? 'False' : 'True'
-            //                 document.getElementById("next-media").onclick = function() {OpenMediaPopup(media[i+1].media.code, media[i+1].media.isVideo, media[i+1].media.nestedPortfolioLinks, nextHasCredits)};
-            //                 document.getElementById("previous-media").onclick = function() {OpenMediaPopup(media[media.length - 1].media.code, media[media.length - 1].media.isVideo, media[media.length - 1].media.nestedPortfolioLinks, prevHasCredits)};
-            //             }
-            //             else{
-            //                 var nextHasCredits = media[i+1].media.credits == null ? 'False' : 'True'
-            //                 var prevHasCredits = media[i-1].media.credits == null? 'False' : 'True'
-            //                 document.getElementById("next-media").onclick = function() {OpenMediaPopup(media[i+1].media.code, media[i+1].media.isVideo, media[i+1].media.nestedPortfolioLinks, nextHasCredits)};
-            //                 document.getElementById("previous-media").onclick = function() {OpenMediaPopup(media[i-1].media.code, media[i-1].media.isVideo, media[i - 1].media.nestedPortfolioLinks, prevHasCredits)};
-            //             }
-            //             return true; stop searching
-            //         }
-            //     });
-            // }
-            
-            function CloseMediaPopup() {
-                document.body.style.overflowY = "auto"; 
-                document.getElementById("media-popup").style.display = "none";
-            }
-        
-            function OpenCreatorPopup(){
-                document.getElementById("popup-creator").classList.add("creator-popup-full-open")
-                document.getElementById("popup-creator").classList.remove("creator-popup-full-close")
-                document.getElementById("blurred-background").style.display = "block"
-            }
-            function CloseCreatorPopup(){
-                document.getElementById("popup-creator").classList.remove("creator-popup-full-open")
-                document.getElementById("popup-creator").classList.add("creator-popup-full-close")
-                document.getElementById("blurred-background").style.display = "none"
-            }
-            
-            $(function() {
-                $('.lazy').Lazy({
-                    scrollDirection: 'vertical',
-                    effect: 'fadeIn',
-                    visibleOnly: true,
-                    placeholder: "data:image/gif;base64,R0lGODlhEALAPQAPzl5uLr9Nrl8e7...",
-                    onError: function(element) {
-                        console.log('error loading ' + element.data('src'));
-                    },
-                    afterLoad: function(element) {
-                        element.removeClass('img-fluid lazy');
-                    }
-                });
-                
-                $("video").lazy({
-                    afterLoad: function(element) {
-                        element.removeClass('img-fluid lazy');
-                    }
-                });
-            });
-                   
-            document.addEventListener('DOMContentLoaded', function () {
-                var animatedPopup = document.getElementById('animatedPopup');
-    
-                function jumpEffect(iterations, currentIteration) {
-                    if (currentIteration < iterations) {
-                        animatedPopup.classList.add('jump-animation');
-                        animatedPopup.style.transform = 'translateY(-10px)';
-    
-                        setTimeout(function () {
-                            animatedPopup.classList.remove('jump-animation');
-                            animatedPopup.style.transform = 'translateY(0)';
-                        }, 500);
-    
-                        setTimeout(function () {
-                            jumpEffect(iterations, currentIteration + 1);
-                        }, 1000);
-                    }
-                }
-    
-                function performJumpEffect() {
-                    jumpEffect(3, 0);
-                }
-    
-                setInterval(performJumpEffect, 25000); // 20000 millisecondi corrispondono a 20 secondi
-            });
-        </script>
-    }
+			// If we need pagination
+			pagination: {
+				el: '.swiper-pagination',
+			},
 
-    @section Style
-    {
-        <link rel="stylesheet" href="~/css/notyf_override.css" asp-append-version="true"/>
-        <style>
-                    
-            img.rounded-corners {
-              border-radius: 20px;
-              width: 100%
-            }
-            .card-columns {
-                column-count: @((int)Model.PortfolioDto.Layout);
-            }
-            
-            .jump-animation {
-                transition: transform 0.5s ease-in-out;
-            }
-            
-        </style>
-    }
+			// Navigation arrows
+			navigation: {
+				nextEl: '.swiper-button-next',
+				prevEl: '.swiper-button-prev',
+			},
+
+			// And if we need scrollbar
+			scrollbar: {
+				el: '.swiper-scrollbar',
+			},
+		});
+
+		function OpenCreditsOrNestedLink() {
+			if (nowNestedPortfolioId != null && nowNestedPortfolioId != "")
+				window.open('@Model.ApplicationUrl' + "/folio/" + nowNestedPortfolioUser + "/" + nowNestedPortfolioName, '_blank')
+			else if (nowNestedUrl != null && nowNestedUrl != "")
+				window.open(nowNestedUrl, '_blank');
+			else if (nowHasCredits)
+				ShowOverlay(true)
+		}
+
+		function ShowOverlay(add) {
+			if (add) {
+				document.getElementById("text-overlay").classList.add("text-overlay-selected")
+				document.getElementById("open-credits").onclick = function () { ShowOverlay(false) }
+				document.getElementById("openPlus").classList.remove("fa-plus");
+				document.getElementById("openPlus").classList.add("fa-x");
+			}
+			else {
+				document.getElementById("text-overlay").classList.remove("text-overlay-selected")
+				document.getElementById("open-credits").onclick = function () { ShowOverlay(true) }
+				document.getElementById("openPlus").classList.remove("fa-x");
+				document.getElementById("openPlus").classList.add("fa-plus");
+			}
+		}
+
+
+		var media = @Html.Raw(Json.Serialize(Model.PortfolioDto.PortfolioMedias))
+
+			function getContainedSize(img) {
+				var ratio = img.naturalWidth / img.naturalHeight
+				var width = img.height * ratio
+				var height = img.height
+				if (width > img.width) {
+					width = img.width
+					height = img.width / ratio
+				}
+				var parentNodeWidth = img.parentNode.parentNode.offsetWidth;
+				var parentNodeHeight = img.parentNode.parentNode.offsetHeight;
+				var percent = (width / parentNodeWidth) * 100 - 2;
+				var percentHeight = (height / parentNodeHeight) * 100;
+
+				//document.getElementById("text-overlay").setAttribute("style","width: " + percent + "% !important; height: "+percentHeight+"%;");
+				//document.getElementById("external-div").setAttribute("style","width: " + percent + "% !important");
+				return [width, height]
+			}
+
+		let nowNestedPortfolioId = ""
+		let nowNestedUrl = ""
+		let nowNestedPortfolioName = ""
+		let nowNestedPortfolioUser = ""
+		let nowHasCredits = false;
+
+		function OpenMediaPopup(mediaId, IsVideo, NestedPortfolioId, NestedPortfolioName, NestedPortfolioUser, NestedUrl, HasCredits) {
+			nowNestedPortfolioId = NestedPortfolioId;
+			nowNestedUrl = NestedUrl;
+			nowNestedPortfolioName = NestedPortfolioName;
+			nowNestedPortfolioUser = NestedPortfolioUser;
+			nowHasCredits = HasCredits === 'True';
+
+			document.getElementById("open-credits").onclick = function () { ShowOverlay(true); };
+			document.getElementById("text-overlay").classList.remove("text-overlay-selected");
+			document.body.style.overflowY = "hidden";
+			document.getElementById("media-popup").style.display = "block";
+			document.getElementById("image-popup").style.display = "none";
+			document.getElementById("video-popup").style.display = "none";
+
+			let mediaIndex = media.findIndex(o => o.mediaId === mediaId);
+			if (mediaIndex === -1) return;
+
+			let src = media[mediaIndex].media.fileName;
+
+			let creditsElement = document.getElementById("credit-text");
+			if (!media[mediaIndex].media.credits) {
+				document.getElementById("open-credits").style.display = "none";
+				creditsElement.textContent = "";
+			} else {
+				document.getElementById("open-credits").style.display = "block";
+				creditsElement.textContent = media[mediaIndex].media.credits;
+			}
+
+			if (IsVideo) {
+				document.getElementById("video-popup").src = '@Model.BasePathImages' + src;
+				document.getElementById("video-popup").style.display = "block";
+				getContainedSize(document.getElementById("video-popup"));
+			} else {
+				document.getElementById("image-popup").src = '@Model.BasePathImages' + src;
+				document.getElementById("image-popup").style.display = "block";
+				getContainedSize(document.getElementById("image-popup"));
+			}
+
+			// aggiorna numero index foto
+			document.getElementById("number-media").textContent = (mediaIndex + 1) + " / " + media.length;
+
+			setupNavigation(mediaIndex, media);
+		}
+
+		function setupNavigation(i, media) {
+			var nextIndex = (i + 1) % media.length;
+			var prevIndex = (i - 1 + media.length) % media.length;
+
+			var nextHasCredits = media[nextIndex].media.credits == null ? 'False' : 'True';
+			var prevHasCredits = media[prevIndex].media.credits == null ? 'False' : 'True';
+
+			document.getElementById("next-media").onclick = function () {
+				OpenMediaPopup(media[nextIndex].media.code, media[nextIndex].media.isVideo, media[nextIndex].media.nestedPortfolioLinks, nextHasCredits);
+			};
+
+			document.getElementById("previous-media").onclick = function () {
+				OpenMediaPopup(media[prevIndex].media.code, media[prevIndex].media.isVideo, media[prevIndex].media.nestedPortfolioLinks, prevHasCredits);
+			};
+
+			document.removeEventListener('keydown', handleKeydown);
+			document.addEventListener('keydown', handleKeydown);
+		}
+
+		function handleKeydown(event) {
+			if (event.key === 'Escape') CloseMediaPopup();
+
+			if (event.key === 'ArrowRight') { // freccia destra
+				document.getElementById("next-media").click();
+			} else if (event.key === 'ArrowLeft') { // freccia sinistra
+				document.getElementById("previous-media").click();
+			}
+		}
+
+		// function OpenMediaPopup(mediaId, IsVideo, NestedPortfolioId, NestedPortfolioName, NestedPortfolioUser, NestedUrl, HasCredits) {
+		//     nowNestedPortfolioId = NestedPortfolioId;
+		//     nowNestedUrl = NestedUrl;
+		//     nowNestedPortfolioName = NestedPortfolioName
+		//     nowNestedPortfolioUser = NestedPortfolioUser
+		//     nowHasCredits = HasCredits == 'True' ? true : false;
+		//     document.getElementById("open-credits").onclick = function (){ShowOverlay(true)}
+		//     document.getElementById("text-overlay").classList.remove("text-overlay-selected")
+		//     document.body.style.overflowY = "hidden";
+		//     document.getElementById("media-popup").style.display = "block";
+		//     document.getElementById("image-popup").style.display = "none";
+		//     document.getElementById("video-popup").style.display = "none";
+		//     let obj = media.find((o, i) => {
+		//         if (o.mediaId === mediaId) {
+		//             let src = media[i].media.fileName
+		//             if(media[i].media.credits == null || media[i].media.credits.toString() == ""){
+		//                 document.getElementById("open-credits").style.display = "none"
+		//                 document.getElementById("credit-text").textContent = ""
+		//             }
+		//             else{
+		//                 document.getElementById("open-credits").style.display = "block"
+		//                 document.getElementById("credit-text").textContent = media[i].media.credits
+		//             }
+
+		//             if(IsVideo){
+		//                 document.getElementById("video-popup").src = '@Model.BasePathImages' + src;
+		//                 document.getElementById("video-popup").style.display = "block";
+		//                 getContainedSize(document.getElementById("video-popup"))
+		//             }
+		//             else{
+		//                 document.getElementById("image-popup").src = '@Model.BasePathImages' + src;
+		//                 document.getElementById("image-popup").style.display = "block";
+		//                 getContainedSize(document.getElementById("image-popup"))
+		//             }
+		//             document.getElementById("number-media").textContent = (i+1) + " / " + media.length
+		//             if (i + 1 == media.length){
+		//                 var nextHasCredits = media[0].media.credits == null? 'False' : 'True'
+		//                 var prevHasCredits = media[i-1].media.credits == null ? 'False' : 'True'
+		//                 document.getElementById("next-media").onclick = function() {OpenMediaPopup(media[0].media.code, media[0].media.isVideo, media[0].media.nestedPortfolioLinks, nextHasCredits)};
+		//                 document.getElementById("previous-media").onclick = function() {OpenMediaPopup(media[i-1].media.code, media[i-1].media.isVideo, media[-1].media.nestedPortfolioLinks, prevHasCredits)};
+		//             }
+		//             else if (i == 0){
+		//                 var nextHasCredits = media[i+1].media.credits == null? 'False' : 'True'
+		//                 var prevHasCredits = media[media.length-1].media.credits == null? 'False' : 'True'
+		//                 document.getElementById("next-media").onclick = function() {OpenMediaPopup(media[i+1].media.code, media[i+1].media.isVideo, media[i+1].media.nestedPortfolioLinks, nextHasCredits)};
+		//                 document.getElementById("previous-media").onclick = function() {OpenMediaPopup(media[media.length - 1].media.code, media[media.length - 1].media.isVideo, media[media.length - 1].media.nestedPortfolioLinks, prevHasCredits)};
+		//             }
+		//             else{
+		//                 var nextHasCredits = media[i+1].media.credits == null ? 'False' : 'True'
+		//                 var prevHasCredits = media[i-1].media.credits == null? 'False' : 'True'
+		//                 document.getElementById("next-media").onclick = function() {OpenMediaPopup(media[i+1].media.code, media[i+1].media.isVideo, media[i+1].media.nestedPortfolioLinks, nextHasCredits)};
+		//                 document.getElementById("previous-media").onclick = function() {OpenMediaPopup(media[i-1].media.code, media[i-1].media.isVideo, media[i - 1].media.nestedPortfolioLinks, prevHasCredits)};
+		//             }
+		//             return true; stop searching
+		//         }
+		//     });
+		// }
+
+		function CloseMediaPopup() {
+			document.body.style.overflowY = "auto";
+			document.getElementById("media-popup").style.display = "none";
+		}
+
+		function OpenCreatorPopup() {
+			document.getElementById("popup-creator").classList.add("creator-popup-full-open")
+			document.getElementById("popup-creator").classList.remove("creator-popup-full-close")
+			document.getElementById("blurred-background").style.display = "block"
+		}
+		function CloseCreatorPopup() {
+			document.getElementById("popup-creator").classList.remove("creator-popup-full-open")
+			document.getElementById("popup-creator").classList.add("creator-popup-full-close")
+			document.getElementById("blurred-background").style.display = "none"
+		}
+
+		$(function () {
+			$('.lazy').Lazy({
+				scrollDirection: 'vertical',
+				effect: 'fadeIn',
+				visibleOnly: true,
+				placeholder: "data:image/gif;base64,R0lGODlhEALAPQAPzl5uLr9Nrl8e7...",
+				onError: function (element) {
+					console.log('error loading ' + element.data('src'));
+				},
+				afterLoad: function (element) {
+					element.removeClass('img-fluid lazy');
+				}
+			});
+
+			$("video").lazy({
+				afterLoad: function (element) {
+					element.removeClass('img-fluid lazy');
+				}
+			});
+		});
+
+		function checkGridSize() {
+			const main = document.getElementById('mediaGridMobileMain');
+			const cont = document.getElementById('images-container');
+			const mobOne = document.getElementById('mediaGridMobileTwo');
+			const mobTwo = document.getElementById('mediaGridMobileTwo');
+
+			if (window.innerWidth <= 648) {
+				main.classList.add('container');
+				main.classList.remove('row');
+
+				cont.classList.add('row');
+				cont.classList.remove('card-columns');
+
+				mobOne.classList.add('col');
+				mobTwo.classList.add('col');
+			} else {
+				main.classList.remove('container');
+				main.classList.add('row');
+
+				cont.classList.remove('row');
+				cont.classList.add('card-columns');
+
+				mobOne.classList.remove('col');
+				mobTwo.classList.remove('col');
+			}
+		}
+
+		window.addEventListener('resize', checkGridSize);
+
+		document.addEventListener('DOMContentLoaded', function () {
+			checkGridSize()
+
+			var animatedPopup = document.getElementById('animatedPopup');
+
+			function jumpEffect(iterations, currentIteration) {
+				if (currentIteration < iterations) {
+					animatedPopup.classList.add('jump-animation');
+					animatedPopup.style.transform = 'translateY(-10px)';
+
+					setTimeout(function () {
+						animatedPopup.classList.remove('jump-animation');
+						animatedPopup.style.transform = 'translateY(0)';
+					}, 500);
+
+					setTimeout(function () {
+						jumpEffect(iterations, currentIteration + 1);
+					}, 1000);
+				}
+			}
+
+			function performJumpEffect() {
+				jumpEffect(3, 0);
+			}
+
+			setInterval(performJumpEffect, 25000); // 20000 millisecondi corrispondono a 20 secondi
+		});
+	</script>
+	}
+
+	@section Style
+		{
+	<link rel="stylesheet" href="~/css/notyf_override.css" asp-append-version="true" />
+	<style>
+
+		img.rounded-corners {
+			border-radius: 20px;
+			width: 100%
+		}
+
+		.card-columns {
+			column-count: @((int)Model.PortfolioDto.Layout);
+		}
+
+		.jump-animation {
+			transition: transform 0.5s ease-in-out;
+		}
+	</style>
+	}
 }
-else if(!Model.IsPublish)
+else if (!Model.IsPublish)
 {
-    <div class="d-flex align-items-center justify-content-center vh-100">
-        <h1 style="color: #202F4D !important;" class="display-1 fw-bold text-white">Portfolio is not published yet.</h1>
-    </div>
+	<div class="d-flex align-items-center justify-content-center vh-100">
+		<h1 style="color: #202F4D !important;" class="display-1 fw-bold text-white">Portfolio is not published yet.</h1>
+	</div>
 }
 else if (!Model.PortfolioDto.IsPublic)
 {
-    <form method="post" asp-action="Portfolio" asp-controller="Public" asp-area="Public" asp-route-portfolioname="@Model.PortfolioDto.PortfolionameForUrl" asp-route-user="@Model.PortfolioDto.FullnameForUrl">
-        @Html.HiddenFor(s => s.PortfolioDto.Code)
-        <input data-val="true" data-val-required="The ControlPassword field is required." id="ControlPassword" name="ControlPassword" type="hidden" value="1">
-        <div class="align-items-center justify-content-center vh-100 pt-7rem">
-            <div class="row">
-                <div class="col-12 text-center">
-                    <h1 style="color: #202F4D !important;" class="display-1 fw-bold text-white">Please insert password <br/> to unlock portfolio.</h1>
-                </div>
-                <div class="empty-veesy"></div>
-                <div class="col-lg-4 col-md-3 nodisplay-sm"></div>
-                <div class="col-lg-4 col-md-6 col-sm-12">
-                    <div class="input-group">
-                        <p class="mb-0 fw-border size-custom"><strong>Password</strong></p>
-                        <div class="d-flex w-100">
-                            <input asp-for="Password" id="password" class="input--style-1 input--style-password " type="password">
-                            <span class="input-group-append border-left-0">
-                                <a onclick="switchPassword()" class="input-group-text span--style-password bg-transparent">
-                                    <img id="password-eye" src="/imgs/Auth/password-hidden_light-mode.png"/>
-                                </a>
-                            </span>
-                        </div>
-                        <button class="w-100 mt-2 rounded-pill btn btn-primary signup" type="submit">Unlock</button>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-3 nodisplay-sm"></div>
-            </div>
-        </div>
-    </form>
+	<form method="post" asp-action="Portfolio" asp-controller="Public" asp-area="Public" asp-route-portfolioname="@Model.PortfolioDto.PortfolionameForUrl" asp-route-user="@Model.PortfolioDto.FullnameForUrl">
+		@Html.HiddenFor(s => s.PortfolioDto.Code)
+		<input data-val="true" data-val-required="The ControlPassword field is required." id="ControlPassword" name="ControlPassword" type="hidden" value="1">
+		<div class="align-items-center justify-content-center vh-100 pt-7rem">
+			<div class="row">
+				<div class="col-12 text-center">
+					<h1 style="color: #202F4D !important;" class="display-1 fw-bold text-white">Please insert password <br /> to unlock portfolio.</h1>
+				</div>
+				<div class="empty-veesy"></div>
+				<div class="col-lg-4 col-md-3 nodisplay-sm"></div>
+				<div class="col-lg-4 col-md-6 col-sm-12">
+					<div class="input-group">
+						<p class="mb-0 fw-border size-custom"><strong>Password</strong></p>
+						<div class="d-flex w-100">
+							<input asp-for="Password" id="password" class="input--style-1 input--style-password " type="password">
+							<span class="input-group-append border-left-0">
+								<a onclick="switchPassword()" class="input-group-text span--style-password bg-transparent">
+									<img id="password-eye" src="/imgs/Auth/password-hidden_light-mode.png" />
+								</a>
+							</span>
+						</div>
+						<button class="w-100 mt-2 rounded-pill btn btn-primary signup" type="submit">Unlock</button>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-3 nodisplay-sm"></div>
+			</div>
+		</div>
+	</form>
 }
 
 <script>
 
-    var passwordClose = true;
+	var passwordClose = true;
 
-    function switchPassword(){
-        if (passwordClose){
-            passwordClose = false;
-            document.getElementById("password").type = "text";
-            document.getElementById("password-eye").src = "/imgs/Auth/password-shown.png";
-        }
-        else{
-            passwordClose = true;
-            document.getElementById("password").type = "password";
-            document.getElementById("password-eye").src = "/imgs/Auth/password-hidden_light-mode.png";
-        }
-    }
+	function switchPassword() {
+		if (passwordClose) {
+			passwordClose = false;
+			document.getElementById("password").type = "text";
+			document.getElementById("password-eye").src = "/imgs/Auth/password-shown.png";
+		}
+		else {
+			passwordClose = true;
+			document.getElementById("password").type = "password";
+			document.getElementById("password-eye").src = "/imgs/Auth/password-hidden_light-mode.png";
+		}
+	}
 </script>
 
 <style>
-        body {
-          margin: 0;
-          padding: 0;
-        }
+	body {
+		margin: 0;
+		padding: 0;
+	}
 
-        img {
-          pointer-events: none;
-        }
+	img {
+		pointer-events: none;
+	}
 </style>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-          var isImageRestricted = @Model.PortfolioDto.IsPublic.ToString().ToLower();
-    
-          if (!isImageRestricted) {
-            document.addEventListener("contextmenu", function(e) {
-              e.preventDefault();
-            });
-          }
-        });
+	document.addEventListener("DOMContentLoaded", function () {
+		var isImageRestricted = @Model.PortfolioDto.IsPublic.ToString().ToLower();
+
+		if (!isImageRestricted) {
+			document.addEventListener("contextmenu", function (e) {
+				e.preventDefault();
+			});
+		}
+	});
 </script>

@@ -11,6 +11,11 @@ img, button {
   user-select: none
 }
 
+.p-0 {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
 .footer-get-in-touch {
   width: 300px;
 
@@ -1693,12 +1698,45 @@ hr {
   overflow: hidden;
 }
 
+.bg-none {
+  background: none !important;
+  background-color: none !important;
+}
+
+.swiper {
+  width: auto;
+  height: auto;
+}
+
 .img-ratio-portfolio{
   max-height: 80vh;
   max-width: 100%;
   margin-left: auto;
   margin-right: auto;
   object-fit: cover;
+}
+
+.fullscreen-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /*border: 1px solid red;*/
+/*    background-color: rgba(0, 0, 0, 0.8);*/
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.fullscreen-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding-top: 60px;
+  max-width: 100%;
+  max-height: 99%;
 }
 
 .vertical-space{
@@ -1722,58 +1760,65 @@ hr {
   color: #0D2045;
 }
 
-@media only screen and (max-width: 600px) {
-  .menu-popup.active{
-    width: 95% !important;
+  @media only screen and (min-width: 600px) {
+    .fullscreen-image {
+      padding-left: 55px;
+      padding-right: 55px;
+    }
   }
 
-  .option-mobile-card{
-  font-size: 14px !important;
+  @media only screen and (max-width: 600px) {
+    .menu-popup.active {
+      width: 95% !important;
+    }
+
+    .option-mobile-card {
+      font-size: 14px !important;
+    }
+
+    .edit-button {
+      display: inline-block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+
+    .edit-button-bottom {
+      display: inline-block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+
+    .edit-button-portfolio {
+      display: inline-block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+
+    .mobile-option-cloud {
+      padding: 1rem !important;
+    }
+
+    #loginLink {
+      position: relative !important;
+      top: 0.8rem !important;
+    }
+
+    #signupLink {
+      position: relative !important;
+      top: 0.7rem !important;
+    }
+
+    footer {
+      margin-top: -37px !important;
+    }
+
+    #color-text-layout {
+      display: none !important;
+    }
   }
 
-  .edit-button {
-    display: inline-block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
-  .edit-button-bottom {
-    display: inline-block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
-
-  .edit-button-portfolio {
-    display: inline-block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
-  
-  .mobile-option-cloud{
-    padding: 1rem !important;
-  }
-  
-  #loginLink{
-    position: relative !important;
-    top: 0.8rem !important;
-  }
-
-  #signupLink{
-    position: relative !important;
-    top: 0.7rem !important;
-  }
-
-  footer{
-    margin-top: -37px !important;
-  }
-
-  #color-text-layout{
-    display: none !important;
-  }
-
-}
-
-.show-edit:hover{
-  .edit-button{
+  .show-edit:hover {
+    .edit-button{
     display: inline-block;
     visibility: visible;
     opacity: 1;
@@ -1847,7 +1892,6 @@ hr {
 .edit-button-portfolio-preview:hover{
   color: white;
 }
-
 
 .edit-button-portfolio{
   background-color: #E45B5A80 !important;
