@@ -10,7 +10,9 @@
 	<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 	<link rel="stylesheet" href="~/css/site-dark.css" asp-append-version="true" />
 	<link rel="stylesheet" href="~/Veesy.WebApp.styles.css" asp-append-version="true" />
+	<!-- Dropzone CSS -->
 	<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0-beta2/css/bootstrap-select.min.css" asp-append-version="true" />
 	@await RenderSectionAsync("Style", required: false)
 	
@@ -63,8 +65,8 @@
 				<h1 class="h3 mb-2 fw-normal ms-3">
 					@if (ViewContext.RouteData.Values["Controller"].ToString() == "Cloud")
 					{
-						<a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="breadcrumb-a-white text-white navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
-							<img class="header-logo-v mr-2">cloud
+						<a style="font-size: 22px !important; position: relative;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="breadcrumb-a-white text-white navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
+							<img class="header-logo-v mr-2">cloud <span style="margin-left: 5px; bottom: 9px;" class="text-beta position-absolute">BETA</span>
 						</a>
 					}
 					else if (ViewContext.RouteData.Values["Action"].ToString() == "Contact")
@@ -129,8 +131,8 @@
 					}
 					else if (ViewContext.RouteData.Values["Controller"].ToString() == "Portfolio")
 					{
-						<a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
-							<img class="header-logo mr-2">portfolio
+						<a style="font-size: 22px !important; position: relative;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
+							<img class="header-logo mr-2">portfolio <span style="margin-left: 5px; bottom: 9px;" class="text-beta position-absolute">BETA</span>
 						</a>
 					}
 					else if (ViewContext.RouteData.Values["Action"].ToString() == "Portfolio")
@@ -147,8 +149,8 @@
 					}
 					else
 					{
-						<a style="font-size: 22px !important;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
-							<img class="header-logo mr-2">desk
+						<a style="font-size: 22px !important; position: relative;" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" asp-area="Portfolio" asp-controller="Home" asp-action="Index">
+							<img class="header-logo mr-2">desk <span style="margin-left: 5px; bottom: 9px;" class="text-beta position-absolute">BETA</span>
 						</a>
 					}
 				</h1>
