@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Veesy.Domain.Constants;
 using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
+using Veesy.Domain.Models.Log;
 using Veesy.Domain.Repositories;
 using Veesy.Service.Dtos;
 using Veesy.Service.Interfaces;
@@ -450,6 +451,19 @@ public class AccountService : IAccountService
         return res;
     }
 
+    public List<MapOverviewDto> GetUserSecurityByMonthGroupByDay(int month, int year)
+    {
+        var res = _uoW.DbContext.UserSecurities.Where(s => s.LastAccess.Month == month && s.LastAccess.Year == year)
+            .GroupBy(s => s.City)
+            .Select(g => new MapOverviewDto()
+            {
+                City = g.Key,
+                NumberConnection = g.Count()
+            })
+            .ToList();
+        return res;
+    }
+
     public List<MyUser> GetCreatorsPlus()
     {
         return _uoW.MyUserRepository.FindAll()
@@ -541,10 +555,22 @@ public class AccountService : IAccountService
         return _uoW.MyUserRepository.FindByCondition(x => x.DiscordId == discordId).FirstOrDefault();
     }
 
+    public List<UserSecurity> GetLastAccess(int i)
+    {
+        return _uoW.DbContext.UserSecurities.OrderByDescending(s => s.LastAccess).Take(i).Include(s => s.MyUser)
+            .ToList();
+    }
+
     public class CreatorOverviewDto
     {
         public int NumberCreator { get; set; }
         public int Day { get; set; }
         public DateTime Date { get; set; }
+    }
+
+    public class MapOverviewDto
+    {
+        public int NumberConnection { get; set; }
+        public string City { get; set; }
     }
 }

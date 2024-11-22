@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
+using Veesy.Domain.Models.Log;
 using Veesy.Service.Dtos;
 using Veesy.Service.Implementation;
 
@@ -50,6 +51,7 @@ public interface IAccountService
     List<string> GetUserSoftSkill(string userId);
     List<string> GetUserLanguageSpoken(string userId);
     List<AccountService.CreatorOverviewDto> GetCreatorNumberByMonthGroupByDay(int month, int year);
+    List<AccountService.MapOverviewDto> GetUserSecurityByMonthGroupByDay(int month, int year);
     List<MyUser> GetCreatorsPlus();
     int GetNumberPayingUsers();
     List<MyUser> GetLastFourLoginAttempt(int number);
@@ -63,4 +65,5 @@ public interface IAccountService
     List<MyUser> GetUserToSendEmailPro();
     Task UpdateMyUsers(List<MyUser> usersToUpdate);
     public MyUser? GetUserByDiscordId(string discordId);
+    List<UserSecurity> GetLastAccess(int i);
 }

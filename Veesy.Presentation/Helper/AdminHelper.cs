@@ -90,11 +90,14 @@ public class AdminHelper
         var now = DateTime.Now;
         var res = _mediaService.GetMediaNumberByMonthGroupByDay(now.Month, now.Year);
         var resCreator = _accountService.GetCreatorNumberByMonthGroupByDay(now.Month, now.Year);
+        var resMap = _accountService.GetUserSecurityByMonthGroupByDay(now.Month, now.Year);
         var lastUserCreated = _accountService.GetLastFourCreatedUser(5);
         var lastMediaUploaded = _mediaService.GetLastFourMediaUploaded();
+        var lastAccess = _accountService.GetLastAccess(5);
         var numberPayingUsers = _accountService.GetNumberPayingUsers(); 
         var mediaOverview = new List<MediaOverviewDto>();
         var creatorOverview = new List<CreatorOverviewDto>();
+        var mapOverview = new List<MapOverviewDto>();
         var creatorsCount = _accountService.GetCreatorsCount();
         foreach (var item in res)
         {
@@ -117,6 +120,16 @@ public class AdminHelper
                 Year = item.Date.Year
             });
         }
+        foreach (var item in resMap)
+        {
+            mapOverview.Add(new MapOverviewDto()
+            {
+                City = item.City??"Unknown",
+                Number = item.NumberConnection,
+                Month = now.Month,
+                Year = now.Year
+            });
+        }
         var vm = new DashboardViewModel()
         {
             MediaNumber = _mediaService.GetMediaNumber(),
@@ -124,7 +137,9 @@ public class AdminHelper
             MediaOverviewDtos = mediaOverview,
             LastUsersCreated = lastUserCreated,
             CreatorOverviewDtos = creatorOverview,
+            MapOverviewDtos = mapOverview,
             NumberPayingUsers = numberPayingUsers,
+            LastAccess = lastAccess,
             LastMediaUploadDtos = MapAdminDto.MapLastMediaUploadDtos(lastMediaUploaded),
             PortfoliosCount = _portfolioService.GetDraftAndPublishedPortfoliosCount()
         };
@@ -318,5 +333,26 @@ public class AdminHelper
                 .Select(g => (CreatorName: g.Key, FormCount: g.Count()))
                 .ToList()
         };
+    }
+
+    public List<MapOverviewDto> GetAccessByMonth(int month)
+    {
+        
+        var now = DateTime.Now;
+        var resAccess = _accountService.GetUserSecurityByMonthGroupByDay(month ,now.Year);
+        var mapCreatorOverview = new List<MapOverviewDto>();
+        
+        foreach (var item in resAccess)
+        {
+            mapCreatorOverview.Add(new MapOverviewDto()
+            {
+                City = item.City,
+                Number = item.NumberConnection,
+                Month = now.Month,
+                Year = now.Year
+            });
+        }
+
+        return mapCreatorOverview;
     }
 }

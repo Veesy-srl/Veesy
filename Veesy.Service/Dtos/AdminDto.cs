@@ -13,6 +13,13 @@ public class MediaOverviewDto
     public int Month { get; set; }
     public int Year { get; set; }
 }
+public class MapOverviewDto
+{
+    public int Number { get; set; }
+    public string City { get; set; }
+    public int Month { get; set; }
+    public int Year { get; set; }
+}
 
 public class ChangeSubscriptionDto
 {

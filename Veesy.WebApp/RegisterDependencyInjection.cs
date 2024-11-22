@@ -50,6 +50,7 @@ public static class RegisterDependencyInjection
         serviceCollection.AddTransient<PublicHelper>();
         serviceCollection.AddTransient<HomeHelper>();
         serviceCollection.AddTransient<FileHelper>();
+        serviceCollection.AddHttpClient<GeoHelper>();
         
         return serviceCollection;
     }

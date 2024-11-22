@@ -30,5 +30,4 @@ public interface IMediaService
     List<MediaService.MediaOverviewDto> GetMediaNumberByMonthGroupByDay(int month, int year);
     List<Media> GetLastFourMediaUploaded();
     public List<Media> GetRandomPhotos(int count);
-
 }

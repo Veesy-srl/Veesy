@@ -204,6 +204,21 @@ public class AdminController : VeesyController
             return Json(new { Result = false, Message = "Error"});
         }
     }
+    
+    [HttpGet]
+    public JsonResult GetAccessByMonth(int month)
+    {
+        try
+        {
+            var result = _adminHelper.GetAccessByMonth(month);
+            var max = result.Count == 0 ? 2 : result.Max(s => s.Number);
+            return Json(new { Result = true, Message = "Success", Number = result.Select(s => s.Number).ToList(),  Categories = result.Select(s => s.City).ToList(), Max = max});
+        }
+        catch (Exception ex)
+        {
+            return Json(new { Result = false, Message = "Error"});
+        }
+    }
 
     [HttpGet]
     public async Task<JsonResult> ToggleReferralLink(Guid id)

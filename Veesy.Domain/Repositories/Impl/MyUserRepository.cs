@@ -7,6 +7,7 @@ using Veesy.Domain.Repositories.Base;
 using System.Linq;
 using System.Threading.Tasks;
 using Veesy.Domain.Constants;
+using Veesy.Domain.Models.Log;
 
 namespace Veesy.Domain.Repositories.Impl;
 
@@ -237,21 +238,9 @@ public class MyUserRepository : RepositoryBase<MyUser>, IMyUserRepository
 
         return resultMedia;
     }
-    
-    public static List<T> Shuffle<T>(List<T> list)
+
+    public async Task AddLastLogin(UserSecurity userSecurity)
     {
-        var random = new Random();
-        int n = list.Count;
-
-        for (int i = n - 1; i > 0; i--)
-        {
-            int j = random.Next(0, i + 1);
-            T temp = list[i];
-            list[i] = list[j];
-            list[j] = temp;
-        }
-
-        return list;
+        await _applicationDbContext.UserSecurities.AddAsync(userSecurity);
     }
-
 }

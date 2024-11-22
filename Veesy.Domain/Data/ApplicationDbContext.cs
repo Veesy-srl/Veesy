@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Veesy.Domain.Models;
+using Veesy.Domain.Models.Log;
 
 namespace Veesy.Domain.Data;
 
@@ -39,6 +40,8 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<ReferralLink> ReferralLinks { get; set; }
     public DbSet<ReferralLinkTracking> ReferralLinkTrackings { get; set; }
     public DbSet<TrackingForm> TrackingForms { get; set; }
+    public DbSet<UserSecurity> UserSecurities { get; set; }
+
 
     #region OnModelCreating
     protected override void OnModelCreating(ModelBuilder modelBuilder)
