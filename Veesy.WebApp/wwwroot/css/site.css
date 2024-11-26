@@ -47,7 +47,8 @@ img, button {
     text-underline-offset: 4px;
   }
   .upgrade-plan-btn span {
-    font-size: 12px;
+    font-size: 14px;
+    padding: 0 14px;
   }
 
   .p-0 {

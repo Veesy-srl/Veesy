@@ -520,8 +520,13 @@
 			const isHidden = window.localStorage.getItem('popup-discord-desk-hide') === 'true';
 
 			if (!isHidden && '@Model.DiscordConnected' === 'false') {
+				console.log('GG');
 				setTimeout(OpenDiscordPopup, 1000); // Apri il popup dopo 1 secondo
 			} else {
+				console.log('XX');
+				if (!isHidden) {
+					setTimeout(OpenDiscordPopup, 1000); // Apri il popup dopo 1 secondo
+				}
 				document.getElementById("discord-popup-splash-id").style.display = "block";
 			}
 		});
