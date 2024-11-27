@@ -130,6 +130,7 @@
 	</header>
 	<div>
 		<div class="login-container" style="height: 100vh;">
+			@* OLD SIGN IN & UP MEDIA
 			@if (ViewContext.RouteData.Values["Action"].ToString() == "SignUp")
 			{
 				<div style="background-image: url('../../imgs/Auth/Immagine per Sign Up.jpg');" class="logo-container vertical-center">
@@ -140,6 +141,13 @@
 				<div style="background-image: url('../../imgs/Auth/Immagine per Log In.jpg');" class="logo-container vertical-center">
 				</div>
 			}
+			*@
+			<div class="auth-media logo-container vertical-center">
+				<video autoplay loop muted>
+					<source src="https://localhost:7218/assets/videos/veesy.webm" type="video/webm">
+					Your browser does not support the video tag.
+				</video>
+			</div>
 			@RenderBody()
 		</div>
 	</div>
