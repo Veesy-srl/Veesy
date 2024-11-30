@@ -113,7 +113,7 @@
 							<hr class="nodisplay-lg" />
 						</div>
 					</div>
-					<div class="ps-3 col-sm-12 col-lg-3 pt-1 border-card-subscription vertical-space bg-gradient-2 pb-0">
+					<div class="ps-3 col-sm-12 col-lg-3 pt-1 border-card-subscription vertical-space pb-0" id="bg-plan">
 						<div class="mt-4 pt-1">
 							<h3 class="mb-0">Your plan:</h3>
 							<div class="row text-white" style="display: flex; align-items: center;">
@@ -141,9 +141,18 @@
 								<h3 class="text-white">max. @Model.Subscription.AllowedMediaNumber media</h3>
 							}
 							<div class="mb-3 mt-3">
-								<a asp-action="PricingPlan" asp-controller="Public" asp-area="Public" class="upgrade-plan-btn" type="submit">
-									<span style="color: white">view plans & upgrade</span>
-								</a>
+								@if (@Model.Subscription.Name == "Pro")
+								{
+									<a asp-action="PricingPlan" asp-controller="Public" asp-area="Public" class="upgrade-plan-btn-pro" type="submit">
+										<span style="color: white">view plans & upgrade</span>
+									</a>	
+								} 
+								else 
+								{
+									<a asp-action="PricingPlan" asp-controller="Public" asp-area="Public" class="upgrade-plan-btn" type="submit">
+										<span style="color: white">view plans & upgrade</span>
+									</a>
+								}
 							</div>
 						</div>
 					</div>
@@ -516,12 +525,21 @@
 		}
 
 		document.addEventListener('DOMContentLoaded', function () {
+			if ('@Model.Subscription.Name' === 'Free') {
+				document.getElementById("bg-plan").classList.add('bg-gradient-3')
+			} else {
+				document.getElementById("bg-plan").classList.add('bg-gradient-2')
+			}
+			
 			// Controlla se il popup deve essere nascosto
 			const isHidden = window.localStorage.getItem('popup-discord-desk-hide') === 'true';
 
 			if (!isHidden && '@Model.DiscordConnected' === 'false') {
 				setTimeout(OpenDiscordPopup, 1000); // Apri il popup dopo 1 secondo
 			} else {
+				if (!isHidden) {
+					setTimeout(OpenDiscordPopup, 1000); // Apri il popup dopo 1 secondo
+				}
 				document.getElementById("discord-popup-splash-id").style.display = "block";
 			}
 		});
