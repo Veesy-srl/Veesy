@@ -51,7 +51,9 @@ public interface IAccountService
     List<string> GetUserSoftSkill(string userId);
     List<string> GetUserLanguageSpoken(string userId);
     List<AccountService.CreatorOverviewDto> GetCreatorNumberByMonthGroupByDay(int month, int year);
+    List<AccountService.CreatorOverviewDto> GetCreatorDeletedNumberByMonthGroupByDay(int month, int year);
     List<AccountService.MapOverviewDto> GetUserSecurityByMonthGroupByDay(int month, int year);
+    List<AccountService.MapOverviewDto> GetUserSecurityByDateIntervalGroupByDay(DateTime startDate, DateTime endDate);
     List<MyUser> GetCreatorsPlus();
     int GetNumberPayingUsers();
     List<MyUser> GetLastFourLoginAttempt(int number);
@@ -59,7 +61,7 @@ public interface IAccountService
     SubscriptionPlan GetUserSubscriptionPlan(string userId);
     SubscriptionPlan GetSubscriptionPlanById(Guid id);
     Task AddNewUserSubscription(string userId, Guid id, MyUser user);
-    Task DeleteUser(MyUser user);
+    Task DeleteUser(MyUser user, bool deleteByAdmin);
     List<MyUser> GetUserEmailNotConfirmed(int days);
     Task DeleteUsers(List<MyUser> users);
     List<MyUser> GetUserToSendEmailPro();

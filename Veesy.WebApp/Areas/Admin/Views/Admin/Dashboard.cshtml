@@ -142,6 +142,8 @@
               <option value="10">October</option>
               <option value="11">November</option>
               <option value="12">December</option>
+              <option value="-1">Last 3 month</option>
+              <option value="0">All year</option>
             </select>
 
             <script>
@@ -333,13 +335,16 @@
                 if(response.result){
                     chart_creator.updateOptions({
                       series: [
-                         { name: "Number creators", data: response.creatorNumber},
+                         { name: "Number creators subscribed", data: response.creatorNumber},
+                         { name: "Number creators deleted", data: response.creatorNumberDeleted},
                       ],
                       xaxis: {
                         categories: response.categories
                       }, 
                       yaxis: {
-                        max: response.max
+                        max: response.max,
+                        min: response.min,
+                        tickAmount: response.tick
                       }
                     })   
                 }
@@ -361,7 +366,7 @@
             dataType: 'json',
             success: function (response) {
                 if(response.result){
-                    chart_creator.updateOptions({
+                  chart_map.updateOptions({
                       series: [
                          { name: "Number creators", data: response.number},
                       ],
@@ -369,7 +374,8 @@
                         categories: response.categories
                       }, 
                       yaxis: {
-                        max: response.max
+                        max: response.max,
+                        tickAmount: response.max
                       }
                     })   
                 }
@@ -488,10 +494,12 @@
     
     @{
       var maxCreators = @Model.CreatorOverviewDtos.Count() == 0 ? 5 : @Model.CreatorOverviewDtos.Max(s => s.NumberCreator);
+      var maxCreatorsDeleted = @Model.CreatorOverviewDtos.Count() == 0 ? 0 : @Model.CreatorOverviewDtos.Min(s => s.NumberCreatorDeleted);
     }
     var chart_creator = {
       series: [
         { name: "Number creator subscribed", data: JSON.parse('@Html.Raw(Json.Serialize(Model.CreatorOverviewDtos.Select(s => s.NumberCreator).ToList()))')},
+        { name: "Number creator deleted", data: JSON.parse('@Html.Raw(Json.Serialize(Model.CreatorOverviewDtos.Select(s => s.NumberCreatorDeleted).ToList()))')},
       ],
   
       chart: {
@@ -550,9 +558,9 @@
   
       yaxis: {
         show: true,
-        min: 0,
+        min: @maxCreatorsDeleted,
         max: @maxCreators,
-        tickAmount: 4,
+        tickAmount: @(maxCreators - maxCreatorsDeleted),
         labels: {
           style: {
             cssClass: "grey--text lighten-2--text fill-color",
@@ -654,7 +662,7 @@
         show: true,
         min: 0,
         max: @maxMap,
-        tickAmount: 4,
+        tickAmount: @maxMap,
         labels: {
           style: {
             cssClass: "grey--text lighten-2--text fill-color",

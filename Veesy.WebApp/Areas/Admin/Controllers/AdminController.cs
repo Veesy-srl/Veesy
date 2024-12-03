@@ -197,7 +197,9 @@ public class AdminController : VeesyController
         {
             var result = _adminHelper.GetCreatorsSubscribedByMonth(month);
             var max = result.Count == 0 ? 2 : result.Max(s => s.NumberCreator);
-            return Json(new { Result = true, Message = "Success", CreatorNumber = result.Select(s => s.NumberCreator).ToList(),  Categories = result.Select(s => s.Day).ToList(), Max = max});
+            var min = result.Count == 0 ? 0 : result.Min(s => s.NumberCreatorDeleted);
+            var tick = max - min;
+            return Json(new { Result = true, Message = "Success", CreatorNumber = result.Select(s => s.NumberCreator).ToList(),  Categories = result.Select(s => s.Day).ToList(), Max = max, Min = min, Tick = tick });
         }
         catch (Exception ex)
         {

@@ -144,6 +144,18 @@
                         <input type="text" class="form-control" id="endpoint"/>
                     </div>
                 </div>
+                <div class="form-check">
+                    <input onchange="SwitchInput()" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>
+                    <label class="form-check-label" for="flexRadioDefault1">
+                        Link interno
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input onchange="SwitchInput()" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2">
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        Link esterno
+                    </label>
+                </div>
                 <div class="mt-2">
                     <label><strong>Redirect url</strong></label>
                     <select class="form-select" id="redirect-url">
@@ -152,6 +164,7 @@
                             <option value="@item">@item</option>
                         }
                     </select>
+                    <input type="text" class="form-control" id="redirect-url-text" style="display: none"/>
                 </div>
                 <div class="float-end">
                     <button onclick="AddReferralLink()" class="mt-2 rounded-pill btn btn-padding btn-primary a-font-p" type="submit">add</button>
@@ -186,7 +199,18 @@
 {
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
     <script>
-        
+        function SwitchInput() {
+            if (document.getElementById("flexRadioDefault2").checked){
+                document.getElementById("redirect-url-text").style.display = "block"
+                document.getElementById("redirect-url").style.display = "none"
+            }    
+            else{
+                document.getElementById("redirect-url-text").style.display = "none"
+                document.getElementById("redirect-url").style.display = "block"
+            }
+        }
+
+
         function CopyLink(link) {
             navigator.clipboard.writeText(link);
             toastNotifyCustom("Link copiato correttamente.", 10000, "#75ccdd", "")
@@ -247,7 +271,7 @@
             $('#load-spinner').css("display", "block");
 
             var endpoint = document.getElementById("endpoint").value
-            var redirectUrl = document.getElementById("redirect-url").value
+            var redirectUrl = document.getElementById("flexRadioDefault2").checked ? document.getElementById("redirect-url-text").value : document.getElementById("redirect-url").value
 
             var referralLinkDto = {endpoint, redirectUrl}
 

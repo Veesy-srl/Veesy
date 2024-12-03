@@ -95,7 +95,7 @@ public class ProfileController : VeesyController
     {
         try
         {
-            var result = await _profileHelper.DeleteAccount(id);
+            var result = await _profileHelper.DeleteAccount(id, true);
             if(!result.Success)
                 _notyfService.Custom(result.Message, 10, "#ca0a0a");
             else 
@@ -105,8 +105,8 @@ public class ProfileController : VeesyController
         catch (Exception ex)
         {
             Logger.Error(ex, ex.Message);
-            _notyfService.Custom("Error updating subscription plan. Please retry.", 10 , "#ca0a0a");
-            return Json(new { Result = false, Message = "Error saving subscription plan. Please retry." });
+            _notyfService.Custom("Error deleting account. Please retry.", 10 , "#ca0a0a");
+            return Json(new { Result = false, Message = "Error deleting account. Please retry." });
         }
     }
     
@@ -116,19 +116,19 @@ public class ProfileController : VeesyController
     {
         try
         {
-            var result = await _profileHelper.DeleteAccount(id);
+            var result = await _profileHelper.DeleteAccount(id,false);
             if(!result.Success)
                 _notyfService.Custom(result.Message, 10, "#ca0a0a");
             else 
                 _notyfService.Custom(result.Message, 10, "#75CCDD");
             await _signInManager.SignOutAsync();
-            return Json(new { Result = true, RedirectUrl = _configuration["ApplicationUrl"] + "/Public/Public/Splash" });
+            return Json(new { Result = true, RedirectUrl = Url.Action("Splash", "Public", new { area = "Public" }) });
         }
         catch (Exception ex)
         {
             Logger.Error(ex, ex.Message);
-            _notyfService.Custom("Error updating subscription plan. Please retry.", 10 , "#ca0a0a");
-            return Json(new { Result = false, Message = "Error saving subscription plan. Please retry." });
+            _notyfService.Custom("Error deleting account. Please retry.", 10 , "#ca0a0a");
+            return Json(new { Result = false, Message = "Error deleting account. Please retry." });
         }
     }
     

@@ -41,6 +41,7 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<ReferralLinkTracking> ReferralLinkTrackings { get; set; }
     public DbSet<TrackingForm> TrackingForms { get; set; }
     public DbSet<UserSecurity> UserSecurities { get; set; }
+    public DbSet<UserDeleted> UserDeleted { get; set; }
 
 
     #region OnModelCreating
