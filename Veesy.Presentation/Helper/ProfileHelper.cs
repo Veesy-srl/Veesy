@@ -452,10 +452,10 @@ public class ProfileHelper
         return new ResultDto(true, $"{subscriptionPlan.Name} now is active.");
     } 
 
-    public async Task<ResultDto> DeleteAccount(string id)
+    public async Task<ResultDto> DeleteAccount(string id, bool deleteByAdmin)
     {
         var user = await _userManager.FindByIdAsync(id);
-        await _accountService.DeleteUser(user);
+        await _accountService.DeleteUser(user, deleteByAdmin);
         return new ResultDto(true, "User deleted correctly.");
     }
 

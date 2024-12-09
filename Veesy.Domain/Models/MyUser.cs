@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
+using Veesy.Domain.Models.Log;
 
 namespace Veesy.Domain.Models;
 
@@ -40,4 +41,5 @@ public class MyUser : IdentityUser
     public virtual List<MyUserInfoToShow> MyUserInfosToShow { get; set; }
     public virtual List<MyUserSubscriptionPlan> MyUserSubscriptionPlans { get; set; }
     public virtual List<TrackingForm> TrackingForm { get; set; }
+    public virtual List<UserSecurity> UserSecurities { get; set; }
 }

@@ -8,6 +8,7 @@ using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
 using Veesy.Presentation.Model.Admin;
 using Veesy.Service.Dtos;
+using Veesy.Service.Implementation;
 using Veesy.Service.Interfaces;
 
 namespace Veesy.Presentation.Helper;
@@ -90,11 +91,15 @@ public class AdminHelper
         var now = DateTime.Now;
         var res = _mediaService.GetMediaNumberByMonthGroupByDay(now.Month, now.Year);
         var resCreator = _accountService.GetCreatorNumberByMonthGroupByDay(now.Month, now.Year);
+        var resCreatorDeleted = _accountService.GetCreatorDeletedNumberByMonthGroupByDay(now.Month ,now.Year);
+        var resMap = _accountService.GetUserSecurityByMonthGroupByDay(now.Month, now.Year);
         var lastUserCreated = _accountService.GetLastFourCreatedUser(5);
         var lastMediaUploaded = _mediaService.GetLastFourMediaUploaded();
+        var lastAccess = _accountService.GetLastAccess(5);
         var numberPayingUsers = _accountService.GetNumberPayingUsers(); 
         var mediaOverview = new List<MediaOverviewDto>();
         var creatorOverview = new List<CreatorOverviewDto>();
+        var mapOverview = new List<MapOverviewDto>();
         var creatorsCount = _accountService.GetCreatorsCount();
         foreach (var item in res)
         {
@@ -117,6 +122,38 @@ public class AdminHelper
                 Year = item.Date.Year
             });
         }
+        
+        
+
+        foreach (var deleted in resCreatorDeleted)
+        {
+            var elem = creatorOverview.FirstOrDefault(s => s.Day == deleted.Day);
+            if (elem != null)
+            {
+                elem.NumberCreatorDeleted = -deleted.NumberCreatorDeleted;
+            }
+            else
+            {
+                creatorOverview.Add(new CreatorOverviewDto()
+                {
+                    Day = deleted.Day,
+                    NumberCreatorDeleted = -deleted.NumberCreatorDeleted,
+                    Month = deleted.Date.Month,
+                    Year = deleted.Date.Year
+                });
+            }
+        }
+        
+        foreach (var item in resMap)
+        {
+            mapOverview.Add(new MapOverviewDto()
+            {
+                City = item.City??"Unknown",
+                Number = item.NumberConnection,
+                Month = now.Month,
+                Year = now.Year
+            });
+        }
         var vm = new DashboardViewModel()
         {
             MediaNumber = _mediaService.GetMediaNumber(),
@@ -124,7 +161,9 @@ public class AdminHelper
             MediaOverviewDtos = mediaOverview,
             LastUsersCreated = lastUserCreated,
             CreatorOverviewDtos = creatorOverview,
+            MapOverviewDtos = mapOverview,
             NumberPayingUsers = numberPayingUsers,
+            LastAccess = lastAccess,
             LastMediaUploadDtos = MapAdminDto.MapLastMediaUploadDtos(lastMediaUploaded),
             PortfoliosCount = _portfolioService.GetDraftAndPublishedPortfoliosCount()
         };
@@ -236,6 +275,7 @@ public class AdminHelper
     {
         var now = DateTime.Now;
         var resCreator = _accountService.GetCreatorNumberByMonthGroupByDay(month ,now.Year);
+        var resCreatorDeleted = _accountService.GetCreatorDeletedNumberByMonthGroupByDay(month ,now.Year);
         var creatorOverview = new List<CreatorOverviewDto>();
         
         foreach (var item in resCreator)
@@ -247,6 +287,25 @@ public class AdminHelper
                 Month = item.Date.Month,
                 Year = item.Date.Year
             });
+        }
+
+        foreach (var deleted in resCreatorDeleted)
+        {
+            var elem = creatorOverview.FirstOrDefault(s => s.Day == deleted.Day);
+            if (elem != null)
+            {
+                elem.NumberCreatorDeleted = -deleted.NumberCreatorDeleted;
+            }
+            else
+            {
+                creatorOverview.Add(new CreatorOverviewDto()
+                {
+                    Day = deleted.Day,
+                    NumberCreatorDeleted = -deleted.NumberCreatorDeleted,
+                    Month = deleted.Date.Month,
+                    Year = deleted.Date.Year
+                });
+            }
         }
 
         return creatorOverview;
@@ -318,5 +377,38 @@ public class AdminHelper
                 .Select(g => (CreatorName: g.Key, FormCount: g.Count()))
                 .ToList()
         };
+    }
+
+    public List<MapOverviewDto> GetAccessByMonth(int month)
+    {
+        
+        var now = DateTime.Now;
+        var resAccess = new List<AccountService.MapOverviewDto>();
+        if (month == 0)
+        {
+            resAccess = _accountService.GetUserSecurityByDateIntervalGroupByDay(new DateTime(now.Year, 1, 1), new DateTime(now.Year, 12, 31));
+        }
+        else if (month == -1)
+        {
+            resAccess = _accountService.GetUserSecurityByDateIntervalGroupByDay(new DateTime(now.Year, now.AddDays(-2).Month, 1), new DateTime(now.Year, 12, DateTime.DaysInMonth(now.Year, month)));
+        }
+        else
+        {
+            resAccess.AddRange(_accountService.GetUserSecurityByMonthGroupByDay(month, now.Year));
+        }
+        var mapCreatorOverview = new List<MapOverviewDto>();
+        
+        foreach (var item in resAccess)
+        {
+            mapCreatorOverview.Add(new MapOverviewDto()
+            {
+                City = item.City??"Unknown",
+                Number = item.NumberConnection,
+                Month = now.Month,
+                Year = now.Year
+            });
+        }
+
+        return mapCreatorOverview;
     }
 }

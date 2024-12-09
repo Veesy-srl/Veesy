@@ -12,6 +12,8 @@ using Veesy.Domain.Constants;
 using Veesy.Domain.Exceptions;
 using Veesy.Email;
 using Veesy.Domain.Models;
+using Veesy.Domain.Models.Log;
+using Veesy.Domain.Repositories;
 using Veesy.Presentation.Model.Auth;
 using Veesy.Service.Interfaces;
 using Veesy.Validators;
@@ -26,10 +28,11 @@ public class AuthHelper
     private readonly MyUserValidator _myUserValidator;
     private readonly IAccountService _accountService;
     private readonly ISubscriptionPlanService _subscriptionPlanService;
+    private readonly IVeesyUoW _uoW;
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     private static readonly Random random = new Random();
 
-    public AuthHelper(UserManager<MyUser> userManager, IConfiguration config, IEmailSender emailSender, MyUserValidator myUserValidator, IAccountService accountService, ISubscriptionPlanService subscriptionPlanService)
+    public AuthHelper(UserManager<MyUser> userManager, IConfiguration config, IEmailSender emailSender, MyUserValidator myUserValidator, IAccountService accountService, ISubscriptionPlanService subscriptionPlanService, IVeesyUoW uoW)
     {
         _userManager = userManager;
         _config = config;
@@ -37,6 +40,7 @@ public class AuthHelper
         _myUserValidator = myUserValidator;
         _accountService = accountService;
         _subscriptionPlanService = subscriptionPlanService;
+        _uoW = uoW;
     }
 
     public async Task<ResultDto> SendEmailConfirmation(string email)
@@ -226,6 +230,20 @@ public class AuthHelper
             Logger.Error(ex, ex.Message);
         }
     }
+
+    public async Task AddLastLogin(UserSecurity userSecurity)
+    {
+        try
+        {
+            await _uoW.MyUserRepository.AddLastLogin(userSecurity);
+            await _uoW.CommitAsync("");
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, ex.Message);
+        }
+    }
+    
     public static string SelectRandomImageName()
     {
         // Array di nomi di file

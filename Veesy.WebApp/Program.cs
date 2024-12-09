@@ -21,6 +21,7 @@ using Veesy.Domain.Models;
 using Veesy.Email;
 using Veesy.Service.Implementation;
 using Veesy.WebApp;
+using Veesy.WebApp.Middlewares;
 
 var logger = LogManager.Setup()
     .LoadConfigurationFromFile("NLog.config")
@@ -76,6 +77,13 @@ try
     
     // Add services to the container.
     builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+    builder.Services.AddDistributedMemoryCache();
+    builder.Services.AddSession(options =>
+    {
+        options.IdleTimeout = TimeSpan.FromMinutes(30); 
+        options.Cookie.HttpOnly = true; 
+        options.Cookie.IsEssential = true; 
+    });
     
     builder.Services.AddNotyf(config =>
     {
@@ -166,6 +174,8 @@ try
     //     }
     // });
     app.UseAuthorization();
+    app.UseSession();
+    app.UseMiddleware<SessionLoggerMiddleware>();
     
     app.MapControllerRoute(
         name: "default",

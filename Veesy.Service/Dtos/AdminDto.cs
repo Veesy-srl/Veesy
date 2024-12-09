@@ -13,6 +13,13 @@ public class MediaOverviewDto
     public int Month { get; set; }
     public int Year { get; set; }
 }
+public class MapOverviewDto
+{
+    public int Number { get; set; }
+    public string City { get; set; }
+    public int Month { get; set; }
+    public int Year { get; set; }
+}
 
 public class ChangeSubscriptionDto
 {
@@ -35,6 +42,7 @@ public class ReferralLinkDto
 public class CreatorOverviewDto
 {
     public int NumberCreator { get; set; }
+    public int NumberCreatorDeleted { get; set; }
     public int Day { get; set; }
     public int Month { get; set; }
     public int Year { get; set; }
@@ -51,6 +59,7 @@ public class LastMediaUpload
 public class FrelancerDto
 {
     public string Fullname => FirstName +  " " + LastName;
+    public string DiscordUsername { get; set; }
     public string FullnameForUrl => (FirstName + "-" + LastName).ToLower().Replace(" ", "-");
     public string PortfolionameForUrl => PortfolioName == null ? "" : PortfolioName.ToLower().Replace(" ", "-");
     public string CreateDate { get; set; }
@@ -104,6 +113,7 @@ public static class MapAdminDto{
             frelancerDtos.Add(new FrelancerDto()
             {
                 Code = user.Id,
+                DiscordUsername = string.IsNullOrEmpty(user.DiscordUsername) ? "" : user.DiscordUsername,
                 FirstName = user.Name,
                 LastName = user.Surname,
                 Email = user.Email,

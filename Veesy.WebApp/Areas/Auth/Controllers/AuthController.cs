@@ -104,7 +104,7 @@ public class AuthController : Controller
         try
         {
             var recaptcha = await _recaptchaVerifier.VerifyAsync(model.RecaptchaToken);
-            if (!recaptcha.Success && !(recaptcha.Score >= 0.7))
+            if (!recaptcha.Success && !(recaptcha.Score >= 0.5))
             {
                 _notyfService.Custom("ReCaptcha test not passed.", 10, "#ca0a0a");
                 model = _authHelper.GetSignUpViewModelException(model);

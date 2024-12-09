@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Veesy.Domain.Constants;
 using Veesy.Domain.Exceptions;
 using Veesy.Domain.Models;
+using Veesy.Domain.Models.Log;
 using Veesy.Domain.Repositories;
 using Veesy.Service.Dtos;
 using Veesy.Service.Interfaces;
@@ -449,6 +450,46 @@ public class AccountService : IAccountService
             .ToList();
         return res;
     }
+    
+    public List<CreatorOverviewDto> GetCreatorDeletedNumberByMonthGroupByDay(int month, int year)
+    {
+        var res = _uoW.DbContext.UserDeleted.Where(s => s.Date.Month == month && s.Date.Year == year)
+            .GroupBy(s => s.Date.Day)
+            .Select(g => new CreatorOverviewDto
+            {
+                Day = g.Key,
+                NumberCreatorDeleted = g.Count(),
+                Date = g.Select(s => s.Date).FirstOrDefault()
+            })
+            .ToList();
+        return res;
+    }
+
+    public List<MapOverviewDto> GetUserSecurityByMonthGroupByDay(int month, int year)
+    {
+        var res = _uoW.DbContext.UserSecurities.Where(s => s.LastAccess.Month == month && s.LastAccess.Year == year)
+            .GroupBy(s => s.City)
+            .Select(g => new MapOverviewDto()
+            {
+                City = g.Key,
+                NumberConnection = g.Count()
+            })
+            .ToList();
+        return res;
+    }
+
+    public List<MapOverviewDto> GetUserSecurityByDateIntervalGroupByDay(DateTime startDate, DateTime endDate)
+    {
+        var res = _uoW.DbContext.UserSecurities.Where(s => s.LastAccess >= startDate && s.LastAccess < endDate)
+            .GroupBy(s => s.City)
+            .Select(g => new MapOverviewDto()
+            {
+                City = g.Key,
+                NumberConnection = g.Count()
+            })
+            .ToList();
+        return res;
+    }
 
     public List<MyUser> GetCreatorsPlus()
     {
@@ -457,7 +498,7 @@ public class AccountService : IAccountService
             .ThenInclude(s => s.SubscriptionPlan)
             .Include(s => s.Portfolios.Where(s => s.IsMain))
             .Where(s =>
-                s.MyUserSubscriptionPlans.OrderBy(s => s.CreateRecordDate).LastOrDefault().SubscriptionPlan.Price > 0).ToList();
+                s.MyUserSubscriptionPlans.OrderBy(s => s.CreateRecordDate).LastOrDefault().SubscriptionPlan.Name != VeesyConstants.SubscriptionPlan.Free).ToList();
     }
 
     public int GetNumberPayingUsers()
@@ -503,11 +544,35 @@ public class AccountService : IAccountService
         await _uoW.CommitAsync(user.Id);
     }
 
-    public async Task DeleteUser(MyUser user)
+    public async Task DeleteUser(MyUser user, bool deleteByAdmin)
     {
-        var id = user.Id;
-        _uoW.MyUserRepository.Delete(user);
-        await _uoW.CommitAsync(id);
+        using (var transaction = _uoW.DbContext.Database.BeginTransaction())
+        {
+            try
+            {
+                var id = user.Id;
+                _uoW.MyUserRepository.Delete(user);
+                if (!deleteByAdmin)
+                {
+                    _uoW.DbContext.UserDeleted.Add(new UserDeleted
+                    {
+                        Username = user.UserName,
+                        Name = user.Name,
+                        Surname = user.Surname,
+                        Email = user.Email,
+                        Date = DateTime.UtcNow,
+                    });
+                }
+
+                await _uoW.CommitAsync(id);
+                await transaction.CommitAsync();
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
+        }
     }
 
     public List<MyUser> GetUserEmailNotConfirmed(int days)
@@ -541,10 +606,23 @@ public class AccountService : IAccountService
         return _uoW.MyUserRepository.FindByCondition(x => x.DiscordId == discordId).FirstOrDefault();
     }
 
+    public List<UserSecurity> GetLastAccess(int i)
+    {
+        return _uoW.DbContext.UserSecurities.OrderByDescending(s => s.LastAccess).Take(i).Include(s => s.MyUser)
+            .ToList();
+    }
+
     public class CreatorOverviewDto
     {
         public int NumberCreator { get; set; }
+        public int NumberCreatorDeleted { get; set; }
         public int Day { get; set; }
         public DateTime Date { get; set; }
+    }
+
+    public class MapOverviewDto
+    {
+        public int NumberConnection { get; set; }
+        public string City { get; set; }
     }
 }

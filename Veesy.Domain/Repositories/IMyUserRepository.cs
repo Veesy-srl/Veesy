@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Veesy.Domain.Models;
+using Veesy.Domain.Models.Log;
 using Veesy.Domain.Repositories.Base;
 
 namespace Veesy.Domain.Repositories;
@@ -34,5 +35,6 @@ public interface IMyUserRepository : IRepositoryBase<MyUser>
     public List<MyUser> GetAllUsersWithMainPortfolio();
     List<Media> GetRandomMedia(int count);
     List<Media> GetRandomPhotos(int count);
+    Task AddLastLogin(UserSecurity userSecurity);
 
 }
