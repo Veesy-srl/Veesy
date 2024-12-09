@@ -378,6 +378,12 @@
             var MediaCode = '@Model.Media.Code';
             
             var NestedUrl = document.getElementById("nested-url").value
+
+            console.log(NestedUrl)
+
+            if (!NestedUrl.startsWith('https://')) {
+              NestedUrl = 'https://' + NestedUrl;
+            }
             
             var UpdateMediaNestedPortfolioDto = {PortfolioSelected, MediaCode, NestedUrl}
             $.ajax({

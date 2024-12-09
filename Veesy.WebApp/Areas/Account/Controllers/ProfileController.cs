@@ -556,7 +556,8 @@ public class ProfileController : VeesyController
         catch (Exception ex)
         {
             Logger.Error(ex, ex.Message);
-            return RedirectToAction("Error400", "Public", new {area = "Public"});
+			      return RedirectToAction("Index", "Home", new { area = "Portfolio" });
+			      /*return RedirectToAction("Error400", "Public", new {area = "Public"});*/
         }
     }
     
