@@ -61,7 +61,7 @@ public class FrelancerDto
     public string Fullname => FirstName +  " " + LastName;
     public string DiscordUsername { get; set; }
     public string FullnameForUrl => (FirstName + "-" + LastName).ToLower().Replace(" ", "-");
-    public string PortfolionameForUrl => PortfolioName == null ? "" : PortfolioName.ToLower().Replace(" ", "-");
+    public string PortfolionameForUrl => PortfolioName == null ? "" : PortfolioName.ToLower().Replace("/", "-").Replace(" ", "-");
     public string CreateDate { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
@@ -120,6 +120,9 @@ public static class MapAdminDto{
                 PhoneNumber = user.PhoneNumber,
                 SubscriptionPlan = user.MyUserSubscriptionPlans.Count == 0 ? "Free" : user.MyUserSubscriptionPlans.LastOrDefault().SubscriptionPlan.Name,
                 Category = user.Category,
+                PortfolioName = user.Portfolios.Where(s => s.IsMain)
+                    .Select(s => s.Name)
+                    .FirstOrDefault(),
                 VisibleCreatorPage = user.VisibleInCreatorPage,
                 Fields = user.MyUserSectors == null ? null : user.MyUserSectors.Select(s => s.Sector.Name).ToList(),
                 Software = user.MyUserUsedSoftwares == null ? null : user.MyUserUsedSoftwares.Select(s => s.UsedSoftware.Name).ToList(),

@@ -49,13 +49,14 @@
                     <tr>
                         <td>@user.Fullname</td>
                         <td>
-                            @if (user.MainPortfolioCode == Guid.Empty)
+                            @if (string.IsNullOrEmpty(user.PortfolioName))
                             {
                                 <p>No main portfolio yet</p>
                             }
                             else
                             {
-                                <a href="@Url.Action("Portfolio", "Public", new { area = "Public", user = @user.FullnameForUrl, portfolioname = user.PortfolionameForUrl })">View link</a>
+                                var userForUrl = (user.FirstName + "-" + user.LastName).ToLower().Replace(" ", "-").Replace("/", "-");
+                                <a target="_blank" style="cursor: pointer" asp-area="Public" asp-controller="Public" asp-action="Portfolio" asp-route-user="@userForUrl" asp-route-portfolioname="@user.PortfolionameForUrl">View portfolio</a>
                             }
                         </td>
                         <td><a href="mailto:@user.Email">@user.Email</a></td>

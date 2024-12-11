@@ -166,8 +166,12 @@
 		function OpenCreditsOrNestedLink() {
 			if (nowNestedPortfolioId != null && nowNestedPortfolioId != "")
 				window.open('@Model.BasePathCode' + "/folio/" + nowNestedPortfolioUser + "/" + nowNestedPortfolioName, '_blank')
-			else if (nowNestedUrl != null && nowNestedUrl != "")
-				window.open(nowNestedUrl, '_blank')
+			else if (nowNestedUrl != null && nowNestedUrl !== "") {
+				if (!nowNestedUrl.startsWith('https://') || nowNestedUrl.startsWith('http://')) {
+					nowNestedUrl = 'https://' + nowNestedUrl;
+				}
+				window.open(nowNestedUrl, '_blank');
+			}
 			else if (nowHasCredits)
 				ShowOverlay(true)
 		}

@@ -329,8 +329,12 @@
         function OpenCreditsOrNestedLink() {
             if(nowNestedPortfolioId != null && nowNestedPortfolioId != "")
                 window.open('@Model.ApplicationUrl' + "/portfolio/preview/" + nowNestedPortfolioId + "/false", '_blank');
-            else if (nowNestedUrl != null && nowNestedUrl != "")
+            else if (nowNestedUrl != null && nowNestedUrl !== "") {
+                if (!nowNestedUrl.startsWith('https://') || nowNestedUrl.startsWith('http://')) {
+                    nowNestedUrl = 'https://' + nowNestedUrl;
+                }
                 window.open(nowNestedUrl, '_blank');
+            }
             else if (nowHasCredits)
                 ShowOverlay(true)
         }
@@ -452,6 +456,8 @@
         function CloseMediaPopup() {
             document.body.style.overflowY = "auto"; 
             document.getElementById("media-popup").style.display = "none";
+            document.getElementById("video-popup").src = '';
+            document.getElementById("image-popup").src = '';
         }
     
         function OpenCreatorPopup(){

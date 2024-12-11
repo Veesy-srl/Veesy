@@ -381,7 +381,7 @@
 
             console.log(NestedUrl)
 
-            if (!NestedUrl.startsWith('https://')) {
+            if (!NestedUrl.startsWith('https://') || !NestedUrl.startsWith('http://')) {
               NestedUrl = 'https://' + NestedUrl;
             }
             
