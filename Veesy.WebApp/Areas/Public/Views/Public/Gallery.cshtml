@@ -3,352 +3,354 @@
 @model Veesy.Presentation.Model.Public.GalleryViewModel
 
 @{
-    ViewData["Title"] = "Gallery";
+	ViewData["Title"] = "Gallery";
 }
 
 <div id="galleryselector" class="nodisplay-sm gallery-selector d-flex justify-content-center">
-    <div class="div-selector btn-layout btn-light">
-        <div class="row">
-            <div class="col-6">
-                <div class="d-flex">
-                    <p class="pt-1 mb-0 pe-2" for="customRange1">spacing</p>
-                    <input onchange="switchColumnPadding(this.value)" type="range" class="form-range range-cust" value="0" step="2" min="0" max="30" id="customRange1">
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="d-flex">
-                    <p class="pt-1 mb-0 pe-2" for="customRange2">column</p>
-                    <input onchange="switchColumnLayout(this.value)" type="range" class="form-range range-cust" value="4" step="1" min="1" max="12" id="customRange2">
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="div-selector btn-layout btn-light">
+		<div class="row">
+			<div class="col-6">
+				<div class="d-flex">
+					<p class="pt-1 mb-0 pe-2" for="customRange1">spacing</p>
+					<input onchange="switchColumnPadding(this.value)" type="range" class="form-range range-cust" value="0" step="2" min="0" max="30" id="customRange1">
+				</div>
+			</div>
+			<div class="col-6">
+				<div class="d-flex">
+					<p class="pt-1 mb-0 pe-2" for="customRange2">column</p>
+					<input onchange="switchColumnLayout(this.value)" type="range" class="form-range range-cust" value="4" step="1" min="1" max="12" id="customRange2">
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <div class="padding-lg pt-7rem-mobile">
-    <div class="row pt-4 p-4-lg">
-        <div class="col-sm-12 col-md-8 mb-3">
-            <h1 class="text-color">Wander through a curated exhibit of visual <br/> art that celebrates the diversity and skill <br/> of our community.</h1>
-        </div>
-    </div>
+	<div class="row pt-4 p-4-lg">
+		<div class="col-sm-12 col-md-8 mb-3">
+			<h1 class="text-color">Wander through a curated exhibit of visual <br /> art that celebrates the diversity and skill <br /> of our community.</h1>
+		</div>
+	</div>
 </div>
- 
+
 <div class="row">
-    <div class="card-columns-gallery draggable-zone ps-0 pe-0" id="images-container">
-        @{
-            foreach (var image in Model.MediaGalleryDtos)
-            {
-                var category = image?.Owner?.Category?.Replace("'", "\\'");
-                var name = image?.Owner?.Fullname?.Replace("'", "\\'");
-                var hasCredits = false;
-                {
-                    hasCredits = !string.IsNullOrEmpty(image.Credits);
-                }
-                
-                if (MediaCostants.ImageExtensions.Contains(image.Type.ToUpper()))
-                {
-                   
-                    <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.Code', false, '@image.Owner.ProfileImageFileName', '@name', '@category', '@image.PortfolioCode', '@image.NestedPortfolioLinks','@image.NestedPortfolioNameForUrl','@image.NestedPortfolioUserForUrl','@image.NestedPortfolioUrl', '@hasCredits')" class="draggable media-div" name="image-gallery" mediaid="@image.Code">
-                        <img title="@image.Owner.Fullname" class="img-fluid lazy rounded-05 w-100 mt-3" data-src="@Model.BasePathImages@image.FileName?tr=w-1080" />
-                    </div>
-                }
-                else
-                {
-                    <div style="cursor: pointer;" onclick="OpenMediaPopup('@image.Code', true, '@image.Owner.ProfileImageFileName', '@name', '@category', '@image.PortfolioCode', '@image.NestedPortfolioLinks','@image.NestedPortfolioNameForUrl','@image.NestedPortfolioUserForUrl', '@image.NestedPortfolioUrl', '@hasCredits')" class="draggable media-div" name="image-gallery">
-                        <video autoplay="autoplay" muted loop class="w-100 shadow-1-strong rounded-05 mt-3" title="@image.Owner.Fullname">
-                            <data-src src="@Model.BasePathImages@image.FileName?tr=w-1080" type="video/mp4"></data-src>
-                        </video>
-                    </div>
-                }
-            }
-        }
-    </div>
+	<div class="card-columns-gallery draggable-zone ps-0 pe-0" id="images-container">
+		@{
+			foreach (var image in Model.MediaGalleryDtos)
+			{
+				var category = image?.Owner?.Category?.Replace("'", "\\'");
+				var name = image?.Owner?.Fullname?.Replace("'", "\\'");
+				var hasCredits = false;
+				{
+					hasCredits = !string.IsNullOrEmpty(image.Credits);
+				}
+
+				if (MediaCostants.ImageExtensions.Contains(image.Type.ToUpper()))
+				{
+
+					<div style="cursor: pointer;" onclick="OpenMediaPopup('@image.Code', false, '@image.Owner.ProfileImageFileName', '@name', '@category', '@image.PortfolioCode', '@image.NestedPortfolioLinks','@image.NestedPortfolioNameForUrl','@image.NestedPortfolioUserForUrl','@image.NestedPortfolioUrl', '@hasCredits')" class="draggable media-div" name="image-gallery" mediaid="@image.Code">
+						<img title="@image.Owner.Fullname" class="img-fluid lazy rounded-05 w-100 mt-3" data-src="@Model.BasePathImages@image.FileName?tr=w-1080" />
+					</div>
+				}
+				else
+				{
+					<div style="cursor: pointer;" onclick="OpenMediaPopup('@image.Code', true, '@image.Owner.ProfileImageFileName', '@name', '@category', '@image.PortfolioCode', '@image.NestedPortfolioLinks','@image.NestedPortfolioNameForUrl','@image.NestedPortfolioUserForUrl', '@image.NestedPortfolioUrl', '@hasCredits')" class="draggable media-div" name="image-gallery">
+						<video autoplay="autoplay" muted loop playsinline class="w-100 shadow-1-strong rounded-05 mt-3" title="@image.Owner.Fullname">
+							<data-src src="@Model.BasePathImages@image.FileName?tr=w-1080" type="video/mp4"></data-src>
+						</video>
+					</div>
+				}
+			}
+		}
+	</div>
 </div>
 
 <div class="empty-veesy"></div>
 <div class="empty-veesy"></div>
 
 <div class="media-popup" id="media-popup">
-    <nav class="bg-grey-veesy navbar navbar-expand-sm navbar-toggleable-sm mb-3 fixed-top">
-        <div class="container-fluid">
-                
-            <h1 class="h3 mb-2 fw-normal">
-                <a role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" onclick="CloseMediaPopup()">
-                    <img class="header-logo">gallery
-                </a>
-            </h1> 
-            <div class="float-end mb-2">
-                <div class="d-flex">
-    
-                    <a onclick="CloseMediaPopup()" class="ms-2 btn btn-light border btn-layout fw-bolder shadow-none" id="menuButton">
-                        <i class="fas fa-times-circle fa-2xs text-primary" id="icon-color"></i>
-                        <span id="color-text-variant">close</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </nav>
-    <div class="bg-grey-veesy row pt-4rem ps-4 pe-4" style="max-height: 100vh">
-        <div class="col-sm-12 col-md-2 center-content nodisplay-sm">
-        </div>
-        <div class="col-sm-12 col-md-8 mb-5">
-            <div id="external-div" class="mx-auto">
-                <div class="row text-center align-bottom show-edit" style="position:relative; max-height: 100vh; max-width: 100%; --bs-gutter-x: 0;">
-                    <div style="position: relative">
-                        <div style="display: inline-block; position: relative;">
-                            <div id="text-overlay" class="text-overlay text-start p-4 rounded-05 mt-1">
-                                <div class="row">
-                                    <div class="col-10">
-                                        <p class="text-white"><strong>IMAGE CREDITS</strong></p>
-                                        <p id="credit-text" class="text-white">Lorem ipsum: dolor sit amet. Consectetur: adipiscing elit. Quisque: lobortis efficitur erat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eu mattis lectus. Aenean eget elit ornare, pulvinar nulla et, tempor ligula. 2023© all rights reserved</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <a onclick="OpenCreditsOrNestedLink()" style="cursor:pointer;">
-                                <video id="video-popup" style="display: none" autoplay="autoplay" muted controls="controls" loop class="img-ratio-portfolio rounded-05">
-                                    <source type="video/mp4">
-                                </video>
-                                <img style="display: none" id="image-popup" asp-append-version="true" class="img-ratio-portfolio rounded-05 mt-1"/>
-                            </a>
-                            <a onclick="ShowOverlay(true)" id="open-credits" style="position: absolute;" class=" edit-button-portfolio-preview">
-                                <i class="fa-solid fa-plus mt-1" id="openPlus"></i>
-                            </a>
-                        </div>   
-                    </div>
-                    <div class="empty-veesy"></div>
-                    <p><strong id="number-media"></strong></p>
-                </div>      
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-2 center-content nodisplay-sm">
-            
-        </div>
-    </div>
-    <div class="creator-popup-gallery me-2" id="creator-popup-id" onclick="OpenCreatorPopup()">
-        <div class="d-flex">
-            <div class="col-11">
-                <p class="text-white ms-2 mb-1" style="margin-top:  2.5% !important;">MEET THE CREATOR</p>
-            </div>
-            <div class="col-1"><div class="text-end pt-1"><i class="fa-solid fa-circle fa-xs me-2 mt-1" style="color: white;"></i></div></div>
-        </div>
-    </div>
-    
-    <div class="creator-popup-gallery mb-3 me-2 creator-popup-full-close" id="popup-creator" style="border-radius: 5px">
-      <div class="d-flex" style="cursor: pointer" onclick="CloseCreatorPopup()">
-        <div class="col-11">
-          <p class="text-white ms-2 mb-1 mt-2">MEET THE CREATOR</p>
-        </div>
-        <div class="col-1 pe-2"><div class="text-end pt-1"><i class="fa-solid fa-circle-xmark mt-1" style="color: white"></i></div></div>
-      </div>
-      <hr class="portfolio-hr"/> 
-      <div class="row creator-popup-body overflow-auto ms-0">
-        <div class="row p-2 pb-2 pt-4">
-            <div class="col-sm-12 col-md-4 mb-3 text-center ps-0 pe-0">
-                <img id="creator-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" class="img-thumbnail-custom" alt="user-image">
-            </div>
-            <div class="col-sm-12 col-md-8 mb-3">
-                <h1 class="text-white" id="creator-fullname"></h1>
-                <h3 class="text-white option-font-20" id="creator-category"></h3>
-            </div>
-        </div>
-        <div class="row">
-          <a class="ps-0 pe-0 pb-2" id="creator-link">
-            <button class="rounded-pill btn div-white-rounded-veesy btn-variant w-100">discover more</button>
-          </a>
-        </div>
-      </div>
-    </div>
+	<nav class="bg-grey-veesy navbar navbar-expand-sm navbar-toggleable-sm mb-3 fixed-top">
+		<div class="container-fluid">
+
+			<h1 class="h3 mb-2 fw-normal">
+				<a role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="navbar-brand" onclick="CloseMediaPopup()">
+					<img class="header-logo">gallery
+				</a>
+			</h1>
+			<div class="float-end mb-2">
+				<div class="d-flex">
+
+					<a onclick="CloseMediaPopup()" class="ms-2 btn btn-light border btn-layout fw-bolder shadow-none" id="menuButton">
+						<i class="fas fa-times-circle fa-2xs text-primary" id="icon-color"></i>
+						<span id="color-text-variant">close</span>
+					</a>
+				</div>
+			</div>
+		</div>
+	</nav>
+	<div class="bg-grey-veesy row pt-4rem ps-4 pe-4" style="max-height: 100vh">
+		<div class="col-sm-12 col-md-2 center-content nodisplay-sm">
+		</div>
+		<div class="col-sm-12 col-md-8 mb-5">
+			<div id="external-div" class="mx-auto">
+				<div class="row text-center align-bottom show-edit" style="position:relative; max-height: 100vh; max-width: 100%; --bs-gutter-x: 0;">
+					<div style="position: relative">
+						<div style="display: inline-block; position: relative;">
+							<div id="text-overlay" class="text-overlay text-start p-4 rounded-05 mt-1">
+								<div class="row">
+									<div class="col-10">
+										<p class="text-white"><strong>IMAGE CREDITS</strong></p>
+										<p id="credit-text" class="text-white">Lorem ipsum: dolor sit amet. Consectetur: adipiscing elit. Quisque: lobortis efficitur erat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eu mattis lectus. Aenean eget elit ornare, pulvinar nulla et, tempor ligula. 2023© all rights reserved</p>
+									</div>
+								</div>
+							</div>
+							<a onclick="OpenCreditsOrNestedLink()" style="cursor:pointer;">
+								<video id="video-popup" style="display: none" autoplay="autoplay" playsinline muted controls="controls" loop class="img-ratio-portfolio rounded-05">
+									<source type="video/mp4">
+								</video>
+								<img style="display: none" id="image-popup" asp-append-version="true" class="img-ratio-portfolio rounded-05 mt-1" />
+							</a>
+							<a onclick="ShowOverlay(true)" id="open-credits" style="position: absolute;" class=" edit-button-portfolio-preview">
+								<i class="fa-solid fa-plus mt-1" id="openPlus"></i>
+							</a>
+						</div>
+					</div>
+					<div class="empty-veesy"></div>
+					<p><strong id="number-media"></strong></p>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-12 col-md-2 center-content nodisplay-sm">
+		</div>
+	</div>
+	<div class="creator-popup-gallery me-2" id="creator-popup-id" onclick="OpenCreatorPopup()">
+		<div class="d-flex">
+			<div class="col-11">
+				<p class="text-white ms-2 mb-1" style="margin-top:  2.5% !important;">MEET THE CREATOR</p>
+			</div>
+			<div class="col-1"><div class="text-end pt-1"><i class="fa-solid fa-circle fa-xs me-2 mt-1" style="color: white;"></i></div></div>
+		</div>
+	</div>
+
+	<div class="creator-popup-gallery mb-3 me-2 creator-popup-full-close" id="popup-creator" style="border-radius: 5px">
+		<div class="d-flex" style="cursor: pointer" onclick="CloseCreatorPopup()">
+			<div class="col-11">
+				<p class="text-white ms-2 mb-1 mt-2">MEET THE CREATOR</p>
+			</div>
+			<div class="col-1 pe-2"><div class="text-end pt-1"><i class="fa-solid fa-circle-xmark mt-1" style="color: white"></i></div></div>
+		</div>
+		<hr class="portfolio-hr" />
+		<div class="row creator-popup-body overflow-auto ms-0">
+			<div class="row p-2 pb-2 pt-4">
+				<div class="col-sm-12 col-md-4 mb-3 text-center ps-0 pe-0">
+					<img id="creator-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" class="img-thumbnail-custom" alt="user-image">
+				</div>
+				<div class="col-sm-12 col-md-8 mb-3">
+					<h1 class="text-white" id="creator-fullname"></h1>
+					<h3 class="text-white option-font-20" id="creator-category"></h3>
+				</div>
+			</div>
+			<div class="row">
+				<a class="ps-0 pe-0 pb-2" id="creator-link">
+					<button class="rounded-pill btn div-white-rounded-veesy btn-variant w-100">discover more</button>
+				</a>
+			</div>
+		</div>
+	</div>
 </div>
 
 @section Scripts
 {
-    <script>
-        
-        function OpenCreditsOrNestedLink() {
-            if(nowNestedPortfolioId != null && nowNestedPortfolioId != "")
-                window.open('@Model.BasePathCode' + "/folio/" + nowNestedPortfolioUser + "/" + nowNestedPortfolioName, '_blank')
-            else if (nowNestedUrl != null && nowNestedUrl != "")
-                window.open(nowNestedUrl, '_blank')
-            else if (nowHasCredits)
-                ShowOverlay(true)
-        }
-        
-        $(function() {
-            $('.lazy').Lazy({
-                scrollDirection: 'vertical',
-                effect: 'fadeIn',
-                visibleOnly: true,
-                placeholder: "data:image/gif;base64,R0lGODlhEALAPQAPzl5uLr9Nrl8e7...",
-                onError: function(element) {
-                    console.log('error loading ' + element.data('src'));
-                },
-                afterLoad: function(element) {
-                    element.removeClass('img-fluid lazy');
-                }
-            });
-            
-            $("video").lazy({
-                afterLoad: function(element) {
-                    element.removeClass('img-fluid lazy');
-                }
-            });
-        });
-        
-        function ShowOverlay(add) {
-            if (add){
-                document.getElementById("text-overlay").classList.add("text-overlay-selected")
-                document.getElementById("open-credits").onclick = function (){ShowOverlay(false)}
-                document.getElementById("openPlus").classList.remove("fa-plus");
-                document.getElementById("openPlus").classList.add("fa-x");
-            }
-            else{
-                document.getElementById("text-overlay").classList.remove("text-overlay-selected")
-                document.getElementById("open-credits").onclick = function (){ShowOverlay(true)}
-                document.getElementById("openPlus").classList.remove("fa-x");
-                document.getElementById("openPlus").classList.add("fa-plus");
-            }
-        }
-        
-        function getContainedSize(img) {
-          var ratio = img.naturalWidth/img.naturalHeight
-          var width = img.height*ratio
-          var height = img.height
-          if (width > img.width) {
-            width = img.width
-            height = img.width/ratio
-          }
-          var parentNodeWidth = img.parentNode.parentNode.offsetWidth;
-          var parentNodeHeight = img.parentNode.parentNode.offsetHeight;
-          var percent = (width / parentNodeWidth) * 100 - 2; 
-          var percentHeight = (height / parentNodeHeight) * 100;
-          
-          //document.getElementById("text-overlay").setAttribute("style","width: " + percent + "% !important; height: "+percentHeight+"%;");
-          //document.getElementById("external-div").setAttribute("style","width: " + percent + "% !important");
-          return [width, height]
-        }
-        
-        var media = @Html.Raw(Json.Serialize(Model.MediaGalleryDtos))
-        
-        let nowNestedPortfolioId = ""
-        let nowNestedPortfolioName = ""
-        let nowNestedPortfolioUser = ""
-        let nowNestedUrl = ""
-        let nowHasCredits = false;
-        
-        function OpenMediaPopup(mediaId, IsVideo, file, user, category, portfolioCode, NestedPortfolioId, NestedPortfolioName, NestedPortfolioUser, NestedUrl, HasCredits) {
-            nowNestedPortfolioId = NestedPortfolioId;
-            nowNestedUrl = NestedUrl;
-            nowNestedPortfolioName = NestedPortfolioName
-            nowNestedPortfolioUser = NestedPortfolioUser
-            nowHasCredits = HasCredits == 'True' ? true : false;
-            document.getElementById("open-credits").onclick = function (){ShowOverlay(true)}
-            document.getElementById("text-overlay").classList.remove("text-overlay-selected")
-            document.body.style.overflowY = "hidden"; 
-            document.getElementById("media-popup").style.display = "block";
-            document.getElementById("image-popup").style.display = "none";
-            document.getElementById("video-popup").style.display = "none";
-            if(file !== ""){
-                document.getElementById("creator-image").src = '@Model.BasePathAzure' + file;
-            }else{
-                document.getElementById("creator-image").src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU';
-            }
-            var basePathCode = '@Model.BasePathCode';
+	<script>
 
-            document.getElementById("creator-fullname").textContent = user;
-            document.getElementById("creator-category").textContent = "- " + category
-            document.getElementById("creator-link").href = basePathCode + "/portfolio/" + portfolioCode
-            let obj = media.find((o, i) => {
-                if (o.code === mediaId) {
-                    let src = media[i].fileName
-                    if(media[i].credits == null || media[i].credits.toString() == ""){
-                        document.getElementById("open-credits").style.display = "none"
-                        document.getElementById("credit-text").textContent = ""
-                    }
-                    else{
-                        document.getElementById("open-credits").style.display = "block"
-                        document.getElementById("credit-text").textContent = media[i].credits
-                    }
-                        
-                    if(IsVideo){
-                        document.getElementById("video-popup").src = '@Model.BasePathImages' + src;  
-                        document.getElementById("video-popup").style.display = "block";
-                        getContainedSize(document.getElementById("video-popup"))
-                    }
-                    else{
-                        document.getElementById("image-popup").src = '@Model.BasePathImages' + src;  
-                        document.getElementById("image-popup").style.display = "block";
-                        getContainedSize(document.getElementById("image-popup"))
-                    }
-                    return true; // stop searching
-                }
-            });
-        }
-        
-        function CloseMediaPopup() {
-            document.body.style.overflowY = "auto"; 
-            document.getElementById("media-popup").style.display = "none";
-            document.getElementById("image-popup").src = ''; 
-            document.getElementById("video-popup").src = ''; 
-        }
-        
-        function OpenCreatorPopup(){
-            document.getElementById("popup-creator").classList.add("creator-popup-full-open");
-            document.getElementById("popup-creator").classList.remove("creator-popup-full-close");
-            document.getElementById("creator-popup-id").style.display = "none";
-        }
-        function CloseCreatorPopup(){
-            document.getElementById("popup-creator").classList.remove("creator-popup-full-open")
-            document.getElementById("popup-creator").classList.add("creator-popup-full-close")
-            document.getElementById("creator-popup-id").style.display = "block";
-        }
-        
-        function switchColumnLayout(columnsNumber) {
-          var imagesContainer = document.getElementById("images-container");
-          imagesContainer.classList.remove("card-columns-gallery")
-          imagesContainer.style.columnCount = columnsNumber
-        }
-        
-        function switchColumnPadding(margin) {
-          var medias = document.querySelectorAll(".media-div");
-          for (let i = 0; i < medias.length; i++){
-              if (distanzaDaSinistra(medias[i]) < 40){
-                  medias[i].style.marginBottom = margin +"px"
-              }
-              else{
-                medias[i].style.marginLeft = margin +"px"
-                medias[i].style.marginBottom = margin +"px"
-              }
-          }
-        }
-        
-        function distanzaDaSinistra(elemento) {
-          var distanza = 0;
-        
-          // Itera attraverso gli elementi genitori fino a raggiungere il body
-          while (elemento) {
-            distanza += elemento.offsetLeft;
-            elemento = elemento.offsetParent;
-          }
-        
-          return distanza;
-        }
-        
-    </script>
+		function OpenCreditsOrNestedLink() {
+			if (nowNestedPortfolioId != null && nowNestedPortfolioId != "")
+				window.open('@Model.BasePathCode' + "/folio/" + nowNestedPortfolioUser + "/" + nowNestedPortfolioName, '_blank')
+			else if (nowNestedUrl != null && nowNestedUrl !== "") {
+				if (!nowNestedUrl.startsWith('https://') || nowNestedUrl.startsWith('http://')) {
+					nowNestedUrl = 'https://' + nowNestedUrl;
+				}
+				window.open(nowNestedUrl, '_blank');
+			}
+			else if (nowHasCredits)
+				ShowOverlay(true)
+		}
+
+		$(function () {
+			$('.lazy').Lazy({
+				scrollDirection: 'vertical',
+				effect: 'fadeIn',
+				visibleOnly: true,
+				placeholder: "data:image/gif;base64,R0lGODlhEALAPQAPzl5uLr9Nrl8e7...",
+				onError: function (element) {
+					console.log('error loading ' + element.data('src'));
+				},
+				afterLoad: function (element) {
+					element.removeClass('img-fluid lazy');
+				}
+			});
+
+			$("video").lazy({
+				afterLoad: function (element) {
+					element.removeClass('img-fluid lazy');
+				}
+			});
+		});
+
+		function ShowOverlay(add) {
+			if (add) {
+				document.getElementById("text-overlay").classList.add("text-overlay-selected")
+				document.getElementById("open-credits").onclick = function () { ShowOverlay(false) }
+				document.getElementById("openPlus").classList.remove("fa-plus");
+				document.getElementById("openPlus").classList.add("fa-x");
+			}
+			else {
+				document.getElementById("text-overlay").classList.remove("text-overlay-selected")
+				document.getElementById("open-credits").onclick = function () { ShowOverlay(true) }
+				document.getElementById("openPlus").classList.remove("fa-x");
+				document.getElementById("openPlus").classList.add("fa-plus");
+			}
+		}
+
+		function getContainedSize(img) {
+			var ratio = img.naturalWidth / img.naturalHeight
+			var width = img.height * ratio
+			var height = img.height
+			if (width > img.width) {
+				width = img.width
+				height = img.width / ratio
+			}
+			var parentNodeWidth = img.parentNode.parentNode.offsetWidth;
+			var parentNodeHeight = img.parentNode.parentNode.offsetHeight;
+			var percent = (width / parentNodeWidth) * 100 - 2;
+			var percentHeight = (height / parentNodeHeight) * 100;
+
+			//document.getElementById("text-overlay").setAttribute("style","width: " + percent + "% !important; height: "+percentHeight+"%;");
+			//document.getElementById("external-div").setAttribute("style","width: " + percent + "% !important");
+			return [width, height]
+		}
+
+		var media = @Html.Raw(Json.Serialize(Model.MediaGalleryDtos))
+
+			let nowNestedPortfolioId = ""
+		let nowNestedPortfolioName = ""
+		let nowNestedPortfolioUser = ""
+		let nowNestedUrl = ""
+		let nowHasCredits = false;
+
+		function OpenMediaPopup(mediaId, IsVideo, file, user, category, portfolioCode, NestedPortfolioId, NestedPortfolioName, NestedPortfolioUser, NestedUrl, HasCredits) {
+			nowNestedPortfolioId = NestedPortfolioId;
+			nowNestedUrl = NestedUrl;
+			nowNestedPortfolioName = NestedPortfolioName
+			nowNestedPortfolioUser = NestedPortfolioUser
+			nowHasCredits = HasCredits == 'True' ? true : false;
+			document.getElementById("open-credits").onclick = function () { ShowOverlay(true) }
+			document.getElementById("text-overlay").classList.remove("text-overlay-selected")
+			document.body.style.overflowY = "hidden";
+			document.getElementById("media-popup").style.display = "block";
+			document.getElementById("image-popup").style.display = "none";
+			document.getElementById("video-popup").style.display = "none";
+			if (file !== "") {
+				document.getElementById("creator-image").src = '@Model.BasePathAzure' + file;
+			} else {
+				document.getElementById("creator-image").src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU';
+			}
+			var basePathCode = '@Model.BasePathCode';
+
+			document.getElementById("creator-fullname").textContent = user;
+			document.getElementById("creator-category").textContent = "- " + category
+			document.getElementById("creator-link").href = basePathCode + "/portfolio/" + portfolioCode
+			let obj = media.find((o, i) => {
+				if (o.code === mediaId) {
+					let src = media[i].fileName
+					if (media[i].credits == null || media[i].credits.toString() == "") {
+						document.getElementById("open-credits").style.display = "none"
+						document.getElementById("credit-text").textContent = ""
+					}
+					else {
+						document.getElementById("open-credits").style.display = "block"
+						document.getElementById("credit-text").textContent = media[i].credits
+					}
+
+					if (IsVideo) {
+						document.getElementById("video-popup").src = '@Model.BasePathImages' + src;
+						document.getElementById("video-popup").style.display = "block";
+						getContainedSize(document.getElementById("video-popup"))
+					}
+					else {
+						document.getElementById("image-popup").src = '@Model.BasePathImages' + src;
+						document.getElementById("image-popup").style.display = "block";
+						getContainedSize(document.getElementById("image-popup"))
+					}
+					return true; // stop searching
+				}
+			});
+		}
+
+		function CloseMediaPopup() {
+			document.body.style.overflowY = "auto";
+			document.getElementById("media-popup").style.display = "none";
+			document.getElementById("image-popup").src = '';
+			document.getElementById("video-popup").src = '';
+		}
+
+		function OpenCreatorPopup() {
+			document.getElementById("popup-creator").classList.add("creator-popup-full-open");
+			document.getElementById("popup-creator").classList.remove("creator-popup-full-close");
+			document.getElementById("creator-popup-id").style.display = "none";
+		}
+		function CloseCreatorPopup() {
+			document.getElementById("popup-creator").classList.remove("creator-popup-full-open")
+			document.getElementById("popup-creator").classList.add("creator-popup-full-close")
+			document.getElementById("creator-popup-id").style.display = "block";
+		}
+
+		function switchColumnLayout(columnsNumber) {
+			var imagesContainer = document.getElementById("images-container");
+			imagesContainer.classList.remove("card-columns-gallery")
+			imagesContainer.style.columnCount = columnsNumber
+		}
+
+		function switchColumnPadding(margin) {
+			var medias = document.querySelectorAll(".media-div");
+			for (let i = 0; i < medias.length; i++) {
+				if (distanzaDaSinistra(medias[i]) < 40) {
+					medias[i].style.marginBottom = margin + "px"
+				}
+				else {
+					medias[i].style.marginLeft = margin + "px"
+					medias[i].style.marginBottom = margin + "px"
+				}
+			}
+		}
+
+		function distanzaDaSinistra(elemento) {
+			var distanza = 0;
+
+			// Itera attraverso gli elementi genitori fino a raggiungere il body
+			while (elemento) {
+				distanza += elemento.offsetLeft;
+				elemento = elemento.offsetParent;
+			}
+
+			return distanza;
+		}
+
+	</script>
 }
 
 @section Style
 {
-    <link rel="stylesheet" href="~/css/notyf_override.css" asp-append-version="true"/>
-    <style>
-                    
-        img.rounded-corners {
-          border-radius: 20px;
-          width: 100%
-        }
-        
-        .jump-animation {
-            transition: transform 0.5s ease-in-out;
-        }
-        
-    </style>
+	<link rel="stylesheet" href="~/css/notyf_override.css" asp-append-version="true" />
+	<style>
+
+		img.rounded-corners {
+			border-radius: 20px;
+			width: 100%
+		}
+
+		.jump-animation {
+			transition: transform 0.5s ease-in-out;
+		}
+	</style>
 }

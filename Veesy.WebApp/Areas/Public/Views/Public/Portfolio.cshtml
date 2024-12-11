@@ -57,7 +57,7 @@
 			</div>
 		</div>
 
-		<div class="row p-0" id="mediaGridMobileMain">
+		<div class="row p-0">
 			<div class="card-columns draggable-zone p-0" id="images-container">
 				@{
 					foreach (var image in Model.PortfolioDto.PortfolioMedias)
@@ -68,14 +68,14 @@
 						}
 						@if (MediaCostants.ImageExtensions.Contains(image.Media.Type.ToUpper()))
 						{
-							<div id="mediaGridMobileOne" style="cursor: pointer;" onclick="OpenMediaPopup('@image.MediaId', false, '@image.Media.NestedPortfolioLinks','@image.Media.NestedPortfolioNameForUrl','@image.Media.NestedPortfolioUserForUrl', '@image.Media.NestedPortfolioUrl', '@hasCredits')" class="draggable" name="image-gallery" mediaid="@image.MediaId">
+							<div style="cursor: pointer;" onclick="OpenMediaPopup('@image.MediaId', false, '@image.Media.NestedPortfolioLinks','@image.Media.NestedPortfolioNameForUrl','@image.Media.NestedPortfolioUserForUrl', '@image.Media.NestedPortfolioUrl', '@hasCredits')" class="draggable" name="image-gallery" mediaid="@image.MediaId">
 								<img title="@image.Media.OriginalFileName" class="img-fluid lazy rounded-05 w-100 mt-3" data-src="@Model.BasePathImages@image.Media.FileName?tr=w-1080" />
 							</div>
 						}
 						else
 						{
-							<div id="mediaGridMobileTwo" style="cursor: pointer;" onclick="OpenMediaPopup('@image.MediaId', true, '@image.Media.NestedPortfolioLinks','@image.Media.NestedPortfolioNameForUrl','@image.Media.NestedPortfolioUserForUrl', '@image.Media.NestedPortfolioUrl', '@hasCredits')" class="draggable" name="image-gallery">
-								<video autoplay="autoplay" muted loop class="w-100 shadow-1-strong rounded-05 mt-3" title="@image.Media.OriginalFileName">
+							<div style="cursor: pointer;" onclick="OpenMediaPopup('@image.MediaId', true, '@image.Media.NestedPortfolioLinks','@image.Media.NestedPortfolioNameForUrl','@image.Media.NestedPortfolioUserForUrl', '@image.Media.NestedPortfolioUrl', '@hasCredits')" class="draggable" name="image-gallery">
+								<video autoplay="autoplay" muted loop playsinline class="w-100 shadow-1-strong rounded-05 mt-3" title="@image.Media.OriginalFileName">
 									<data-src src="@Model.BasePathImages@image.Media.FileName?tr=w-1080" type="video/mp4"></data-src>
 								</video>
 							</div>
@@ -154,7 +154,7 @@
 								</div>
 							</div>
 							<a onclick="OpenCreditsOrNestedLink()" style="cursor:pointer;">
-								<video id="video-popup" style="display: none" autoplay="autoplay" muted controls="controls" loop class="fullscreen-image rounded-05">
+								<video id="video-popup" style="display: none" autoplay="autoplay" playsinline muted controls="controls" loop class="fullscreen-image rounded-05">
 									<source type="video/mp4">
 								</video>
 								@*
@@ -341,8 +341,12 @@
 		function OpenCreditsOrNestedLink() {
 			if (nowNestedPortfolioId != null && nowNestedPortfolioId != "")
 				window.open('@Model.ApplicationUrl' + "/folio/" + nowNestedPortfolioUser + "/" + nowNestedPortfolioName, '_blank')
-			else if (nowNestedUrl != null && nowNestedUrl != "")
+			else if (nowNestedUrl != null && nowNestedUrl !== "") {
+				if (!nowNestedUrl.startsWith('https://') || nowNestedUrl.startsWith('http://')) {
+					nowNestedUrl = 'https://' + nowNestedUrl;
+				}
 				window.open(nowNestedUrl, '_blank');
+			}
 			else if (nowHasCredits)
 				ShowOverlay(true)
 		}
@@ -523,6 +527,8 @@
 		function CloseMediaPopup() {
 			document.body.style.overflowY = "auto";
 			document.getElementById("media-popup").style.display = "none";
+			document.getElementById("image-popup").src = '';
+			document.getElementById("video-popup").src = '';
 		}
 
 		function OpenCreatorPopup() {
@@ -557,34 +563,36 @@
 			});
 		});
 
+		let resizeTimeout;
+
 		function checkGridSize() {
-			const main = document.getElementById('mediaGridMobileMain');
-			const cont = document.getElementById('images-container');
-			const mobOne = document.getElementById('mediaGridMobileTwo');
-			const mobTwo = document.getElementById('mediaGridMobileTwo');
+				const layout = @((int)Model.PortfolioDto.Layout);
+				const cont = document.getElementById('images-container');
 
-			if (window.innerWidth <= 648) {
-				main.classList.add('container');
-				main.classList.remove('row');
+				if (layout === 1) return;
 
-				cont.classList.add('row');
-				cont.classList.remove('card-columns');
+				let newColumnCount;
+				if (window.innerWidth <= 648) {
+						newColumnCount = 2;
+				} else {
+						newColumnCount = layout;
+				}
 
-				mobOne.classList.add('col');
-				mobTwo.classList.add('col');
-			} else {
-				main.classList.remove('container');
-				main.classList.add('row');
-
-				cont.classList.remove('row');
-				cont.classList.add('card-columns');
-
-				mobOne.classList.remove('col');
-				mobTwo.classList.remove('col');
-			}
+				if (cont.style.columnCount !== newColumnCount.toString()) {
+						cont.style.columnCount = newColumnCount;
+				}
 		}
 
-		window.addEventListener('resize', checkGridSize);
+		function debounce(func, wait) {
+				return function() {
+						clearTimeout(resizeTimeout);
+						resizeTimeout = setTimeout(func, wait);
+				};
+		}
+
+		const debouncedCheckGridSize = debounce(checkGridSize, 200);
+
+		window.addEventListener('resize', debouncedCheckGridSize);
 
 		document.addEventListener('DOMContentLoaded', function () {
 			checkGridSize()
@@ -611,7 +619,7 @@
 				jumpEffect(3, 0);
 			}
 
-			setInterval(performJumpEffect, 25000); // 20000 millisecondi corrispondono a 20 secondi
+			setInterval(performJumpEffect, 25000); // 25000 millisecondi corrispondono a 25 secondi
 		});
 	</script>
 	}
