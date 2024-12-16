@@ -7,6 +7,7 @@ using Veesy.Presentation.Helper;
 using Veesy.Service.Implementation;
 using Veesy.Service.Interfaces;
 using Veesy.Validators;
+using Veesy.WebApp.Worker;
 
 namespace Veesy.WebApp;
 
@@ -51,6 +52,9 @@ public static class RegisterDependencyInjection
         serviceCollection.AddTransient<HomeHelper>();
         serviceCollection.AddTransient<FileHelper>();
         serviceCollection.AddHttpClient<GeoHelper>();
+        
+        /*Worker dependency injection*/
+        serviceCollection.AddHostedService<RemoveOldUserWorker>();
         
         return serviceCollection;
     }
