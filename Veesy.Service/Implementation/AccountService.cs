@@ -377,6 +377,7 @@ public class AccountService : IAccountService
                 Code = user.Id,
                 FirstName = user.Name,
                 LastName = user.Surname,
+                DiscordUsername = string.IsNullOrEmpty(user.DiscordUsername) ? "" : user.DiscordUsername,
                 Email = user.Email,
                 SubscriptionPlan = user.MyUserSubscriptionPlans
                     .OrderByDescending(sp => sp.CreateRecordDate)
