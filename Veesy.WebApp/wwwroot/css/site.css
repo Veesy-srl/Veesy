@@ -39,6 +39,10 @@ img, button {
   justify-content: start;
 }
 
+.welcome-icon-desk {
+  transform: skew(-40deg);
+}
+
 .welcome-cards {
   gap: 3rem;
   display: flex;
