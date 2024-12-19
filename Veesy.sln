@@ -3,29 +3,29 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Veesy.WebApp", "..\Veesy\Veesy.WebApp\Veesy.WebApp.csproj", "{775AE053-E0B6-4853-A7EE-AA3F3A2171A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Veesy.WebApp", "Veesy.WebApp\Veesy.WebApp.csproj", "{775AE053-E0B6-4853-A7EE-AA3F3A2171A7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{7C76E082-CE59-44EF-A0BB-154D81D7FDE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Veesy.Domain", "..\Veesy\Veesy.Domain\Veesy.Domain.csproj", "{E6DF7A84-A248-4C78-879F-81863E698E40}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Veesy.Domain", "Veesy.Domain\Veesy.Domain.csproj", "{E6DF7A84-A248-4C78-879F-81863E698E40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Veesy.Service", "Veesy.Service\Veesy.Service.csproj", "{9B25312D-3532-46E4-9C2F-452C1A435B88}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Veesy.Service", "Veesy.Service\Veesy.Service.csproj", "{9B25312D-3532-46E4-9C2F-452C1A435B88}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{7F8082BA-50CF-4523-88E8-9C16588AF6F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Veesy.Presentation", "Veesy.Presentation\Veesy.Presentation.csproj", "{672BD5DE-7AAA-4498-B726-770ECBF46D2A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Veesy.Presentation", "Veesy.Presentation\Veesy.Presentation.csproj", "{672BD5DE-7AAA-4498-B726-770ECBF46D2A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utility", "Utility", "{B9902C68-355A-4B88-AE59-C03804F4569B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Veesy.Email", "Veesy.Email\Veesy.Email.csproj", "{37E39FE1-A1BF-4C9D-9EB3-A425027A6C70}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Veesy.Email", "Veesy.Email\Veesy.Email.csproj", "{37E39FE1-A1BF-4C9D-9EB3-A425027A6C70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Veesy.Validators", "Veesy.Validators\Veesy.Validators.csproj", "{52C956DB-A67F-4CDD-B513-0C6A625B082F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Veesy.Validators", "Veesy.Validators\Veesy.Validators.csproj", "{52C956DB-A67F-4CDD-B513-0C6A625B082F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Veesy.WorkerService", "Veesy.WorkerService\Veesy.WorkerService.csproj", "{AE02E8DB-BB0F-4882-B754-60ADF9FCE003}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Veesy.WorkerService", "Veesy.WorkerService\Veesy.WorkerService.csproj", "{AE02E8DB-BB0F-4882-B754-60ADF9FCE003}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Veesy.Discord", "Veesy.Discord\Veesy.Discord.csproj", "{DC7A2330-E401-4F68-A8A9-7F3D6D8E8A87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Veesy.Discord", "Veesy.Discord\Veesy.Discord.csproj", "{DC7A2330-E401-4F68-A8A9-7F3D6D8E8A87}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Veesy.Utils", "Veesy.Utils\Veesy.Utils.csproj", "{5E35D2A5-8764-4AF6-8317-737132A01F81}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Veesy.Utils", "Veesy.Utils\Veesy.Utils.csproj", "{5E35D2A5-8764-4AF6-8317-737132A01F81}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
