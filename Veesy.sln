@@ -21,8 +21,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Veesy.Email", "Veesy.Email\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Veesy.Validators", "Veesy.Validators\Veesy.Validators.csproj", "{52C956DB-A67F-4CDD-B513-0C6A625B082F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Veesy.WorkerService", "Veesy.WorkerService\Veesy.WorkerService.csproj", "{AE02E8DB-BB0F-4882-B754-60ADF9FCE003}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Veesy.Discord", "Veesy.Discord\Veesy.Discord.csproj", "{DC7A2330-E401-4F68-A8A9-7F3D6D8E8A87}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Veesy.Utils", "Veesy.Utils\Veesy.Utils.csproj", "{5E35D2A5-8764-4AF6-8317-737132A01F81}"
