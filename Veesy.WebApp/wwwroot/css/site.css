@@ -11,6 +11,139 @@ img, button {
   user-select: none
 }
 
+/*NEW WELCOME PAGE*/
+
+.welcome-head {
+  gap: 3rem;
+  display: flex;
+  margin-top: 200px;
+  align-items: start;
+  justify-content: center;
+
+  @media only screen and (max-width: 800px) {
+    margin-top: 40px;
+    flex-direction: column;
+  }
+}
+.welcome-head-h1 {
+  font-size: 50px !important;
+  @media only screen and (max-width: 800px) {
+    font-size: 35px !important;
+  }
+}
+
+.welcome-head-buttons {
+  gap: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+.welcome-icon-desk {
+  transform: skew(-40deg);
+}
+
+.welcome-cards {
+  gap: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media only screen and (max-width: 1000px) {
+    flex-direction: column;
+  }
+}
+.welcome-cards-bottom {
+  gap: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media only screen and (max-width: 1000px) {
+    flex-direction: column;
+  }
+}
+
+.welcome-cards-help {
+  gap: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.welcome-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.welcome-last {
+  width: 100%;
+  gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+.welcome-last-grid {
+  gap: 2rem;
+  display: flex;
+  justify-content: space-between;
+
+  @media only screen and (max-width: 1000px) {
+    flex-direction: column;
+  }
+}
+.welcome-last-grid-div {
+  display: flex;
+  min-height: 450px;
+  border-radius: 10px;
+
+  @media only screen and (max-width: 1000px) {
+    width: 100% !important;
+    background-size: cover !important;
+  }
+}
+
+.cntr {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.sm-cntr {
+  @media only screen and (max-width: 600px) {
+    text-align: center !important;
+  }
+}
+
+.welcome-team {
+  gap: 1rem;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  @media only screen and (max-width: 1000px) {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
+.welcome-team-div {
+  display: flex;
+  flex-direction: column;
+}
+.welcome-team-div-img1 {
+  object-fit: cover;
+  margin-bottom: 15px;
+  border-radius: 999px;
+  width: 160px !important;
+  height: 160px !important;
+}
+.welcome-team-div-img2 {
+  object-fit: cover;
+  margin-bottom: 15px;
+  border-radius: 999px;
+  width: 206px !important;
+  height: 206px !important;
+}
+
 .auth-media video {
   pointer-events: none;
 }
@@ -394,6 +527,7 @@ h3{
 
 body{
   font-family: "elza-text",sans-serif !important;
+  scroll-behavior: smooth;
   overflow-x: hidden;
 }
 
@@ -418,6 +552,12 @@ body{
 
 .nodisplay-sm{
   @media only screen and (max-width: 600px) {
+    display: none !important;
+  }
+}
+
+.nodisplay-sm2 {
+  @media only screen and (max-width: 1400px) {
     display: none !important;
   }
 }

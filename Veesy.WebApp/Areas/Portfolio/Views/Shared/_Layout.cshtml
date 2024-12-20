@@ -58,6 +58,9 @@
 	<header>
 		@{
 			var background = ViewContext.RouteData.Values["Controller"].ToString() == "Cloud" ? "bg-grey" : "bg-grey-veesy";
+			var deskNoPadding = ViewContext.RouteData.Values["Controller"].ToString() == "Home" 
+				? "padding-left: 0px; padding-right: 0px;" 
+				: "padding-left: 22px; padding-right: 22px;";
 		}
 		<nav class="navbar navbar-expand-sm navbar-toggleable-sm mb-3 fixed-top" style="position: absolute; ">
 			<div class="container-fluid" style="margin-right: 20px; padding-right: 0px;">
@@ -301,7 +304,7 @@
 			<span class="sr-only">Loading...</span>
 		</div>
 	</div>
-	<div class="@background container-fluid" style="padding-left: 22px; padding-right: 22px; min-height: 102.5vh;">
+	<div class="@background container-fluid" style="@deskNoPadding min-height: 102.5vh;">
 		@RenderBody()
 	</div>
 
