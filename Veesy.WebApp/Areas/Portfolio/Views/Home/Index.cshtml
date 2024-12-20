@@ -3,337 +3,637 @@
 
 @{
 	ViewData["Title"] = "Dashboard";
+	bool showOnboarding = false;
 }
 
-<h1 class="h3 fw-normal">
-	<div class="navbar-brand d-inline-flex text-black" style="margin-top: 0.7rem!important;" asp-area="" asp-controller="Home" asp-action="Index"></div>
-</h1>
+@if (showOnboarding)
+{
 
+	<h1 class="h3 fw-normal">
+		<div class="navbar-brand d-inline-flex text-black" style="margin-top: 0.7rem!important;" asp-area="" asp-controller="Home" asp-action="Index"></div>
+	</h1>
 
-<div class="padding-lg">
-	<div class="row pt-4 p-4-lg">
-		<div class="empty-veesy nodisplay-sm"></div>
-		<div class="empty-veesy nodisplay-sm"></div>
-		<div class="col-sm-12 ps-3 col-md-4">
-			<h1 class="text-color mt-2">
-				Welcome back @Model.Name,<br /> your creative space awaits...
-			</h1>
-			<div class="empty-veesy"></div>
-			<div class="empty-veesy"></div>
-			<div class="col-12">
-				<a class="mb-0">
-					<strong>Do you need some help?</strong>
-				</a>
+	<div class="container py-5 d-flex flex-column" style="min-height: 100vh; justify-content: space-between !important;">
+		<div class="welcome-head">
+			<!-- (220x220 GIF Image) -->
+			<div>
+				<img src="~/imgs/mail/welcome/source.gif" alt="GIF" class="img-fluid" style="border-radius: 4px; max-width: 220px; max-height: 220px;">
 			</div>
-			<a href="mailto:info@veesy.it" class="grey-link-underline mb-4">Contact us</a>
-			<div class="empty-veesy"></div>
+
+			<!-- Colonna Destra (Big Text, Subtext, and Buttons) -->
+			<div>
+				<div class="text-left">
+					<h1 class="fw-bold text-color welcome-head-h1" style="line-height: normal !important;">
+						Ciao, @Model.Name, sei su Veesy,<br class="nodisplay-sm" />
+						la <b class="fw-bolder">piattaforma-community</b> dedicata a <br class="nodisplay-sm" />
+						chi lavora nel mondo della creatività.
+					</h1>
+					<p style="font-size: 18px !important; margin-top: 50px;">
+						Organizza il tuo portfolio e i tuoi media nel Desk o connettiti<br class="nodisplay-sm" />
+						con altrɜ freelancer su Discord, nella nostra community.<br class="nodisplay-sm" />
+						Cosa vuoi fare, adesso?
+					</p>
+
+					<!-- Buttons -->
+					<div class="welcome-head-buttons" style="margin-top: 50px;">
+						<a href="/desk"
+							 class="d-flex justify-content-center align-items-center gap-4 btn px-4 py-3 fw-bold"
+							 style="background: #F0F0F0 !important; border-radius: 16px; position: relative; color: var(--text-color) !important;
+							">
+							esplora il desk
+							<div style="position: relative; display: flex; align-items: center; justify-content: center;">
+								<div class="welcome-icon-desk" style="width: 22px; height: 12px; background: #75CCDD !important; z-index: 999; mix-blend-mode: multiply;"></div>
+								<div class="welcome-icon-desk" style="width: 22px; height: 12px; background: #F0B800 !important; position: absolute; left: -2px; top: -7px;"></div>
+							</div>
+						</a>
+
+						<a href="https://discord.gg/VAVfu9TQEp" target="_blank"
+							 class="d-flex justify-content-center align-items-center gap-4 btn px-4 py-3 fw-bold"
+							 style="background: #F0F0F0 !important; border-radius: 16px; position: relative; color: var(--text-color) !important;
+								">
+							entra in discord
+							<div style="position: relative; display: flex; align-items: center; justify-content: center;">
+								<div style="width: 24px; height: 12px; border-radius: 999px; background: #fe61ba !important; z-index: 999; mix-blend-mode: multiply; transform: rotate(-20deg)"></div>
+								<div style="width: 24px; height: 12px; border-radius: 999px; background: #00CE85 !important; position: absolute; left: -13px; top: -4px;"></div>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
 		</div>
-		<div class="ps-3 pe-3 col-sm-12 col-md-8">
-			<div style="border: none" class="card card-dashboard rounded-05 bg-transparent">
-				<div class="card-header rounded-05-header p-0 bg-white" style="border-bottom: 0px;">
-					<div class="row m-0 dashboard-header-border">
-						<div class="col-9 mt-2 mb-1">
-							<p class="mb-0" style="font-size: 14px !important; line-height: 22px !important;">
-								<strong>OVERVIEW</strong>
+
+		<!-- Sezione con "Servono più info?" alla fine -->
+		<div class="container sm-cntr">
+			<div class="welcome-head">
+				<div style="min-width: 290px; min-height: 1px;"></div>
+				<div style="padding-top: 10px; width: 100% !important;">
+					<a href="#moreInfo" class="btn veesy-text-color fw-bolder"
+						 style="
+							padding: 15px 40px;
+							border-top-left-radius: 10px;
+							border-top-right-radius: 10px;
+							background: #D8DBDF !important;
+							margin-bottom: 0;
+							letter-spacing: 0.5px;
+								">
+						Leggi di più su<br /> 
+						Veesy <i class="fas fa-arrow-down fa-2xs"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="moreInfo" class="container py-5" style="min-height: 100vh;">
+		<div class="welcome-cards">
+			<!-- Card 1 -->
+			<div class="welcome-card">
+				<div class="welcome-card text-white" style="background: #202F4D !important; border-radius: 20px; min-height: 550px; padding: 30px;">
+					<div class="card-body d-flex flex-column justify-content-between" style="color: #E1E5E7 !important;">
+						<h5 class="card-title px-3 py-2" style="border-radius: 999px; width: max-content; border: 1px solid #5A667C; color: #E1E5E7 !important;">discord</h5>
+						<h1 style="color: #E1E5E7 !important; line-height: 50px !important; font-size: 40px !important;" class="card-text pt-4">
+							La tua rete<br />
+							<b>professionale</b>
+						</h1>
+
+						<p class="pt-4" style="font-weight: 500 !important; line-height: 28px !important; font-size: 20px !important; color: #E1E5E7 !important;">
+							Scambia idee, trova collaborazioni e accedi a risorse esclusive. La community è il cuore pulsante del networking Veesy: uno spazio e strumento di lavoro che rende le connessioni professionali più umane e immediate.
+						</p>
+
+						<a href="https://discord.gg/VAVfu9TQEp" target="_blank"
+							 class="d-flex justify-content-center align-items-center gap-4 btn mt-4 px-4 py-3 fw-bold"
+							 style="width: max-content; background: #F0F0F0 !important; border-radius: 16px; position: relative;;
+							">
+							entra in community
+							<div style="position: relative; display: flex; align-items: center; justify-content: center;">
+								<div style="width: 24px; height: 12px; border-radius: 999px; background: #fe61ba !important; z-index: 999; mix-blend-mode: multiply; transform: rotate(-20deg)"></div>
+								<div style="width: 24px; height: 12px; border-radius: 999px; background: #00CE85 !important; position: absolute; left: -13px; top: -4px;"></div>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<!-- Card 2 -->
+			<div class="welcome-card">
+				<div class="welcome-card" style="background: linear-gradient(154deg, #75CCDD 40%, #00CE85); border-radius: 20px; min-height: 550px; padding: 30px;">
+					<div class="card-body d-flex flex-column justify-content-between" style="color: #E1E5E7 !important;">
+						<h5 class="card-title px-3 py-2" style="border-radius: 999px; width: max-content; border: 1px solid #5A667C; color: #202F4D !important;">desk</h5>
+						<h1 style="color: #202F4D !important; line-height: 50px !important; font-size: 40px !important;" class="card-text pt-4">
+							La tua <b>dashboard</b><br />
+							magica
+						</h1>
+
+						<p class="pt-4" style="font-weight: 500 !important; line-height: 28px !important; font-size: 20px !important; color: #202F4D !important;">
+							Cataloga, organizza, condividi in un attimo il tuo portfolio: rendilo il tuo cappello magico, la tua scatola delle meraviglie. Tira fuori ciò che serve, quando serve, attingendo dai tuoi media in un cloud sconfinato.
+						</p>
+
+						<a href="/desk" target="_blank"
+							 class="d-flex justify-content-center align-items-center gap-4 btn mt-4 px-4 py-3 fw-bold"
+							 style="width: max-content; background: #F0F0F0 !important; border-radius: 16px; position: relative;
+							">
+							esplora il desk
+							<div style="position: relative; display: flex; align-items: center; justify-content: center;">
+								<div class="welcome-icon-desk" style="width: 22px; height: 12px; background: #75CCDD !important; z-index: 999; mix-blend-mode: multiply;"></div>
+								<div class="welcome-icon-desk" style="width: 22px; height: 12px; background: #F0B800 !important; position: absolute; left: -2px; top: -7px;"></div>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Sezione con "Tutto fantastico..." alla fine -->
+		<div class="welcome-cards-bottom" style="flex-direction: column; margin-top: 100px;">
+			<div class="welcome-cards-bottom">
+				<div class="text-center veesy-text-color"
+						 style="
+						padding: 22px 25px;
+						border-radius: 15px;
+						background: #C1DDE3 !important;
+						margin-bottom: 0;
+						letter-spacing: 0.5px;
+						font-weight: 600 !important;
+						font-size: 14px !important;
+					">
+					Tutto fantastico, ma<br />
+					vuoi capire meglio<br />
+					come funziona?
+				</div>
+				<p class="mb-0" style="font-size: 18px !important; line-height: 24px !important;">
+					Scrivici per avere assistenza o chiedere più<br class="nodisplay-sm" />
+					info. Siamo già una community! E siamo qui per<br class="nodisplay-sm" />
+					rendere il tuo percorso più semplice e interessante<br class="nodisplay-sm" />
+					fin dal tuo ingresso.
+				</p>
+			</div>
+			@* <a href="/contact" target="_blank" class="welcome-cards-help fw-bold">
+				contattaci <i class="fas fa-arrow-right fa-2xs"></i>
+			</a> *@
+		</div>
+
+	</div>
+
+	<div style="display: flex; min-height: 10vh;">
+		<div style="width: 100%; background: #CDD2D8 !important; height: 10vh; border-radius: 100% 0% 100% 0% / 55% 100% 0% 78%;"></div>
+		<div style="width: 100%; background: #CDD2D8 !important; height: 10vh; border-radius: 0% 100% 0% 100% / 100% 55% 78% 0%;"></div>
+	</div>
+
+	<div class="py-5" style="background: #CDD2D8 !important; min-height: 70vh;">
+		<div class="container d-flex flex-column">
+			<div class="welcome-team">
+				<div class="welcome-team-div" style="align-items: center; justify-content: start;">
+					<div class="welcome-team-div" style="align-items: center;">
+						<img src="~/imgs/Discord/pfp_angelo.png" alt="Angelo - Discord Manager" class="welcome-team-div-img1" />
+						<h3 class="fw-bold" style="font-size: 20px !important;">Angelo</h3>
+						<h6 style="color: #202F4D !important;">Discord Manager</h6>
+					</div>
+				</div>
+				<div class="welcome-team-div" style="align-items: center; min-height: 50vh; justify-content: center;">
+					<h1 class="fw-bold text-center" style="font-size: 40px !important;">Piacere di conoscerti!</h1>
+					<p style="text-align: center;" class="mt-5">
+						Parla direttamente con Angelo e Lodo, il team di<br class="nodisplay-sm2" />
+						accoglienza della community Discord. Rispondiamo alle<br class="nodisplay-sm2" />
+						tue domande, ascoltiamo i feedback e ti aiutiamo a vivere<br class="nodisplay-sm2" />
+						al meglio l’esperienza Veesy.
+					</p>
+					<a href="https://discord.gg/VAVfu9TQEp" target="_blank"
+						 class="d-flex justify-content-center align-items-center gap-4 btn mt-4 px-4 py-3 fw-bold"
+						 style="width: max-content; background: #F0F0F0 !important; border-radius: 16px; position: relative; color: var(--text-color) !important;
+						">
+						entra in discord
+						<div style="position: relative; display: flex; align-items: center; justify-content: center;">
+							<div style="width: 24px; height: 12px; border-radius: 999px; background: #fe61ba !important; z-index: 999; mix-blend-mode: multiply; transform: rotate(-20deg)"></div>
+							<div style="width: 24px; height: 12px; border-radius: 999px; background: #00CE85 !important; position: absolute; left: -13px; top: -4px;"></div>
+						</div>
+					</a>
+				</div>
+				<div class="welcome-team-div" style="align-items: center; justify-content: end;">
+					<div class="welcome-team-div" style="align-items: center;">
+						<img src="~/imgs/Discord/pfp_lodovica.png" alt="Lodovica - Community Manager" class="welcome-team-div-img2" />
+						<h3 class="fw-bold" style="font-size: 20px !important;">Lodovica</h3>
+						<h6 style="color: #202F4D !important;">Community Manager</h6>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div style="background: #CDD2D8 !important; min-height: 50vh; padding-bottom: 140px;">
+		<div class="container d-flex flex-column">
+			<div class="welcome-last" style="text-align: center">
+				<h1 class="fw-bold" style="font-size: 40px !important;">Cose interessanti</h1>
+				<p class="mt-4" style="font-size: 18px !important;">Non ci si annoia mai, qui! Abbiamo sempre contenuti freschi da leggere,<br class="nodisplay-sm2" /> ascoltare, commentare, condividere con chi abbiamo affinità professionali.</p>
+			</div>
+			<div class="welcome-last-grid" style="margin-top: 60px !important;">
+
+				<div style="width: 40%; background: #E1E5E7 !important; flex-direction: column; justify-content: space-between !important;" class="welcome-last-grid-div">
+					<div style="width: 100% !important;">
+						<iframe style="
+							width: 100% !important;
+							border-top-left-radius:12px !important;
+							border-top-right-radius:12px !important;"
+							src="https://open.spotify.com/embed/episode/6JP5LkN4XNCA6rZvglLqNA?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+						<div style="padding: 20px 30px;">
+							<h1 class="mt-3" style="font-size: 25px !important;">Il nostro Podcast: <b>Frigo Pieno</b></h1>
+							<p class="mt-4" style="font-size: 18px !important;">
+								Nato da chiacchiere di fine giornata, ora è un podcast su Spotify per freelancer. Si parla di idee, IA, burnout, personal branding.
 							</p>
 						</div>
-						<div style="border-radius: 0 0.5rem 0 0;" class="col-3 text-end bg-gradient-1">
-							<i class="fa-solid fa-circle fa-2xs color-circle mt-3"></i>
+					</div>
+					<div style="padding: 0px 30px;" class="fw-bold mb-5">
+						<a href="https://open.spotify.com/show/4roHmmrq6ogk1n2GBl4uoQ?si=d8a588d626bc4a38" target="_blank">
+							qui le puntate
+							<span style="position: relative; width: max-content; border-radius: 999px; border: 2px solid #D4DADD;">
+								<i class="fas fa-arrow-right fa-2xs px-2"></i>
+							</span>
+						</a>
+					</div>
+				</div>
+
+				<div style="width: 30%; flex-direction: column; background: linear-gradient(153deg, #202F4D 40%, #146A62)" class="cntr welcome-last-grid-div">
+					<h1 style="font-size: 24px !important;" class="text-white">Community <b>live</b></h1>
+					<div class="text-center mt-3 veesy-text-color"
+							 style="
+							padding: 22px 25px;
+							border-radius: 10px;
+							background: #00CE85 !important;
+							margin-bottom: 0;
+							letter-spacing: 0.5px;
+							font-weight: 600 !important;
+							font-size: 14px !important;
+							">
+						Cosa succede nei<br />
+						tuoi canali Discord,<br />
+						in tempo reale
+					</div>
+				</div>
+
+				<div style="width: 30%; background-image: url('../../imgs/welcome_last_pic.png'); background-repeat: no-repeat;" class="welcome-last-grid-div cntr">
+					<div style="
+						background: rgba(255, 255, 255, 0.25) !important;
+						border-radius: 10px !important;
+						opacity: 1 !important;
+						backdrop-filter: blur(25px) !important;
+						-webkit-backdrop-filter: blur(25px) !important;
+						height: 54% !important; width: 80% !important
+						">
+						<div class="cntr text-center py-4 px-4" style="flex-direction: column !important; height: 100% !important;">
+							<h1 style="font-size: 25px !important;" class="text-color text-center">Talk di community: gli <b>Asterischi</b></h1>
+							<p class="pt-3 mb-0">Appuntamenti settimanali nella voice room, di solito il mercoledì sera: parliamo delle note a margine sulla vita freelancer.</p>
 						</div>
 					</div>
 				</div>
-				<div class="card-body card-body-dashboard row p-0 m-0">
+			</div>
 
-					<div class="ps-3 col-sm-12 col-lg-3 card-body-background-radius card-body-background vertical-space pb-0 pt-2">
-						@if (Model.DiscordConnected)
-						{
-							<i style="color: #75CCDD" class="fa-brands fa-discord fa-4x m-2 mt-4"></i>
-						}
-						else
-						{
-							<i style="color: #AAB0BB" class="fa-brands fa-discord fa-4x m-2 mt-4"></i>
-						}
-						<div>
+			<div class="mt-5" style="display: flex; align-items: center; justify-content: center;">
+				<a href="/desk" target="_blank"
+					 class="d-flex justify-content-center align-items-center gap-4 btn mt-4 px-4 py-3 fw-bold"
+					 style="width: max-content; background: #F0F0F0 !important; border-radius: 16px; position: relative; color: var(--text-color) !important;
+					">
+					esplora il desk
+					<div style="position: relative; display: flex; align-items: center; justify-content: center;">
+						<div class="welcome-icon-desk" style="width: 22px; height: 12px; background: #75CCDD !important; z-index: 999; mix-blend-mode: multiply;"></div>
+						<div class="welcome-icon-desk" style="width: 22px; height: 12px; background: #F0B800 !important; position: absolute; left: -2px; top: -7px;"></div>
+					</div>
+				</a>
+			</div>
+		</div>
+	</div>
+
+}
+else
+{
+	<h1 class="h3 fw-normal">
+		<div class="navbar-brand d-inline-flex text-black" style="margin-top: 0.7rem!important;" asp-area="" asp-controller="Home" asp-action="Index"></div>
+	</h1>
+
+
+	<div class="padding-lg">
+		<div class="row pt-4 p-4-lg">
+			<div class="empty-veesy nodisplay-sm"></div>
+			<div class="empty-veesy nodisplay-sm"></div>
+			<div class="col-sm-12 ps-3 col-md-4">
+				<h1 class="text-color mt-2">
+					Welcome back @Model.Name,<br /> your creative space awaits...
+				</h1>
+				<div class="empty-veesy"></div>
+				<div class="empty-veesy"></div>
+				<div class="col-12">
+					<a class="mb-0">
+						<strong>Do you need some help?</strong>
+					</a>
+				</div>
+				<a href="mailto:info@veesy.it" class="grey-link-underline mb-4">Contact us</a>
+				<div class="empty-veesy"></div>
+			</div>
+			<div class="ps-3 pe-3 col-sm-12 col-md-8">
+				<div style="border: none" class="card card-dashboard rounded-05 bg-transparent">
+					<div class="card-header rounded-05-header p-0 bg-white" style="border-bottom: 0px;">
+						<div class="row m-0 dashboard-header-border">
+							<div class="col-9 mt-2 mb-1">
+								<p class="mb-0" style="font-size: 14px !important; line-height: 22px !important;">
+									<strong>OVERVIEW</strong>
+								</p>
+							</div>
+							<div style="border-radius: 0 0.5rem 0 0;" class="col-3 text-end bg-gradient-1">
+								<i class="fa-solid fa-circle fa-2xs color-circle mt-3"></i>
+							</div>
+						</div>
+					</div>
+					<div class="card-body card-body-dashboard row p-0 m-0">
+
+						<div class="ps-3 col-sm-12 col-lg-3 card-body-background-radius card-body-background vertical-space pb-0 pt-2">
 							@if (Model.DiscordConnected)
 							{
-								<h3 class="text-color"><strong>Connected</strong> to <br /> @Model.DiscordUsername</h3>
-								<div class="mb-3 mt-3">
-									<a href="https://discord.gg/VAVfu9TQEp" target="_blank" class="grey-link">your community <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-								</div>
+								<i style="color: #75CCDD" class="fa-brands fa-discord fa-4x m-2 mt-4"></i>
 							}
 							else
 							{
-								<h3 class="text-color"><strong>Connect</strong> your Discord <br /> account</h3>
-								<div class="mb-3 mt-3">
-									<a href="@Model.DiscordLink" class="red-link font-a-as-p"><i class="fa-brands fa-discord text-2xl me-1"></i>connect discord</a>
-								</div>
+								<i style="color: #AAB0BB" class="fa-brands fa-discord fa-4x m-2 mt-4"></i>
 							}
-							<hr class="nodisplay-lg" />
-						</div>
-					</div>
-
-					<div class="ps-3 col-sm-12 col-lg-3 card-body-background vertical-space pt-2 pb-0">
-						<div class="mt-4 pt-1">
-							<div class="d-flex align-items-end mb-2">
-								<h1 style="font-size: 65px !important; line-height: 65px !important;" class="text-color">
-									<strong>@Model.MediaNumber</strong>
-								</h1>
-								@if (Model.Subscription.AllowedMediaNumber == -1)
+							<div>
+								@if (Model.DiscordConnected)
 								{
-									<h3 style="font-size: 40px !important; line-height: 40px; color: #D2D5DB !important;" class="mb-4">/∞</h3>
+									<h3 class="text-color"><strong>Connected</strong> to <br /> @Model.DiscordUsername</h3>
+									<div class="mb-3 mt-3">
+										<a href="https://discord.gg/VAVfu9TQEp" target="_blank" class="grey-link">your community <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+									</div>
 								}
 								else
 								{
-									<h3 style="font-size: 40px !important; line-height: 40px; color: #D2D5DB !important;" class="mb-4">/@Model.Subscription.AllowedMediaNumber</h3>
+									<h3 class="text-color"><strong>Connect</strong> your Discord <br /> account</h3>
+									<div class="mb-3 mt-3">
+										<a href="@Model.DiscordLink" class="red-link font-a-as-p"><i class="fa-brands fa-discord text-2xl me-1"></i>connect discord</a>
+									</div>
 								}
-							</div>
-							<div style="height: 5px;" class="progress" id="progress-media">
-								<div class="progress-bar" role="progressbar" aria-valuenow="@Model.MediaPercent" aria-valuemin="0" aria-valuemax="100"></div>
+								<hr class="nodisplay-lg" />
 							</div>
 						</div>
-						<div class="mt-4">
-							<h3 class="text-color"><strong>Files uploaded</strong> on <br /> cloud.</h3>
-							<div class="mb-3 mt-3">
-								<a asp-action="List" asp-controller="Cloud" asp-area="Portfolio" class="grey-link">your cloud <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-							</div>
-							<hr class="nodisplay-lg" />
-						</div>
-					</div>
-					<div class="ps-3 col-sm-12 col-lg-3 card-body-background vertical-space pt-2 pb-0">
-						<div class="mt-4 pt-1">
-							<h1 style="font-size: 65px !important; line-height: 65px !important;" class="text-color">
-								<strong>@Model.PortfolioNumber.ToString("00")</strong>
-							</h1>
-						</div>
-						<div class="mt-4 pt-2">
-							<h3 class="text-color"><strong>Portfolios </strong>created from <br /> your media.</h3>
-							<div class="mb-3 mt-3">
-								<a asp-action="List" asp-controller="Portfolio" asp-area="Portfolio" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i>edit portfolios</a>
-							</div>
-							<hr class="nodisplay-lg" />
-						</div>
-					</div>
-					<div class="ps-3 col-sm-12 col-lg-3 pt-1 border-card-subscription vertical-space pb-0" id="bg-plan">
-						<div class="mt-4 pt-1">
-							<h3 class="mb-0">Your plan:</h3>
-							<div class="row text-white" style="display: flex; align-items: center;">
-								<h2 style="width: max-content; margin-bottom: 0;">
-									<strong>@Model.Subscription.Name</strong>
-								</h2>
-								<span class="tag-beta">BETA</span>
-							</div>
-						</div>
-						<div>
-							@if (@Model.Subscription.Price > 0)
-							{
-								<h3 class="mb-0 text-white">@((Model.Subscription.Price * 12).ToString("00"))€ / year</h3>
-							}
-							else
-							{
-								<h3 class="mb-0 text-white">free forever</h3>
-							}
-							@if (Model.Subscription.AllowedMediaNumber == -1)
-							{
-								<h3 class="text-white">unlimited media</h3>
-							}
-							else
-							{
-								<h3 class="text-white">max. @Model.Subscription.AllowedMediaNumber media</h3>
-							}
-							<div class="mb-3 mt-3">
-								@if (@Model.Subscription.Name == "Pro")
-								{
-									<a asp-action="PricingPlan" asp-controller="Public" asp-area="Public" class="upgrade-plan-btn-pro" type="submit">
-										<span style="color: white">view plans & upgrade</span>
-									</a>	
-								} 
-								else 
-								{
-									<a asp-action="PricingPlan" asp-controller="Public" asp-area="Public" class="upgrade-plan-btn" type="submit">
-										<span style="color: white">view plans & upgrade</span>
-									</a>
-								}
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 
-
-	<div class="row mt-3 pt-3 pb-4 p-4-lg mb-4 row-eq-height">
-		<div class="mb-4 ps-3 pe-3 h-100 col-sm-12 col-md-4 rounded-05">
-			<div class="pb-1 pt-0 bg-white card-header d-flex rounded-05-header alternative-bottom-border-dash">
-				<div class="col-11">
-					<p class="mt-2 mb-0" style="font-size: 14px !important; line-height: 22px !important;">
-						<strong>PORTFOLIO</strong>
-					</p>
-				</div>
-				<div class="col-1 text-end">
-					<i class="fa-solid fa-circle fa-2xs circle-color-dash mt-3"></i>
-				</div>
-			</div>
-			<div class="pt-2 vertical-space card-body bg-white rounded-bottom rounded-05-footer">
-				<h1 class="mt-3 text-color">Create stunning portfolios and share your work effortlessly.</h1>
-				<div class="row pt-2">
-					@if (Model.PortfolioThumbnailDto != null)
-					{
-						<div class="col-4 pe-0">
-							<div style="width: 100% !important;" class='box m-0'>
-								<div class='content1_1'>
-									@if (Model.PortfolioThumbnailDto.IsVideo)
+						<div class="ps-3 col-sm-12 col-lg-3 card-body-background vertical-space pt-2 pb-0">
+							<div class="mt-4 pt-1">
+								<div class="d-flex align-items-end mb-2">
+									<h1 style="font-size: 65px !important; line-height: 65px !important;" class="text-color">
+										<strong>@Model.MediaNumber</strong>
+									</h1>
+									@if (Model.Subscription.AllowedMediaNumber == -1)
 									{
-										<video autoplay="autoplay" muted loop class="image-fit-radius-dashboard" title="@Model.PortfolioThumbnailDto.DefaultImageOriginalName">
-											<source src="@Model.BasePath@Model.PortfolioThumbnailDto.DefaultImageName?tr=w-400" type="video/mp4">
-										</video>
+										<h3 style="font-size: 40px !important; line-height: 40px; color: #D2D5DB !important;" class="mb-4">/∞</h3>
 									}
 									else
 									{
-										if (Model.PortfolioThumbnailDto.DefaultImageName == "")
-										{
-											<img class="image-fit-radius-dashboard" src="~/imgs/noimage.png" />
-										}
-										else
-										{
-											<img class="image-fit-radius-dashboard" title="@Model.PortfolioThumbnailDto.DefaultImageOriginalName" src="@Model.BasePath@Model.PortfolioThumbnailDto.DefaultImageName?tr=w-400" />
-										}
+										<h3 style="font-size: 40px !important; line-height: 40px; color: #D2D5DB !important;" class="mb-4">/@Model.Subscription.AllowedMediaNumber</h3>
+									}
+								</div>
+								<div style="height: 5px;" class="progress" id="progress-media">
+									<div class="progress-bar" role="progressbar" aria-valuenow="@Model.MediaPercent" aria-valuemin="0" aria-valuemax="100"></div>
+								</div>
+							</div>
+							<div class="mt-4">
+								<h3 class="text-color"><strong>Files uploaded</strong> on <br /> cloud.</h3>
+								<div class="mb-3 mt-3">
+									<a asp-action="List" asp-controller="Cloud" asp-area="Portfolio" class="grey-link">your cloud <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+								</div>
+								<hr class="nodisplay-lg" />
+							</div>
+						</div>
+						<div class="ps-3 col-sm-12 col-lg-3 card-body-background vertical-space pt-2 pb-0">
+							<div class="mt-4 pt-1">
+								<h1 style="font-size: 65px !important; line-height: 65px !important;" class="text-color">
+									<strong>@Model.PortfolioNumber.ToString("00")</strong>
+								</h1>
+							</div>
+							<div class="mt-4 pt-2">
+								<h3 class="text-color"><strong>Portfolios </strong>created from <br /> your media.</h3>
+								<div class="mb-3 mt-3">
+									<a asp-action="List" asp-controller="Portfolio" asp-area="Portfolio" class="grey-link"><i class="fa-regular fa-pen-to-square pe-1"></i>edit portfolios</a>
+								</div>
+								<hr class="nodisplay-lg" />
+							</div>
+						</div>
+						<div class="ps-3 col-sm-12 col-lg-3 pt-1 border-card-subscription vertical-space pb-0" id="bg-plan">
+							<div class="mt-4 pt-1">
+								<h3 class="mb-0">Your plan:</h3>
+								<div class="row text-white" style="display: flex; align-items: center;">
+									<h2 style="width: max-content; margin-bottom: 0;">
+										<strong>@Model.Subscription.Name</strong>
+									</h2>
+									<span class="tag-beta">BETA</span>
+								</div>
+							</div>
+							<div>
+								@if (@Model.Subscription.Price > 0)
+								{
+									<h3 class="mb-0 text-white">@((Model.Subscription.Price * 12).ToString("00"))€ / year</h3>
+								}
+								else
+								{
+									<h3 class="mb-0 text-white">free forever</h3>
+								}
+								@if (Model.Subscription.AllowedMediaNumber == -1)
+								{
+									<h3 class="text-white">unlimited media</h3>
+								}
+								else
+								{
+									<h3 class="text-white">max. @Model.Subscription.AllowedMediaNumber media</h3>
+								}
+								<div class="mb-3 mt-3">
+									@if (@Model.Subscription.Name == "Pro")
+									{
+										<a asp-action="PricingPlan" asp-controller="Public" asp-area="Public" class="upgrade-plan-btn-pro" type="submit">
+											<span style="color: white">view plans & upgrade</span>
+										</a>
+									}
+									else
+									{
+										<a asp-action="PricingPlan" asp-controller="Public" asp-area="Public" class="upgrade-plan-btn" type="submit">
+											<span style="color: white">view plans & upgrade</span>
+										</a>
 									}
 								</div>
 							</div>
 						</div>
-						<div class="col-8 vertical-space">
-							<h5>
-								<a class="blue-link-option" onclick="CopyLink('@Model.ApplicationUrl@Url.Action("Portfolio", "Public", new { area = "Public", user = @Model.PortfolioThumbnailDto.FullnameForUrl, portfolioname = Model.PortfolioThumbnailDto.PortfolionameForUrl })')">
-									<i class="fa-regular fa-clone me-2"></i>
-								</a><strong class="text-color">@Model.PortfolioThumbnailDto.Name</strong>
-							</h5>
-							<p class="veesy-grey-p mb-0" style="margin-bottom: 2rem">Updated on @Model.PortfolioThumbnailDto.LastUpdate<br />@Model.PortfolioThumbnailDto.NumberMedia media uploaded</p>
-						</div>
-					}
-					else
-					{
-						<div class="empty-veesy"></div>
-						<div class="text-center text-color">No featured portfolio yet</div>
-						<div class="empty-veesy"></div>
-					}
+					</div>
 				</div>
-				<div class="row pt-2">
-					<hr class="hr-color-dash" />
-					<div class="col-6 pt-2">
+			</div>
+		</div>
+
+
+		<div class="row mt-3 pt-3 pb-4 p-4-lg mb-4 row-eq-height">
+			<div class="mb-4 ps-3 pe-3 h-100 col-sm-12 col-md-4 rounded-05">
+				<div class="pb-1 pt-0 bg-white card-header d-flex rounded-05-header alternative-bottom-border-dash">
+					<div class="col-11">
+						<p class="mt-2 mb-0" style="font-size: 14px !important; line-height: 22px !important;">
+							<strong>PORTFOLIO</strong>
+						</p>
+					</div>
+					<div class="col-1 text-end">
+						<i class="fa-solid fa-circle fa-2xs circle-color-dash mt-3"></i>
+					</div>
+				</div>
+				<div class="pt-2 vertical-space card-body bg-white rounded-bottom rounded-05-footer">
+					<h1 class="mt-3 text-color">Create stunning portfolios and share your work effortlessly.</h1>
+					<div class="row pt-2">
 						@if (Model.PortfolioThumbnailDto != null)
 						{
-							<a asp-controller="Portfolio" asp-action="Settings" asp-route-id="@Model.PortfolioThumbnailDto.Code" asp-area="Portfolio" class="grey-link ms-2"><i class="fa-regular fa-pen-to-square pe-1"></i>edit main portfolio</a>
-						}
-					</div>
-					<div class="col-6 text-end">
-						<a asp-controller="Portfolio" asp-action="List" asp-area="Portfolio" class="w-100 rounded-pill btn btn-primary a-font-p" type="submit">your portfolios</a>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="mb-4 ps-3 pe-3 col-sm-12 col-md-4 rounded-05 h-100">
-			<div style="border-bottom: 1px solid rgba(255,255,255, 0.125)" class="pb-1 pt-0 bg-grey-dash card-header d-flex rounded-05-header">
-				<div class="col-11">
-					<p class="text-white mt-2 mb-0" style="font-size: 14px !important; line-height: 22px !important;">
-						<strong>CLOUD</strong>
-					</p>
-				</div>
-				<div class="col-1 text-end">
-					<i class="fa-solid fa-circle fa-2xs mt-3" style="color: #ffffff;"></i>
-				</div>
-			</div>
-			<div class="pt-0 vertical-space card-body bg-grey-dash rounded-bottom rounded-05-footer">
-				<div>
-					<p class="text-white mt-4 mb-0"><strong>Quick Upload: </strong>Upload now and use anytime and everywhere.</p>
-					<p class="text-white mb-0">Formats accepted: <strong>jpg, png, mov, mp4, gif.</strong></p>
-				</div>
-				<div class="row">
-					<div class="col-12 rounded pt-4" style="color: transparent">
-						<div id="div-uploader" style="overflow-y: auto; max-height: 190px">
-							<form enctype="multipart/form-data" asp-action="UploadMedia" asp-controller="Media" asp-area="Portfolio" class="dropzone card-grey-dashed-dropzone" id="uploader">
-								<a id="dropzone-close-button" style="padding: 0.7rem 1rem !important; display: none;" onclick="hideDropZone()" class="p-0 ms-2 btn btn-light border fw-bolder shadow-none close-button-dropzone">
-									<i class="fas fa-times-circle fa-2xs text-primary" id="icon-color" aria-hidden="true"></i>
-									<span id="color-text-variant">close</span>
-								</a>
-								<div class="pt-4 dz-message needsclick" id="message-uploader">
-									<div id="div-uploader-icon" class="w-100 mb-1">
-										<i id="uploader-icon" class="fa-solid fa-circle-plus fa-xl" style="color: #383B43"></i>
-									</div>
-									<span id="uploader-text" style="color: white;" class="text-white">
-										upload or drop your files here
-									</span>
-									<div class="progress-bar progress-bar-primary" role="progressbar" data-dz-uploadprogress>
-										<span class="progress-text"></span>
+							<div class="col-4 pe-0">
+								<div style="width: 100% !important;" class='box m-0'>
+									<div class='content1_1'>
+										@if (Model.PortfolioThumbnailDto.IsVideo)
+										{
+											<video autoplay="autoplay" muted loop class="image-fit-radius-dashboard" title="@Model.PortfolioThumbnailDto.DefaultImageOriginalName">
+												<source src="@Model.BasePath@Model.PortfolioThumbnailDto.DefaultImageName?tr=w-400" type="video/mp4">
+											</video>
+										}
+										else
+										{
+											if (Model.PortfolioThumbnailDto.DefaultImageName == "")
+											{
+												<img class="image-fit-radius-dashboard" src="~/imgs/noimage.png" />
+											}
+											else
+											{
+												<img class="image-fit-radius-dashboard" title="@Model.PortfolioThumbnailDto.DefaultImageOriginalName" src="@Model.BasePath@Model.PortfolioThumbnailDto.DefaultImageName?tr=w-400" />
+											}
+										}
 									</div>
 								</div>
-							</form>
-						</div>
+							</div>
+							<div class="col-8 vertical-space">
+								<h5>
+									<a class="blue-link-option" onclick="CopyLink('@Model.ApplicationUrl@Url.Action("Portfolio", "Public", new { area = "Public", user = @Model.PortfolioThumbnailDto.FullnameForUrl, portfolioname = Model.PortfolioThumbnailDto.PortfolionameForUrl })')">
+										<i class="fa-regular fa-clone me-2"></i>
+									</a><strong class="text-color">@Model.PortfolioThumbnailDto.Name</strong>
+								</h5>
+								<p class="veesy-grey-p mb-0" style="margin-bottom: 2rem">Updated on @Model.PortfolioThumbnailDto.LastUpdate<br />@Model.PortfolioThumbnailDto.NumberMedia media uploaded</p>
+							</div>
+						}
+						else
+						{
+							<div class="empty-veesy"></div>
+							<div class="text-center text-color">No featured portfolio yet</div>
+							<div class="empty-veesy"></div>
+						}
 					</div>
-				</div>
-				<div class="row pt-4">
-					<div class="col-6 pt-2">
-						<a class="grey-link ms-2" style="display: none">how it works<i class="fa-solid fa-arrow-up-right-from-square ms-2"></i></a>
-					</div>
-					<div class="col-6 text-end">
-						<a asp-area="Portfolio" asp-controller="Cloud" asp-action="List" class="a-font-p w-100 rounded-pill btn btn-white" type="submit">go to cloud</a>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="mb-4 ps-3 pe-3 col-sm-12 col-md-4 rounded-05 h-100">
-			<div style="border-bottom: 1px solid rgba(255,255,255, 0.125);" class="pb-1 pt-0 bg-blue card-header d-flex  rounded-05-header">
-				<div class="col-11">
-					<p class="text-white mt-2 mb-0" style="font-size: 14px !important; line-height: 22px !important;">
-						<strong>PROFILE</strong>
-					</p>
-				</div>
-				<div class="col-1 text-end">
-					<i class="fa-solid fa-circle fa-2xs mt-3" style="color: #ffffff;"></i>
-				</div>
-			</div>
-			<div class="pt-2 vertical-space card-body bg-blue rounded-bottom rounded-05-footer">
-				<div class="row mt-4">
-					<div class="col-9">
-						<h3 style="font-size: 27px !important; line-height: 30px !important;" class="text-white">@Model.Name @Model.Surname</h3>
-						<h5 class="text-white">- @Model.UserCategory</h5>
-						<div class="empty-veesy"></div>
-						<p class="text-white">@Model.UserDescription</p>
-					</div>
-					<div class="col-3">
-						<div class="text-end">
-							@if (string.IsNullOrEmpty(Model.FileName))
-							{
-								<img style="float: right" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" class="img-thumbnail-custom-dashboard rounded-circle" alt="user-image">
-							}
-							else
-							{
-								<img style="float: right" src="@Model.BaseProfileImage@Model.FileName?tr=w-400" class="img-thumbnail-custom-dashboard rounded-circle" alt="user-image">
-							}
-						</div>
-					</div>
-				</div>
-				<div class="row pt-2">
-					<hr style="color: #D7DADF" />
-					@if (Model.PortfolioThumbnailDto != null)
-					{
+					<div class="row pt-2">
+						<hr class="hr-color-dash" />
 						<div class="col-6 pt-2">
-							<a asp-controller="Portfolio" asp-area="Portfolio" asp-action="PortfolioPreview" asp-route-id="@Model.PortfolioThumbnailDto.Code" asp-route-open="@true" class="grey-link ms-2">view main portfolio <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+							@if (Model.PortfolioThumbnailDto != null)
+							{
+								<a asp-controller="Portfolio" asp-action="Settings" asp-route-id="@Model.PortfolioThumbnailDto.Code" asp-area="Portfolio" class="grey-link ms-2"><i class="fa-regular fa-pen-to-square pe-1"></i>edit main portfolio</a>
+							}
 						</div>
-					}
-					else
-					{
-						<div class="col-6"></div>
-					}
-					<div class="col-6 text-end">
-						<a asp-controller="Profile" asp-area="Account" asp-action="Profile" class="a-font-p w-100 rounded-pill btn btn-white" type="submit"><i class="fa-regular fa-pen-to-square pe-1"></i>update profile</a>
+						<div class="col-6 text-end">
+							<a asp-controller="Portfolio" asp-action="List" asp-area="Portfolio" class="w-100 rounded-pill btn btn-primary a-font-p" type="submit">your portfolios</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="mb-4 ps-3 pe-3 col-sm-12 col-md-4 rounded-05 h-100">
+				<div style="border-bottom: 1px solid rgba(255,255,255, 0.125)" class="pb-1 pt-0 bg-grey-dash card-header d-flex rounded-05-header">
+					<div class="col-11">
+						<p class="text-white mt-2 mb-0" style="font-size: 14px !important; line-height: 22px !important;">
+							<strong>CLOUD</strong>
+						</p>
+					</div>
+					<div class="col-1 text-end">
+						<i class="fa-solid fa-circle fa-2xs mt-3" style="color: #ffffff;"></i>
+					</div>
+				</div>
+				<div class="pt-0 vertical-space card-body bg-grey-dash rounded-bottom rounded-05-footer">
+					<div>
+						<p class="text-white mt-4 mb-0"><strong>Quick Upload: </strong>Upload now and use anytime and everywhere.</p>
+						<p class="text-white mb-0">Formats accepted: <strong>jpg, png, mov, mp4, gif.</strong></p>
+					</div>
+					<div class="row">
+						<div class="col-12 rounded pt-4" style="color: transparent">
+							<div id="div-uploader" style="overflow-y: auto; max-height: 190px">
+								<form enctype="multipart/form-data" asp-action="UploadMedia" asp-controller="Media" asp-area="Portfolio" class="dropzone card-grey-dashed-dropzone" id="uploader">
+									<a id="dropzone-close-button" style="padding: 0.7rem 1rem !important; display: none;" onclick="hideDropZone()" class="p-0 ms-2 btn btn-light border fw-bolder shadow-none close-button-dropzone">
+										<i class="fas fa-times-circle fa-2xs text-primary" id="icon-color" aria-hidden="true"></i>
+										<span id="color-text-variant">close</span>
+									</a>
+									<div class="pt-4 dz-message needsclick" id="message-uploader">
+										<div id="div-uploader-icon" class="w-100 mb-1">
+											<i id="uploader-icon" class="fa-solid fa-circle-plus fa-xl" style="color: #383B43"></i>
+										</div>
+										<span id="uploader-text" style="color: white;" class="text-white">
+											upload or drop your files here
+										</span>
+										<div class="progress-bar progress-bar-primary" role="progressbar" data-dz-uploadprogress>
+											<span class="progress-text"></span>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="row pt-4">
+						<div class="col-6 pt-2">
+							<a class="grey-link ms-2" style="display: none">how it works<i class="fa-solid fa-arrow-up-right-from-square ms-2"></i></a>
+						</div>
+						<div class="col-6 text-end">
+							<a asp-area="Portfolio" asp-controller="Cloud" asp-action="List" class="a-font-p w-100 rounded-pill btn btn-white" type="submit">go to cloud</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="mb-4 ps-3 pe-3 col-sm-12 col-md-4 rounded-05 h-100">
+				<div style="border-bottom: 1px solid rgba(255,255,255, 0.125);" class="pb-1 pt-0 bg-blue card-header d-flex  rounded-05-header">
+					<div class="col-11">
+						<p class="text-white mt-2 mb-0" style="font-size: 14px !important; line-height: 22px !important;">
+							<strong>PROFILE</strong>
+						</p>
+					</div>
+					<div class="col-1 text-end">
+						<i class="fa-solid fa-circle fa-2xs mt-3" style="color: #ffffff;"></i>
+					</div>
+				</div>
+				<div class="pt-2 vertical-space card-body bg-blue rounded-bottom rounded-05-footer">
+					<div class="row mt-4">
+						<div class="col-9">
+							<h3 style="font-size: 27px !important; line-height: 30px !important;" class="text-white">@Model.Name @Model.Surname</h3>
+							<h5 class="text-white">- @Model.UserCategory</h5>
+							<div class="empty-veesy"></div>
+							<p class="text-white">@Model.UserDescription</p>
+						</div>
+						<div class="col-3">
+							<div class="text-end">
+								@if (string.IsNullOrEmpty(Model.FileName))
+								{
+									<img style="float: right" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrVmYaV8ReWhTf5aMtZgkI__Mf9iCStzIShCMY-EzO-s05kD81VTb5ZtLnz5CiqB1LXu4&usqp=CAU" class="img-thumbnail-custom-dashboard rounded-circle" alt="user-image">
+								}
+								else
+								{
+									<img style="float: right" src="@Model.BaseProfileImage@Model.FileName?tr=w-400" class="img-thumbnail-custom-dashboard rounded-circle" alt="user-image">
+								}
+							</div>
+						</div>
+					</div>
+					<div class="row pt-2">
+						<hr style="color: #D7DADF" />
+						@if (Model.PortfolioThumbnailDto != null)
+						{
+							<div class="col-6 pt-2">
+								<a asp-controller="Portfolio" asp-area="Portfolio" asp-action="PortfolioPreview" asp-route-id="@Model.PortfolioThumbnailDto.Code" asp-route-open="@true" class="grey-link ms-2">view main portfolio <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+							</div>
+						}
+						else
+						{
+							<div class="col-6"></div>
+						}
+						<div class="col-6 text-end">
+							<a asp-controller="Profile" asp-area="Account" asp-action="Profile" class="a-font-p w-100 rounded-pill btn btn-white" type="submit"><i class="fa-regular fa-pen-to-square pe-1"></i>update profile</a>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
-<div class="empty-veesy"></div>
+	<div class="empty-veesy"></div>
+}
 
 
 @if (!Model.DiscordConnected)
@@ -387,7 +687,6 @@
 
 @section Scripts {
 	<script>
-
 		var div_uploader = document.getElementById("div-uploader");
 		/*Dropzone configuration*/
 		Dropzone.autoDiscover = false;
@@ -505,7 +804,7 @@
 		var allwidthprogress = document.getElementById("progress-media").offsetWidth
 
 		var percent = (@Model.MediaPercent / 100) * allwidthprogress
-						$(".progress-bar").animate({
+										$(".progress-bar").animate({
 			width: percent
 		}, 2500);
 
@@ -530,7 +829,7 @@
 			} else {
 				document.getElementById("bg-plan").classList.add('bg-gradient-2')
 			}
-			
+
 			// Controlla se il popup deve essere nascosto
 			const isHidden = window.localStorage.getItem('popup-discord-desk-hide') === 'true';
 
