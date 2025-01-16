@@ -76,7 +76,7 @@ public class AuthController : Controller
             {
                 //_authHelper.AddLastLogin(user);
                 if((await _userManager.GetRolesAsync(user))[0] == Roles.Admin)
-                    return RedirectToAction("Dashboard", "Admin", new { area = "Admin" });
+                    return RedirectToAction("Dashboard", "Admin", new { area = "Admin", year = DateTime.Now.Year });
                 return RedirectToAction("Index", "Home", new { area = "Portfolio" });
             }
             _notyfService.Custom("Email or password are invalid", 10, "#ca0a0a");
