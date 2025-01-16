@@ -34,10 +34,10 @@ public class AdminController : VeesyController
         _endpointDataSource = endpointDataSource;
     }
     
-    [HttpGet("overview")]
-    public IActionResult Dashboard()
+    [HttpGet("overview/{year}")]
+    public IActionResult Dashboard(int year)
     {
-        var vm = _adminHelper.GetDashboardViewModel();
+        var vm = _adminHelper.GetDashboardViewModel(year);
         return View(vm);
     }
     
@@ -176,11 +176,11 @@ public class AdminController : VeesyController
     }
 
     [HttpGet]
-    public JsonResult GetMediaUploadedByMonth(int month)
+    public JsonResult GetMediaUploadedByMonth(int month, int year)
     {
         try
         {
-            var result = _adminHelper.GetMediaUploadedByMonth(month);
+            var result = _adminHelper.GetMediaUploadedByMonth(month, year);
             var max = result.Count == 0 ? 2 : result.Max(s => s.MediaSize);
             return Json(new { Result = true, Message = "Success", MediaNumber = result.Select(s => s.NumberMedia).ToList(), MediaSize = result.Select(s => s.MediaSize).ToList(), Categories = result.Select(s => s.Day).ToList(), Max = max});
         }
@@ -191,11 +191,11 @@ public class AdminController : VeesyController
     }
     
     [HttpGet]
-    public JsonResult GetCreatorsSubscribedByMonth(int month)
+    public JsonResult GetCreatorsSubscribedByMonth(int month, int year)
     {
         try
         {
-            var result = _adminHelper.GetCreatorsSubscribedByMonth(month);
+            var result = _adminHelper.GetCreatorsSubscribedByMonth(month, year);
             var max = result.Count == 0 ? 2 : result.Max(s => s.NumberCreator);
             var min = result.Count == 0 ? 0 : result.Min(s => s.NumberCreatorDeleted);
             var tick = max - min;
@@ -208,11 +208,11 @@ public class AdminController : VeesyController
     }
     
     [HttpGet]
-    public JsonResult GetAccessByMonth(int month)
+    public JsonResult GetAccessByMonth(int month, int year)
     {
         try
         {
-            var result = _adminHelper.GetAccessByMonth(month);
+            var result = _adminHelper.GetAccessByMonth(month, year);
             var max = result.Count == 0 ? 2 : result.Max(s => s.Number);
             return Json(new { Result = true, Message = "Success", Number = result.Select(s => s.Number).ToList(),  Categories = result.Select(s => s.City).ToList(), Max = max});
         }

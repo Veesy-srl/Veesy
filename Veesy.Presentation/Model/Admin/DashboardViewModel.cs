@@ -19,4 +19,5 @@ public class DashboardViewModel
     public (int DraftPortfolios, int PublishedPortfolios) PortfoliosCount { get; set; }
     public List<MapOverviewDto> MapOverviewDtos { get; set; }
     public List<UserSecurity> LastAccess { get; set; }
+    public int Year { get; set; }
 }

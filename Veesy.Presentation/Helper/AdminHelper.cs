@@ -86,9 +86,10 @@ public class AdminHelper
         return vm;
     }
 
-    public DashboardViewModel GetDashboardViewModel()
+    public DashboardViewModel GetDashboardViewModel(int year)
     {
-        var now = DateTime.Now;
+
+        var now = year == 0 ? DateTime.Now : new DateTime(year, DateTime.Now.Month, 1);
         var res = _mediaService.GetMediaNumberByMonthGroupByDay(now.Month, now.Year);
         var resCreator = _accountService.GetCreatorNumberByMonthGroupByDay(now.Month, now.Year);
         var resCreatorDeleted = _accountService.GetCreatorDeletedNumberByMonthGroupByDay(now.Month ,now.Year);
@@ -156,6 +157,7 @@ public class AdminHelper
         }
         var vm = new DashboardViewModel()
         {
+            Year = now.Year,
             MediaNumber = _mediaService.GetMediaNumber(),
             CreatorNumber = creatorsCount,
             MediaOverviewDtos = mediaOverview,
@@ -252,9 +254,9 @@ public class AdminHelper
         public decimal Total { get; set; }
     }
 
-    public List<MediaOverviewDto> GetMediaUploadedByMonth(int month)
+    public List<MediaOverviewDto> GetMediaUploadedByMonth(int month, int year)
     {
-        var res = _mediaService.GetMediaNumberByMonthGroupByDay(month, DateTime.Now.Year);
+        var res = _mediaService.GetMediaNumberByMonthGroupByDay(month, year);
         var mediaOverview = new List<MediaOverviewDto>();
         foreach (var item in res)
         {
@@ -271,11 +273,11 @@ public class AdminHelper
         return mediaOverview;
     }
 
-    public List<CreatorOverviewDto> GetCreatorsSubscribedByMonth(int month)
+    public List<CreatorOverviewDto> GetCreatorsSubscribedByMonth(int month, int year)
     {
         var now = DateTime.Now;
-        var resCreator = _accountService.GetCreatorNumberByMonthGroupByDay(month ,now.Year);
-        var resCreatorDeleted = _accountService.GetCreatorDeletedNumberByMonthGroupByDay(month ,now.Year);
+        var resCreator = _accountService.GetCreatorNumberByMonthGroupByDay(month, year);
+        var resCreatorDeleted = _accountService.GetCreatorDeletedNumberByMonthGroupByDay(month, year);
         var creatorOverview = new List<CreatorOverviewDto>();
         
         foreach (var item in resCreator)
@@ -379,14 +381,14 @@ public class AdminHelper
         };
     }
 
-    public List<MapOverviewDto> GetAccessByMonth(int month)
+    public List<MapOverviewDto> GetAccessByMonth(int month, int year)
     {
         
         var now = DateTime.Now;
         var resAccess = new List<AccountService.MapOverviewDto>();
         if (month == 0)
         {
-            resAccess = _accountService.GetUserSecurityByDateIntervalGroupByDay(new DateTime(now.Year, 1, 1), new DateTime(now.Year, 12, 31));
+            resAccess = _accountService.GetUserSecurityByDateIntervalGroupByDay(new DateTime(year, 1, 1), new DateTime(year, 12, 31));
         }
         else if (month == -1)
         {
@@ -394,7 +396,7 @@ public class AdminHelper
         }
         else
         {
-            resAccess.AddRange(_accountService.GetUserSecurityByMonthGroupByDay(month, now.Year));
+            resAccess.AddRange(_accountService.GetUserSecurityByMonthGroupByDay(month, year));
         }
         var mapCreatorOverview = new List<MapOverviewDto>();
         
@@ -405,7 +407,7 @@ public class AdminHelper
                 City = item.City??"Unknown",
                 Number = item.NumberConnection,
                 Month = now.Month,
-                Year = now.Year
+                Year = year
             });
         }
 

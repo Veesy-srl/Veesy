@@ -18,6 +18,25 @@
 @{
   var nowMonth = DateTime.Now.Month; 
 }
+
+<div class="row mb-3">
+  <div class="col-sm-2 col-md-2">
+    <select id="yearSelect" class="form-select" onchange="ChangeDashboardYear()">
+      @for (int date = 2024; date <= DateTime.Now.Year; date++)
+      {
+        if (Model.Year == date)
+        {
+          <option selected="selected" value="@date">@date</option>
+        }
+        else
+        {
+          <option value="@date">@date</option>
+        }
+      }
+    </select>
+  </div>
+</div>
+
 <div class="row">
   <div class="col-sm-12 col-md-3">
     <div class="card">
@@ -292,12 +311,19 @@
   <script src="~/assets/js/dashboard.js"></script>
 
   <script>
+    
+    function ChangeDashboardYear(){
+      var year = document.getElementById("yearSelect").value;
+      window.location.href = '/overview/' + year
+    }
+    
     function ChangeMediaGraph() {
         $('#load-spinner').css("display", "block");
         var month = document.getElementById("month-media").value
+        var year = document.getElementById("yearSelect").value;
         $.ajax({
             type: 'GET',
-            url: '@Url.Action("GetMediaUploadedByMonth", "Admin")' + "?month=" + month,
+            url: '@Url.Action("GetMediaUploadedByMonth", "Admin")' + "?month=" + month + '&year=' + year,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             success: function (response) {
@@ -326,9 +352,10 @@
     function ChangeCreatorGraph() {
         $('#load-spinner').css("display", "block");
         var month = document.getElementById("month-creator").value
+        var year = document.getElementById("yearSelect").value;
         $.ajax({
             type: 'GET',
-            url: '@Url.Action("GetCreatorsSubscribedByMonth", "Admin")' + "?month=" + month,
+            url: '@Url.Action("GetCreatorsSubscribedByMonth", "Admin")' + "?month=" + month + '&year=' + year,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             success: function (response) {
@@ -359,9 +386,10 @@
     function ChangeMapGraph() {
         $('#load-spinner').css("display", "block");
         var month = document.getElementById("month-map").value
+        var year = document.getElementById("yearSelect").value;
         $.ajax({
             type: 'GET',
-            url: '@Url.Action("GetAccessByMonth", "Admin")' + "?month=" + month,
+            url: '@Url.Action("GetAccessByMonth", "Admin")' + "?month=" + month + '&year=' + year,
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             success: function (response) {
@@ -697,5 +725,6 @@
   
     var chart_map = new ApexCharts(document.querySelector("#chart-map"), chart_map);
     chart_map.render();
+  
   </script>
 }
