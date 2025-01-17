@@ -234,7 +234,7 @@
 									<a class="dropdown-item dropdown-item-layout @(ViewContext.RouteData.Values["Controller"].ToString() == "Profile" ? "a-ciano-header" : "menu-element")" asp-action="Profile" asp-controller="Profile" asp-area="Account">Profile</a>
 									@if (User.IsInRole(Roles.Admin))
 									{
-										<a class="dropdown-item dropdown-item-layout menu-element" asp-action="Dashboard" asp-controller="Admin" asp-area="Admin">Admin dashboard</a>
+										<a class="dropdown-item dropdown-item-layout menu-element" asp-action="Dashboard" asp-controller="Admin" asp-area="Admin" asp-route-year="@DateTime.Now.Year">Admin dashboard</a>
 									}
 									<a class="dropdown-item dropdown-item-layout menu-element" asp-action="Logout" asp-controller="Auth" asp-area="Auth">Log out</a>
 								</div>
