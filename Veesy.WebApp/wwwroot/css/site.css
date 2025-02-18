@@ -115,6 +115,19 @@ img, button {
   }
 }
 
+.portfolio-media-navs {
+    width: 100%;
+    height: 85vh;
+    display: flex;
+    position: absolute;
+    align-items: center;
+    justify-content: space-between;
+
+    @media only screen and (max-width: 800px) {
+        height: 7vh;
+    }
+}
+
 .welcome-team {
   gap: 1rem;
   width: 100%;
@@ -285,12 +298,18 @@ img, button {
   width: 100%;
 }
 
+..div-center {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
 
 .card-columns-gallery {
-  column-count: 4;
-  @media only screen and (max-width: 600px) {
-    column-count: 2;
-  }
+    column-count: 4;
+
+    @media only screen and (max-width: 600px) {
+        column-count: 2;
+    }
 }
 
 .div-selector{
@@ -1924,12 +1943,22 @@ hr {
   background-color: none !important;
 }
 
-.img-ratio-portfolio{
-  max-height: 80vh;
-  max-width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  object-fit: cover;
+.img-ratio-portfolio {
+    width: 100%;
+    height: 90vh;
+    max-width: 100%;
+    object-fit: cover;
+    margin-left: auto;
+    margin-right: auto;
+    transition: height 0.3s ease-in-out;
+}
+
+/* Add media query for responsiveness */
+@media (max-width: 800px) {
+    .img-ratio-portfolio {
+        height: auto;
+        max-height: 100%;
+    }
 }
 
 .fullscreen-modal {
@@ -1948,11 +1977,11 @@ hr {
 
 .fullscreen-image {
   width: 100%;
-  height: 100%;
+  height: 100vh;
+/*  padding-top: 60px;*/
   object-fit: contain;
-  padding-top: 60px;
-  max-width: 100%;
-  max-height: 99%;
+/*  max-width: 100vh;*/
+/*  max-height: 99vh;*/
 }
 
 .vertical-space{
@@ -2084,20 +2113,20 @@ hr {
   right: 20px;
   z-index: 10;
   color: white !important;
-  width: 23px;
-  height: 23px;
+  width: 26px;
+  height: 26px;
 }
 
-.text-overlay{
-  background-color: rgba(83, 107, 126, 0.73) !important;
-  position: absolute;
-  z-index: 9;
-  color: white !important;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  transition: 5s ease;
-  display: none;
+.text-overlay {
+    background-color: rgba(83, 107, 126, 0.73) !important;
+    position: absolute;
+    z-index: 9;
+    color: white !important;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: 5s ease;
+    display: none;
 }
 
 .text-overlay-selected{
