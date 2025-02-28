@@ -167,7 +167,7 @@ public class AuthHelper
             MyUserCategoriesWork = categories,
             ProfileImageFileName = imageDefault,
             LastLoginTime = DateTime.Now,
-            VisibleInCreatorPage = true,
+            VisibleInCreatorPage = false,
             MyUserSubscriptionPlans = new List<MyUserSubscriptionPlan>
             {
                 new ()

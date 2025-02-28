@@ -87,7 +87,7 @@
 							</div>
 							@if (string.IsNullOrEmpty(Model.Portfolio.Password))
 							{
-								<div class="col-4 text-end"><a onclick="openModal('#modalPassword')" class="grey-link"><i id="lock-icon" class="fa-solid fa-lock-open me-2"></i><strong id="lock-text">unlocked</strong></a></div>
+								<div class="col-4 text-end"><a onclick="openModal('#modalPassword')" class="grey-link" id="link-password"><i id="lock-icon" class="fa-solid fa-lock-open me-2"></i><strong id="lock-text">unlocked</strong></a></div>
 							}
 							else
 							{
@@ -517,6 +517,7 @@
 						document.getElementById("lock-text").textContent = "lock";
 						document.getElementById("lock-icon").classList.remove("fa-lock-open");
 						document.getElementById("lock-icon").classList.add("fa-lock");
+						document.getElementById("link-password").onclick = function() { ChangePortfolioSecurity(); };
 						closeModal('#modalPassword')
 					}
 					$('#load-spinner').css("display", "none");
@@ -542,7 +543,7 @@
 				dataType: 'json',
 				success: function (response) {
 					if (response.result) {
-						if (!IsPublish) {
+						if (document.getElementById("lock-text").textContent !== "lock") {
 							document.getElementById("password-show").textContent = portfolioPassword;
 							document.getElementById("lock-text").textContent = "lock";
 							document.getElementById("lock-icon").classList.remove("fa-lock-open");
